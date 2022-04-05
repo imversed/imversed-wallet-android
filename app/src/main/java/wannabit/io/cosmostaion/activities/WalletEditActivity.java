@@ -44,7 +44,7 @@ public class WalletEditActivity extends BaseActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wallet_edit);
-        mToolbar = findViewById(R.id.tool_bar);
+        mToolbar = findViewById(R.id.toolbar);
         mBtnDone = findViewById(R.id.btn_done);
         mDisplayRecyclerView = findViewById(R.id.display_recycler);
         mHideRecyclerView = findViewById(R.id.hide_recycler);
@@ -121,7 +121,7 @@ public class WalletEditActivity extends BaseActivity implements View.OnClickList
             final BaseChain chain = mDisplayChains.get(position);
             holder.chainCard.setCardBackgroundColor(WDp.getChainBgColor(WalletEditActivity.this, chain));
             holder.chainTokenImg.setImageResource(chain.getChainIcon());
-            WDp.getChainTitle2(WalletEditActivity.this, chain, holder.chainName);
+            holder.chainName.setText(chain.getChainAlterTitle());
 
             holder.chainRemoveImg.setOnClickListener(v -> {
                 if (getBaseDao().onSelectAccountsByChain(BaseChain.COSMOS_MAIN).size() <= 0) {
@@ -212,7 +212,7 @@ public class WalletEditActivity extends BaseActivity implements View.OnClickList
             final BaseChain chain = mHideChains.get(position);
             holder.chainCard.setCardBackgroundColor(WDp.getChainBgColor(WalletEditActivity.this, chain));
             holder.chainTokenImg.setImageResource(chain.getChainIcon());
-            WDp.getChainTitle2(WalletEditActivity.this, chain, holder.chainName);
+            holder.chainName.setText(chain.getChainAlterTitle());
 
             holder.chainAddImg.setOnClickListener(v -> {
                 int hideChainIndex = mHideChains.indexOf(chain);

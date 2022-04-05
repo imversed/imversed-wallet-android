@@ -88,27 +88,27 @@ import wannabit.io.cosmostaion.utils.WUtil;
 
 public class BaseData {
 
-    private BaseApplication mApp;
+    private Context context;
     private SharedPreferences mSharedPreferences;
     private SQLiteDatabase mSQLiteDatabase;
     public String mCopySalt;
     public EncResult mCopyEncResult;
 
-    public BaseData(BaseApplication apps) {
-        this.mApp = apps;
+    public BaseData(Context context) {
+        this.context = context.getApplicationContext();
         this.mSharedPreferences = getSharedPreferences();
-        SQLiteDatabase.loadLibs(mApp);
+        SQLiteDatabase.loadLibs(this.context);
     }
 
     private SharedPreferences getSharedPreferences() {
         if (mSharedPreferences == null)
-            mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(mApp);
+            mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return mSharedPreferences;
     }
 
     public SQLiteDatabase getBaseDB() {
         if (mSQLiteDatabase == null) {
-            mSQLiteDatabase = BaseDB.getInstance(mApp).getWritableDatabase(mApp.getString(R.string.db_password));
+            mSQLiteDatabase = BaseDB.getInstance(context).getWritableDatabase(context.getString(R.string.db_password));
         }
         return mSQLiteDatabase;
     }
@@ -280,7 +280,6 @@ public class BaseData {
     public SifIncentive.User mSifLmIncentive;
 
     //GRPC for KAVA
-    public ArrayList<QueryOuterClass.CurrentPriceResponse> mKavaPrices = new ArrayList<>();
     public HashMap<String, QueryOuterClass.CurrentPriceResponse> mKavaTokenPrice = new HashMap<>();
     public IncentiveParam mIncentiveParam5;
     public IncentiveReward mIncentiveRewards;
@@ -833,17 +832,21 @@ public class BaseData {
         getSharedPreferences().edit().putLong(BaseConstant.PRE_USER_ID, user).commit();
     }
 
-    public String getLastUser() {
+    public long getLastUserId() {
         Account account = onSelectAccount(String.valueOf(getSharedPreferences().getLong(BaseConstant.PRE_USER_ID, -1)));
         BaseChain mBaseChain = BaseChain.getChain(account.baseChain);
         if (!dpSortedChains().contains(mBaseChain)) {
             for (BaseChain chain : dpSortedChains()) {
                 if (onSelectAccountsByChain(chain).size() > 0) {
-                    return String.valueOf(onSelectAccountsByChain(chain).get(0).id);
+                    return onSelectAccountsByChain(chain).get(0).id;
                 }
             }
         }
-        return String.valueOf(getSharedPreferences().getLong(BaseConstant.PRE_USER_ID, -1));
+        return getSharedPreferences().getLong(BaseConstant.PRE_USER_ID, -1);
+    }
+
+    public String getLastUser() {
+        return String.valueOf(getLastUserId());
     }
 
     public BaseChain getLastChain() {
@@ -996,22 +999,6 @@ public class BaseData {
 
     public String getFCMToken() {
         return getSharedPreferences().getString(BaseConstant.PRE_FCM_TOKEN, "");
-    }
-
-    public void setEventTime() {
-        Date dt = new Date();
-        Calendar c = Calendar.getInstance();
-        c.setTime(dt);
-        c.add(Calendar.DATE, 1);
-        getSharedPreferences().edit().putLong(PRE_EVENT_HIDE, c.getTimeInMillis()).commit();
-    }
-
-    public boolean getEventTime() {
-        Date dt = new Date();
-        if (dt.getTime() > getSharedPreferences().getLong(PRE_EVENT_HIDE, 1)) {
-            return true;
-        }
-        return false;
     }
 
     public void setUserHidenChains(ArrayList<BaseChain> hidedChains) {
@@ -1175,20 +1162,22 @@ public class BaseData {
     public Password onSelectPassword() {
         Password result = null;
         Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_PASSWORD, new String[]{"resource", "spec"}, null, null, null, null, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            result = new Password(cursor.getString(0), cursor.getString(1));
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                result = new Password(cursor.getString(0), cursor.getString(1));
+            }
+            cursor.close();
         }
-        cursor.close();
         return result;
     }
 
     public boolean onHasPassword() {
         boolean existed = false;
         Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_PASSWORD, new String[]{"resource", "spec"}, null, null, null, null, null);
-        if (cursor != null && cursor.getCount() > 0) {
-            existed = true;
+        if (cursor != null) {
+            existed = cursor.getCount() > 0;
+            cursor.close();
         }
-        cursor.close();
         return existed;
     }
 
@@ -1252,9 +1241,9 @@ public class BaseData {
 
     public ArrayList<Account> onSelectAccountsByChain(BaseChain chain) {
         ArrayList<Account> result = new ArrayList<>();
-        ArrayList<Account> AllAccount = onSelectAccounts();
-        for (Account account : AllAccount) {
-            if (BaseChain.getChain(account.baseChain).equals(chain)) {
+        ArrayList<Account> accounts = onSelectAccounts();
+        for (Account account : accounts) {
+            if (chain.hasChainName(account.baseChain)) {
                 result.add(account);
             }
         }
@@ -1503,7 +1492,6 @@ public class BaseData {
 
     public boolean onDeleteAccount(String id) {
         //TODO delete Tx or else data with this account
-        onDeleteBalance(id);
         return getBaseDB().delete(BaseConstant.DB_TABLE_ACCOUNT, "id = ?", new String[]{id}) > 0;
     }
 
@@ -1604,19 +1592,21 @@ public class BaseData {
     public ArrayList<Balance> onSelectBalance(long accountId) {
         ArrayList<Balance> result = new ArrayList<>();
         Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_BALANCE, new String[]{"accountId", "symbol", "balance", "fetchTime", "frozen", "locked"}, "accountId == ?", new String[]{"" + accountId}, null, null, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                Balance balance = new Balance(
-                        cursor.getLong(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getLong(3),
-                        cursor.getString(4),
-                        cursor.getString(5));
-                result.add(balance);
-            } while (cursor.moveToNext());
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    Balance balance = new Balance(
+                            cursor.getLong(0),
+                            cursor.getString(1),
+                            cursor.getString(2),
+                            cursor.getLong(3),
+                            cursor.getString(4),
+                            cursor.getString(5));
+                    result.add(balance);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
         }
-        cursor.close();
         return result;
     }
 

@@ -42,22 +42,22 @@ public class NFTSendActivity extends BaseBroadCastActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step);
-        mToolbar = findViewById(R.id.tool_bar);
+        mToolbar = findViewById(R.id.toolbar);
         mTitle = findViewById(R.id.toolbar_title);
         mIvStep = findViewById(R.id.send_step);
         mTvStep = findViewById(R.id.send_step_msg);
         mViewPager = findViewById(R.id.view_pager);
-        mTitle.setText(getString(R.string.str_send_nfts));
+        mTitle.setText(R.string.str_send_nfts);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mIvStep.setImageDrawable(getDrawable(R.drawable.step_4_img_1));
-        mTvStep.setText(getString(R.string.str_send_nft_step_0));
+        mIvStep.setImageResource(R.drawable.step_4_img_1);
+        mTvStep.setText(R.string.str_send_nft_step_0);
 
-        mAccount = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
-        mBaseChain = BaseChain.getChain(mAccount.baseChain);
+        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_SEND_NFT;
 
         mNftDenomId = getIntent().getStringExtra("mDenomId");
@@ -76,18 +76,18 @@ public class NFTSendActivity extends BaseBroadCastActivity {
             @Override
             public void onPageSelected(int i) {
                 if (i == 0) {
-                    mIvStep.setImageDrawable(getDrawable(R.drawable.step_4_img_1));
-                    mTvStep.setText(getString(R.string.str_send_nft_step_0));
+                    mIvStep.setImageResource(R.drawable.step_4_img_1);
+                    mTvStep.setText(R.string.str_send_nft_step_0);
                 } else if (i == 1) {
-                    mIvStep.setImageDrawable(getDrawable(R.drawable.step_4_img_2));
-                    mTvStep.setText(getString(R.string.str_send_nft_step_1));
+                    mIvStep.setImageResource(R.drawable.step_4_img_2);
+                    mTvStep.setText(R.string.str_send_nft_step_1);
                 } else if (i == 2) {
-                    mIvStep.setImageDrawable(getDrawable(R.drawable.step_4_img_3));
-                    mTvStep.setText(getString(R.string.str_send_nft_step_2));
+                    mIvStep.setImageResource(R.drawable.step_4_img_3);
+                    mTvStep.setText(R.string.str_send_nft_step_2);
                     ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
                 } else if (i == 3) {
-                    mIvStep.setImageDrawable(getDrawable(R.drawable.step_4_img_4));
-                    mTvStep.setText(getString(R.string.str_send_nft_step_3));
+                    mIvStep.setImageResource(R.drawable.step_4_img_4);
+                    mTvStep.setText(R.string.str_send_nft_step_3);
                     ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
                 }
             }

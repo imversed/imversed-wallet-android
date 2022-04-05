@@ -3,7 +3,6 @@ package wannabit.io.cosmostaion.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +42,7 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_list);
-        mToolbar = findViewById(R.id.tool_bar);
+        mToolbar = findViewById(R.id.toolbar);
         mBtnEdit = findViewById(R.id.btn_edit);
         mChainRecyclerView = findViewById(R.id.chain_recycler);
         mAccountRecyclerView = findViewById(R.id.account_recycler);
@@ -70,13 +69,11 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -124,16 +121,15 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
                 }
             });
             holder.chainImg.setImageResource(chain.getChainIcon());
-
-            WDp.getChainTitle2(AccountListActivity.this, chain, holder.chainName);
+            holder.chainName.setText(chain.getChainAlterTitle());
 
             if (chain.equals(mSelectedChain)) {
-                holder.chainCard.setBackground(getResources().getDrawable(R.drawable.box_chain_selected));
+                holder.chainCard.setBackgroundResource(R.drawable.box_chain_selected);
                 holder.chainImg.setAlpha(1f);
                 holder.chainName.setTextColor(getColor(R.color.colorWhite));
             } else {
-                holder.chainCard.setBackground(getResources().getDrawable(R.drawable.box_chain_unselected));
-                holder.chainImg.setAlpha(0.1f);
+                holder.chainCard.setBackgroundResource(R.drawable.box_chain_unselected);
+                holder.chainImg.setAlpha(0.5f);
                 holder.chainName.setTextColor(getColor(R.color.colorGray4));
             }
 
@@ -175,7 +171,7 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
             final AccountHolder holder = (AccountHolder) viewHolder;
             final Account account = mDisplayAccounts.get(position);
 
-            WDp.DpMainDenom(getBaseContext(), account.baseChain, holder.accountDenom);
+            WDp.DpMainDenom(account.baseChain, holder.accountDenom);
             holder.accountAddress.setText(account.address);
             holder.accountAvailable.setText(account.getLastTotal(getBaseContext(), BaseChain.getChain(account.baseChain)));
             holder.accountKeyState.setColorFilter(ContextCompat.getColor(getBaseContext(), R.color.colorGray0), android.graphics.PorterDuff.Mode.SRC_IN);

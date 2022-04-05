@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -67,23 +66,23 @@ public class HtlcSendActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step);
         mRootView = findViewById(R.id.root_view);
-        mToolbar = findViewById(R.id.tool_bar);
+        mToolbar = findViewById(R.id.toolbar);
         mTitle = findViewById(R.id.toolbar_title);
         mIvStep = findViewById(R.id.send_step);
         mTvStep = findViewById(R.id.send_step_msg);
         mViewPager = findViewById(R.id.view_pager);
-        mTitle.setText(getString(R.string.str_htlc_send_c));
+        mTitle.setText(R.string.str_htlc_send_c);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mAccount = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
-        mBaseChain = BaseChain.getChain(mAccount.baseChain);
+        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        baseChain = BaseChain.getChain(account.baseChain);
         mToSwapDenom = getIntent().getStringExtra("toSwapDenom");
 
-        mIvStep.setImageDrawable(getDrawable(R.drawable.step_4_img_1));
-        mTvStep.setText(getString(R.string.str_htlc_send_step_1));
+        mIvStep.setImageResource(R.drawable.step_4_img_1);
+        mTvStep.setText(R.string.str_htlc_send_step_1);
 
         mPageAdapter = new HtlcSendPageAdapter(getSupportFragmentManager());
         mViewPager.setOffscreenPageLimit(3);
@@ -97,19 +96,19 @@ public class HtlcSendActivity extends BaseActivity {
             @Override
             public void onPageSelected(int i) {
                 if (i == 0) {
-                    mIvStep.setImageDrawable(getDrawable(R.drawable.step_4_img_1));
-                    mTvStep.setText(getString(R.string.str_htlc_send_step_1));
+                    mIvStep.setImageResource(R.drawable.step_4_img_1);
+                    mTvStep.setText(R.string.str_htlc_send_step_1);
                 } else if (i == 1) {
-                    mIvStep.setImageDrawable(getDrawable(R.drawable.step_4_img_2));
-                    mTvStep.setText(getString(R.string.str_htlc_send_step_2));
+                    mIvStep.setImageResource(R.drawable.step_4_img_2);
+                    mTvStep.setText(R.string.str_htlc_send_step_2);
                     ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
                 } else if (i == 2) {
-                    mIvStep.setImageDrawable(getDrawable(R.drawable.step_4_img_3));
-                    mTvStep.setText(getString(R.string.str_htlc_send_step_3));
+                    mIvStep.setImageResource(R.drawable.step_4_img_3);
+                    mTvStep.setText(R.string.str_htlc_send_step_3);
                     ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
                 } else if (i == 3) {
-                    mIvStep.setImageDrawable(getDrawable(R.drawable.step_4_img_4));
-                    mTvStep.setText(getString(R.string.str_htlc_send_step_4));
+                    mIvStep.setImageResource(R.drawable.step_4_img_4);
+                    mTvStep.setText(R.string.str_htlc_send_step_4);
                     ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
                 }
             }
@@ -120,12 +119,7 @@ public class HtlcSendActivity extends BaseActivity {
         });
         mViewPager.setCurrentItem(0);
 
-        mRootView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onHideKeyboard();
-            }
-        });
+        mRootView.setOnClickListener(v -> onHideKeyboard());
     }
 
     @Override
@@ -167,17 +161,17 @@ public class HtlcSendActivity extends BaseActivity {
 
 
     public Fee onInitSendFee() {
-        if (mBaseChain.equals(BNB_MAIN)) {
+        if (baseChain.equals(BNB_MAIN)) {
             Coin gasCoin = new Coin();
-            gasCoin.denom = mBaseChain.getMainDenom();
+            gasCoin.denom = baseChain.getMainDenom();
             gasCoin.amount = FEE_BNB_SEND;
             ArrayList<Coin> gasCoins = new ArrayList<>();
             gasCoins.add(gasCoin);
             mSendFee = new Fee("", gasCoins);
 
-        } else if (mBaseChain.equals(BaseChain.KAVA_MAIN)) {
+        } else if (baseChain.equals(BaseChain.KAVA_MAIN)) {
             Coin gasCoin = new Coin();
-            gasCoin.denom = mBaseChain.getMainDenom();
+            gasCoin.denom = baseChain.getMainDenom();
             gasCoin.amount = "12500";
             ArrayList<Coin> gasCoins = new ArrayList<>();
             gasCoins.add(gasCoin);
@@ -272,10 +266,10 @@ public class HtlcSendActivity extends BaseActivity {
     }
 
     public BigDecimal getAvailable() {
-        if (mBaseChain.equals(BaseChain.KAVA_MAIN)) {
+        if (baseChain.equals(BaseChain.KAVA_MAIN)) {
             return getBaseDao().getAvailable(mToSwapDenom);
         } else {
-            return mAccount.getTokenBalance(mToSwapDenom);
+            return account.getTokenBalance(mToSwapDenom);
         }
     }
 }

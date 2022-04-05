@@ -107,8 +107,8 @@ public class HtlcSendStep3Fragment extends BaseFragment implements View.OnClickL
         BigDecimal claimFeeAmount = new BigDecimal(claimFee.amount.get(0).amount);
 
         // set send card view
-        mSendIcon.setColorFilter(WDp.getChainColor(getContext(), getSActivity().mBaseChain), android.graphics.PorterDuff.Mode.SRC_IN);
-        if (getSActivity().mBaseChain.equals(BaseChain.BNB_MAIN)) {
+        mSendIcon.setColorFilter(WDp.getChainColor(getContext(), getSActivity().baseChain), android.graphics.PorterDuff.Mode.SRC_IN);
+        if (getSActivity().baseChain.equals(BaseChain.BNB_MAIN)) {
             if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_BNB) || mToSwapDenom.equals(TOKEN_HTLC_BINANCE_TEST_BNB)) {
                 mSendDenomTv.setText(getString(R.string.str_bnb_c));
                 mSendDenomTv.setTextColor(getResources().getColor(R.color.colorBnb));
@@ -122,17 +122,17 @@ public class HtlcSendStep3Fragment extends BaseFragment implements View.OnClickL
                 mSendDenomTv.setText("BUSD");
                 mSendDenomTv.setTextColor(getResources().getColor(R.color.colorWhite));
             }
-            WDp.DpMainDenom(getContext(), getSActivity().mBaseChain.getChain(), mSendFeeDenomTv);
+            WDp.DpMainDenom(getSActivity().baseChain.getChain(), mSendFeeDenomTv);
 
             mSendAmountTv.setText(WDp.getDpAmount2(toSendAmount, 0, 8));
             mSendFeeAmountTv.setText(WDp.getDpAmount2(sendFeeAmount, 0, 8));
             mReceiveChainTv.setText(WDp.getDpChainName(getContext(), getSActivity().mRecipientChain));
             mReceiveAddressTv.setText(getSActivity().mRecipientAccount.address);
 
-        } else if (getSActivity().mBaseChain.equals(BaseChain.KAVA_MAIN)) {
+        } else if (getSActivity().baseChain.equals(BaseChain.KAVA_MAIN)) {
             mDecimal = WUtil.getKavaCoinDecimal(getBaseDao(), getSActivity().mToSwapDenom);
             mSendDenomTv.setText(getSActivity().mToSwapDenom.toUpperCase());
-            WDp.DpMainDenom(getContext(), getSActivity().mBaseChain.getChain(), mSendFeeDenomTv);
+            WDp.DpMainDenom(getSActivity().baseChain.getChain(), mSendFeeDenomTv);
 
             mSendAmountTv.setText(WDp.getDpAmount2(toSendAmount, mDecimal, mDecimal));
             mSendFeeAmountTv.setText(WDp.getDpAmount2(sendFeeAmount, 6, 6));
@@ -158,7 +158,7 @@ public class HtlcSendStep3Fragment extends BaseFragment implements View.OnClickL
                 mReceiveAmountDenomTv.setTextColor(getResources().getColor(R.color.colorWhite));
                 mRelayFeeAmountDenomTv.setTextColor(getResources().getColor(R.color.colorWhite));
             }
-            WDp.DpMainDenom(getContext(), getSActivity().mRecipientChain.getChain(), mClaimFeeDenomTv);
+            WDp.DpMainDenom(getSActivity().mRecipientChain.getChain(), mClaimFeeDenomTv);
 
             BigDecimal relayFee = getSActivity().mKavaBep3Param2.getSupportedSwapAssetFee(getSActivity().mToSwapDenom);
             mReceiveAmountTv.setText(WDp.getDpAmount2(toSendAmount.subtract(relayFee), mDecimal, mDecimal));
@@ -181,7 +181,7 @@ public class HtlcSendStep3Fragment extends BaseFragment implements View.OnClickL
                 mReceiveAmountDenomTv.setText("BUSD");
                 mRelayFeeAmountDenomTv.setText("BUSD");
             }
-            WDp.DpMainDenom(getContext(), getSActivity().mRecipientChain.getChain(), mClaimFeeDenomTv);
+            WDp.DpMainDenom(getSActivity().mRecipientChain.getChain(), mClaimFeeDenomTv);
 
             BigDecimal relayFee = getSActivity().mKavaBep3Param2.getSupportedSwapAssetFee(getSActivity().mToSwapDenom).movePointLeft(8);
             mReceiveAmountTv.setText(WDp.getDpAmount2(toSendAmount.subtract(relayFee), 0, 8));

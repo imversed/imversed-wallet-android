@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -91,24 +90,21 @@ public class RegisterDomain0Fragment extends BaseFragment implements View.OnClic
             }
         });
 
-        mTypeSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (buttonView.isPressed()) {
-                    if (isChecked) {
-                        mDomainType.setText("Open".toUpperCase());
-                        mDomainType.setTextColor(getResources().getColor(R.color.colorIov));
-                        mTypeDescription.setText(getString(R.string.str_description_open_domain));
-                    } else {
-                        mDomainType.setText("Closed".toUpperCase());
-                        mDomainType.setTextColor(getResources().getColor(R.color.colorWhite));
-                        mTypeDescription.setText(getString(R.string.str_description_closed_domain));
-                    }
-
-                    String userInput = mDomainInput.getText().toString().trim();
-                    BigDecimal starNameFee = getBaseDao().getStarNameRegisterDomainFee(userInput, mTypeSwitch.isChecked() ? "open" : "closed");
-                    mStarNameFeeTv.setText(WDp.getDpAmount2(starNameFee, 6, 6));
+        mTypeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (buttonView.isPressed()) {
+                if (isChecked) {
+                    mDomainType.setText(R.string.str_open_upper);
+                    mDomainType.setTextColor(getResources().getColor(R.color.colorIov));
+                    mTypeDescription.setText(getString(R.string.str_description_open_domain));
+                } else {
+                    mDomainType.setText(R.string.str_closed_upper);
+                    mDomainType.setTextColor(getResources().getColor(R.color.colorWhite));
+                    mTypeDescription.setText(getString(R.string.str_description_closed_domain));
                 }
+
+                String userInput = mDomainInput.getText().toString().trim();
+                BigDecimal starNameFee = getBaseDao().getStarNameRegisterDomainFee(userInput, mTypeSwitch.isChecked() ? "open" : "closed");
+                mStarNameFeeTv.setText(WDp.getDpAmount2(starNameFee, 6, 6));
             }
         });
         return rootView;
@@ -135,9 +131,9 @@ public class RegisterDomain0Fragment extends BaseFragment implements View.OnClic
                 Toast.makeText(getBaseActivity(), R.string.error_invalid_domain_format, Toast.LENGTH_SHORT).show();
                 return;
             }
-            BigDecimal available = getBaseDao().getAvailable(getSActivity().mBaseChain.getMainDenom());
+            BigDecimal available = getBaseDao().getAvailable(getSActivity().baseChain.getMainDenom());
             BigDecimal starNameFee = getBaseDao().getStarNameRegisterDomainFee(userInput, mTypeSwitch.isChecked() ? "open" : "closed");
-            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getSActivity(), getSActivity().mBaseChain, CONST_PW_TX_REGISTER_DOMAIN, 0);
+            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getSActivity(), getSActivity().baseChain, CONST_PW_TX_REGISTER_DOMAIN, 0);
             if (available.compareTo(starNameFee.add(txFee)) < 0) {
                 Toast.makeText(getBaseActivity(), R.string.error_not_enough_starname_fee, Toast.LENGTH_SHORT).show();
                 return;
@@ -156,28 +152,22 @@ public class RegisterDomain0Fragment extends BaseFragment implements View.OnClic
     private void onCheckDomainInfo(String domain) {
         getSActivity().onShowWaitDialog();
 
-        QueryGrpc.QueryStub mStub = QueryGrpc.newStub(ChannelBuilder.getChain(getSActivity().mBaseChain)).withDeadlineAfter(TIME_OUT, TimeUnit.SECONDS);
+        QueryGrpc.QueryStub mStub = QueryGrpc.newStub(ChannelBuilder.getChain(getSActivity().baseChain)).withDeadlineAfter(TIME_OUT, TimeUnit.SECONDS);
         QueryOuterClass.QueryDomainRequest request = QueryOuterClass.QueryDomainRequest.newBuilder().setName(domain).build();
         mStub.domain(request, new StreamObserver<QueryOuterClass.QueryDomainResponse>() {
             @Override
             public void onNext(QueryOuterClass.QueryDomainResponse value) {
-                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        getSActivity().onHideWaitDialog();
-                        Toast.makeText(getBaseActivity(), R.string.error_already_registered_domain, Toast.LENGTH_SHORT).show();
-                    }
+                new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                    getSActivity().onHideWaitDialog();
+                    Toast.makeText(getBaseActivity(), R.string.error_already_registered_domain, Toast.LENGTH_SHORT).show();
                 }, 500);
             }
 
             @Override
             public void onError(Throwable t) {
-                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        getSActivity().onHideWaitDialog();
-                        onNextStep();
-                    }
+                new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                    getSActivity().onHideWaitDialog();
+                    onNextStep();
                 }, 500);
             }
 
