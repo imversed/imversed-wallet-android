@@ -20,10 +20,12 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
+import com.fulldive.wallet.interactors.accounts.DuplicateAccountException;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf2.Any;
 
 import net.sqlcipher.Cursor;
+import net.sqlcipher.SQLException;
 import net.sqlcipher.database.SQLiteDatabase;
 
 import org.json.JSONArray;
@@ -1000,7 +1002,7 @@ public class BaseData {
         return getSharedPreferences().getString(BaseConstant.PRE_FCM_TOKEN, "");
     }
 
-    public void setUserHidenChains(ArrayList<BaseChain> hidedChains) {
+    public void setUserHidenChains(List<BaseChain> hidedChains) {
         JSONArray array = new JSONArray();
         for (BaseChain baseChain : hidedChains) {
             array.put(baseChain.getChain());
@@ -1029,7 +1031,7 @@ public class BaseData {
         return hideChains;
     }
 
-    public void setUserSortedChains(ArrayList<BaseChain> displayedChains) {
+    public void setUserSortedChains(List<BaseChain> displayedChains) {
         JSONArray array = new JSONArray();
         for (BaseChain baseChain : displayedChains) {
             array.put(baseChain.getChain());
@@ -1058,10 +1060,10 @@ public class BaseData {
         return displayChains;
     }
 
-    public ArrayList<BaseChain> userHideChains() {
+    public List<BaseChain> userHideChains() {
         ArrayList<BaseChain> result = new ArrayList<>();
         ArrayList<BaseChain> mAllChains = new ArrayList<>();
-        ArrayList<String> hiddenChains = getUserHiddenChains();
+        List<String> hiddenChains = getUserHiddenChains();
         for (BaseChain baseChain : BaseChain.values()) {
             if (baseChain.isSupported() && !baseChain.equals(BaseChain.COSMOS_MAIN)) {
                 mAllChains.add(baseChain);
@@ -1076,10 +1078,10 @@ public class BaseData {
         return result;
     }
 
-    public ArrayList<BaseChain> userDisplayChains() {
-        ArrayList<BaseChain> result = new ArrayList<>();
-        ArrayList<BaseChain> mAllChains = new ArrayList<>();
-        ArrayList<BaseChain> hiddenChains = userHideChains();
+    public List<BaseChain> userDisplayChains() {
+        List<BaseChain> result = new ArrayList<>();
+        List<BaseChain> mAllChains = new ArrayList<>();
+        List<BaseChain> hiddenChains = userHideChains();
         for (BaseChain baseChain : BaseChain.values()) {
             if (baseChain.isSupported() && !baseChain.equals(BaseChain.COSMOS_MAIN)) {
                 mAllChains.add(baseChain);
@@ -1104,10 +1106,10 @@ public class BaseData {
         return sorted;
     }
 
-    public ArrayList<BaseChain> userSortedChains() {
-        ArrayList<BaseChain> result = new ArrayList<>();
-        ArrayList<BaseChain> rawDpChains = userDisplayChains();
-        ArrayList<String> orderedChains = getUserHiddenChains();
+    public List<BaseChain> userSortedChains() {
+        List<BaseChain> result = new ArrayList<>();
+        List<BaseChain> rawDpChains = userDisplayChains();
+        List<String> orderedChains = getUserHiddenChains();
         for (BaseChain chain : rawDpChains) {
             if (!orderedChains.contains(chain.getChain())) {
                 result.add(chain);
@@ -1119,8 +1121,8 @@ public class BaseData {
     public ArrayList<BaseChain> dpSortedChains() {
         ArrayList<BaseChain> result = new ArrayList<>();
         result.add(BaseChain.COSMOS_MAIN);
-        ArrayList<BaseChain> rawDpChains = userDisplayChains();
-        ArrayList<String> orderedChains = getUserHiddenChains();
+        List<BaseChain> rawDpChains = userDisplayChains();
+        List<String> orderedChains = getUserHiddenChains();
         for (BaseChain chain : rawDpChains) {
             if (!orderedChains.contains(chain.getChain())) {
                 result.add(chain);
@@ -1371,9 +1373,10 @@ public class BaseData {
         return null;
     }
 
-    public long onInsertAccount(Account account) {
-        long result = -1;
-        if (isDupleAccount(account.address, account.baseChain)) return result;
+    public long insertAccount(Account account) throws DuplicateAccountException, SQLException {
+        if (isAccountExists(account.address, account.baseChain)) {
+            throw new DuplicateAccountException();
+        }
         ContentValues values = new ContentValues();
         values.put("uuid", account.uuid);
         values.put("nickName", account.nickName);
@@ -1450,14 +1453,14 @@ public class BaseData {
     }
 
 
-    public boolean isDupleAccount(String address, String chain) {
-        boolean existed = false;
+    public boolean isAccountExists(String address, String chain) {
+        boolean result = false;
         Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_ACCOUNT, new String[]{"id"}, "address == ? AND baseChain == ?", new String[]{address, chain}, null, null, null);
-        if (cursor != null && cursor.getCount() > 0) {
-            existed = true;
+        if (cursor != null) {
+            result = cursor.getCount() > 0;
+            cursor.close();
         }
-        cursor.close();
-        return existed;
+        return result;
     }
 
     public boolean onDeleteAccount(String id) {

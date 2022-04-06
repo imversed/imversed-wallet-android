@@ -1,7 +1,6 @@
 package wannabit.io.cosmostaion.utils;
 
 import static org.bitcoinj.core.ECKey.CURVE;
-import static wannabit.io.cosmostaion.base.BaseChain.FETCHAI_MAIN;
 import static wannabit.io.cosmostaion.base.BaseChain.getChain;
 
 import android.text.TextUtils;
@@ -9,6 +8,7 @@ import android.util.Base64;
 
 import androidx.annotation.NonNull;
 
+import com.fulldive.wallet.extensions.ChainExtensionsKt;
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.ByteString;
 import com.google.protobuf2.Any;
@@ -27,7 +27,6 @@ import org.web3j.crypto.Keys;
 
 import java.io.ByteArrayOutputStream;
 import java.math.BigInteger;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
@@ -88,7 +87,7 @@ public class WKey {
     }
 
     public static String getStringHdSeedFromWords(ArrayList<String> words) {
-        return WUtil.ByteArrayToHexString(getByteHdSeedFromWords(words));
+        return WUtil.byteArrayToHexString(getByteHdSeedFromWords(words));
     }
 
     public static boolean isValidStringHdSeedFromWords(ArrayList<String> words) {
@@ -106,102 +105,6 @@ public class WKey {
         return result;
     }
 
-    public static List<ChildNumber> getParentPath(BaseChain chain, int customPath) {
-        ArrayList<ChildNumber> result = new ArrayList<>();
-        result.add(new ChildNumber(44, true));
-        int childNumber;
-        boolean lastZero = true;
-        boolean lastHardenedZero = true;
-
-        switch (chain) {
-            case BNB_MAIN:
-                childNumber = 714;
-                break;
-            case BAND_MAIN:
-                childNumber = 494;
-                break;
-            case IOV_MAIN:
-                childNumber = 234;
-                break;
-            case PERSIS_MAIN:
-                childNumber = 750;
-                break;
-            case CRYPTO_MAIN:
-                childNumber = 394;
-                break;
-            case MEDI_MAIN:
-                childNumber = 371;
-                break;
-            case INJ_MAIN:
-            case EVMOS_MAIN:
-                childNumber = 60;
-                break;
-            case BITSONG_MAIN:
-                childNumber = 639;
-                break;
-            case DESMOS_MAIN:
-                childNumber = 852;
-                break;
-            case PROVENANCE_MAIN:
-                childNumber = 505;
-                break;
-            case KAVA_MAIN:
-                if (customPath == 0) {
-                    childNumber = 118;
-                } else {
-                    childNumber = 459;
-                }
-                break;
-            case SECRET_MAIN:
-                if (customPath == 0) {
-                    childNumber = 118;
-                } else {
-                    childNumber = 529;
-                }
-
-                break;
-            case LUM_MAIN:
-                if (customPath == 0) {
-                    childNumber = 118;
-                } else {
-                    childNumber = 880;
-                }
-
-                break;
-            case FETCHAI_MAIN:
-                if (customPath == 0) {
-                    childNumber = 118;
-                } else if (customPath == 1) {
-                    childNumber = 60;
-                } else if (customPath == 2) {
-                    childNumber = 60;
-                    lastHardenedZero = false;
-                    lastZero = false;
-                } else {
-                    childNumber = 60;
-                    lastZero = false;
-                }
-                break;
-            case OKEX_MAIN:
-                if (customPath == 0 || customPath == 1) {
-                    childNumber = 996;
-                } else {
-                    childNumber = 60;
-                }
-                break;
-            default:
-                childNumber = 118;
-        }
-        result.add(new ChildNumber(childNumber, true));
-        if (lastHardenedZero) {
-            result.add(ChildNumber.ZERO_HARDENED);
-        }
-        if (lastZero) {
-            result.add(ChildNumber.ZERO);
-        }
-        return result;
-    }
-
     public static List<ChildNumber> getFetchParentPath2() {
         return ImmutableList.of(ChildNumber.ZERO);
     }
@@ -211,9 +114,9 @@ public class WKey {
     public static DeterministicKey getKeyWithPathfromEntropy(Account account, String entropy) {
         DeterministicKey result;
         BaseChain chain = getChain(account.baseChain);
-        DeterministicKey masterKey = HDKeyDerivation.createMasterPrivateKey(getHDSeed(WUtil.HexStringToByteArray(entropy)));
-        final List<ChildNumber> parentPath = WKey.getParentPath(chain, account.customPath);
-        if (!chain.equals(FETCHAI_MAIN) || account.customPath != 2) {
+        DeterministicKey masterKey = HDKeyDerivation.createMasterPrivateKey(getHDSeed(WUtil.hexStringToByteArray(entropy)));
+        final List<ChildNumber> parentPath = ChainExtensionsKt.getPath(chain, account.customPath);
+        if (!chain.equals(BaseChain.FETCHAI_MAIN) || account.customPath != 2) {
             result = new DeterministicHierarchy(masterKey).deriveChild(parentPath, true, true, new ChildNumber(Integer.parseInt(account.path)));
         } else {
             DeterministicKey targetKey = new DeterministicHierarchy(masterKey).deriveChild(parentPath, true, true, new ChildNumber(Integer.parseInt(account.path), true));
@@ -225,9 +128,9 @@ public class WKey {
     // create, restore
     public static DeterministicKey getCreateKeyWithPathfromEntropy(BaseChain chain, String entropy, int path, int customPath) {
         DeterministicKey result;
-        DeterministicKey masterKey = HDKeyDerivation.createMasterPrivateKey(getHDSeed(WUtil.HexStringToByteArray(entropy)));
-        final List<ChildNumber> parentPath = WKey.getParentPath(chain, customPath);
-        if (!chain.equals(FETCHAI_MAIN) || customPath != 2) {
+        DeterministicKey masterKey = HDKeyDerivation.createMasterPrivateKey(getHDSeed(WUtil.hexStringToByteArray(entropy)));
+        final List<ChildNumber> parentPath = ChainExtensionsKt.getPath(chain, customPath);
+        if (!chain.equals(BaseChain.FETCHAI_MAIN) || customPath != 2) {
             result = new DeterministicHierarchy(masterKey).deriveChild(parentPath, true, true, new ChildNumber(path));
         } else {
             DeterministicKey targetKey = new DeterministicHierarchy(masterKey).deriveChild(parentPath, true, true, new ChildNumber(path, true));
@@ -297,7 +200,7 @@ public class WKey {
         System.arraycopy(uncompressedPubKey, 1, pub, 0, 64);
 
         byte[] address = Keys.getAddress(pub);
-        WLog.w("eth address " + WUtil.ByteArrayToHexString(address));
+        WLog.w("eth address " + WUtil.byteArrayToHexString(address));
 
         String addressResult = null;
         try {
@@ -316,13 +219,13 @@ public class WKey {
         System.arraycopy(uncompressedPubKey, 1, pub, 0, 64);
 
         byte[] address = Keys.getAddress(pub);
-        return "0x" + WUtil.ByteArrayToHexString(address);
+        return "0x" + WUtil.byteArrayToHexString(address);
     }
 
     public static String generateTenderAddressFromPrivateKey(String privateKey) {
         String pubKey = generatePubKeyHexFromPriv(privateKey);
         MessageDigest digest = Sha256.getSha256Digest();
-        byte[] hash = digest.digest(WUtil.HexStringToByteArray(pubKey));
+        byte[] hash = digest.digest(WUtil.hexStringToByteArray(pubKey));
 
         RIPEMD160Digest digest2 = new RIPEMD160Digest();
         digest2.update(hash, 0, hash.length);
@@ -330,12 +233,12 @@ public class WKey {
         byte[] hash3 = new byte[digest2.getDigestSize()];
         digest2.doFinal(hash3, 0);
 
-        return "0x" + WUtil.ByteArrayToHexString(hash3);
+        return "0x" + WUtil.byteArrayToHexString(hash3);
     }
 
     public static String convertAddressOkexToEth(String exAddress) throws Exception {
         byte[] pub = convertBits(bech32Decode(exAddress).data, 5, 8, false);
-        return "0x" + WUtil.ByteArrayToHexString(pub);
+        return "0x" + WUtil.byteArrayToHexString(pub);
     }
 
     public static String convertAddressEthToOkex(String esAddress) throws Exception {
@@ -343,7 +246,7 @@ public class WKey {
         if (cosmoTypeAddress.startsWith("0x")) {
             cosmoTypeAddress = cosmoTypeAddress.replace("0x", "");
         }
-        byte[] pub = WUtil.HexStringToByteArray(cosmoTypeAddress);
+        byte[] pub = WUtil.hexStringToByteArray(cosmoTypeAddress);
         String addressResult = null;
         try {
             byte[] bytes = convertBits(pub, 8, 5, true);
@@ -383,7 +286,7 @@ public class WKey {
     public static String getDpAddress(BaseChain chain, String pubHex) {
         String result = null;
         MessageDigest digest = Sha256.getSha256Digest();
-        byte[] hash = digest.digest(WUtil.HexStringToByteArray(pubHex));
+        byte[] hash = digest.digest(WUtil.hexStringToByteArray(pubHex));
 
         RIPEMD160Digest digest2 = new RIPEMD160Digest();
         digest2.update(hash, 0, hash.length);
@@ -668,9 +571,9 @@ public class WKey {
         System.arraycopy(rhs, 0, expectedSwapId, 0, rhs.length);
         System.arraycopy(o, 0, expectedSwapId, rhs.length, o.length);
 
-        WLog.w("expectedSwapId " + WUtil.ByteArrayToHexString(expectedSwapId));
+        WLog.w("expectedSwapId " + WUtil.byteArrayToHexString(expectedSwapId));
 
         byte[] expectedSwapIdSha = Sha256.getSha256Digest().digest(expectedSwapId);
-        return WUtil.ByteArrayToHexString(expectedSwapIdSha);
+        return WUtil.byteArrayToHexString(expectedSwapIdSha);
     }
 }
