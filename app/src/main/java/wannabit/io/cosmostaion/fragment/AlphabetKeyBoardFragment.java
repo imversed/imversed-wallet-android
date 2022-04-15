@@ -41,7 +41,7 @@ public class AlphabetKeyBoardFragment extends KeyboardFragment implements View.O
         Collections.shuffle(mAlphabetArray, new Random(System.nanoTime()));
         final String packageName = mRootView.getContext().getPackageName();
         for (int i = 0; i < mAlphabetBtns.length; i++) {
-            mAlphabetBtns[i] = mRootView.findViewById(getResources().getIdentifier("password_char" + i, "id", packageName));
+            mAlphabetBtns[i] = mRootView.findViewById(getResources().getIdentifier("alphabetButton" + i, "id", packageName));
             mAlphabetBtns[i].setText(mAlphabetArray.get(i));
             mAlphabetBtns[i].setOnClickListener(this);
         }

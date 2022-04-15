@@ -20,8 +20,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
 
-import com.fulldive.wallet.presentation.security.CheckPasswordActivity;
-import com.fulldive.wallet.presentation.security.SetPasswordActivity;
+import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
+import com.fulldive.wallet.presentation.security.password.SetPasswordActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 

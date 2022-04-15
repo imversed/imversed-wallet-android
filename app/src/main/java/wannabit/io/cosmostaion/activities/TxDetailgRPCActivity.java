@@ -159,7 +159,7 @@ public class TxDetailgRPCActivity extends BaseActivity implements View.OnClickLi
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = getChain(account.baseChain);
         mIsGen = getIntent().getBooleanExtra("isGen", false);
         mIsSuccess = getIntent().getBooleanExtra("isSuccess", false);

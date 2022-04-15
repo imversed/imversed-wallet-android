@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.DialogFragment
 import androidx.viewbinding.ViewBinding
 import com.fulldive.wallet.di.IEnrichableActivity
+import com.fulldive.wallet.extensions.clearUi
 import com.fulldive.wallet.extensions.or
 import com.fulldive.wallet.extensions.toast
 import com.fulldive.wallet.presentation.system.WaitDialogFragment
@@ -43,6 +44,7 @@ abstract class BaseMvpActivity<VB : ViewBinding> : MvpAppCompatActivity(), IEnri
 
     @CallSuper
     override fun onDestroy() {
+        clearUi()
         binding = null
         super.onDestroy()
     }

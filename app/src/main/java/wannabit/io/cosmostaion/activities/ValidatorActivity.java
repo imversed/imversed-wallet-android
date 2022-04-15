@@ -96,7 +96,7 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
         mSwipeRefreshLayout = findViewById(R.id.layer_refresher);
         mRecyclerView = findViewById(R.id.recycler);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mValOpAddress = getIntent().getStringExtra("valOpAddress");
 

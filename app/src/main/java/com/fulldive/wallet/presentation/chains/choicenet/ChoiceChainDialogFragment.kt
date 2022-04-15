@@ -121,7 +121,7 @@ class ChoiceChainDialogFragment : BaseMvpDialogFragment() {
             arguments = bundleOf(
                 KEY_ADD to isAdd,
                 KEY_REQUEST_CODE to requestCode,
-                KEY_CHAINS to chains
+                KEY_CHAINS to ArrayList(chains)
             )
         }
     }

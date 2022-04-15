@@ -49,7 +49,7 @@ public class WalletSwitchActivity extends BaseActivity {
     }
 
     private void loadChains() {
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         ArrayList<BaseChain> mDisplayChains = getBaseDao().dpSortedChains();
         mExpendedChains = getBaseDao().getExpendedChains();
         mSelectedChain = BaseChain.getChain(account.baseChain);

@@ -1,21 +1,17 @@
-package wannabit.io.cosmostaion.activities;
-
-import static wannabit.io.cosmostaion.base.BaseChain.getChain;
+package com.fulldive.wallet.presentation.security.mnemonic;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
+
+import com.fulldive.wallet.presentation.security.mnemonic.layout.MnemonicLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +22,10 @@ import wannabit.io.cosmostaion.base.BaseChain;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.dialog.Dialog_Safe_Copy;
-import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WKey;
 import wannabit.io.cosmostaion.utils.WUtil;
 
 public class MnemonicCheckActivity extends BaseActivity {
-
-    private final LinearLayout[] wordsLayer = new LinearLayout[24];
-    private final TextView[] wordsTextView = new TextView[24];
 
     private List<String> mnemonicWords = new ArrayList<>();
 
@@ -43,7 +35,7 @@ public class MnemonicCheckActivity extends BaseActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.activity_mnemonic_check);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        CardView mnemonicCardView = findViewById(R.id.mnemonicsCardView);
+        MnemonicLayout mnemonicsLayout = findViewById(R.id.mnemonicsLayout);
         Button copyButton = findViewById(R.id.copyButton);
         Button okButton = findViewById(R.id.okButton);
 
@@ -51,27 +43,15 @@ public class MnemonicCheckActivity extends BaseActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        for (int i = 0; i < wordsLayer.length; i++) {
-            wordsLayer[i] = findViewById(getResources().getIdentifier("layer_mnemonic_" + i, "id", this.getPackageName()));
-            wordsTextView[i] = findViewById(getResources().getIdentifier("tv_mnemonic_" + i, "id", this.getPackageName()));
-        }
-
         String entropy = getIntent().getStringExtra("entropy");
-        Account toCheck = getBaseDao().onSelectAccount("" + getIntent().getLongExtra("checkid", -1));
-        mnemonicCardView.setCardBackgroundColor(WDp.getChainBgColor(getBaseContext(), BaseChain.getChain(toCheck.baseChain)));
         mnemonicWords = new ArrayList<>(WKey.getRandomMnemonic(WUtil.hexStringToByteArray(entropy)));
 
-        for (int i = 0; i < wordsLayer.length; i++) {
-            BaseChain chain = getChain(toCheck.baseChain);
-            LinearLayout wordsLayout = wordsLayer[i];
-            if (chain != null) {
-                wordsLayout.setBackgroundResource(chain.getMnemonicBackground());
-            }
-            wordsLayout.setVisibility(i >= mnemonicWords.size() ? View.INVISIBLE : View.VISIBLE);
-        }
-
-        for (int i = 0; i < mnemonicWords.size(); i++) {
-            wordsTextView[i].setText(mnemonicWords.get(i));
+        mnemonicsLayout.performAttach();    // XXX
+        Account toCheck = getBaseDao().getAccount("" + getIntent().getLongExtra("checkid", -1));
+        final BaseChain chain = BaseChain.getChain(toCheck.baseChain);
+        if (chain != null) {
+            mnemonicsLayout.setChain(chain);
+            mnemonicsLayout.setMnemonicWords(mnemonicWords);
         }
 
         copyButton.setOnClickListener(v -> {

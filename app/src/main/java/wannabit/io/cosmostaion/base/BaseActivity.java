@@ -22,6 +22,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.fulldive.wallet.di.IEnrichableActivity;
+import com.fulldive.wallet.extensions.AnyExtensionsKt;
 import com.fulldive.wallet.interactors.chains.StationInteractor;
 import com.fulldive.wallet.interactors.chains.binance.BinanceInteractor;
 import com.fulldive.wallet.interactors.chains.grpc.GrpcInteractor;
@@ -110,6 +111,7 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
 
     @Override
     protected void onDestroy() {
+        AnyExtensionsKt.clearUi(this);
         compositeDisposable.clear();
         super.onDestroy();
     }

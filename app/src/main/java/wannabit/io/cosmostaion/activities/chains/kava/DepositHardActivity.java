@@ -62,7 +62,7 @@ public class DepositHardActivity extends BaseBroadCastActivity {
         mIvStep.setImageResource(R.drawable.step_4_img_1);
         mTvStep.setText(R.string.str_deposit_harvest_step_1);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_DEPOSIT_HARD;
         mHardMoneyMarketDenom = getIntent().getStringExtra("hardPoolDemon");

@@ -69,7 +69,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityOptionsCompat;
 
 import com.addisonelliott.segmentedbutton.SegmentedButtonGroup;
-import com.fulldive.wallet.presentation.security.CheckPasswordActivity;
+import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
 import com.google.gson.Gson;
 
 import org.bitcoinj.core.ECKey;
@@ -562,7 +562,7 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
 
                 break;
             case CONST_PW_TX_LINK_ACCOUNT:
-                Account toAccount = getBaseDao().onSelectAccount(getSActivity().mDesmosToLinkAccountId.toString());
+                Account toAccount = getBaseDao().getAccount(getSActivity().mDesmosToLinkAccountId.toString());
                 ECKey ecKey;
                 if (toAccount.fromMnemonic) {
                     String entropy = CryptoHelper.doDecryptData(getSActivity().getString(R.string.key_mnemonic) + toAccount.uuid, toAccount.resource, toAccount.spec);

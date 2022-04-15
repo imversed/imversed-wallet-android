@@ -85,7 +85,7 @@ public class HardDetailActivity extends BaseActivity implements TaskListener {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mAccount = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        mAccount = getBaseDao().getAccount(getBaseDao().getLastUser());
         mBaseChain = BaseChain.getChain(mAccount.baseChain);
         mHardMoneyMarketDenom = getIntent().getStringExtra("hard_money_market_denom");
         mHardParams = getBaseDao().mHardParams;

@@ -1,47 +1,52 @@
-package com.fulldive.wallet.presentation.security
+package com.fulldive.wallet.presentation.security.password
 
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.core.view.isInvisible
 import com.fulldive.wallet.presentation.base.BaseMvpActivity
+import com.fulldive.wallet.presentation.system.keyboard.KeyboardListener
 import com.fulldive.wallet.presentation.system.keyboard.KeyboardPagerAdapter
 import com.fulldive.wallet.presentation.system.keyboard.KeyboardType
 import com.joom.lightsaber.getInstance
 import moxy.ktx.moxyPresenter
 import wannabit.io.cosmostaion.R
+import wannabit.io.cosmostaion.base.ITimelessActivity
 import wannabit.io.cosmostaion.databinding.ActivityPasswordSetBinding
-import com.fulldive.wallet.presentation.system.keyboard.KeyboardListener
+import wannabit.io.cosmostaion.fragment.KeyboardFragment
 
-class CheckPasswordActivity : BaseMvpActivity<ActivityPasswordSetBinding>(),
-    CheckPasswordMoxyView,
+class SetPasswordActivity : BaseMvpActivity<ActivityPasswordSetBinding>(),
+    SetPasswordMoxyView,
+    ITimelessActivity,
     KeyboardListener {
 
+    private var adapter: KeyboardPagerAdapter? = null
+
     private val presenter by moxyPresenter {
-        appInjector.getInstance<CheckPasswordPresenter>()
+        appInjector.getInstance<SetPasswordPresenter>()
     }
 
     override fun getViewBinding() = ActivityPasswordSetBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_SECURE,
-            WindowManager.LayoutParams.FLAG_SECURE
-        )
         super.onCreate(savedInstanceState)
+
         binding {
-            titleTextView.setText(R.string.str_init_password)
+            titleTextView.setText(R.string.str_password_init)
 
             keyboardPager.offscreenPageLimit = 2
             keyboardPager.adapter = KeyboardPagerAdapter(
                 supportFragmentManager,
-                this@CheckPasswordActivity
-            )
+                this@SetPasswordActivity
+            ).also {
+                adapter = it
+            }
             hintTextView.visibility = View.INVISIBLE
             subtitleTextView.visibility = View.INVISIBLE
         }
     }
+
 
     override fun onBackPressed() {
         presenter.onBackPressed()
@@ -52,11 +57,17 @@ class CheckPasswordActivity : BaseMvpActivity<ActivityPasswordSetBinding>(),
         super.onStop()
     }
 
+    override fun setCheckPasswordHintVisible(isVisible: Boolean) {
+        binding {
+            subtitleTextView.isInvisible = !isVisible
+        }
+    }
+
     override fun shakeView() {
         binding {
             layerContents.clearAnimation()
             val animation = AnimationUtils.loadAnimation(
-                this@CheckPasswordActivity, R.anim.shake
+                this@SetPasswordActivity, R.anim.shake
             )
             animation.reset()
             animation.setAnimationListener(object : Animation.AnimationListener {
@@ -94,6 +105,10 @@ class CheckPasswordActivity : BaseMvpActivity<ActivityPasswordSetBinding>(),
                     )
                 }
         }
+    }
+
+    override fun shuffleKeyboard() {
+        adapter?.fragments?.forEach(KeyboardFragment::shuffleKeyboard)
     }
 
     override fun clear() {

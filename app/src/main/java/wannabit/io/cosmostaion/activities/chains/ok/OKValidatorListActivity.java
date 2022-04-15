@@ -58,7 +58,7 @@ public class OKValidatorListActivity extends BaseActivity implements FetchCallBa
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mToolbarTitle.setText(R.string.str_validator_vote);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
 
         mPageAdapter = new OKValidatorPageAdapter(getSupportFragmentManager());

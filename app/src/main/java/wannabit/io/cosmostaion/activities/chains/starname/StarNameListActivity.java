@@ -59,7 +59,7 @@ public class StarNameListActivity extends BaseActivity implements TaskListener {
         mNameServiceTapLayer = findViewById(R.id.name_service_tab);
         mNameServicePager = findViewById(R.id.name_service_view_pager);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
 
         mPageAdapter = new StarNamePageAdapter(getSupportFragmentManager());

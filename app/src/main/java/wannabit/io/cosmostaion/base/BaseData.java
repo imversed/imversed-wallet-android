@@ -872,7 +872,7 @@ public class BaseData {
     }
 
     public long getLastUserId() {
-        Account account = onSelectAccount(String.valueOf(getSharedPreferences().getLong(BaseConstant.PRE_USER_ID, -1)));
+        Account account = getAccount(String.valueOf(getSharedPreferences().getLong(BaseConstant.PRE_USER_ID, -1)));
         BaseChain mBaseChain = BaseChain.getChain(account.baseChain);
         if (!dpSortedChains().contains(mBaseChain)) {
             for (BaseChain chain : dpSortedChains()) {
@@ -1319,7 +1319,7 @@ public class BaseData {
         return result;
     }
 
-    public Account onSelectAccount(String id) {
+    public Account getAccount(String id) {
         Account result = null;
         Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_ACCOUNT, new String[]{"id", "uuid", "nickName", "isFavo", "address", "baseChain",
                 "hasPrivateKey", "resource", "spec", "fromMnemonic", "path",

@@ -71,7 +71,7 @@ public class SimpleBnbSendTask extends CommonTask {
                 }
                 context.getBaseDao().updateAccount(WUtil.getAccountFromBnbLcd(mAccount.id, response.body()));
                 context.getBaseDao().updateBalances(mAccount.id, WUtil.getBalancesFromBnbLcd(mAccount.id, response.body()));
-                mAccount = context.getBaseDao().onSelectAccount("" + mAccount.id);
+                mAccount = context.getBaseDao().getAccount("" + mAccount.id);
 
                 if (mAccount.fromMnemonic) {
                     String entropy = CryptoHelper.doDecryptData(context.getString(R.string.key_mnemonic) + mAccount.uuid, mAccount.resource, mAccount.spec);

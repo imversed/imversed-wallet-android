@@ -4,6 +4,8 @@ package wannabit.io.cosmostaion.base;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import com.fulldive.wallet.extensions.AnyExtensionsKt;
+
 public class BaseFragment extends Fragment {
 
     protected BaseApplication mApplication;
@@ -35,9 +37,15 @@ public class BaseFragment extends Fragment {
 
     public void showDialog(DialogFragment dialogFragment, String tag, boolean cancelable) {
         dialogFragment.setCancelable(cancelable);
-        getParentFragmentManager()    // maybe we have to use  getChildFragmentManager()
+        getParentFragmentManager()
                 .beginTransaction()
                 .add(dialogFragment, tag)
                 .commitNowAllowingStateLoss();
+    }
+
+    @Override
+    public void onDestroyView() {
+        AnyExtensionsKt.clearUi(this);
+        super.onDestroyView();
     }
 }

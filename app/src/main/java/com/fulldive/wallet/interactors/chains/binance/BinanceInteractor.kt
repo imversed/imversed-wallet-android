@@ -41,7 +41,7 @@ class BinanceInteractor @Inject constructor(
                         WLog.e(error.message)
                         error.printStackTrace()
                     }
-                    .onErrorComplete() // XXX: onErrorComplete()
+                    .onErrorComplete()
             }
     }
 

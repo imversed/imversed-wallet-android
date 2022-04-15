@@ -72,7 +72,7 @@ public class StarNameAccountDetailActivity extends BaseActivity implements View.
         mBtnRenew = findViewById(R.id.btn_renew);
         mBtnEdit = findViewById(R.id.btn_edit);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mMyDomain = getIntent().getStringExtra("domain");
         mMyAccount = getIntent().getStringExtra("account");

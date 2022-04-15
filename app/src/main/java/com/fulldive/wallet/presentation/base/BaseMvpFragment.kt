@@ -9,6 +9,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.viewbinding.ViewBinding
 import com.fulldive.wallet.di.IEnrichableActivity
 import com.fulldive.wallet.di.IInjectorHolder
+import com.fulldive.wallet.extensions.clearUi
 import com.fulldive.wallet.extensions.toast
 import com.joom.lightsaber.Injector
 import moxy.MvpAppCompatFragment
@@ -41,6 +42,7 @@ abstract class BaseMvpFragment<VB : ViewBinding> : MvpAppCompatFragment(), IInje
 
     override fun onDestroyView() {
         binding = null
+        clearUi()
         super.onDestroyView()
     }
 

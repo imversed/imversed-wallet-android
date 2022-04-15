@@ -40,8 +40,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fulldive.wallet.presentation.accounts.AddAccountDialogFragment;
 import com.fulldive.wallet.presentation.chains.choicenet.ChoiceChainDialogFragment;
-import com.fulldive.wallet.presentation.security.CheckPasswordActivity;
-import com.fulldive.wallet.presentation.security.SetPasswordActivity;
+import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
+import com.fulldive.wallet.presentation.security.password.SetPasswordActivity;
 
 import org.bitcoinj.crypto.MnemonicCode;
 
@@ -65,7 +65,7 @@ public class RestoreActivity extends BaseActivity implements View.OnClickListene
 
     private LinearLayout contentsLayout;
     private Button pasteButton, confirmButton;
-    private final Button[] alphabetBtns = new Button[26];
+    private final Button[] alphabetButtons = new Button[26];
     private ImageButton deleteButton;
     private Button nextButton;
     private ImageView chainImageView;
@@ -123,14 +123,14 @@ public class RestoreActivity extends BaseActivity implements View.OnClickListene
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         allMnemonic = new ArrayList<>(MnemonicCode.INSTANCE.getWordList());
         final String packageName = getPackageName();
-        for (int i = 0; i < alphabetBtns.length; i++) {
-            alphabetBtns[i] = findViewById(getResources().getIdentifier("password_char" + i, "id", packageName));
-            alphabetBtns[i].setOnClickListener(this);
+        for (int i = 0; i < alphabetButtons.length; i++) {
+            alphabetButtons[i] = findViewById(getResources().getIdentifier("alphabetButton" + i, "id", packageName));
+            alphabetButtons[i].setOnClickListener(this);
         }
 
         for (int i = 0; i < mnemonicsEditText.length; i++) {
             final int position = i;
-            mnemonicsEditText[i] = findViewById(getResources().getIdentifier("tv_mnemonic_" + i, "id", packageName));
+            mnemonicsEditText[i] = findViewById(getResources().getIdentifier("mnemonicsEditText" + i, "id", packageName));
             mnemonicsEditText[i].setShowSoftInputOnFocus(false);
             mnemonicsEditText[i].setOnFocusChangeListener((v, hasFocus) -> {
                 if (hasFocus) {

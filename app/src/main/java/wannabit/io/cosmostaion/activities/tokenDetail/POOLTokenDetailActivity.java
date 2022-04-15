@@ -85,7 +85,7 @@ public class POOLTokenDetailActivity extends BaseActivity implements View.OnClic
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mPoolDenom = getIntent().getStringExtra("denom");
 

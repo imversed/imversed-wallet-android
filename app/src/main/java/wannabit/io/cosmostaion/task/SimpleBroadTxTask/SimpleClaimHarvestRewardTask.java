@@ -68,7 +68,7 @@ public class SimpleClaimHarvestRewardTask extends CommonTask {
                 }
                 context.getBaseDao().updateAccount(WUtil.getAccountFromKavaLcd(mAccount.id, response.body()));
                 context.getBaseDao().updateBalances(mAccount.id, WUtil.getBalancesFromKavaLcd(mAccount.id, response.body()));
-                mAccount = context.getBaseDao().onSelectAccount("" + mAccount.id);
+                mAccount = context.getBaseDao().getAccount("" + mAccount.id);
 
             }
 

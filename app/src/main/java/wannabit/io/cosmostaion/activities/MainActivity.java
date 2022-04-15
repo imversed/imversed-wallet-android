@@ -152,7 +152,7 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
 
     public void onAccountSwitched() {
         boolean needFetch = false;
-        Account supportedAccount = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        Account supportedAccount = getBaseDao().getAccount(getBaseDao().getLastUser());
 
         if (account == null) {
             needFetch = true;
@@ -163,7 +163,7 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
             needFetch = true;
         }
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         if (needFetch) {
             showWaitDialog();

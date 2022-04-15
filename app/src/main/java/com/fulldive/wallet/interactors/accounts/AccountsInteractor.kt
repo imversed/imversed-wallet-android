@@ -22,7 +22,7 @@ class AccountsInteractor @Inject constructor(
 ) {
 
     fun getAccount(accountId: Long): Single<Account> {
-        return accountsRepository.getSelectAccount(accountId)
+        return accountsRepository.getAccount(accountId)
     }
 
     fun getSelectedAccount(): Single<Account> {

@@ -63,7 +63,7 @@ public class IBCSendActivity extends BaseBroadCastActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mTvStep.setText(getString(R.string.str_send_step_0));
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mToIbcDenom = getIntent().getStringExtra("sendTokenDenom");
         mTxType = CONST_PW_TX_IBC_TRANSFER;

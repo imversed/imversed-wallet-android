@@ -94,7 +94,7 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mDenom = getIntent().getStringExtra("denom");
 

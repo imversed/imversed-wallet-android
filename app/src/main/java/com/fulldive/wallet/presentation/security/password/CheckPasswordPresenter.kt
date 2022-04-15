@@ -1,4 +1,4 @@
-package com.fulldive.wallet.presentation.security
+package com.fulldive.wallet.presentation.security.password
 
 import com.fulldive.wallet.di.modules.DefaultPresentersModule
 import com.fulldive.wallet.extensions.withDefaults

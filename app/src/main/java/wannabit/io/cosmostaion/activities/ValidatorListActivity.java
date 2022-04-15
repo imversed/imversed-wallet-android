@@ -56,7 +56,7 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
 
         pageAdapter = new ValidatorPageAdapter(getSupportFragmentManager());

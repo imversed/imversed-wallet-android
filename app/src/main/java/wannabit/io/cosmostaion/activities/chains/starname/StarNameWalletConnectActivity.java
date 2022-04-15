@@ -105,7 +105,7 @@ public class StarNameWalletConnectActivity extends BaseActivity implements View.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mWcURL = getIntent().getStringExtra("wcUrl");
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
 
         mWcThread = new StarNameWcThread();

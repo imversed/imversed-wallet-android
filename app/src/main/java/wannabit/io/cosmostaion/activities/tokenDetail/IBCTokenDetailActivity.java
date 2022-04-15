@@ -91,7 +91,7 @@ public class IBCTokenDetailActivity extends BaseActivity implements View.OnClick
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mIbcDenom = getIntent().getStringExtra("denom");
         mIbcToken = getBaseDao().getIbcToken(mIbcDenom);

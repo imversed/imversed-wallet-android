@@ -76,7 +76,7 @@ public class RepayCdpActivity extends BaseBroadCastActivity implements TaskListe
         mIvStep.setImageResource(R.drawable.step_4_img_1);
         mTvStep.setText(R.string.str_repay_cdp_step_1);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_REPAY_CDP;
 

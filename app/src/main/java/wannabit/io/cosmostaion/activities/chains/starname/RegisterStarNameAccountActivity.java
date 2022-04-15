@@ -63,7 +63,7 @@ public class RegisterStarNameAccountActivity extends BaseBroadCastActivity {
         mIvStep.setImageDrawable(getDrawable(R.drawable.step_1_img));
         mTvStep.setText(getString(R.string.str_register_account_step_0));
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_REGISTER_ACCOUNT;
 

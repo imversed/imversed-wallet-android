@@ -65,7 +65,7 @@ public class ClaimRewardActivity extends BaseBroadCastActivity implements TaskLi
         mIvStep.setImageResource(R.drawable.step_4_img_1);
         mTvStep.setText(R.string.str_reward_step_1);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = getChain(account.baseChain);
         mTxType = CONST_PW_TX_SIMPLE_REWARD;
 

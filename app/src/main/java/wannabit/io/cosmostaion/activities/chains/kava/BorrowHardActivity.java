@@ -62,7 +62,7 @@ public class BorrowHardActivity extends BaseBroadCastActivity {
         mIvStep.setImageResource(R.drawable.step_4_img_1);
         mTvStep.setText(R.string.str_borrow_hard_step_1);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_BORROW_HARD;
         mHardMoneyMarketDenom = getIntent().getStringExtra("hardPoolDemon");

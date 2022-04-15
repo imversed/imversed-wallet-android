@@ -12,7 +12,7 @@ import android.widget.Button;
 import androidx.fragment.app.DialogFragment;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.MnemonicCheckActivity;
+import com.fulldive.wallet.presentation.security.mnemonic.MnemonicCheckActivity;
 
 public class Dialog_Safe_Copy extends DialogFragment {
 

@@ -88,7 +88,7 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         for (Coin coin : getBaseDao().mGrpcBalance) {
             if (coin.denom.equalsIgnoreCase(getIntent().getStringExtra("denom"))) {
@@ -103,12 +103,7 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
         mRecyclerView.setAdapter(mAdapter);
 
         //prepare for token history
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                onUpdateView();
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> onUpdateView());
 
         onUpdateView();
         mBtnAddressPopup.setOnClickListener(this);

@@ -42,14 +42,14 @@
 
 
         <activity
-            android:name="com.fulldive.wallet.presentation.security.SetPasswordActivity"
+            android:name="com.fulldive.wallet.presentation.security.password.SetPasswordActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name="com.fulldive.wallet.presentation.security.CheckPasswordActivity"
+            android:name="com.fulldive.wallet.presentation.security.password.CheckPasswordActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -296,7 +296,7 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".activities.MnemonicCheckActivity"
+            android:name="com.fulldive.wallet.presentation.security.mnemonic.MnemonicCheckActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />

@@ -80,6 +80,7 @@ import android.widget.Toast;
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.interactors.secret.InvalidPasswordException;
 import com.fulldive.wallet.interactors.secret.SecretInteractor;
+import com.fulldive.wallet.presentation.security.mnemonic.MnemonicCheckActivity;
 import com.fulldive.wallet.presentation.system.keyboard.KeyboardListener;
 import com.fulldive.wallet.presentation.system.keyboard.KeyboardPagerAdapter;
 import com.fulldive.wallet.rx.AppSchedulers;
@@ -311,7 +312,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
         mPurpose = getIntent().getIntExtra(CONST_PW_PURPOSE, CONST_PW_SIMPLE_CHECK);
 
         if (mPurpose != CONST_PW_SIMPLE_CHECK) {
-            account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+            account = getBaseDao().getAccount(getBaseDao().getLastUser());
             baseChain = getChain(account.baseChain);
         }
         mTargetAddress = getIntent().getStringExtra("toAddress");
@@ -722,7 +723,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
 
                 break;
             case CONST_PW_TX_LINK_ACCOUNT:
-                Account toAccount = getBaseDao().onSelectAccount(mDesmosToLinkAccountId.toString());
+                Account toAccount = getBaseDao().getAccount(mDesmosToLinkAccountId.toString());
                 ECKey ecKey;
                 if (toAccount.fromMnemonic) {
                     String entropy = CryptoHelper.doDecryptData(getString(R.string.key_mnemonic) + toAccount.uuid, toAccount.resource, toAccount.spec);

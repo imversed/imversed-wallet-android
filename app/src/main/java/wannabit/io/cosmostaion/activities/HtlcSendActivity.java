@@ -22,7 +22,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fulldive.wallet.extensions.ActivityExtensionsKt;
-import com.fulldive.wallet.presentation.security.CheckPasswordActivity;
+import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -90,7 +90,7 @@ public class HtlcSendActivity extends BaseActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mToSwapDenom = getIntent().getStringExtra("toSwapDenom");
 

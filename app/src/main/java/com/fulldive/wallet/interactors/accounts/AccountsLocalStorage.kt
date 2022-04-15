@@ -18,7 +18,7 @@ class AccountsLocalStorage @Inject constructor(
 
     fun getAccount(accountId: Long): Single<Account> {
         return safeSingle {
-            baseData.onSelectAccount("$accountId")
+            baseData.getAccount("$accountId")
         }
     }
 

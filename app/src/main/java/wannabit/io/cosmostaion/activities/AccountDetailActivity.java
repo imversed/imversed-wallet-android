@@ -32,7 +32,7 @@ import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.fulldive.wallet.presentation.accounts.DeleteConfirmDialogFragment;
 import com.fulldive.wallet.presentation.main.intro.IntroActivity;
-import com.fulldive.wallet.presentation.security.CheckPasswordActivity;
+import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
 import com.fulldive.wallet.rx.AppSchedulers;
 
 import io.reactivex.disposables.Disposable;
@@ -193,7 +193,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
         if (getIntent() == null || TextUtils.isEmpty(getIntent().getStringExtra("id"))) {
             onBackPressed();
         }
-        account = getBaseDao().onSelectAccount(getIntent().getStringExtra("id"));
+        account = getBaseDao().getAccount(getIntent().getStringExtra("id"));
         if (account == null) onBackPressed();
         baseChain = BaseChain.getChain(account.baseChain);
 

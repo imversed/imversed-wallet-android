@@ -45,7 +45,7 @@ class OsmoUnbondingAllDialogFragment : BottomSheetDialogFragment() {
             (activity as? EarningDetailActivity)?.onStartUnbonding(lockups)
             dismiss()
         }
-        view.findViewById<Button>(R.id.btn_one).setOnClickListener { v: View? ->
+        view.findViewById<Button>(R.id.btn_one).setOnClickListener {
             safe {
                 val lockup = PeriodLock.parseFrom(single)
                 (activity as? EarningDetailActivity)?.onStartUnbonding(arrayListOf(lockup))
