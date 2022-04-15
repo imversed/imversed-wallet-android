@@ -16,7 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 
-import com.fulldive.wallet.presentation.lockscreen.CheckPasswordActivity;
+import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;

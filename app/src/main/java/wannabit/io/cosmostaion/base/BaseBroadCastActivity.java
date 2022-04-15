@@ -2,6 +2,7 @@ package wannabit.io.cosmostaion.base;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 import irismod.nft.QueryOuterClass;
 import osmosis.gamm.poolmodels.balancer.BalancerPool;
@@ -48,7 +49,7 @@ public class BaseBroadCastActivity extends BaseActivity {
     public Coin mPoolCoin1;
     public Coin mLpToken;
     public long mOsmosisLockupDuration;
-    public ArrayList<Lock.PeriodLock> mOsmosisLockups = new ArrayList<>();
+    public List<Lock.PeriodLock> mOsmosisLockups = new ArrayList<>();
     public Coin mSwapInCoin;
     public Coin mSwapOutCoin;
 

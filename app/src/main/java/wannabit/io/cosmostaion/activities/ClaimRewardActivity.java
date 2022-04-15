@@ -39,11 +39,9 @@ import wannabit.io.cosmostaion.task.gRpcTask.WithdrawAddressGrpcTask;
 
 public class ClaimRewardActivity extends BaseBroadCastActivity implements TaskListener {
 
-    private Toolbar mToolbar;
-    private TextView mTitle;
     private ImageView mIvStep;
     private TextView mTvStep;
-    private ViewPager mViewPager;
+    private ViewPager viewPager;
     private RewardPageAdapter mPageAdapter;
 
     public String mWithdrawAddress;
@@ -53,31 +51,31 @@ public class ClaimRewardActivity extends BaseBroadCastActivity implements TaskLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step);
-        mToolbar = findViewById(R.id.toolbar);
-        mTitle = findViewById(R.id.toolbar_title);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        TextView toolbarTitleTextView = findViewById(R.id.toolbarTitleTextView);
         mIvStep = findViewById(R.id.send_step);
         mTvStep = findViewById(R.id.send_step_msg);
-        mViewPager = findViewById(R.id.view_pager);
-        mTitle.setText(getString(R.string.str_reward_c));
+        viewPager = findViewById(R.id.view_pager);
+        toolbarTitleTextView.setText(R.string.str_reward_c);
 
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mIvStep.setImageResource(R.drawable.step_4_img_1);
         mTvStep.setText(R.string.str_reward_step_1);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = getChain(account.baseChain);
         mTxType = CONST_PW_TX_SIMPLE_REWARD;
 
         mValAddresses = getIntent().getStringArrayListExtra("valOpAddresses");
 
         mPageAdapter = new RewardPageAdapter(getSupportFragmentManager());
-        mViewPager.setOffscreenPageLimit(3);
-        mViewPager.setAdapter(mPageAdapter);
+        viewPager.setOffscreenPageLimit(3);
+        viewPager.setAdapter(mPageAdapter);
 
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
             }
@@ -108,7 +106,7 @@ public class ClaimRewardActivity extends BaseBroadCastActivity implements TaskLi
             public void onPageScrollStateChanged(int i) {
             }
         });
-        mViewPager.setCurrentItem(0);
+        viewPager.setCurrentItem(0);
         onFetchReward();
     }
 
@@ -132,24 +130,24 @@ public class ClaimRewardActivity extends BaseBroadCastActivity implements TaskLi
     @Override
     public void onBackPressed() {
         ActivityExtensionsKt.hideKeyboard(this);
-        if (mViewPager.getCurrentItem() > 0) {
-            mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1, true);
+        if (viewPager.getCurrentItem() > 0) {
+            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1, true);
         } else {
             super.onBackPressed();
         }
     }
 
     public void onNextStep() {
-        if (mViewPager.getCurrentItem() < mViewPager.getChildCount()) {
+        if (viewPager.getCurrentItem() < viewPager.getChildCount()) {
             ActivityExtensionsKt.hideKeyboard(this);
-            mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1, true);
+            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1, true);
         }
     }
 
     public void onBeforeStep() {
-        if (mViewPager.getCurrentItem() > 0) {
+        if (viewPager.getCurrentItem() > 0) {
             ActivityExtensionsKt.hideKeyboard(this);
-            mViewPager.setCurrentItem(mViewPager.getCurrentItem() - 1, true);
+            viewPager.setCurrentItem(viewPager.getCurrentItem() - 1, true);
         } else {
             onBackPressed();
         }

@@ -16,9 +16,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fulldive.wallet.extensions.ChainExtensionsKt;
 import com.fulldive.wallet.interactors.secret.MnemonicUtils;
 
 import java.math.BigDecimal;
@@ -46,37 +48,33 @@ import wannabit.io.cosmostaion.utils.WLog;
 
 public class RestorePathActivity extends BaseActivity implements TaskListener {
 
-    private String mEntropy;
-    private int mWordSize;
-    private BaseChain mChain;
+    private String entropy;
+    private int wordSize;
+    private BaseChain chain;
 
-    private Toolbar mToolbar;
-    private RecyclerView mRecyclerView;
-    private NewWalletAdapter mNewWalletAdapter;
-
-    private int mCustomPath;
+    private int customPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restore_path);
 
-        mToolbar = findViewById(R.id.toolbar);
-        mRecyclerView = findViewById(R.id.recycler);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
 
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.setHasFixedSize(true);
-        mNewWalletAdapter = new NewWalletAdapter();
-        mRecyclerView.setAdapter(mNewWalletAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        recyclerView.setHasFixedSize(true);
+        NewWalletAdapter adapter = new NewWalletAdapter();
+        recyclerView.setAdapter(adapter);
 
-        mEntropy = getIntent().getStringExtra("entropy");
-        mChain = BaseChain.getChain(getIntent().getStringExtra("chain"));
-        mWordSize = getIntent().getIntExtra("size", MnemonicUtils.MNEMONIC_WORDS_COUNT);
-        mCustomPath = getIntent().getIntExtra("customPath", 0);
+        entropy = getIntent().getStringExtra("entropy");
+        chain = BaseChain.getChain(getIntent().getStringExtra("chain"));
+        wordSize = getIntent().getIntExtra("size", MnemonicUtils.MNEMONIC_WORDS_COUNT);
+        customPath = getIntent().getIntExtra("customPath", 0);
     }
 
 
@@ -93,11 +91,11 @@ public class RestorePathActivity extends BaseActivity implements TaskListener {
 
     private void onGenAccount(int path) {
         showWaitDialog();
-        new GenerateAccountTask(getBaseApplication(), mChain, this, mCustomPath).execute("" + path, mEntropy, "" + mWordSize);
+        new GenerateAccountTask(getBaseApplication(), chain, this, customPath).execute("" + path, entropy, "" + wordSize);
     }
 
     private void onOverrideAccount(Account account, int path) {
-        new OverrideAccountTask(getBaseApplication(), account, this, mCustomPath).execute("" + path, mEntropy, "" + mWordSize);
+        new OverrideAccountTask(getBaseApplication(), account, this, customPath).execute("" + path, entropy, "" + wordSize);
     }
 
     @Override
@@ -128,55 +126,55 @@ public class RestorePathActivity extends BaseActivity implements TaskListener {
         public void onBindViewHolder(@NonNull final NewWalletHolder holder, final int position) {
             String address = "";
             try {
-                address = MnemonicUtils.INSTANCE.createAddress(mChain, mEntropy, position, mCustomPath);
+                address = MnemonicUtils.INSTANCE.createAddress(chain, entropy, position, customPath);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            holder.newPath.setText(WDp.getPath(mChain, position, mCustomPath));
+            holder.newPath.setText(ChainExtensionsKt.getPathString(chain, position, customPath));
             holder.newAddress.setText(address);
-            final Account temp = getBaseDao().onSelectExistAccount(address, mChain);
+            final Account temp = getBaseDao().onSelectExistAccount(address, chain);
             if (temp == null) {
-                holder.newState.setText(getString(R.string.str_ready));
-                holder.newState.setTextColor(getResources().getColor(R.color.colorWhite));
-                holder.cardNewWallet.setCardBackgroundColor(WDp.getChainBgColor(getBaseContext(), mChain));
+                holder.newState.setText(R.string.str_ready);
+                holder.newState.setTextColor(ContextCompat.getColor(RestorePathActivity.this, R.color.colorWhite));
+                holder.cardNewWallet.setCardBackgroundColor(WDp.getChainBgColor(RestorePathActivity.this, chain));
             } else {
                 if (temp.hasPrivateKey) {
-                    holder.newState.setText(getString(R.string.str_imported));
-                    holder.newState.setTextColor(getResources().getColor(R.color.colorGray1));
-                    holder.cardNewWallet.setCardBackgroundColor(getResources().getColor(R.color.colorTransBg));
+                    holder.newState.setText(R.string.str_imported);
+                    holder.newState.setTextColor(ContextCompat.getColor(RestorePathActivity.this, R.color.colorGray1));
+                    holder.cardNewWallet.setCardBackgroundColor(ContextCompat.getColor(RestorePathActivity.this, R.color.colorTransBg));
                 } else {
-                    holder.newState.setText(getString(R.string.str_override));
-                    holder.newState.setTextColor(getResources().getColor(R.color.colorWhite));
-                    holder.cardNewWallet.setCardBackgroundColor(WDp.getChainBgColor(getBaseContext(), mChain));
+                    holder.newState.setText(R.string.str_override);
+                    holder.newState.setTextColor(ContextCompat.getColor(RestorePathActivity.this, R.color.colorWhite));
+                    holder.cardNewWallet.setCardBackgroundColor(WDp.getChainBgColor(RestorePathActivity.this, chain));
                 }
             }
             holder.cardNewWallet.setOnClickListener(v -> {
                 if (holder.newState.getText().toString().equals(getString(R.string.str_ready))) {
                     onGenAccount(position);
                 } else if (holder.newState.getText().toString().equals(getString(R.string.str_imported))) {
-                    Toast.makeText(getBaseContext(), getString(R.string.str_already_imported_key), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), R.string.str_already_imported_key, Toast.LENGTH_SHORT).show();
 
                 } else {
                     onOverrideAccount(temp, position);
                 }
             });
 
-            if (mChain.isGRPC()) {
+            if (chain.isGRPC()) {
                 holder.coinLayer.setVisibility(View.VISIBLE);
-                WDp.showCoinDp(getBaseContext(), getBaseDao(), mChain.getMainDenom(), "0", holder.coinDenom, holder.coinAmount, mChain);
+                WDp.showCoinDp(getBaseContext(), getBaseDao(), chain.getMainDenom(), "0", holder.coinDenom, holder.coinAmount, chain);
                 new BalanceGrpcTask(getBaseApplication(), result -> {
                     WLog.w("result " + result.resultData);
                     ArrayList<CoinOuterClass.Coin> balances = (ArrayList<CoinOuterClass.Coin>) result.resultData;
                     if (balances != null && balances.size() > 0) {
                         for (CoinOuterClass.Coin balance : balances) {
-                            if (balance.getDenom().equals(mChain.getMainDenom())) {
-                                WDp.showCoinDp(getBaseContext(), getBaseDao(), balance.getDenom(), balance.getAmount(), holder.coinDenom, holder.coinAmount, mChain);
+                            if (balance.getDenom().equals(chain.getMainDenom())) {
+                                WDp.showCoinDp(getBaseContext(), getBaseDao(), balance.getDenom(), balance.getAmount(), holder.coinDenom, holder.coinAmount, chain);
                             }
                         }
                     }
-                }, mChain, address).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }, chain, address).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
-            } else if (mChain.equals(BNB_MAIN)) {
+            } else if (chain.equals(BNB_MAIN)) {
                 holder.bnbLayer.setVisibility(View.VISIBLE);
                 holder.bnbAmount.setText(WDp.getDpAmount2(BigDecimal.ZERO, 0, 8));
                 ApiClient.getBnbChain(getBaseContext()).getAccountInfo(address).enqueue(new Callback<ResBnbAccountInfo>() {
@@ -197,7 +195,7 @@ public class RestorePathActivity extends BaseActivity implements TaskListener {
                     }
                 });
 
-            } else if (mChain.equals(OKEX_MAIN)) {
+            } else if (chain.equals(OKEX_MAIN)) {
                 holder.okLayer.setVisibility(View.VISIBLE);
                 holder.okAmount.setText(WDp.getDpAmount2(BigDecimal.ZERO, 0, 18));
                 ApiClient.getOkexChain(getBaseContext()).getAccountBalance(address).enqueue(new Callback<ResOkAccountToken>() {

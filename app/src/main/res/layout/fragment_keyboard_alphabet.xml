@@ -15,7 +15,7 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/password_char0"
+            android:id="@+id/alphabetButton0"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -24,17 +24,7 @@
             android:text="A" />
 
         <Button
-            android:id="@+id/password_char1"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            style="@style/font_ssm_keyboard_white"
-            android:text="A" />
-
-        <Button
-            android:id="@+id/password_char2"
+            android:id="@+id/alphabetButton1"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -44,7 +34,7 @@
             android:text="A" />
 
         <Button
-            android:id="@+id/password_char3"
+            android:id="@+id/alphabetButton2"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -54,7 +44,7 @@
             android:text="A" />
 
         <Button
-            android:id="@+id/password_char4"
+            android:id="@+id/alphabetButton3"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -64,7 +54,7 @@
             android:text="A" />
 
         <Button
-            android:id="@+id/password_char5"
+            android:id="@+id/alphabetButton4"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -74,35 +64,7 @@
             android:text="A" />
 
         <Button
-            android:id="@+id/password_char6"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            style="@style/font_ssm_keyboard_white"
-            android:text="A" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginLeft="@dimen/space_24"
-        android:layout_marginRight="@dimen/space_24"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/password_char7"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            style="@style/font_ssm_keyboard_white"
-            android:text="A" />
-
-        <Button
-            android:id="@+id/password_char8"
+            android:id="@+id/alphabetButton5"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -112,47 +74,7 @@
             android:text="A" />
 
         <Button
-            android:id="@+id/password_char9"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            style="@style/font_ssm_keyboard_white"
-            android:text="A" />
-
-        <Button
-            android:id="@+id/password_char10"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            style="@style/font_ssm_keyboard_white"
-            android:text="A" />
-
-        <Button
-            android:id="@+id/password_char11"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            style="@style/font_ssm_keyboard_white"
-            android:text="A" />
-
-        <Button
-            android:id="@+id/password_char12"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            style="@style/font_ssm_keyboard_white"
-            android:text="A" />
-
-        <Button
-            android:id="@+id/password_char13"
+            android:id="@+id/alphabetButton6"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -171,7 +93,7 @@
         android:gravity="center">
 
         <Button
-            android:id="@+id/password_char14"
+            android:id="@+id/alphabetButton7"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -180,17 +102,7 @@
             android:text="A" />
 
         <Button
-            android:id="@+id/password_char15"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            style="@style/font_ssm_keyboard_white"
-            android:text="A" />
-
-        <Button
-            android:id="@+id/password_char16"
+            android:id="@+id/alphabetButton8"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -200,7 +112,7 @@
             android:text="A" />
 
         <Button
-            android:id="@+id/password_char17"
+            android:id="@+id/alphabetButton9"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -210,7 +122,7 @@
             android:text="A" />
 
         <Button
-            android:id="@+id/password_char18"
+            android:id="@+id/alphabetButton10"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -220,7 +132,7 @@
             android:text="A" />
 
         <Button
-            android:id="@+id/password_char19"
+            android:id="@+id/alphabetButton11"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -230,7 +142,95 @@
             android:text="A" />
 
         <Button
-            android:id="@+id/password_char20"
+            android:id="@+id/alphabetButton12"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/space_8"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            style="@style/font_ssm_keyboard_white"
+            android:text="A" />
+
+        <Button
+            android:id="@+id/alphabetButton13"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/space_8"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            style="@style/font_ssm_keyboard_white"
+            android:text="A" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginLeft="@dimen/space_24"
+        android:layout_marginRight="@dimen/space_24"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/alphabetButton14"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            style="@style/font_ssm_keyboard_white"
+            android:text="A" />
+
+        <Button
+            android:id="@+id/alphabetButton15"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/space_8"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            style="@style/font_ssm_keyboard_white"
+            android:text="A" />
+
+        <Button
+            android:id="@+id/alphabetButton16"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/space_8"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            style="@style/font_ssm_keyboard_white"
+            android:text="A" />
+
+        <Button
+            android:id="@+id/alphabetButton17"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/space_8"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            style="@style/font_ssm_keyboard_white"
+            android:text="A" />
+
+        <Button
+            android:id="@+id/alphabetButton18"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/space_8"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            style="@style/font_ssm_keyboard_white"
+            android:text="A" />
+
+        <Button
+            android:id="@+id/alphabetButton19"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/space_8"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            style="@style/font_ssm_keyboard_white"
+            android:text="A" />
+
+        <Button
+            android:id="@+id/alphabetButton20"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -249,7 +249,7 @@
         android:layout_marginRight="@dimen/space_40">
 
         <Button
-            android:id="@+id/password_char21"
+            android:id="@+id/alphabetButton21"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -258,17 +258,7 @@
             android:text="A" />
 
         <Button
-            android:id="@+id/password_char22"
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            style="@style/font_ssm_keyboard_white"
-            android:text="A" />
-
-        <Button
-            android:id="@+id/password_char23"
+            android:id="@+id/alphabetButton22"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -278,7 +268,7 @@
             android:text="A" />
 
         <Button
-            android:id="@+id/password_char24"
+            android:id="@+id/alphabetButton23"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -288,7 +278,17 @@
             android:text="A" />
 
         <Button
-            android:id="@+id/password_char25"
+            android:id="@+id/alphabetButton24"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginLeft="@dimen/space_8"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            style="@style/font_ssm_keyboard_white"
+            android:text="A" />
+
+        <Button
+            android:id="@+id/alphabetButton25"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"

@@ -14,30 +14,22 @@ import android.widget.Toast;
 import androidx.core.content.ContextCompat;
 import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 import androidx.core.os.CancellationSignal;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.fulldive.wallet.interactors.secret.InvalidPasswordException;
 import com.fulldive.wallet.interactors.secret.SecretInteractor;
+import com.fulldive.wallet.presentation.system.keyboard.KeyboardListener;
+import com.fulldive.wallet.presentation.system.keyboard.KeyboardPagerAdapter;
 import com.fulldive.wallet.rx.AppSchedulers;
-
-import java.util.ArrayList;
 
 import io.reactivex.disposables.Disposable;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.ITimelessActivity;
-import wannabit.io.cosmostaion.fragment.AlphabetKeyBoardFragment;
-import wannabit.io.cosmostaion.fragment.KeyboardFragment;
-import wannabit.io.cosmostaion.fragment.NumberKeyBoardFragment;
-import wannabit.io.cosmostaion.task.TaskListener;
-import wannabit.io.cosmostaion.utils.KeyboardListener;
 import wannabit.io.cosmostaion.utils.WLog;
 import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.LockedViewPager;
 
-public class AppLockActivity extends BaseActivity implements ITimelessActivity, KeyboardListener, TaskListener {
+public class AppLockActivity extends BaseActivity implements ITimelessActivity, KeyboardListener {
 
     private LinearLayout layerContents;
     private ImageView fingerImage;
@@ -58,17 +50,17 @@ public class AppLockActivity extends BaseActivity implements ITimelessActivity, 
 
         secretInteractor = getAppInjector().getInstance(SecretInteractor.class);
 
-        layerContents = findViewById(R.id.layer_contents);
+        layerContents = findViewById(R.id.layerContents);
         fingerImage = findViewById(R.id.img_fingerprint);
         unlockMsg = findViewById(R.id.tv_unlock_msg);
         viewPager = findViewById(R.id.keyboardPager);
 
         for (int i = 0; i < ivCircle.length; i++) {
-            ivCircle[i] = findViewById(getResources().getIdentifier("img_circle" + i, "id", getPackageName()));
+            ivCircle[i] = findViewById(getResources().getIdentifier("circleImage" + i, "id", getPackageName()));
         }
 
         viewPager.setOffscreenPageLimit(2);
-        KeyboardPagerAdapter mAdapter = new KeyboardPagerAdapter(getSupportFragmentManager());
+        KeyboardPagerAdapter mAdapter = new KeyboardPagerAdapter(getSupportFragmentManager(), this);
         viewPager.setAdapter(mAdapter);
     }
 
@@ -249,32 +241,5 @@ public class AppLockActivity extends BaseActivity implements ITimelessActivity, 
             }
         });
         layerContents.startAnimation(animation);
-    }
-
-    public class KeyboardPagerAdapter extends FragmentPagerAdapter {
-
-        private final ArrayList<KeyboardFragment> fragments = new ArrayList<>();
-
-        public KeyboardPagerAdapter(FragmentManager fm) {
-            super(fm);
-            fragments.clear();
-            NumberKeyBoardFragment number = NumberKeyBoardFragment.newInstance();
-            number.setListener(AppLockActivity.this);
-            fragments.add(number);
-
-            AlphabetKeyBoardFragment alphabet = AlphabetKeyBoardFragment.newInstance();
-            alphabet.setListener(AppLockActivity.this);
-            fragments.add(alphabet);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return fragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragments.size();
-        }
     }
 }

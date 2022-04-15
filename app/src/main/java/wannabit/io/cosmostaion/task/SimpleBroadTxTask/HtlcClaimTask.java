@@ -71,9 +71,9 @@ public class HtlcClaimTask extends CommonTask {
                     result.errorCode = BaseConstant.ERROR_CODE_BROADCAST;
                     return result;
                 }
-                context.getBaseDao().onUpdateAccount(WUtil.getAccountFromBnbLcd(mReceiveAccount.id, response.body()));
-                context.getBaseDao().onUpdateBalances(mReceiveAccount.id, WUtil.getBalancesFromBnbLcd(mReceiveAccount.id, response.body()));
-                mReceiveAccount = context.getBaseDao().onSelectAccount("" + mReceiveAccount.id);
+                context.getBaseDao().updateAccount(WUtil.getAccountFromBnbLcd(mReceiveAccount.id, response.body()));
+                context.getBaseDao().updateBalances(mReceiveAccount.id, WUtil.getBalancesFromBnbLcd(mReceiveAccount.id, response.body()));
+                mReceiveAccount = context.getBaseDao().getAccount("" + mReceiveAccount.id);
 
                 if (mReceiveAccount.fromMnemonic) {
                     String entropy = CryptoHelper.doDecryptData(context.getString(R.string.key_mnemonic) + mReceiveAccount.uuid, mReceiveAccount.resource, mReceiveAccount.spec);

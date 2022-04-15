@@ -60,7 +60,7 @@ public class SimpleSendTask extends CommonTask {
     @Override
     protected TaskResult doInBackground(String... strings) {
         try {
-            Password checkPw = context.getBaseDao().onSelectPassword();
+            Password checkPw = context.getBaseDao().getPassword();
             if (!CryptoHelper.verifyData(strings[0], checkPw.resource, context.getString(R.string.key_password))) {
                 result.isSuccess = false;
                 result.errorCode = ERROR_CODE_INVALID_PASSWORD;
@@ -72,8 +72,7 @@ public class SimpleSendTask extends CommonTask {
                 result.errorCode = ERROR_CODE_BROADCAST;
                 return result;
             }
-            context.getBaseDao().onUpdateAccount(WUtil.getAccountFromOkLcd(mAccount.id, accountResponse.body()));
-            context.getBaseDao().mOkAccountInfo = accountResponse.body();
+            context.getBaseDao().updateAccount(WUtil.getAccountFromOkLcd(mAccount.id, accountResponse.body()));
 
             ECKey ecKey;
             if (mAccount.fromMnemonic) {

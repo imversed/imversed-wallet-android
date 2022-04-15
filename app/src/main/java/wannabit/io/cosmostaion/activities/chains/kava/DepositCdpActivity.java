@@ -35,11 +35,12 @@ import wannabit.io.cosmostaion.fragment.StepFeeSetFragment;
 import wannabit.io.cosmostaion.fragment.StepMemoFragment;
 import wannabit.io.cosmostaion.fragment.chains.kava.DepositCdpStep0Fragment;
 import wannabit.io.cosmostaion.fragment.chains.kava.DepositCdpStep3Fragment;
+import wannabit.io.cosmostaion.task.TaskListener;
 import wannabit.io.cosmostaion.task.TaskResult;
 import wannabit.io.cosmostaion.task.gRpcTask.KavaCdpsByOwnerGrpcTask;
 import wannabit.io.cosmostaion.utils.WLog;
 
-public class DepositCdpActivity extends BaseBroadCastActivity {
+public class DepositCdpActivity extends BaseBroadCastActivity implements TaskListener {
 
     private RelativeLayout mRootView;
     private Toolbar mToolbar;
@@ -62,7 +63,7 @@ public class DepositCdpActivity extends BaseBroadCastActivity {
         setContentView(R.layout.activity_step);
         mRootView = findViewById(R.id.root_view);
         mToolbar = findViewById(R.id.toolbar);
-        mTitle = findViewById(R.id.toolbar_title);
+        mTitle = findViewById(R.id.toolbarTitleTextView);
         mIvStep = findViewById(R.id.send_step);
         mTvStep = findViewById(R.id.send_step_msg);
         mViewPager = findViewById(R.id.view_pager);
@@ -75,7 +76,7 @@ public class DepositCdpActivity extends BaseBroadCastActivity {
         mIvStep.setImageResource(R.drawable.step_4_img_1);
         mTvStep.setText(R.string.str_deposit_cdp_step_1);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_DEPOSIT_CDP;
 

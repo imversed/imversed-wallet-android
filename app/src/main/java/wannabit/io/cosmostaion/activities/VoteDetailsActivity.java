@@ -77,7 +77,7 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
         mVoteBtn.setOnClickListener(this);
 
         mProposalId = getIntent().getStringExtra("proposalId");
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mChain = WDp.getChainNameByBaseChain(baseChain);
 

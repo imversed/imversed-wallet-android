@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.List;
 
 import osmosis.gamm.poolmodels.balancer.BalancerPool;
 import osmosis.incentives.GaugeOuterClass;
@@ -46,7 +47,7 @@ public class EarningOtherHolder extends RecyclerView.ViewHolder {
     }
 
     public void onBindView(Context c, BaseActivity activity, BaseData baseData,
-                           BalancerPool.Pool pool, ArrayList<Lock.PeriodLock> lockups, ArrayList<GaugeOuterClass.Gauge> gauges) {
+                           BalancerPool.Pool pool, List<Lock.PeriodLock> lockups, List<GaugeOuterClass.Gauge> gauges) {
 
         Coin coin0 = new Coin(pool.getPoolAssets(0).getToken().getDenom(), pool.getPoolAssets(0).getToken().getAmount());
         Coin coin1 = new Coin(pool.getPoolAssets(1).getToken().getDenom(), pool.getPoolAssets(1).getToken().getAmount());

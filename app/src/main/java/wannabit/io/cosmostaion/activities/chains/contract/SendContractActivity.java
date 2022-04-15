@@ -47,7 +47,7 @@ public class SendContractActivity extends BaseBroadCastActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step);
         mToolbar = findViewById(R.id.toolbar);
-        mTitle = findViewById(R.id.toolbar_title);
+        mTitle = findViewById(R.id.toolbarTitleTextView);
         mIvStep = findViewById(R.id.send_step);
         mTvStep = findViewById(R.id.send_step_msg);
         mViewPager = findViewById(R.id.view_pager);
@@ -58,7 +58,7 @@ public class SendContractActivity extends BaseBroadCastActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mTvStep.setText(getString(R.string.str_send_step_0));
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_EXECUTE_CONTRACT;
 

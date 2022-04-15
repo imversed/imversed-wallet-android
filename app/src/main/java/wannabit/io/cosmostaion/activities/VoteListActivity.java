@@ -60,7 +60,7 @@ public class VoteListActivity extends BaseActivity implements TaskListener {
         mEmptyProposal = findViewById(R.id.empty_proposal);
         mLoadingLayer = findViewById(R.id.loadingLayer);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mChain = WDp.getChainNameByBaseChain(baseChain);
 
@@ -81,7 +81,7 @@ public class VoteListActivity extends BaseActivity implements TaskListener {
     @Override
     protected void onResume() {
         super.onResume();
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         onFetchProposals();
     }

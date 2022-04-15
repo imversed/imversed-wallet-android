@@ -52,7 +52,7 @@ public class DeleteStarNameActivity extends BaseBroadCastActivity {
         setContentView(R.layout.activity_step);
         mRootView = findViewById(R.id.root_view);
         mToolbar = findViewById(R.id.toolbar);
-        mTitle = findViewById(R.id.toolbar_title);
+        mTitle = findViewById(R.id.toolbarTitleTextView);
         mIvStep = findViewById(R.id.send_step);
         mTvStep = findViewById(R.id.send_step_msg);
         mViewPager = findViewById(R.id.view_pager);
@@ -77,7 +77,7 @@ public class DeleteStarNameActivity extends BaseBroadCastActivity {
         mIvStep.setImageResource(R.drawable.step_4_img_1);
         mTvStep.setText(R.string.str_register_domain_step_0);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
 
         mPageAdapter = new DeleteStarNamePageAdapter(getSupportFragmentManager());

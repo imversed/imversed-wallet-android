@@ -47,6 +47,7 @@ import wannabit.io.cosmostaion.fragment.chains.cosmos.GravityPoolListFragment;
 import wannabit.io.cosmostaion.fragment.chains.cosmos.GravitySwapFragment;
 import wannabit.io.cosmostaion.model.GDexManager;
 import wannabit.io.cosmostaion.model.type.Coin;
+import wannabit.io.cosmostaion.task.TaskListener;
 import wannabit.io.cosmostaion.task.TaskResult;
 import wannabit.io.cosmostaion.task.gRpcTask.GravityDexManagerGrpcTask;
 import wannabit.io.cosmostaion.task.gRpcTask.GravityDexParamGrpcTask;
@@ -56,7 +57,7 @@ import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WLog;
 import wannabit.io.cosmostaion.utils.WUtil;
 
-public class GravityListActivity extends BaseActivity {
+public class GravityListActivity extends BaseActivity implements TaskListener {
 
     private Toolbar mToolbar;
     private TextView mTitle;
@@ -74,7 +75,7 @@ public class GravityListActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_labs_list);
         mToolbar = findViewById(R.id.toolbar);
-        mTitle = findViewById(R.id.toolbar_title);
+        mTitle = findViewById(R.id.toolbarTitleTextView);
         mLabTapLayer = findViewById(R.id.lab_tab);
         mLabPager = findViewById(R.id.lab_view_pager);
         mTitle.setText(getString(R.string.str_gravity_dex));
@@ -83,7 +84,7 @@ public class GravityListActivity extends BaseActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
 
         mPageAdapter = new CosmosGravityPageAdapter(getSupportFragmentManager());
@@ -247,7 +248,7 @@ public class GravityListActivity extends BaseActivity {
                     }
                 }
             }
-            mTaskCount = mTaskCount + 1;
+            mTaskCount++;
             for (Liquidity.Pool pool : mPoolList) {
                 new GravityDexManagerGrpcTask(getBaseApplication(), this, baseChain, pool.getReserveAccountAddress()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -287,12 +288,9 @@ public class GravityListActivity extends BaseActivity {
                     }
                 }
             }
-            new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    hideWaitDialog();
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
-                }
+            new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                hideWaitDialog();
+                ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
             }, 300);
         }
     }

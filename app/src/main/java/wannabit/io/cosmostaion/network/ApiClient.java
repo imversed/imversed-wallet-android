@@ -10,15 +10,26 @@ import java.util.HashMap;
 
 import javax.annotation.Nullable;
 
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
+import wannabit.io.cosmostaion.BuildConfig;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseChain;
 import wannabit.io.cosmostaion.utils.WLog;
 
 public class ApiClient {
+
+
+    public static Station getStationApi(Context context, BaseChain chain) {
+        if (chain.isTestNet()) {
+            return getStationTest(context);
+        }
+        return getStation(context);
+    }
 
     //Services for station wallet api
     private static Station station = null;
@@ -30,6 +41,7 @@ public class ApiClient {
                         .baseUrl(c.getString(R.string.url_station))
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .client(createClient())
                         .build();
                 station = retrofit.create(Station.class);
             }
@@ -47,6 +59,7 @@ public class ApiClient {
                         .baseUrl(c.getString(R.string.url_station_testnet))
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .client(createClient())
                         .build();
                 stationTest = retrofit.create(Station.class);
             }
@@ -64,6 +77,7 @@ public class ApiClient {
                         .baseUrl(c.getString(R.string.url_mintscan))
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .client(createClient())
                         .build();
                 mintscan = retrofit.create(Station.class);
             }
@@ -84,6 +98,7 @@ public class ApiClient {
                         .baseUrl(c.getString(R.string.url_api_airdrop_desmos))
                         .addConverterFactory(ScalarsConverterFactory.create())
                         .addConverterFactory(GsonConverterFactory.create(gson))
+                        .client(createClient())
                         .build();
                 airdrop = retrofit.create(Station.class);
             }
@@ -101,6 +116,7 @@ public class ApiClient {
                         .baseUrl(c.getString(R.string.url_station_old))
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .client(createClient())
                         .build();
                 cosmostation = retrofit.create(Cosmostation.class);
             }
@@ -119,6 +135,7 @@ public class ApiClient {
                         .baseUrl(c.getString(R.string.url_main_bnb))
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .client(createClient())
                         .build();
                 service_binance = retrofit.create(BinanceChain.class);
             }
@@ -136,6 +153,7 @@ public class ApiClient {
                         .baseUrl(c.getString(R.string.url_lcd_kava_main))
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .client(createClient())
                         .build();
                 service_kava = retrofit.create(KavaChain.class);
             }
@@ -153,6 +171,7 @@ public class ApiClient {
                         .baseUrl(c.getString(R.string.url_lcd_certik_main))
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .client(createClient())
                         .build();
                 service_certik = retrofit.create(Station.class);
             }
@@ -170,6 +189,7 @@ public class ApiClient {
                         .baseUrl(c.getString(R.string.url_lcd_ok))
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .client(createClient())
                         .build();
                 service_ok = retrofit.create(OkChain.class);
             }
@@ -187,6 +207,7 @@ public class ApiClient {
                         .baseUrl(c.getString(R.string.url_api_ok))
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .client(createClient())
                         .build();
                 api_oec = retrofit.create(OkChain.class);
             }
@@ -204,6 +225,7 @@ public class ApiClient {
                         .baseUrl(c.getString(R.string.url_rizon_swap_status_mainnet))
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .client(createClient())
                         .build();
                 api_rizon_swap_status = retrofit.create(HdacChain.class);
             }
@@ -221,6 +243,7 @@ public class ApiClient {
                         .baseUrl(c.getString(R.string.url_rizon_swap_status_testnet))
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .client(createClient())
                         .build();
                 api_rizon_swap_test_status = retrofit.create(HdacChain.class);
             }
@@ -238,6 +261,7 @@ public class ApiClient {
                         .baseUrl(c.getString(R.string.url_hdac_mainnet))
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .client(createClient())
                         .build();
                 service_hdac_mainnet = retrofit.create(HdacChain.class);
             }
@@ -255,6 +279,7 @@ public class ApiClient {
                         .baseUrl(c.getString(R.string.url_hdac_testnet))
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .client(createClient())
                         .build();
                 service_hdac_testnet = retrofit.create(HdacChain.class);
             }
@@ -274,6 +299,7 @@ public class ApiClient {
                         .baseUrl(url)
                         .addConverterFactory(GsonConverterFactory.create())
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                        .client(createClient())
                         .build();
                 result = retrofit.create(HistoryApi.class);
             } catch (Exception ex) {
@@ -296,5 +322,16 @@ public class ApiClient {
             }
         }
         return historyApi;
+    }
+
+
+    private static OkHttpClient createClient() {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        if (BuildConfig.DEBUG) {
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+            builder.addInterceptor(interceptor);
+        }
+        return builder.build();
     }
 }

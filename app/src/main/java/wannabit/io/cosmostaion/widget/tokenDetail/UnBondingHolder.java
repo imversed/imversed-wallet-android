@@ -10,6 +10,7 @@ import androidx.cardview.widget.CardView;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseChain;
@@ -93,7 +94,7 @@ public class UnBondingHolder extends BaseHolder {
         final int stakingDivideDecimal = WDp.mainDivideDecimal(chain);
         final int stakingDisplayDecimal = WDp.mainDivideDecimal(chain);
 
-        final ArrayList<UnbondingInfo.DpEntry> unbondings = WUtil.onSortUnbondingsRecent_Grpc(c, baseData.mGrpcUndelegations);
+        final List<UnbondingInfo.DpEntry> unbondings = WUtil.onSortUnbondingsRecent_Grpc(baseData.mGrpcUndelegations);
         mUndelegateCnt.setText(String.valueOf(unbondings.size()));
         mUndelegateTime0.setText(WDp.getDpTime(c, Long.parseLong(unbondings.get(0).completion_time) * 1000));
         mUndelegateAmount0.setText(WDp.getDpAmount2(new BigDecimal(unbondings.get(0).balance), stakingDivideDecimal, stakingDisplayDecimal));
@@ -135,7 +136,7 @@ public class UnBondingHolder extends BaseHolder {
         final int stakingDivideDecimal = WDp.mainDivideDecimal(chain);
         final int stakingDisplayDecimal = WDp.mainDivideDecimal(chain);
 
-        final ArrayList<UnbondingInfo.DpEntry> unbondings = WUtil.onSortUnbondingsRecent(c, baseData.mMyUnbondings);
+        final List<UnbondingInfo.DpEntry> unbondings = WUtil.onSortUnbondingsRecent(c, baseData.mMyUnbondings);
         mUndelegateCnt.setText(String.valueOf(unbondings.size()));
         mUndelegateTime0.setText(WDp.getTimeformat(c, unbondings.get(0).completion_time));
         mUndelegateAmount0.setText(WDp.getDpAmount2(new BigDecimal(unbondings.get(0).balance), stakingDivideDecimal, stakingDisplayDecimal));

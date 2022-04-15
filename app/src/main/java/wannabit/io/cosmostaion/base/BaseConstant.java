@@ -13,7 +13,6 @@ public class BaseConstant {
     public final static String DB_TABLE_BALANCE = "balan";
     public final static String DB_TABLE_BONDING = "bondi";
     public final static String DB_TABLE_UNBONDING = "unbond";
-    public final static String DB_TABLE_PRICE = "price";
 
     public final static String PRE_USER_ID = "PRE_USER_ID";
     public final static String PRE_SELECTED_CHAINS = "PRE_SELECTED_CHAINS";
@@ -25,63 +24,34 @@ public class BaseConstant {
     public final static String PRE_APP_LOCK_TIME = "PRE_APP_LOCK_TIME";
     public final static String PRE_APP_LOCK_LEAVE_TIME = "PRE_APP_LOCK_LEAVE_TIME";
     public final static String PRE_FCM_TOKEN = "PRE_FCM_TOKEN";
-    public final static String PRE_EVENT_HIDE = "PRE_EVENT_HIDE";
     public final static String PRE_USER_HIDEN_CHAINS = "PRE_USER_HIDEN_CHAINS";
     public final static String PRE_USER_SORTED_CHAINS = "PRE_USER_SORTED_CHAINS";
     public final static String PRE_USER_EXPENDED_CHAINS = "PRE_USER_EXPENDED_CHAINS";
 
 
-    public final static int TASK_INIT_PW = 2000;
     public final static int TASK_INIT_ACCOUNT = 2002;
-    public final static int TASK_FETCH_ACCOUNT = 2004;
-    public final static int TASK_FETCH_ALL_REWARDS = 2008;
     public final static int TASK_GEN_TX_SIMPLE_SEND = 2018;
     public final static int TASK_OVERRIDE_ACCOUNT = 2019;
-    public final static int TASK_CHECK_MNEMONIC = 2025;
-    public final static int TASK_FETCH_BNB_HISTORY = 2041;
-    public final static int TASK_FETCH_BNB_TOKENS = 2042;
-    public final static int TASK_FETCH_BNB_TICKER = 2043;
-    public final static int TASK_FETCH_BNB_MINI_TICKER = 2044;
     public final static int TASK_GEN_TX_BNB_SIMPLE_SEND = 2045;
-    public final static int TASK_PUSH_STATUS_UPDATE = 2057;
     public final static int TASK_MOON_PAY_SIGNATURE = 2058;
     public final static int TASK_FETCH_KAVA_CDP_DEPOSIT = 2061;
     public final static int TASK_GEN_TX_HTLC_REFUND = 2071;
     public final static int TASK_GEN_TX_BNB_HTLC_REFUND = 2072;
-    public final static int TASK_FETCH_KAVA_INCENTIVE_PARAM = 2074;
-    public final static int TASK_FETCH_KAVA_INCENTIVE_REWARD = 2076;
-    public final static int TASK_FETCH_BNB_MINI_TOKENS = 2078;
     public final static int TASK_GEN_TX_HTLC_CREATE = 2079;
     public final static int TASK_GEN_TX_HTLC_CLAIM = 2080;
-    public final static int TASK_FETCH_BNB_FEES = 2081;
-    public final static int TASK_FETCH_OK_STAKING_INFO = 2082;
-    public final static int TASK_FETCH_OK_UNBONDING_INFO = 2083;
-    public final static int TASK_FETCH_OK_ACCOUNT_BALANCE = 2084;
-    public final static int TASK_FETCH_OK_TOKEN_LIST = 2085;
     public final static int TASK_GEN_TX_OK_DEPOSIT = 2086;
     public final static int TASK_GEN_TX_OK_WITHDRAW = 2087;
     public final static int TASK_GEN_TX_OK_DIRECT_VOTE = 2088;
     public final static int TASK_GEN_TX_KAVA_CLAIM_HARVEST = 2109;
-    public final static int TASK_FETCH_OK_HISTORY = 2113;
-    public final static int TASK_FETCH_OK_DEX_TICKERS = 2114;
     public final static int TASK_FETCH_KAVA_HARD_MODULE_ACCOUNT = 2123;
     public final static int TASK_FETCH_NODE_INFO = 2126;
-    public final static int TASK_FETCH_OKEX_ALL_VALIDATORS = 2127;
-    public final static int TASK_CHECK_PRIVATE_KEY = 2135;
     public final static int TASK_INIT_PKEY_ACCOUNT = 2136;
     public final static int TASK_OVERRIDE_PKEY_ACCOUNT = 2137;
 
-    public final static int TASK_FETCH_API_ADDRESS_HISTORY = 2300;
     public final static int TASK_FETCH_API_STAKE_HISTORY = 2301;
 
-    public final static int TASK_FETCH_PRICE_INFO = 2800;
-    public final static int TASK_FETCH_PARAM_INFO = 2801;
-    public final static int TASK_FETCH_IBC_PATHS = 2802;
-    public final static int TASK_FETCH_IBC_TOKENS = 2803;
     public final static int TASK_FETCH_MINTSCAN_PROPOSAL = 2804;
-    public final static int TASK_FETCH_MINTSCAN_ASSETS = 2805;
     public final static int TASK_FETCH_MINTSCAN_PROPOSAL_LIST = 2806;
-    public final static int TASK_FETCH_MINTSCAN_CW20_ASSETS = 2807;
 
     public final static int TASK_HDAC_NODE_INFO = 2900;
     public final static int TASK_HDAC_UTXO = 2901;
@@ -93,14 +63,10 @@ public class BaseConstant {
     //gRPC
     public final static int TASK_GRPC_FETCH_BALANCE = 4001;
     public final static int TASK_GRPC_FETCH_BONDED_VALIDATORS = 4002;
-    public final static int TASK_GRPC_FETCH_UNBONDED_VALIDATORS = 4003;
-    public final static int TASK_GRPC_FETCH_UNBONDING_VALIDATORS = 4004;
     public final static int TASK_GRPC_FETCH_DELEGATIONS = 4005;
     public final static int TASK_GRPC_FETCH_UNDELEGATIONS = 4006;
     public final static int TASK_GRPC_FETCH_ALL_REWARDS = 4007;
-    public final static int TASK_GRPC_FETCH_IRIS_PARAM_MINT = 4009;
     public final static int TASK_GRPC_FETCH_STAKING_POOL = 4012;
-    public final static int TASK_GRPC_FETCH_IRIS_TOKEN_LIST = 4013;
     public final static int TASK_GRPC_FETCH_VALIDATOR_INFO = 4014;
     public final static int TASK_GRPC_FETCH_SELF_BONDING = 4015;
     public final static int TASK_GRPC_FETCH_WITHDRAW_ADDRESS = 4016;
@@ -108,7 +74,6 @@ public class BaseConstant {
     public final static int TASK_GRPC_FETCH_REDELEGATIONS_FROM_TO = 4018;
     public final static int TASK_GRPC_FETCH_PROPOSAL_MY_VOTE = 4023;
     public final static int TASK_GRPC_FETCH_NODE_INFO = 4024;
-    public final static int TASK_GRPC_FETCH_AUTH = 4025;
     public final static int TASK_GRPC_FETCH_GRAVITY_POOL_LIST = 4026;
     public final static int TASK_GRPC_FETCH_GRAVITY_PARAM = 4027;
     public final static int TASK_GRPC_FETCH_GRAVITY_MANAGER = 4028;
@@ -116,11 +81,7 @@ public class BaseConstant {
     public final static int TASK_GRPC_FETCH_GRAVITY_POOL_INFO = 4030;
     public final static int TASK_GRPC_FETCH_DESMOS_PROFILE_INFO = 4031;
     public final static int TASK_GRPC_FETCH_SUPPLY_OF_INFO = 4032;
-    public final static int TASK_GRPC_FETCH_BALANCE_OF_CW20 = 4033;
 
-    public final static int TASK_GRPC_FETCH_BAND_ORACLE_STATUS = 4100;
-    public final static int TASK_GRPC_FETCH_STARNAME_FEE = 4101;
-    public final static int TASK_GRPC_FETCH_STARNAME_CONFIG = 4102;
     public final static int TASK_GRPC_FETCH_STARNAME_ACCOUNT = 4103;
     public final static int TASK_GRPC_FETCH_STARNAME_DOMAIN = 4104;
     public final static int TASK_GRPC_FETCH_STARNAME_RESOLVE = 4105;
@@ -142,7 +103,6 @@ public class BaseConstant {
 
     public final static int TASK_GRPC_FETCH_PROFILE_INFO = 4275;
 
-    public final static int TASK_GRPC_FETCH_KAVA_PRICES = 4277;
     public final static int TASK_GRPC_FETCH_KAVA_PRICE_TOKEN = 4278;
     public final static int TASK_GRPC_FETCH_KAVA_SWAP_PARAMS = 4279;
     public final static int TASK_GRPC_FETCH_KAVA_SWAP_POOLS = 4280;
@@ -155,7 +115,6 @@ public class BaseConstant {
     public final static int TASK_GRPC_FETCH_KAVA_HARD_MY_DEPOSIT = 4287;
     public final static int TASK_GRPC_FETCH_KAVA_HARD_MY_BORROW = 4288;
     public final static int TASK_GRPC_FETCH_KAVA_HARD_INTEREST_RATE = 4289;
-    public final static int TASK_GRPC_FETCH_KAVA_HARD_MODULE_ACCOUNT = 4290;
     public final static int TASK_GRPC_FETCH_KAVA_HARD_RESERVES = 4291;
     public final static int TASK_GRPC_FETCH_KAVA_HARD_TOTAL_DEPOSIT = 4292;
     public final static int TASK_GRPC_FETCH_KAVA_HARD_TOTAL_BORROW = 4293;
@@ -322,13 +281,11 @@ public class BaseConstant {
     public final static String ETHERMINT_KEY_TYPE_PUBLIC = "ethermint/PubKeyEthSecp256k1";
 
     public final static String CONST_PW_PURPOSE = "CONST_PW_PURPOSE";
-    public final static int CONST_PW_INIT = 5000;
     public final static int CONST_PW_SIMPLE_CHECK = 5002;
     public final static int CONST_PW_TX_SIMPLE_SEND = 5003;
     public final static int CONST_PW_TX_SIMPLE_DELEGATE = 5004;
     public final static int CONST_PW_TX_SIMPLE_UNDELEGATE = 5005;
     public final static int CONST_PW_TX_SIMPLE_REWARD = 5006;
-    public final static int CONST_PW_DELETE_ACCOUNT = 5007;
     public final static int CONST_PW_CHECK_MNEMONIC = 5008;
     public final static int CONST_PW_TX_SIMPLE_REDELEGATE = 5009;
     public final static int CONST_PW_TX_SIMPLE_CHANGE_REWARD_ADDRESS = 5010;
@@ -384,7 +341,6 @@ public class BaseConstant {
     public final static int ERROR_CODE_UNKNOWN = 8000;
     public final static int ERROR_CODE_NETWORK = 8001;
     public final static int ERROR_CODE_INVALID_PASSWORD = 8002;
-    public final static int ERROR_CODE_TIMEOUT = 8003;
     public final static int ERROR_CODE_BROADCAST = 8004;
 
 
@@ -426,35 +382,6 @@ public class BaseConstant {
     public final static String TOKEN_HTLC_BINANCE_TEST_BTC = "BTCB-101";
     public final static String TOKEN_HTLC_KAVA_TEST_BNB = "bnb";
     public final static String TOKEN_HTLC_KAVA_TEST_BTC = "btcb";
-
-
-    //TODO HardCoding!!
-    public final static long COSMOS_UNBONDING_TIME = 1814400000;
-    public final static long COSMOS_UNBONDING_DAY = 3;
-
-
-    public final static String KEY_PATH = "m/44'/118'/0'/0/";
-    public final static String KEY_BNB_PATH = "m/44'/714'/0'/0/";
-    public final static String KEY_IOV_PATH = "m/44'/234'/0'/0/";
-    public final static String KEY_NEW_KAVA_PATH = "m/44'/459'/0'/0/";
-    public final static String KEY_BAND_PATH = "m/44'/494'/0'/0/";
-    public final static String KEY_NEW_OK_PATH = "m/44'/996'/0'/0/";
-    public final static String KEY_NEW_SECRET_PATH = "m/44'/529'/0'/0/";
-    public final static String KEY_PERSIS_PATH = "m/44'/750'/0'/0/";
-    public final static String KEY_CRYPTO_PATH = "m/44'/394'/0'/0/";
-    public final static String KEY_MEDI_PATH = "m/44'/371'/0'/0/";
-    public final static String KEY_ALTHEA_PATH = "m/44'/60'/0'/0/";
-    public final static String KEY_FETCH_BASE_PATH = "m/44'/118'/0'/0/";
-    public final static String KEY_ETH_NON_LEDGER_PATH = "m/44'/60'/0'/0/";
-    public final static String KEY_ETH_LEDGER_LIVE_PATH_1 = "m/44'/60'/";
-    public final static String KEY_ETH_LEDGER_LIVE_PATH_2 = "'/0/0";
-    public final static String KEY_ETH_LEDGER_LEGACY_PATH = "m/44'/60'/0'/";
-    public final static String KEY_ETH_PATH = "m/44'/60'/0'/0/";
-    public final static String KEY_BITSONG_PATH = "m/44'/639'/0'/0/";
-    public final static String KEY_DESMOS_PATH = "m/44'/852'/0'/0/";
-    public final static String KEY_LUM_PATH = "m/44'/880'/0'/0/";
-    public final static String KEY_PROVENANCE_PATH = "m/44'/505'/0'/0/";
-
 
     public final static long CONSTANT_S = 1000L;
     public final static long CONSTANT_10S = CONSTANT_S * 10;

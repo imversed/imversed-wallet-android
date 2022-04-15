@@ -17,13 +17,13 @@ class AccountsRepository @Inject constructor(
         return accountsLocalStorage.getAccounts()
     }
 
-    fun getSelectAccount(accountId: Long): Single<Account> {
+    fun getAccount(accountId: Long): Single<Account> {
         return accountsLocalStorage.getAccount(accountId)
     }
 
     fun getSelectedAccount(): Single<Account> {
         return accountsLocalStorage.getSelectedAccount()
-            .flatMap(::getSelectAccount)
+            .flatMap(::getAccount)
     }
 
     fun getAccountsByAddress(address: String): Single<List<Account>> {

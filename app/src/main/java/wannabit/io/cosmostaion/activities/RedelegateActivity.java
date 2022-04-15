@@ -55,7 +55,7 @@ public class RedelegateActivity extends BaseBroadCastActivity implements TaskLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step);
         mToolbar = findViewById(R.id.toolbar);
-        mTitle = findViewById(R.id.toolbar_title);
+        mTitle = findViewById(R.id.toolbarTitleTextView);
         mIvStep = findViewById(R.id.send_step);
         mTvStep = findViewById(R.id.send_step_msg);
         mViewPager = findViewById(R.id.view_pager);
@@ -68,7 +68,7 @@ public class RedelegateActivity extends BaseBroadCastActivity implements TaskLis
         mIvStep.setImageDrawable(getDrawable(R.drawable.step_1_img));
         mTvStep.setText(getString(R.string.str_redelegate_step_0));
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_SIMPLE_REDELEGATE;
 
@@ -193,7 +193,6 @@ public class RedelegateActivity extends BaseBroadCastActivity implements TaskLis
                 WUtil.onSortByValidatorPowerV1(mGRpcTopValidators);
 
             } else {
-                new Exception().printStackTrace();
                 Toast.makeText(getBaseContext(), R.string.error_network_error, Toast.LENGTH_SHORT).show();
 
             }

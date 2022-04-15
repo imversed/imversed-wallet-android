@@ -49,7 +49,7 @@ public class OKValidatorListActivity extends BaseActivity implements FetchCallBa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_validator_list);
         mToolbar = findViewById(R.id.toolbar);
-        mToolbarTitle = findViewById(R.id.toolbar_title);
+        mToolbarTitle = findViewById(R.id.toolbarTitleTextView);
         mValidatorTapLayer = findViewById(R.id.validator_tab);
         mValidatorPager = findViewById(R.id.validator_view_pager);
 
@@ -58,7 +58,7 @@ public class OKValidatorListActivity extends BaseActivity implements FetchCallBa
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mToolbarTitle.setText(R.string.str_validator_vote);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
 
         mPageAdapter = new OKValidatorPageAdapter(getSupportFragmentManager());
@@ -104,7 +104,7 @@ public class OKValidatorListActivity extends BaseActivity implements FetchCallBa
     }
 
     public void onFetchAllData() {
-        onFetchAccountInfo(this);
+        fetchAllData(this);
     }
 
     @Override

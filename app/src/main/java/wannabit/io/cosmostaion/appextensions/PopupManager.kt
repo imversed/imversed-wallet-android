@@ -1,3 +1,5 @@
+@file:Suppress("SameParameterValue")
+
 package wannabit.io.cosmostaion.appextensions
 
 import android.content.Context
@@ -163,7 +165,7 @@ object PopupManager {
             .url(url)
             .post(body)
             .build()
-        var result = ""
+        var result: String
         client.newCall(request).execute().use { response ->
             result = response.body.toString()
         }

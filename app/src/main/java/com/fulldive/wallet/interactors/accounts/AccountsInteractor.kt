@@ -22,7 +22,7 @@ class AccountsInteractor @Inject constructor(
 ) {
 
     fun getAccount(accountId: Long): Single<Account> {
-        return accountsRepository.getSelectAccount(accountId)
+        return accountsRepository.getAccount(accountId)
     }
 
     fun getSelectedAccount(): Single<Account> {
@@ -88,7 +88,7 @@ class AccountsInteractor @Inject constructor(
     fun createAccount(chain: BaseChain, accountSecrets: AccountSecrets): Completable {
         return singleCallable { UUID.randomUUID().toString() }
             .flatMap { uuid ->
-                secretInteractor.encryptData(uuid, accountSecrets.entropy)
+                secretInteractor.encryptEntropy(uuid, accountSecrets.entropy)
                     .map { encryptData ->
                         Account(
                             uuid,
@@ -111,7 +111,7 @@ class AccountsInteractor @Inject constructor(
             .andThen(selectChain(chain.chain))
     }
 
-    fun createEmptyAccount(chain: BaseChain, address: String): Completable {
+    fun createWatchAccount(chain: BaseChain, address: String): Completable {
         return singleCallable {
             val uuid = UUID.randomUUID().toString()
             Account(
@@ -187,5 +187,4 @@ class AccountsInteractor @Inject constructor(
             )
         )
     }
-
 }

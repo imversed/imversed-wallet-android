@@ -74,7 +74,7 @@ public class CdpDetail5Activity extends BaseActivity implements TaskListener, Vi
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mAccount = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        mAccount = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(mAccount.baseChain);
 
         mCdpParams = getBaseDao().mCdpParams;

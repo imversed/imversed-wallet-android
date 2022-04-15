@@ -54,7 +54,7 @@ public class SimpleBnbHtlcRefundTask extends CommonTask {
     @Override
     protected TaskResult doInBackground(String... strings) {
         try {
-            Password checkPw = context.getBaseDao().onSelectPassword();
+            Password checkPw = context.getBaseDao().getPassword();
             if (!CryptoHelper.verifyData(strings[0], checkPw.resource, context.getString(R.string.key_password))) {
                 result.isSuccess = false;
                 result.errorCode = BaseConstant.ERROR_CODE_INVALID_PASSWORD;
@@ -67,9 +67,9 @@ public class SimpleBnbHtlcRefundTask extends CommonTask {
                     result.errorCode = BaseConstant.ERROR_CODE_BROADCAST;
                     return result;
                 }
-                context.getBaseDao().onUpdateAccount(WUtil.getAccountFromBnbLcd(mAccount.id, response.body()));
-                context.getBaseDao().onUpdateBalances(mAccount.id, WUtil.getBalancesFromBnbLcd(mAccount.id, response.body()));
-                mAccount = context.getBaseDao().onSelectAccount("" + mAccount.id);
+                context.getBaseDao().updateAccount(WUtil.getAccountFromBnbLcd(mAccount.id, response.body()));
+                context.getBaseDao().updateBalances(mAccount.id, WUtil.getBalancesFromBnbLcd(mAccount.id, response.body()));
+                mAccount = context.getBaseDao().getAccount("" + mAccount.id);
 
                 if (mAccount.fromMnemonic) {
                     String entropy = CryptoHelper.doDecryptData(context.getString(R.string.key_mnemonic) + mAccount.uuid, mAccount.resource, mAccount.spec);

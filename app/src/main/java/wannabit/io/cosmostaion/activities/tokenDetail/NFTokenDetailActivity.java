@@ -73,7 +73,7 @@ public class NFTokenDetailActivity extends BaseActivity implements View.OnClickL
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         //TODO: Support Imversed nft
         if (baseChain.equals(IRIS_MAIN)) {

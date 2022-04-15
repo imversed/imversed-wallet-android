@@ -88,7 +88,7 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         for (Coin coin : getBaseDao().mGrpcBalance) {
             if (coin.denom.equalsIgnoreCase(getIntent().getStringExtra("denom"))) {
@@ -103,12 +103,7 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
         mRecyclerView.setAdapter(mAdapter);
 
         //prepare for token history
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                onUpdateView();
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> onUpdateView());
 
         onUpdateView();
         mBtnAddressPopup.setOnClickListener(this);
@@ -132,7 +127,7 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
         final Assets assets = getBaseDao().getAsset(mBridgeDenom);
         Picasso.get().load(ASSET_IMG_URL + assets.logo).fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(mToolbarSymbolImg);
         mToolbarSymbol.setText(assets.origin_symbol);
-        mToolbarSymbol.setTextColor(getResources().getColor(R.color.colorWhite));
+        mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
         mTotalAmount = getBaseDao().getAvailable(mBridgeDenom);
 
         mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), assets.origin_symbol));

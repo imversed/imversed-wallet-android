@@ -20,11 +20,10 @@ import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseChain;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dialog.Dialog_Safe_Copy_pKey;
-import wannabit.io.cosmostaion.task.TaskListener;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WKey;
 
-public class PrivateKeyCheckActivity extends BaseActivity implements View.OnClickListener, TaskListener {
+public class PrivateKeyCheckActivity extends BaseActivity implements View.OnClickListener {
 
     private Toolbar mToolbar;
     private CardView mCardView;
@@ -54,7 +53,7 @@ public class PrivateKeyCheckActivity extends BaseActivity implements View.OnClic
         mCopy.setOnClickListener(this);
         mOk.setOnClickListener(this);
 
-        account = getBaseDao().onSelectAccount("" + getIntent().getLongExtra("checkid", -1));
+        account = getBaseDao().getAccount("" + getIntent().getLongExtra("accountId", -1));
         mCardView.setCardBackgroundColor(WDp.getChainBgColor(getBaseContext(), BaseChain.getChain(account.baseChain)));
         onUpdateView();
     }

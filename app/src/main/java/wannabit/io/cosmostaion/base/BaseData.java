@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import cosmos.base.v1beta1.CoinOuterClass;
@@ -77,7 +78,6 @@ import wannabit.io.cosmostaion.model.kava.IncentiveReward;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.model.type.Validator;
 import wannabit.io.cosmostaion.network.res.ResBnbFee;
-import wannabit.io.cosmostaion.network.res.ResOkAccountInfo;
 import wannabit.io.cosmostaion.network.res.ResOkStaking;
 import wannabit.io.cosmostaion.network.res.ResOkTickersList;
 import wannabit.io.cosmostaion.network.res.ResOkTokenList;
@@ -115,12 +115,12 @@ public class BaseData {
     }
 
 
-    public ArrayList<Price> mPrices = new ArrayList<>();
+    public List<Price> mPrices = new ArrayList<>();
     public ChainParam.Params mChainParam;
-    public ArrayList<IbcPath> mIbcPaths = new ArrayList<>();
-    public ArrayList<IbcToken> mIbcTokens = new ArrayList<>();
-    public ArrayList<Assets> mAssets = new ArrayList<>();
-    public ArrayList<Cw20Assets> mCw20Assets = new ArrayList<>();
+    public List<IbcPath> mIbcPaths = new ArrayList<>();
+    public List<IbcToken> mIbcTokens = new ArrayList<>();
+    public List<Assets> mAssets = new ArrayList<>();
+    public List<Cw20Assets> mCw20Assets = new ArrayList<>();
 
     public Price getPrice(String denom) {
         for (Price price : mPrices) {
@@ -254,23 +254,61 @@ public class BaseData {
 
     //COMMON DATA
     public NodeInfo mNodeInfo;
-    public ArrayList<Validator> mAllValidators = new ArrayList<>();
-    public ArrayList<Validator> mMyValidators = new ArrayList<>();
-    public ArrayList<Validator> mTopValidators = new ArrayList<>();
-    public ArrayList<Validator> mOtherValidators = new ArrayList<>();
+    public List<Validator> mAllValidators = new ArrayList<>();
+    public List<Validator> mTopValidators = new ArrayList<>();
+    public List<Validator> mOtherValidators = new ArrayList<>();
+    public List<Validator> mMyValidators = new ArrayList<>();
 
-    public ArrayList<Balance> mBalances = new ArrayList<>();
+    public List<Validator> getMyValidators() {
+        if (mMyValidators.isEmpty()) {
+            final ArrayList<Validator> result = new ArrayList<>();
+            if (mOkStaking != null && mOkStaking.validator_address != null) {
+                for (String valAddr : mOkStaking.validator_address) {
+                    for (Validator val : mAllValidators) {
+                        if (val.operator_address.equals(valAddr)) {
+                            result.add(val);
+                        }
+                    }
+                }
+            }
+
+            if (!mMyDelegations.isEmpty() || !mMyUnbondings.isEmpty()) {
+                for (Validator top : mAllValidators) {
+                    boolean already = false;
+                    for (BondingInfo bond : mMyDelegations) {
+                        if (bond.validator_address.equals(top.operator_address)) {
+                            already = true;
+                            break;
+                        }
+                    }
+                    for (UnbondingInfo unbond : mMyUnbondings) {
+                        if (unbond.validator_address.equals(top.operator_address) && !already) {
+                            already = true;
+                            break;
+                        }
+                    }
+                    if (already) result.add(top);
+                }
+            }
+
+            mMyValidators = result;
+            return result;
+        } else {
+            return mMyValidators;
+        }
+    }
+
+    public List<Balance> mBalances = new ArrayList<>();
     public ArrayList<BondingInfo> mMyDelegations = new ArrayList<>();
     public ArrayList<UnbondingInfo> mMyUnbondings = new ArrayList<>();
     public ArrayList<RewardInfo> mMyRewards = new ArrayList<>();
 
     //COMMON DATA FOR BINANCE
-    public ArrayList<BnbToken> mBnbTokens = new ArrayList<>();
-    public ArrayList<BnbTicker> mBnbTickers = new ArrayList<>();
-    public ArrayList<ResBnbFee> mBnbFees = new ArrayList<>();
+    public List<BnbToken> mBnbTokens = new ArrayList<>();
+    public List<BnbTicker> mBnbTickers = new ArrayList<>();
+    public List<ResBnbFee> mBnbFees = new ArrayList<>();
 
     //COMMON DATA FOR OKEX
-    public ResOkAccountInfo mOkAccountInfo;
     public ResOkStaking mOkStaking;
     public ResOkUnbonding mOkUnbonding;
     public ResOkTokenList mOkTokenList;
@@ -281,7 +319,7 @@ public class BaseData {
     public SifIncentive.User mSifLmIncentive;
 
     //GRPC for KAVA
-    public HashMap<String, QueryOuterClass.CurrentPriceResponse> mKavaTokenPrice = new HashMap<>();
+    public Map<String, QueryOuterClass.CurrentPriceResponse> mKavaTokenPrice = new HashMap<>();
     public IncentiveParam mIncentiveParam5;
     public IncentiveReward mIncentiveRewards;
     public Swap.Params mSwapParams;
@@ -471,26 +509,26 @@ public class BaseData {
     //gRPC
     public tendermint.p2p.Types.NodeInfo mGRpcNodeInfo;
     public Any mGRpcAccount;
-    public ArrayList<Staking.Validator> mGRpcTopValidators = new ArrayList<>();
-    public ArrayList<Staking.Validator> mGRpcOtherValidators = new ArrayList<>();
-    public ArrayList<Staking.Validator> mGRpcAllValidators = new ArrayList<>();
-    public ArrayList<Staking.Validator> mGRpcMyValidators = new ArrayList<>();
+    public List<Staking.Validator> mGRpcTopValidators = new ArrayList<>();
+    public List<Staking.Validator> mGRpcOtherValidators = new ArrayList<>();
+    public List<Staking.Validator> mGRpcAllValidators = new ArrayList<>();
+    public List<Staking.Validator> mGRpcMyValidators = new ArrayList<>();
 
-    public ArrayList<Coin> mGrpcBalance = new ArrayList<>();
-    public ArrayList<Coin> mGrpcVesting = new ArrayList<>();
-    public ArrayList<Staking.DelegationResponse> mGrpcDelegations = new ArrayList<>();
-    public ArrayList<Staking.UnbondingDelegation> mGrpcUndelegations = new ArrayList<>();
-    public ArrayList<Distribution.DelegationDelegatorReward> mGrpcRewards = new ArrayList<>();
+    public List<Coin> mGrpcBalance = new ArrayList<>();
+    public List<Coin> mGrpcVesting = new ArrayList<>();
+    public List<Staking.DelegationResponse> mGrpcDelegations = new ArrayList<>();
+    public List<Staking.UnbondingDelegation> mGrpcUndelegations = new ArrayList<>();
+    public List<Distribution.DelegationDelegatorReward> mGrpcRewards = new ArrayList<>();
 
     //COMMON DATA FOR STARNAME
     public starnamed.x.configuration.v1beta1.Types.Fees mGrpcStarNameFee;
     public starnamed.x.configuration.v1beta1.Types.Config mGrpcStarNameConfig;
 
     //Osmosis pool list
-    public ArrayList<BalancerPool.Pool> mGrpcOsmosisPool = new ArrayList<>();
+    public List<BalancerPool.Pool> mGrpcOsmosisPool = new ArrayList<>();
 
     //Gravity pool list
-    public ArrayList<Liquidity.Pool> mGrpcGravityPools = new ArrayList<>();
+    public List<Liquidity.Pool> mGrpcGravityPools = new ArrayList<>();
     public Liquidity.Params mParams;
 
     //Gravity GDex Manager
@@ -834,7 +872,7 @@ public class BaseData {
     }
 
     public long getLastUserId() {
-        Account account = onSelectAccount(String.valueOf(getSharedPreferences().getLong(BaseConstant.PRE_USER_ID, -1)));
+        Account account = getAccount(String.valueOf(getSharedPreferences().getLong(BaseConstant.PRE_USER_ID, -1)));
         BaseChain mBaseChain = BaseChain.getChain(account.baseChain);
         if (!dpSortedChains().contains(mBaseChain)) {
             for (BaseChain chain : dpSortedChains()) {
@@ -1160,7 +1198,7 @@ public class BaseData {
         return chains;
     }
 
-    public Password onSelectPassword() {
+    public Password getPassword() {
         Password result = null;
         Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_PASSWORD, new String[]{"resource", "spec"}, null, null, null, null, null);
         if (cursor != null) {
@@ -1182,7 +1220,7 @@ public class BaseData {
         return existed;
     }
 
-    public long onInsertPassword(Password password) {
+    public long setPassword(Password password) {
         long result = -1;
         if (onHasPassword()) return result;
 
@@ -1197,7 +1235,7 @@ public class BaseData {
         ArrayList<Account> result = new ArrayList<>();
         Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_ACCOUNT, new String[]{"id", "uuid", "nickName", "isFavo", "address", "baseChain",
                 "hasPrivateKey", "resource", "spec", "fromMnemonic", "path",
-                "isValidator", "sequenceNumber", "accountNumber", "fetchTime", "msize", "importTime", "lastTotal", "sortOrder", "pushAlarm", "newBip", "customPath"}, null, null, null, null, null);
+                "isValidator", "sequenceNumber", "accountNumber", "fetchTime", "msize", "importTime", "lastTotal", "sortOrder", "newBip", "customPath"}, null, null, null, null, null);
         if (cursor != null && cursor.moveToFirst()) {
             do {
                 Account account = new Account(
@@ -1221,8 +1259,7 @@ public class BaseData {
                         cursor.getString(17),
                         cursor.getLong(18),
                         cursor.getInt(19) > 0,
-                        cursor.getInt(20) > 0,
-                        cursor.getInt(21)
+                        cursor.getInt(20)
                 );
                 account.setBalances(onSelectBalance(account.id));
                 result.add(account);
@@ -1282,11 +1319,11 @@ public class BaseData {
         return result;
     }
 
-    public Account onSelectAccount(String id) {
+    public Account getAccount(String id) {
         Account result = null;
         Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_ACCOUNT, new String[]{"id", "uuid", "nickName", "isFavo", "address", "baseChain",
                 "hasPrivateKey", "resource", "spec", "fromMnemonic", "path",
-                "isValidator", "sequenceNumber", "accountNumber", "fetchTime", "msize", "importTime", "lastTotal", "sortOrder", "pushAlarm", "newBip", "customPath"}, "id == ?", new String[]{id}, null, null, null);
+                "isValidator", "sequenceNumber", "accountNumber", "fetchTime", "msize", "importTime", "lastTotal", "sortOrder", "newBip", "customPath"}, "id == ?", new String[]{id}, null, null, null);
         if (cursor != null && cursor.moveToFirst()) {
             result = new Account(
                     cursor.getLong(0),
@@ -1309,8 +1346,7 @@ public class BaseData {
                     cursor.getString(17),
                     cursor.getLong(18),
                     cursor.getInt(19) > 0,
-                    cursor.getInt(20) > 0,
-                    cursor.getInt(21)
+                    cursor.getInt(20)
             );
             result.setBalances(onSelectBalance(result.id));
         }
@@ -1325,7 +1361,7 @@ public class BaseData {
         ArrayList<Account> result = new ArrayList<>();
         Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_ACCOUNT, new String[]{"id", "uuid", "nickName", "isFavo", "address", "baseChain",
                 "hasPrivateKey", "resource", "spec", "fromMnemonic", "path",
-                "isValidator", "sequenceNumber", "accountNumber", "fetchTime", "msize", "importTime", "lastTotal", "sortOrder", "pushAlarm", "newBip", "customPath"}, "address == ?", new String[]{address}, null, null, null);
+                "isValidator", "sequenceNumber", "accountNumber", "fetchTime", "msize", "importTime", "lastTotal", "sortOrder", "newBip", "customPath"}, "address == ?", new String[]{address}, null, null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 do {
@@ -1350,8 +1386,7 @@ public class BaseData {
                             cursor.getString(17),
                             cursor.getLong(18),
                             cursor.getInt(19) > 0,
-                            cursor.getInt(20) > 0,
-                            cursor.getInt(21)
+                            cursor.getInt(20)
                     );
                     account.setBalances(onSelectBalance(account.id));
                     result.add(account);
@@ -1395,13 +1430,12 @@ public class BaseData {
         values.put("msize", account.msize);
         values.put("importTime", account.importTime);
         values.put("sortOrder", 9999l);
-        values.put("pushAlarm", account.pushAlarm);
         values.put("newBip", account.newBip44);
         values.put("customPath", account.customPath);
         return getBaseDB().insertOrThrow(BaseConstant.DB_TABLE_ACCOUNT, null, values);
     }
 
-    public long onUpdateAccount(Account account) {
+    public long updateAccount(Account account) {
         ContentValues values = new ContentValues();
         if (!TextUtils.isEmpty(account.nickName))
             values.put("nickName", account.nickName);
@@ -1422,21 +1456,6 @@ public class BaseData {
         ContentValues values = new ContentValues();
         values.put("lastTotal", amount);
         return getBaseDB().update(BaseConstant.DB_TABLE_ACCOUNT, values, "id = ?", new String[]{"" + account.id});
-    }
-
-    public void onUpdateAccountOrders(ArrayList<Account> accounts) {
-        for (Account account : accounts) {
-            ContentValues values = new ContentValues();
-            values.put("sortOrder", account.sortOrder);
-            getBaseDB().update(BaseConstant.DB_TABLE_ACCOUNT, values, "id = ?", new String[]{"" + account.id});
-        }
-    }
-
-    public Account onUpdatePushEnabled(Account account, boolean using) {
-        ContentValues values = new ContentValues();
-        values.put("pushAlarm", using);
-        getBaseDB().update(BaseConstant.DB_TABLE_ACCOUNT, values, "id = ?", new String[]{"" + account.id});
-        return onSelectAccount("" + account.id);
     }
 
     public long onOverrideAccount(Account account) {
@@ -1605,7 +1624,7 @@ public class BaseData {
         return onInsertBalance(balance);
     }
 
-    public void onUpdateBalances(long accountId, ArrayList<Balance> balances) {
+    public void updateBalances(long accountId, List<Balance> balances) {
         if (balances == null || balances.size() == 0) {
             onDeleteBalance("" + accountId);
             return;
@@ -1628,5 +1647,65 @@ public class BaseData {
 
     public boolean onDeleteBalance(String accountId) {
         return getBaseDB().delete(BaseConstant.DB_TABLE_BALANCE, "accountId = ?", new String[]{accountId}) > 0;
+    }
+
+    public void clear() {
+        mIbcPaths = new ArrayList<>();
+        mIbcTokens = new ArrayList<>();
+        mChainParam = null;
+        mAssets = new ArrayList<>();
+        mCw20Assets = new ArrayList<>();
+
+        mSifLmIncentive = null;
+
+        mNodeInfo = null;
+        mAllValidators = new ArrayList<>();
+        mMyValidators = new ArrayList<>();
+        mTopValidators = new ArrayList<>();
+        mOtherValidators = new ArrayList<>();
+
+        mBalances = new ArrayList<>();
+        mMyDelegations = new ArrayList<>();
+        mMyUnbondings = new ArrayList<>();
+        mMyRewards = new ArrayList<>();
+
+        //kava GRPC
+        mIncentiveParam5 = null;
+        mIncentiveRewards = null;
+        mMyHardDeposits = new ArrayList<>();
+        mMyHardBorrows = new ArrayList<>();
+        mModuleCoins = new ArrayList<>();
+        mReserveCoins = new ArrayList<>();
+
+
+        //binance
+        mBnbTokens = new ArrayList<>();
+        mBnbTickers = new ArrayList<>();
+        mBnbFees = new ArrayList<>();
+
+        //gRPC
+        mGRpcNodeInfo = null;
+        mGRpcAccount = null;
+        mGRpcTopValidators = new ArrayList<>();
+        mGRpcOtherValidators = new ArrayList<>();
+        mGRpcAllValidators = new ArrayList<>();
+        mGRpcMyValidators = new ArrayList<>();
+
+        mGrpcBalance = new ArrayList<>();
+        mGrpcVesting = new ArrayList<>();
+        mGrpcDelegations = new ArrayList<>();
+        mGrpcUndelegations = new ArrayList<>();
+        mGrpcRewards = new ArrayList<>();
+
+        mGrpcStarNameFee = null;
+        mGrpcStarNameConfig = null;
+
+        mGrpcGravityPools = new ArrayList<>();
+
+        //okex
+        mOkStaking = null;
+        mOkUnbonding = null;
+        mOkTokenList = null;
+        mOkTickersList = null;
     }
 }

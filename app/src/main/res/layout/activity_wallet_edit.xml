@@ -24,7 +24,7 @@
             android:layout_centerVertical="true">
 
             <TextView
-                android:id="@+id/toolbar_title"
+                android:id="@+id/toolbarTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/font_ssm_17_white"

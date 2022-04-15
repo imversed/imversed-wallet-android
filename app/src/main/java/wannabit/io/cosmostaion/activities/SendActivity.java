@@ -45,7 +45,7 @@ public class SendActivity extends BaseBroadCastActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_step);
-        TextView titleView = findViewById(R.id.toolbar_title);
+        TextView titleView = findViewById(R.id.toolbarTitleTextView);
         mIvStep = findViewById(R.id.send_step);
         mTvStep = findViewById(R.id.send_step_msg);
         mViewPager = findViewById(R.id.view_pager);
@@ -56,15 +56,13 @@ public class SendActivity extends BaseBroadCastActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mTvStep.setText(R.string.str_send_step_0);
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_SIMPLE_SEND;
 
         mDenom = getIntent().getStringExtra("sendTokenDenom");
         if (baseChain.equals(BaseChain.BNB_MAIN)) {
             mBnbToken = getBaseDao().getBnbToken(mDenom);
-        } else if (baseChain.equals(BaseChain.IRIS_MAIN) || baseChain.equals(BaseChain.IRIS_TEST)) {
-//            mIrisToken = getBaseDao().getIrisToken(mDenom);
         }
 
         mPageAdapter = new SendPageAdapter(getSupportFragmentManager());

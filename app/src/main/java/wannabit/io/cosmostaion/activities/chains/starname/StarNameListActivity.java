@@ -42,7 +42,6 @@ import wannabit.io.cosmostaion.utils.WLog;
 public class StarNameListActivity extends BaseActivity implements TaskListener {
 
     private Toolbar mToolbar;
-    private TextView mToolbarTitle;
     private ViewPager mNameServicePager;
     private TabLayout mNameServiceTapLayer;
     private StarNamePageAdapter mPageAdapter;
@@ -57,11 +56,10 @@ public class StarNameListActivity extends BaseActivity implements TaskListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starname_list);
         mToolbar = findViewById(R.id.toolbar);
-        mToolbarTitle = findViewById(R.id.toolbar_title);
         mNameServiceTapLayer = findViewById(R.id.name_service_tab);
         mNameServicePager = findViewById(R.id.name_service_view_pager);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
 
         mPageAdapter = new StarNamePageAdapter(getSupportFragmentManager());

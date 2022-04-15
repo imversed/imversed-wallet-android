@@ -11,6 +11,7 @@ import cosmos.base.query.v1beta1.Pagination;
 import cosmos.staking.v1beta1.QueryGrpc;
 import cosmos.staking.v1beta1.QueryOuterClass;
 import cosmos.staking.v1beta1.Staking;
+import kotlin.Deprecated;
 import wannabit.io.cosmostaion.base.BaseApplication;
 import wannabit.io.cosmostaion.base.BaseChain;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
@@ -19,16 +20,15 @@ import wannabit.io.cosmostaion.task.TaskListener;
 import wannabit.io.cosmostaion.task.TaskResult;
 import wannabit.io.cosmostaion.utils.WLog;
 
+@Deprecated(message = "Migrate to rx")
 public class BondedValidatorsGrpcTask extends CommonTask {
-    private final BaseChain mChain;
     private final ArrayList<Staking.Validator> mResultData = new ArrayList<>();
     private final QueryGrpc.QueryBlockingStub mStub;
 
     public BondedValidatorsGrpcTask(BaseApplication app, TaskListener listener, BaseChain chain) {
         super(app, listener);
-        this.mChain = chain;
         this.result.taskType = TASK_GRPC_FETCH_BONDED_VALIDATORS;
-        this.mStub = QueryGrpc.newBlockingStub(ChannelBuilder.getChain(mChain)).withDeadlineAfter(TIME_OUT, TimeUnit.SECONDS);
+        this.mStub = QueryGrpc.newBlockingStub(ChannelBuilder.getChain(chain)).withDeadlineAfter(TIME_OUT, TimeUnit.SECONDS);
     }
 
 

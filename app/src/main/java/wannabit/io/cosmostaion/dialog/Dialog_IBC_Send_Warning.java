@@ -34,12 +34,9 @@ public class Dialog_IBC_Send_Warning extends DialogFragment {
         Button btn_continue = view.findViewById(R.id.btn_continue);
         final String denom = getArguments().getString("sendTokenDenom");
 
-        btn_continue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((BaseActivity) getActivity()).onCheckIbcTransfer(denom);
-                dismiss();
-            }
+        btn_continue.setOnClickListener(v -> {
+            ((BaseActivity) getActivity()).onCheckIbcTransfer(denom);
+            dismiss();
         });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

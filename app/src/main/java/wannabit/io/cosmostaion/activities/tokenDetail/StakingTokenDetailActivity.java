@@ -90,7 +90,7 @@ public class StakingTokenDetailActivity extends BaseActivity implements View.OnC
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().onSelectAccount(getBaseDao().getLastUser());
+        account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mMainDenom = baseChain.getMainDenom();
         mDivideDecimal = WDp.mainDivideDecimal(baseChain);

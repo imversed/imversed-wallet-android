@@ -5,6 +5,7 @@ import static wannabit.io.cosmostaion.base.BaseConstant.TASK_FETCH_NODE_INFO;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_NODE_INFO;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_WITHDRAW_ADDRESS;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,13 +20,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.widget.SwitchCompat;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.content.ContextCompat;
 
+import com.fulldive.wallet.extensions.ChainExtensionsKt;
+import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.fulldive.wallet.presentation.accounts.DeleteConfirmDialogFragment;
+import com.fulldive.wallet.presentation.main.intro.IntroActivity;
+import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
+import com.fulldive.wallet.rx.AppSchedulers;
 
+import io.reactivex.disposables.Disposable;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseChain;
@@ -35,26 +45,22 @@ import wannabit.io.cosmostaion.dialog.Dialog_RewardAddressChangeInfo;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.model.NodeInfo;
 import wannabit.io.cosmostaion.task.FetchTask.NodeInfoTask;
-import wannabit.io.cosmostaion.task.FetchTask.PushUpdateTask;
 import wannabit.io.cosmostaion.task.TaskListener;
 import wannabit.io.cosmostaion.task.TaskResult;
 import wannabit.io.cosmostaion.task.gRpcTask.NodeInfoGrpcTask;
 import wannabit.io.cosmostaion.task.gRpcTask.WithdrawAddressGrpcTask;
 import wannabit.io.cosmostaion.utils.WDp;
+import wannabit.io.cosmostaion.utils.WLog;
 
 public class AccountDetailActivity extends BaseActivity implements View.OnClickListener, TaskListener {
 
-    private Toolbar mToolbar;
+    private Toolbar toolbar;
     private View mView;
     private Button mBtnCheck, mBtnCheckKey, mBtnDelete;
 
     private CardView mCardName;
     private ImageView mChainImg, mNameEditImg;
     private TextView mAccountName;
-
-    private CardView mCardAlarm;
-    private SwitchCompat mAlarmSwitch;
-    private TextView mAlarmMsg;
 
     private CardView mCardBody;
     private ImageView mBtnQr;
@@ -67,11 +73,23 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
     private ImageView mBtnRewardAddressChange;
     private TextView mRewardAddress;
 
+    private AccountsInteractor accountsInteractor;
+
+    private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    actionDeleteAccount(account.id);
+                }
+            }
+    );
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_detail);
-        mToolbar = findViewById(R.id.toolbar);
+        accountsInteractor = getAppInjector().getInstance(AccountsInteractor.class);
+
+        toolbar = findViewById(R.id.toolbar);
         mBtnCheck = findViewById(R.id.btn_check);
         mView = findViewById(R.id.view);
         mBtnCheckKey = findViewById(R.id.btn_check_key);
@@ -80,9 +98,6 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
         mChainImg = findViewById(R.id.chain_img);
         mNameEditImg = findViewById(R.id.account_edit);
         mAccountName = findViewById(R.id.account_name);
-        mCardAlarm = findViewById(R.id.card_alarm);
-        mAlarmSwitch = findViewById(R.id.switch_using_alarm);
-        mAlarmMsg = findViewById(R.id.account_alarm_msg);
         mCardBody = findViewById(R.id.card_body);
         mBtnQr = findViewById(R.id.account_qr);
         mAccountAddress = findViewById(R.id.account_address);
@@ -97,7 +112,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
         mBtnRewardAddressChange = findViewById(R.id.reward_change_btn);
         mRewardAddress = findViewById(R.id.reward_address);
 
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -129,15 +144,37 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
 
     public void onStartDeleteUser(Long accountId) {
         if (account.hasPrivateKey) {
-            Intent intent = new Intent(AccountDetailActivity.this, PasswordCheckActivity.class);
-            intent.putExtra(BaseConstant.CONST_PW_PURPOSE, BaseConstant.CONST_PW_DELETE_ACCOUNT);
-            intent.putExtra("id", accountId);
-            startActivity(intent);
-            overridePendingTransition(R.anim.slide_in_bottom, R.anim.fade_out);
+            final Intent intent = new Intent(this, CheckPasswordActivity.class);
+            launcher.launch(
+                    intent,
+                    ActivityOptionsCompat.makeCustomAnimation(this, R.anim.slide_in_bottom, R.anim.fade_out)
+            );
         } else {
-            onDeleteAccount(accountId);
+            actionDeleteAccount(accountId);
         }
     }
+
+    private void actionDeleteAccount(Long accountId) {
+        showWaitDialog();
+        Disposable disposable = accountsInteractor.deleteAccount(accountId)
+                .subscribeOn(AppSchedulers.INSTANCE.io())
+                .observeOn(AppSchedulers.INSTANCE.ui())
+                .doOnError(error -> WLog.e(error.toString()))
+                .subscribe(
+                        () -> {
+                            WLog.w("Account was selected after removing");
+                            startMainActivity(0);
+                        },
+                        error -> {
+                            Toast.makeText(getBaseContext(), R.string.str_unknown_error_msg, Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(this, IntroActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        }
+                );
+        compositeDisposable.add(disposable);
+    }
+
 
     public void onStartChangeRewardAddress() {
         if (!account.hasPrivateKey) {
@@ -156,19 +193,18 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
         if (getIntent() == null || TextUtils.isEmpty(getIntent().getStringExtra("id"))) {
             onBackPressed();
         }
-        account = getBaseDao().onSelectAccount(getIntent().getStringExtra("id"));
+        account = getBaseDao().getAccount(getIntent().getStringExtra("id"));
         if (account == null) onBackPressed();
         baseChain = BaseChain.getChain(account.baseChain);
 
-        onUpdatePushStatusUI();
-        WDp.showChainDp(AccountDetailActivity.this, baseChain, mCardName, mCardAlarm, mCardBody, mCardRewardAddress);
+        WDp.showChainDp(AccountDetailActivity.this, baseChain, mCardName, mCardBody, mCardRewardAddress);
         mChainImg.setImageResource(baseChain.getChainIcon());
 
         if (baseChain.isGRPC()) {
             new WithdrawAddressGrpcTask(getBaseApplication(), this, baseChain, account).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             new NodeInfoGrpcTask(getBaseApplication(), this, baseChain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
-            new NodeInfoTask(getBaseApplication(), this, BaseChain.getChain(account.baseChain)).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new NodeInfoTask(getBaseApplication(), this, baseChain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
 
         mAccountName.setText(account.getAccountTitle(this));
@@ -177,7 +213,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
 
         if (account.hasPrivateKey && account.fromMnemonic) {
             mAccountState.setText(getString(R.string.str_with_mnemonic));
-            mAccountPath.setText(WDp.getPath(BaseChain.getChain(account.baseChain), Integer.parseInt(account.path), account.customPath));
+            mAccountPath.setText(ChainExtensionsKt.getPathString(baseChain, Integer.parseInt(account.path), account.customPath));
             mPathLayer.setVisibility(View.VISIBLE);
             mImportMsg.setVisibility(View.GONE);
             mBtnCheck.setVisibility(View.VISIBLE);
@@ -185,7 +221,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
             mBtnCheck.setText(getString(R.string.str_check_mnemonic));
             mBtnCheckKey.setText(getString(R.string.str_check_private_key));
 
-        } else if (account.hasPrivateKey && !account.fromMnemonic) {
+        } else if (account.hasPrivateKey) {
             mAccountState.setText(getString(R.string.str_with_privatekey));
             mPathLayer.setVisibility(View.GONE);
             mImportMsg.setVisibility(View.GONE);
@@ -195,13 +231,13 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
             mBtnCheckKey.setText(getString(R.string.str_check_private_key));
             if (baseChain.equals(OKEX_MAIN)) {
                 mPathLayer.setVisibility(View.VISIBLE);
-                mAccountPathTitle.setText("Address Type");
+                mAccountPathTitle.setText(R.string.str_address_type);
                 if (account.customPath > 0) {
-                    mAccountPath.setText("Ethereum Type Address");
+                    mAccountPath.setText(R.string.str_ethereum_type_address);
                 } else {
-                    mAccountPath.setText("Legacy Tendermint Type Address");
+                    mAccountPath.setText(R.string.str_legacy_tendermint_type_address);
                 }
-                mAccountPath.setTextColor(getResources().getColor(R.color.colorPhoton));
+                mAccountPath.setTextColor(ContextCompat.getColor(this, R.color.colorPhoton));
             }
 
         } else {
@@ -217,31 +253,9 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
 
     }
 
-    private void onUpdatePushStatusUI() {
-        if (account.pushAlarm && isNotificationsEnabled()) {
-            mAlarmSwitch.setChecked(true);
-            mAlarmMsg.setText(getString(R.string.str_alarm_enabled));
-        } else {
-            mAlarmSwitch.setChecked(false);
-            mAlarmMsg.setText(getString(R.string.str_alarm_disabled));
-        }
-
-        mAlarmSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (buttonView.isPressed()) {
-                if (!isNotificationsEnabled()) {
-                    onShowPushEnableDialog();
-                    buttonView.setEnabled(false);
-                    return;
-                }
-                new PushUpdateTask(getBaseApplication(), AccountDetailActivity.this, account, getBaseDao().getFCMToken(), isChecked).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                showWaitDialog();
-            }
-        });
-    }
-
     public void onChangeNickName(String name) {
         account.nickName = name;
-        if (getBaseDao().onUpdateAccount(account) > 0) {
+        if (getBaseDao().updateAccount(account) > 0) {
             onInitView();
         }
     }
@@ -308,7 +322,6 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
             }
 
             if (TextUtils.isEmpty(mRewardAddress.getText().toString())) {
-                new Exception().printStackTrace();
                 Toast.makeText(getBaseContext(), R.string.error_network_error, Toast.LENGTH_SHORT).show();
 
                 return;
@@ -328,9 +341,9 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
             if (!TextUtils.isEmpty(rewardAddress)) {
                 mRewardAddress.setText(rewardAddress.trim());
                 if (rewardAddress.equals(account.address)) {
-                    mRewardAddress.setTextColor(getResources().getColor(R.color.colorWhite));
+                    mRewardAddress.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
                 } else {
-                    mRewardAddress.setTextColor(getResources().getColor(R.color.colorRed));
+                    mRewardAddress.setTextColor(ContextCompat.getColor(this, R.color.colorRed));
                 }
             }
 
@@ -343,22 +356,9 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
         } else if (result.taskType == TASK_GRPC_FETCH_NODE_INFO) {
             tendermint.p2p.Types.NodeInfo nodeinfo = (tendermint.p2p.Types.NodeInfo) result.resultData;
             if (nodeinfo != null) {
-                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mAccountChain.setText(nodeinfo.getNetwork());
-                    }
-                }, 100);
+                new Handler(Looper.getMainLooper()).postDelayed(() -> mAccountChain.setText(nodeinfo.getNetwork()), 100);
 
             }
-
-        } else if (result.taskType == BaseConstant.TASK_PUSH_STATUS_UPDATE) {
-            if (result.isSuccess) {
-                account = getBaseDao().onUpdatePushEnabled(account, (boolean) result.resultData);
-            }
-            onUpdatePushStatusUI();
-            hideWaitDialog();
-
         }
     }
 }

@@ -19,7 +19,7 @@ import com.fulldive.wallet.presentation.accounts.AddAccountDialogFragment
 import com.fulldive.wallet.presentation.base.BaseMvpDialogFragment
 import com.joom.lightsaber.getInstance
 import wannabit.io.cosmostaion.R
-import wannabit.io.cosmostaion.base.BaseActivity
+import wannabit.io.cosmostaion.activities.RestoreActivity
 import wannabit.io.cosmostaion.base.BaseChain
 
 
@@ -83,7 +83,7 @@ class ChoiceChainDialogFragment : BaseMvpDialogFragment() {
 
     private fun onChainClicked(chain: BaseChain) {
         sendResult(chain)
-        (activity as? BaseActivity)?.apply {
+        (activity as? RestoreActivity)?.apply {
             if (isAddNet) {
                 onChainSelected(chain)
             } else {
@@ -121,7 +121,7 @@ class ChoiceChainDialogFragment : BaseMvpDialogFragment() {
             arguments = bundleOf(
                 KEY_ADD to isAdd,
                 KEY_REQUEST_CODE to requestCode,
-                KEY_CHAINS to chains
+                KEY_CHAINS to ArrayList(chains)
             )
         }
     }

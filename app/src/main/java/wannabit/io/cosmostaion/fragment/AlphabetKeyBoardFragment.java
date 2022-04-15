@@ -41,7 +41,7 @@ public class AlphabetKeyBoardFragment extends KeyboardFragment implements View.O
         Collections.shuffle(mAlphabetArray, new Random(System.nanoTime()));
         final String packageName = mRootView.getContext().getPackageName();
         for (int i = 0; i < mAlphabetBtns.length; i++) {
-            mAlphabetBtns[i] = mRootView.findViewById(getResources().getIdentifier("password_char" + i, "id", packageName));
+            mAlphabetBtns[i] = mRootView.findViewById(getResources().getIdentifier("alphabetButton" + i, "id", packageName));
             mAlphabetBtns[i].setText(mAlphabetArray.get(i));
             mAlphabetBtns[i].setOnClickListener(this);
         }
@@ -51,7 +51,7 @@ public class AlphabetKeyBoardFragment extends KeyboardFragment implements View.O
     }
 
     @Override
-    public void onShuffleKeyboard() {
+    public void shuffleKeyboard() {
         final Animation fadeInAnimation = AnimationUtils.loadAnimation(requireContext(), R.anim.fade_in);
         fadeInAnimation.reset();
 
@@ -82,13 +82,13 @@ public class AlphabetKeyBoardFragment extends KeyboardFragment implements View.O
     @Override
     public void onClick(View view) {
         if (view instanceof Button) {
-            if (mListner != null) {
-                mListner.userInsertKey(((Button) view).getText().toString().trim().toCharArray()[0]);
+            if (keyboardListener != null) {
+                keyboardListener.userInsertKey(((Button) view).getText().toString().trim().toCharArray()[0]);
             }
 
         } else if (view instanceof ImageButton) {
-            if (mListner != null) {
-                mListner.userDeleteKey();
+            if (keyboardListener != null) {
+                keyboardListener.userDeleteKey();
             }
         }
     }

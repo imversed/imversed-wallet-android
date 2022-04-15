@@ -2,13 +2,14 @@ package wannabit.io.cosmostaion.utils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 import osmosis.lockup.Lock;
 
 public class OsmosisPeriodLockWrapper implements Serializable {
-    public ArrayList<Lock.PeriodLock> array;
+    public List<Lock.PeriodLock> array;
 
-    public OsmosisPeriodLockWrapper(ArrayList<Lock.PeriodLock> a) {
+    public OsmosisPeriodLockWrapper(List<Lock.PeriodLock> a) {
         array = a;
     }
 }

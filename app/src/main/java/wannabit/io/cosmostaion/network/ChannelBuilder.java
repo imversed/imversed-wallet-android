@@ -12,7 +12,7 @@ import wannabit.io.cosmostaion.base.BaseChain;
 
 public class ChannelBuilder {
 
-    public final static int TIME_OUT = 8;
+    public final static long TIME_OUT = 8L;
     private final static HashMap<String, ManagedChannel> channelHashMap = new HashMap<>();
 
     @Nullable

@@ -5,19 +5,16 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
-import android.widget.TextView
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.content.ContextCompat
-import com.fulldive.wallet.interactors.secret.MnemonicUtils
 import com.fulldive.wallet.presentation.base.BaseMvpActivity
-import com.fulldive.wallet.presentation.lockscreen.CheckPasswordActivity
+import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity
+import com.fulldive.wallet.presentation.security.password.SetPasswordActivity
 import com.joom.lightsaber.getInstance
 import moxy.ktx.moxyPresenter
 import wannabit.io.cosmostaion.R
 import wannabit.io.cosmostaion.activities.MainActivity
-import wannabit.io.cosmostaion.activities.PasswordSetActivity
 import wannabit.io.cosmostaion.base.BaseChain
 import wannabit.io.cosmostaion.databinding.ActivityCreateBinding
 
@@ -61,6 +58,8 @@ class CreateAccountActivity : BaseMvpActivity<ActivityCreateBinding>(), CreateAc
             setDisplayShowTitleEnabled(false)
             setDisplayHomeAsUpEnabled(true)
         }
+
+        // TODO: add copy mnemonic
     }
 
     override fun showAccountAddress(address: String) {
@@ -80,23 +79,8 @@ class CreateAccountActivity : BaseMvpActivity<ActivityCreateBinding>(), CreateAc
 
     override fun showChain(chain: BaseChain) {
         binding {
-            mnemonicsCardView.setCardBackgroundColor(
-                ContextCompat.getColor(
-                    baseContext,
-                    chain.chainBackground
-                )
-            )
-            mnemonicsCardView.visibility = View.VISIBLE
-        }
-        for (i in 0 until MnemonicUtils.MNEMONIC_WORDS_COUNT) {
-            resources
-                .getIdentifier("mnemonicLayout$i", "id", packageName)
-                .let { id -> findViewById<View>(id) }
-                .setBackgroundResource(chain.mnemonicBackground)
-            resources
-                .getIdentifier("mnemonicTextView$i", "id", packageName)
-                .let { id -> findViewById<TextView>(id) }
-                .text = getString(R.string.str_mnemonic_counder_template, i)
+            mnemonicsLayout.setChain(chain)
+            mnemonicsLayout.visibility = View.VISIBLE
         }
     }
 
@@ -107,12 +91,7 @@ class CreateAccountActivity : BaseMvpActivity<ActivityCreateBinding>(), CreateAc
             nextButton.setOnClickListener {
                 presenter.onCreateAccountClicked()
             }
-        }
-        for (i in 0 until MnemonicUtils.MNEMONIC_WORDS_COUNT) {
-            resources
-                .getIdentifier("mnemonicEditText$i", "id", packageName)
-                .let { id -> findViewById<TextView>(id) }
-                .text = mnemonicWords[i]
+            mnemonicsLayout.setMnemonicWords(mnemonicWords)
         }
     }
 
@@ -136,7 +115,7 @@ class CreateAccountActivity : BaseMvpActivity<ActivityCreateBinding>(), CreateAc
 
     override fun requestCreatePassword() {
         launcherSetPassword.launch(
-            Intent(this, PasswordSetActivity::class.java),
+            Intent(this, SetPasswordActivity::class.java),
             ActivityOptionsCompat.makeCustomAnimation(this, R.anim.slide_in_bottom, R.anim.fade_out)
         )
     }

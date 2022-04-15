@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <TextView
-            android:id="@+id/toolbar_title"
+            android:id="@+id/toolbarTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/font_ssm_17_white"
@@ -26,7 +26,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"

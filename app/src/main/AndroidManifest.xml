@@ -42,14 +42,14 @@
 
 
         <activity
-            android:name=".activities.PasswordSetActivity"
+            android:name="com.fulldive.wallet.presentation.security.password.SetPasswordActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name="com.fulldive.wallet.presentation.lockscreen.CheckPasswordActivity"
+            android:name="com.fulldive.wallet.presentation.security.password.CheckPasswordActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -200,12 +200,6 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
-            android:name=".activities.chains.desmos.LinkAccountActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
-
-        <activity
             android:name=".activities.ValidatorListActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -302,7 +296,7 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".activities.MnemonicCheckActivity"
+            android:name="com.fulldive.wallet.presentation.security.mnemonic.ShowMnemonicActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
@@ -579,26 +573,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
-
-
-        <activity
-            android:name=".activities.chains.rizon.EventHorizonActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
-
-        <activity
-            android:name=".activities.chains.rizon.EventHorizonDetailActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
-
-        <activity
-            android:name=".activities.chains.rizon.RizonSwapStatusActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="adjustResize|stateHidden" />
-
 
         <activity
             android:name=".activities.chains.cosmos.GravityListActivity"
