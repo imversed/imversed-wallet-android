@@ -90,12 +90,12 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (dy > 0) {
-                    if (getMainActivity().mFloatBtn.isShown()) {
-                        getMainActivity().mFloatBtn.hide();
+                    if (getMainActivity().floatingActionButton.isShown()) {
+                        getMainActivity().floatingActionButton.hide();
                     }
                 } else if (dy < 0) {
-                    if (!getMainActivity().mFloatBtn.isShown()) {
-                        getMainActivity().mFloatBtn.show();
+                    if (!getMainActivity().floatingActionButton.isShown()) {
+                        getMainActivity().floatingActionButton.show();
                     }
                 }
             }

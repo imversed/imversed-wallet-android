@@ -23,8 +23,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -40,6 +42,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 import desmos.profiles.v1beta1.ModelsProfile;
 import wannabit.io.cosmostaion.R;
@@ -50,6 +53,7 @@ import wannabit.io.cosmostaion.activities.chains.sif.SifIncentiveActivity;
 import wannabit.io.cosmostaion.appextensions.PopupManager;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseChain;
+import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.base.IBusyFetchListener;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.dao.Account;
@@ -58,6 +62,7 @@ import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.fragment.MainSendFragment;
 import wannabit.io.cosmostaion.fragment.MainSettingFragment;
 import wannabit.io.cosmostaion.fragment.MainTokensFragment;
+import wannabit.io.cosmostaion.model.kava.IncentiveReward;
 import wannabit.io.cosmostaion.utils.FetchCallBack;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
@@ -67,12 +72,12 @@ import wannabit.io.cosmostaion.widget.TintableImageView;
 
 public class MainActivity extends BaseActivity implements FetchCallBack {
 
-    private ImageView mToolbarChainImg;
-    private TextView mToolbarTitle;
-    private TextView mToolbarChainName;
+    private ImageView toolbarChainImageView;
+    private TextView toolbarTitleTextView;
+    private TextView toolbarChainTextView;
 
-    public MainViewPageAdapter mPageAdapter;
-    public FloatingActionButton mFloatBtn;
+    public MainViewPageAdapter adapter;
+    public FloatingActionButton floatingActionButton;
 
     private BaseChain mSelectedChain;
 
@@ -80,56 +85,33 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mToolbarTitle = findViewById(R.id.toolbar_title);
-        mToolbarChainImg = findViewById(R.id.toolbar_net_image);
-        mToolbarChainName = findViewById(R.id.toolbar_net_name);
-        mFloatBtn = findViewById(R.id.btn_floating);
+        toolbarTitleTextView = findViewById(R.id.toolbarTitleTextView);
+        toolbarChainImageView = findViewById(R.id.toolbarChainImageView);
+        toolbarChainTextView = findViewById(R.id.toolbarChainTextView);
+        floatingActionButton = findViewById(R.id.floatingActionButton);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
-        LockedViewPager contentsPager = findViewById(R.id.view_pager);
+        LockedViewPager viewPager = findViewById(R.id.view_pager);
         TabLayout tabLayer = findViewById(R.id.bottom_tab);
 
-        mFloatBtn.setOnClickListener(v -> startSendMainDenom());
+        floatingActionButton.setOnClickListener(v -> startSendMainDenom());
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        mPageAdapter = new MainViewPageAdapter(getSupportFragmentManager());
-        contentsPager.setPageTransformer(false, new FadePageTransformer());
-        contentsPager.setOffscreenPageLimit(3);
-        contentsPager.setAdapter(mPageAdapter);
-        tabLayer.setupWithViewPager(contentsPager);
+        adapter = new MainViewPageAdapter(getSupportFragmentManager());
+        viewPager.setPageTransformer(false, new FadePageTransformer());
+        viewPager.setOffscreenPageLimit(3);
+        viewPager.setAdapter(adapter);
+        tabLayer.setupWithViewPager(viewPager);
         tabLayer.setTabRippleColor(null);
 
-        View tab0 = LayoutInflater.from(this).inflate(R.layout.view_tab_item, null);
-        TintableImageView tabItemIcon0 = tab0.findViewById(R.id.tabItemIcon);
-        TextView tabItemText0 = tab0.findViewById(R.id.tabItemText);
-        tabItemIcon0.setImageResource(R.drawable.wallet_ic);
-        tabItemText0.setText(R.string.str_main_wallet);
-        tabLayer.getTabAt(0).setCustomView(tab0);
+        createTab(tabLayer, 0, R.drawable.wallet_ic, R.string.str_main_wallet);
+        createTab(tabLayer, 1, R.drawable.tokens_ic, R.string.str_main_tokens);
+        createTab(tabLayer, 2, R.drawable.ts_ic, R.string.str_main_history);
+        createTab(tabLayer, 3, R.drawable.setting_ic, R.string.str_main_set);
 
-        View tab1 = LayoutInflater.from(this).inflate(R.layout.view_tab_item, null);
-        TintableImageView tabItemIcon1 = tab1.findViewById(R.id.tabItemIcon);
-        TextView tabItemText1 = tab1.findViewById(R.id.tabItemText);
-        tabItemIcon1.setImageResource(R.drawable.tokens_ic);
-        tabItemText1.setText(R.string.str_main_tokens);
-        tabLayer.getTabAt(1).setCustomView(tab1);
-
-        View tab2 = LayoutInflater.from(this).inflate(R.layout.view_tab_item, null);
-        TintableImageView tabItemIcon2 = tab2.findViewById(R.id.tabItemIcon);
-        TextView tabItemText2 = tab2.findViewById(R.id.tabItemText);
-        tabItemIcon2.setImageResource(R.drawable.ts_ic);
-        tabItemText2.setText(R.string.str_main_history);
-        tabLayer.getTabAt(2).setCustomView(tab2);
-
-        View tab3 = LayoutInflater.from(this).inflate(R.layout.view_tab_item, null);
-        TintableImageView tabItemIcon3 = tab3.findViewById(R.id.tabItemIcon);
-        TextView tabItemText3 = tab3.findViewById(R.id.tabItemText);
-        tabItemIcon3.setImageResource(R.drawable.setting_ic);
-        tabItemText3.setText(R.string.str_main_set);
-        tabLayer.getTabAt(3).setCustomView(tab3);
-
-        contentsPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i1) {
             }
@@ -140,16 +122,25 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
 
             @Override
             public void onPageSelected(int position) {
-                if (mPageAdapter != null && mPageAdapter.mCurrentFragment != null) {
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                if (adapter != null && adapter.currentFragment != null) {
+                    ((IRefreshTabListener) adapter.currentFragment).onRefreshTab();
                 }
-                if (position != 0) mFloatBtn.hide();
-                else if (!mFloatBtn.isShown()) mFloatBtn.show();
+                if (position != 0) floatingActionButton.hide();
+                else if (!floatingActionButton.isShown()) floatingActionButton.show();
             }
         });
 
-        contentsPager.setCurrentItem(getIntent().getIntExtra("page", 0), false);
+        viewPager.setCurrentItem(getIntent().getIntExtra("page", 0), false);
         PopupManager.INSTANCE.onAppStarted(this);
+    }
+
+    private void createTab(TabLayout tabLayer, int index, @DrawableRes int iconResId, @StringRes int titleResId) {
+        View tabView = LayoutInflater.from(this).inflate(R.layout.view_tab_item, null);
+        TintableImageView tabItemIconView = tabView.findViewById(R.id.tabItemIcon);
+        TextView tabItemTextView = tabView.findViewById(R.id.tabItemText);
+        tabItemIconView.setImageResource(iconResId);
+        tabItemTextView.setText(titleResId);
+        tabLayer.getTabAt(index).setCustomView(tabView);
     }
 
     @Override
@@ -178,18 +169,18 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
             showWaitDialog();
             onFetchAllData();
 
-            mToolbarChainImg.setImageResource(baseChain.getChainIcon());
-            WDp.getChainHint(baseChain, mToolbarChainName);
-            mToolbarChainName.setTextColor(WDp.getChainColor(this, baseChain));
+            toolbarChainImageView.setImageResource(baseChain.getChainIcon());
+            WDp.getChainHint(baseChain, toolbarChainTextView);
+            toolbarChainTextView.setTextColor(WDp.getChainColor(this, baseChain));
 
-            mFloatBtn.setImageTintList(ContextCompat.getColorStateList(this, baseChain.getFloatButtonColor()));
-            mFloatBtn.setBackgroundTintList(ContextCompat.getColorStateList(this, baseChain.getFloatButtonBackground()));
+            floatingActionButton.setImageTintList(ContextCompat.getColorStateList(this, baseChain.getFloatButtonColor()));
+            floatingActionButton.setBackgroundTintList(ContextCompat.getColorStateList(this, baseChain.getFloatButtonBackground()));
 
             mSelectedChain = baseChain;
             onChainSelect(mSelectedChain);
         }
 
-        mToolbarTitle.setText(account.getAccountTitle(this));
+        toolbarTitleTextView.setText(account.getAccountTitle(this));
     }
 
     private void onChainSelect(BaseChain baseChain) {
@@ -273,7 +264,7 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
     public void fetchFinished() {
         if (!isFinishing()) {
             hideWaitDialog();
-            for (Fragment fragment : mPageAdapter.getFragments()) {
+            for (Fragment fragment : adapter.getFragments()) {
                 if (fragment instanceof IRefreshTabListener) {
                     ((IRefreshTabListener) fragment).onRefreshTab();
                 }
@@ -285,9 +276,9 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
     public void fetchBusy() {
         if (!isFinishing()) {
             hideWaitDialog();
-            Fragment fragment = mPageAdapter.mCurrentFragment;
+            Fragment fragment = adapter.currentFragment;
             if (fragment instanceof IBusyFetchListener) {
-                ((IBusyFetchListener) mPageAdapter.mCurrentFragment).onBusyFetch();
+                ((IBusyFetchListener) adapter.currentFragment).onBusyFetch();
             }
         }
     }
@@ -298,16 +289,17 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
             showDialog(add);
             return;
         }
-
+        final BaseData baseData = getBaseDao();
         if (baseChain.equals(KAVA_MAIN)) {
-            BigDecimal available = getBaseDao().getAvailable(baseChain.getMainDenom());
+            BigDecimal available = baseData.getAvailable(baseChain.getMainDenom());
             BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, baseChain, CONST_PW_TX_CLAIM_INCENTIVE, 0);
             if (available.compareTo(txFee) <= 0) {
                 Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (getBaseDao().mIncentiveRewards.getRewardSum(TOKEN_KAVA) == BigDecimal.ZERO && getBaseDao().mIncentiveRewards.getRewardSum(TOKEN_HARD) == BigDecimal.ZERO &&
-                    getBaseDao().mIncentiveRewards.getRewardSum(TOKEN_SWP) == BigDecimal.ZERO) {
+            final IncentiveReward incentiveReward = baseData.mIncentiveRewards;
+            if (incentiveReward.getRewardSum(TOKEN_KAVA).equals(BigDecimal.ZERO) && incentiveReward.getRewardSum(TOKEN_HARD).equals(BigDecimal.ZERO) &&
+                    incentiveReward.getRewardSum(TOKEN_SWP).equals(BigDecimal.ZERO)) {
                 Toast.makeText(this, R.string.error_no_incentive_to_claim, Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -315,13 +307,13 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
             startActivity(intent);
 
         } else if (baseChain.equals(SIF_MAIN)) {
-            BigDecimal available = getBaseDao().getAvailable(baseChain.getMainDenom());
+            BigDecimal available = baseData.getAvailable(baseChain.getMainDenom());
             BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, baseChain, CONST_PW_TX_SIF_CLAIM_INCENTIVE, 0);
             if (available.compareTo(txFee) <= 0) {
                 Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (getBaseDao().mSifLmIncentive == null || getBaseDao().mSifLmIncentive.totalClaimableCommissionsAndClaimableRewards == 0) {
+            if (baseData.mSifLmIncentive == null || baseData.mSifLmIncentive.totalClaimableCommissionsAndClaimableRewards == 0) {
                 Toast.makeText(this, R.string.error_no_incentive_to_claim, Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -332,43 +324,42 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
 
     private static class MainViewPageAdapter extends FragmentPagerAdapter {
 
-        private final ArrayList<Fragment> mFragments = new ArrayList<>();
-        private Fragment mCurrentFragment;
+        private final ArrayList<Fragment> fragments = new ArrayList<>();
+        private Fragment currentFragment;
 
         public MainViewPageAdapter(FragmentManager fm) {
             super(fm);
-            mFragments.clear();
-            mFragments.add(MainSendFragment.newInstance(null));
-            mFragments.add(MainTokensFragment.newInstance(null));
-            mFragments.add(MainHistoryFragment.Companion.newInstance());
-            mFragments.add(MainSettingFragment.newInstance(null));
+            fragments.add(MainSendFragment.newInstance(null));
+            fragments.add(MainTokensFragment.newInstance(null));
+            fragments.add(MainHistoryFragment.Companion.newInstance());
+            fragments.add(MainSettingFragment.newInstance(null));
         }
 
         @NonNull
         @Override
         public Fragment getItem(int position) {
-            return mFragments.get(position);
+            return fragments.get(position);
         }
 
         @Override
         public int getCount() {
-            return mFragments.size();
+            return fragments.size();
         }
 
         @Override
         public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
             if (getCurrentFragment() != object) {
-                mCurrentFragment = ((Fragment) object);
+                currentFragment = ((Fragment) object);
             }
             super.setPrimaryItem(container, position, object);
         }
 
         public Fragment getCurrentFragment() {
-            return mCurrentFragment;
+            return currentFragment;
         }
 
-        public ArrayList<Fragment> getFragments() {
-            return mFragments;
+        public List<Fragment> getFragments() {
+            return fragments;
         }
     }
 

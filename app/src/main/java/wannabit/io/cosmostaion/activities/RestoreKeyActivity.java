@@ -40,7 +40,6 @@ import wannabit.io.cosmostaion.utils.WKey;
 
 public class RestoreKeyActivity extends BaseActivity implements View.OnClickListener, TaskListener {
 
-    private Toolbar toolbar;
     private EditText addressEditText;
     private Button cancelButton, nextButton;
     private LinearLayout scanQRButton, pasteButton;
@@ -64,7 +63,7 @@ public class RestoreKeyActivity extends BaseActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restore_key);
 
-        toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         addressEditText = findViewById(R.id.addressEditText);
         cancelButton = findViewById(R.id.cancelButton);
         nextButton = findViewById(R.id.nextButton);

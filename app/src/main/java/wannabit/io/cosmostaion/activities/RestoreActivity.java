@@ -132,12 +132,9 @@ public class RestoreActivity extends BaseActivity implements View.OnClickListene
             final int position = i;
             mnemonicsEditText[i] = findViewById(getResources().getIdentifier("tv_mnemonic_" + i, "id", packageName));
             mnemonicsEditText[i].setShowSoftInputOnFocus(false);
-            mnemonicsEditText[i].setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus) {
-                        mnemonicPosition = position;
-                    }
+            mnemonicsEditText[i].setOnFocusChangeListener((v, hasFocus) -> {
+                if (hasFocus) {
+                    mnemonicPosition = position;
                 }
             });
         }
@@ -417,12 +414,9 @@ public class RestoreActivity extends BaseActivity implements View.OnClickListene
         @Override
         public void onBindViewHolder(@NonNull MnemonicHolder holder, @SuppressLint("RecyclerView") final int position) {
             holder.itemMnemonic.setText(mFilteredMnemonic.get(position));
-            holder.itemRoot.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mnemonicsEditText[mnemonicPosition].setText(mFilteredMnemonic.get(position));
-                    onNextWord();
-                }
+            holder.itemRoot.setOnClickListener(v -> {
+                mnemonicsEditText[mnemonicPosition].setText(mFilteredMnemonic.get(position));
+                onNextWord();
             });
         }
 

@@ -49,7 +49,7 @@ public class OKValidatorListActivity extends BaseActivity implements FetchCallBa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_validator_list);
         mToolbar = findViewById(R.id.toolbar);
-        mToolbarTitle = findViewById(R.id.toolbar_title);
+        mToolbarTitle = findViewById(R.id.toolbarTitleTextView);
         mValidatorTapLayer = findViewById(R.id.validator_tab);
         mValidatorPager = findViewById(R.id.validator_view_pager);
 

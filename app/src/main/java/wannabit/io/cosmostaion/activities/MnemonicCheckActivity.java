@@ -14,7 +14,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.appcompat.content.res.AppCompatResources;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
@@ -34,7 +33,7 @@ import wannabit.io.cosmostaion.utils.WUtil;
 public class MnemonicCheckActivity extends BaseActivity {
 
     private final LinearLayout[] wordsLayer = new LinearLayout[24];
-    private final TextView[] mTvWords = new TextView[24];
+    private final TextView[] wordsTextView = new TextView[24];
 
     private List<String> mnemonicWords = new ArrayList<>();
 
@@ -54,25 +53,25 @@ public class MnemonicCheckActivity extends BaseActivity {
 
         for (int i = 0; i < wordsLayer.length; i++) {
             wordsLayer[i] = findViewById(getResources().getIdentifier("layer_mnemonic_" + i, "id", this.getPackageName()));
-            mTvWords[i] = findViewById(getResources().getIdentifier("tv_mnemonic_" + i, "id", this.getPackageName()));
+            wordsTextView[i] = findViewById(getResources().getIdentifier("tv_mnemonic_" + i, "id", this.getPackageName()));
         }
 
         String entropy = getIntent().getStringExtra("entropy");
         Account toCheck = getBaseDao().onSelectAccount("" + getIntent().getLongExtra("checkid", -1));
-        mnemonicCardView.setCardBackgroundColor(WDp.getChainBgColor(getBaseContext(), getChain(toCheck.baseChain)));
+        mnemonicCardView.setCardBackgroundColor(WDp.getChainBgColor(getBaseContext(), BaseChain.getChain(toCheck.baseChain)));
         mnemonicWords = new ArrayList<>(WKey.getRandomMnemonic(WUtil.hexStringToByteArray(entropy)));
 
         for (int i = 0; i < wordsLayer.length; i++) {
             BaseChain chain = getChain(toCheck.baseChain);
             LinearLayout wordsLayout = wordsLayer[i];
             if (chain != null) {
-                wordsLayout.setBackground(AppCompatResources.getDrawable(this, chain.getMnemonicBackground()));
+                wordsLayout.setBackgroundResource(chain.getMnemonicBackground());
             }
             wordsLayout.setVisibility(i >= mnemonicWords.size() ? View.INVISIBLE : View.VISIBLE);
         }
 
         for (int i = 0; i < mnemonicWords.size(); i++) {
-            mTvWords[i].setText(mnemonicWords.get(i));
+            wordsTextView[i].setText(mnemonicWords.get(i));
         }
 
         copyButton.setOnClickListener(v -> {
