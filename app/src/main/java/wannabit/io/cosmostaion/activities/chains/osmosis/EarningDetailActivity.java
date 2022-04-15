@@ -28,6 +28,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import osmosis.gamm.poolmodels.balancer.BalancerPool;
 import osmosis.incentives.GaugeOuterClass;
@@ -65,11 +66,11 @@ public class EarningDetailActivity extends BaseActivity implements View.OnClickL
     private RecyclerViewHeader mRecyclerViewHeader;
 
     private BalancerPool.Pool mPool;
-    private ArrayList<GaugeOuterClass.Gauge> mGauges;
-    public ArrayList<Lock.PeriodLock> mLockUps = new ArrayList<>();
-    public ArrayList<Lock.PeriodLock> mBondedList = new ArrayList<>();
-    public ArrayList<Lock.PeriodLock> mUnbondingList = new ArrayList<>();
-    public ArrayList<Lock.PeriodLock> mUnbondedList = new ArrayList<>();
+    private List<GaugeOuterClass.Gauge> mGauges;
+    public List<Lock.PeriodLock> mLockUps = new ArrayList<>();
+    public List<Lock.PeriodLock> mBondedList = new ArrayList<>();
+    public List<Lock.PeriodLock> mUnbondingList = new ArrayList<>();
+    public List<Lock.PeriodLock> mUnbondedList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,7 +167,7 @@ public class EarningDetailActivity extends BaseActivity implements View.OnClickL
             }
 
             @Override
-            public String SecitonHeader(ArrayList<Lock.PeriodLock> lockArrayList, int section) {
+            public String SecitonHeader(int section) {
                 if (section == TYPE_BONDED) {
                     return getString(R.string.str_earing_bonded_header);
                 } else if (section == TYPE_UNBONDING) {
@@ -253,7 +254,7 @@ public class EarningDetailActivity extends BaseActivity implements View.OnClickL
         }
     }
 
-    public void onStartUnbonding(ArrayList<Lock.PeriodLock> lockups) {
+    public void onStartUnbonding(List<Lock.PeriodLock> lockups) {
         WLog.w("onStartUnbonding " + lockups.size());
         Intent intent = new Intent(this, StartUnbondingActivity.class);
         OsmosisPeriodLockWrapper lockupsWrapper = new OsmosisPeriodLockWrapper(lockups);
@@ -284,7 +285,7 @@ public class EarningDetailActivity extends BaseActivity implements View.OnClickL
         }
     }
 
-    public void onStartUnlock(ArrayList<Lock.PeriodLock> lockups) {
+    public void onStartUnlock(List<Lock.PeriodLock> lockups) {
         WLog.w("onStartUnlock " + lockups.size());
         Intent intent = new Intent(this, StartUnlockActivity.class);
         OsmosisPeriodLockWrapper lockupsWrapper = new OsmosisPeriodLockWrapper(lockups);
@@ -391,13 +392,13 @@ public class EarningDetailActivity extends BaseActivity implements View.OnClickL
                 String title = "";
                 mSection = parent.getAdapter().getItemViewType(position);
                 if (mSection == TYPE_BONDED) {
-                    title = sectionCallback.SecitonHeader(mBondedList, mSection);
+                    title = sectionCallback.SecitonHeader(mSection);
                     mItemCnt.setText("" + mBondedList.size());
                 } else if (mSection == TYPE_UNBONDING) {
-                    title = sectionCallback.SecitonHeader(mUnbondingList, mSection);
+                    title = sectionCallback.SecitonHeader(mSection);
                     mItemCnt.setText("" + mUnbondingList.size());
                 } else if (mSection == TYPE_UNBONDED) {
-                    title = sectionCallback.SecitonHeader(mUnbondedList, mSection);
+                    title = sectionCallback.SecitonHeader(mSection);
                     mItemCnt.setText("" + mUnbondedList.size());
                 }
                 mHeaderTitle.setText(title);
@@ -455,6 +456,6 @@ public class EarningDetailActivity extends BaseActivity implements View.OnClickL
     public interface SectionCallback {
         boolean isSection(int position);
 
-        String SecitonHeader(ArrayList<Lock.PeriodLock> lockArrayList, int section);
+        String SecitonHeader(int section);
     }
 }

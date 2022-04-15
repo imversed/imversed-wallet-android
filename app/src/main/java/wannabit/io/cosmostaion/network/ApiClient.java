@@ -23,6 +23,14 @@ import wannabit.io.cosmostaion.utils.WLog;
 
 public class ApiClient {
 
+
+    public static Station getStationApi(Context context, BaseChain chain) {
+        if (chain.isTestNet()) {
+            return getStationTest(context);
+        }
+        return getStation(context);
+    }
+
     //Services for station wallet api
     private static Station station = null;
 

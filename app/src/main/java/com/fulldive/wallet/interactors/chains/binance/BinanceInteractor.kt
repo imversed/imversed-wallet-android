@@ -13,6 +13,7 @@ import wannabit.io.cosmostaion.base.BaseChain
 import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.model.NodeInfo
+import wannabit.io.cosmostaion.utils.WLog
 import java.math.BigDecimal
 import javax.inject.Inject
 
@@ -36,6 +37,10 @@ class BinanceInteractor @Inject constructor(
                         chain,
                         nodeInfo.network
                     )
+                    .doOnError { error ->
+                        WLog.e(error.message)
+                        error.printStackTrace()
+                    }
                     .onErrorComplete() // XXX: onErrorComplete()
             }
     }

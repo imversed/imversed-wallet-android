@@ -208,7 +208,7 @@ public class ValidatorAllFragment extends BaseFragment implements View.OnClickLi
         }
 
         private boolean checkIsMyValidator(List<Validator> userList, final String targetName) {
-            return FluentIterable.from(userList).anyMatch((Predicate<Validator>) input -> input.description.moniker.equals(targetName));
+            return FluentIterable.from(userList).anyMatch(input -> input.description.moniker.equals(targetName));
         }
 
         @Override
@@ -259,7 +259,7 @@ public class ValidatorAllFragment extends BaseFragment implements View.OnClickLi
 
         } else {
             if (getBaseDao().getValSorting() == 2) {
-                WUtil.onSortingByCommission(getBaseDao().mTopValidators, getMainActivity().baseChain);
+                WUtil.onSortingByCommission(getBaseDao().mTopValidators);
                 mSortType.setText(getString(R.string.str_sorting_by_yield));
             } else if (getBaseDao().getValSorting() == 0) {
                 WUtil.onSortByValidatorName(getBaseDao().mTopValidators);

@@ -92,6 +92,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.disposables.Disposable;
 import irismod.nft.QueryOuterClass;
@@ -223,7 +224,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
     private Coin mSwapInCoin;
     private Coin mSwapOutCoin;
     private long mOsmosisLockupDuration;
-    private ArrayList<Lock.PeriodLock> mOsmosisLockups = new ArrayList<>();
+    private List<Lock.PeriodLock> mOsmosisLockups = new ArrayList<>();
 
     private Liquidity.Pool mGDexPool;
     public String mGDexSwapOrderPrice;

@@ -176,9 +176,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -1153,12 +1153,6 @@ public class WDp {
         textView.setText(String.format("(%s)", context.getString(titleRes)));
     }
 
-    public static void getLayoutColor(Context c, BaseChain baseChain, LinearLayout[] wordsLayer) {
-        for (LinearLayout linearLayout : wordsLayer) {
-            linearLayout.setBackground(ContextCompat.getDrawable(c, baseChain.getMnemonicBackground()));
-        }
-    }
-
     public static BaseChain getChainTypeByChainId(String chainId) {
         if (chainId != null) {
             if (chainId.contains("cosmoshub-")) {
@@ -1245,7 +1239,7 @@ public class WDp {
             if (baseChain.equals(COSMOS_MAIN)) {
                 return "cosmos";
             } else if (baseChain.equals(IMVERSED_MAIN)) {
-                return "imversed";
+                return "imversed-canary";
             } else if (baseChain.equals(IRIS_MAIN)) {
                 return "iris";
             } else if (baseChain.equals(BNB_MAIN)) {
@@ -1511,7 +1505,7 @@ public class WDp {
 
     public static BigDecimal kavaTokenDollorValue(BaseData baseData, String denom, BigDecimal amount) {
         int dpDecimal = WUtil.getKavaCoinDecimal(baseData, denom);
-        HashMap<String, kava.pricefeed.v1beta1.QueryOuterClass.CurrentPriceResponse> prices = baseData.mKavaTokenPrice;
+        Map<String, kava.pricefeed.v1beta1.QueryOuterClass.CurrentPriceResponse> prices = baseData.mKavaTokenPrice;
         if (denom.equals("hard") && prices.get("hard:usd") != null) {
             BigDecimal price = new BigDecimal(prices.get("hard:usd").getPrice());
             return amount.movePointLeft(dpDecimal).multiply(price);

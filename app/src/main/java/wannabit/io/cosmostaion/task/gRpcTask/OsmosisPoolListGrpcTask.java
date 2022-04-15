@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 import cosmos.base.query.v1beta1.Pagination;
+import kotlin.Deprecated;
 import osmosis.gamm.poolmodels.balancer.BalancerPool;
 import osmosis.gamm.v1beta1.QueryGrpc;
 import osmosis.gamm.v1beta1.QueryOuterClass;
@@ -21,16 +22,15 @@ import wannabit.io.cosmostaion.task.TaskListener;
 import wannabit.io.cosmostaion.task.TaskResult;
 import wannabit.io.cosmostaion.utils.WLog;
 
+@Deprecated(message = "Migrate to rx")
 public class OsmosisPoolListGrpcTask extends CommonTask {
-    private final BaseChain mChain;
     private final QueryGrpc.QueryBlockingStub mStub;
     private final ArrayList<BalancerPool.Pool> mResultData = new ArrayList<>();
 
     public OsmosisPoolListGrpcTask(BaseApplication app, TaskListener listener, BaseChain chain) {
         super(app, listener);
-        this.mChain = chain;
         this.result.taskType = TASK_GRPC_FETCH_OSMOSIS_POOL_LIST;
-        this.mStub = QueryGrpc.newBlockingStub(ChannelBuilder.getChain(mChain)).withDeadlineAfter(TIME_OUT, TimeUnit.SECONDS);
+        this.mStub = QueryGrpc.newBlockingStub(ChannelBuilder.getChain(chain)).withDeadlineAfter(TIME_OUT, TimeUnit.SECONDS);
     }
 
     @Override

@@ -7,6 +7,9 @@ import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Single
 import wannabit.io.cosmostaion.base.BaseChain
 import wannabit.io.cosmostaion.dao.ChainParam
+import wannabit.io.cosmostaion.dao.IbcPath
+import wannabit.io.cosmostaion.dao.IbcToken
+import wannabit.io.cosmostaion.dao.Price
 import wannabit.io.cosmostaion.network.ApiClient
 import javax.inject.Inject
 
@@ -17,12 +20,32 @@ class StationRemoteSource @Inject constructor(
 
     fun requestChainParams(chain: BaseChain, network: String): Single<ChainParam> {
         return safeSingle {
-            if (chain.isTestNet) {
-                ApiClient.getStationTest(context).getParam(network).execute()
-            } else {
-                ApiClient.getStation(context).getParam(network).execute()
-            }
+            ApiClient.getStationApi(context, chain)
+                .getParam(network).execute()
                 .body()
+        }
+    }
+
+    fun requestIbcPaths(chain: BaseChain, network: String): Single<List<IbcPath>> {
+        return safeSingle {
+            ApiClient.getStationApi(context, chain)
+                .getIbcPaths(network).execute()
+                .body()!!.sendable
+        }
+    }
+
+    fun requestIbcTokens(chain: BaseChain, network: String): Single<List<IbcToken>> {
+        return safeSingle {
+            ApiClient.getStationApi(context, chain)
+                .getIbcTokens(network).execute()
+                .body()!!.ibc_tokens
+        }
+    }
+
+    fun updatePrices(chain: BaseChain): Single<List<Price>> {
+        return safeSingle {
+            ApiClient.getStationApi(context, chain)
+                .price.execute().body()
         }
     }
 }

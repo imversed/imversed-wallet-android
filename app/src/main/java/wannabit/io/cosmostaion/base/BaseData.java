@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import cosmos.base.v1beta1.CoinOuterClass;
@@ -114,12 +115,12 @@ public class BaseData {
     }
 
 
-    public ArrayList<Price> mPrices = new ArrayList<>();
+    public List<Price> mPrices = new ArrayList<>();
     public ChainParam.Params mChainParam;
-    public ArrayList<IbcPath> mIbcPaths = new ArrayList<>();
-    public ArrayList<IbcToken> mIbcTokens = new ArrayList<>();
-    public ArrayList<Assets> mAssets = new ArrayList<>();
-    public ArrayList<Cw20Assets> mCw20Assets = new ArrayList<>();
+    public List<IbcPath> mIbcPaths = new ArrayList<>();
+    public List<IbcToken> mIbcTokens = new ArrayList<>();
+    public List<Assets> mAssets = new ArrayList<>();
+    public List<Cw20Assets> mCw20Assets = new ArrayList<>();
 
     public Price getPrice(String denom) {
         for (Price price : mPrices) {
@@ -318,7 +319,7 @@ public class BaseData {
     public SifIncentive.User mSifLmIncentive;
 
     //GRPC for KAVA
-    public HashMap<String, QueryOuterClass.CurrentPriceResponse> mKavaTokenPrice = new HashMap<>();
+    public Map<String, QueryOuterClass.CurrentPriceResponse> mKavaTokenPrice = new HashMap<>();
     public IncentiveParam mIncentiveParam5;
     public IncentiveReward mIncentiveRewards;
     public Swap.Params mSwapParams;
@@ -508,26 +509,26 @@ public class BaseData {
     //gRPC
     public tendermint.p2p.Types.NodeInfo mGRpcNodeInfo;
     public Any mGRpcAccount;
-    public ArrayList<Staking.Validator> mGRpcTopValidators = new ArrayList<>();
-    public ArrayList<Staking.Validator> mGRpcOtherValidators = new ArrayList<>();
-    public ArrayList<Staking.Validator> mGRpcAllValidators = new ArrayList<>();
-    public ArrayList<Staking.Validator> mGRpcMyValidators = new ArrayList<>();
+    public List<Staking.Validator> mGRpcTopValidators = new ArrayList<>();
+    public List<Staking.Validator> mGRpcOtherValidators = new ArrayList<>();
+    public List<Staking.Validator> mGRpcAllValidators = new ArrayList<>();
+    public List<Staking.Validator> mGRpcMyValidators = new ArrayList<>();
 
-    public ArrayList<Coin> mGrpcBalance = new ArrayList<>();
-    public ArrayList<Coin> mGrpcVesting = new ArrayList<>();
-    public ArrayList<Staking.DelegationResponse> mGrpcDelegations = new ArrayList<>();
-    public ArrayList<Staking.UnbondingDelegation> mGrpcUndelegations = new ArrayList<>();
-    public ArrayList<Distribution.DelegationDelegatorReward> mGrpcRewards = new ArrayList<>();
+    public List<Coin> mGrpcBalance = new ArrayList<>();
+    public List<Coin> mGrpcVesting = new ArrayList<>();
+    public List<Staking.DelegationResponse> mGrpcDelegations = new ArrayList<>();
+    public List<Staking.UnbondingDelegation> mGrpcUndelegations = new ArrayList<>();
+    public List<Distribution.DelegationDelegatorReward> mGrpcRewards = new ArrayList<>();
 
     //COMMON DATA FOR STARNAME
     public starnamed.x.configuration.v1beta1.Types.Fees mGrpcStarNameFee;
     public starnamed.x.configuration.v1beta1.Types.Config mGrpcStarNameConfig;
 
     //Osmosis pool list
-    public ArrayList<BalancerPool.Pool> mGrpcOsmosisPool = new ArrayList<>();
+    public List<BalancerPool.Pool> mGrpcOsmosisPool = new ArrayList<>();
 
     //Gravity pool list
-    public ArrayList<Liquidity.Pool> mGrpcGravityPools = new ArrayList<>();
+    public List<Liquidity.Pool> mGrpcGravityPools = new ArrayList<>();
     public Liquidity.Params mParams;
 
     //Gravity GDex Manager
@@ -1649,57 +1650,57 @@ public class BaseData {
     }
 
     public void clear() {
-        mIbcPaths.clear();
-        mIbcTokens.clear();
+        mIbcPaths = new ArrayList<>();
+        mIbcTokens = new ArrayList<>();
         mChainParam = null;
-        mAssets.clear();
-        mCw20Assets.clear();
+        mAssets = new ArrayList<>();
+        mCw20Assets = new ArrayList<>();
 
         mSifLmIncentive = null;
 
         mNodeInfo = null;
-        mAllValidators.clear();
-        mMyValidators.clear();
-        mTopValidators.clear();
-        mOtherValidators.clear();
+        mAllValidators = new ArrayList<>();
+        mMyValidators = new ArrayList<>();
+        mTopValidators = new ArrayList<>();
+        mOtherValidators = new ArrayList<>();
 
-        mBalances.clear();
-        mMyDelegations.clear();
-        mMyUnbondings.clear();
-        mMyRewards.clear();
+        mBalances = new ArrayList<>();
+        mMyDelegations = new ArrayList<>();
+        mMyUnbondings = new ArrayList<>();
+        mMyRewards = new ArrayList<>();
 
         //kava GRPC
         mIncentiveParam5 = null;
         mIncentiveRewards = null;
-        mMyHardDeposits.clear();
-        mMyHardBorrows.clear();
-        mModuleCoins.clear();
-        mReserveCoins.clear();
+        mMyHardDeposits = new ArrayList<>();
+        mMyHardBorrows = new ArrayList<>();
+        mModuleCoins = new ArrayList<>();
+        mReserveCoins = new ArrayList<>();
 
 
         //binance
-        mBnbTokens.clear();
-        mBnbTickers.clear();
-        mBnbFees.clear();
+        mBnbTokens = new ArrayList<>();
+        mBnbTickers = new ArrayList<>();
+        mBnbFees = new ArrayList<>();
 
         //gRPC
         mGRpcNodeInfo = null;
         mGRpcAccount = null;
-        mGRpcTopValidators.clear();
-        mGRpcOtherValidators.clear();
-        mGRpcAllValidators.clear();
-        mGRpcMyValidators.clear();
+        mGRpcTopValidators = new ArrayList<>();
+        mGRpcOtherValidators = new ArrayList<>();
+        mGRpcAllValidators = new ArrayList<>();
+        mGRpcMyValidators = new ArrayList<>();
 
-        mGrpcBalance.clear();
-        mGrpcVesting.clear();
-        mGrpcDelegations.clear();
-        mGrpcUndelegations.clear();
-        mGrpcRewards.clear();
+        mGrpcBalance = new ArrayList<>();
+        mGrpcVesting = new ArrayList<>();
+        mGrpcDelegations = new ArrayList<>();
+        mGrpcUndelegations = new ArrayList<>();
+        mGrpcRewards = new ArrayList<>();
 
         mGrpcStarNameFee = null;
         mGrpcStarNameConfig = null;
 
-        mGrpcGravityPools.clear();
+        mGrpcGravityPools = new ArrayList<>();
 
         //okex
         mOkStaking = null;

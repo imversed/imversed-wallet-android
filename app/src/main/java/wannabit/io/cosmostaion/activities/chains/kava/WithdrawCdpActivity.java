@@ -38,11 +38,12 @@ import wannabit.io.cosmostaion.fragment.chains.kava.WithdrawCdpStep0Fragment;
 import wannabit.io.cosmostaion.fragment.chains.kava.WithdrawCdpStep3Fragment;
 import wannabit.io.cosmostaion.model.kava.CdpDeposit;
 import wannabit.io.cosmostaion.task.FetchTask.KavaCdpByDepositorTask;
+import wannabit.io.cosmostaion.task.TaskListener;
 import wannabit.io.cosmostaion.task.TaskResult;
 import wannabit.io.cosmostaion.task.gRpcTask.KavaCdpsByOwnerGrpcTask;
 import wannabit.io.cosmostaion.utils.WLog;
 
-public class WithdrawCdpActivity extends BaseBroadCastActivity {
+public class WithdrawCdpActivity extends BaseBroadCastActivity implements TaskListener {
 
     private RelativeLayout mRootView;
     private Toolbar mToolbar;

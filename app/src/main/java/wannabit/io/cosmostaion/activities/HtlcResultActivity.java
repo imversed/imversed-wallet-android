@@ -44,12 +44,13 @@ import wannabit.io.cosmostaion.network.res.ResKavaSwapInfo;
 import wannabit.io.cosmostaion.network.res.ResTxInfo;
 import wannabit.io.cosmostaion.task.SimpleBroadTxTask.HtlcClaimTask;
 import wannabit.io.cosmostaion.task.SimpleBroadTxTask.HtlcCreateTask;
+import wannabit.io.cosmostaion.task.TaskListener;
 import wannabit.io.cosmostaion.task.TaskResult;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WLog;
 import wannabit.io.cosmostaion.utils.WUtil;
 
-public class HtlcResultActivity extends BaseActivity implements View.OnClickListener {
+public class HtlcResultActivity extends BaseActivity implements View.OnClickListener, TaskListener {
     private Toolbar mToolbar;
     private NestedScrollView mTxScrollView;
     private RelativeLayout mLoadingLayer;

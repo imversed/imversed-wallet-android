@@ -6,10 +6,10 @@ import static wannabit.io.cosmostaion.network.ChannelBuilder.TIME_OUT;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
-import cosmos.base.query.v1beta1.Pagination;
 import cosmos.staking.v1beta1.QueryGrpc;
 import cosmos.staking.v1beta1.QueryOuterClass;
 import cosmos.staking.v1beta1.Staking;
+import kotlin.Deprecated;
 import wannabit.io.cosmostaion.base.BaseApplication;
 import wannabit.io.cosmostaion.base.BaseChain;
 import wannabit.io.cosmostaion.dao.Account;
@@ -19,18 +19,17 @@ import wannabit.io.cosmostaion.task.TaskListener;
 import wannabit.io.cosmostaion.task.TaskResult;
 import wannabit.io.cosmostaion.utils.WLog;
 
+@Deprecated(message = "Migrate to rx")
 public class UnDelegationsGrpcTask extends CommonTask {
-    private final BaseChain mChain;
     private final Account mAccount;
     private final ArrayList<Staking.UnbondingDelegation> mResultData = new ArrayList<>();
     private final QueryGrpc.QueryBlockingStub mStub;
 
     public UnDelegationsGrpcTask(BaseApplication app, TaskListener listener, BaseChain chain, Account account) {
         super(app, listener);
-        this.mChain = chain;
         this.mAccount = account;
         this.result.taskType = TASK_GRPC_FETCH_UNDELEGATIONS;
-        this.mStub = QueryGrpc.newBlockingStub(ChannelBuilder.getChain(mChain)).withDeadlineAfter(TIME_OUT, TimeUnit.SECONDS);
+        this.mStub = QueryGrpc.newBlockingStub(ChannelBuilder.getChain(chain)).withDeadlineAfter(TIME_OUT, TimeUnit.SECONDS);
     }
 
     @Override
@@ -39,34 +38,12 @@ public class UnDelegationsGrpcTask extends CommonTask {
             QueryOuterClass.QueryDelegatorUnbondingDelegationsRequest request = QueryOuterClass.QueryDelegatorUnbondingDelegationsRequest.newBuilder().setDelegatorAddr(mAccount.address).build();
             QueryOuterClass.QueryDelegatorUnbondingDelegationsResponse response = mStub.delegatorUnbondingDelegations(request);
             mResultData.addAll(response.getUnbondingResponsesList());
-//            WLog.w("UnDelegations " + response);
-
-//            if (response.hasPagination() && response.getPagination().getNextKey().size() > 0) {
-//                pageJob(response.getPagination().getNextKey());
-//            }
             this.result.isSuccess = true;
             this.result.resultData = mResultData;
-//            WLog.w("UnDelegations " + mResultData.size());
 
         } catch (Exception e) {
             WLog.e("UnDelegationsGrpcTask " + e.getMessage());
         }
         return result;
-    }
-
-    private cosmos.bank.v1beta1.QueryOuterClass.QueryAllBalancesResponse pageJob(com.google.protobuf.ByteString nextKey) {
-        try {
-            Pagination.PageRequest pageRequest = Pagination.PageRequest.newBuilder().setKey(nextKey).build();
-            QueryOuterClass.QueryDelegatorUnbondingDelegationsRequest request = QueryOuterClass.QueryDelegatorUnbondingDelegationsRequest.newBuilder().setPagination(pageRequest).setDelegatorAddr(mAccount.address).build();
-            QueryOuterClass.QueryDelegatorUnbondingDelegationsResponse response = mStub.delegatorUnbondingDelegations(request);
-            mResultData.addAll(response.getUnbondingResponsesList());
-            if (response.hasPagination() && response.getPagination().getNextKey().size() > 0) {
-                pageJob(response.getPagination().getNextKey());
-            }
-
-        } catch (Exception e) {
-            WLog.e("UnDelegationsGrpcTask pageJob " + e.getMessage());
-        }
-        return null;
     }
 }

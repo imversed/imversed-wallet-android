@@ -35,12 +35,13 @@ import wannabit.io.cosmostaion.fragment.StepFeeSetFragment;
 import wannabit.io.cosmostaion.fragment.StepMemoFragment;
 import wannabit.io.cosmostaion.fragment.chains.starname.ReplaceStarName0Fragment;
 import wannabit.io.cosmostaion.fragment.chains.starname.ReplaceStarName3Fragment;
+import wannabit.io.cosmostaion.task.TaskListener;
 import wannabit.io.cosmostaion.task.TaskResult;
 import wannabit.io.cosmostaion.task.gRpcTask.StarNameGrpcDomainInfoTask;
 import wannabit.io.cosmostaion.task.gRpcTask.StarNameGrpcResolveTask;
 import wannabit.io.cosmostaion.utils.StarnameResourceWrapper;
 
-public class ReplaceStarNameActivity extends BaseBroadCastActivity {
+public class ReplaceStarNameActivity extends BaseBroadCastActivity implements TaskListener {
 
     private RelativeLayout mRootView;
     private Toolbar mToolbar;

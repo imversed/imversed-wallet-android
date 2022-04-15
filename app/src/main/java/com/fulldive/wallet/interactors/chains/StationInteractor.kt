@@ -14,4 +14,16 @@ class StationInteractor @Inject constructor(
     fun updateStationParams(baseChain: BaseChain, network: String): Completable {
         return stationRepository.updateChainParams(baseChain, network)
     }
+
+    fun updateIbcPaths(chain: BaseChain, network: String): Completable {
+        return stationRepository.updateIbcPaths(chain, network)
+    }
+
+    fun updateIbcTokens(chain: BaseChain, network: String): Completable {
+        return stationRepository.updateIbcTokens(chain, network)
+    }
+
+    fun updatePrices(chain: BaseChain): Completable {
+        return stationRepository.updatePrices(chain)
+    }
 }

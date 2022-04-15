@@ -25,12 +25,11 @@ import io.reactivex.disposables.Disposable;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.ITimelessActivity;
-import wannabit.io.cosmostaion.task.TaskListener;
 import wannabit.io.cosmostaion.utils.WLog;
 import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.LockedViewPager;
 
-public class AppLockActivity extends BaseActivity implements ITimelessActivity, KeyboardListener, TaskListener {
+public class AppLockActivity extends BaseActivity implements ITimelessActivity, KeyboardListener {
 
     private LinearLayout layerContents;
     private ImageView fingerImage;

@@ -687,7 +687,7 @@ public class WUtil {
         });
     }
 
-    public static void onSortByDelegateV1(ArrayList<Staking.Validator> validators, final BaseData dao) {
+    public static void onSortByDelegateV1(List<Staking.Validator> validators, final BaseData dao) {
         Collections.sort(validators, (o1, o2) -> {
             BigDecimal bondingO1 = dao.getDelegation(o1.getOperatorAddress());
             BigDecimal bondingO2 = dao.getDelegation(o2.getOperatorAddress());
@@ -713,7 +713,7 @@ public class WUtil {
         });
     }
 
-    public static void onSortByRewardV1(ArrayList<Staking.Validator> validators, String denom, final BaseData dao) {
+    public static void onSortByRewardV1(List<Staking.Validator> validators, String denom, final BaseData dao) {
         Collections.sort(validators, (o1, o2) -> {
             BigDecimal rewardO1 = dao.getReward(denom, o1.getOperatorAddress());
             BigDecimal rewardO2 = dao.getReward(denom, o2.getOperatorAddress());
@@ -726,7 +726,7 @@ public class WUtil {
         });
     }
 
-    public static void onSortByOnlyReward(ArrayList<Validator> validators, String denom, BaseData basedata) {
+    public static void onSortByOnlyReward(List<Validator> validators, String denom, BaseData basedata) {
         Collections.sort(validators, (o1, o2) -> {
             BigDecimal rewardO1 = basedata.rewardAmountByValidator(denom, o1.operator_address);
             BigDecimal rewardO2 = basedata.rewardAmountByValidator(denom, o2.operator_address);
@@ -755,7 +755,7 @@ public class WUtil {
         return BigDecimal.ZERO;
     }
 
-    public static void onSortingByCommission(List<Validator> validators, final BaseChain chain) {
+    public static void onSortingByCommission(List<Validator> validators) {
         Collections.sort(validators, (o1, o2) -> {
             if (Float.parseFloat(o1.commission.commission_rates.rate) > Float.parseFloat(o2.commission.commission_rates.rate))
                 return 1;
@@ -770,7 +770,7 @@ public class WUtil {
         });
     }
 
-    public static void onSortingByCommissionV1(ArrayList<Staking.Validator> validators) {
+    public static void onSortingByCommissionV1(List<Staking.Validator> validators) {
         Collections.sort(validators, (o1, o2) -> {
             return Float.compare(
                     Float.parseFloat(o1.getCommission().getCommissionRates().getRate()),
@@ -784,7 +784,7 @@ public class WUtil {
         });
     }
 
-    public static void onSortingDenom(ArrayList<String> denom, BaseChain chain) {
+    public static void onSortingDenom(List<String> denom, BaseChain chain) {
         Collections.sort(denom, (o1, o2) -> {
             if (o1.equals(chain.getMainDenom())) return -1;
             if (o2.equals(chain.getMainDenom())) return 1;
@@ -798,7 +798,7 @@ public class WUtil {
         });
     }
 
-    public static void onSortingNativeCoins(ArrayList<Balance> balances, final BaseChain chain) {
+    public static void onSortingNativeCoins(List<Balance> balances, final BaseChain chain) {
         Collections.sort(balances, (o1, o2) -> {
             if (o1.symbol.equals(chain.getMainDenom())) return -1;
             if (o2.symbol.equals(chain.getMainDenom())) return 1;
@@ -815,7 +815,7 @@ public class WUtil {
         });
     }
 
-    public static void onSortingCoins(ArrayList<Coin> coins, BaseChain chain) {
+    public static void onSortingCoins(List<Coin> coins, BaseChain chain) {
         Collections.sort(coins, (o1, o2) -> {
             if (o1.denom.equals(chain.getMainDenom())) return -1;
             if (o2.denom.equals(chain.getMainDenom())) return 1;
@@ -823,7 +823,7 @@ public class WUtil {
         });
     }
 
-    public static void onSortingOsmosisPool(ArrayList<Coin> coins) {
+    public static void onSortingOsmosisPool(List<Coin> coins) {
         Collections.sort(coins, (o1, o2) -> {
             if (o1.osmosisAmmPoolId() < o2.osmosisAmmPoolId()) return -1;
             else if (o1.osmosisAmmPoolId() > o2.osmosisAmmPoolId()) return 1;
@@ -831,7 +831,7 @@ public class WUtil {
         });
     }
 
-    public static void onSortingGravityPool(ArrayList<Coin> coins, BaseData baseData) {
+    public static void onSortingGravityPool(List<Coin> coins, BaseData baseData) {
         Collections.sort(coins, (o1, o2) -> {
             long id1 = baseData.getGravityPoolByDenom(o1.denom).getId();
             long id2 = baseData.getGravityPoolByDenom(o2.denom).getId();
@@ -839,7 +839,7 @@ public class WUtil {
         });
     }
 
-    public static void onSortingInjectivePool(ArrayList<Coin> coins) {
+    public static void onSortingInjectivePool(List<Coin> coins) {
         Collections.sort(coins, (o1, o2) -> {
             if (o1.injectivePoolId() < o2.injectivePoolId()) return -1;
             else if (o1.injectivePoolId() > o2.injectivePoolId()) return 1;
@@ -848,7 +848,7 @@ public class WUtil {
     }
 
 
-    public static ArrayList<UnbondingInfo.DpEntry> onSortUnbondingsRecent(Context c, ArrayList<UnbondingInfo> unbondingInfos) {
+    public static List<UnbondingInfo.DpEntry> onSortUnbondingsRecent(Context c, List<UnbondingInfo> unbondingInfos) {
         ArrayList<UnbondingInfo.DpEntry> result = new ArrayList<>();
         for (UnbondingInfo unbondingInfo : unbondingInfos) {
             for (UnbondingInfo.Entry entry : unbondingInfo.entries) {
@@ -863,7 +863,7 @@ public class WUtil {
         return result;
     }
 
-    public static ArrayList<UnbondingInfo.DpEntry> onSortUnbondingsRecent_Grpc(Context c, ArrayList<Staking.UnbondingDelegation> unbondingGrpcInfos) {
+    public static List<UnbondingInfo.DpEntry> onSortUnbondingsRecent_Grpc(List<Staking.UnbondingDelegation> unbondingGrpcInfos) {
         ArrayList<UnbondingInfo.DpEntry> result = new ArrayList<>();
         for (Staking.UnbondingDelegation unbondingGrpcInfo : unbondingGrpcInfos) {
             for (Staking.UnbondingDelegationEntry entry : unbondingGrpcInfo.getEntriesList()) {
@@ -1545,7 +1545,7 @@ public class WUtil {
         return result;
     }
 
-    public static ArrayList<GaugeOuterClass.Gauge> getGaugesByPoolId(long poolId, ArrayList<QueryOuterClass.IncentivizedPool> incentivizedPools, ArrayList<GaugeOuterClass.Gauge> allGauges) {
+    public static List<GaugeOuterClass.Gauge> getGaugesByPoolId(long poolId, List<QueryOuterClass.IncentivizedPool> incentivizedPools, List<GaugeOuterClass.Gauge> allGauges) {
         ArrayList<Long> gaugeIds = new ArrayList<Long>();
         ArrayList<GaugeOuterClass.Gauge> result = new ArrayList<GaugeOuterClass.Gauge>();
         for (QueryOuterClass.IncentivizedPool pool : incentivizedPools) {
@@ -1561,7 +1561,7 @@ public class WUtil {
         return result;
     }
 
-    public static ArrayList<Lock.PeriodLock> getLockupByPoolId(long poolId, ArrayList<Lock.PeriodLock> lockups) {
+    public static ArrayList<Lock.PeriodLock> getLockupByPoolId(long poolId, List<Lock.PeriodLock> lockups) {
         ArrayList<Lock.PeriodLock> result = new ArrayList<Lock.PeriodLock>();
         for (Lock.PeriodLock lockup : lockups) {
             Coin lpCoin = new Coin(lockup.getCoins(0).getDenom(), lockup.getCoins(0).getAmount());
@@ -1589,7 +1589,7 @@ public class WUtil {
         return coin0Value.add(coin1Value);
     }
 
-    public static BigDecimal getNextIncentiveAmount(ArrayList<GaugeOuterClass.Gauge> gauges, int position) {
+    public static BigDecimal getNextIncentiveAmount(List<GaugeOuterClass.Gauge> gauges, int position) {
         if (gauges.size() != 3) {
             return BigDecimal.ZERO;
         }
@@ -1632,7 +1632,7 @@ public class WUtil {
         }
     }
 
-    public static BigDecimal getPoolArp(BaseData baseData, BalancerPool.Pool pool, ArrayList<GaugeOuterClass.Gauge> gauges, int position) {
+    public static BigDecimal getPoolArp(BaseData baseData, BalancerPool.Pool pool, List<GaugeOuterClass.Gauge> gauges, int position) {
         BigDecimal poolValue = getPoolValue(baseData, pool);
         BigDecimal incentiveAmount = getNextIncentiveAmount(gauges, position);
         BigDecimal incentiveValue = WDp.usdValue(baseData, baseData.getBaseDenom(TOKEN_OSMOSIS), incentiveAmount, WUtil.getOsmosisCoinDecimal(baseData, TOKEN_OSMOSIS));

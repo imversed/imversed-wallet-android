@@ -35,11 +35,12 @@ import wannabit.io.cosmostaion.fragment.StepFeeSetFragment;
 import wannabit.io.cosmostaion.fragment.StepMemoFragment;
 import wannabit.io.cosmostaion.fragment.chains.kava.DepositCdpStep0Fragment;
 import wannabit.io.cosmostaion.fragment.chains.kava.DepositCdpStep3Fragment;
+import wannabit.io.cosmostaion.task.TaskListener;
 import wannabit.io.cosmostaion.task.TaskResult;
 import wannabit.io.cosmostaion.task.gRpcTask.KavaCdpsByOwnerGrpcTask;
 import wannabit.io.cosmostaion.utils.WLog;
 
-public class DepositCdpActivity extends BaseBroadCastActivity {
+public class DepositCdpActivity extends BaseBroadCastActivity implements TaskListener {
 
     private RelativeLayout mRootView;
     private Toolbar mToolbar;

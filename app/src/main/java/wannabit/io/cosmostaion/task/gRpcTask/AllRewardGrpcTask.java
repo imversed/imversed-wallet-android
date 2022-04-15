@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import cosmos.distribution.v1beta1.Distribution;
 import cosmos.distribution.v1beta1.QueryGrpc;
 import cosmos.distribution.v1beta1.QueryOuterClass;
+import kotlin.Deprecated;
 import wannabit.io.cosmostaion.base.BaseApplication;
 import wannabit.io.cosmostaion.base.BaseChain;
 import wannabit.io.cosmostaion.dao.Account;
@@ -19,6 +20,7 @@ import wannabit.io.cosmostaion.task.TaskListener;
 import wannabit.io.cosmostaion.task.TaskResult;
 import wannabit.io.cosmostaion.utils.WLog;
 
+@Deprecated(message = "Migrate to rx")
 public class AllRewardGrpcTask extends CommonTask {
     private final Account mAccount;
     private final ArrayList<Distribution.DelegationDelegatorReward> mResultData = new ArrayList<>();

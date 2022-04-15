@@ -38,6 +38,7 @@ import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.model.kava.IncentiveReward;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.task.FetchTask.KavaHardModuleAccountTask;
+import wannabit.io.cosmostaion.task.TaskListener;
 import wannabit.io.cosmostaion.task.TaskResult;
 import wannabit.io.cosmostaion.task.gRpcTask.KavaHardInterestRateGrpcTask;
 import wannabit.io.cosmostaion.task.gRpcTask.KavaHardMyBorrowGrpcTask;
@@ -51,7 +52,7 @@ import wannabit.io.cosmostaion.widget.HardDetailInfoHolder;
 import wannabit.io.cosmostaion.widget.HardDetailMyAvailableHolder;
 import wannabit.io.cosmostaion.widget.HardDetailMyStatusHolder;
 
-public class HardDetailActivity extends BaseActivity {
+public class HardDetailActivity extends BaseActivity implements TaskListener {
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;

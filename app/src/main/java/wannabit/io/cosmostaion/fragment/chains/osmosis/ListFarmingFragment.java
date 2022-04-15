@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import osmosis.gamm.poolmodels.balancer.BalancerPool;
 import osmosis.incentives.GaugeOuterClass;
@@ -32,7 +33,7 @@ public class ListFarmingFragment extends BaseFragment implements IRefreshTabList
     private RecyclerView mRecyclerView;
     private EarningListAdapter mAdapter;
 
-    public ArrayList<BalancerPool.Pool> mTempPoolList = new ArrayList<>();
+    public List<BalancerPool.Pool> mTempPoolList = new ArrayList<>();
     public ArrayList<BalancerPool.Pool> mPoolList = new ArrayList<>();
     public ArrayList<BalancerPool.Pool> mMyIncentivizedPool = new ArrayList<>();
     public ArrayList<BalancerPool.Pool> mOtherIncentivizedPool = new ArrayList<>();
@@ -140,15 +141,15 @@ public class ListFarmingFragment extends BaseFragment implements IRefreshTabList
             if (getItemViewType(position) == TYPE_MY_EARNING) {
                 final EarningMyHolder holder = (EarningMyHolder) viewHolder;
                 final BalancerPool.Pool pool = mMyIncentivizedPool.get(position);
-                final ArrayList<GaugeOuterClass.Gauge> gauges = WUtil.getGaugesByPoolId(pool.getId(), mIncentivizedPool, mActiveGauges);
-                final ArrayList<Lock.PeriodLock> lockups = WUtil.getLockupByPoolId(pool.getId(), mPeriodLockUps);
+                final List<GaugeOuterClass.Gauge> gauges = WUtil.getGaugesByPoolId(pool.getId(), mIncentivizedPool, mActiveGauges);
+                final List<Lock.PeriodLock> lockups = WUtil.getLockupByPoolId(pool.getId(), mPeriodLockUps);
                 holder.onBindView(getContext(), getSActivity(), getBaseDao(), pool, lockups, gauges);
 
             } else if (getItemViewType(position) == TYPE_OTHER_EARNING) {
                 final EarningOtherHolder holder = (EarningOtherHolder) viewHolder;
                 final BalancerPool.Pool pool = mOtherIncentivizedPool.get(position - mMyIncentivizedPool.size());
-                final ArrayList<GaugeOuterClass.Gauge> gauges = WUtil.getGaugesByPoolId(pool.getId(), mIncentivizedPool, mActiveGauges);
-                final ArrayList<Lock.PeriodLock> lockups = WUtil.getLockupByPoolId(pool.getId(), mPeriodLockUps);
+                final List<GaugeOuterClass.Gauge> gauges = WUtil.getGaugesByPoolId(pool.getId(), mIncentivizedPool, mActiveGauges);
+                final List<Lock.PeriodLock> lockups = WUtil.getLockupByPoolId(pool.getId(), mPeriodLockUps);
                 holder.onBindView(getContext(), getSActivity(), getBaseDao(), pool, lockups, gauges);
             }
         }

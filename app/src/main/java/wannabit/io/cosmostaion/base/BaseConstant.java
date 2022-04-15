@@ -37,8 +37,6 @@ public class BaseConstant {
     public final static int TASK_FETCH_KAVA_CDP_DEPOSIT = 2061;
     public final static int TASK_GEN_TX_HTLC_REFUND = 2071;
     public final static int TASK_GEN_TX_BNB_HTLC_REFUND = 2072;
-    public final static int TASK_FETCH_KAVA_INCENTIVE_PARAM = 2074;
-    public final static int TASK_FETCH_KAVA_INCENTIVE_REWARD = 2076;
     public final static int TASK_GEN_TX_HTLC_CREATE = 2079;
     public final static int TASK_GEN_TX_HTLC_CLAIM = 2080;
     public final static int TASK_GEN_TX_OK_DEPOSIT = 2086;
@@ -52,14 +50,8 @@ public class BaseConstant {
 
     public final static int TASK_FETCH_API_STAKE_HISTORY = 2301;
 
-    public final static int TASK_FETCH_PRICE_INFO = 2800;
-    public final static int TASK_FETCH_PARAM_INFO = 2801;
-    public final static int TASK_FETCH_IBC_PATHS = 2802;
-    public final static int TASK_FETCH_IBC_TOKENS = 2803;
     public final static int TASK_FETCH_MINTSCAN_PROPOSAL = 2804;
-    public final static int TASK_FETCH_MINTSCAN_ASSETS = 2805;
     public final static int TASK_FETCH_MINTSCAN_PROPOSAL_LIST = 2806;
-    public final static int TASK_FETCH_MINTSCAN_CW20_ASSETS = 2807;
 
     public final static int TASK_HDAC_NODE_INFO = 2900;
     public final static int TASK_HDAC_UTXO = 2901;
@@ -71,8 +63,6 @@ public class BaseConstant {
     //gRPC
     public final static int TASK_GRPC_FETCH_BALANCE = 4001;
     public final static int TASK_GRPC_FETCH_BONDED_VALIDATORS = 4002;
-    public final static int TASK_GRPC_FETCH_UNBONDED_VALIDATORS = 4003;
-    public final static int TASK_GRPC_FETCH_UNBONDING_VALIDATORS = 4004;
     public final static int TASK_GRPC_FETCH_DELEGATIONS = 4005;
     public final static int TASK_GRPC_FETCH_UNDELEGATIONS = 4006;
     public final static int TASK_GRPC_FETCH_ALL_REWARDS = 4007;
@@ -84,7 +74,6 @@ public class BaseConstant {
     public final static int TASK_GRPC_FETCH_REDELEGATIONS_FROM_TO = 4018;
     public final static int TASK_GRPC_FETCH_PROPOSAL_MY_VOTE = 4023;
     public final static int TASK_GRPC_FETCH_NODE_INFO = 4024;
-    public final static int TASK_GRPC_FETCH_AUTH = 4025;
     public final static int TASK_GRPC_FETCH_GRAVITY_POOL_LIST = 4026;
     public final static int TASK_GRPC_FETCH_GRAVITY_PARAM = 4027;
     public final static int TASK_GRPC_FETCH_GRAVITY_MANAGER = 4028;
@@ -92,10 +81,7 @@ public class BaseConstant {
     public final static int TASK_GRPC_FETCH_GRAVITY_POOL_INFO = 4030;
     public final static int TASK_GRPC_FETCH_DESMOS_PROFILE_INFO = 4031;
     public final static int TASK_GRPC_FETCH_SUPPLY_OF_INFO = 4032;
-    public final static int TASK_GRPC_FETCH_BALANCE_OF_CW20 = 4033;
 
-    public final static int TASK_GRPC_FETCH_STARNAME_FEE = 4101;
-    public final static int TASK_GRPC_FETCH_STARNAME_CONFIG = 4102;
     public final static int TASK_GRPC_FETCH_STARNAME_ACCOUNT = 4103;
     public final static int TASK_GRPC_FETCH_STARNAME_DOMAIN = 4104;
     public final static int TASK_GRPC_FETCH_STARNAME_RESOLVE = 4105;
@@ -117,7 +103,6 @@ public class BaseConstant {
 
     public final static int TASK_GRPC_FETCH_PROFILE_INFO = 4275;
 
-    public final static int TASK_GRPC_FETCH_KAVA_PRICES = 4277;
     public final static int TASK_GRPC_FETCH_KAVA_PRICE_TOKEN = 4278;
     public final static int TASK_GRPC_FETCH_KAVA_SWAP_PARAMS = 4279;
     public final static int TASK_GRPC_FETCH_KAVA_SWAP_POOLS = 4280;
