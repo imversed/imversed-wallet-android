@@ -12,6 +12,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +38,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fulldive.wallet.presentation.accounts.AddAccountDialogFragment;
 import com.fulldive.wallet.presentation.chains.choicenet.ChoiceChainDialogFragment;
 import com.fulldive.wallet.presentation.security.CheckPasswordActivity;
 import com.fulldive.wallet.presentation.security.SetPasswordActivity;
@@ -387,13 +389,20 @@ public class RestoreActivity extends BaseActivity implements View.OnClickListene
         startActivity(intent);
     }
 
-    @Override
     public void onChoiceNet(BaseChain chain) {
-        super.onChoiceNet(chain);
         this.chain = chain;
         onUpdateView();
     }
 
+    public void onChainSelected(BaseChain baseChain) {
+        if (getBaseDao().getAccountsByChain(baseChain).size() >= 5) {
+            Toast.makeText(this, R.string.error_max_account_number, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        new Handler().postDelayed(() -> {
+            showDialog(AddAccountDialogFragment.Companion.newInstance(baseChain.getChain()));
+        }, 300);
+    }
 
     public class MnemonicAdapter extends RecyclerView.Adapter<MnemonicAdapter.MnemonicHolder> implements Filterable {
 

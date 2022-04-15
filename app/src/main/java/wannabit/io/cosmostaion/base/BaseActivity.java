@@ -13,7 +13,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.widget.Toast;
 
@@ -27,7 +26,6 @@ import com.fulldive.wallet.interactors.chains.StationInteractor;
 import com.fulldive.wallet.interactors.chains.binance.BinanceInteractor;
 import com.fulldive.wallet.interactors.chains.grpc.GrpcInteractor;
 import com.fulldive.wallet.interactors.chains.okex.OkexInteractor;
-import com.fulldive.wallet.presentation.accounts.AddAccountDialogFragment;
 import com.fulldive.wallet.presentation.system.WaitDialogFragment;
 import com.fulldive.wallet.rx.AppSchedulers;
 import com.joom.lightsaber.Injector;
@@ -76,7 +74,6 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
     private OkexInteractor okexInteractor;
     private GrpcInteractor grpcInteractor;
     private StationInteractor stationInteractor;
-
 
     @Override
     public void setAppInjector(@NonNull Injector appInjector) {
@@ -211,23 +208,6 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
         Intent intent = new Intent(getBaseContext(), HtlcSendActivity.class);
         intent.putExtra("toSwapDenom", sendDenom);
         startActivity(intent);
-    }
-
-    @Deprecated
-    public void onChoiceNet(BaseChain chain) {
-    }
-
-    public void onChainSelected(BaseChain baseChain) {
-        if (getBaseDao().getAccountsByChain(baseChain).size() >= 5) {
-            Toast.makeText(this, R.string.error_max_account_number, Toast.LENGTH_SHORT).show();
-            return;
-        }
-        new Handler().postDelayed(() -> {
-            showDialog(AddAccountDialogFragment.Companion.newInstance(baseChain.getChain()));
-        }, 300);
-    }
-
-    public void onChoiceStarnameResourceAddress(String address) {
     }
 
     public void onAddMnemonicForAccount() {

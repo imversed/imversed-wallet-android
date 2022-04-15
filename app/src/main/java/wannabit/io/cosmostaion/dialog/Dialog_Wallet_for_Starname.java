@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import wannabit.io.cosmostaion.R;
+import wannabit.io.cosmostaion.activities.chains.starname.StarNameResourceAddActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseChain;
 import wannabit.io.cosmostaion.dao.Account;
@@ -88,7 +89,7 @@ public class Dialog_Wallet_for_Starname extends DialogFragment {
             }
             holder.accountName.setText(account.getAccountTitle(getContext()));
             holder.accountContent.setOnClickListener(v -> {
-                ((BaseActivity) getActivity()).onChoiceStarnameResourceAddress(account.address);
+                ((StarNameResourceAddActivity) getActivity()).onChoiceStarnameResourceAddress(account.address);
                 dismiss();
             });
 

@@ -159,11 +159,9 @@ public class StarNameResourceAddActivity extends BaseActivity implements View.On
         }
     }
 
-    @Override
     public void onChoiceStarnameResourceAddress(String address) {
         WLog.w("address " + address);
         mUserInput.setText(address);
-
     }
 
     @Override

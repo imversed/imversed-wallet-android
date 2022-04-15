@@ -15,7 +15,6 @@ import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_SWP;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +32,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.fulldive.wallet.presentation.accounts.AddAccountDialogFragment;
 import com.fulldive.wallet.presentation.main.history.MainHistoryFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -55,7 +53,6 @@ import wannabit.io.cosmostaion.base.BaseChain;
 import wannabit.io.cosmostaion.base.IBusyFetchListener;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.dao.Account;
-import wannabit.io.cosmostaion.dao.ChainAccounts;
 import wannabit.io.cosmostaion.dialog.Dialog_WalletConnect;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.fragment.MainSendFragment;
@@ -78,7 +75,6 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
     public FloatingActionButton mFloatBtn;
 
     private BaseChain mSelectedChain;
-    private final ArrayList<ChainAccounts> mChainAccounts = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,24 +194,13 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
 
     private void onChainSelect(BaseChain baseChain) {
         invalidateOptionsMenu();
-        mChainAccounts.clear();
-
-        ArrayList<BaseChain> displayChains = getBaseDao().dpSortedChains();
-        ArrayList<BaseChain> expendedChains = getBaseDao().getExpendedChains();
-
         mSelectedChain = baseChain;
         getBaseDao().setLastChain(mSelectedChain.getChain());
-
-        for (BaseChain chain : displayChains) {
-            boolean opened = expendedChains.contains(chain) || mSelectedChain.equals(chain);
-            mChainAccounts.add(new ChainAccounts(opened, chain, getBaseDao().getAccountsByChain(chain)));
-        }
     }
 
     public void onClickSwitchWallet() {
         startActivity(new Intent(this, WalletSwitchActivity.class));
         overridePendingTransition(R.anim.slide_in_bottom, R.anim.fade_out);
-        onChainSelect(mSelectedChain);
     }
 
     @Override
@@ -232,16 +217,6 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
         }
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
-    }
-
-    public void onChainSelected(BaseChain baseChain) {
-        if (getBaseDao().getAccountsByChain(baseChain).size() >= 5) {
-            Toast.makeText(this, R.string.error_max_account_number, Toast.LENGTH_SHORT).show();
-            return;
-        }
-        new Handler().postDelayed(() -> {
-            showDialog(AddAccountDialogFragment.Companion.newInstance(baseChain.getChain()));
-        }, 300);
     }
 
     public void onFetchAllData() {

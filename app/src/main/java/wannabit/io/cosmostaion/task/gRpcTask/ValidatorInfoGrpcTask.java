@@ -13,16 +13,14 @@ import wannabit.io.cosmostaion.task.TaskResult;
 import wannabit.io.cosmostaion.utils.WLog;
 
 public class ValidatorInfoGrpcTask extends CommonTask {
-    private final BaseChain mChain;
     private final String mValOpAddress;
     private final QueryGrpc.QueryBlockingStub mStub;
 
     public ValidatorInfoGrpcTask(BaseApplication app, TaskListener listener, BaseChain chain, String opAddress) {
         super(app, listener);
-        this.mChain = chain;
         this.mValOpAddress = opAddress;
         this.result.taskType = TASK_GRPC_FETCH_VALIDATOR_INFO;
-        this.mStub = QueryGrpc.newBlockingStub(ChannelBuilder.getChain(mChain));
+        this.mStub = QueryGrpc.newBlockingStub(ChannelBuilder.getChain(chain));
     }
 
 

@@ -102,6 +102,11 @@ class BinanceInteractor @Inject constructor(
                     .setAccount(account)
                     .andThen(binanceRepository.setAccountBalances(account.id, balances))
             }
+            .doOnError { error ->
+                WLog.e(error.message)
+                error.printStackTrace()
+            }
+            .onErrorComplete()
     }
 
     fun updateNodeInfo(): Single<NodeInfo> {
