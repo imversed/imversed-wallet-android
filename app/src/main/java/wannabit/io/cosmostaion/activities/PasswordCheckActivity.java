@@ -80,7 +80,7 @@ import android.widget.Toast;
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.interactors.secret.InvalidPasswordException;
 import com.fulldive.wallet.interactors.secret.SecretInteractor;
-import com.fulldive.wallet.presentation.security.mnemonic.MnemonicCheckActivity;
+import com.fulldive.wallet.presentation.security.mnemonic.ShowMnemonicActivity;
 import com.fulldive.wallet.presentation.system.keyboard.KeyboardListener;
 import com.fulldive.wallet.presentation.system.keyboard.KeyboardPagerAdapter;
 import com.fulldive.wallet.rx.AppSchedulers;
@@ -490,7 +490,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
 
                 break;
             case CONST_PW_CHECK_MNEMONIC:
-                fetchEntropy(MnemonicCheckActivity.class);
+                fetchEntropy(ShowMnemonicActivity.class);
 
                 break;
             case CONST_PW_CHECK_PRIVATE_KEY:
@@ -855,8 +855,8 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
                 .subscribe(
                         entropy -> {
                             Intent checkintent = new Intent(PasswordCheckActivity.this, cls);
-                            checkintent.putExtra("checkid", mIdToCheck);
-                            checkintent.putExtra("entropy", entropy);
+                            checkintent.putExtra(ShowMnemonicActivity.KEY_ACCOUNT_ID, mIdToCheck);
+                            checkintent.putExtra(ShowMnemonicActivity.KEY_ENTROPY, entropy);
                             startActivity(checkintent);
                         },
                         error -> {

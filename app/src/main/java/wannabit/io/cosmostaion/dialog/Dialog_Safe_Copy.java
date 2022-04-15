@@ -12,7 +12,7 @@ import android.widget.Button;
 import androidx.fragment.app.DialogFragment;
 
 import wannabit.io.cosmostaion.R;
-import com.fulldive.wallet.presentation.security.mnemonic.MnemonicCheckActivity;
+import com.fulldive.wallet.presentation.security.mnemonic.ShowMnemonicActivity;
 
 public class Dialog_Safe_Copy extends DialogFragment {
 
@@ -33,12 +33,12 @@ public class Dialog_Safe_Copy extends DialogFragment {
         Button btn_positive = view.findViewById(R.id.positiveButton);
 
         btn_negative.setOnClickListener(v -> {
-            ((MnemonicCheckActivity) getActivity()).onRawCopy();
+            ((ShowMnemonicActivity) getActivity()).onRawCopy();
             dismiss();
         });
 
         btn_positive.setOnClickListener(v -> {
-            ((MnemonicCheckActivity) getActivity()).onSafeCopy();
+            ((ShowMnemonicActivity) getActivity()).onSafeCopy();
             dismiss();
         });
 

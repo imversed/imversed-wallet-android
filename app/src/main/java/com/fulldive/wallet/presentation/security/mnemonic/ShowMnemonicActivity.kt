@@ -1,103 +1,94 @@
-package com.fulldive.wallet.presentation.security.mnemonic;
+package com.fulldive.wallet.presentation.security.mnemonic
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
-import android.os.Bundle;
-import android.view.MenuItem;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.Toast;
+import android.content.Intent
+import android.os.Bundle
+import android.view.MenuItem
+import android.view.WindowManager
+import com.fulldive.wallet.extensions.unsafeLazy
+import com.fulldive.wallet.presentation.base.BaseMvpActivity
+import com.joom.lightsaber.getInstance
+import moxy.ktx.moxyPresenter
+import wannabit.io.cosmostaion.activities.MainActivity
+import wannabit.io.cosmostaion.base.BaseChain
+import wannabit.io.cosmostaion.databinding.ActivityMnemonicCheckBinding
 
-import androidx.appcompat.widget.Toolbar;
-
-import com.fulldive.wallet.presentation.security.mnemonic.layout.MnemonicLayout;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
-import wannabit.io.cosmostaion.crypto.CryptoHelper;
-import wannabit.io.cosmostaion.dao.Account;
-import wannabit.io.cosmostaion.dialog.Dialog_Safe_Copy;
-import wannabit.io.cosmostaion.utils.WKey;
-import wannabit.io.cosmostaion.utils.WUtil;
-
-public class MnemonicCheckActivity extends BaseActivity {
-
-    private List<String> mnemonicWords = new ArrayList<>();
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
-        setContentView(R.layout.activity_mnemonic_check);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        MnemonicLayout mnemonicsLayout = findViewById(R.id.mnemonicsLayout);
-        Button copyButton = findViewById(R.id.copyButton);
-        Button okButton = findViewById(R.id.okButton);
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        String entropy = getIntent().getStringExtra("entropy");
-        mnemonicWords = new ArrayList<>(WKey.getRandomMnemonic(WUtil.hexStringToByteArray(entropy)));
-
-        mnemonicsLayout.performAttach();    // XXX
-        Account toCheck = getBaseDao().getAccount("" + getIntent().getLongExtra("checkid", -1));
-        final BaseChain chain = BaseChain.getChain(toCheck.baseChain);
-        if (chain != null) {
-            mnemonicsLayout.setChain(chain);
-            mnemonicsLayout.setMnemonicWords(mnemonicWords);
-        }
-
-        copyButton.setOnClickListener(v -> {
-            Dialog_Safe_Copy delete = Dialog_Safe_Copy.newInstance();
-            showDialog(delete);
-        });
-
-        okButton.setOnClickListener(v -> startMainActivity(3));
+class ShowMnemonicActivity : BaseMvpActivity<ActivityMnemonicCheckBinding>(), ShowMnemonicMoxyView {
+    private val accountId by unsafeLazy { intent.getLongExtra(KEY_ACCOUNT_ID, -1) }
+    private val entropy by unsafeLazy {
+        intent.getStringExtra(KEY_ENTROPY) ?: throw  IllegalStateException("Entropy can't be null")
     }
 
-    public void onRawCopy() {
-        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        StringBuilder builder = new StringBuilder();
-        for (String word : mnemonicWords) {
-            if (builder.length() != 0)
-                builder.append(" ");
-            builder.append(word);
-        }
-        String data = builder.toString();
-        ClipData clip = ClipData.newPlainText("my data", data);
-        clipboard.setPrimaryClip(clip);
-        Toast.makeText(getBaseContext(), R.string.str_copied, Toast.LENGTH_SHORT).show();
-
+    private val presenter by moxyPresenter {
+        appInjector.getInstance<ShowMnemonicPresenter>()
+            .also {
+                it.accountId = accountId
+                it.entropy = entropy
+            }
     }
 
-    public void onSafeCopy() {
-        StringBuilder builder = new StringBuilder();
-        for (String word : mnemonicWords) {
-            if (builder.length() != 0)
-                builder.append(" ");
-            builder.append(word);
-        }
-        String data = builder.toString();
-        getBaseDao().mCopyEncResult = CryptoHelper.doEncryptData(getBaseDao().mCopySalt, data, false);
-        Toast.makeText(getBaseContext(), R.string.str_safe_copied, Toast.LENGTH_SHORT).show();
+    override fun getViewBinding() = ActivityMnemonicCheckBinding.inflate(layoutInflater)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_SECURE,
+            WindowManager.LayoutParams.FLAG_SECURE
+        )
+        super.onCreate(savedInstanceState)
+        binding {
+            setSupportActionBar(toolbar)
+            copyButton.setOnClickListener {
+                presenter.onCopyClicked()
+            }
+            okButton.setOnClickListener { presenter.onOkClicked() }
+            mnemonicsLayout.performAttach() // XXX
+        }
+        supportActionBar?.apply {
+            setDisplayShowTitleEnabled(false)
+            setDisplayHomeAsUpEnabled(true)
+        }
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+    override fun showMnemonicWords(mnemonicWords: List<String>) {
+        binding {
+            mnemonicsLayout.setMnemonicWords(mnemonicWords)
         }
+    }
+
+    override fun showChain(chain: BaseChain) {
+        binding {
+            mnemonicsLayout.setChain(chain)
+        }
+    }
+
+    override fun showMainActivity(tabIndex: Int) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.putExtra("page", tabIndex)
+        startActivity(intent)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> {
+                super.onOptionsItemSelected(item)
+            }
+        }
+    }
+
+    fun onRawCopy() {
+        presenter.onRawCopyClicked()
+    }
+
+    fun onSafeCopy() {
+        presenter.onSafeCopyClicked()
+    }
+
+    companion object {
+        const val KEY_ENTROPY = "entropy"
+        const val KEY_ACCOUNT_ID = "accountId"
     }
 }

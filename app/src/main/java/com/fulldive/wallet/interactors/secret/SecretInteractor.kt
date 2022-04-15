@@ -98,11 +98,13 @@ class SecretInteractor @Inject constructor(
         }
     }
 
-    fun encryptData(uuid: String, entropy: String): Single<EncResult> {
+    fun encryptEntropy(uuid: String, entropy: String): Single<EncResult> {
+        return encryptText(MNEMONIC_KEY + uuid, entropy)
+    }
+
+    fun encryptText(key: String, text: String): Single<EncResult> {
         return safeSingle {
-            CryptoHelper.doEncryptData(
-                MNEMONIC_KEY + uuid, entropy, false
-            )
+            CryptoHelper.doEncryptData(key, text, false)
         }
     }
 

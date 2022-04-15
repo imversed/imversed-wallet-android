@@ -53,7 +53,7 @@ public class PrivateKeyCheckActivity extends BaseActivity implements View.OnClic
         mCopy.setOnClickListener(this);
         mOk.setOnClickListener(this);
 
-        account = getBaseDao().getAccount("" + getIntent().getLongExtra("checkid", -1));
+        account = getBaseDao().getAccount("" + getIntent().getLongExtra("accountId", -1));
         mCardView.setCardBackgroundColor(WDp.getChainBgColor(getBaseContext(), BaseChain.getChain(account.baseChain)));
         onUpdateView();
     }
