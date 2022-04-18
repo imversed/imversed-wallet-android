@@ -1,6 +1,7 @@
 package com.fulldive.wallet.presentation.security.mnemonic
 
 import com.fulldive.wallet.di.modules.DefaultPresentersModule
+import com.fulldive.wallet.extensions.safeSingle
 import com.fulldive.wallet.extensions.withDefaults
 import com.fulldive.wallet.interactors.ClipboardInteractor
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
@@ -41,7 +42,11 @@ class ShowMnemonicPresenter @Inject constructor(
         accountsInteractor
             .getAccount(accountId)
             .map(Account::baseChain)
-            .map(BaseChain::getChain)
+            .flatMap { chainName ->
+                safeSingle {
+                    BaseChain.getChain(chainName)
+                }
+            }
             .withDefaults()
             .compositeSubscribe(
                 onSuccess = viewState::showChain

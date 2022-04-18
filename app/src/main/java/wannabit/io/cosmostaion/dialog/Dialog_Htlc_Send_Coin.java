@@ -32,6 +32,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseChain;
@@ -41,7 +42,7 @@ public class Dialog_Htlc_Send_Coin extends DialogFragment {
     private RecyclerView mRecyclerView;
     private ToSwapCoinListAdapter mToSwapCoinListAdapter;
     private BaseChain mBaseChain;
-    private ArrayList<String> mSwappableCoinList;
+    private List<String> mSwappableCoinList;
 
     public static Dialog_Htlc_Send_Coin newInstance(Bundle bundle) {
         Dialog_Htlc_Send_Coin frag = new Dialog_Htlc_Send_Coin();

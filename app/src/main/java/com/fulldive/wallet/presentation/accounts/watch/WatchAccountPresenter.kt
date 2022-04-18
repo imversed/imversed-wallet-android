@@ -74,7 +74,7 @@ class WatchAccountPresenter @Inject constructor(
                     val dialog = ChoiceChainDialogFragment
                         .newInstance(
                             requestCode = requestCode,
-                            chains = chains.map(BaseChain::getChain)
+                            chains = chains.map(BaseChain::chain)
                         )
                     viewState.showDialog(dialog, "dialog", true)
                     requestCode

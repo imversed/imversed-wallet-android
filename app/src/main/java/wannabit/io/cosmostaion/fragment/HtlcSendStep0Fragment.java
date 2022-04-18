@@ -30,6 +30,7 @@ import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -67,9 +68,9 @@ public class HtlcSendStep0Fragment extends BaseFragment implements View.OnClickL
     private TextView mSystemMaxAmount, mSystemMaxDenom;
     private TextView mRemainAmount, mRemainDenom;
 
-    private ArrayList<BaseChain> mToChainList;
+    private List<BaseChain> mToChainList;
     private BaseChain mToChain;
-    private ArrayList<String> mSwappableCoinList;
+    private List<String> mSwappableCoinList;
     private String mToSwapDenom;
 
     private ResKavaBep3Param mKavaBep3Param2;

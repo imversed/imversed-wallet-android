@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseChain;
@@ -28,7 +29,7 @@ public class Dialog_Htlc_Receive_Chain extends DialogFragment {
 
     private RecyclerView mRecyclerView;
     private DestinationChainListAdapter mDestinationChainListAdapter;
-    private ArrayList<BaseChain> mToChainList;
+    private List<BaseChain> mToChainList;
 
     public static Dialog_Htlc_Receive_Chain newInstance(Bundle bundle) {
         Dialog_Htlc_Receive_Chain frag = new Dialog_Htlc_Receive_Chain();

@@ -2,6 +2,7 @@ package com.fulldive.wallet.presentation.security.key
 
 import com.fulldive.wallet.di.modules.DefaultPresentersModule
 import com.fulldive.wallet.extensions.combine
+import com.fulldive.wallet.extensions.safeSingle
 import com.fulldive.wallet.extensions.withDefaults
 import com.fulldive.wallet.extensions.withPrefix
 import com.fulldive.wallet.interactors.ClipboardInteractor
@@ -34,8 +35,11 @@ class ShowPrivateKeyPresenter @Inject constructor(
         val accountSingle = accountsInteractor.getAccount(accountId)
         val chainSingle = accountSingle
             .map(Account::baseChain)
-            .map(BaseChain::getChain)
-
+            .flatMap { chainName ->
+                safeSingle {
+                    BaseChain.getChain(chainName)
+                }
+            }
         Single.zip(accountSingle, chainSingle, ::combine)
             .flatMap { (account, chain) ->
                 if (account.fromMnemonic) {
