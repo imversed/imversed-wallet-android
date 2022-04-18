@@ -4,7 +4,7 @@ package wannabit.io.cosmostaion.base;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
-import com.fulldive.wallet.extensions.AnyExtensionsKt;
+import com.fulldive.wallet.extensions.ViewExtensionsKt;
 
 public class BaseFragment extends Fragment {
 
@@ -45,7 +45,7 @@ public class BaseFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        AnyExtensionsKt.clearUi(this);
+        ViewExtensionsKt.clearUi(this);
         super.onDestroyView();
     }
 }

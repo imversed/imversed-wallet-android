@@ -12,7 +12,7 @@ import android.widget.Button;
 import androidx.fragment.app.DialogFragment;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.PrivateKeyCheckActivity;
+import com.fulldive.wallet.presentation.security.key.ShowPrivateKeyActivity;
 
 public class Dialog_Safe_Copy_pKey extends DialogFragment {
 
@@ -33,12 +33,12 @@ public class Dialog_Safe_Copy_pKey extends DialogFragment {
         Button btn_positive = view.findViewById(R.id.positiveButton);
 
         btn_negative.setOnClickListener(v -> {
-            ((PrivateKeyCheckActivity) getActivity()).onRawCopy();
+            ((ShowPrivateKeyActivity) getActivity()).onRawCopy();
             dismiss();
         });
 
         btn_positive.setOnClickListener(v -> {
-            ((PrivateKeyCheckActivity) getActivity()).onSafeCopy();
+            ((ShowPrivateKeyActivity) getActivity()).onSafeCopy();
             dismiss();
         });
 

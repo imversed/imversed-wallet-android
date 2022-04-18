@@ -52,7 +52,7 @@ public class OverridePkeyAccountTask extends CommonTask {
         account.resource = encR.getEncDataString();
         account.spec = encR.getIvDataString();
         account.fromMnemonic = false;
-        account.path = "-1";
+        account.path = -1;
         account.msize = -1;
         account.newBip44 = false;
         account.customPath = customPath;

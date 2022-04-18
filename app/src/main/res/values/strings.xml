@@ -263,7 +263,8 @@
     <string name="str_copy">Copy</string>
     <string name="str_copy_to">Copy to clipboard</string>
     <string name="str_copied">Copied to clipboard</string>
-    <string name="str_safe_copied">Mnemonic copied safely</string>
+    <string name="str_safe_mnemonic_copied">Mnemonic copied safely</string>
+    <string name="str_safe_key_copied">Key copied safely</string>
     <string name="str_add_mnemonics">Add Mnemonics</string>
     <string name="str_back">Back</string>
     <string name="str_with_qr">Share QR Image</string>
@@ -2017,5 +2018,6 @@
     <string name="str_address_type">Address Type</string>
     <string name="str_ethereum_type_address">Ethereum Type Address</string>
     <string name="str_legacy_tendermint_type_address">Legacy Tendermint Type Address</string>
+    <string name="str_empty_key">-</string>
 
 </resources>

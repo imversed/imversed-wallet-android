@@ -7,7 +7,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
+import com.fulldive.wallet.extensions.getColorCompat
 import com.fulldive.wallet.interactors.secret.MnemonicUtils
 import com.fulldive.wallet.presentation.base.BaseMvpFrameLayout
 import com.joom.lightsaber.getInstance
@@ -38,8 +38,7 @@ class MnemonicLayout : BaseMvpFrameLayout<LayoutMnemonicBinding>, MnemonicMoxyVi
     override fun setColors(@ColorRes backgroundResId: Int, @DrawableRes wordsBackgroundResId: Int) {
         binding {
             cardView.setCardBackgroundColor(
-                ContextCompat.getColor(
-                    context,
+                context.getColorCompat(
                     backgroundResId
                 )
             )

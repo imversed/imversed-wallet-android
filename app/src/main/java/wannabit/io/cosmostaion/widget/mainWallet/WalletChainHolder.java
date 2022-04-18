@@ -36,7 +36,7 @@ public class WalletChainHolder extends BaseHolder {
 
     public WalletChainHolder(@NonNull View itemView) {
         super(itemView);
-        mTvChainCard = itemView.findViewById(R.id.card_root);
+        mTvChainCard = itemView.findViewById(R.id.cardView);
         mTvChainIcon = itemView.findViewById(R.id.chain_icon);
         mTvChainDenom = itemView.findViewById(R.id.chain_denom);
         mTvChainTotal = itemView.findViewById(R.id.chain_amount);

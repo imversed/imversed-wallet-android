@@ -26,7 +26,6 @@ import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.ITimelessActivity;
 import wannabit.io.cosmostaion.utils.WLog;
-import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.LockedViewPager;
 
 public class AppLockActivity extends BaseActivity implements ITimelessActivity, KeyboardListener {
@@ -103,10 +102,10 @@ public class AppLockActivity extends BaseActivity implements ITimelessActivity, 
         if (userInput.length() == 4) {
             viewPager.setCurrentItem(1, true);
 
-        } else if (userInput.length() == 5 && WUtil.checkPasscodePattern(userInput)) {
+        } else if (userInput.length() == 5 && secretInteractor.isPasswordValid(userInput)) {
             onFinishInput();
 
-        } else if (userInput.length() == 5 && !WUtil.checkPasscodePattern(userInput)) {
+        } else if (userInput.length() == 5) {
             onInitView();
             return;
         }

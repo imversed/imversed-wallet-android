@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
 import java.util.List;
 
 import osmosis.gamm.poolmodels.balancer.BalancerPool;
@@ -37,7 +36,7 @@ public class EarningUnbondedHolder extends RecyclerView.ViewHolder {
 
     public EarningUnbondedHolder(@NonNull View itemView) {
         super(itemView);
-        itemRoot = itemView.findViewById(R.id.card_root);
+        itemRoot = itemView.findViewById(R.id.cardView);
         itemLockId = itemView.findViewById(R.id.lock_id);
         itemLockStatus = itemView.findViewById(R.id.lock_status);
         itemAmount = itemView.findViewById(R.id.amount);

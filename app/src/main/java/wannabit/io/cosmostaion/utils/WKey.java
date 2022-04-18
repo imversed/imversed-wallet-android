@@ -9,6 +9,7 @@ import android.util.Base64;
 import androidx.annotation.NonNull;
 
 import com.fulldive.wallet.extensions.ChainExtensionsKt;
+import com.fulldive.wallet.interactors.secret.MnemonicUtils;
 import com.google.common.collect.ImmutableList;
 import com.google.protobuf.ByteString;
 import com.google.protobuf2.Any;
@@ -20,7 +21,6 @@ import org.bitcoinj.crypto.DeterministicHierarchy;
 import org.bitcoinj.crypto.DeterministicKey;
 import org.bitcoinj.crypto.HDKeyDerivation;
 import org.bitcoinj.crypto.MnemonicCode;
-import org.bitcoinj.crypto.MnemonicException;
 import org.bouncycastle.crypto.digests.RIPEMD160Digest;
 import org.bouncycastle.util.encoders.Hex;
 import org.web3j.crypto.Keys;
@@ -37,7 +37,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import cosmos.auth.v1beta1.QueryOuterClass;
-import wannabit.io.cosmostaion.BuildConfig;
+import kotlin.Deprecated;
 import wannabit.io.cosmostaion.base.BaseChain;
 import wannabit.io.cosmostaion.crypto.Sha256;
 import wannabit.io.cosmostaion.dao.Account;
@@ -46,26 +46,8 @@ public class WKey {
 
     private static final String CHARSET = "qpzry9x8gf2tvdw0s3jn54khce6mua7l";
 
-    public static byte[] getEntropy() {
-        byte[] seed = new byte[32];
-        new SecureRandom().nextBytes(seed);
-        return seed;
-    }
-
-    public static List<String> getRandomMnemonic(byte[] entropy) {
-        List<String> result = new ArrayList<>();
-        try {
-            result = MnemonicCode.INSTANCE.toMnemonic(entropy);
-
-        } catch (MnemonicException.MnemonicLengthException e) {
-            if (BuildConfig.DEBUG)
-                e.printStackTrace();
-
-        }
-        return result;
-    }
-
-    public static byte[] toEntropy(ArrayList<String> words) {
+    @Deprecated(message = "Use SecretInteractor.entropyFromMnemonicWords")
+    public static byte[] toEntropy(List<String> words) {
         try {
             return new MnemonicCode().toEntropy(words);
         } catch (Exception e) {
@@ -87,7 +69,7 @@ public class WKey {
     }
 
     public static String getStringHdSeedFromWords(ArrayList<String> words) {
-        return WUtil.byteArrayToHexString(getByteHdSeedFromWords(words));
+        return MnemonicUtils.INSTANCE.byteArrayToHexString(getByteHdSeedFromWords(words));
     }
 
     public static boolean isValidStringHdSeedFromWords(ArrayList<String> words) {
@@ -111,24 +93,26 @@ public class WKey {
 
 
     //singer
+    @Deprecated(message = "Alternative is MnemonicUtils.createKeyWithPathFromEntropy")
     public static DeterministicKey getKeyWithPathfromEntropy(Account account, String entropy) {
         DeterministicKey result;
         BaseChain chain = getChain(account.baseChain);
-        DeterministicKey masterKey = HDKeyDerivation.createMasterPrivateKey(getHDSeed(WUtil.hexStringToByteArray(entropy)));
+        DeterministicKey masterKey = HDKeyDerivation.createMasterPrivateKey(getHDSeed(MnemonicUtils.INSTANCE.hexStringToByteArray(entropy)));
         final List<ChildNumber> parentPath = ChainExtensionsKt.getPath(chain, account.customPath);
         if (!chain.equals(BaseChain.FETCHAI_MAIN) || account.customPath != 2) {
-            result = new DeterministicHierarchy(masterKey).deriveChild(parentPath, true, true, new ChildNumber(Integer.parseInt(account.path)));
+            result = new DeterministicHierarchy(masterKey).deriveChild(parentPath, true, true, new ChildNumber(account.path));
         } else {
-            DeterministicKey targetKey = new DeterministicHierarchy(masterKey).deriveChild(parentPath, true, true, new ChildNumber(Integer.parseInt(account.path), true));
+            DeterministicKey targetKey = new DeterministicHierarchy(masterKey).deriveChild(parentPath, true, true, new ChildNumber(account.path, true));
             result = new DeterministicHierarchy(targetKey).deriveChild(WKey.getFetchParentPath2(), true, true, ChildNumber.ZERO);
         }
         return result;
     }
 
     // create, restore
+    @Deprecated(message = "Alternative is MnemonicUtils.createKeyWithPathFromEntropy")
     public static DeterministicKey getCreateKeyWithPathfromEntropy(BaseChain chain, String entropy, int path, int customPath) {
         DeterministicKey result;
-        DeterministicKey masterKey = HDKeyDerivation.createMasterPrivateKey(getHDSeed(WUtil.hexStringToByteArray(entropy)));
+        DeterministicKey masterKey = HDKeyDerivation.createMasterPrivateKey(getHDSeed(MnemonicUtils.INSTANCE.hexStringToByteArray(entropy)));
         final List<ChildNumber> parentPath = ChainExtensionsKt.getPath(chain, customPath);
         if (!chain.equals(BaseChain.FETCHAI_MAIN) || customPath != 2) {
             result = new DeterministicHierarchy(masterKey).deriveChild(parentPath, true, true, new ChildNumber(path));
@@ -200,9 +184,9 @@ public class WKey {
         System.arraycopy(uncompressedPubKey, 1, pub, 0, 64);
 
         byte[] address = Keys.getAddress(pub);
-        WLog.w("eth address " + WUtil.byteArrayToHexString(address));
+        WLog.w("eth address " + MnemonicUtils.INSTANCE.byteArrayToHexString(address));
 
-        String addressResult = null;
+        String addressResult;
         try {
             byte[] bytes = convertBits(address, 8, 5, true);
             addressResult = Bech32.encode(mainPrefix, bytes);
@@ -219,13 +203,13 @@ public class WKey {
         System.arraycopy(uncompressedPubKey, 1, pub, 0, 64);
 
         byte[] address = Keys.getAddress(pub);
-        return "0x" + WUtil.byteArrayToHexString(address);
+        return "0x" + MnemonicUtils.INSTANCE.byteArrayToHexString(address);
     }
 
     public static String generateTenderAddressFromPrivateKey(String privateKey) {
         String pubKey = generatePubKeyHexFromPriv(privateKey);
         MessageDigest digest = Sha256.getSha256Digest();
-        byte[] hash = digest.digest(WUtil.hexStringToByteArray(pubKey));
+        byte[] hash = digest.digest(MnemonicUtils.INSTANCE.hexStringToByteArray(pubKey));
 
         RIPEMD160Digest digest2 = new RIPEMD160Digest();
         digest2.update(hash, 0, hash.length);
@@ -233,12 +217,12 @@ public class WKey {
         byte[] hash3 = new byte[digest2.getDigestSize()];
         digest2.doFinal(hash3, 0);
 
-        return "0x" + WUtil.byteArrayToHexString(hash3);
+        return "0x" + MnemonicUtils.INSTANCE.byteArrayToHexString(hash3);
     }
 
     public static String convertAddressOkexToEth(String exAddress) throws Exception {
         byte[] pub = convertBits(bech32Decode(exAddress).data, 5, 8, false);
-        return "0x" + WUtil.byteArrayToHexString(pub);
+        return "0x" + MnemonicUtils.INSTANCE.byteArrayToHexString(pub);
     }
 
     public static String convertAddressEthToOkex(String esAddress) throws Exception {
@@ -246,7 +230,7 @@ public class WKey {
         if (cosmoTypeAddress.startsWith("0x")) {
             cosmoTypeAddress = cosmoTypeAddress.replace("0x", "");
         }
-        byte[] pub = WUtil.hexStringToByteArray(cosmoTypeAddress);
+        byte[] pub = MnemonicUtils.INSTANCE.hexStringToByteArray(cosmoTypeAddress);
         String addressResult = null;
         try {
             byte[] bytes = convertBits(pub, 8, 5, true);
@@ -286,7 +270,7 @@ public class WKey {
     public static String getDpAddress(BaseChain chain, String pubHex) {
         String result = null;
         MessageDigest digest = Sha256.getSha256Digest();
-        byte[] hash = digest.digest(WUtil.hexStringToByteArray(pubHex));
+        byte[] hash = digest.digest(MnemonicUtils.INSTANCE.hexStringToByteArray(pubHex));
 
         RIPEMD160Digest digest2 = new RIPEMD160Digest();
         digest2.update(hash, 0, hash.length);
@@ -549,9 +533,9 @@ public class WKey {
         System.arraycopy(rhs, 0, expectedSwapId, 0, rhs.length);
         System.arraycopy(o, 0, expectedSwapId, rhs.length, o.length);
 
-        WLog.w("expectedSwapId " + WUtil.byteArrayToHexString(expectedSwapId));
+        WLog.w("expectedSwapId " + MnemonicUtils.INSTANCE.byteArrayToHexString(expectedSwapId));
 
         byte[] expectedSwapIdSha = Sha256.getSha256Digest().digest(expectedSwapId);
-        return WUtil.byteArrayToHexString(expectedSwapIdSha);
+        return MnemonicUtils.INSTANCE.byteArrayToHexString(expectedSwapIdSha);
     }
 }

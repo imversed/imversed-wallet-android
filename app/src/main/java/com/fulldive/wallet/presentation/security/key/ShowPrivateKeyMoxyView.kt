@@ -1,4 +1,4 @@
-package com.fulldive.wallet.presentation.security.mnemonic
+package com.fulldive.wallet.presentation.security.key
 
 import androidx.fragment.app.DialogFragment
 import com.fulldive.wallet.presentation.base.BaseMoxyView
@@ -6,10 +6,10 @@ import moxy.viewstate.strategy.alias.AddToEndSingle
 import moxy.viewstate.strategy.alias.OneExecution
 import wannabit.io.cosmostaion.base.BaseChain
 
-interface ShowMnemonicMoxyView : BaseMoxyView {
+interface ShowPrivateKeyMoxyView : BaseMoxyView {
 
     @AddToEndSingle
-    fun showMnemonicWords(mnemonicWords: List<String>)
+    fun showPrivateKey(key: String)
 
     @AddToEndSingle
     fun showChain(chain: BaseChain)

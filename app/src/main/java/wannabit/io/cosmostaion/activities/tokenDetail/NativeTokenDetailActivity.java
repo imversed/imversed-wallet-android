@@ -80,7 +80,7 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
         mItemUpDownImg = findViewById(R.id.ic_price_updown);
         mItemUpDownPrice = findViewById(R.id.dash_price_updown_tx);
 
-        mBtnAddressPopup = findViewById(R.id.card_root);
+        mBtnAddressPopup = findViewById(R.id.cardView);
         mKeyState = findViewById(R.id.img_account);
         mAddress = findViewById(R.id.account_Address);
         mTotalValue = findViewById(R.id.total_value);

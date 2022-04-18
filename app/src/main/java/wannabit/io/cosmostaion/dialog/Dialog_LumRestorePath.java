@@ -37,20 +37,14 @@ public class Dialog_LumRestorePath extends DialogFragment {
         mBasicPath = view.findViewById(R.id.basic_path);
         mAirdropPath = view.findViewById(R.id.airdrop_path);
 
-        mBasicPath.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((RestoreActivity) getActivity()).onUsingCustomPath(1);
-                dismiss();
-            }
+        mBasicPath.setOnClickListener(v -> {
+            ((RestoreActivity) getActivity()).onUsingCustomPath(1);
+            dismiss();
         });
 
-        mAirdropPath.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((RestoreActivity) getActivity()).onUsingCustomPath(0);
-                dismiss();
-            }
+        mAirdropPath.setOnClickListener(v -> {
+            ((RestoreActivity) getActivity()).onUsingCustomPath(0);
+            dismiss();
         });
 
 

@@ -80,6 +80,7 @@ import android.widget.Toast;
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.interactors.secret.InvalidPasswordException;
 import com.fulldive.wallet.interactors.secret.SecretInteractor;
+import com.fulldive.wallet.presentation.security.key.ShowPrivateKeyActivity;
 import com.fulldive.wallet.presentation.security.mnemonic.ShowMnemonicActivity;
 import com.fulldive.wallet.presentation.system.keyboard.KeyboardListener;
 import com.fulldive.wallet.presentation.system.keyboard.KeyboardPagerAdapter;
@@ -172,7 +173,6 @@ import wannabit.io.cosmostaion.utils.OsmosisPeriodLockWrapper;
 import wannabit.io.cosmostaion.utils.StarnameResourceWrapper;
 import wannabit.io.cosmostaion.utils.WKey;
 import wannabit.io.cosmostaion.utils.WLog;
-import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.LockedViewPager;
 
 public class PasswordCheckActivity extends BaseActivity implements ITimelessActivity, KeyboardListener, TaskListener {
@@ -456,10 +456,10 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
         if (userInput.length() == 4) {
             mViewPager.setCurrentItem(1, true);
 
-        } else if (userInput.length() == 5 && WUtil.checkPasscodePattern(userInput)) {
+        } else if (userInput.length() == 5 && secretInteractor.isPasswordValid(userInput)) {
             onFinishInput();
 
-        } else if (userInput.length() == 5 && !WUtil.checkPasscodePattern(userInput)) {
+        } else if (userInput.length() == 5) {
             onInitView();
             return;
         }
@@ -494,7 +494,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
 
                 break;
             case CONST_PW_CHECK_PRIVATE_KEY:
-                fetchEntropy(PrivateKeyCheckActivity.class);
+                fetchEntropy(ShowPrivateKeyActivity.class);
 
                 break;
             case CONST_PW_TX_SIMPLE_SEND:
@@ -847,7 +847,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
                 .checkPassword(userInput)
                 .andThen(accountsInteractor.getAccount(mIdToCheck))
                 .flatMap(account ->
-                        secretInteractor.decryptEntropy(account.uuid, account.resource, account.spec)
+                        secretInteractor.entropyToMnemonic(account.uuid, account.resource, account.spec)
                 )
                 .subscribeOn(AppSchedulers.INSTANCE.io())
                 .observeOn(AppSchedulers.INSTANCE.ui())

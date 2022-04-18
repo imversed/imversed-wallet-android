@@ -8,6 +8,7 @@ import com.binance.dex.api.client.BinanceDexEnvironment;
 import com.binance.dex.api.client.Wallet;
 import com.binance.dex.api.client.domain.TransactionMetadata;
 import com.binance.dex.api.client.domain.broadcast.TransactionOption;
+import com.fulldive.wallet.interactors.secret.MnemonicUtils;
 
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.crypto.DeterministicKey;
@@ -92,7 +93,7 @@ public class HtlcClaimTask extends CommonTask {
                 mRandomNumber = mRandomNumber.toLowerCase();
                 BinanceDexApiRestClient client = BinanceDexApiClientFactory.newInstance().newRestClient(BinanceDexEnvironment.PROD.getBaseUrl());
                 TransactionOption options = new TransactionOption(context.getString(R.string.str_claim_swap_memo_c), 82, null);
-                List<TransactionMetadata> resp = client.claimHtlt(mExpectedSwapId, WUtil.hexStringToByteArray(mRandomNumber), wallet, options, true);
+                List<TransactionMetadata> resp = client.claimHtlt(mExpectedSwapId, MnemonicUtils.INSTANCE.hexStringToByteArray(mRandomNumber), wallet, options, true);
                 if (resp.get(0).isOk()) {
                     if (BuildConfig.DEBUG)
                         WLog.w("BNB_MAIN Claim suceess txhash " + resp.get(0).getHash());

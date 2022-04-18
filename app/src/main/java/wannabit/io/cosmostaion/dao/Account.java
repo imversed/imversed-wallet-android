@@ -26,7 +26,7 @@ public class Account {
     public String resource;
     public String spec;
     public Boolean fromMnemonic;
-    public String path;
+    public Integer path;
 
     public Boolean isValidator;
     public Integer sequenceNumber;
@@ -74,7 +74,7 @@ public class Account {
         this.fromMnemonic = fromMnemonic;
         this.msize = msize;
         this.importTime = importTime;
-        this.path = String.valueOf(path);
+        this.path = path;
         this.customPath = customPath;
     }
 
@@ -94,7 +94,7 @@ public class Account {
 
     public Account(Long id, String uuid, String nickName, boolean isFavo, String address,
                    String baseChain, boolean hasPrivateKey, String resource, String spec,
-                   boolean fromMnemonic, String path, boolean isValidator, int sequenceNumber,
+                   boolean fromMnemonic, int path, boolean isValidator, int sequenceNumber,
                    int accountNumber, Long fetchTime, int msize, long importTime, String lastTotal, long sortOrder, boolean newBip, int customPath) {
         this.id = id;
         this.uuid = uuid;

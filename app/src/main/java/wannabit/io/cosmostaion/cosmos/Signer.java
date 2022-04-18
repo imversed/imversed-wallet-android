@@ -3,6 +3,7 @@ package wannabit.io.cosmostaion.cosmos;
 import static cosmos.tx.signing.v1beta1.Signing.SignMode.SIGN_MODE_DIRECT;
 import static wannabit.io.cosmostaion.utils.WUtil.integerToBytes;
 
+import com.fulldive.wallet.interactors.secret.MnemonicUtils;
 import com.google.gson.Gson;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Duration;
@@ -781,7 +782,7 @@ public class Signer {
         Any chainAddress = Any.newBuilder().setTypeUrl("/desmos.profiles.v1beta1.Bech32Address").setValue(desmosBech32.toByteString()).build();
         Keys.PubKey toAccountPub = Keys.PubKey.newBuilder().setKey(ByteString.copyFrom(toKey.getPubKey())).build();
         Any toAccountPubKey = Any.newBuilder().setTypeUrl("/cosmos.crypto.secp256k1.PubKey").setValue(toAccountPub.toByteString()).build();
-        ModelsChainLinks.Proof desmosProof = ModelsChainLinks.Proof.newBuilder().setSignature(WUtil.byteArrayToHexString(sigbyte)).setPlainText(hexString).setPubKey(toAccountPubKey).build();
+        ModelsChainLinks.Proof desmosProof = ModelsChainLinks.Proof.newBuilder().setSignature(MnemonicUtils.INSTANCE.byteArrayToHexString(sigbyte)).setPlainText(hexString).setPubKey(toAccountPubKey).build();
         ModelsChainLinks.ChainConfig desmosChainConfig = ModelsChainLinks.ChainConfig.newBuilder().setName(WUtil.getDesmosConfig(toChain)).build();
         MsgsChainLinks.MsgLinkChainAccount linkchain = MsgsChainLinks.MsgLinkChainAccount.newBuilder().setChainAddress(chainAddress).setProof(desmosProof).setChainConfig(desmosChainConfig).setSigner(singer).build();
 

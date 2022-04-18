@@ -25,7 +25,7 @@ object MnemonicUtils {
         path: Int,
         customPath: Int
     ): String {
-        val childKey = getCreateKeyWithPathFromEntropy(chain, entropy, path, customPath)
+        val childKey = createKeyWithPathFromEntropy(chain, entropy, path, customPath)
         return when (chain) {
             BaseChain.OKEX_MAIN -> {
                 when (customPath) {
@@ -63,7 +63,7 @@ object MnemonicUtils {
         var i = 0
         while (i < len) {
             data[i / 2] = ((Character.digit(s[i], 16) shl 4)
-                + Character.digit(s[i + 1], 16)).toByte()
+                    + Character.digit(s[i + 1], 16)).toByte()
             i += 2
         }
         return data
@@ -76,7 +76,7 @@ object MnemonicUtils {
 
 
     @Throws(Exception::class)
-    private fun getCreateKeyWithPathFromEntropy(
+    fun createKeyWithPathFromEntropy(
         chain: BaseChain,
         entropy: String,
         path: Int,

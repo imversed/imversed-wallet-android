@@ -88,7 +88,7 @@ class AccountsInteractor @Inject constructor(
     fun createAccount(chain: BaseChain, accountSecrets: AccountSecrets): Completable {
         return singleCallable { UUID.randomUUID().toString() }
             .flatMap { uuid ->
-                secretInteractor.encryptEntropy(uuid, accountSecrets.entropy)
+                secretInteractor.entropyFromMnemonic(uuid, accountSecrets.entropy)
                     .map { encryptData ->
                         Account(
                             uuid,

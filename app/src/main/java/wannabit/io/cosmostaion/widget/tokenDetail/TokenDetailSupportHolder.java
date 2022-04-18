@@ -60,7 +60,7 @@ public class TokenDetailSupportHolder extends BaseHolder {
 
     public TokenDetailSupportHolder(@NonNull View itemView) {
         super(itemView);
-        mAmountView = itemView.findViewById(R.id.card_root);
+        mAmountView = itemView.findViewById(R.id.cardView);
         mTvTotal = itemView.findViewById(R.id.total_amount);
         mTvAvailable = itemView.findViewById(R.id.available_amount);
         mLockedLayout = itemView.findViewById(R.id.locked_layout);

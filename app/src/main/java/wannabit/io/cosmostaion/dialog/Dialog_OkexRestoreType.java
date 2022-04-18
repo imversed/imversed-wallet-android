@@ -38,28 +38,19 @@ public class Dialog_OkexRestoreType extends DialogFragment {
         mNewPath = view.findViewById(R.id.new_path);
         mEthPath = view.findViewById(R.id.eth_path);
 
-        mOldPath.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((RestoreActivity) getActivity()).onUsingCustomPath(0);
-                dismiss();
-            }
+        mOldPath.setOnClickListener(v -> {
+            ((RestoreActivity) getActivity()).onUsingCustomPath(0);
+            dismiss();
         });
 
-        mNewPath.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((RestoreActivity) getActivity()).onUsingCustomPath(1);
-                dismiss();
-            }
+        mNewPath.setOnClickListener(v -> {
+            ((RestoreActivity) getActivity()).onUsingCustomPath(1);
+            dismiss();
         });
 
-        mEthPath.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((RestoreActivity) getActivity()).onUsingCustomPath(2);
-                dismiss();
-            }
+        mEthPath.setOnClickListener(v -> {
+            ((RestoreActivity) getActivity()).onUsingCustomPath(2);
+            dismiss();
         });
 
 

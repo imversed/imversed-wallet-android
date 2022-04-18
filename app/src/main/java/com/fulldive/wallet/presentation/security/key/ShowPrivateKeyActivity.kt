@@ -1,61 +1,62 @@
-package com.fulldive.wallet.presentation.security.mnemonic
+package com.fulldive.wallet.presentation.security.key
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.WindowManager
+import androidx.core.view.isVisible
+import com.fulldive.wallet.extensions.getColorCompat
 import com.fulldive.wallet.extensions.unsafeLazy
 import com.fulldive.wallet.presentation.base.BaseMvpActivity
 import com.joom.lightsaber.getInstance
 import moxy.ktx.moxyPresenter
 import wannabit.io.cosmostaion.activities.MainActivity
 import wannabit.io.cosmostaion.base.BaseChain
-import wannabit.io.cosmostaion.databinding.ActivityMnemonicCheckBinding
+import wannabit.io.cosmostaion.databinding.ActivityShowPrivateKeyBinding
 
-class ShowMnemonicActivity : BaseMvpActivity<ActivityMnemonicCheckBinding>(), ShowMnemonicMoxyView {
+class ShowPrivateKeyActivity : BaseMvpActivity<ActivityShowPrivateKeyBinding>(),
+    ShowPrivateKeyMoxyView {
+
     private val accountId by unsafeLazy { intent.getLongExtra(KEY_ACCOUNT_ID, -1) }
     private val entropy by unsafeLazy {
         intent.getStringExtra(KEY_ENTROPY) ?: throw  IllegalStateException("Entropy can't be null")
     }
 
     private val presenter by moxyPresenter {
-        appInjector.getInstance<ShowMnemonicPresenter>()
+        appInjector.getInstance<ShowPrivateKeyPresenter>()
             .also {
                 it.accountId = accountId
                 it.entropy = entropy
             }
     }
 
-    override fun getViewBinding() = ActivityMnemonicCheckBinding.inflate(layoutInflater)
+    override fun getViewBinding() = ActivityShowPrivateKeyBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_SECURE,
-            WindowManager.LayoutParams.FLAG_SECURE
-        )
         super.onCreate(savedInstanceState)
         binding {
             setSupportActionBar(toolbar)
-            copyButton.setOnClickListener {
-                presenter.onCopyClicked()
-            }
+            copyButton.setOnClickListener { presenter.onCopyClicked() }
             okButton.setOnClickListener { presenter.onOkClicked() }
         }
+
         supportActionBar?.apply {
             setDisplayShowTitleEnabled(false)
             setDisplayHomeAsUpEnabled(true)
         }
     }
 
-    override fun showMnemonicWords(mnemonicWords: List<String>) {
+    override fun showPrivateKey(key: String) {
         binding {
-            mnemonicsLayout.setMnemonicWords(mnemonicWords)
+            privateKeyTextView.text = key
+            copyButton.isVisible = true
         }
     }
 
     override fun showChain(chain: BaseChain) {
         binding {
-            mnemonicsLayout.setChain(chain)
+            cardView.setCardBackgroundColor(
+                getColorCompat(chain.chainBackground)
+            )
         }
     }
 
@@ -72,9 +73,7 @@ class ShowMnemonicActivity : BaseMvpActivity<ActivityMnemonicCheckBinding>(), Sh
                 onBackPressed()
                 true
             }
-            else -> {
-                super.onOptionsItemSelected(item)
-            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 

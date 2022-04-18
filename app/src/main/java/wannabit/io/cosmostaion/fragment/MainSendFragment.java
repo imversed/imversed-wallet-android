@@ -70,7 +70,7 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main_send, container, false);
-        mCardView = rootView.findViewById(R.id.card_root);
+        mCardView = rootView.findViewById(R.id.cardView);
         itemKeyStatus = rootView.findViewById(R.id.img_account);
         mWalletAddress = rootView.findViewById(R.id.wallet_address);
         mTotalValue = rootView.findViewById(R.id.total_value);

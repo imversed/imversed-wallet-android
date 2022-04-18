@@ -156,7 +156,7 @@ public class MyAccountFragment extends BaseFragment implements View.OnClickListe
 
             public MyAccountPromotionHolder(@NonNull View itemView) {
                 super(itemView);
-                itemRoot = itemView.findViewById(R.id.card_root);
+                itemRoot = itemView.findViewById(R.id.cardView);
             }
         }
 
@@ -166,7 +166,7 @@ public class MyAccountFragment extends BaseFragment implements View.OnClickListe
 
             public MyAccountHolder(@NonNull View itemView) {
                 super(itemView);
-                itemRoot = itemView.findViewById(R.id.card_root);
+                itemRoot = itemView.findViewById(R.id.cardView);
                 itemAccount = itemView.findViewById(R.id.starname_account_name);
                 itemAddressCnt = itemView.findViewById(R.id.connected_addressed);
                 itemExpireDate = itemView.findViewById(R.id.expire_date);

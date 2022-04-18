@@ -25,7 +25,7 @@ public class WalletGuideHolder extends BaseHolder {
 
     public WalletGuideHolder(@NonNull View itemView) {
         super(itemView);
-        itemRoot = itemView.findViewById(R.id.card_root);
+        itemRoot = itemView.findViewById(R.id.cardView);
         itemGuideImg = itemView.findViewById(R.id.img_guide);
         itemGuideTitle = itemView.findViewById(R.id.title_guide);
         itemGuideMsg = itemView.findViewById(R.id.msg_guide);

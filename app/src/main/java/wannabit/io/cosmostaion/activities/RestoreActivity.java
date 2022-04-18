@@ -6,7 +6,6 @@ import static wannabit.io.cosmostaion.base.BaseChain.LUM_MAIN;
 import static wannabit.io.cosmostaion.base.BaseChain.OKEX_MAIN;
 import static wannabit.io.cosmostaion.base.BaseChain.SECRET_MAIN;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -25,7 +24,6 @@ import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +36,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fulldive.wallet.interactors.secret.MnemonicUtils;
 import com.fulldive.wallet.presentation.accounts.AddAccountDialogFragment;
 import com.fulldive.wallet.presentation.chains.choicenet.ChoiceChainDialogFragment;
 import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
@@ -47,6 +46,7 @@ import org.bitcoinj.crypto.MnemonicCode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
@@ -59,7 +59,6 @@ import wannabit.io.cosmostaion.dialog.Dialog_OkexRestoreType;
 import wannabit.io.cosmostaion.dialog.Dialog_SecretRestorePath;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WKey;
-import wannabit.io.cosmostaion.utils.WUtil;
 
 public class RestoreActivity extends BaseActivity implements View.OnClickListener {
 
@@ -75,7 +74,6 @@ public class RestoreActivity extends BaseActivity implements View.OnClickListene
     private int mnemonicPosition = 0;
 
     private BaseChain chain;
-    private ArrayList<String> allMnemonic;
     private MnemonicAdapter mnemonicAdapter;
     private final ArrayList<String> words = new ArrayList<>();
 
@@ -121,7 +119,6 @@ public class RestoreActivity extends BaseActivity implements View.OnClickListene
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-        allMnemonic = new ArrayList<>(MnemonicCode.INSTANCE.getWordList());
         final String packageName = getPackageName();
         for (int i = 0; i < alphabetButtons.length; i++) {
             alphabetButtons[i] = findViewById(getResources().getIdentifier("alphabetButton" + i, "id", packageName));
@@ -141,7 +138,9 @@ public class RestoreActivity extends BaseActivity implements View.OnClickListene
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getBaseContext(), LinearLayoutManager.HORIZONTAL, false));
         recyclerView.setHasFixedSize(true);
-        mnemonicAdapter = new MnemonicAdapter();
+
+
+        mnemonicAdapter = new MnemonicAdapter(MnemonicCode.INSTANCE.getWordList());
         recyclerView.setAdapter(mnemonicAdapter);
 
         onCheckMnemonicCnt();
@@ -203,9 +202,9 @@ public class RestoreActivity extends BaseActivity implements View.OnClickListene
 
     private void onCheckMnemonicCnt() {
         words.clear();
-        for (int i = 0; i < mnemonicsEditText.length; i++) {
-            if (!TextUtils.isEmpty(mnemonicsEditText[i].getText().toString().trim())) {
-                words.add(mnemonicsEditText[i].getText().toString().trim());
+        for (EditText editText : mnemonicsEditText) {
+            if (!TextUtils.isEmpty(editText.getText().toString().trim())) {
+                words.add(editText.getText().toString().trim());
             } else {
                 break;
             }
@@ -239,7 +238,7 @@ public class RestoreActivity extends BaseActivity implements View.OnClickListene
                 if (TextUtils.isEmpty(words)) {
                     return;
                 }
-                ArrayList<String> newinsert = new ArrayList<>(Arrays.asList(words.split("\\s+")));
+                List<String> newinsert = new ArrayList<>(Arrays.asList(words.split("\\s+")));
                 for (int i = 0; i < mnemonicsEditText.length; i++) {
                     if (newinsert.size() > i) {
                         String toinsert = newinsert.get(i).replace(" ", "");
@@ -263,7 +262,7 @@ public class RestoreActivity extends BaseActivity implements View.OnClickListene
                         Toast.makeText(this, R.string.error_clipboard_no_data, Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    ArrayList<String> newinsert = new ArrayList<>(Arrays.asList(userPaste.split("\\s+")));
+                    List<String> newinsert = new ArrayList<>(Arrays.asList(userPaste.split("\\s+")));
                     for (int i = 0; i < mnemonicsEditText.length; i++) {
                         if (newinsert.size() > i) {
                             String toinsert = newinsert.get(i).replace(" ", "");
@@ -379,7 +378,7 @@ public class RestoreActivity extends BaseActivity implements View.OnClickListene
     private void showRestorePathActivity() {
         Intent intent = new Intent(RestoreActivity.this, RestorePathActivity.class);
         intent.putExtra("HDseed", WKey.getStringHdSeedFromWords(words));
-        intent.putExtra("entropy", WUtil.byteArrayToHexString(WKey.toEntropy(words)));
+        intent.putExtra("entropy", MnemonicUtils.INSTANCE.byteArrayToHexString(WKey.toEntropy(words)));
         intent.putExtra("size", words.size());
         intent.putExtra("chain", chain.getChain());
         intent.putExtra("customPath", isCustomPath);
@@ -403,7 +402,12 @@ public class RestoreActivity extends BaseActivity implements View.OnClickListene
 
     public class MnemonicAdapter extends RecyclerView.Adapter<MnemonicAdapter.MnemonicHolder> implements Filterable {
 
-        private ArrayList<String> mFilteredMnemonic = new ArrayList<>();
+        private ArrayList<String> filteredMnemonic = new ArrayList<>();
+        private final List<String> dictionary;
+
+        public MnemonicAdapter(List<String> dictionary) {
+            this.dictionary = dictionary;
+        }
 
         @NonNull
         @Override
@@ -412,17 +416,17 @@ public class RestoreActivity extends BaseActivity implements View.OnClickListene
         }
 
         @Override
-        public void onBindViewHolder(@NonNull MnemonicHolder holder, @SuppressLint("RecyclerView") final int position) {
-            holder.itemMnemonic.setText(mFilteredMnemonic.get(position));
-            holder.itemRoot.setOnClickListener(v -> {
-                mnemonicsEditText[mnemonicPosition].setText(mFilteredMnemonic.get(position));
+        public void onBindViewHolder(@NonNull MnemonicHolder holder, final int position) {
+            holder.titleTextView.setText(filteredMnemonic.get(position));
+            holder.titleTextView.setOnClickListener(v -> {
+                mnemonicsEditText[mnemonicPosition].setText(filteredMnemonic.get(position));
                 onNextWord();
             });
         }
 
         @Override
         public int getItemCount() {
-            return mFilteredMnemonic.size();
+            return filteredMnemonic.size();
         }
 
         @Override
@@ -433,39 +437,37 @@ public class RestoreActivity extends BaseActivity implements View.OnClickListene
                 protected FilterResults performFiltering(CharSequence constraint) {
                     String charString = constraint.toString();
                     if (charString.isEmpty()) {
-                        mFilteredMnemonic.clear();
+                        filteredMnemonic.clear();
 
                     } else {
                         ArrayList<String> filteredList = new ArrayList<>();
-                        for (String word : allMnemonic) {
+                        for (String word : dictionary) {
                             if (word.startsWith(charString.toLowerCase()) && !word.equals(charString.toLowerCase())) {
                                 filteredList.add(word);
                             }
                         }
-                        mFilteredMnemonic = filteredList;
+                        filteredMnemonic = filteredList;
                     }
 
                     FilterResults filterResults = new FilterResults();
-                    filterResults.values = mFilteredMnemonic;
+                    filterResults.values = filteredMnemonic;
                     return filterResults;
                 }
 
                 @Override
                 protected void publishResults(CharSequence constraint, FilterResults results) {
-                    mFilteredMnemonic = (ArrayList<String>) results.values;
+                    filteredMnemonic = (ArrayList<String>) results.values;
                     notifyDataSetChanged();
                 }
             };
         }
 
         public class MnemonicHolder extends RecyclerView.ViewHolder {
-            RelativeLayout itemRoot;
-            TextView itemMnemonic;
+            TextView titleTextView;
 
             public MnemonicHolder(View v) {
                 super(v);
-                itemRoot = itemView.findViewById(R.id.root_mnemonic);
-                itemMnemonic = itemView.findViewById(R.id.tv_mnemonic);
+                titleTextView = itemView.findViewById(R.id.titleTextView);
             }
         }
     }

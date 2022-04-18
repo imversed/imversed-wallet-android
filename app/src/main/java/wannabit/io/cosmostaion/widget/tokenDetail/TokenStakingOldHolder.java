@@ -39,7 +39,7 @@ public class TokenStakingOldHolder extends BaseHolder {
 
     public TokenStakingOldHolder(@NonNull View itemView) {
         super(itemView);
-        mCardRoot = itemView.findViewById(R.id.card_root);
+        mCardRoot = itemView.findViewById(R.id.cardView);
         mTotalAmount = itemView.findViewById(R.id.total_amount);
         mAvailableAmount = itemView.findViewById(R.id.available_amount);
         mDelegatedAmount = itemView.findViewById(R.id.delegated_amount);

@@ -46,7 +46,7 @@ public class HardPoolHolder extends BaseHolder {
 
     public HardPoolHolder(@NonNull View itemView) {
         super(itemView);
-        itemRoot = itemView.findViewById(R.id.card_root);
+        itemRoot = itemView.findViewById(R.id.cardView);
         hardPoolImg = itemView.findViewById(R.id.pool_img);
         hardPoolTitle = itemView.findViewById(R.id.pool_title);
         supplyApyTv = itemView.findViewById(R.id.supply_apy);

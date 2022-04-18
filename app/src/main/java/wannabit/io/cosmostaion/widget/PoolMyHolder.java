@@ -38,7 +38,7 @@ public class PoolMyHolder extends BaseHolder {
 
     public PoolMyHolder(@NonNull View itemView) {
         super(itemView);
-        itemRoot = itemView.findViewById(R.id.card_root);
+        itemRoot = itemView.findViewById(R.id.cardView);
         itemMyPoolType = itemView.findViewById(R.id.mypool_market_type);
         itemMyTotalDepositValue = itemView.findViewById(R.id.mypool_total_liquidity_value);
         itemMyTotalDepositAmount0 = itemView.findViewById(R.id.mypool_total_liquidity_amount1);

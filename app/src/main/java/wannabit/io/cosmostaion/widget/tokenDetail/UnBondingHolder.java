@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import wannabit.io.cosmostaion.R;
@@ -47,7 +46,7 @@ public class UnBondingHolder extends BaseHolder {
 
     public UnBondingHolder(@NonNull View itemView) {
         super(itemView);
-        mUndelegateCard = itemView.findViewById(R.id.card_root);
+        mUndelegateCard = itemView.findViewById(R.id.cardView);
         mUndelegateCnt = itemView.findViewById(R.id.undelegate_count);
 
         mUndelegateLayer0 = itemView.findViewById(R.id.undelegate_detail_layer0);

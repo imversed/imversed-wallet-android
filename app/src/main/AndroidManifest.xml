@@ -302,7 +302,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
-            android:name=".activities.PrivateKeyCheckActivity"
+            android:name="com.fulldive.wallet.presentation.security.key.ShowPrivateKeyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />

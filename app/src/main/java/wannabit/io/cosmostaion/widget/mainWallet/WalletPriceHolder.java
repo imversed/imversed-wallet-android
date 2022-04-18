@@ -36,7 +36,7 @@ public class WalletPriceHolder extends BaseHolder {
 
     public WalletPriceHolder(@NonNull View itemView) {
         super(itemView);
-        itemRoot = itemView.findViewById(R.id.card_root);
+        itemRoot = itemView.findViewById(R.id.cardView);
         itemPerPrice = itemView.findViewById(R.id.per_price);
         itemUpDownPrice = itemView.findViewById(R.id.dash_price_updown_tx);
         itemUpDownImg = itemView.findViewById(R.id.ic_price_updown);

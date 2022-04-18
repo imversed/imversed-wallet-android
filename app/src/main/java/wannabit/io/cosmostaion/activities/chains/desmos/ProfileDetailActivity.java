@@ -153,7 +153,7 @@ public class ProfileDetailActivity extends BaseActivity implements View.OnClickL
 
             public ProfileHolder(@NonNull View itemView) {
                 super(itemView);
-                card_root = itemView.findViewById(R.id.card_root);
+                card_root = itemView.findViewById(R.id.cardView);
                 profile_nickname = itemView.findViewById(R.id.profile_nickname);
                 profile_bio = itemView.findViewById(R.id.profile_bio);
             }

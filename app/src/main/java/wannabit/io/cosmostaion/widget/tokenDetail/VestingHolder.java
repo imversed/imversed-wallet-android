@@ -47,7 +47,7 @@ public class VestingHolder extends BaseHolder {
 
     public VestingHolder(@NonNull View itemView) {
         super(itemView);
-        mVestingRoot = itemView.findViewById(R.id.card_root);
+        mVestingRoot = itemView.findViewById(R.id.cardView);
         mVestingCnt = itemView.findViewById(R.id.vesting_count);
         mVestingLayer0 = itemView.findViewById(R.id.vesting_layer0);
         mVestingLayer1 = itemView.findViewById(R.id.vesting_layer1);

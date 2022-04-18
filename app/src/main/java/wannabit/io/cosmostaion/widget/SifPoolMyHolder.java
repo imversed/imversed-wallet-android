@@ -31,7 +31,7 @@ public class SifPoolMyHolder extends BaseHolder {
 
     public SifPoolMyHolder(@NonNull View itemView) {
         super(itemView);
-        itemRoot = itemView.findViewById(R.id.card_root);
+        itemRoot = itemView.findViewById(R.id.cardView);
         itemExternalImg = itemView.findViewById(R.id.mypool_external_img);
         itemMyPoolType = itemView.findViewById(R.id.mypool_market_type);
         itemMyTotalDepositValue = itemView.findViewById(R.id.mypool_total_liquidity_value);

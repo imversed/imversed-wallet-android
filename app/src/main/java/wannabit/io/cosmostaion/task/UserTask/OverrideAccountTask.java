@@ -60,7 +60,7 @@ public class OverrideAccountTask extends CommonTask {
         account.resource = encR.getEncDataString();
         account.spec = encR.getIvDataString();
         account.fromMnemonic = true;
-        account.path = path;
+        account.path = Integer.parseInt(path);
         account.msize = Integer.parseInt(msize);
         account.customPath = mCustomPath;
         return account;

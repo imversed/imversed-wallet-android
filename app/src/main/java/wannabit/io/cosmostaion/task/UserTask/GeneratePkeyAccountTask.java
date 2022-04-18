@@ -72,7 +72,7 @@ public class GeneratePkeyAccountTask extends CommonTask {
         newAccount.resource = encR.getEncDataString();
         newAccount.spec = encR.getIvDataString();
         newAccount.fromMnemonic = false;
-        newAccount.path = "-1";
+        newAccount.path = -1;
         newAccount.msize = -1;
         newAccount.importTime = System.currentTimeMillis();
         newAccount.customPath = mCustomPath;

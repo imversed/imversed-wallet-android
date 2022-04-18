@@ -19,8 +19,6 @@ public class GenerateAccountTask extends CommonTask {
     private final BaseChain mBaseChain;
     private final int mCustomPath;
 
-    private ArrayList<BaseChain> mHideChains = new ArrayList<>();
-
     public GenerateAccountTask(BaseApplication app, BaseChain baseChain, TaskListener listener, int customPath) {
         super(app, listener);
         this.mBaseChain = baseChain;
@@ -41,13 +39,13 @@ public class GenerateAccountTask extends CommonTask {
             long id = context.getBaseDao().insertAccount(onGenAccount(strings[1], strings[0], strings[2]));
             if (id > 0) {
                 result.isSuccess = true;
-                mHideChains = new ArrayList<>(context.getBaseDao().userHideChains());
-                if (mHideChains.contains(mBaseChain)) {
-                    int position = mHideChains.indexOf(mBaseChain);
+                ArrayList<BaseChain> hiddenChains = new ArrayList<>(context.getBaseDao().userHideChains());
+                if (hiddenChains.contains(mBaseChain)) {
+                    int position = hiddenChains.indexOf(mBaseChain);
                     if (position >= 0) {
-                        mHideChains.remove(position);
+                        hiddenChains.remove(position);
                     }
-                    context.getBaseDao().setUserHidenChains(mHideChains);
+                    context.getBaseDao().setUserHidenChains(hiddenChains);
                 }
                 context.getBaseDao().setLastUser(id);
                 context.getBaseDao().setLastChain(mBaseChain.getChain());
@@ -74,7 +72,7 @@ public class GenerateAccountTask extends CommonTask {
         newAccount.resource = encR.getEncDataString();
         newAccount.spec = encR.getIvDataString();
         newAccount.fromMnemonic = true;
-        newAccount.path = path;
+        newAccount.path = Integer.parseInt(path);
         newAccount.msize = Integer.parseInt(size);
         newAccount.importTime = System.currentTimeMillis();
         newAccount.customPath = mCustomPath;
