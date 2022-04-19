@@ -4,6 +4,14 @@ import com.fulldive.wallet.rx.AppSchedulers
 import io.reactivex.*
 import wannabit.io.cosmostaion.utils.WLog
 
+fun <T> Single<T>.withUiDefaults(): Single<T> {
+    return compose {
+        it.subscribeOn(AppSchedulers.ui())
+            .observeOn(AppSchedulers.ui())
+            .doOnError { error -> WLog.e(error.toString()) }
+    }
+}
+
 fun <T> Single<T>.withDefaults(): Single<T> {
     return compose {
         it.subscribeOn(AppSchedulers.io())

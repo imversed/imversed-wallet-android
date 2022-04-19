@@ -20,6 +20,8 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
+import androidx.annotation.Nullable;
+
 import com.fulldive.wallet.interactors.accounts.DuplicateAccountException;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf2.Any;
@@ -1198,6 +1200,7 @@ public class BaseData {
         return chains;
     }
 
+    @Nullable
     public Password getPassword() {
         Password result = null;
         Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_PASSWORD, new String[]{"resource", "spec"}, null, null, null, null, null);
@@ -1210,7 +1213,7 @@ public class BaseData {
         return result;
     }
 
-    public boolean onHasPassword() {
+    public boolean hasPassword() {
         boolean existed = false;
         Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_PASSWORD, new String[]{"resource", "spec"}, null, null, null, null, null);
         if (cursor != null) {
@@ -1222,7 +1225,7 @@ public class BaseData {
 
     public long setPassword(Password password) {
         long result = -1;
-        if (onHasPassword()) return result;
+        if (hasPassword()) return result;
 
         ContentValues values = new ContentValues();
         values.put("resource", password.resource);
@@ -1270,7 +1273,7 @@ public class BaseData {
         Iterator<Account> iterator = result.iterator();
         while (iterator.hasNext()) {
             Account account = iterator.next();
-            if (!BaseChain.isSupported(account.baseChain)) {
+            if (!BaseChain.Companion.isSupported(account.baseChain)) {
                 iterator.remove();
             }
         }
@@ -1351,7 +1354,7 @@ public class BaseData {
             result.setBalances(onSelectBalance(result.id));
         }
         cursor.close();
-        if (!BaseChain.isSupported(result.baseChain)) {
+        if (!BaseChain.Companion.isSupported(result.baseChain)) {
             return onSelectAccounts().get(0);
         }
         return result;

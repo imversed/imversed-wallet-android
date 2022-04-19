@@ -101,7 +101,7 @@ public class AppLockSetActivity extends BaseActivity implements View.OnClickList
                 );
 
             } else {
-                if (getBaseDao().onHasPassword()) {
+                if (getBaseDao().hasPassword()) {
                     getBaseDao().setUsingAppLock(true);
                     onUpdateView();
                 } else {

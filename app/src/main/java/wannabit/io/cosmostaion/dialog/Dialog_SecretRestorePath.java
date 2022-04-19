@@ -7,25 +7,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import com.fulldive.wallet.presentation.accounts.restore.MnemonicRestoreActivity;
+
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.RestoreActivity;
 
 public class Dialog_SecretRestorePath extends DialogFragment {
 
-    private LinearLayout mOldPath, mNewPath;
-
-    public static Dialog_SecretRestorePath newInstance(Bundle bundle) {
-        Dialog_SecretRestorePath frag = new Dialog_SecretRestorePath();
-        frag.setArguments(bundle);
-        return frag;
+    public static Dialog_SecretRestorePath newInstance() {
+        return new Dialog_SecretRestorePath();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0));
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -34,23 +31,19 @@ public class Dialog_SecretRestorePath extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_secret_restore_path, null);
 
-        mOldPath = view.findViewById(R.id.old_path);
-        mNewPath = view.findViewById(R.id.new_path);
-
-        mOldPath.setOnClickListener(v -> {
-            ((RestoreActivity) getActivity()).onUsingCustomPath(0);
+        view.findViewById(R.id.oldPathLayout).setOnClickListener(v -> {
+            ((MnemonicRestoreActivity) getActivity()).onUsingCustomPath(0);
             dismiss();
         });
 
-        mNewPath.setOnClickListener(v -> {
-            ((RestoreActivity) getActivity()).onUsingCustomPath(1);
+        view.findViewById(R.id.newPathLayout).setOnClickListener(v -> {
+            ((MnemonicRestoreActivity) getActivity()).onUsingCustomPath(1);
             dismiss();
         });
 
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(view);
-        return builder.create();
+        return new AlertDialog.Builder(getActivity())
+                .setView(view)
+                .create();
     }
-
 }
+

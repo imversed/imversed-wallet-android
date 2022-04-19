@@ -31,6 +31,8 @@ import com.fulldive.wallet.extensions.ChainExtensionsKt;
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.fulldive.wallet.presentation.accounts.DeleteConfirmDialogFragment;
+import com.fulldive.wallet.presentation.accounts.restore.MnemonicRestoreActivity;
+import com.fulldive.wallet.presentation.accounts.restore.PrivateKeyRestoreActivity;
 import com.fulldive.wallet.presentation.main.intro.IntroActivity;
 import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
 import com.fulldive.wallet.rx.AppSchedulers;
@@ -271,7 +273,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
                 overridePendingTransition(R.anim.slide_in_bottom, R.anim.fade_out);
 
             } else {
-                Intent restoreIntent = new Intent(AccountDetailActivity.this, RestoreActivity.class);
+                Intent restoreIntent = new Intent(AccountDetailActivity.this, MnemonicRestoreActivity.class);
                 restoreIntent.putExtra("chain", baseChain.getChain());
                 startActivity(restoreIntent);
             }
@@ -285,7 +287,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
                 overridePendingTransition(R.anim.slide_in_bottom, R.anim.fade_out);
 
             } else {
-                Intent restoreIntent = new Intent(AccountDetailActivity.this, RestoreKeyActivity.class);
+                Intent restoreIntent = new Intent(AccountDetailActivity.this, PrivateKeyRestoreActivity.class);
                 restoreIntent.putExtra("chain", baseChain.getChain());
                 startActivity(restoreIntent);
             }

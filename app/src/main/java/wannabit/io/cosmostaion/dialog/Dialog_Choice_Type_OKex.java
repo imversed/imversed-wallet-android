@@ -12,7 +12,7 @@ import android.widget.LinearLayout;
 import androidx.fragment.app.DialogFragment;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.RestoreKeyActivity;
+import com.fulldive.wallet.presentation.accounts.restore.PrivateKeyRestoreActivity;
 
 public class Dialog_Choice_Type_OKex extends DialogFragment {
 
@@ -36,7 +36,7 @@ public class Dialog_Choice_Type_OKex extends DialogFragment {
         mOldAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((RestoreKeyActivity) getActivity()).onCheckOecAddressType(0);
+                ((PrivateKeyRestoreActivity) getActivity()).onCheckOecAddressType(0);
                 dismiss();
             }
         });
@@ -44,7 +44,7 @@ public class Dialog_Choice_Type_OKex extends DialogFragment {
         mNewAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((RestoreKeyActivity) getActivity()).onCheckOecAddressType(1);
+                ((PrivateKeyRestoreActivity) getActivity()).onCheckOecAddressType(1);
                 dismiss();
             }
         });

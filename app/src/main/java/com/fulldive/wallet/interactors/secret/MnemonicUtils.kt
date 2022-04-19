@@ -1,6 +1,7 @@
 package com.fulldive.wallet.interactors.secret
 
 import com.fulldive.wallet.extensions.getPath
+import com.fulldive.wallet.extensions.safe
 import org.bitcoinj.core.Bech32
 import org.bitcoinj.core.ECKey
 import org.bitcoinj.crypto.*
@@ -44,7 +45,6 @@ object MnemonicUtils {
         }
     }
 
-
     fun byteArrayToHexString(bytes: ByteArray): String {
         val hexChars = CharArray(bytes.size * 2)
         for (j in bytes.indices) {
@@ -69,11 +69,19 @@ object MnemonicUtils {
         return data
     }
 
-    @Throws(Exception::class)
-    private fun getHDSeed(entropy: ByteArray): ByteArray {
-        return MnemonicCode.toSeed(MnemonicCode.INSTANCE.toMnemonic(entropy), "")
+    fun getStringHdSeedFromWords(words: List<String>): String? {
+        return getByteHdSeedFromWords(words)?.let(::byteArrayToHexString)
     }
 
+    fun isValidStringHdSeedFromWords(words: List<String>): Boolean {
+        return getByteHdSeedFromWords(words) != null
+    }
+
+    private fun getByteHdSeedFromWords(words: List<String>): ByteArray? {
+        return safe {
+            getHDSeed(MnemonicCode.INSTANCE.toEntropy(words))
+        }
+    }
 
     @Throws(Exception::class)
     fun createKeyWithPathFromEntropy(
@@ -115,7 +123,6 @@ object MnemonicUtils {
     }
 
     // Ethermint Style Key gen (OKex)
-
     @Throws(java.lang.Exception::class)
     fun createNewAddressSecp256k1(mainPrefix: String, publickKey: ByteArray): String {
         val uncompressedPubKey = ECKey.CURVE.curve.decodePoint(publickKey).getEncoded(false)
@@ -124,6 +131,11 @@ object MnemonicUtils {
         val address = Keys.getAddress(pub)
         val bytes = convertBits(address, 8, 5, true)
         return Bech32.encode(mainPrefix, bytes)
+    }
+
+    @Throws(Exception::class)
+    private fun getHDSeed(entropy: ByteArray): ByteArray {
+        return MnemonicCode.toSeed(MnemonicCode.INSTANCE.toMnemonic(entropy), "")
     }
 
     private fun generateEthAddressFromPrivateKey(privateKey: String): String {

@@ -99,7 +99,7 @@ class MnemonicLayout : BaseMvpFrameLayout<LayoutMnemonicBinding>, MnemonicMoxyVi
         count: Int,
         block: (Int, T) -> Unit
     ) {
-        return (0 until count).forEach { index ->
+        (0 until count).forEach { index ->
             block(
                 index,
                 findViewById(

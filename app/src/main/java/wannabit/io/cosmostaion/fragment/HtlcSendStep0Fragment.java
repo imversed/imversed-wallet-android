@@ -120,13 +120,13 @@ public class HtlcSendStep0Fragment extends BaseFragment implements View.OnClickL
         mBtnToChain.setOnClickListener(this);
         mBtnToSendCoin.setOnClickListener(this);
 
-        mToChainList = BaseChain.getHtlcSendable(getSActivity().baseChain);
+        mToChainList = BaseChain.Companion.getHtlcSendable(getSActivity().baseChain);
         if (mToChainList.size() <= 0) {
             getSActivity().onBeforeStep();
         }
         mToChain = mToChainList.get(0);
 
-        mSwappableCoinList = BaseChain.getHtlcSwappableCoin(getSActivity().baseChain);
+        mSwappableCoinList = BaseChain.Companion.getHtlcSwappableCoin(getSActivity().baseChain);
         if (mSwappableCoinList.size() <= 0) {
             getSActivity().onBeforeStep();
         }

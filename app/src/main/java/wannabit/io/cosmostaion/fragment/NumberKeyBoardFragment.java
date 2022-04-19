@@ -44,7 +44,7 @@ public class NumberKeyBoardFragment extends KeyboardFragment implements View.OnC
             numberButtons[i].setText(numberArray.get(i));
             numberButtons[i].setOnClickListener(this);
         }
-        rootView.findViewById(R.id.password_back).setOnClickListener(this);
+        rootView.findViewById(R.id.deleteButton).setOnClickListener(this);
         return rootView;
     }
 

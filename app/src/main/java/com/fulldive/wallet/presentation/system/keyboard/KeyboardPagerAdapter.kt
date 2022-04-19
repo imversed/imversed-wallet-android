@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentPagerAdapter
 import wannabit.io.cosmostaion.fragment.AlphabetKeyBoardFragment
 import wannabit.io.cosmostaion.fragment.KeyboardFragment
 import wannabit.io.cosmostaion.fragment.NumberKeyBoardFragment
-import wannabit.io.cosmostaion.utils.WLog
 
 class KeyboardPagerAdapter(
     fragmentManager: FragmentManager,
@@ -16,7 +15,6 @@ class KeyboardPagerAdapter(
     val fragments: List<KeyboardFragment>
 
     init {
-        WLog.w("KeyboardPagerAdapter.init")
         fragments = listOf(
             NumberKeyBoardFragment.newInstance().apply {
                 setListener(listener)

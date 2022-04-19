@@ -93,7 +93,7 @@ class CreateAccountPresenter @Inject constructor(
             .observeOn(AppSchedulers.ui())
             .flatMap { requestCode ->
                 completeCallable {
-                    val dialog = ChoiceChainDialogFragment.newInstance(false, requestCode)
+                    val dialog = ChoiceChainDialogFragment.newInstance(false, requestCode, isCheckLimit = true)
                     viewState.showDialog(dialog, "dialog", false)
                 }
                     .toSingleDefault(requestCode)

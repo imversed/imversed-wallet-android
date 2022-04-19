@@ -1,8 +1,10 @@
 package com.fulldive.wallet.interactors.secret
 
 import com.fulldive.wallet.di.modules.DefaultInteractorsModule
+import com.fulldive.wallet.extensions.orNull
 import com.fulldive.wallet.extensions.safeCompletable
 import com.fulldive.wallet.extensions.safeSingle
+import com.fulldive.wallet.extensions.toSingle
 import com.fulldive.wallet.models.local.AccountSecrets
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
@@ -156,8 +158,47 @@ class SecretInteractor @Inject constructor(
         return result
     }
 
+    fun entropyHexFromMnemonicWords(words: List<String>): String {
+        return MnemonicUtils.byteArrayToHexString(MnemonicCode.INSTANCE.toEntropy(words))
+    }
+
     fun entropyFromMnemonicWords(words: List<String>): ByteArray {
         return MnemonicCode.INSTANCE.toEntropy(words)
+    }
+
+    fun isValidMnemonicArray(words: Array<String>): Boolean {
+        return MNEMONIC_SIZES.contains(words.size) && isValidMnemonicWords(words)
+    }
+
+    fun isValidMnemonicWords(words: Array<String>): Boolean {
+        val mnemonics = MnemonicCode.INSTANCE.wordList
+        return words.all(mnemonics::contains)
+    }
+
+    fun isValidMnemonicWord(word: String): Boolean {
+        return word.isNotEmpty() && MnemonicCode.INSTANCE.wordList.contains(word)
+    }
+
+    fun getMnemonicDictionary(): Single<List<String>> {
+        return MnemonicCode.INSTANCE.wordList.toSingle()
+    }
+
+    fun encrypt(salt: String, encDataString: String, ivDataString: String): Single<String> {
+        return safeSingle {
+            CryptoHelper.doDecryptData(
+                salt,
+                encDataString,
+                ivDataString
+            )
+                .trim()
+                .orNull()
+        }
+    }
+
+    fun isPasswordExists(): Single<Boolean> {
+        return secretRepository.getPassword()
+            .map { true }
+            .onErrorReturnItem(false)
     }
 
     private fun getEntropy(): ByteArray {
@@ -169,6 +210,7 @@ class SecretInteractor @Inject constructor(
     companion object {
         const val PRIVATE_KEY_PREFIX = "0x"
         private const val ENTROPY_SIZE = 32
+        private val MNEMONIC_SIZES = listOf(12, 16, 24)
 
         private const val PASSWORD_KEY = "PASSWORD_KEY"
         private const val PRIVATE_KEY = "PRIVATE_KEY"

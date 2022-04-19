@@ -71,7 +71,7 @@ class AccountsLocalStorage @Inject constructor(
 
     fun checkExistsPassword(): Single<Boolean> {
         return safeSingle {
-            baseData.onHasPassword()
+            baseData.hasPassword()
         }
     }
 

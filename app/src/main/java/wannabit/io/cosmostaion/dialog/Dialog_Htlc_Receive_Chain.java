@@ -47,7 +47,7 @@ public class Dialog_Htlc_Receive_Chain extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_htlc_receive_chain, null);
         mRecyclerView = view.findViewById(R.id.recycler);
-        mToChainList = BaseChain.getHtlcSendable(BaseChain.getChain(getArguments().getString("chainName")));
+        mToChainList = BaseChain.Companion.getHtlcSendable(BaseChain.getChain(getArguments().getString("chainName")));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
         mDestinationChainListAdapter = new DestinationChainListAdapter();

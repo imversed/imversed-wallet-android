@@ -20,8 +20,8 @@ import wannabit.io.cosmostaion.R;
 
 public class AlphabetKeyBoardFragment extends KeyboardFragment implements View.OnClickListener {
 
-    private View mRootView;
-    private final Button[] mAlphabetBtns = new Button[26];
+    private View rootView;
+    private final Button[] alphabetButtons = new Button[26];
     private ArrayList<String> mAlphabetArray = new ArrayList<>();
 
     public static AlphabetKeyBoardFragment newInstance() {
@@ -33,21 +33,20 @@ public class AlphabetKeyBoardFragment extends KeyboardFragment implements View.O
         super.onCreate(savedInstanceState);
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_keyboard_alphabet, container, false);
+        rootView = inflater.inflate(R.layout.fragment_keyboard_alphabet, container, false);
         mAlphabetArray = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.password_alphabet)));
         Collections.shuffle(mAlphabetArray, new Random(System.nanoTime()));
-        final String packageName = mRootView.getContext().getPackageName();
-        for (int i = 0; i < mAlphabetBtns.length; i++) {
-            mAlphabetBtns[i] = mRootView.findViewById(getResources().getIdentifier("alphabetButton" + i, "id", packageName));
-            mAlphabetBtns[i].setText(mAlphabetArray.get(i));
-            mAlphabetBtns[i].setOnClickListener(this);
+        final String packageName = rootView.getContext().getPackageName();
+        for (int i = 0; i < alphabetButtons.length; i++) {
+            alphabetButtons[i] = rootView.findViewById(getResources().getIdentifier("alphabetButton" + i, "id", packageName));
+            alphabetButtons[i].setText(mAlphabetArray.get(i));
+            alphabetButtons[i].setOnClickListener(this);
         }
-        ImageButton backButton = mRootView.findViewById(R.id.password_back);
+        ImageButton backButton = rootView.findViewById(R.id.deleteButton);
         backButton.setOnClickListener(this);
-        return mRootView;
+        return rootView;
     }
 
     @Override
@@ -65,18 +64,17 @@ public class AlphabetKeyBoardFragment extends KeyboardFragment implements View.O
             @Override
             public void onAnimationEnd(Animation animation) {
                 Collections.shuffle(mAlphabetArray, new Random(System.nanoTime()));
-                for (int i = 0; i < mAlphabetBtns.length; i++) {
-                    mAlphabetBtns[i].setText(mAlphabetArray.get(i));
+                for (int i = 0; i < alphabetButtons.length; i++) {
+                    alphabetButtons[i].setText(mAlphabetArray.get(i));
                 }
-                mRootView.startAnimation(fadeInAnimation);
+                rootView.startAnimation(fadeInAnimation);
             }
 
             @Override
             public void onAnimationRepeat(Animation animation) {
             }
         });
-        mRootView.startAnimation(fadeOutAnimation);
-
+        rootView.startAnimation(fadeOutAnimation);
     }
 
     @Override

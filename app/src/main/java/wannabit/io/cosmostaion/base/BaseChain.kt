@@ -965,14 +965,12 @@ enum class BaseChain constructor(
             }
         }
 
-        @JvmStatic
         fun getChainByDenom(denom: String): BaseChain? {
             return values().find { chain ->
                 chain.mainDenom == denom
             }
         }
 
-        @JvmStatic
         fun getChainsByAddress(address: String): List<BaseChain> {
             return when {
                 address.startsWith("0x") && WKey.isValidEthAddress(address) -> {
@@ -989,12 +987,10 @@ enum class BaseChain constructor(
             }
         }
 
-        @JvmStatic
         fun isSupported(chainName: String): Boolean {
             return getChain(chainName)?.isSupported == true
         }
 
-        @JvmStatic
         fun getHtlcSendable(fromChain: BaseChain): List<BaseChain> {
             return when (fromChain) {
                 KAVA_MAIN -> listOf(BNB_MAIN)
@@ -1003,7 +999,6 @@ enum class BaseChain constructor(
             }
         }
 
-        @JvmStatic
         fun getHtlcSwappableCoin(fromChain: BaseChain): List<String> {
             return when (fromChain) {
                 BNB_MAIN -> listOf(

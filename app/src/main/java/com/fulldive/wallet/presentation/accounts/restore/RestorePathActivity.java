@@ -1,4 +1,4 @@
-package wannabit.io.cosmostaion.activities;
+package com.fulldive.wallet.presentation.accounts.restore;
 
 import static wannabit.io.cosmostaion.base.BaseChain.BNB_MAIN;
 import static wannabit.io.cosmostaion.base.BaseChain.OKEX_MAIN;
@@ -51,7 +51,6 @@ public class RestorePathActivity extends BaseActivity implements TaskListener {
     private String entropy;
     private int wordSize;
     private BaseChain chain;
-
     private int customPath;
 
     @Override
@@ -137,17 +136,16 @@ public class RestorePathActivity extends BaseActivity implements TaskListener {
                 holder.newState.setText(R.string.str_ready);
                 holder.newState.setTextColor(ContextCompat.getColor(RestorePathActivity.this, R.color.colorWhite));
                 holder.cardNewWallet.setCardBackgroundColor(WDp.getChainBgColor(RestorePathActivity.this, chain));
+            } else if (temp.hasPrivateKey) {
+                holder.newState.setText(R.string.str_imported);
+                holder.newState.setTextColor(ContextCompat.getColor(RestorePathActivity.this, R.color.colorGray1));
+                holder.cardNewWallet.setCardBackgroundColor(ContextCompat.getColor(RestorePathActivity.this, R.color.colorTransBg));
             } else {
-                if (temp.hasPrivateKey) {
-                    holder.newState.setText(R.string.str_imported);
-                    holder.newState.setTextColor(ContextCompat.getColor(RestorePathActivity.this, R.color.colorGray1));
-                    holder.cardNewWallet.setCardBackgroundColor(ContextCompat.getColor(RestorePathActivity.this, R.color.colorTransBg));
-                } else {
-                    holder.newState.setText(R.string.str_override);
-                    holder.newState.setTextColor(ContextCompat.getColor(RestorePathActivity.this, R.color.colorWhite));
-                    holder.cardNewWallet.setCardBackgroundColor(WDp.getChainBgColor(RestorePathActivity.this, chain));
-                }
+                holder.newState.setText(R.string.str_override);
+                holder.newState.setTextColor(ContextCompat.getColor(RestorePathActivity.this, R.color.colorWhite));
+                holder.cardNewWallet.setCardBackgroundColor(WDp.getChainBgColor(RestorePathActivity.this, chain));
             }
+
             holder.cardNewWallet.setOnClickListener(v -> {
                 if (holder.newState.getText().toString().equals(getString(R.string.str_ready))) {
                     onGenAccount(position);
@@ -234,7 +232,7 @@ public class RestorePathActivity extends BaseActivity implements TaskListener {
             public NewWalletHolder(View v) {
                 super(v);
                 cardNewWallet = itemView.findViewById(R.id.card_new_wallet);
-                newPath = itemView.findViewById(R.id.new_path);
+                newPath = itemView.findViewById(R.id.newPathLayout);
                 newState = itemView.findViewById(R.id.new_state);
                 newAddress = itemView.findViewById(R.id.new_address);
                 atomLayer = itemView.findViewById(R.id.atom_layer);

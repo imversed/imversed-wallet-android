@@ -1,4 +1,4 @@
-package wannabit.io.cosmostaion.activities;
+package com.fulldive.wallet.presentation.accounts.restore;
 
 import android.app.Activity;
 import android.content.ClipboardManager;
@@ -38,7 +38,7 @@ import wannabit.io.cosmostaion.task.UserTask.GeneratePkeyAccountTask;
 import wannabit.io.cosmostaion.task.UserTask.OverridePkeyAccountTask;
 import wannabit.io.cosmostaion.utils.WKey;
 
-public class RestoreKeyActivity extends BaseActivity implements View.OnClickListener, TaskListener {
+public class PrivateKeyRestoreActivity extends BaseActivity implements View.OnClickListener, TaskListener {
 
     private EditText addressEditText;
     private Button cancelButton, nextButton;
@@ -183,14 +183,14 @@ public class RestoreKeyActivity extends BaseActivity implements View.OnClickList
 
     private void onCheckPassword() {
         Class<?> cls;
-        if (!getBaseDao().onHasPassword()) {
+        if (!getBaseDao().hasPassword()) {
             cls = SetPasswordActivity.class;
         } else {
             cls = CheckPasswordActivity.class;
         }
 
         launcher.launch(
-                new Intent(RestoreKeyActivity.this, cls),
+                new Intent(PrivateKeyRestoreActivity.this, cls),
                 ActivityOptionsCompat.makeCustomAnimation(this, R.anim.slide_in_bottom, R.anim.fade_out)
         );
     }

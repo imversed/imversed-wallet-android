@@ -132,7 +132,7 @@
             android:text="1" />
 
         <ImageButton
-            android:id="@+id/password_back"
+            android:id="@+id/deleteButton"
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"

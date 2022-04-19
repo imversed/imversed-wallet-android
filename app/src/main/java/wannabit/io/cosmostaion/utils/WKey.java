@@ -123,19 +123,6 @@ public class WKey {
         return result;
     }
 
-    public static boolean isMnemonicWords(ArrayList<String> words) {
-        boolean result = true;
-        List<String> mnemonics = MnemonicCode.INSTANCE.getWordList();
-        for (String insert : words) {
-            if (!mnemonics.contains(insert)) {
-                result = false;
-                break;
-            }
-        }
-        return result;
-    }
-
-
     public static boolean isValidBech32(String address) {
         boolean result = false;
         try {

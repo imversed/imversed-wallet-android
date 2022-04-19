@@ -731,7 +731,7 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
     //with Native gRPC
     private void onNativeGrpcItem(TokensAdapter.AssetHolder holder, final int position) {
         final Coin coin = mNativeGrpc.get(position);
-        final BaseChain chain = BaseChain.getChainByDenom(coin.denom);
+        final BaseChain chain = BaseChain.Companion.getChainByDenom(coin.denom);
 
         Picasso.get().cancelRequest(holder.itemImg);
 

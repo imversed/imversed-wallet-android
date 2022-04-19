@@ -61,7 +61,7 @@ public class Dialog_Htlc_Send_Coin extends DialogFragment {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_htlc_send_coin, null);
         mRecyclerView = view.findViewById(R.id.recycler);
         mBaseChain = BaseChain.getChain(getArguments().getString("chainName"));
-        mSwappableCoinList = BaseChain.getHtlcSwappableCoin(mBaseChain);
+        mSwappableCoinList = BaseChain.Companion.getHtlcSwappableCoin(mBaseChain);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
         mToSwapCoinListAdapter = new ToSwapCoinListAdapter();

@@ -22,7 +22,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.fulldive.wallet.di.IEnrichableActivity;
-import com.fulldive.wallet.extensions.AnyExtensionsKt;
 import com.fulldive.wallet.extensions.ViewExtensionsKt;
 import com.fulldive.wallet.interactors.chains.StationInteractor;
 import com.fulldive.wallet.interactors.chains.binance.BinanceInteractor;
@@ -44,7 +43,7 @@ import wannabit.io.cosmostaion.activities.AppLockActivity;
 import wannabit.io.cosmostaion.activities.HtlcSendActivity;
 import wannabit.io.cosmostaion.activities.MainActivity;
 import wannabit.io.cosmostaion.activities.PasswordCheckActivity;
-import wannabit.io.cosmostaion.activities.RestoreActivity;
+import com.fulldive.wallet.presentation.accounts.restore.MnemonicRestoreActivity;
 import wannabit.io.cosmostaion.activities.SendActivity;
 import wannabit.io.cosmostaion.activities.chains.ibc.IBCSendActivity;
 import wannabit.io.cosmostaion.dao.Account;
@@ -214,7 +213,7 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
     }
 
     public void onAddMnemonicForAccount() {
-        startActivity(new Intent(BaseActivity.this, RestoreActivity.class));
+        startActivity(new Intent(BaseActivity.this, MnemonicRestoreActivity.class));
     }
 
     public void onCheckIbcTransfer(String denom) {
