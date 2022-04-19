@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import retrofit2.Response;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.model.RizonSwapStatus;
@@ -32,7 +32,7 @@ public class RizonSwapStatusTask extends CommonTask {
     protected TaskResult doInBackground(String... strings) {
         try {
             Response<ArrayList<RizonSwapStatus>> response;
-            if (mBaseChain.equals(BaseChain.RIZON_TEST)) {
+            if (mBaseChain.equals(BaseChain.RIZON_TEST.INSTANCE)) {
                 response = ApiClient.getRizonSwapTestStatus(context).getSwapStatus(mAccount.address).execute();
             } else {
                 response = ApiClient.getRizonSwapStatus(context).getSwapStatus(mAccount.address).execute();

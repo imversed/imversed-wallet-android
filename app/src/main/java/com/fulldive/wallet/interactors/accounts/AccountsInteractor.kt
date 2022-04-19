@@ -10,7 +10,7 @@ import com.fulldive.wallet.rx.AppSchedulers
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dao.Account
 import java.util.*
 import javax.inject.Inject
@@ -23,6 +23,10 @@ class AccountsInteractor @Inject constructor(
 
     fun getAccount(accountId: Long): Single<Account> {
         return accountsRepository.getAccount(accountId)
+    }
+
+    fun getAccount(chain: BaseChain, address: String): Single<Account> {
+        return accountsRepository.getAccount(chain, address)
     }
 
     fun getSelectedAccount(): Single<Account> {
@@ -88,12 +92,12 @@ class AccountsInteractor @Inject constructor(
     fun createAccount(chain: BaseChain, accountSecrets: AccountSecrets): Completable {
         return singleCallable { UUID.randomUUID().toString() }
             .flatMap { uuid ->
-                secretInteractor.encryptEntropy(uuid, accountSecrets.entropy)
+                secretInteractor.entropyFromMnemonic(uuid, accountSecrets.entropy)
                     .map { encryptData ->
                         Account(
                             uuid,
                             accountSecrets.address,
-                            chain.chain,
+                            chain.chainName,
                             true,
                             encryptData.encDataString,
                             encryptData.ivDataString,
@@ -107,8 +111,77 @@ class AccountsInteractor @Inject constructor(
             }
             .flatMap(accountsRepository::addAccount)
             .flatMapCompletable(accountsRepository::selectAccount)
-            .andThen(showChain(chain.chain))
-            .andThen(selectChain(chain.chain))
+            .andThen(showChain(chain.chainName))
+            .andThen(selectChain(chain.chainName))
+    }
+
+    fun createAccount(
+        chain: BaseChain,
+        address: String,
+        entropy: String,
+        mnemonicSize: Int,
+        path: Int,
+        customPath: Int
+    ): Completable {
+        return singleCallable { UUID.randomUUID().toString() }
+            .flatMap { uuid ->
+                secretInteractor.entropyFromMnemonic(uuid, entropy)
+                    .map { encryptData ->
+                        Account(
+                            uuid,
+                            address,
+                            chain.chainName,
+                            true,
+                            encryptData.encDataString,
+                            encryptData.ivDataString,
+                            true,
+                            mnemonicSize,
+                            System.currentTimeMillis(),
+                            path,
+                            customPath
+                        )
+                    }
+            }
+            .flatMap(accountsRepository::addAccount)
+            .flatMapCompletable(accountsRepository::selectAccount)
+            .andThen(showChain(chain.chainName))
+            .andThen(selectChain(chain.chainName))
+    }
+
+    fun updateAccount(
+        accountId: Long,
+        uuid: String,
+        entropy: String,
+        chainName: String,
+        address: String,
+        hasPrivateKey: Boolean,
+        fromMnemonic: Boolean,
+        path: Int,
+        mnemonicSize: Int,
+        customPath: Int
+    ): Completable {
+        return secretInteractor.entropyFromMnemonic(uuid, entropy)
+            .map { encryptData ->
+                Account(
+                    uuid,
+                    address,
+                    chainName,
+                    hasPrivateKey,
+                    encryptData.encDataString,
+                    encryptData.ivDataString,
+                    fromMnemonic,
+                    mnemonicSize,
+                    System.currentTimeMillis(),
+                    path,
+                    customPath
+                ).apply {
+                    id = accountId
+                }
+            }
+            .flatMapCompletable(accountsRepository::updateAccount)
+            .andThen(accountsRepository.selectAccount(accountId))
+            .andThen(showChain(chainName))
+            .andThen(selectChain(chainName))
     }
 
     fun createWatchAccount(chain: BaseChain, address: String): Completable {
@@ -117,14 +190,14 @@ class AccountsInteractor @Inject constructor(
             Account(
                 uuid,
                 address.lowercase(),
-                chain.chain,
+                chain.chainName,
                 System.currentTimeMillis()
             )
         }
             .flatMap(accountsRepository::addAccount)
             .flatMapCompletable(accountsRepository::selectAccount)
-            .andThen(showChain(chain.chain))
-            .andThen(selectChain(chain.chain))
+            .andThen(showChain(chain.chainName))
+            .andThen(selectChain(chain.chainName))
     }
 
     private fun selectChain(chain: String): Completable {
@@ -135,7 +208,7 @@ class AccountsInteractor @Inject constructor(
         return accountsRepository
             .getHiddenChains()
             .flatMapCompletable { items ->
-                val index = items.indexOfFirst { it.chain == chain }
+                val index = items.indexOfFirst { it.chainName == chain }
                 if (index >= 0) {
                     singleCallable {
                         items.toMutableList().apply {

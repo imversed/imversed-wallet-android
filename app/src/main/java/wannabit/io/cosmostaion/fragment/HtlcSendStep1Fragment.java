@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.HtlcSendActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.dao.Account;
@@ -72,10 +72,10 @@ public class HtlcSendStep1Fragment extends BaseFragment implements View.OnClickL
             getSActivity().onBeforeStep();
         }
         mKeyStatusImg.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorGray0), android.graphics.PorterDuff.Mode.SRC_IN);
-        if (getSActivity().mRecipientChain.equals(BaseChain.BNB_MAIN)) {
+        if (getSActivity().mRecipientChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
             mKeyStatusImg.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorBnb), android.graphics.PorterDuff.Mode.SRC_IN);
 
-        } else if (getSActivity().mRecipientChain.equals(BaseChain.KAVA_MAIN)) {
+        } else if (getSActivity().mRecipientChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             mKeyStatusImg.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorKava), android.graphics.PorterDuff.Mode.SRC_IN);
         }
         mKeyStatusImg.setVisibility(View.VISIBLE);
@@ -86,10 +86,10 @@ public class HtlcSendStep1Fragment extends BaseFragment implements View.OnClickL
     @Override
     public void onRefreshTab() {
         mToAccountList = getSActivity().getBaseDao().onSelectAccountsByHtlcClaim(getSActivity().mRecipientChain);
-        if (getSActivity().mRecipientChain.equals(BaseChain.BNB_MAIN)) {
+        if (getSActivity().mRecipientChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
             mWarnMSg.setText(String.format(getString(R.string.error_can_not_bep3_account_msg), WDp.getDpChainName(getContext(), getSActivity().mRecipientChain)));
 
-        } else if (getSActivity().mRecipientChain.equals(BaseChain.KAVA_MAIN)) {
+        } else if (getSActivity().mRecipientChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             mWarnMSg.setText(String.format(getString(R.string.error_can_not_bep3_account_msg2), WDp.getDpChainName(getContext(), getSActivity().mRecipientChain)));
         }
     }
@@ -110,7 +110,7 @@ public class HtlcSendStep1Fragment extends BaseFragment implements View.OnClickL
         } else if (v.equals(mReceiverBtn)) {
             if (mToAccountList.size() > 0) {
                 Bundle bundle = new Bundle();
-                bundle.putString("chainName", getSActivity().mRecipientChain.getChain());
+                bundle.putString("chainName", getSActivity().mRecipientChain.getChainName());
                 Dialog_Htlc_Receivable_Accounts dialog = Dialog_Htlc_Receivable_Accounts.newInstance(bundle);
                 dialog.setTargetFragment(this, SELECT_ACCOUNT);
                 showDialog(dialog);
@@ -119,9 +119,9 @@ public class HtlcSendStep1Fragment extends BaseFragment implements View.OnClickL
                 Bundle bundle = new Bundle();
                 String title = String.format(getString(R.string.error_can_not_bep3_account_title), WDp.getDpChainName(getContext(), getSActivity().mRecipientChain));
                 String msg = "";
-                if (getSActivity().mRecipientChain.equals(BaseChain.BNB_MAIN)) {
+                if (getSActivity().mRecipientChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
                     msg = String.format(getString(R.string.error_can_not_bep3_account_msg), WDp.getDpChainName(getContext(), getSActivity().mRecipientChain));
-                } else if (getSActivity().mRecipientChain.equals(BaseChain.KAVA_MAIN)) {
+                } else if (getSActivity().mRecipientChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                     msg = String.format(getString(R.string.error_can_not_bep3_account_msg2), WDp.getDpChainName(getContext(), getSActivity().mRecipientChain));
                 }
                 bundle.putString("title", title);

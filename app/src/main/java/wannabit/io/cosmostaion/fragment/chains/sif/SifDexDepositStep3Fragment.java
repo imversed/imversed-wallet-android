@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.sif.SifDepositPoolActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.utils.WDp;
@@ -72,13 +72,13 @@ public class SifDexDepositStep3Fragment extends BaseFragment implements View.OnC
     public void onRefreshTab() {
         mLpAmountTitle.setVisibility(View.GONE);
         mLpAmountLayer.setVisibility(View.GONE);
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
 
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
 
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
-        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mSifDepositCoin0, mJoinInput0AmountSymbol, mJoinInput0Amount, BaseChain.SIF_MAIN);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mSifDepositCoin1, mJoinInput1AmountSymbol, mJoinInput1Amount, BaseChain.SIF_MAIN);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mSifDepositCoin0, mJoinInput0AmountSymbol, mJoinInput0Amount, BaseChain.SIF_MAIN.INSTANCE);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mSifDepositCoin1, mJoinInput1AmountSymbol, mJoinInput1Amount, BaseChain.SIF_MAIN.INSTANCE);
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
         mMemo.setText(getSActivity().mTxMemo);
     }

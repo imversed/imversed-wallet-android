@@ -11,7 +11,7 @@ import androidx.cardview.widget.CardView;
 import java.math.BigDecimal;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.widget.BaseHolder;
@@ -39,7 +39,7 @@ public class TokenStakingOldHolder extends BaseHolder {
 
     public TokenStakingOldHolder(@NonNull View itemView) {
         super(itemView);
-        mCardRoot = itemView.findViewById(R.id.card_root);
+        mCardRoot = itemView.findViewById(R.id.cardView);
         mTotalAmount = itemView.findViewById(R.id.total_amount);
         mAvailableAmount = itemView.findViewById(R.id.available_amount);
         mDelegatedAmount = itemView.findViewById(R.id.delegated_amount);
@@ -64,10 +64,10 @@ public class TokenStakingOldHolder extends BaseHolder {
 
     @Override
     public void onBindTokenHolder(Context c, BaseChain chain, BaseData baseData, String denom) {
-        final int stakingDivideDecimal = WDp.mainDivideDecimal(chain);
-        final int stakingDisplayDecimal = WDp.mainDisplayDecimal(chain);
+        final int stakingDivideDecimal = chain.getDivideDecimal();
+        final int stakingDisplayDecimal = chain.getDisplayDecimal();
 
-        if (chain.equals(BaseChain.BNB_MAIN)) {
+        if (chain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
             mVestingLayer.setVisibility(View.GONE);
             mDelegatedLayer.setVisibility(View.GONE);
             mUnbondingLayer.setVisibility(View.GONE);
@@ -86,7 +86,7 @@ public class TokenStakingOldHolder extends BaseHolder {
             mlockedAmount.setText(WDp.getDpAmount2(lockedAmount, stakingDivideDecimal, stakingDisplayDecimal));
             mFrozenAmount.setText(WDp.getDpAmount2(frozenAmount, stakingDivideDecimal, stakingDisplayDecimal));
 
-        } else if (chain.equals(BaseChain.OKEX_MAIN)) {
+        } else if (chain.equals(BaseChain.OKEX_MAIN.INSTANCE)) {
             mVestingLayer.setVisibility(View.GONE);
             mDelegatedLayer.setVisibility(View.GONE);
             mUnbondingLayer.setVisibility(View.GONE);

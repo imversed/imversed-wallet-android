@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.osmosis.ExitPoolActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.utils.WDp;
@@ -66,7 +66,7 @@ public class ExitPoolStep3Fragment extends BaseFragment implements View.OnClickL
 
     @Override
     public void onRefreshTab() {
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
         String InputAmount = getSActivity().mLpToken.amount;
         String InputDenom = getSActivity().mLpToken.denom;
@@ -76,9 +76,9 @@ public class ExitPoolStep3Fragment extends BaseFragment implements View.OnClickL
         String OutputDenom1 = getSActivity().mPoolCoin1.denom;
 
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
-        WDp.showCoinDp(getSActivity(), getBaseDao(), WUtil.dpOsmosisTokenName(getSActivity(), getBaseDao(), mExitInAmountSymbol, InputDenom), InputAmount, mExitInAmountSymbol, mExitInAmount, BaseChain.OSMOSIS_MAIN);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), WUtil.dpOsmosisTokenName(getSActivity(), getBaseDao(), mExitOutput0AmountSymbol, OutputDenom0), OutputAmount0, mExitOutput0AmountSymbol, mExitOutput0Amount, BaseChain.OSMOSIS_MAIN);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), WUtil.dpOsmosisTokenName(getSActivity(), getBaseDao(), mExitOutput1AmountSymbol, OutputDenom1), OutputAmount1, mExitOutput1AmountSymbol, mExitOutput1Amount, BaseChain.OSMOSIS_MAIN);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), WUtil.dpOsmosisTokenName(getSActivity(), getBaseDao(), mExitInAmountSymbol, InputDenom), InputAmount, mExitInAmountSymbol, mExitInAmount, BaseChain.OSMOSIS_MAIN.INSTANCE);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), WUtil.dpOsmosisTokenName(getSActivity(), getBaseDao(), mExitOutput0AmountSymbol, OutputDenom0), OutputAmount0, mExitOutput0AmountSymbol, mExitOutput0Amount, BaseChain.OSMOSIS_MAIN.INSTANCE);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), WUtil.dpOsmosisTokenName(getSActivity(), getBaseDao(), mExitOutput1AmountSymbol, OutputDenom1), OutputAmount1, mExitOutput1AmountSymbol, mExitOutput1Amount, BaseChain.OSMOSIS_MAIN.INSTANCE);
         mMemo.setText(getSActivity().mTxMemo);
     }
 

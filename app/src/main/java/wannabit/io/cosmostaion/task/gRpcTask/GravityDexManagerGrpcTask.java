@@ -9,7 +9,7 @@ import cosmos.bank.v1beta1.QueryGrpc;
 import cosmos.bank.v1beta1.QueryOuterClass;
 import cosmos.base.query.v1beta1.Pagination;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.task.CommonTask;
 import wannabit.io.cosmostaion.task.TaskListener;

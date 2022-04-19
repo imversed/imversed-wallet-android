@@ -1,6 +1,6 @@
 package wannabit.io.cosmostaion.fragment.chains.starname;
 
-import static wannabit.io.cosmostaion.base.BaseChain.IOV_MAIN;
+import static com.fulldive.wallet.models.BaseChain.IOV_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.IOV_MSG_TYPE_RENEW_DOMAIN;
 
 import android.os.Bundle;
@@ -57,7 +57,7 @@ public class RenewStarName3Fragment extends BaseFragment implements View.OnClick
     public void onRefreshTab() {
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
 
-        if (getSActivity().baseChain.equals(IOV_MAIN)) {
+        if (getSActivity().baseChain.equals(IOV_MAIN.INSTANCE)) {
             mFeeAmount.setText(WDp.getDpAmount2(feeAmount, 6, 6));
         }
 

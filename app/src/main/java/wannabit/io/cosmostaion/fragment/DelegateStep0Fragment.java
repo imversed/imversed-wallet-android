@@ -1,8 +1,8 @@
 package wannabit.io.cosmostaion.fragment;
 
-import static wannabit.io.cosmostaion.base.BaseChain.BAND_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.FETCHAI_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.KAVA_MAIN;
+import static com.fulldive.wallet.models.BaseChain.BAND_MAIN;
+import static com.fulldive.wallet.models.BaseChain.FETCHAI_MAIN;
+import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIMPLE_DELEGATE;
 
 import android.os.Bundle;
@@ -87,7 +87,7 @@ public class DelegateStep0Fragment extends BaseFragment implements View.OnClickL
         super.onResume();
         if (!isAdded() || getSActivity() == null || getSActivity().account == null)
             getSActivity().onBackPressed();
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
         setDpDecimals(mDpDecimal);
         WDp.DpMainDenom(getSActivity().account.baseChain, mDenomTitle);
         BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getContext(), getSActivity().baseChain, CONST_PW_TX_SIMPLE_DELEGATE, 0);
@@ -207,7 +207,7 @@ public class DelegateStep0Fragment extends BaseFragment implements View.OnClickL
             mAmountInput.setText(half.toPlainString());
 
         } else if (v.equals(mAddMax)) {
-            if (getSActivity().baseChain.equals(KAVA_MAIN) || getSActivity().baseChain.equals(BAND_MAIN) || getSActivity().baseChain.equals(FETCHAI_MAIN)) {
+            if (getSActivity().baseChain.equals(KAVA_MAIN.INSTANCE) || getSActivity().baseChain.equals(BAND_MAIN.INSTANCE) || getSActivity().baseChain.equals(FETCHAI_MAIN.INSTANCE)) {
                 BigDecimal max = mMaxAvailable.movePointLeft(mDpDecimal).setScale(mDpDecimal, RoundingMode.DOWN);
                 mAmountInput.setText(max.toPlainString());
 

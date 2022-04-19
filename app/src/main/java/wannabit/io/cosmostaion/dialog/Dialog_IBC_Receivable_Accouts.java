@@ -26,7 +26,7 @@ import java.util.List;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.utils.WDp;
 
@@ -73,7 +73,7 @@ public class Dialog_IBC_Receivable_Accouts extends DialogFragment {
         public void onBindViewHolder(@NonNull AccountListAdapter.AccountHolder holder, int position) {
             final Account account = mAccounts.get(position);
             final BaseChain baseChain = BaseChain.getChain(account.baseChain);
-            final int dpDecimal = WDp.mainDisplayDecimal(baseChain);
+            final int dpDecimal = baseChain.getDisplayDecimal();
             final Context context = holder.itemView.getContext();
             holder.accountKeyState.setColorFilter(ContextCompat.getColor(context, R.color.colorGray0), android.graphics.PorterDuff.Mode.SRC_IN);
             holder.accountAddress.setText(account.address);

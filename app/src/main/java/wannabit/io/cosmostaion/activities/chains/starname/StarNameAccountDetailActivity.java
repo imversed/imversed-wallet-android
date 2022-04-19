@@ -35,7 +35,7 @@ import java.math.BigDecimal;
 import starnamed.x.starname.v1beta1.Types;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.task.TaskListener;
 import wannabit.io.cosmostaion.task.TaskResult;
@@ -285,7 +285,7 @@ public class StarNameAccountDetailActivity extends BaseActivity implements View.
 
             public MyAccountHeaderHolder(View v) {
                 super(v);
-                itemRoot = itemView.findViewById(R.id.card_root);
+                itemRoot = itemView.findViewById(R.id.cardView);
                 itemStarName = itemView.findViewById(R.id.starname_name);
                 itemBtnWebLink = itemView.findViewById(R.id.web_detail);
                 itemAddressCnt = itemView.findViewById(R.id.connected_addressed);
@@ -300,7 +300,7 @@ public class StarNameAccountDetailActivity extends BaseActivity implements View.
 
             public MyResourceHolder(View v) {
                 super(v);
-                itemRoot = itemView.findViewById(R.id.card_root);
+                itemRoot = itemView.findViewById(R.id.cardView);
                 itemChainImg = itemView.findViewById(R.id.chain_img);
                 itemChainName = itemView.findViewById(R.id.chain_name);
                 itemAddress = itemView.findViewById(R.id.chain_address);

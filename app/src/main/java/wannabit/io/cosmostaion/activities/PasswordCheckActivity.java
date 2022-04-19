@@ -1,8 +1,8 @@
 package wannabit.io.cosmostaion.activities;
 
-import static wannabit.io.cosmostaion.base.BaseChain.BNB_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.KAVA_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.getChain;
+import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
+import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
+import static com.fulldive.wallet.models.BaseChain.getChain;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_CHECK_MNEMONIC;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_CHECK_PRIVATE_KEY;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_PURPOSE;
@@ -80,6 +80,7 @@ import android.widget.Toast;
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.interactors.secret.InvalidPasswordException;
 import com.fulldive.wallet.interactors.secret.SecretInteractor;
+import com.fulldive.wallet.presentation.security.key.ShowPrivateKeyActivity;
 import com.fulldive.wallet.presentation.security.mnemonic.ShowMnemonicActivity;
 import com.fulldive.wallet.presentation.system.keyboard.KeyboardListener;
 import com.fulldive.wallet.presentation.system.keyboard.KeyboardPagerAdapter;
@@ -104,7 +105,7 @@ import starnamed.x.starname.v1beta1.Types;
 import tendermint.liquidity.v1beta1.Liquidity;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.ITimelessActivity;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dao.Account;
@@ -172,7 +173,6 @@ import wannabit.io.cosmostaion.utils.OsmosisPeriodLockWrapper;
 import wannabit.io.cosmostaion.utils.StarnameResourceWrapper;
 import wannabit.io.cosmostaion.utils.WKey;
 import wannabit.io.cosmostaion.utils.WLog;
-import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.LockedViewPager;
 
 public class PasswordCheckActivity extends BaseActivity implements ITimelessActivity, KeyboardListener, TaskListener {
@@ -456,10 +456,10 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
         if (userInput.length() == 4) {
             mViewPager.setCurrentItem(1, true);
 
-        } else if (userInput.length() == 5 && WUtil.checkPasscodePattern(userInput)) {
+        } else if (userInput.length() == 5 && secretInteractor.isPasswordValid(userInput)) {
             onFinishInput();
 
-        } else if (userInput.length() == 5 && !WUtil.checkPasscodePattern(userInput)) {
+        } else if (userInput.length() == 5) {
             onInitView();
             return;
         }
@@ -494,7 +494,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
 
                 break;
             case CONST_PW_CHECK_PRIVATE_KEY:
-                fetchEntropy(PrivateKeyCheckActivity.class);
+                fetchEntropy(ShowPrivateKeyActivity.class);
 
                 break;
             case CONST_PW_TX_SIMPLE_SEND:
@@ -503,7 +503,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
                     new SendGrpcTask(getBaseApplication(), this, baseChain, account, mTargetAddress, mTargetCoins, mTargetMemo, mTargetFee,
                             getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
-                } else if (baseChain.equals(BNB_MAIN)) {
+                } else if (baseChain.equals(BNB_MAIN.INSTANCE)) {
                     new SimpleBnbSendTask(getBaseApplication(), this, account, mTargetAddress, mTargetCoins, mTargetMemo, mTargetFee)
                             .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
@@ -557,11 +557,11 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
                 break;
             case CONST_PW_TX_HTLS_REFUND:
                 showWaitDialog();
-                if (baseChain.equals(BNB_MAIN)) {
+                if (baseChain.equals(BNB_MAIN.INSTANCE)) {
                     new SimpleBnbHtlcRefundTask(getBaseApplication(), this, account,
                             mSwapId, mTargetMemo).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
-                } else if (baseChain.equals(KAVA_MAIN)) {
+                } else if (baseChain.equals(KAVA_MAIN.INSTANCE)) {
                     new SimpleHtlcRefundTask(getBaseApplication(), this, account, mSwapId,
                             mTargetMemo, mTargetFee).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
                 }
@@ -847,7 +847,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
                 .checkPassword(userInput)
                 .andThen(accountsInteractor.getAccount(mIdToCheck))
                 .flatMap(account ->
-                        secretInteractor.decryptEntropy(account.uuid, account.resource, account.spec)
+                        secretInteractor.entropyToMnemonic(account.uuid, account.resource, account.spec)
                 )
                 .subscribeOn(AppSchedulers.INSTANCE.io())
                 .observeOn(AppSchedulers.INSTANCE.ui())
@@ -917,7 +917,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
             return;
         }
 
-        if ((baseChain.equals(BNB_MAIN)) && result.taskType == TASK_GEN_TX_BNB_HTLC_REFUND) {
+        if ((baseChain.equals(BNB_MAIN.INSTANCE)) && result.taskType == TASK_GEN_TX_BNB_HTLC_REFUND) {
             Intent txIntent = new Intent(PasswordCheckActivity.this, TxDetailActivity.class);
             txIntent.putExtra("isGen", true);
             txIntent.putExtra("isSuccess", result.isSuccess);

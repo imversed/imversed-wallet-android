@@ -1,9 +1,9 @@
 package wannabit.io.cosmostaion.fragment;
 
-import static wannabit.io.cosmostaion.base.BaseChain.BNB_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.DESMOS_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.KAVA_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.OKEX_MAIN;
+import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
+import static com.fulldive.wallet.models.BaseChain.DESMOS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
+import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,7 +26,7 @@ import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.MainActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IBusyFetchListener;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
@@ -70,7 +70,7 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main_send, container, false);
-        mCardView = rootView.findViewById(R.id.card_root);
+        mCardView = rootView.findViewById(R.id.cardView);
         itemKeyStatus = rootView.findViewById(R.id.img_account);
         mWalletAddress = rootView.findViewById(R.id.wallet_address);
         mTotalValue = rootView.findViewById(R.id.total_value);
@@ -221,7 +221,7 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
             if (getMainActivity().baseChain == null) {
                 return 0;
             }
-            if (getMainActivity().baseChain.equals(KAVA_MAIN) || getMainActivity().baseChain.equals(DESMOS_MAIN)) {
+            if (getMainActivity().baseChain.equals(KAVA_MAIN.INSTANCE) || getMainActivity().baseChain.equals(DESMOS_MAIN.INSTANCE)) {
                 return 5;
             } else if (getMainActivity().baseChain.isGRPC()) {
                 return 4;
@@ -232,7 +232,7 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
 
         @Override
         public int getItemViewType(int position) {
-            if (getMainActivity().baseChain.equals(KAVA_MAIN)) {
+            if (getMainActivity().baseChain.equals(KAVA_MAIN.INSTANCE)) {
                 if (position == 0) {
                     return TYPE_WALLET;
                 } else if (position == 1) {
@@ -245,7 +245,7 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
                     return TYPE_GIUDE;
                 }
 
-            } else if (getMainActivity().baseChain.equals(DESMOS_MAIN)) {
+            } else if (getMainActivity().baseChain.equals(DESMOS_MAIN.INSTANCE)) {
                 if (position == 0) {
                     return TYPE_WALLET;
                 } else if (position == 1) {
@@ -269,11 +269,11 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
                     return TYPE_GIUDE;
                 }
 
-            } else if (getMainActivity().baseChain.equals(BNB_MAIN) || getMainActivity().baseChain.equals(OKEX_MAIN)) {
+            } else if (getMainActivity().baseChain.equals(BNB_MAIN.INSTANCE) || getMainActivity().baseChain.equals(OKEX_MAIN.INSTANCE)) {
                 if (position == 0) {
-                    if (getMainActivity().baseChain.equals(BNB_MAIN)) {
+                    if (getMainActivity().baseChain.equals(BNB_MAIN.INSTANCE)) {
                         return TYPE_BINANCE;
-                    } else if (getMainActivity().baseChain.equals(OKEX_MAIN)) {
+                    } else if (getMainActivity().baseChain.equals(OKEX_MAIN.INSTANCE)) {
                         return TYPE_OKEX;
                     }
                 } else if (position == 1) {

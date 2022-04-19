@@ -1,6 +1,6 @@
 package wannabit.io.cosmostaion.activities.tokenDetail;
 
-import static wannabit.io.cosmostaion.base.BaseChain.BNB_MAIN;
+import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIMPLE_SEND;
 
 import android.content.Intent;
@@ -29,7 +29,7 @@ import java.math.BigDecimal;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.SendActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
@@ -77,7 +77,7 @@ public class StakingTokenDetailActivity extends BaseActivity implements View.OnC
         mItemUpDownImg = findViewById(R.id.ic_price_updown);
         mItemUpDownPrice = findViewById(R.id.dash_price_updown_tx);
 
-        mBtnAddressPopup = findViewById(R.id.card_root);
+        mBtnAddressPopup = findViewById(R.id.cardView);
         mKeyState = findViewById(R.id.img_account);
         mAddress = findViewById(R.id.account_Address);
         mTotalValue = findViewById(R.id.total_value);
@@ -93,9 +93,9 @@ public class StakingTokenDetailActivity extends BaseActivity implements View.OnC
         account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         mMainDenom = baseChain.getMainDenom();
-        mDivideDecimal = WDp.mainDivideDecimal(baseChain);
+        mDivideDecimal = baseChain.getDivideDecimal();
 
-        if (baseChain.equals(BNB_MAIN)) {
+        if (baseChain.equals(BNB_MAIN.INSTANCE)) {
             mBtnBep3Send.setVisibility(View.VISIBLE);
         }
 

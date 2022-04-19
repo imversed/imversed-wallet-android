@@ -1,7 +1,7 @@
 package wannabit.io.cosmostaion.task.gRpcTask;
 
-import static wannabit.io.cosmostaion.base.BaseChain.CRYPTO_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.IRIS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.CRYPTO_MAIN;
+import static com.fulldive.wallet.models.BaseChain.IRIS_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_NFTOKEN_LIST;
 
 import com.google.protobuf.ByteString;
@@ -13,7 +13,7 @@ import irismod.nft.Nft;
 import irismod.nft.QueryGrpc;
 import irismod.nft.QueryOuterClass;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.task.CommonTask;
@@ -51,7 +51,7 @@ public class NFTokenListGrpcTask extends CommonTask {
             } else {
                 pageRequest = Pagination.PageRequest.newBuilder().setCountTotal(true).setLimit(1000).build();
             }
-            if (mChain.equals(IRIS_MAIN)) {
+            if (mChain.equals(IRIS_MAIN.INSTANCE)) {
                 QueryOuterClass.QueryOwnerRequest request = QueryOuterClass.QueryOwnerRequest.newBuilder().setOwner(mAccount.address).setPagination(pageRequest).build();
                 QueryOuterClass.QueryOwnerResponse response = mIrisStub.owner(request);
                 mIrisResultData.addAll(response.getOwner().getIdCollectionsList());
@@ -60,7 +60,7 @@ public class NFTokenListGrpcTask extends CommonTask {
                 result.resultData = mIrisResultData;
                 result.resultByteData = response.getPagination().getNextKey();
 
-            } else if (mChain.equals(CRYPTO_MAIN)) {
+            } else if (mChain.equals(CRYPTO_MAIN.INSTANCE)) {
                 chainmain.nft.v1.QueryOuterClass.QueryOwnerRequest request = chainmain.nft.v1.QueryOuterClass.QueryOwnerRequest.newBuilder().setOwner(mAccount.address).setPagination(pageRequest).build();
                 chainmain.nft.v1.QueryOuterClass.QueryOwnerResponse response = mCryptoStub.owner(request);
                 mCryptoResultData.addAll(response.getOwner().getIdCollectionsList());

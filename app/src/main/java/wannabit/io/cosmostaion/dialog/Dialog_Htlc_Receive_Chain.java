@@ -18,17 +18,17 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.utils.WDp;
 
 public class Dialog_Htlc_Receive_Chain extends DialogFragment {
 
     private RecyclerView mRecyclerView;
     private DestinationChainListAdapter mDestinationChainListAdapter;
-    private ArrayList<BaseChain> mToChainList;
+    private List<BaseChain> mToChainList;
 
     public static Dialog_Htlc_Receive_Chain newInstance(Bundle bundle) {
         Dialog_Htlc_Receive_Chain frag = new Dialog_Htlc_Receive_Chain();
@@ -46,7 +46,7 @@ public class Dialog_Htlc_Receive_Chain extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_htlc_receive_chain, null);
         mRecyclerView = view.findViewById(R.id.recycler);
-        mToChainList = BaseChain.getHtlcSendable(BaseChain.getChain(getArguments().getString("chainName")));
+        mToChainList = BaseChain.Companion.getHtlcSendable(BaseChain.getChain(getArguments().getString("chainName")));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
         mDestinationChainListAdapter = new DestinationChainListAdapter();

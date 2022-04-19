@@ -8,6 +8,7 @@ import com.binance.dex.api.client.BinanceDexEnvironment;
 import com.binance.dex.api.client.Wallet;
 import com.binance.dex.api.client.domain.TransactionMetadata;
 import com.binance.dex.api.client.domain.broadcast.TransactionOption;
+import com.fulldive.wallet.interactors.secret.MnemonicUtils;
 
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.crypto.DeterministicKey;
@@ -24,7 +25,7 @@ import retrofit2.Response;
 import wannabit.io.cosmostaion.BuildConfig;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.cosmos.Signer;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
@@ -65,7 +66,7 @@ public class HtlcClaimTask extends CommonTask {
     protected TaskResult doInBackground(String... strings) {
 
         try {
-            if (mReceiveChain.equals(BaseChain.BNB_MAIN)) {
+            if (mReceiveChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
                 Response<ResBnbAccountInfo> response = ApiClient.getBnbChain(context).getAccountInfo(mReceiveAccount.address).execute();
                 if (!response.isSuccessful()) {
                     result.errorCode = BaseConstant.ERROR_CODE_BROADCAST;
@@ -92,7 +93,7 @@ public class HtlcClaimTask extends CommonTask {
                 mRandomNumber = mRandomNumber.toLowerCase();
                 BinanceDexApiRestClient client = BinanceDexApiClientFactory.newInstance().newRestClient(BinanceDexEnvironment.PROD.getBaseUrl());
                 TransactionOption options = new TransactionOption(context.getString(R.string.str_claim_swap_memo_c), 82, null);
-                List<TransactionMetadata> resp = client.claimHtlt(mExpectedSwapId, WUtil.hexStringToByteArray(mRandomNumber), wallet, options, true);
+                List<TransactionMetadata> resp = client.claimHtlt(mExpectedSwapId, MnemonicUtils.INSTANCE.hexStringToByteArray(mRandomNumber), wallet, options, true);
                 if (resp.get(0).isOk()) {
                     if (BuildConfig.DEBUG)
                         WLog.w("BNB_MAIN Claim suceess txhash " + resp.get(0).getHash());
@@ -107,7 +108,7 @@ public class HtlcClaimTask extends CommonTask {
                     result.isSuccess = false;
                 }
 
-            } else if (mReceiveChain.equals(BaseChain.KAVA_MAIN)) {
+            } else if (mReceiveChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                 ServiceGrpc.ServiceBlockingStub nodeInfoStub = ServiceGrpc.newBlockingStub(ChannelBuilder.getChain(mReceiveChain));
                 Query.GetNodeInfoRequest receiveNodeInfo = Query.GetNodeInfoRequest.newBuilder().build();
                 Query.GetNodeInfoResponse receiveInfo = nodeInfoStub.getNodeInfo(receiveNodeInfo);

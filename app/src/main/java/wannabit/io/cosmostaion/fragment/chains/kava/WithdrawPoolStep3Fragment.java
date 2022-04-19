@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.kava.WithDrawPoolActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.utils.WDp;
@@ -64,12 +64,12 @@ public class WithdrawPoolStep3Fragment extends BaseFragment implements View.OnCl
 
     @Override
     public void onRefreshTab() {
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
         mExitMyShare.setText(WDp.getDpAmount2(getSActivity().mKavaShareAmount, 6, 6));
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
 
-        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mKavaMinTokenA, mExitOutput0AmountSymbol, mExitOutput0Amount, BaseChain.KAVA_MAIN);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mKavaMinTokenB, mExitOutput1AmountSymbol, mExitOutput1Amount, BaseChain.KAVA_MAIN);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mKavaMinTokenA, mExitOutput0AmountSymbol, mExitOutput0Amount, BaseChain.KAVA_MAIN.INSTANCE);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mKavaMinTokenB, mExitOutput1AmountSymbol, mExitOutput1Amount, BaseChain.KAVA_MAIN.INSTANCE);
 
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
         mMemo.setText(getSActivity().mTxMemo);

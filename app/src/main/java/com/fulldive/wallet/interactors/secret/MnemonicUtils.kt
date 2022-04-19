@@ -1,13 +1,14 @@
 package com.fulldive.wallet.interactors.secret
 
 import com.fulldive.wallet.extensions.getPath
+import com.fulldive.wallet.extensions.safe
 import org.bitcoinj.core.Bech32
 import org.bitcoinj.core.ECKey
 import org.bitcoinj.crypto.*
 import org.bouncycastle.crypto.digests.RIPEMD160Digest
 import org.bouncycastle.util.encoders.Hex
 import org.web3j.crypto.Keys
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.crypto.Sha256
 import java.io.ByteArrayOutputStream
 import java.math.BigInteger
@@ -25,7 +26,7 @@ object MnemonicUtils {
         path: Int,
         customPath: Int
     ): String {
-        val childKey = getCreateKeyWithPathFromEntropy(chain, entropy, path, customPath)
+        val childKey = createKeyWithPathFromEntropy(chain, entropy, path, customPath)
         return when (chain) {
             BaseChain.OKEX_MAIN -> {
                 when (customPath) {
@@ -36,14 +37,13 @@ object MnemonicUtils {
             }
             BaseChain.EVMOS_MAIN,
             BaseChain.INJ_MAIN -> {
-                generateAddressFromPrivateKey(fetchPrefix(chain), childKey.privateKeyAsHex)
+                generateAddressFromPrivateKey(chain.chainAddressPrefix, childKey.privateKeyAsHex)
             }
             else -> {
-                getDpAddress(fetchPrefix(chain), childKey.publicKeyAsHex)
+                getDpAddress(chain.chainAddressPrefix, childKey.publicKeyAsHex)
             }
         }
     }
-
 
     fun byteArrayToHexString(bytes: ByteArray): String {
         val hexChars = CharArray(bytes.size * 2)
@@ -63,20 +63,28 @@ object MnemonicUtils {
         var i = 0
         while (i < len) {
             data[i / 2] = ((Character.digit(s[i], 16) shl 4)
-                + Character.digit(s[i + 1], 16)).toByte()
+                    + Character.digit(s[i + 1], 16)).toByte()
             i += 2
         }
         return data
     }
 
-    @Throws(Exception::class)
-    private fun getHDSeed(entropy: ByteArray): ByteArray {
-        return MnemonicCode.toSeed(MnemonicCode.INSTANCE.toMnemonic(entropy), "")
+    fun getStringHdSeedFromWords(words: List<String>): String? {
+        return getByteHdSeedFromWords(words)?.let(::byteArrayToHexString)
     }
 
+    fun isValidStringHdSeedFromWords(words: List<String>): Boolean {
+        return getByteHdSeedFromWords(words) != null
+    }
+
+    private fun getByteHdSeedFromWords(words: List<String>): ByteArray? {
+        return safe {
+            getHDSeed(MnemonicCode.INSTANCE.toEntropy(words))
+        }
+    }
 
     @Throws(Exception::class)
-    private fun getCreateKeyWithPathFromEntropy(
+    fun createKeyWithPathFromEntropy(
         chain: BaseChain,
         entropy: String,
         path: Int,
@@ -115,7 +123,6 @@ object MnemonicUtils {
     }
 
     // Ethermint Style Key gen (OKex)
-
     @Throws(java.lang.Exception::class)
     fun createNewAddressSecp256k1(mainPrefix: String, publickKey: ByteArray): String {
         val uncompressedPubKey = ECKey.CURVE.curve.decodePoint(publickKey).getEncoded(false)
@@ -124,6 +131,11 @@ object MnemonicUtils {
         val address = Keys.getAddress(pub)
         val bytes = convertBits(address, 8, 5, true)
         return Bech32.encode(mainPrefix, bytes)
+    }
+
+    @Throws(Exception::class)
+    private fun getHDSeed(entropy: ByteArray): ByteArray {
+        return MnemonicCode.toSeed(MnemonicCode.INSTANCE.toMnemonic(entropy), "")
     }
 
     private fun generateEthAddressFromPrivateKey(privateKey: String): String {
@@ -157,14 +169,6 @@ object MnemonicUtils {
     private fun generateAddressFromPrivateKey(prefix: String, privateKey: String): String {
         val publicKey = hexPublicKeyFromPrivateKey(privateKey)
         return generateAddressFromPublicKey(prefix, publicKey)
-    }
-
-    private fun fetchPrefix(chain: BaseChain): String {
-        var prefix = chain.chainAddressPrefix
-        if (prefix.endsWith("1")) {
-            prefix = prefix.substring(0, prefix.length - 1)
-        }
-        return prefix
     }
 
     private fun getDpAddress(prefix: String, publicHexKey: String): String {

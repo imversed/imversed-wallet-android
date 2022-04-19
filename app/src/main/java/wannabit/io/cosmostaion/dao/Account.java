@@ -1,6 +1,6 @@
 package wannabit.io.cosmostaion.dao;
 
-import static wannabit.io.cosmostaion.base.BaseChain.BNB_MAIN;
+import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
 
 import android.content.Context;
 import android.text.SpannableString;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.utils.WDp;
 
 public class Account {
@@ -26,7 +26,7 @@ public class Account {
     public String resource;
     public String spec;
     public Boolean fromMnemonic;
-    public String path;
+    public Integer path;
 
     public Boolean isValidator;
     public Integer sequenceNumber;
@@ -74,7 +74,7 @@ public class Account {
         this.fromMnemonic = fromMnemonic;
         this.msize = msize;
         this.importTime = importTime;
-        this.path = String.valueOf(path);
+        this.path = path;
         this.customPath = customPath;
     }
 
@@ -94,7 +94,7 @@ public class Account {
 
     public Account(Long id, String uuid, String nickName, boolean isFavo, String address,
                    String baseChain, boolean hasPrivateKey, String resource, String spec,
-                   boolean fromMnemonic, String path, boolean isValidator, int sequenceNumber,
+                   boolean fromMnemonic, int path, boolean isValidator, int sequenceNumber,
                    int accountNumber, Long fetchTime, int msize, long importTime, String lastTotal, long sortOrder, boolean newBip, int customPath) {
         this.id = id;
         this.uuid = uuid;
@@ -143,7 +143,7 @@ public class Account {
             return result;
         }
         for (Balance balance : balances) {
-            if (balance.symbol.equals(BNB_MAIN.getMainDenom())) {
+            if (balance.symbol.equals(BNB_MAIN.INSTANCE.getMainDenom())) {
                 result = balance.balance;
                 break;
             }
@@ -157,7 +157,7 @@ public class Account {
             return result;
         }
         for (Balance balance : balances) {
-            if (balance.symbol.equals(BNB_MAIN.getMainDenom())) {
+            if (balance.symbol.equals(BNB_MAIN.INSTANCE.getMainDenom())) {
                 result = balance.balance;
                 break;
             }
@@ -197,26 +197,16 @@ public class Account {
         SpannableString result = SpannableString.valueOf("--");
         try {
             if (!TextUtils.isEmpty(lastTotal)) {
-                switch (chain) {
-                    case BNB_MAIN:
-                    case OKEX_MAIN:
-                        result = WDp.getDpAmount2(new BigDecimal(lastTotal), 0, 6);
-                        break;
-                    case FETCHAI_MAIN:
-                    case SIF_MAIN:
-                    case INJ_MAIN:
-                    case EVMOS_MAIN:
-                    case CUDOS_MAIN:
-                        result = WDp.getDpAmount2(new BigDecimal(lastTotal), 18, 6);
-                        break;
-                    case CRYPTO_MAIN:
-                        result = WDp.getDpAmount2(new BigDecimal(lastTotal), 8, 6);
-                        break;
-                    case PROVENANCE_MAIN:
-                        result = WDp.getDpAmount2(new BigDecimal(lastTotal), 9, 6);
-                        break;
-                    default:
-                        result = WDp.getDpAmount2(new BigDecimal(lastTotal), 6, 6);
+                if (BNB_MAIN.INSTANCE.equals(chain) || BaseChain.OKEX_MAIN.INSTANCE.equals(chain)) {
+                    result = WDp.getDpAmount2(new BigDecimal(lastTotal), 0, 6);
+                } else if (BaseChain.FETCHAI_MAIN.INSTANCE.equals(chain) || BaseChain.SIF_MAIN.INSTANCE.equals(chain) || BaseChain.INJ_MAIN.INSTANCE.equals(chain) || BaseChain.EVMOS_MAIN.INSTANCE.equals(chain) || BaseChain.CUDOS_MAIN.INSTANCE.equals(chain)) {
+                    result = WDp.getDpAmount2(new BigDecimal(lastTotal), 18, 6);
+                } else if (BaseChain.CRYPTO_MAIN.INSTANCE.equals(chain)) {
+                    result = WDp.getDpAmount2(new BigDecimal(lastTotal), 8, 6);
+                } else if (BaseChain.PROVENANCE_MAIN.INSTANCE.equals(chain)) {
+                    result = WDp.getDpAmount2(new BigDecimal(lastTotal), 9, 6);
+                } else {
+                    result = WDp.getDpAmount2(new BigDecimal(lastTotal), 6, 6);
                 }
             }
         } catch (Exception ignore) {

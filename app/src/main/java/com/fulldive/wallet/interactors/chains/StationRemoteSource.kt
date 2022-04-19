@@ -5,7 +5,7 @@ import com.fulldive.wallet.di.modules.DefaultLocalStorageModule
 import com.fulldive.wallet.extensions.safeSingle
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Single
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dao.ChainParam
 import wannabit.io.cosmostaion.dao.IbcPath
 import wannabit.io.cosmostaion.dao.IbcToken

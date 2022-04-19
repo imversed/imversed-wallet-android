@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import osmosis.lockup.Lock;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.osmosis.StartUnlockActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.utils.WDp;
@@ -63,7 +63,7 @@ public class StartUnLockStep3Fragment extends BaseFragment implements View.OnCli
 
     @Override
     public void onRefreshTab() {
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
         String toUnbondingDenom = getSActivity().mOsmosisLockups.get(0).getCoins(0).getDenom();
         String ids = "";
@@ -75,7 +75,7 @@ public class StartUnLockStep3Fragment extends BaseFragment implements View.OnCli
 
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
         mUnLockIds.setText(ids);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), toUnbondingDenom, toUnbondingAmount.toPlainString(), mUnLockSymbol, mUnLockAmount, BaseChain.OSMOSIS_MAIN);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), toUnbondingDenom, toUnbondingAmount.toPlainString(), mUnLockSymbol, mUnLockAmount, BaseChain.OSMOSIS_MAIN.INSTANCE);
         mMemo.setText(getSActivity().mTxMemo);
     }
 

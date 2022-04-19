@@ -9,7 +9,6 @@ import com.joom.lightsaber.ProvidedBy
 import moxy.MvpAppCompatActivity
 import wannabit.io.cosmostaion.R
 import wannabit.io.cosmostaion.utils.WLog
-import wannabit.io.cosmostaion.utils.WUtil
 import javax.inject.Inject
 
 @ProvidedBy(DefaultPresentersModule::class)
@@ -43,7 +42,7 @@ class SetPasswordPresenter @Inject constructor(
             userInput.length == 4 -> {
                 viewState.switchKeyboard(KeyboardType.Alphabet)
             }
-            userInput.length == 5 && WUtil.checkPasscodePattern(userInput) -> {
+            userInput.length == 5 && secretInteractor.isPasswordValid(userInput) -> {
                 checkPassword()
             }
             userInput.length == 5 -> {

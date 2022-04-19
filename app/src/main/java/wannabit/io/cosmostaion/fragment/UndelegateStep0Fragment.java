@@ -78,7 +78,7 @@ public class UndelegateStep0Fragment extends BaseFragment implements View.OnClic
         super.onResume();
         if (!isAdded() || getSActivity() == null || getSActivity().account == null)
             getSActivity().onBackPressed();
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
         setDpDecimals(mDpDecimal);
         WDp.DpMainDenom(getSActivity().account.baseChain, mDenomTitle);
 

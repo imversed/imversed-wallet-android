@@ -30,7 +30,7 @@ import java.math.BigDecimal;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.SendActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dao.IbcToken;
 import wannabit.io.cosmostaion.dialog.Dialog_IBC_Send_Warning;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
@@ -78,7 +78,7 @@ public class IBCTokenDetailActivity extends BaseActivity implements View.OnClick
         mItemUpDownImg = findViewById(R.id.ic_price_updown);
         mItemUpDownPrice = findViewById(R.id.dash_price_updown_tx);
 
-        mBtnAddressPopup = findViewById(R.id.card_root);
+        mBtnAddressPopup = findViewById(R.id.cardView);
         mKeyState = findViewById(R.id.img_account);
         mAddress = findViewById(R.id.account_Address);
         mTotalValue = findViewById(R.id.total_value);

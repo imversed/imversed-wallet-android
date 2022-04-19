@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.osmosis.StartEarningActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.model.type.Coin;
@@ -64,13 +64,13 @@ public class StartLockStep3Fragment extends BaseFragment implements View.OnClick
 
     @Override
     public void onRefreshTab() {
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
         final Coin LpCoin = new Coin(getSActivity().mLpToken.denom, getSActivity().mLpToken.amount);
         long UnbondingDuraion = getSActivity().mOsmosisLockupDuration;
 
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
-        WDp.showCoinDp(getSActivity(), getBaseDao(), LpCoin, mLockCoinSymbol, mLockCoinAmount, BaseChain.OSMOSIS_MAIN);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), LpCoin, mLockCoinSymbol, mLockCoinAmount, BaseChain.OSMOSIS_MAIN.INSTANCE);
         if (UnbondingDuraion == 86400) {
             mLockUnbondingDuraion.setText("1 Day");
         } else if (UnbondingDuraion == 604800) {

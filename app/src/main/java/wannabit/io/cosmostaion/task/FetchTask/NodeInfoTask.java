@@ -1,13 +1,13 @@
 package wannabit.io.cosmostaion.task.FetchTask;
 
-import static wannabit.io.cosmostaion.base.BaseChain.BNB_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.OKEX_MAIN;
+import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
+import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_FETCH_NODE_INFO;
 
 import kotlin.Deprecated;
 import retrofit2.Response;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.ApiClient;
 import wannabit.io.cosmostaion.network.res.ResNodeInfo;
 import wannabit.io.cosmostaion.task.CommonTask;
@@ -28,7 +28,7 @@ public class NodeInfoTask extends CommonTask {
     @Override
     protected TaskResult doInBackground(String... strings) {
         try {
-            if (mChain.equals(BNB_MAIN)) {
+            if (mChain.equals(BNB_MAIN.INSTANCE)) {
                 Response<ResNodeInfo> response = ApiClient.getBnbChain(context).getNodeInfo().execute();
                 if (response.isSuccessful() && response.body() != null && response.body().node_info != null) {
                     result.resultData = response.body().node_info;
@@ -38,7 +38,7 @@ public class NodeInfoTask extends CommonTask {
                     WLog.w("NodeInfoTask : NOk");
                 }
 
-            } else if (mChain.equals(OKEX_MAIN)) {
+            } else if (mChain.equals(OKEX_MAIN.INSTANCE)) {
                 Response<ResNodeInfo> response = ApiClient.getOkexChain(context).getNodeInfo().execute();
                 if (response.isSuccessful() && response.body() != null && response.body().node_info != null) {
                     result.resultData = response.body().node_info;

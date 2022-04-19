@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import akash.market.v1beta2.BidOuterClass;
 import cosmos.tx.v1beta1.ServiceOuterClass;
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.utils.WDp;
 
@@ -34,9 +34,9 @@ public class TxCreateBidHolder extends TxHolder {
     }
 
     public void onBindMsg(Context c, BaseData baseData, BaseChain baseChain, ServiceOuterClass.GetTxResponse response, int position, String address, boolean isGen) {
-        WDp.DpMainDenom(baseChain.getChain(), itemCreateBidPriceDenom);
-        WDp.DpMainDenom(baseChain.getChain(), itemCreateBidDepositDenom);
-        final int dpDecimal = WDp.mainDivideDecimal(baseChain);
+        WDp.DpMainDenom(baseChain.getChainName(), itemCreateBidPriceDenom);
+        WDp.DpMainDenom(baseChain.getChainName(), itemCreateBidDepositDenom);
+        final int dpDecimal = baseChain.getDivideDecimal();
         itemCreateBidImg.setColorFilter(WDp.getChainColor(c, baseChain), android.graphics.PorterDuff.Mode.SRC_IN);
 
         try {

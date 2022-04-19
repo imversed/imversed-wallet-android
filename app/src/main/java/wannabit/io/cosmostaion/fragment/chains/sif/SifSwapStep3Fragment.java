@@ -70,7 +70,7 @@ public class SifSwapStep3Fragment extends BaseFragment implements View.OnClickLi
     public void onRefreshTab() {
         mSlippageLayer.setVisibility(View.GONE);
         mSwapFeeSymbol.setVisibility(View.VISIBLE);
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
         mInputCoinDecimal = WUtil.getSifCoinDecimal(getBaseDao(), getSActivity().mInputDenom);
         mOutputCoinDecimal = WUtil.getSifCoinDecimal(getBaseDao(), getSActivity().mOutputDenom);
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);

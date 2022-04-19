@@ -18,7 +18,7 @@ import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.MainActivity;
 import wannabit.io.cosmostaion.activities.ValidatorListActivity;
 import wannabit.io.cosmostaion.activities.VoteListActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
@@ -36,7 +36,7 @@ public class WalletChainHolder extends BaseHolder {
 
     public WalletChainHolder(@NonNull View itemView) {
         super(itemView);
-        mTvChainCard = itemView.findViewById(R.id.card_root);
+        mTvChainCard = itemView.findViewById(R.id.cardView);
         mTvChainIcon = itemView.findViewById(R.id.chain_icon);
         mTvChainDenom = itemView.findViewById(R.id.chain_denom);
         mTvChainTotal = itemView.findViewById(R.id.chain_amount);
@@ -59,7 +59,7 @@ public class WalletChainHolder extends BaseHolder {
     public void onBindHolder(@NotNull MainActivity mainActivity) {
         final BaseData baseData = mainActivity.getBaseDao();
         final String denom = mainActivity.baseChain.getMainDenom();
-        final int decimal = WDp.mainDivideDecimal(mainActivity.baseChain);
+        final int decimal = mainActivity.baseChain.getDivideDecimal();
         mTvChainCard.setCardBackgroundColor(WDp.getChainBgColor(mainActivity, mainActivity.baseChain));
         WUtil.getWalletData(mainActivity.baseChain, mTvChainIcon, mTvChainDenom);
 
@@ -98,14 +98,14 @@ public class WalletChainHolder extends BaseHolder {
         // dex, nft, desmos profile setting
         WUtil.getDexTitle(mainActivity.baseChain, mBtnDex, mBtnDexTitle);
         mBtnDex.setOnClickListener(v -> {
-            if (mainActivity.baseChain.equals(BaseChain.DESMOS_MAIN)) {
+            if (mainActivity.baseChain.equals(BaseChain.DESMOS_MAIN.INSTANCE)) {
                 mainActivity.onClickProfile();
             } else {
                 mainActivity.startActivity(WUtil.getDexIntent(mainActivity, mainActivity.baseChain));
             }
         });
 
-        if (mainActivity.baseChain.equals(BaseChain.COSMOS_MAIN)) {
+        if (mainActivity.baseChain.equals(BaseChain.COSMOS_MAIN.INSTANCE)) {
             mBtnWalletConnect.setVisibility(View.VISIBLE);
         } else {
             mBtnWalletConnect.setVisibility(View.GONE);

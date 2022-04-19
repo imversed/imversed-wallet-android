@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.cosmos.GravityDepositPoolActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.utils.WDp;
@@ -68,7 +68,7 @@ public class GDexDepositStep3Fragment extends BaseFragment implements View.OnCli
 
     @Override
     public void onRefreshTab() {
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
         String InputAmount0 = getSActivity().mPoolCoin0.amount;
         String InputDenom0 = getSActivity().mPoolCoin0.denom;
         String InputAmount1 = getSActivity().mPoolCoin1.amount;
@@ -77,8 +77,8 @@ public class GDexDepositStep3Fragment extends BaseFragment implements View.OnCli
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
 
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
-        WDp.showCoinDp(getSActivity(), getBaseDao(), WUtil.dpCosmosTokenName(getSActivity(), getBaseDao(), mJoinInput0AmountSymbol, InputDenom0), InputAmount0, mJoinInput0AmountSymbol, mJoinInput0Amount, BaseChain.COSMOS_MAIN);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), WUtil.dpCosmosTokenName(getSActivity(), getBaseDao(), mJoinInput1AmountSymbol, InputDenom1), InputAmount1, mJoinInput1AmountSymbol, mJoinInput1Amount, BaseChain.COSMOS_MAIN);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), WUtil.dpCosmosTokenName(getSActivity(), getBaseDao(), mJoinInput0AmountSymbol, InputDenom0), InputAmount0, mJoinInput0AmountSymbol, mJoinInput0Amount, BaseChain.COSMOS_MAIN.INSTANCE);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), WUtil.dpCosmosTokenName(getSActivity(), getBaseDao(), mJoinInput1AmountSymbol, InputDenom1), InputAmount1, mJoinInput1AmountSymbol, mJoinInput1Amount, BaseChain.COSMOS_MAIN.INSTANCE);
         mLpAmountSymbol.setText("GDEX-" + getSActivity().mGDexPoolId);
         mLpAmount.setText(WDp.getDpAmount2(new BigDecimal(getSActivity().mLpToken.amount), 6, 6));
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));

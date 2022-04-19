@@ -29,9 +29,7 @@ public class BaseConstant {
     public final static String PRE_USER_EXPENDED_CHAINS = "PRE_USER_EXPENDED_CHAINS";
 
 
-    public final static int TASK_INIT_ACCOUNT = 2002;
     public final static int TASK_GEN_TX_SIMPLE_SEND = 2018;
-    public final static int TASK_OVERRIDE_ACCOUNT = 2019;
     public final static int TASK_GEN_TX_BNB_SIMPLE_SEND = 2045;
     public final static int TASK_MOON_PAY_SIGNATURE = 2058;
     public final static int TASK_FETCH_KAVA_CDP_DEPOSIT = 2061;
@@ -350,16 +348,10 @@ public class BaseConstant {
     public final static String TOKEN_SWP = "swp";
     public final static String TOKEN_OK = "okt";
     public final static String TOKEN_DVPN = "udvpn";
-    public final static String TOKEN_FET = "afet";
-    public final static String TOKEN_CRO = "basecro";
     public final static String TOKEN_SIF = "rowan";
     public final static String TOKEN_OSMOSIS = "uosmo";
     public final static String TOKEN_ION = "uion";
     public final static String TOKEN_NGM = "ungm";
-    public final static String TOKEN_INJ = "inj";
-    public final static String TOKEN_EVMOS = "aevmos";
-    public final static String TOKEN_CUDOS = "acudos";
-    public final static String TOKEN_HASH = "nhash";
 
 
     public final static String TOKEN_EMONEY_EUR = "eeur";

@@ -11,7 +11,7 @@ import cosmos.staking.v1beta1.QueryOuterClass;
 import cosmos.staking.v1beta1.Staking;
 import kotlin.Deprecated;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.task.CommonTask;

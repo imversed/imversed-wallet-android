@@ -108,6 +108,7 @@ dependencies {
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
     implementation 'org.apache.commons:commons-lang3:3.6'
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.20'
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.20"
     implementation "androidx.core:core-ktx:1.7.0"
 
     implementation 'com.squareup.moshi:moshi:1.8.0'

@@ -51,7 +51,7 @@ public class BaseApplication extends Application implements IInjectorHolder {
     public boolean needShowLockScreen() {
         final BaseData baseData = getBaseDao();
         if (!isReturnedForeground() ||
-                !baseData.onHasPassword() ||
+                !baseData.hasPassword() ||
                 !baseData.getUsingAppLock() ||
                 (baseData.onSelectAccounts().size() <= 0)) return false;
 

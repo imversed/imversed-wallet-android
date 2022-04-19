@@ -83,21 +83,21 @@
             android:windowSoftInputMode="stateHidden" />
 
         <activity
-            android:name=".activities.RestoreActivity"
+            android:name="com.fulldive.wallet.presentation.accounts.restore.MnemonicRestoreActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
-            android:name=".activities.RestoreKeyActivity"
+            android:name="com.fulldive.wallet.presentation.accounts.restore.PrivateKeyRestoreActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
-            android:name=".activities.RestorePathActivity"
+            android:name="com.fulldive.wallet.presentation.accounts.restore.RestorePathActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
@@ -302,7 +302,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
-            android:name=".activities.PrivateKeyCheckActivity"
+            android:name="com.fulldive.wallet.presentation.security.key.ShowPrivateKeyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />

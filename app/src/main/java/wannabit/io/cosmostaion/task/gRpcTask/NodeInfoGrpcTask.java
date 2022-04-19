@@ -9,7 +9,7 @@ import cosmos.base.tendermint.v1beta1.Query;
 import cosmos.base.tendermint.v1beta1.ServiceGrpc;
 import kotlin.Deprecated;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.task.CommonTask;
 import wannabit.io.cosmostaion.task.TaskListener;

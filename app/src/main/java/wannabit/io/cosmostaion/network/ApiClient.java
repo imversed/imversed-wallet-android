@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import wannabit.io.cosmostaion.BuildConfig;
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.utils.WLog;
 
 public class ApiClient {
@@ -313,11 +313,11 @@ public class ApiClient {
     public static HistoryApi getChainHistoryApi(BaseChain chain) {
         HistoryApi historyApi;
         synchronized (ApiClient.class) {
-            historyApi = historyApiMap.get(chain.getChain());
+            historyApi = historyApiMap.get(chain.getChainName());
             if (historyApi == null) {
                 historyApi = createHistoryApi(chain.getHistoryApiUrl());
                 if (historyApi != null) {
-                    historyApiMap.put(chain.getChain(), historyApi);
+                    historyApiMap.put(chain.getChainName(), historyApi);
                 }
             }
         }

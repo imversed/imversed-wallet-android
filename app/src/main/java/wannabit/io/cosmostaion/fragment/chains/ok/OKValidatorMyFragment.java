@@ -1,7 +1,7 @@
 package wannabit.io.cosmostaion.fragment.chains.ok;
 
-import static wannabit.io.cosmostaion.base.BaseChain.OKEX_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.OK_TEST;
+import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
+import static com.fulldive.wallet.models.BaseChain.OK_TEST;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -126,7 +126,7 @@ public class OKValidatorMyFragment extends BaseFragment implements View.OnClickL
             if (getItemViewType(position) == TYPE_MY_VALIDATOR) {
                 final OKMyValidatorHolder holder = (OKMyValidatorHolder) viewHolder;
                 final Validator validator = getBaseDao().getMyValidators().get(position);
-                if (getSActivity().baseChain.equals(OKEX_MAIN) || getSActivity().baseChain.equals(OK_TEST)) {
+                if (getSActivity().baseChain.equals(OKEX_MAIN.INSTANCE) || getSActivity().baseChain.equals(OK_TEST.INSTANCE)) {
                     holder.itemRoot.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorTransBgOkex));
                     holder.itemTvMoniker.setText(validator.description.moniker);
                     holder.itemTvVotingPower.setText(WDp.getDpAmount2(new BigDecimal(validator.delegator_shares), 0, 0));
@@ -200,7 +200,7 @@ public class OKValidatorMyFragment extends BaseFragment implements View.OnClickL
     }
 
     public void onSortValidator() {
-        WUtil.onSortByOKValidatorPower(getBaseDao().getMyValidators());
+        getBaseDao().mMyValidators = WUtil.onSortByOKValidatorPower(getBaseDao().getMyValidators());
     }
 
 }

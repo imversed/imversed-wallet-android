@@ -29,7 +29,7 @@ public class BaseDB extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL("CREATE TABLE [" + BaseConstant.DB_TABLE_ACCOUNT +
                 "] ([id] INTEGER PRIMARY KEY AUTOINCREMENT, [uuid] TEXT, [nickName] TEXT, [isFavo] INTEGER DEFAULT 0, [address] TEXT, [baseChain] INTEGER, " +
-                "[hasPrivateKey] INTEGER DEFAULT 0, [resource] TEXT, [spec] TEXT, [fromMnemonic] INTEGER DEFAULT 0, [path] TEXT, " +
+                "[hasPrivateKey] INTEGER DEFAULT 0, [resource] TEXT, [spec] TEXT, [fromMnemonic] INTEGER DEFAULT 0, [path] INTEGER DEFAULT 0, " +
                 "[isValidator] INTEGER DEFAULT 0, [sequenceNumber] INTEGER, [accountNumber] INTEGER, [fetchTime] INTEGER, [msize] INTEGER, [importTime] INTEGER, [lastTotal] TEXT, [sortOrder] INTEGER, " +
                 "[newBip] INTEGER DEFAULT 0, [customPath] INTEGER DEFAULT 0)");
 

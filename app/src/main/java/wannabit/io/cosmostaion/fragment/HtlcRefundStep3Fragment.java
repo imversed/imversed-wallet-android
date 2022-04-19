@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.HtlcRefundActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.model.type.Coin;
@@ -55,15 +55,15 @@ public class HtlcRefundStep3Fragment extends BaseFragment implements View.OnClic
     @Override
     public void onRefreshTab() {
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
-        WDp.DpMainDenom(getSActivity().baseChain.getChain(), mFeeDenom);
-        if (getSActivity().baseChain.equals(BaseChain.BNB_MAIN)) {
+        WDp.DpMainDenom(getSActivity().baseChain.getChainName(), mFeeDenom);
+        if (getSActivity().baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
             mFeeAmount.setText(WDp.getDpAmount2(feeAmount, 0, 8));
             mSwapId.setText(getSActivity().mSwapId);
             mRefundAddress.setText(getSActivity().mResBnbSwapInfo.fromAddr);
             Coin coin = getSActivity().mResBnbSwapInfo.getSendCoin();
             WDp.showCoinDp(getContext(), getBaseDao(), coin, mRefundAmountDenom, mRefundAmount, getSActivity().baseChain);
 
-        } else if (getSActivity().baseChain.equals(BaseChain.KAVA_MAIN)) {
+        } else if (getSActivity().baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             mFeeAmount.setText(WDp.getDpAmount2(feeAmount, 6, 6));
             mSwapId.setText(getSActivity().mSwapId);
             mRefundAddress.setText(getSActivity().mResKavaSwapInfo.result.sender);

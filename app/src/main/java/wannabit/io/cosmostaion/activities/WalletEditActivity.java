@@ -22,7 +22,7 @@ import java.util.List;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.utils.WDp;
 
 public class WalletEditActivity extends BaseActivity implements View.OnClickListener {
@@ -70,8 +70,8 @@ public class WalletEditActivity extends BaseActivity implements View.OnClickList
         mHideListAdapter = new HideListAdapter();
         mHideRecyclerView.setAdapter(mHideListAdapter);
 
-        for (BaseChain baseChain : BaseChain.values()) {
-            if (baseChain.isSupported() && !baseChain.equals(BaseChain.COSMOS_MAIN)) {
+        for (BaseChain baseChain : BaseChain.Companion.getChains()) {
+            if (baseChain.isSupported() && !baseChain.equals(BaseChain.COSMOS_MAIN.INSTANCE)) {
                 mAllChains.add(baseChain);
             }
         }
@@ -125,7 +125,7 @@ public class WalletEditActivity extends BaseActivity implements View.OnClickList
             holder.chainName.setText(chain.getChainAlterTitle());
 
             holder.chainRemoveImg.setOnClickListener(v -> {
-                if (getBaseDao().getAccountsByChain(BaseChain.COSMOS_MAIN).size() <= 0) {
+                if (getBaseDao().getAccountsByChain(BaseChain.COSMOS_MAIN.INSTANCE).size() <= 0) {
                     int dpAccountSum = 0;
                     for (BaseChain baseChain : mDisplayChains) {
                         if (!baseChain.equals(chain)) {

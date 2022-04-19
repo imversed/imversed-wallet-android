@@ -165,7 +165,7 @@ public class MyDomainFragment extends BaseFragment implements View.OnClickListen
 
             public MyDomainPromotionHolder(@NonNull View itemView) {
                 super(itemView);
-                itemRoot = itemView.findViewById(R.id.card_root);
+                itemRoot = itemView.findViewById(R.id.cardView);
             }
         }
 
@@ -175,7 +175,7 @@ public class MyDomainFragment extends BaseFragment implements View.OnClickListen
 
             public MyDomainHolder(@NonNull View itemView) {
                 super(itemView);
-                itemRoot = itemView.findViewById(R.id.card_root);
+                itemRoot = itemView.findViewById(R.id.cardView);
                 itemDomain = itemView.findViewById(R.id.starname_domain_name);
                 itemType = itemView.findViewById(R.id.domain_type);
                 itemExpireDate = itemView.findViewById(R.id.expire_date);

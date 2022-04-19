@@ -1,9 +1,5 @@
 package wannabit.io.cosmostaion.base;
 
-import static wannabit.io.cosmostaion.base.BaseChain.BAND_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.BNB_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.COSMOS_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.KAVA_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_HTLS_REFUND;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIMPLE_SEND;
 import static wannabit.io.cosmostaion.base.BaseConstant.FEE_BNB_SEND;
@@ -22,11 +18,13 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.fulldive.wallet.di.IEnrichableActivity;
-import com.fulldive.wallet.extensions.AnyExtensionsKt;
+import com.fulldive.wallet.extensions.ViewExtensionsKt;
 import com.fulldive.wallet.interactors.chains.StationInteractor;
 import com.fulldive.wallet.interactors.chains.binance.BinanceInteractor;
 import com.fulldive.wallet.interactors.chains.grpc.GrpcInteractor;
 import com.fulldive.wallet.interactors.chains.okex.OkexInteractor;
+import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.presentation.accounts.restore.MnemonicRestoreActivity;
 import com.fulldive.wallet.presentation.system.WaitDialogFragment;
 import com.fulldive.wallet.rx.AppSchedulers;
 import com.joom.lightsaber.Injector;
@@ -43,7 +41,6 @@ import wannabit.io.cosmostaion.activities.AppLockActivity;
 import wannabit.io.cosmostaion.activities.HtlcSendActivity;
 import wannabit.io.cosmostaion.activities.MainActivity;
 import wannabit.io.cosmostaion.activities.PasswordCheckActivity;
-import wannabit.io.cosmostaion.activities.RestoreActivity;
 import wannabit.io.cosmostaion.activities.SendActivity;
 import wannabit.io.cosmostaion.activities.chains.ibc.IBCSendActivity;
 import wannabit.io.cosmostaion.dao.Account;
@@ -111,7 +108,7 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
 
     @Override
     protected void onDestroy() {
-        AnyExtensionsKt.clearUi(this);
+        ViewExtensionsKt.clearUi(this);
         compositeDisposable.clear();
         super.onDestroy();
     }
@@ -191,11 +188,11 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
 
         boolean hasBalance = true;
         BigDecimal mainDenomAvailable = getBaseDao().availableAmount(baseChain.getMainDenom());
-        if (baseChain.equals(BNB_MAIN)) {
+        if (baseChain.equals(BaseChain.BNB_MAIN.INSTANCE.INSTANCE)) {
             if (mainDenomAvailable.compareTo(new BigDecimal(FEE_BNB_SEND)) <= 0) {
                 hasBalance = false;
             }
-        } else if (baseChain.equals(KAVA_MAIN)) {
+        } else if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE.INSTANCE)) {
             BigDecimal mainAvailable = getBaseDao().getAvailable(baseChain.getMainDenom());
             BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), baseChain, CONST_PW_TX_HTLS_REFUND, 0);
             if (mainAvailable.subtract(feeAmount).compareTo(BigDecimal.ZERO) <= 0) {
@@ -213,7 +210,7 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
     }
 
     public void onAddMnemonicForAccount() {
-        startActivity(new Intent(BaseActivity.this, RestoreActivity.class));
+        startActivity(new Intent(BaseActivity.this, MnemonicRestoreActivity.class));
     }
 
     public void onCheckIbcTransfer(String denom) {
@@ -229,9 +226,9 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
 
         if (baseChain.isGRPC()) {
             completable = updateGrpcAccount();
-        } else if (baseChain == BaseChain.BNB_MAIN) {
+        } else if (baseChain == BaseChain.BNB_MAIN.INSTANCE) {
             completable = updateBinanceAccount();
-        } else if (baseChain == BaseChain.OKEX_MAIN) {
+        } else if (baseChain == BaseChain.OKEX_MAIN.INSTANCE) {
             completable = updateOkexAccount();
         } else {
             completable = Completable.error(new IllegalStateException());
@@ -315,13 +312,13 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
 
     public void onStartMoonpaySignature(String fiat) {
         String query = "?apiKey=" + getString(R.string.moon_pay_public_key);
-        if (baseChain.equals(COSMOS_MAIN)) {
+        if (baseChain.equals(BaseChain.COSMOS_MAIN.INSTANCE)) {
             query = query + "&currencyCode=atom";
-        } else if (baseChain.equals(BNB_MAIN)) {
+        } else if (baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
             query = query + "&currencyCode=bnb";
-        } else if (baseChain.equals(KAVA_MAIN)) {
+        } else if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             query = query + "&currencyCode=kava";
-        } else if (baseChain.equals(BAND_MAIN)) {
+        } else if (baseChain.equals(BaseChain.BAND_MAIN.INSTANCE)) {
             query = query + "&currencyCode=band";
         }
         query = query + "&walletAddress=" + account.address + "&baseCurrencyCode=" + fiat;

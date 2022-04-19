@@ -7,8 +7,8 @@ import com.fulldive.wallet.presentation.accounts.create.CreateAccountActivity
 import com.fulldive.wallet.presentation.accounts.watch.WatchAccountActivity
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
 import com.joom.lightsaber.ProvidedBy
-import wannabit.io.cosmostaion.activities.RestoreActivity
-import wannabit.io.cosmostaion.activities.RestoreKeyActivity
+import com.fulldive.wallet.presentation.accounts.restore.MnemonicRestoreActivity
+import com.fulldive.wallet.presentation.accounts.restore.PrivateKeyRestoreActivity
 import javax.inject.Inject
 
 @ProvidedBy(DefaultPresentersModule::class)
@@ -16,11 +16,11 @@ class AddAccountPresenter @Inject constructor() : BaseMoxyPresenter<AddAccountMo
     lateinit var chain: String
 
     fun onImportKeyClicked(packageContext: Context) {
-        showActivity(packageContext, RestoreKeyActivity::class.java)
+        showActivity(packageContext, PrivateKeyRestoreActivity::class.java)
     }
 
     fun onImportMnemonicClicked(packageContext: Context) {
-        showActivity(packageContext, RestoreActivity::class.java)
+        showActivity(packageContext, MnemonicRestoreActivity::class.java)
     }
 
     fun onWatchAddressClicked(packageContext: Context) {

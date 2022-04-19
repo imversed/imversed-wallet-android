@@ -7,25 +7,22 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
+import com.fulldive.wallet.presentation.accounts.restore.MnemonicRestoreActivity;
+
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.RestoreActivity;
 
 public class Dialog_LumRestorePath extends DialogFragment {
 
-    private LinearLayout mBasicPath, mAirdropPath;
-
-    public static Dialog_LumRestorePath newInstance(Bundle bundle) {
-        Dialog_LumRestorePath frag = new Dialog_LumRestorePath();
-        frag.setArguments(bundle);
-        return frag;
+    public static Dialog_LumRestorePath newInstance() {
+        return new Dialog_LumRestorePath();
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(0));
         return super.onCreateView(inflater, container, savedInstanceState);
     }
@@ -34,29 +31,19 @@ public class Dialog_LumRestorePath extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_lum_restore_path, null);
 
-        mBasicPath = view.findViewById(R.id.basic_path);
-        mAirdropPath = view.findViewById(R.id.airdrop_path);
-
-        mBasicPath.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((RestoreActivity) getActivity()).onUsingCustomPath(1);
-                dismiss();
-            }
+        view.findViewById(R.id.basic_path).setOnClickListener(v -> {
+            ((MnemonicRestoreActivity) getActivity()).onUsingCustomPath(1);
+            dismiss();
         });
 
-        mAirdropPath.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((RestoreActivity) getActivity()).onUsingCustomPath(0);
-                dismiss();
-            }
+        view.findViewById(R.id.airdrop_path).setOnClickListener(v -> {
+            ((MnemonicRestoreActivity) getActivity()).onUsingCustomPath(0);
+            dismiss();
         });
 
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(view);
-        return builder.create();
+        return new AlertDialog.Builder(getActivity())
+                .setView(view)
+                .create();
     }
-
 }
+

@@ -11,7 +11,7 @@ import osmosis.incentives.GaugeOuterClass;
 import osmosis.incentives.QueryGrpc;
 import osmosis.incentives.QueryOuterClass;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.task.CommonTask;
 import wannabit.io.cosmostaion.task.TaskListener;

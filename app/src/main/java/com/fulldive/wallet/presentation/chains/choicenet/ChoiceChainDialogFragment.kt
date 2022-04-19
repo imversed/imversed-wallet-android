@@ -19,11 +19,11 @@ import com.fulldive.wallet.presentation.accounts.AddAccountDialogFragment
 import com.fulldive.wallet.presentation.base.BaseMvpDialogFragment
 import com.joom.lightsaber.getInstance
 import wannabit.io.cosmostaion.R
-import wannabit.io.cosmostaion.activities.RestoreActivity
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 
 
 class ChoiceChainDialogFragment : BaseMvpDialogFragment() {
+    private val isCheckLimit by unsafeLazy { arguments?.getBoolean(KEY_ADD, false).orFalse() }
     private val isAddNet by unsafeLazy { arguments?.getBoolean(KEY_ADD, false).orFalse() }
     private val requestCode by unsafeLazy { arguments?.getString(KEY_REQUEST_CODE).orEmpty() }
     private val chains: List<String> by unsafeLazy {
@@ -46,9 +46,9 @@ class ChoiceChainDialogFragment : BaseMvpDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val view = LayoutInflater.from(activity).inflate(R.layout.dialog_list, null)
-        val items = BaseChain.values().toList()
+        val items = BaseChain.chains
             .filter { chain ->
-                chain.isSupported && (chains.isEmpty() || chains.contains(chain.chain))
+                chain.isSupported && (chains.isEmpty() || chains.contains(chain.chainName))
             }
 
         val linearLayout = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -82,32 +82,25 @@ class ChoiceChainDialogFragment : BaseMvpDialogFragment() {
     }
 
     private fun onChainClicked(chain: BaseChain) {
-        sendResult(chain)
-        (activity as? RestoreActivity)?.apply {
+        if (isCheckLimit && getInjector().getInstance<AccountsInteractor>()
+                .getAccountsByChain(chain).size >= 5
+        ) {
+            showMessage(R.string.error_max_account_number)
+        } else {
+            sendResult(chain)
             if (isAddNet) {
-                onChainSelected(chain)
-            } else {
-                onChoiceNet(chain)
-            }
-        } ?: let {
-            if (isAddNet) {
-                val accountsInteractor = getInjector().getInstance<AccountsInteractor>()
-                if (accountsInteractor.getAccountsByChain(chain).size >= 5) {
-                    showMessage(R.string.error_max_account_number)
-                    return
-                } else {
-                    showDialog(
-                        AddAccountDialogFragment.newInstance(
-                            chain.chain
-                        )
+                showDialog(
+                    AddAccountDialogFragment.newInstance(
+                        chain.chainName
                     )
-                }
+                )
             }
+            dialog?.dismiss()
         }
-        dialog?.dismiss()
     }
 
     companion object {
+        private const val KEY_CHECK_LIMIT = "KEY_CHECK_LIMIT"
         private const val KEY_ADD = "KEY_ADD"
         private const val KEY_REQUEST_CODE = "KEY_REQUEST_CODE"
         private const val KEY_CHAINS = "KEY_CHAINS"
@@ -116,10 +109,12 @@ class ChoiceChainDialogFragment : BaseMvpDialogFragment() {
         fun newInstance(
             isAdd: Boolean = true,
             requestCode: String = "",
-            chains: List<String> = emptyList()
+            chains: List<String> = emptyList(),
+            isCheckLimit: Boolean = false
         ) = ChoiceChainDialogFragment().apply {
             arguments = bundleOf(
                 KEY_ADD to isAdd,
+                KEY_CHECK_LIMIT to isCheckLimit,
                 KEY_REQUEST_CODE to requestCode,
                 KEY_CHAINS to ArrayList(chains)
             )

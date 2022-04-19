@@ -26,6 +26,7 @@ import com.binance.dex.api.client.Wallet;
 import com.binance.dex.api.client.domain.TransactionMetadata;
 import com.binance.dex.api.client.domain.broadcast.HtltReq;
 import com.binance.dex.api.client.domain.broadcast.TransactionOption;
+import com.fulldive.wallet.interactors.secret.MnemonicUtils;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.RandomUtils;
@@ -45,7 +46,7 @@ import retrofit2.Response;
 import wannabit.io.cosmostaion.BuildConfig;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.cosmos.MsgGenerator;
 import wannabit.io.cosmostaion.cosmos.Signer;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
@@ -92,7 +93,7 @@ public class HtlcCreateTask extends CommonTask {
     @Override
     protected TaskResult doInBackground(String... strings) {
         try {
-            if (mSendChain.equals(BaseChain.BNB_MAIN)) {
+            if (mSendChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
                 Response<ResBnbAccountInfo> response = ApiClient.getBnbChain(context).getAccountInfo(mSendAccount.address).execute();
                 if (!response.isSuccessful()) {
                     result.errorCode = ERROR_CODE_BROADCAST;
@@ -120,7 +121,7 @@ public class HtlcCreateTask extends CommonTask {
                 byte[] originData = ArrayUtils.addAll(randomNumber, WUtil.long2Bytes(timestamp));
 
                 HtltReq htltReq = MsgGenerator.getBnbHtlcCreateMsg(mSendChain, mReceiveChain, mSendAccount, mReceiveAccount, mToSendCoins, timestamp, originData);
-                mRandomNumber = WUtil.byteArrayToHexString(randomNumber).toUpperCase();
+                mRandomNumber = MnemonicUtils.INSTANCE.byteArrayToHexString(randomNumber).toUpperCase();
                 mRandomNumberHash = htltReq.getRandomNumberHash();
                 if (mToSendCoins.get(0).denom.equals(TOKEN_HTLC_BINANCE_BNB)) {
                     mExpectedSwapId = WKey.getSwapId(mRandomNumberHash, KAVA_MAIN_BNB_DEPUTY, mSendAccount.address).toUpperCase();
@@ -159,7 +160,7 @@ public class HtlcCreateTask extends CommonTask {
                 }
 
 
-            } else if (mSendChain.equals(BaseChain.KAVA_MAIN)) {
+            } else if (mSendChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                 if (mSendAccount.fromMnemonic) {
                     String entropy = CryptoHelper.doDecryptData(context.getString(R.string.key_mnemonic) + mSendAccount.uuid, mSendAccount.resource, mSendAccount.spec);
                     DeterministicKey deterministicKey = WKey.getKeyWithPathfromEntropy(mSendAccount, entropy);
@@ -177,8 +178,8 @@ public class HtlcCreateTask extends CommonTask {
                 byte[] randomNumber = RandomUtils.nextBytes(32);
                 byte[] originData = ArrayUtils.addAll(randomNumber, WUtil.long2Bytes(timestamp));
 
-                mRandomNumber = WUtil.byteArrayToHexString(randomNumber).toUpperCase();
-                mRandomNumberHash = WUtil.hexStringToByteArray(WUtil.byteArrayToHexString(Sha256.getSha256Digest().digest(originData)).toUpperCase());
+                mRandomNumber = MnemonicUtils.INSTANCE.byteArrayToHexString(randomNumber).toUpperCase();
+                mRandomNumberHash = MnemonicUtils.INSTANCE.hexStringToByteArray(MnemonicUtils.INSTANCE.byteArrayToHexString(Sha256.getSha256Digest().digest(originData)).toUpperCase());
                 if (mToSendCoins.get(0).denom.equals(TOKEN_HTLC_KAVA_BNB)) {
                     mExpectedSwapId = WKey.getSwapId(mRandomNumberHash, BINANCE_MAIN_BNB_DEPUTY, mSendAccount.address).toUpperCase();
 
@@ -195,7 +196,7 @@ public class HtlcCreateTask extends CommonTask {
 
                 //broadCast
                 ServiceGrpc.ServiceBlockingStub txService = ServiceGrpc.newBlockingStub(ChannelBuilder.getChain(mSendChain));
-                ServiceOuterClass.BroadcastTxRequest broadcastTxRequest = Signer.getGrpcKavaCreateHTLCSwapReq(mAuthResponse, mSendAccount.address, mReceiveAccount.address, mToSendCoins, timestamp, WUtil.byteArrayToHexString(Sha256.getSha256Digest().digest(originData)).toUpperCase(), mSendFee, context.getString(R.string.str_create_swap_memo_c), ecKey, context.getBaseDao().getChainIdGrpc());
+                ServiceOuterClass.BroadcastTxRequest broadcastTxRequest = Signer.getGrpcKavaCreateHTLCSwapReq(mAuthResponse, mSendAccount.address, mReceiveAccount.address, mToSendCoins, timestamp, MnemonicUtils.INSTANCE.byteArrayToHexString(Sha256.getSha256Digest().digest(originData)).toUpperCase(), mSendFee, context.getString(R.string.str_create_swap_memo_c), ecKey, context.getBaseDao().getChainIdGrpc());
                 ServiceOuterClass.BroadcastTxResponse response = txService.broadcastTx(broadcastTxRequest);
                 result.resultData = response.getTxResponse().getTxhash();
                 if (response.getTxResponse().getCode() > 0) {

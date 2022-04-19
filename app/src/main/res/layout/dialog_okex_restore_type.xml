@@ -36,7 +36,7 @@
             android:layout_marginTop="@dimen/space_16" />
 
         <LinearLayout
-            android:id="@+id/old_path"
+            android:id="@+id/oldPathLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -57,7 +57,7 @@
             android:background="@color/colorGray10" />
 
         <LinearLayout
-            android:id="@+id/new_path"
+            android:id="@+id/newPathLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -78,7 +78,7 @@
             android:background="@color/colorGray10" />
 
         <LinearLayout
-            android:id="@+id/eth_path"
+            android:id="@+id/ethPathLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

@@ -69,7 +69,7 @@ public class GDexSwapStep3Fragment extends BaseFragment implements View.OnClickL
     @Override
     public void onRefreshTab() {
         mSlippageLayer.setVisibility(View.GONE);
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
         mInputCoinDecimal = WUtil.getCosmosCoinDecimal(getBaseDao(), getSActivity().mInputDenom);
         mOutputCoinDecimal = WUtil.getCosmosCoinDecimal(getBaseDao(), getSActivity().mOutputDenom);
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);

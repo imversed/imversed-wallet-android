@@ -27,7 +27,7 @@ public class OverridePkeyAccountTask extends CommonTask {
     protected TaskResult doInBackground(String... strings) {
         try {
             Account oAccount = onModAccount();
-            long id = context.getBaseDao().onOverrideAccount(oAccount);
+            long id = context.getBaseDao().overrideAccount(oAccount);
             if (id > 0) {
                 result.isSuccess = true;
                 context.getBaseDao().setLastUser(oAccount.id);
@@ -52,7 +52,7 @@ public class OverridePkeyAccountTask extends CommonTask {
         account.resource = encR.getEncDataString();
         account.spec = encR.getIvDataString();
         account.fromMnemonic = false;
-        account.path = "-1";
+        account.path = -1;
         account.msize = -1;
         account.newBip44 = false;
         account.customPath = customPath;

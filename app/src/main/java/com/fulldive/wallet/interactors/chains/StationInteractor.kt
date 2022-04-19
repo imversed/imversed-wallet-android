@@ -3,7 +3,7 @@ package com.fulldive.wallet.interactors.chains
 import com.fulldive.wallet.di.modules.DefaultInteractorsModule
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import javax.inject.Inject
 
 @ProvidedBy(DefaultInteractorsModule::class)

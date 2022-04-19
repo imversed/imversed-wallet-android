@@ -1,7 +1,7 @@
 package wannabit.io.cosmostaion.fragment;
 
-import static wannabit.io.cosmostaion.base.BaseChain.BNB_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.OKEX_MAIN;
+import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
+import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -90,8 +90,8 @@ public class SendStep4Fragment extends BaseFragment implements View.OnClickListe
         final String toSendDenom = getSActivity().mDenom;
 
         if (getSActivity().baseChain.isGRPC()) {
-            mDivideDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
-            mDisplayDecimal = WDp.mainDisplayDecimal(getSActivity().baseChain);
+            mDivideDecimal = getSActivity().baseChain.getDivideDecimal();
+            mDisplayDecimal = getSActivity().baseChain.getDisplayDecimal();
 
             mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDivideDecimal, mDisplayDecimal));
 
@@ -123,9 +123,9 @@ public class SendStep4Fragment extends BaseFragment implements View.OnClickListe
             }
 
         } else {
-            if (getSActivity().baseChain.equals(BNB_MAIN)) {
-                mDivideDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
-                mDisplayDecimal = WDp.mainDisplayDecimal(getSActivity().baseChain);
+            if (getSActivity().baseChain.equals(BNB_MAIN.INSTANCE)) {
+                mDivideDecimal = getSActivity().baseChain.getDivideDecimal();
+                mDisplayDecimal = getSActivity().baseChain.getDisplayDecimal();
 
                 mDenomSendAmount.setText(getSActivity().mBnbToken.original_symbol.toUpperCase());
                 mDenomCurrentAmount.setText(getSActivity().mBnbToken.original_symbol.toUpperCase());
@@ -134,20 +134,20 @@ public class SendStep4Fragment extends BaseFragment implements View.OnClickListe
                 mSendAmount.setText(WDp.getDpAmount2(toSendAmount, mDivideDecimal, mDisplayDecimal));
                 mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDivideDecimal, mDisplayDecimal));
 
-                if (getSActivity().mBnbToken.symbol.equals(BNB_MAIN.getMainDenom())) {
+                if (getSActivity().mBnbToken.symbol.equals(BNB_MAIN.INSTANCE.getMainDenom())) {
                     int textColor = ContextCompat.getColor(requireContext(), R.color.colorBnb);
                     mDenomSendAmount.setTextColor(textColor);
                     mDenomCurrentAmount.setTextColor(textColor);
                     mDenomRemainAmount.setTextColor(textColor);
 
                     mTotalSpendAmount.setText(WDp.getDpAmount2(feeAmount.add(toSendAmount), mDivideDecimal, mDisplayDecimal));
-                    mTotalPrice.setText(WDp.dpUserCurrencyValue(getBaseDao(), BNB_MAIN.getMainDenom(), feeAmount.add(toSendAmount), 0));
+                    mTotalPrice.setText(WDp.dpUserCurrencyValue(getBaseDao(), BNB_MAIN.INSTANCE.getMainDenom(), feeAmount.add(toSendAmount), 0));
 
                     BigDecimal currentAvai = getSActivity().account.getBnbBalance();
                     mCurrentBalance.setText(WDp.getDpAmount2(currentAvai, mDivideDecimal, mDisplayDecimal));
                     BigDecimal subtract = currentAvai.subtract(toSendAmount).subtract(feeAmount);
                     mRemainingBalance.setText(WDp.getDpAmount2(subtract, mDivideDecimal, mDisplayDecimal));
-                    mRemainingPrice.setText(WDp.dpUserCurrencyValue(getBaseDao(), BNB_MAIN.getMainDenom(), subtract, 0));
+                    mRemainingPrice.setText(WDp.dpUserCurrencyValue(getBaseDao(), BNB_MAIN.INSTANCE.getMainDenom(), subtract, 0));
                 } else {
                     int textColor = ContextCompat.getColor(requireContext(), R.color.colorWhite);
                     mDenomSendAmount.setTextColor(textColor);
@@ -163,9 +163,9 @@ public class SendStep4Fragment extends BaseFragment implements View.OnClickListe
                 }
 
 
-            } else if (getSActivity().baseChain.equals(OKEX_MAIN)) {
-                mDivideDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
-                mDisplayDecimal = WDp.mainDisplayDecimal(getSActivity().baseChain);
+            } else if (getSActivity().baseChain.equals(OKEX_MAIN.INSTANCE)) {
+                mDivideDecimal = getSActivity().baseChain.getDivideDecimal();
+                mDisplayDecimal = getSActivity().baseChain.getDisplayDecimal();
 
                 mSendAmount.setText(WDp.getDpAmount2(toSendAmount, mDivideDecimal, mDisplayDecimal));
                 mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDivideDecimal, mDisplayDecimal));
@@ -180,13 +180,13 @@ public class SendStep4Fragment extends BaseFragment implements View.OnClickListe
                     mDenomCurrentAmount.setTextColor(textColor);
                     mDenomRemainAmount.setTextColor(textColor);
                     mTotalSpendAmount.setText(WDp.getDpAmount2(feeAmount.add(toSendAmount), mDivideDecimal, mDisplayDecimal));
-                    mTotalPrice.setText(WDp.dpUserCurrencyValue(getBaseDao(), OKEX_MAIN.getMainDenom(), feeAmount.add(toSendAmount), mDivideDecimal));
+                    mTotalPrice.setText(WDp.dpUserCurrencyValue(getBaseDao(), OKEX_MAIN.INSTANCE.getMainDenom(), feeAmount.add(toSendAmount), mDivideDecimal));
 
                     BigDecimal currentAvai = getBaseDao().availableAmount(toSendDenom);
                     mCurrentBalance.setText(WDp.getDpAmount2(currentAvai, mDivideDecimal, mDisplayDecimal));
                     BigDecimal subtract = currentAvai.subtract(toSendAmount).subtract(feeAmount);
                     mRemainingBalance.setText(WDp.getDpAmount2(subtract, mDivideDecimal, mDisplayDecimal));
-                    mRemainingPrice.setText(WDp.dpUserCurrencyValue(getBaseDao(), OKEX_MAIN.getMainDenom(), subtract, mDivideDecimal));
+                    mRemainingPrice.setText(WDp.dpUserCurrencyValue(getBaseDao(), OKEX_MAIN.INSTANCE.getMainDenom(), subtract, mDivideDecimal));
 
                 } else {
                     int textColor = ContextCompat.getColor(requireContext(), R.color.colorWhite);
@@ -204,8 +204,8 @@ public class SendStep4Fragment extends BaseFragment implements View.OnClickListe
                 }
 
             } else {
-                mDivideDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
-                mDisplayDecimal = WDp.mainDisplayDecimal(getSActivity().baseChain);
+                mDivideDecimal = getSActivity().baseChain.getDivideDecimal();
+                mDisplayDecimal = getSActivity().baseChain.getDisplayDecimal();
 
                 mSendAmount.setText(WDp.getDpAmount2(toSendAmount, mDivideDecimal, mDisplayDecimal));
                 mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDivideDecimal, mDisplayDecimal));

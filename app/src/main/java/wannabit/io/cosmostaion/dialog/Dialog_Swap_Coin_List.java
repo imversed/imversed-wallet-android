@@ -1,7 +1,7 @@
 package wannabit.io.cosmostaion.dialog;
 
-import static wannabit.io.cosmostaion.base.BaseChain.COSMOS_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.KAVA_MAIN;
+import static com.fulldive.wallet.models.BaseChain.COSMOS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.ASSET_IMG_URL;
 import static wannabit.io.cosmostaion.base.BaseConstant.KAVA_COIN_IMG_URL;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_ION;
@@ -99,7 +99,7 @@ public class Dialog_Swap_Coin_List extends DialogFragment {
                     Picasso.get().load(ibcToken.moniker).fit().placeholder(R.drawable.token_default_ibc).error(R.drawable.token_default_ibc).into(holder.chainImg);
                 } catch (Exception e) {
                 }
-            } else if (getSActivity().baseChain.equals(KAVA_MAIN)) {
+            } else if (getSActivity().baseChain.equals(KAVA_MAIN.INSTANCE)) {
                 try {
                     Picasso.get().load(KAVA_COIN_IMG_URL + mSwapCoinList.get(position) + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.chainImg);
                     String baseDenom = WDp.getKavaBaseDenom(mSwapCoinList.get(position));
@@ -110,7 +110,7 @@ public class Dialog_Swap_Coin_List extends DialogFragment {
                     }
                 } catch (Exception e) {
                 }
-            } else if (inputCoin.equals(COSMOS_MAIN.getMainDenom())) {
+            } else if (inputCoin.equals(COSMOS_MAIN.INSTANCE.getMainDenom())) {
                 holder.chainName.setText(R.string.str_atom_c);
                 Picasso.get().cancelRequest(holder.chainImg);
                 holder.chainImg.setImageResource(R.drawable.atom_ic);

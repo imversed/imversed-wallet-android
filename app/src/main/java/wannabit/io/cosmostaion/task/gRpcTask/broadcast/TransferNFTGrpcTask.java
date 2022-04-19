@@ -1,7 +1,7 @@
 package wannabit.io.cosmostaion.task.gRpcTask.broadcast;
 
-import static wannabit.io.cosmostaion.base.BaseChain.CRYPTO_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.IRIS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.CRYPTO_MAIN;
+import static com.fulldive.wallet.models.BaseChain.IRIS_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.ERROR_CODE_INVALID_PASSWORD;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_GEN_TX_TRANSFER_NFT;
 
@@ -16,7 +16,7 @@ import cosmos.tx.v1beta1.ServiceGrpc;
 import cosmos.tx.v1beta1.ServiceOuterClass;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.cosmos.Signer;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dao.Account;
@@ -86,9 +86,9 @@ public class TransferNFTGrpcTask extends CommonTask {
             //broadCast
             ServiceOuterClass.BroadcastTxRequest broadcastTxRequest = null;
             ServiceGrpc.ServiceBlockingStub txService = ServiceGrpc.newBlockingStub(ChannelBuilder.getChain(mBaseChain));
-            if (mBaseChain.equals(IRIS_MAIN)) {
+            if (mBaseChain.equals(IRIS_MAIN.INSTANCE)) {
                 broadcastTxRequest = Signer.getGrpcSendNftIrisReq(mAuthResponse, mAccount.address, mRecipient, mDenomId, mId, mIrisResponse, mFees, mMemo, ecKey, mChainId);
-            } else if (mBaseChain.equals(CRYPTO_MAIN)) {
+            } else if (mBaseChain.equals(CRYPTO_MAIN.INSTANCE)) {
                 broadcastTxRequest = Signer.getGrpcSendNftCroReq(mAuthResponse, mAccount.address, mRecipient, mDenomId, mId, mFees, mMemo, ecKey, mChainId);
             }
             if (broadcastTxRequest != null) {

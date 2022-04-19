@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import cosmos.tx.v1beta1.ServiceOuterClass;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.TxDetailgRPCActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.utils.WDp;
 
@@ -46,10 +46,10 @@ public class TxCommonHolder extends TxHolder {
     }
 
     public void onBindCommon(TxDetailgRPCActivity c, BaseData baseData, BaseChain baseChain, ServiceOuterClass.GetTxResponse response, boolean isGen) {
-        WDp.DpMainDenom(baseChain.getChain(), itemFeeDenom);
-        WDp.DpMainDenom(baseChain.getChain(), itemFeeUsedDenom);
-        WDp.DpMainDenom(baseChain.getChain(), itemFeeLimitDenom);
-        final int dpDecimal = WDp.mainDivideDecimal(baseChain);
+        WDp.DpMainDenom(baseChain.getChainName(), itemFeeDenom);
+        WDp.DpMainDenom(baseChain.getChainName(), itemFeeUsedDenom);
+        WDp.DpMainDenom(baseChain.getChainName(), itemFeeLimitDenom);
+        final int dpDecimal = baseChain.getDivideDecimal();
         if (response.getTxResponse().getCode() != 0) {
             itemStatusImg.setImageDrawable(c.getDrawable(R.drawable.fail_ic));
             itemStatusTxt.setText(R.string.str_failed_c);

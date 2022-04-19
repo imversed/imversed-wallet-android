@@ -60,7 +60,7 @@ public class RewardAddressChangeStep3Fragment extends BaseFragment implements Vi
 
     @Override
     public void onRefreshTab() {
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
         mCurrentAddress.setText(getSActivity().mCurrentRewardAddress);

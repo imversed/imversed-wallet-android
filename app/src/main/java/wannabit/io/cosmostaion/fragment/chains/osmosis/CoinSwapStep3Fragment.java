@@ -69,7 +69,7 @@ public class CoinSwapStep3Fragment extends BaseFragment implements View.OnClickL
     @Override
     public void onRefreshTab() {
         mSlippageLayer.setVisibility(View.VISIBLE);
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
         mInputCoinDecimal = WUtil.getOsmosisCoinDecimal(getBaseDao(), getSActivity().mInputDenom);
         mOutputCoinDecimal = WUtil.getOsmosisCoinDecimal(getBaseDao(), getSActivity().mOutputDenom);
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);

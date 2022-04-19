@@ -55,6 +55,19 @@ class ClipboardInteractor @Inject constructor(
             }
     }
 
+    fun getSafeClip(): Single<String> {
+        return if(baseData.mCopySalt != null && baseData.mCopyEncResult != null){
+            secretInteractor
+                .encrypt(
+                    baseData.mCopySalt,
+                    baseData.mCopyEncResult.encDataString,
+                    baseData.mCopyEncResult.ivDataString
+                )
+        } else {
+            Single.error(RuntimeException("Safe clipboard is empty"))
+        }
+    }
+
     companion object {
         private const val PLAIN_TEXT_LABEL = "my data"
     }

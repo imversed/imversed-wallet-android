@@ -1,8 +1,8 @@
 package wannabit.io.cosmostaion.widget.mainWallet;
 
-import static wannabit.io.cosmostaion.base.BaseChain.BNB_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.COSMOS_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.KAVA_MAIN;
+import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
+import static com.fulldive.wallet.models.BaseChain.COSMOS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.SUPPORT_MOONPAY;
 
 import android.view.View;
@@ -36,7 +36,7 @@ public class WalletPriceHolder extends BaseHolder {
 
     public WalletPriceHolder(@NonNull View itemView) {
         super(itemView);
-        itemRoot = itemView.findViewById(R.id.card_root);
+        itemRoot = itemView.findViewById(R.id.cardView);
         itemPerPrice = itemView.findViewById(R.id.per_price);
         itemUpDownPrice = itemView.findViewById(R.id.dash_price_updown_tx);
         itemUpDownImg = itemView.findViewById(R.id.ic_price_updown);
@@ -64,11 +64,11 @@ public class WalletPriceHolder extends BaseHolder {
 
         if (SUPPORT_MOONPAY) {
             itemBuyLayer.setVisibility(View.VISIBLE);
-            if (mainActivity.baseChain.equals(COSMOS_MAIN)) {
+            if (mainActivity.baseChain.equals(COSMOS_MAIN.INSTANCE)) {
                 itemBuyCoinTv.setText(R.string.str_buy_atom);
-            } else if (mainActivity.baseChain.equals(BNB_MAIN)) {
+            } else if (mainActivity.baseChain.equals(BNB_MAIN.INSTANCE)) {
                 itemBuyCoinTv.setText(R.string.str_buy_bnb);
-            } else if (mainActivity.baseChain.equals(KAVA_MAIN)) {
+            } else if (mainActivity.baseChain.equals(KAVA_MAIN.INSTANCE)) {
                 itemBuyCoinTv.setText(R.string.str_buy_kava);
             }
             itemBuyCoinBtn.setOnClickListener(v -> {

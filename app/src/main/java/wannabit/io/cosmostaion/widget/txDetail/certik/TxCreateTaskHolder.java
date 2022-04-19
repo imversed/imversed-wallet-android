@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import cosmos.tx.v1beta1.ServiceOuterClass;
 import shentu.oracle.v1alpha1.Tx;
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.utils.WDp;
@@ -43,7 +43,7 @@ public class TxCreateTaskHolder extends TxHolder {
             if (msg.getBountyList() != null) {
                 coin = new Coin(msg.getBounty(0).getDenom(), msg.getBounty(0).getAmount());
             }
-            WDp.showCoinDp(c, baseData, coin, itemCreateTaskBountrySymbol, itemCreateTaskBountryAmount, BaseChain.CERTIK_MAIN);
+            WDp.showCoinDp(c, baseData, coin, itemCreateTaskBountrySymbol, itemCreateTaskBountryAmount, BaseChain.CERTIK_MAIN.INSTANCE);
         } catch (Exception e) {
         }
     }

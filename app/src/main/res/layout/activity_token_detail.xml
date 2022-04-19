@@ -88,7 +88,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_root"
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/space_12"
@@ -148,7 +148,7 @@
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/layer_refresher"
-        android:layout_below="@+id/card_root"
+        android:layout_below="@+id/cardView"
         android:layout_above="@+id/control_later"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

@@ -1,5 +1,7 @@
 package wannabit.io.cosmostaion.base;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;

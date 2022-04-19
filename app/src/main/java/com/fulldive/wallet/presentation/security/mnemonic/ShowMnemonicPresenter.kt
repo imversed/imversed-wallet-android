@@ -1,22 +1,24 @@
 package com.fulldive.wallet.presentation.security.mnemonic
 
 import com.fulldive.wallet.di.modules.DefaultPresentersModule
+import com.fulldive.wallet.extensions.safeSingle
 import com.fulldive.wallet.extensions.withDefaults
 import com.fulldive.wallet.interactors.ClipboardInteractor
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
+import com.fulldive.wallet.interactors.secret.SecretInteractor
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
+import com.fulldive.wallet.rx.AppSchedulers
 import com.joom.lightsaber.ProvidedBy
 import wannabit.io.cosmostaion.R
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.dialog.Dialog_Safe_Copy
-import wannabit.io.cosmostaion.utils.WKey
-import wannabit.io.cosmostaion.utils.WUtil
 import javax.inject.Inject
 
 @ProvidedBy(DefaultPresentersModule::class)
 class ShowMnemonicPresenter @Inject constructor(
     private val accountsInteractor: AccountsInteractor,
+    private val secretInteractor: SecretInteractor,
     private val clipboardInteractor: ClipboardInteractor
 ) : BaseMoxyPresenter<ShowMnemonicMoxyView>() {
 
@@ -27,13 +29,24 @@ class ShowMnemonicPresenter @Inject constructor(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
 
-        mnemonicWords = WKey.getRandomMnemonic(WUtil.hexStringToByteArray(entropy)).toList()
-        viewState.showMnemonicWords(mnemonicWords)
+        secretInteractor
+            .getRandomMnemonic(entropy)
+            .withDefaults()
+            .compositeSubscribe(
+                onSuccess = { words ->
+                    this.mnemonicWords = words
+                    viewState.showMnemonicWords(words)
+                }
+            )
 
         accountsInteractor
             .getAccount(accountId)
             .map(Account::baseChain)
-            .map(BaseChain::getChain)
+            .flatMap { chainName ->
+                safeSingle {
+                    BaseChain.getChain(chainName)
+                }
+            }
             .withDefaults()
             .compositeSubscribe(
                 onSuccess = viewState::showChain
@@ -41,7 +54,7 @@ class ShowMnemonicPresenter @Inject constructor(
     }
 
     fun onOkClicked() {
-        viewState.showMainActivity(3)
+        viewState.finish()
     }
 
     fun onCopyClicked() {
@@ -50,24 +63,29 @@ class ShowMnemonicPresenter @Inject constructor(
     }
 
     fun onRawCopyClicked() {
-        clipboardInteractor
-            .copyToClipboard(mnemonicWords.joinToString(" "))
-            .withDefaults()
-            .compositeSubscribe(
-                onSuccess = {
-                    viewState.showMessage(R.string.str_copied)
-                }
-            )
+        if (mnemonicWords.isNotEmpty()) {
+            clipboardInteractor
+                .copyToClipboard(mnemonicWords.joinToString(" "))
+                .subscribeOn(AppSchedulers.ui())
+                .observeOn(AppSchedulers.ui())
+                .compositeSubscribe(
+                    onSuccess = {
+                        viewState.showMessage(R.string.str_copied)
+                    }
+                )
+        }
     }
 
     fun onSafeCopyClicked() {
-        clipboardInteractor
-            .copyToSafeClipboard(mnemonicWords.joinToString(" "))
-            .withDefaults()
-            .compositeSubscribe(
-                onSuccess = {
-                    viewState.showMessage(R.string.str_safe_copied)
-                }
-            )
+        if (mnemonicWords.isNotEmpty()) {
+            clipboardInteractor
+                .copyToSafeClipboard(mnemonicWords.joinToString(" "))
+                .withDefaults()
+                .compositeSubscribe(
+                    onSuccess = {
+                        viewState.showMessage(R.string.str_safe_mnemonic_copied)
+                    }
+                )
+        }
     }
 }

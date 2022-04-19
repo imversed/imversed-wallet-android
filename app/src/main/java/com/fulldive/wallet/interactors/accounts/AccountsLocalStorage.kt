@@ -6,7 +6,7 @@ import com.fulldive.wallet.extensions.safeSingle
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.base.BaseData
 import wannabit.io.cosmostaion.dao.Account
 import javax.inject.Inject
@@ -19,6 +19,12 @@ class AccountsLocalStorage @Inject constructor(
     fun getAccount(accountId: Long): Single<Account> {
         return safeSingle {
             baseData.getAccount("$accountId")
+        }
+    }
+
+    fun getAccount(chain: BaseChain, address: String): Single<Account> {
+        return safeSingle {
+            baseData.getAccount(address, chain.chainName)
         }
     }
 
@@ -71,13 +77,19 @@ class AccountsLocalStorage @Inject constructor(
 
     fun checkExistsPassword(): Single<Boolean> {
         return safeSingle {
-            baseData.onHasPassword()
+            baseData.hasPassword()
         }
     }
 
     fun addAccount(account: Account): Single<Long> {
         return safeSingle {
             baseData.insertAccount(account)
+        }
+    }
+
+    fun updateAccount(account: Account): Completable {
+        return safeCompletable {
+            baseData.overrideAccount(account)
         }
     }
 

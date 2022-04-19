@@ -7,13 +7,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.fulldive.wallet.interactors.secret.MnemonicUtils;
+
 import cosmos.tx.v1beta1.ServiceOuterClass;
 import ibc.core.channel.v1.Tx;
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.utils.WDp;
-import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.txDetail.TxHolder;
 
 public class TxIBCAcknowledgeHolder extends TxHolder {
@@ -33,7 +34,7 @@ public class TxIBCAcknowledgeHolder extends TxHolder {
         try {
             Tx.MsgAcknowledgement msg = Tx.MsgAcknowledgement.parseFrom(response.getTx().getBody().getMessages(position).getValue());
             itemIbcAcknowledgeSiner.setText(msg.getSigner());
-            itemIbcAcknowledge.setText(WUtil.byteArrayToHexString(msg.getAcknowledgement().toByteArray()));
+            itemIbcAcknowledge.setText(MnemonicUtils.INSTANCE.byteArrayToHexString(msg.getAcknowledgement().toByteArray()));
         } catch (Exception e) {
         }
     }

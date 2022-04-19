@@ -35,7 +35,7 @@ import java.math.BigDecimal;
 import starnamed.x.starname.v1beta1.Types;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.task.TaskListener;
 import wannabit.io.cosmostaion.task.TaskResult;
@@ -290,7 +290,7 @@ public class StarNameDomainDetailActivity extends BaseActivity implements View.O
 
             public MyDomainHeaderHolder(View v) {
                 super(v);
-                itemRoot = itemView.findViewById(R.id.card_root);
+                itemRoot = itemView.findViewById(R.id.cardView);
                 itemDomain = itemView.findViewById(R.id.starname_domain_name);
                 itemBtnWebLink = itemView.findViewById(R.id.web_detail);
                 itemType = itemView.findViewById(R.id.domain_type);
@@ -306,7 +306,7 @@ public class StarNameDomainDetailActivity extends BaseActivity implements View.O
 
             public MyResourceHolder(View v) {
                 super(v);
-                itemRoot = itemView.findViewById(R.id.card_root);
+                itemRoot = itemView.findViewById(R.id.cardView);
                 itemChainImg = itemView.findViewById(R.id.chain_img);
                 itemChainName = itemView.findViewById(R.id.chain_name);
                 itemAddress = itemView.findViewById(R.id.chain_address);

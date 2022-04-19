@@ -75,7 +75,7 @@ public class RewardStep3Fragment extends BaseFragment implements View.OnClickLis
 
     @Override
     public void onRefreshTab() {
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
         BigDecimal rewardSum = BigDecimal.ZERO;
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
         for (String opAddress : getSActivity().mValAddresses) {

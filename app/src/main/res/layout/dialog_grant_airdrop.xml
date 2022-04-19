@@ -28,7 +28,7 @@
             android:background="@color/colorGray10" />
 
         <Button
-            android:id="@+id/btn_ok"
+            android:id="@+id/okButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAllCaps="false"

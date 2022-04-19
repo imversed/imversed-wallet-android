@@ -60,7 +60,7 @@ public class ReInvestStep0Fragment extends BaseFragment implements View.OnClickL
 
     @Override
     public void onRefreshTab() {
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
         if (getSActivity().mAmount != null) {
             BigDecimal rewardSum = new BigDecimal(getSActivity().mAmount.amount).setScale(0, BigDecimal.ROUND_DOWN);
             mTvRewardAmount.setText(WDp.getDpAmount2(rewardSum, mDpDecimal, mDpDecimal));

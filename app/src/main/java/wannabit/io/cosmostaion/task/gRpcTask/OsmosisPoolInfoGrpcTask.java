@@ -9,7 +9,7 @@ import osmosis.gamm.poolmodels.balancer.BalancerPool;
 import osmosis.gamm.v1beta1.QueryGrpc;
 import osmosis.gamm.v1beta1.QueryOuterClass;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.task.CommonTask;
 import wannabit.io.cosmostaion.task.TaskListener;

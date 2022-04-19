@@ -27,7 +27,7 @@ import java.math.RoundingMode;
 import osmosis.gamm.poolmodels.balancer.BalancerPool;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.osmosis.JoinPoolActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.task.TaskListener;
@@ -150,8 +150,8 @@ public class JoinPoolStep0Fragment extends BaseFragment implements View.OnClickL
         WUtil.dpOsmosisTokenName(getSActivity(), getBaseDao(), mJoinPoolInput0Symbol, coin0Denom);
         WUtil.DpOsmosisTokenImg(getBaseDao(), mJoinPoolInput1Img, coin1Denom);
         WUtil.dpOsmosisTokenName(getSActivity(), getBaseDao(), mJoinPoolInput1Symbol, coin1Denom);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), WUtil.dpOsmosisTokenName(getSActivity(), getBaseDao(), mJoinPoolInput0Denom, coin0Denom), mAvailable0MaxAmount.toString(), mJoinPoolInput0Denom, mJoinPoolInput0Amount, BaseChain.OSMOSIS_MAIN);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), WUtil.dpOsmosisTokenName(getSActivity(), getBaseDao(), mJoinPoolInput1Denom, coin1Denom), mAvailable1MaxAmount.toString(), mJoinPoolInput1Denom, mJoinPoolInput1Amount, BaseChain.OSMOSIS_MAIN);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), WUtil.dpOsmosisTokenName(getSActivity(), getBaseDao(), mJoinPoolInput0Denom, coin0Denom), mAvailable0MaxAmount.toString(), mJoinPoolInput0Denom, mJoinPoolInput0Amount, BaseChain.OSMOSIS_MAIN.INSTANCE);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), WUtil.dpOsmosisTokenName(getSActivity(), getBaseDao(), mJoinPoolInput1Denom, coin1Denom), mAvailable1MaxAmount.toString(), mJoinPoolInput1Denom, mJoinPoolInput1Amount, BaseChain.OSMOSIS_MAIN.INSTANCE);
 
         BigDecimal coin0Amount = new BigDecimal(getSActivity().mOsmosisPool.getPoolAssets(0).getToken().getAmount());
         BigDecimal coin1Amount = new BigDecimal(getSActivity().mOsmosisPool.getPoolAssets(1).getToken().getAmount());

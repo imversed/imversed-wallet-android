@@ -27,7 +27,7 @@ import java.util.Comparator;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.res.ResProposal;
 import wannabit.io.cosmostaion.task.FetchTask.MintScanProposalListTask;
 import wannabit.io.cosmostaion.task.TaskListener;

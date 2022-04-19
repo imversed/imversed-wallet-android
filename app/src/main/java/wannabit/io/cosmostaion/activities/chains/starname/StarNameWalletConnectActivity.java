@@ -33,7 +33,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.dialog.Dialog_StarName_Export_Confirm;
 import wannabit.io.cosmostaion.model.ExportStarName;

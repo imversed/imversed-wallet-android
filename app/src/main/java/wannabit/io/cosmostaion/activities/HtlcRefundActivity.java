@@ -24,7 +24,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseBroadCastActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
@@ -209,7 +209,7 @@ public class HtlcRefundActivity extends BaseBroadCastActivity {
 
 
     private void onFetchHtlcStatus(String swapId) {
-        if (baseChain.equals(BaseChain.KAVA_MAIN)) {
+        if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             ApiClient.getKavaChain(getBaseContext()).getSwapById(swapId).enqueue(new Callback<ResKavaSwapInfo>() {
                 @Override
                 public void onResponse(Call<ResKavaSwapInfo> call, Response<ResKavaSwapInfo> response) {
@@ -229,7 +229,7 @@ public class HtlcRefundActivity extends BaseBroadCastActivity {
                 }
             });
 
-        } else if (baseChain.equals(BaseChain.BNB_MAIN)) {
+        } else if (baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
             ApiClient.getBnbChain(getBaseContext()).getSwapById(swapId).enqueue(new Callback<ResBnbSwapInfo>() {
                 @Override
                 public void onResponse(Call<ResBnbSwapInfo> call, Response<ResBnbSwapInfo> response) {

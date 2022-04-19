@@ -1,7 +1,7 @@
 package wannabit.io.cosmostaion.fragment;
 
-import static wannabit.io.cosmostaion.base.BaseChain.ALTHEA_TEST;
-import static wannabit.io.cosmostaion.base.BaseChain.BAND_MAIN;
+import static com.fulldive.wallet.models.BaseChain.ALTHEA_TEST;
+import static com.fulldive.wallet.models.BaseChain.BAND_MAIN;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -21,18 +21,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import cosmos.staking.v1beta1.Staking;
 import de.hdodenhof.circleimageview.CircleImageView;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.ValidatorListActivity;
+import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IBusyFetchListener;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
@@ -129,7 +128,7 @@ public class ValidatorAllFragment extends BaseFragment implements View.OnClickLi
         @Override
         public void onBindViewHolder(@NonNull final AllValidatorHolder holder, final int position) {
             holder.itemBandOracleOff.setVisibility(View.INVISIBLE);
-            final int dpDecimal = WDp.mainDivideDecimal(getMainActivity().baseChain);
+            final int dpDecimal = getMainActivity().baseChain.getDivideDecimal();
             if (getMainActivity().baseChain.isGRPC()) {
                 final Staking.Validator validator = getBaseDao().mGRpcTopValidators.get(position);
                 holder.itemTvVotingPower.setText(WDp.getDpAmount2(new BigDecimal(validator.getTokens()), dpDecimal, 6));
@@ -153,7 +152,7 @@ public class ValidatorAllFragment extends BaseFragment implements View.OnClickLi
                     holder.itemRoot.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorTransBg));
                 }
 
-                if (getMainActivity().baseChain.equals(BAND_MAIN)) {
+                if (getMainActivity().baseChain.equals(BAND_MAIN.INSTANCE)) {
                     holder.itemTvCommission.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorGray1));
                     if (getBaseDao().mChainParam != null && !getBaseDao().mChainParam.isOracleEnable(validator.getOperatorAddress())) {
                         holder.itemBandOracleOff.setVisibility(View.VISIBLE);
@@ -163,7 +162,7 @@ public class ValidatorAllFragment extends BaseFragment implements View.OnClickLi
                     }
                 }
 
-                if (getMainActivity().baseChain.equals(ALTHEA_TEST)) {
+                if (getMainActivity().baseChain.equals(ALTHEA_TEST.INSTANCE)) {
                     holder.itemTvCommission.setText("--");
                 }
 
@@ -245,27 +244,28 @@ public class ValidatorAllFragment extends BaseFragment implements View.OnClickLi
 
 
     public void onSortValidator() {
+        final BaseData baseDao = getBaseDao();
         if (getMainActivity().baseChain.isGRPC()) {
-            if (getBaseDao().getValSorting() == 2) {
-                WUtil.onSortingByCommissionV1(getBaseDao().mGRpcTopValidators);
+            if (baseDao.getValSorting() == 2) {
+                baseDao.mGRpcTopValidators = WUtil.onSortingByCommissionV1(baseDao.mGRpcTopValidators);
                 mSortType.setText(getString(R.string.str_sorting_by_yield));
-            } else if (getBaseDao().getValSorting() == 0) {
-                WUtil.onSortByValidatorNameV1(getBaseDao().mGRpcTopValidators);
+            } else if (baseDao.getValSorting() == 0) {
+                baseDao.mGRpcTopValidators = WUtil.onSortByValidatorNameV1(baseDao.mGRpcTopValidators);
                 mSortType.setText(getString(R.string.str_sorting_by_name));
             } else {
-                WUtil.onSortByValidatorPowerV1(getBaseDao().mGRpcTopValidators);
+                baseDao.mGRpcTopValidators = WUtil.onSortByValidatorPowerV1(baseDao.mGRpcTopValidators);
                 mSortType.setText(getString(R.string.str_sorting_by_power));
             }
 
         } else {
-            if (getBaseDao().getValSorting() == 2) {
-                WUtil.onSortingByCommission(getBaseDao().mTopValidators);
+            if (baseDao.getValSorting() == 2) {
+                baseDao.mTopValidators = WUtil.onSortingByCommission(baseDao.mTopValidators);
                 mSortType.setText(getString(R.string.str_sorting_by_yield));
-            } else if (getBaseDao().getValSorting() == 0) {
-                WUtil.onSortByValidatorName(getBaseDao().mTopValidators);
+            } else if (baseDao.getValSorting() == 0) {
+                baseDao.mTopValidators = WUtil.onSortByValidatorName(baseDao.mTopValidators);
                 mSortType.setText(getString(R.string.str_sorting_by_name));
             } else {
-                WUtil.onSortByValidatorPower(getBaseDao().mTopValidators);
+                baseDao.mTopValidators = WUtil.onSortByValidatorPower(baseDao.mTopValidators);
                 mSortType.setText(getString(R.string.str_sorting_by_power));
             }
         }

@@ -1,12 +1,15 @@
 package com.fulldive.wallet.interactors.chains.okex
 
 import com.fulldive.wallet.di.modules.DefaultRepositoryModule
+import com.fulldive.wallet.extensions.or
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
 import wannabit.io.cosmostaion.dao.Account
+import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.network.res.ResNodeInfo
 import wannabit.io.cosmostaion.network.res.ResOkAccountInfo
+import java.math.BigDecimal
 import javax.inject.Inject
 
 @ProvidedBy(DefaultRepositoryModule::class)
@@ -63,6 +66,23 @@ class OkexRepository @Inject constructor(
 
     fun requestNodeInfo(): Single<ResNodeInfo> {
         return okexRemoteSource.requestNodeInfo()
+    }
+
+    fun requestAccountBalance(address: String): Single<List<Balance>> {
+        return okexRemoteSource.requestAccountBalance(address)
+            .map { accountToken ->
+                accountToken
+                    .data.currencies
+                    ?.map { currency ->
+                        Balance().apply {
+                            symbol = currency.symbol
+                            balance = BigDecimal(currency.available)
+                            locked = BigDecimal(currency.locked)
+                            fetchTime = System.currentTimeMillis()
+                        }
+                    }
+                    .or(emptyList())
+            }
     }
 
     fun setNodeInfo(nodeInfo: ResNodeInfo): Completable {

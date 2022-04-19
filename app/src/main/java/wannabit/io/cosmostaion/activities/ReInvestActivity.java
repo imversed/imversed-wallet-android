@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import cosmos.distribution.v1beta1.Distribution;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseBroadCastActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.fragment.ReInvestStep0Fragment;

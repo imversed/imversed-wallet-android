@@ -1,6 +1,6 @@
 package wannabit.io.cosmostaion.activities;
 
-import static wannabit.io.cosmostaion.base.BaseChain.OKEX_MAIN;
+import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_FETCH_NODE_INFO;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_NODE_INFO;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_WITHDRAW_ADDRESS;
@@ -31,6 +31,8 @@ import com.fulldive.wallet.extensions.ChainExtensionsKt;
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.fulldive.wallet.presentation.accounts.DeleteConfirmDialogFragment;
+import com.fulldive.wallet.presentation.accounts.restore.MnemonicRestoreActivity;
+import com.fulldive.wallet.presentation.accounts.restore.PrivateKeyRestoreActivity;
 import com.fulldive.wallet.presentation.main.intro.IntroActivity;
 import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
 import com.fulldive.wallet.rx.AppSchedulers;
@@ -38,7 +40,7 @@ import com.fulldive.wallet.rx.AppSchedulers;
 import io.reactivex.disposables.Disposable;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.dialog.Dialog_ChangeNickName;
 import wannabit.io.cosmostaion.dialog.Dialog_RewardAddressChangeInfo;
@@ -213,7 +215,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
 
         if (account.hasPrivateKey && account.fromMnemonic) {
             mAccountState.setText(getString(R.string.str_with_mnemonic));
-            mAccountPath.setText(ChainExtensionsKt.getPathString(baseChain, Integer.parseInt(account.path), account.customPath));
+            mAccountPath.setText(ChainExtensionsKt.getPathString(baseChain, account.path, account.customPath));
             mPathLayer.setVisibility(View.VISIBLE);
             mImportMsg.setVisibility(View.GONE);
             mBtnCheck.setVisibility(View.VISIBLE);
@@ -229,7 +231,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
             mView.setVisibility(View.GONE);
             mBtnCheckKey.setVisibility(View.VISIBLE);
             mBtnCheckKey.setText(getString(R.string.str_check_private_key));
-            if (baseChain.equals(OKEX_MAIN)) {
+            if (baseChain.equals(OKEX_MAIN.INSTANCE)) {
                 mPathLayer.setVisibility(View.VISIBLE);
                 mAccountPathTitle.setText(R.string.str_address_type);
                 if (account.customPath > 0) {
@@ -271,8 +273,8 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
                 overridePendingTransition(R.anim.slide_in_bottom, R.anim.fade_out);
 
             } else {
-                Intent restoreIntent = new Intent(AccountDetailActivity.this, RestoreActivity.class);
-                restoreIntent.putExtra("chain", baseChain.getChain());
+                Intent restoreIntent = new Intent(AccountDetailActivity.this, MnemonicRestoreActivity.class);
+                restoreIntent.putExtra("chain", baseChain.getChainName());
                 startActivity(restoreIntent);
             }
 
@@ -285,8 +287,8 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
                 overridePendingTransition(R.anim.slide_in_bottom, R.anim.fade_out);
 
             } else {
-                Intent restoreIntent = new Intent(AccountDetailActivity.this, RestoreKeyActivity.class);
-                restoreIntent.putExtra("chain", baseChain.getChain());
+                Intent restoreIntent = new Intent(AccountDetailActivity.this, PrivateKeyRestoreActivity.class);
+                restoreIntent.putExtra("chain", baseChain.getChainName());
                 startActivity(restoreIntent);
             }
 

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 import cosmos.vesting.v1beta1.Vesting;
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.widget.BaseHolder;
@@ -47,7 +47,7 @@ public class VestingHolder extends BaseHolder {
 
     public VestingHolder(@NonNull View itemView) {
         super(itemView);
-        mVestingRoot = itemView.findViewById(R.id.card_root);
+        mVestingRoot = itemView.findViewById(R.id.cardView);
         mVestingCnt = itemView.findViewById(R.id.vesting_count);
         mVestingLayer0 = itemView.findViewById(R.id.vesting_layer0);
         mVestingLayer1 = itemView.findViewById(R.id.vesting_layer1);

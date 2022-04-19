@@ -237,7 +237,7 @@ public class ReplaceStarName0Fragment extends BaseFragment implements View.OnCli
 
             public ResourceAddHolder(@NonNull View itemView) {
                 super(itemView);
-                itemRoot = itemView.findViewById(R.id.card_root);
+                itemRoot = itemView.findViewById(R.id.cardView);
                 itemBtnAdd = itemView.findViewById(R.id.btn_add);
             }
         }
@@ -249,7 +249,7 @@ public class ReplaceStarName0Fragment extends BaseFragment implements View.OnCli
 
             public ResourceHolder(@NonNull View itemView) {
                 super(itemView);
-                itemRoot = itemView.findViewById(R.id.card_root);
+                itemRoot = itemView.findViewById(R.id.cardView);
                 itemChainImg = itemView.findViewById(R.id.chain_img);
                 itemChainName = itemView.findViewById(R.id.chain_name);
                 itemChainAddress = itemView.findViewById(R.id.chain_address);

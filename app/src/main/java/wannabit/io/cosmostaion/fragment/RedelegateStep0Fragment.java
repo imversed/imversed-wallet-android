@@ -80,7 +80,7 @@ public class RedelegateStep0Fragment extends BaseFragment implements View.OnClic
     @Override
     public void onResume() {
         super.onResume();
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
         setDpDecimals(mDpDecimal);
         WDp.DpMainDenom(getSActivity().account.baseChain, mDenomTitle);
         mMaxAvailable = getSActivity().getBaseDao().getDelegation(getSActivity().mValAddress);

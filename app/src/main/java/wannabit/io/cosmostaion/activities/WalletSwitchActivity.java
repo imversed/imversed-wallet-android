@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dao.ChainAccounts;
 import wannabit.io.cosmostaion.widget.mainWallet.ManageChainSwitchHolder;
 
@@ -53,7 +53,7 @@ public class WalletSwitchActivity extends BaseActivity {
         ArrayList<BaseChain> mDisplayChains = getBaseDao().dpSortedChains();
         mExpendedChains = getBaseDao().getExpendedChains();
         mSelectedChain = BaseChain.getChain(account.baseChain);
-        getBaseDao().setLastChain(mSelectedChain.getChain());
+        getBaseDao().setLastChain(mSelectedChain.getChainName());
 
         for (BaseChain chain : mDisplayChains) {
             if (mExpendedChains.contains(chain) || mSelectedChain.equals(chain)) {

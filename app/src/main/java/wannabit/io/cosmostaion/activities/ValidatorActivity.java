@@ -1,8 +1,8 @@
 package wannabit.io.cosmostaion.activities;
 
 import static cosmos.staking.v1beta1.Staking.BondStatus.BOND_STATUS_BONDED;
-import static wannabit.io.cosmostaion.base.BaseChain.ALTHEA_TEST;
-import static wannabit.io.cosmostaion.base.BaseChain.BAND_MAIN;
+import static com.fulldive.wallet.models.BaseChain.ALTHEA_TEST;
+import static com.fulldive.wallet.models.BaseChain.BAND_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_REINVEST;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIMPLE_DELEGATE;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIMPLE_REDELEGATE;
@@ -37,6 +37,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.fulldive.wallet.interactors.secret.WalletUtils;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
@@ -48,7 +49,7 @@ import cosmos.staking.v1beta1.Staking;
 import de.hdodenhof.circleimageview.CircleImageView;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.dialog.Dialog_Not_Top_100;
 import wannabit.io.cosmostaion.dialog.Dialog_RedelegationLimited;
@@ -66,7 +67,6 @@ import wannabit.io.cosmostaion.task.gRpcTask.UnDelegationsGrpcTask;
 import wannabit.io.cosmostaion.task.gRpcTask.ValidatorInfoGrpcTask;
 import wannabit.io.cosmostaion.task.gRpcTask.WithdrawAddressGrpcTask;
 import wannabit.io.cosmostaion.utils.WDp;
-import wannabit.io.cosmostaion.utils.WKey;
 import wannabit.io.cosmostaion.utils.WUtil;
 
 public class ValidatorActivity extends BaseActivity implements TaskListener {
@@ -143,13 +143,13 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
     private void onInitFetch() {
         if (mTaskCount > 0) return;
         mTaskCount = 6;
-        getBaseDao().mGrpcDelegations.clear();
-        getBaseDao().mGrpcUndelegations.clear();
-        getBaseDao().mGrpcRewards.clear();
+        getBaseDao().mGrpcDelegations = new ArrayList<>();
+        getBaseDao().mGrpcUndelegations = new ArrayList<>();
+        getBaseDao().mGrpcRewards = new ArrayList<>();
 
         new ValidatorInfoGrpcTask(getBaseApplication(), this, baseChain, mValOpAddress).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new DelegationsGrpcTask(getBaseApplication(), this, baseChain, account).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new SelfBondingGrpcTask(getBaseApplication(), this, baseChain, mValOpAddress, WKey.convertDpOpAddressToDpAddress(mValOpAddress, BaseChain.getChain(account.baseChain))).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new SelfBondingGrpcTask(getBaseApplication(), this, baseChain, mValOpAddress, WalletUtils.INSTANCE.convertDpOpAddressToDpAddress(mValOpAddress, BaseChain.getChain(account.baseChain))).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new UnDelegationsGrpcTask(getBaseApplication(), this, baseChain, account).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new AllRewardGrpcTask(getBaseApplication(), this, baseChain, account).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new ReDelegationsToGrpcTask(getBaseApplication(), this, baseChain, account, mValOpAddress).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -478,7 +478,7 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
 
         private void onBindValidatorV1(RecyclerView.ViewHolder viewHolder) {
             final ValidatorHolder holder = (ValidatorHolder) viewHolder;
-            final int dpDecimal = WDp.mainDivideDecimal(baseChain);
+            final int dpDecimal = baseChain.getDivideDecimal();
             holder.itemTvMoniker.setText(mGrpcValidator.getDescription().getMoniker());
             holder.itemTvAddress.setText(mGrpcValidator.getOperatorAddress());
             holder.itemBandOracleOff.setVisibility(View.INVISIBLE);
@@ -506,7 +506,7 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
                 holder.itemImgRevoked.setVisibility(View.GONE);
             }
 
-            if (baseChain.equals(BAND_MAIN)) {
+            if (baseChain.equals(BAND_MAIN.INSTANCE)) {
                 if (getBaseDao().mChainParam != null && !getBaseDao().mChainParam.isOracleEnable(mGrpcValidator.getOperatorAddress())) {
                     holder.itemBandOracleOff.setImageDrawable(getDrawable(R.drawable.band_oracleoff_l));
                     holder.itemTvYieldRate.setTextColor(ContextCompat.getColor(ValidatorActivity.this, R.color.colorRed));
@@ -529,7 +529,7 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
             } catch (Exception e) {
             }
 
-            if (baseChain.equals(ALTHEA_TEST)) {
+            if (baseChain.equals(ALTHEA_TEST.INSTANCE)) {
                 holder.itemTvYieldRate.setText("--");
             }
 
@@ -544,7 +544,7 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
 
         private void onBindMyValidatorV1(RecyclerView.ViewHolder viewHolder) {
             final MyValidatorHolder holder = (MyValidatorHolder) viewHolder;
-            final int dpDecimal = WDp.mainDivideDecimal(baseChain);
+            final int dpDecimal = baseChain.getDivideDecimal();
             holder.itemTvMoniker.setText(mGrpcValidator.getDescription().getMoniker());
             holder.itemTvAddress.setText(mGrpcValidator.getOperatorAddress());
             holder.itemBandOracleOff.setVisibility(View.INVISIBLE);
@@ -572,7 +572,7 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
                 holder.itemImgRevoked.setVisibility(View.GONE);
             }
 
-            if (baseChain.equals(BAND_MAIN)) {
+            if (baseChain.equals(BAND_MAIN.INSTANCE)) {
                 if (getBaseDao().mChainParam != null && !getBaseDao().mChainParam.isOracleEnable(mGrpcValidator.getOperatorAddress())) {
                     holder.itemBandOracleOff.setImageDrawable(getDrawable(R.drawable.band_oracleoff_l));
                     holder.itemTvYieldRate.setTextColor(ContextCompat.getColor(ValidatorActivity.this, R.color.colorRed));
@@ -595,14 +595,14 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
             } catch (Exception e) {
             }
 
-            if (baseChain.equals(ALTHEA_TEST)) {
+            if (baseChain.equals(ALTHEA_TEST.INSTANCE)) {
                 holder.itemTvYieldRate.setText("--");
             }
         }
 
         private void onBindActionV1(RecyclerView.ViewHolder viewHolder) {
             final MyActionHolder holder = (MyActionHolder) viewHolder;
-            final int dpDecimal = WDp.mainDivideDecimal(baseChain);
+            final int dpDecimal = baseChain.getDivideDecimal();
             holder.itemRoot.setCardBackgroundColor(WDp.getChainBgColor(getBaseContext(), baseChain));
             holder.itemTvDelegatedAmount.setText(WDp.getDpAmount2(getBaseDao().getDelegation(mValOpAddress), dpDecimal, dpDecimal));
             holder.itemTvUnbondingAmount.setText(WDp.getDpAmount2(getBaseDao().getUndelegation(mValOpAddress), dpDecimal, dpDecimal));
@@ -621,7 +621,7 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
 
             }
 
-            if (baseChain.equals(ALTHEA_TEST)) {
+            if (baseChain.equals(ALTHEA_TEST.INSTANCE)) {
                 holder.itemDailyReturn.setText("--");
                 holder.itemMonthlyReturn.setText("--");
             }

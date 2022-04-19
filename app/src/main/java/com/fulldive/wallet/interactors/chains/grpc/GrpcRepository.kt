@@ -2,16 +2,18 @@ package com.fulldive.wallet.interactors.chains.grpc
 
 import com.fulldive.wallet.di.modules.DefaultRepositoryModule
 import com.fulldive.wallet.extensions.safe
+import com.fulldive.wallet.extensions.safeSingle
 import com.joom.lightsaber.ProvidedBy
 import cosmos.staking.v1beta1.Staking
 import io.reactivex.Completable
 import io.reactivex.Single
 import tendermint.p2p.Types
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.dao.Cw20Assets
 import wannabit.io.cosmostaion.model.type.Coin
+import java.math.BigDecimal
 import java.util.*
 import javax.inject.Inject
 
@@ -111,6 +113,21 @@ class GrpcRepository @Inject constructor(
             }
             .flatMapCompletable { snapBalances ->
                 grpcLocalSource.updateBalances(account.id, snapBalances)
+            }
+    }
+
+    fun getBalances(chain: BaseChain, address: String): Single<List<Balance>> {
+        return grpcRemoteSource
+            .requestBalance(chain, address)
+            .flatMap { coins ->
+                safeSingle {
+                    coins.map { coin ->
+                        Balance().apply {
+                            symbol = coin.denom
+                            balance = BigDecimal(coin.amount)
+                        }
+                    }
+                }
             }
     }
 

@@ -60,7 +60,7 @@ public class UndelegateStep3Fragment extends BaseFragment implements View.OnClic
 
     @Override
     public void onRefreshTab() {
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
         BigDecimal toUnDeleagteAmount = new BigDecimal(getSActivity().mAmount.amount);
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
 

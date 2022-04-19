@@ -1,7 +1,7 @@
 package wannabit.io.cosmostaion.cosmos;
 
-import static wannabit.io.cosmostaion.base.BaseChain.KAVA_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.OKEX_MAIN;
+import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
+import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.BINANCE_MAIN_BNB_DEPUTY;
 import static wannabit.io.cosmostaion.base.BaseConstant.BINANCE_MAIN_BTCB_DEPUTY;
 import static wannabit.io.cosmostaion.base.BaseConstant.BINANCE_MAIN_BUSD_DEPUTY;
@@ -30,13 +30,12 @@ import org.web3j.crypto.Sign;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.crypto.Sha256;
 import wannabit.io.cosmostaion.dao.Account;
@@ -58,7 +57,7 @@ public class MsgGenerator {
     public static Msg genTransferMsg(String fromAddr, String toAddr, ArrayList<Coin> coins, BaseChain chain) {
         Msg result = new Msg();
         Msg.Value value = new Msg.Value();
-        if (chain.equals(OKEX_MAIN)) {
+        if (chain.equals(OKEX_MAIN.INSTANCE)) {
             try {
                 value.from_address = WKey.convertAddressEthToOkex(fromAddr);
                 value.to_address = WKey.convertAddressEthToOkex(toAddr);
@@ -84,7 +83,7 @@ public class MsgGenerator {
     public static Msg genRefundAtomicSwap(String from, String swapId, BaseChain chain) {
         Msg result = new Msg();
         Msg.Value value = new Msg.Value();
-        if (chain.equals(KAVA_MAIN)) {
+        if (chain.equals(KAVA_MAIN.INSTANCE)) {
             value.from = from;
             value.swap_id = swapId.toUpperCase();
             result.type = BaseConstant.KAVA_MSG_TYPE_BEP3_REFUND_SWAP;
@@ -97,8 +96,8 @@ public class MsgGenerator {
     public static HtltReq getBnbHtlcCreateMsg(BaseChain fromChain, BaseChain toChain, Account fromAccount, Account toAccount, ArrayList<Coin> sendCoins, long timestamp, byte[] originData) {
         HtltReq htltReq = new HtltReq();
         Coin toSendCoin = sendCoins.get(0);
-        if (fromChain.equals(BaseChain.BNB_MAIN)) {
-            if (toChain.equals(KAVA_MAIN)) {
+        if (fromChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
+            if (toChain.equals(KAVA_MAIN.INSTANCE)) {
                 if (sendCoins.get(0).denom.equals(TOKEN_HTLC_BINANCE_BNB)) {
                     htltReq.setRecipient(BINANCE_MAIN_BNB_DEPUTY);
                     htltReq.setSenderOtherChain(KAVA_MAIN_BNB_DEPUTY);

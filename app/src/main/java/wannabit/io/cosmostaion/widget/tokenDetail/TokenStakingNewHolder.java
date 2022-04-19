@@ -11,7 +11,7 @@ import androidx.cardview.widget.CardView;
 import java.math.BigDecimal;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.widget.BaseHolder;
@@ -29,7 +29,7 @@ public class TokenStakingNewHolder extends BaseHolder {
 
     public TokenStakingNewHolder(@NonNull View itemView) {
         super(itemView);
-        mCardRoot = itemView.findViewById(R.id.card_root);
+        mCardRoot = itemView.findViewById(R.id.cardView);
         mTotalAmount = itemView.findViewById(R.id.total_amount);
         mAvailableAmount = itemView.findViewById(R.id.available_amount);
         mVestingAmount = itemView.findViewById(R.id.vesting_amount);
@@ -42,8 +42,8 @@ public class TokenStakingNewHolder extends BaseHolder {
 
     @Override
     public void onBindTokenHolder(Context c, BaseChain chain, BaseData baseData, String denom) {
-        final int stakingDivideDecimal = WDp.mainDivideDecimal(chain);
-        final int stakingDisplayDecimal = WDp.mainDisplayDecimal(chain);
+        final int stakingDivideDecimal = chain.getDivideDecimal();
+        final int stakingDisplayDecimal = chain.getDisplayDecimal();
         final BigDecimal totalToken = baseData.getAllMainAsset(denom);
         mTotalAmount.setText(WDp.getDpAmount2(totalToken, stakingDivideDecimal, stakingDisplayDecimal));
         mAvailableAmount.setText(WDp.getDpAmount2(baseData.getAvailable(denom), stakingDivideDecimal, stakingDisplayDecimal));

@@ -5,7 +5,7 @@ import com.fulldive.wallet.extensions.completeCallable
 import com.fulldive.wallet.extensions.safeCompletable
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.base.BaseData
 import wannabit.io.cosmostaion.dao.ChainParam
 import wannabit.io.cosmostaion.dao.IbcPath

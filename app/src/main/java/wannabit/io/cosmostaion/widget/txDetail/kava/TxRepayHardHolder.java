@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import cosmos.tx.v1beta1.ServiceOuterClass;
 import kava.hard.v1beta1.Tx;
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.widget.txDetail.TxHolder;
@@ -35,7 +35,7 @@ public class TxRepayHardHolder extends TxHolder {
             Tx.MsgRepay msg = Tx.MsgRepay.parseFrom(response.getTx().getBody().getMessages(position).getValue());
             itemSender.setText(msg.getSender());
             itemOwener.setText(msg.getSender());
-            WDp.showCoinDp(c, baseData, msg.getAmount(0).getDenom(), msg.getAmount(0).getAmount(), itemRepayDenom, itemRepayAmount, BaseChain.KAVA_MAIN);
+            WDp.showCoinDp(c, baseData, msg.getAmount(0).getDenom(), msg.getAmount(0).getAmount(), itemRepayDenom, itemRepayAmount, BaseChain.KAVA_MAIN.INSTANCE);
 
         } catch (Exception e) {
         }
