@@ -5,7 +5,6 @@ import com.fulldive.wallet.di.modules.DefaultPresentersModule
 import com.fulldive.wallet.extensions.*
 import com.fulldive.wallet.interactors.ClipboardInteractor
 import com.fulldive.wallet.interactors.ScreensInteractor
-import com.fulldive.wallet.interactors.accounts.AccountsInteractor
 import com.fulldive.wallet.interactors.secret.MnemonicUtils
 import com.fulldive.wallet.interactors.secret.SecretInteractor
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
@@ -13,7 +12,7 @@ import com.fulldive.wallet.presentation.chains.choicenet.ChoiceChainDialogFragme
 import com.fulldive.wallet.rx.AppSchedulers
 import com.joom.lightsaber.ProvidedBy
 import wannabit.io.cosmostaion.R
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dialog.*
 import java.util.*
 import javax.inject.Inject
@@ -21,7 +20,6 @@ import kotlin.math.max
 
 @ProvidedBy(DefaultPresentersModule::class)
 class MnemonicRestorePresenter @Inject constructor(
-    private val accountsInteractor: AccountsInteractor,
     private val secretInteractor: SecretInteractor,
     private val screensInteractor: ScreensInteractor,
     private val clipboardInteractor: ClipboardInteractor
@@ -130,11 +128,13 @@ class MnemonicRestorePresenter @Inject constructor(
             ) {
                 result = Bundle().apply {
                     val wordsList = fields.toList()
-                    putString("HDseed", MnemonicUtils.getStringHdSeedFromWords(wordsList)!!)
-                    putString("entropy", secretInteractor.entropyHexFromMnemonicWords(wordsList))
-                    putInt("size", wordsList.size)
-                    putInt("customPath", customPath)
-                    putString("chain", chain!!.chain)
+                    putString(
+                        RestorePathActivity.KEY_ENTROPY,
+                        secretInteractor.entropyHexFromMnemonicWords(wordsList)
+                    )
+                    putInt(RestorePathActivity.KEY_SIZE, wordsList.size)
+                    putInt(RestorePathActivity.KEY_CUSTOM_PATH, customPath)
+                    putString(RestorePathActivity.KEY_CHAIN, chain!!.chainName)
                 }
             }
             result
@@ -223,7 +223,7 @@ class MnemonicRestorePresenter @Inject constructor(
         val count = fields.count(secretInteractor::isValidMnemonicWord)
         val isValidMnemonic = secretInteractor.isValidMnemonicArray(fields)
         val colorResId = if (isValidMnemonic || count == 0) {
-            chain.or(BaseChain.COSMOS_MAIN).denomColor
+            chain.or(BaseChain.COSMOS_MAIN).chainColor
         } else {
             R.color.colorRed
         }

@@ -1,6 +1,6 @@
 package wannabit.io.cosmostaion.task.SimpleBroadTxTask;
 
-import static wannabit.io.cosmostaion.base.BaseChain.getChain;
+import static com.fulldive.wallet.models.BaseChain.getChain;
 import static wannabit.io.cosmostaion.base.BaseConstant.ERROR_CODE_BROADCAST;
 import static wannabit.io.cosmostaion.base.BaseConstant.ERROR_CODE_INVALID_PASSWORD;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GEN_TX_SIMPLE_SEND;

@@ -1,6 +1,6 @@
 package wannabit.io.cosmostaion.activities.chains.cosmos;
 
-import static wannabit.io.cosmostaion.base.BaseChain.COSMOS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.COSMOS_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_GDEX_DEPOSIT;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_GDEX_SWAP;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_GDEX_WITHDRAW;
@@ -38,7 +38,7 @@ import cosmos.base.v1beta1.CoinOuterClass;
 import tendermint.liquidity.v1beta1.Liquidity;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.dialog.Dialog_Pool_Gravity_Dex;
@@ -190,7 +190,7 @@ public class GravityListActivity extends BaseActivity implements TaskListener {
         BigDecimal coin0Available = getBaseDao().getAvailable(coin0denom);
         BigDecimal coin1Available = getBaseDao().getAvailable(coin1Denom);
 
-        if (coin1Denom.equalsIgnoreCase(COSMOS_MAIN.getMainDenom())) {
+        if (coin1Denom.equalsIgnoreCase(COSMOS_MAIN.INSTANCE.getMainDenom())) {
             coin1Available = coin1Available.subtract(feeAmount);
         }
 
@@ -212,7 +212,7 @@ public class GravityListActivity extends BaseActivity implements TaskListener {
             return;
         }
 
-        BigDecimal mainBalance = getBaseDao().getAvailable(COSMOS_MAIN.getMainDenom());
+        BigDecimal mainBalance = getBaseDao().getAvailable(COSMOS_MAIN.INSTANCE.getMainDenom());
         BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), baseChain, CONST_PW_TX_GDEX_WITHDRAW, 0);
 
         if (mainBalance.compareTo(feeAmount) < 0) {
@@ -280,7 +280,7 @@ public class GravityListActivity extends BaseActivity implements TaskListener {
             }
         }
         if (mTaskCount == 0) {
-            mAllDenoms.add(COSMOS_MAIN.getMainDenom());
+            mAllDenoms.add(COSMOS_MAIN.INSTANCE.getMainDenom());
             for (Liquidity.Pool pool : mPoolList) {
                 for (String denom : pool.getReserveCoinDenomsList()) {
                     if (!mAllDenoms.contains(denom)) {

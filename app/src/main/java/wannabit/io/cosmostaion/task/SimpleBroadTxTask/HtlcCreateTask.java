@@ -46,7 +46,7 @@ import retrofit2.Response;
 import wannabit.io.cosmostaion.BuildConfig;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.cosmos.MsgGenerator;
 import wannabit.io.cosmostaion.cosmos.Signer;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
@@ -93,7 +93,7 @@ public class HtlcCreateTask extends CommonTask {
     @Override
     protected TaskResult doInBackground(String... strings) {
         try {
-            if (mSendChain.equals(BaseChain.BNB_MAIN)) {
+            if (mSendChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
                 Response<ResBnbAccountInfo> response = ApiClient.getBnbChain(context).getAccountInfo(mSendAccount.address).execute();
                 if (!response.isSuccessful()) {
                     result.errorCode = ERROR_CODE_BROADCAST;
@@ -160,7 +160,7 @@ public class HtlcCreateTask extends CommonTask {
                 }
 
 
-            } else if (mSendChain.equals(BaseChain.KAVA_MAIN)) {
+            } else if (mSendChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                 if (mSendAccount.fromMnemonic) {
                     String entropy = CryptoHelper.doDecryptData(context.getString(R.string.key_mnemonic) + mSendAccount.uuid, mSendAccount.resource, mSendAccount.spec);
                     DeterministicKey deterministicKey = WKey.getKeyWithPathfromEntropy(mSendAccount, entropy);

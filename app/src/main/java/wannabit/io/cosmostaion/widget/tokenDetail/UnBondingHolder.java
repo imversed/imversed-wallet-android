@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.model.UnbondingInfo;
 import wannabit.io.cosmostaion.utils.WDp;
@@ -90,8 +90,8 @@ public class UnBondingHolder extends BaseHolder {
         mUndelegateLayer3.setVisibility(View.GONE);
         mUndelegateLayer4.setVisibility(View.GONE);
 
-        final int stakingDivideDecimal = WDp.mainDivideDecimal(chain);
-        final int stakingDisplayDecimal = WDp.mainDivideDecimal(chain);
+        final int stakingDivideDecimal = chain.getDivideDecimal();
+        final int stakingDisplayDecimal = chain.getDivideDecimal();
 
         final List<UnbondingInfo.DpEntry> unbondings = WUtil.onSortUnbondingsRecent_Grpc(baseData.mGrpcUndelegations);
         mUndelegateCnt.setText(String.valueOf(unbondings.size()));
@@ -132,8 +132,8 @@ public class UnBondingHolder extends BaseHolder {
         mUndelegateLayer3.setVisibility(View.GONE);
         mUndelegateLayer4.setVisibility(View.GONE);
 
-        final int stakingDivideDecimal = WDp.mainDivideDecimal(chain);
-        final int stakingDisplayDecimal = WDp.mainDivideDecimal(chain);
+        final int stakingDivideDecimal = chain.getDivideDecimal();
+        final int stakingDisplayDecimal = chain.getDivideDecimal();
 
         final List<UnbondingInfo.DpEntry> unbondings = WUtil.onSortUnbondingsRecent(c, baseData.mMyUnbondings);
         mUndelegateCnt.setText(String.valueOf(unbondings.size()));

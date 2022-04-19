@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.PasswordCheckActivity;
 import wannabit.io.cosmostaion.base.BaseBroadCastActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
@@ -69,7 +69,7 @@ public class OKVoteDirectActivity extends BaseBroadCastActivity {
         baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_OK_DIRECT_VOTE;
 
-        WUtil.onSortByOKValidatorPower(getBaseDao().mAllValidators);
+        getBaseDao().mAllValidators = WUtil.onSortByOKValidatorPower(getBaseDao().mAllValidators);
         mOkDeposit = getBaseDao().mOkStaking;
 
         if (mOkDeposit != null && mOkDeposit.validator_address != null) {

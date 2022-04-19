@@ -27,7 +27,7 @@ public class OverridePkeyAccountTask extends CommonTask {
     protected TaskResult doInBackground(String... strings) {
         try {
             Account oAccount = onModAccount();
-            long id = context.getBaseDao().onOverrideAccount(oAccount);
+            long id = context.getBaseDao().overrideAccount(oAccount);
             if (id > 0) {
                 result.isSuccess = true;
                 context.getBaseDao().setLastUser(oAccount.id);

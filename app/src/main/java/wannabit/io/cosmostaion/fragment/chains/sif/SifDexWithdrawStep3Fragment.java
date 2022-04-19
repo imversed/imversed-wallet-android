@@ -14,7 +14,7 @@ import java.math.RoundingMode;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.sif.SifWithdrawPoolActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
@@ -67,7 +67,7 @@ public class SifDexWithdrawStep3Fragment extends BaseFragment implements View.On
 
     @Override
     public void onRefreshTab() {
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
 
         BigDecimal lpRoWanAmount = WUtil.getNativeAmount(getSActivity().mSifPool);
@@ -79,8 +79,8 @@ public class SifDexWithdrawStep3Fragment extends BaseFragment implements View.On
 
         mExitInAmount.setText(WDp.getDpAmount2(lpUnitAmount, mDpDecimal, mDpDecimal));
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
-        WDp.showCoinDp(getSActivity(), getBaseDao(), BaseConstant.TOKEN_SIF, rowanWithAmount.toPlainString(), mExitOutput0AmountSymbol, mExitOutput0Amount, BaseChain.SIF_MAIN);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mSifPool.getExternalAsset().getSymbol(), externalWithDrawAmount.toPlainString(), mExitOutput1AmountSymbol, mExitOutput1Amount, BaseChain.SIF_MAIN);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), BaseConstant.TOKEN_SIF, rowanWithAmount.toPlainString(), mExitOutput0AmountSymbol, mExitOutput0Amount, BaseChain.SIF_MAIN.INSTANCE);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mSifPool.getExternalAsset().getSymbol(), externalWithDrawAmount.toPlainString(), mExitOutput1AmountSymbol, mExitOutput1Amount, BaseChain.SIF_MAIN.INSTANCE);
         mMemo.setText(getSActivity().mTxMemo);
 
     }

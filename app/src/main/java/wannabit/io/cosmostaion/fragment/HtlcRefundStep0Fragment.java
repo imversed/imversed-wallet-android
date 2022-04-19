@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.HtlcRefundActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.model.type.Coin;
@@ -49,13 +49,13 @@ public class HtlcRefundStep0Fragment extends BaseFragment implements View.OnClic
 
     @Override
     public void onRefreshTab() {
-        if (getSActivity().baseChain.equals(BaseChain.BNB_MAIN)) {
+        if (getSActivity().baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
             mSwapId.setText(getSActivity().mSwapId);
             mRefundAddress.setText(getSActivity().mResBnbSwapInfo.fromAddr);
             Coin coin = getSActivity().mResBnbSwapInfo.getSendCoin();
             WDp.showCoinDp(getContext(), getBaseDao(), coin, mRefundAmountDenom, mRefundAmount, getSActivity().baseChain);
 
-        } else if (getSActivity().baseChain.equals(BaseChain.KAVA_MAIN)) {
+        } else if (getSActivity().baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             mSwapId.setText(getSActivity().mSwapId);
             mRefundAddress.setText(getSActivity().mResKavaSwapInfo.result.sender);
             Coin coin = getSActivity().mResKavaSwapInfo.result.amount.get(0);

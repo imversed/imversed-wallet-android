@@ -4,7 +4,7 @@ import com.fulldive.wallet.di.modules.DefaultRepositoryModule
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dao.Account
 import javax.inject.Inject
 
@@ -19,6 +19,10 @@ class AccountsRepository @Inject constructor(
 
     fun getAccount(accountId: Long): Single<Account> {
         return accountsLocalStorage.getAccount(accountId)
+    }
+
+    fun getAccount(chain: BaseChain, address: String): Single<Account> {
+        return accountsLocalStorage.getAccount(chain, address)
     }
 
     fun getSelectedAccount(): Single<Account> {
@@ -44,6 +48,10 @@ class AccountsRepository @Inject constructor(
 
     fun addAccount(account: Account): Single<Long> {
         return accountsLocalStorage.addAccount(account)
+    }
+
+    fun updateAccount(account: Account): Completable {
+        return accountsLocalStorage.updateAccount(account)
     }
 
     fun deleteAccount(accountId: Long): Completable {

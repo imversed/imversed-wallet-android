@@ -1,7 +1,7 @@
 package wannabit.io.cosmostaion.activities.chains.nft;
 
-import static wannabit.io.cosmostaion.base.BaseChain.CRYPTO_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.IRIS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.CRYPTO_MAIN;
+import static com.fulldive.wallet.models.BaseChain.IRIS_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_MINT_NFT;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_NFTOKEN_LIST;
 
@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import irismod.nft.Nft;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.task.TaskListener;
 import wannabit.io.cosmostaion.task.TaskResult;
@@ -138,7 +138,7 @@ public class NFTListActivity extends BaseActivity implements TaskListener {
         mTaskCount--;
         if (result.taskType == TASK_GRPC_FETCH_NFTOKEN_LIST) {
             if (result.isSuccess && result.resultData != null && result.resultByteData != null) {
-                if (baseChain.equals(IRIS_MAIN)) {
+                if (baseChain.equals(IRIS_MAIN.INSTANCE)) {
                     ArrayList<Nft.IDCollection> tempList = (ArrayList<Nft.IDCollection>) result.resultData;
                     mPageKey = result.resultByteData;
                     if (tempList.size() > 0) {
@@ -152,7 +152,7 @@ public class NFTListActivity extends BaseActivity implements TaskListener {
                         mEmptyNfts.setVisibility(View.VISIBLE);
                     }
 
-                } else if (baseChain.equals(CRYPTO_MAIN)) {
+                } else if (baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
                     ArrayList<chainmain.nft.v1.Nft.IDCollection> tempList = (ArrayList<chainmain.nft.v1.Nft.IDCollection>) result.resultData;
                     mPageKey = result.resultByteData;
                     if (tempList.size() > 0) {
@@ -190,14 +190,14 @@ public class NFTListActivity extends BaseActivity implements TaskListener {
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
             final NftMyHolder holder = (NftMyHolder) viewHolder;
-            if (baseChain.equals(IRIS_MAIN)) {
+            if (baseChain.equals(IRIS_MAIN.INSTANCE)) {
                 if (mMyIrisNFTs != null && mMyIrisNFTs.size() > 0) {
                     final Nft.IDCollection collection = mMyIrisNFTs.get(position);
                     final String tokenId = mTokenIds.get(position);
                     holder.onBindNFT(NFTListActivity.this, collection.getDenomId(), tokenId);
                 }
 
-            } else if (baseChain.equals(CRYPTO_MAIN)) {
+            } else if (baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
                 if (mMyCryptoNFTs != null && mMyCryptoNFTs.size() > 0) {
                     final chainmain.nft.v1.Nft.IDCollection collection = mMyCryptoNFTs.get(position);
                     final String tokenId = mTokenIds.get(position);
@@ -208,9 +208,9 @@ public class NFTListActivity extends BaseActivity implements TaskListener {
 
         @Override
         public int getItemCount() {
-            if (baseChain.equals(IRIS_MAIN)) {
+            if (baseChain.equals(IRIS_MAIN.INSTANCE)) {
                 return mMyIrisNFTs.size();
-            } else if (baseChain.equals(CRYPTO_MAIN)) {
+            } else if (baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
                 return mMyCryptoNFTs.size();
             } else {
                 return 0;

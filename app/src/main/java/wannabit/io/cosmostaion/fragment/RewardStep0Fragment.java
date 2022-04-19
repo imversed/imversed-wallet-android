@@ -67,7 +67,7 @@ public class RewardStep0Fragment extends BaseFragment implements View.OnClickLis
 
     @Override
     public void onRefreshTab() {
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
         BigDecimal rewardSum = BigDecimal.ZERO;
         for (String opAddress : getSActivity().mValAddresses) {
             rewardSum = rewardSum.add(getSActivity().getBaseDao().getReward(getSActivity().baseChain.getMainDenom(), opAddress));

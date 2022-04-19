@@ -12,7 +12,7 @@ import java.util.List;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.MainActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.model.type.BnbHistory;
 import wannabit.io.cosmostaion.network.res.ResApiNewTxListCustom;
@@ -57,10 +57,10 @@ class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         } else {
             HistoryOldHolder holder = (HistoryOldHolder) viewHolder;
-            if (chain.equals(BaseChain.BNB_MAIN)) {
+            if (chain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
                 final BnbHistory history = bnbHistories.get(position);
                 holder.onBindOldBnbHistory(mainActivity, history);
-            } else if (chain.equals(BaseChain.OKEX_MAIN)) {
+            } else if (chain.equals(BaseChain.OKEX_MAIN.INSTANCE)) {
                 final ResOkHistoryHit history = okHistory.get(position);
                 holder.onBindOldOkHistory(mainActivity, history);
             }
@@ -78,9 +78,9 @@ class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        if (chain.equals(BaseChain.BNB_MAIN)) {
+        if (chain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
             return bnbHistories.size();
-        } else if (chain.equals(BaseChain.OKEX_MAIN)) {
+        } else if (chain.equals(BaseChain.OKEX_MAIN.INSTANCE)) {
             return okHistory.size();
         } else {
             return apiNewTxCustomHistory.size();

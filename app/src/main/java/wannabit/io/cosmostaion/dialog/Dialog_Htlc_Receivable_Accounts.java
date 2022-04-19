@@ -23,7 +23,7 @@ import java.util.ArrayList;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.utils.WDp;
 
@@ -77,13 +77,13 @@ public class Dialog_Htlc_Receivable_Accounts extends DialogFragment {
             holder.accountAddress.setText(account.address);
             holder.accountName.setText(account.getAccountTitle(requireContext()));
 
-            if (baseChain.equals(BaseChain.BNB_MAIN)) {
+            if (baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
                 if (account.hasPrivateKey) {
                     holder.accountKeyState.setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorBnb), android.graphics.PorterDuff.Mode.SRC_IN);
                 }
                 WDp.showCoinDp(getContext(), getSActivity().getBaseDao(), baseChain.getMainDenom(), account.getBnbBalanceScale().toPlainString(), holder.accountDenom, holder.accountAvailable, baseChain);
 
-            } else if (baseChain.equals(BaseChain.KAVA_MAIN)) {
+            } else if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                 if (account.hasPrivateKey) {
                     holder.accountKeyState.setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorKava), android.graphics.PorterDuff.Mode.SRC_IN);
                 }

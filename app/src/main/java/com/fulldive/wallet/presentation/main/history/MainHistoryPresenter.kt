@@ -6,7 +6,7 @@ import com.fulldive.wallet.extensions.withDefaults
 import com.fulldive.wallet.interactors.HistoryInteractor
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
 import com.joom.lightsaber.ProvidedBy
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.utils.WDp
 import javax.inject.Inject

@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 import desmos.profiles.v1beta1.QueryGrpc;
 import desmos.profiles.v1beta1.QueryProfile;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.task.CommonTask;
 import wannabit.io.cosmostaion.task.TaskListener;

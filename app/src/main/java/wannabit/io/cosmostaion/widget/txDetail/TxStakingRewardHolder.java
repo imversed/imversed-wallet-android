@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 
 import cosmos.tx.v1beta1.ServiceOuterClass;
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.utils.WDp;
 
@@ -30,9 +30,9 @@ public class TxStakingRewardHolder extends TxHolder {
     }
 
     public void onBindMsg(Context c, BaseData baseData, BaseChain baseChain, ServiceOuterClass.GetTxResponse response, int position, String address, boolean isGen) {
-        WDp.DpMainDenom(baseChain.getChain(), itemRewardAmountDenom);
+        WDp.DpMainDenom(baseChain.getChainName(), itemRewardAmountDenom);
         itemRewardImg.setColorFilter(WDp.getChainColor(c, baseChain), android.graphics.PorterDuff.Mode.SRC_IN);
-        final int dpDecimal = WDp.mainDivideDecimal(baseChain);
+        final int dpDecimal = baseChain.getDivideDecimal();
 
         try {
             cosmos.distribution.v1beta1.Tx.MsgWithdrawDelegatorReward msg = cosmos.distribution.v1beta1.Tx.MsgWithdrawDelegatorReward.parseFrom(response.getTx().getBody().getMessages(position).getValue());

@@ -11,8 +11,9 @@ import io.grpc.StatusRuntimeException
 import io.reactivex.Completable
 import io.reactivex.Single
 import tendermint.p2p.Types
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dao.Account
+import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.utils.WDp
 import wannabit.io.cosmostaion.utils.WLog
 import javax.inject.Inject
@@ -24,13 +25,13 @@ class GrpcInteractor @Inject constructor(
 ) {
     fun update(account: Account, chain: BaseChain): Completable {
         return Completable
-            .concatArray(
+            .mergeArray(
                 updateBondedValidators(chain).subscribeOn(AppSchedulers.io()),
                 updateUnbondedValidators(chain).subscribeOn(AppSchedulers.io()),
                 updateUnbondingValidators(chain).subscribeOn(AppSchedulers.io())
             )
             .andThen(
-                Completable.concatArray(
+                Completable.mergeArray(
                     updateAccount(chain, account).subscribeOn(AppSchedulers.io()),
                     updateBalance(chain, account).subscribeOn(AppSchedulers.io()),
                     updateDelegations(chain, account).subscribeOn(AppSchedulers.io()),
@@ -43,7 +44,7 @@ class GrpcInteractor @Inject constructor(
             .andThen(updateNodeInfo(chain))
             .flatMapCompletable { nodeInfo ->
                 Completable
-                    .concatArray(
+                    .mergeArray(
                         stationInteractor
                             .updateStationParams(
                                 chain,
@@ -144,6 +145,10 @@ class GrpcInteractor @Inject constructor(
             }
     }
 
+    fun getBalances(chain: BaseChain, address: String): Single<List<Balance>> {
+        return grpcRepository.getBalances(chain, address)
+    }
+
     private fun updateValidators(chain: BaseChain): Completable {
         return Single
             .zip(
@@ -229,7 +234,7 @@ class GrpcInteractor @Inject constructor(
             BaseChain.COSMOS_MAIN -> {
                 grpcRepository.updateGravityDex(chain)
             }
-            BaseChain.IOV_MAIN -> Completable.concatArray(
+            BaseChain.IOV_MAIN -> Completable.mergeArray(
                 grpcRepository.updateStarNameFees(),
                 grpcRepository.updateStarNameConfig()
             )
@@ -239,7 +244,7 @@ class GrpcInteractor @Inject constructor(
             BaseChain.JUNO_MAIN -> {
                 updateMintScanCw20Assets(chain, account)
             }
-            BaseChain.KAVA_MAIN -> Completable.concatArray(
+            BaseChain.KAVA_MAIN -> Completable.mergeArray(
                 grpcRepository.updateKavaMarketPrice(),
                 grpcRepository.updateKavaIncentiveParam(),
                 grpcRepository.updateKavaIncentiveReward(account.address)

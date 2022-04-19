@@ -30,7 +30,7 @@ import retrofit2.Response;
 import wannabit.io.cosmostaion.BuildConfig;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.dialog.Dialog_Htlc_Error;
 import wannabit.io.cosmostaion.dialog.Dialog_MoreSwapWait;
@@ -184,7 +184,7 @@ public class HtlcResultActivity extends BaseActivity implements View.OnClickList
         TextView randomHashTv = cardSend.findViewById(R.id.random_hash);
 
         iconImg.setColorFilter(WDp.getChainColor(getBaseContext(), baseChain), android.graphics.PorterDuff.Mode.SRC_IN);
-        if (baseChain.equals(BaseChain.BNB_MAIN) && mResSendBnbTxInfo != null) {
+        if (baseChain.equals(BaseChain.BNB_MAIN.INSTANCE) && mResSendBnbTxInfo != null) {
             final Msg msg = mResSendBnbTxInfo.tx.value.msg.get(0);
 
             if (mResSendBnbTxInfo.ok) {
@@ -204,7 +204,7 @@ public class HtlcResultActivity extends BaseActivity implements View.OnClickList
             Coin sendCoin = WDp.getCoins(msg.value.amount).get(0);
             WDp.showCoinDp(getBaseContext(), getBaseDao(), sendCoin, sendDenom, sendAmount, baseChain);
 
-            WDp.DpMainDenom(baseChain.getChain(), feeDenom);
+            WDp.DpMainDenom(baseChain.getChainName(), feeDenom);
             feeAmount.setText(WDp.getDpAmount2(new BigDecimal(FEE_BNB_SEND), 0, 8));
 
             senderTv.setText(msg.value.from);
@@ -213,7 +213,7 @@ public class HtlcResultActivity extends BaseActivity implements View.OnClickList
             recipientTv.setText(msg.value.recipient_other_chain);
             randomHashTv.setText(msg.value.random_number_hash);
 
-        } else if ((baseChain.equals(BaseChain.KAVA_MAIN)) && mResSendTxInfo != null) {
+        } else if ((baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) && mResSendTxInfo != null) {
             final Msg msg = mResSendTxInfo.tx.value.msg.get(0);
 
             if (mResSendTxInfo.isSuccess()) {
@@ -234,7 +234,7 @@ public class HtlcResultActivity extends BaseActivity implements View.OnClickList
             sendDenom.setText(sendCoin.denom.toUpperCase());
             sendAmount.setText(WDp.getDpAmount2(new BigDecimal(sendCoin.amount), WUtil.getKavaCoinDecimal(getBaseDao(), sendCoin.denom), WUtil.getKavaCoinDecimal(getBaseDao(), sendCoin.denom)));
 
-            WDp.DpMainDenom(baseChain.getChain(), feeDenom);
+            WDp.DpMainDenom(baseChain.getChainName(), feeDenom);
             feeAmount.setText(WDp.getDpAmount2(mResSendTxInfo.simpleFee(), 6, 6));
 
             senderTv.setText(msg.value.from);
@@ -266,7 +266,7 @@ public class HtlcResultActivity extends BaseActivity implements View.OnClickList
 
         iconImg.setColorFilter(WDp.getChainColor(getBaseContext(), mRecipientChain), android.graphics.PorterDuff.Mode.SRC_IN);
 
-        if (mRecipientChain.equals(BaseChain.BNB_MAIN) && mResReceiveBnbTxInfo != null) {
+        if (mRecipientChain.equals(BaseChain.BNB_MAIN.INSTANCE) && mResReceiveBnbTxInfo != null) {
             final Msg msg = mResReceiveBnbTxInfo.tx.value.msg.get(0);
             if (mResReceiveBnbTxInfo.ok) {
                 statusImg.setImageDrawable(getResources().getDrawable(R.drawable.success_ic));
@@ -285,7 +285,7 @@ public class HtlcResultActivity extends BaseActivity implements View.OnClickList
             claimDenom.setText("");
             claimAmount.setText("");
 
-            WDp.DpMainDenom(mRecipientChain.getChain(), feeDenom);
+            WDp.DpMainDenom(mRecipientChain.getChainName(), feeDenom);
             feeAmount.setText(WDp.getDpAmount2(new BigDecimal(FEE_BNB_SEND), 0, 8));
 
             claimerTv.setText(msg.value.from);
@@ -293,7 +293,7 @@ public class HtlcResultActivity extends BaseActivity implements View.OnClickList
             swapIdTv.setText(msg.value.swap_id);
 
         } else if (mResReceiveTxInfo != null) {
-            if (mRecipientChain.equals(BaseChain.KAVA_MAIN)) {
+            if (mRecipientChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                 final Msg msg = mResReceiveTxInfo.tx.value.msg.get(0);
                 if (mResReceiveTxInfo.isSuccess()) {
                     statusImg.setImageDrawable(getResources().getDrawable(R.drawable.success_ic));
@@ -323,7 +323,7 @@ public class HtlcResultActivity extends BaseActivity implements View.OnClickList
                     claimAmount.setText("");
                 }
 
-                WDp.DpMainDenom(mRecipientChain.getChain(), feeDenom);
+                WDp.DpMainDenom(mRecipientChain.getChainName(), feeDenom);
                 feeAmount.setText(WDp.getDpAmount2(mResReceiveTxInfo.simpleFee(), 6, 6));
 
                 claimerTv.setText(msg.value.from);
@@ -337,7 +337,7 @@ public class HtlcResultActivity extends BaseActivity implements View.OnClickList
 
     private void onFetchSendTx(String hash) {
         WLog.w("onFetchSendTx " + hash);
-        if (baseChain.equals(BaseChain.BNB_MAIN)) {
+        if (baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
             ApiClient.getBnbChain(getBaseContext()).getSearchTx(hash, "json").enqueue(new Callback<ResBnbTxInfo>() {
                 @Override
                 public void onResponse(Call<ResBnbTxInfo> call, Response<ResBnbTxInfo> response) {
@@ -356,7 +356,7 @@ public class HtlcResultActivity extends BaseActivity implements View.OnClickList
                 }
             });
 
-        } else if (baseChain.equals(BaseChain.KAVA_MAIN)) {
+        } else if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             ApiClient.getKavaChain(getBaseContext()).getSearchTx(hash).enqueue(new Callback<ResTxInfo>() {
                 @Override
                 public void onResponse(Call<ResTxInfo> call, Response<ResTxInfo> response) {
@@ -381,7 +381,7 @@ public class HtlcResultActivity extends BaseActivity implements View.OnClickList
 
     private void onFetchClaimTx(String hash) {
         WLog.w("onFetchClaimTx " + hash);
-        if (mRecipientChain.equals(BaseChain.BNB_MAIN)) {
+        if (mRecipientChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
             ApiClient.getBnbChain(getBaseContext()).getSearchTx(hash, "json").enqueue(new Callback<ResBnbTxInfo>() {
                 @Override
                 public void onResponse(Call<ResBnbTxInfo> call, Response<ResBnbTxInfo> response) {
@@ -414,7 +414,7 @@ public class HtlcResultActivity extends BaseActivity implements View.OnClickList
                 }
             });
 
-        } else if (mRecipientChain.equals(BaseChain.KAVA_MAIN)) {
+        } else if (mRecipientChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             ApiClient.getKavaChain(getBaseContext()).getSearchTx(hash).enqueue(new Callback<ResTxInfo>() {
                 @Override
                 public void onResponse(Call<ResTxInfo> call, Response<ResTxInfo> response) {
@@ -459,7 +459,7 @@ public class HtlcResultActivity extends BaseActivity implements View.OnClickList
 
     private void onCheckSwapId(String expectedSwapId) {
         WLog.w("onCheckSwapId " + SwapFetchCnt + " " + expectedSwapId);
-        if (mRecipientChain.equals(BaseChain.KAVA_MAIN)) {
+        if (mRecipientChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             ApiClient.getKavaChain(this).getSwapById(expectedSwapId).enqueue(new Callback<ResKavaSwapInfo>() {
                 @Override
                 public void onResponse(Call<ResKavaSwapInfo> call, Response<ResKavaSwapInfo> response) {
@@ -476,7 +476,7 @@ public class HtlcResultActivity extends BaseActivity implements View.OnClickList
                 }
             });
 
-        } else if (mRecipientChain.equals(BaseChain.BNB_MAIN)) {
+        } else if (mRecipientChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
             ApiClient.getBnbChain(this).getSwapById(expectedSwapId).enqueue(new Callback<ResBnbSwapInfo>() {
                 @Override
                 public void onResponse(Call<ResBnbSwapInfo> call, Response<ResBnbSwapInfo> response) {

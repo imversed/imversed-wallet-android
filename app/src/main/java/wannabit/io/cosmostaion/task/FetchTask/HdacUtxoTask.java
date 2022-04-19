@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 import retrofit2.Response;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.model.hdac.HdacUtxo;
 import wannabit.io.cosmostaion.network.ApiClient;
 import wannabit.io.cosmostaion.task.CommonTask;
@@ -30,7 +30,7 @@ public class HdacUtxoTask extends CommonTask {
     protected TaskResult doInBackground(String... strings) {
         try {
             Response<ArrayList<HdacUtxo>> response;
-            if (baseChain.equals(BaseChain.RIZON_TEST)) {
+            if (baseChain.equals(BaseChain.RIZON_TEST.INSTANCE)) {
                 response = ApiClient.getTestHdac(context).getUtxo(hdacAddress).execute();
             } else {
                 response = ApiClient.getMainHdac(context).getUtxo(hdacAddress).execute();

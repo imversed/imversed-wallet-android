@@ -14,7 +14,7 @@ import com.joom.lightsaber.getInstance
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import wannabit.io.cosmostaion.R
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.databinding.LayoutMnemonicBinding
 
 class MnemonicLayout : BaseMvpFrameLayout<LayoutMnemonicBinding>, MnemonicMoxyView {

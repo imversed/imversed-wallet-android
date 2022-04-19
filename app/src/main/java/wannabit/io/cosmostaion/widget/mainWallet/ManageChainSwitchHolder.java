@@ -18,7 +18,7 @@ import java.util.Locale;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.WalletSwitchActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.dao.ChainAccounts;
 import wannabit.io.cosmostaion.utils.WDp;

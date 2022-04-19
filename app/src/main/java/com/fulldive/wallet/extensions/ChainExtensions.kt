@@ -2,7 +2,7 @@ package com.fulldive.wallet.extensions
 
 import com.google.gson.JsonParser
 import org.bitcoinj.crypto.ChildNumber
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 
 private fun fetchPath(json: String, customPath: Int): Triple<Int, Boolean, Boolean> {
     var lastZero = true

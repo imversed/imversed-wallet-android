@@ -1,7 +1,7 @@
 package wannabit.io.cosmostaion.widget.txDetail.nft;
 
-import static wannabit.io.cosmostaion.base.BaseChain.CRYPTO_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.IRIS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.CRYPTO_MAIN;
+import static com.fulldive.wallet.models.BaseChain.IRIS_MAIN;
 
 import android.content.Context;
 import android.view.View;
@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import cosmos.tx.v1beta1.ServiceOuterClass;
 import irismod.nft.Tx;
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.widget.txDetail.TxHolder;
@@ -33,7 +33,7 @@ public class TxIssueDenomHolder extends TxHolder {
     public void onBindMsg(Context c, BaseData baseData, BaseChain baseChain, ServiceOuterClass.GetTxResponse response, int position, String address, boolean isGen) {
         itemIssueDenomImg.setColorFilter(WDp.getChainColor(c, baseChain), android.graphics.PorterDuff.Mode.SRC_IN);
 
-        if (baseChain.equals(IRIS_MAIN)) {
+        if (baseChain.equals(IRIS_MAIN.INSTANCE)) {
             try {
                 Tx.MsgIssueDenom msg = Tx.MsgIssueDenom.parseFrom(response.getTx().getBody().getMessages(position).getValue());
                 itemIssueDenomId.setText(msg.getId());
@@ -41,7 +41,7 @@ public class TxIssueDenomHolder extends TxHolder {
                 itemIssueDenomSchema.setText(msg.getSchema());
             } catch (Exception e) {
             }
-        } else if (baseChain.equals(CRYPTO_MAIN)) {
+        } else if (baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
             try {
                 chainmain.nft.v1.Tx.MsgIssueDenom msg = chainmain.nft.v1.Tx.MsgIssueDenom.parseFrom(response.getTx().getBody().getMessages(position).getValue());
                 itemIssueDenomId.setText(msg.getId());

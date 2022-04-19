@@ -1,7 +1,7 @@
 package wannabit.io.cosmostaion.widget;
 
-import static wannabit.io.cosmostaion.base.BaseChain.CRYPTO_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.IRIS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.CRYPTO_MAIN;
+import static com.fulldive.wallet.models.BaseChain.IRIS_MAIN;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -45,7 +45,7 @@ public class NftMyHolder extends RecyclerView.ViewHolder {
             @Override
             public void onTaskResponse(TaskResult result) {
                 if (result.isSuccess) {
-                    if (activity.baseChain.equals(IRIS_MAIN)) {
+                    if (activity.baseChain.equals(IRIS_MAIN.INSTANCE)) {
                         QueryOuterClass.QueryNFTResponse irisResponse = (QueryOuterClass.QueryNFTResponse) result.resultData;
                         if (irisResponse != null) {
                             try {
@@ -67,7 +67,7 @@ public class NftMyHolder extends RecyclerView.ViewHolder {
                                 }
                             });
                         }
-                    } else if (activity.baseChain.equals(CRYPTO_MAIN)) {
+                    } else if (activity.baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
                         chainmain.nft.v1.Nft.BaseNFT myCryptoNftInfo = (chainmain.nft.v1.Nft.BaseNFT) result.resultData;
                         if (myCryptoNftInfo != null) {
                             try {

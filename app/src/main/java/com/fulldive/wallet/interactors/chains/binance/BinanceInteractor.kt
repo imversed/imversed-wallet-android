@@ -9,7 +9,7 @@ import com.fulldive.wallet.rx.AppSchedulers
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.model.NodeInfo
@@ -24,7 +24,7 @@ class BinanceInteractor @Inject constructor(
 ) {
     fun update(account: Account, chain: BaseChain): Completable {
         return Completable
-            .concatArray(
+            .mergeArray(
                 updateTokensList().subscribeOn(AppSchedulers.io()),
                 updateTickersList().subscribeOn(AppSchedulers.io()),
                 updateFees().subscribeOn(AppSchedulers.io())
@@ -107,6 +107,25 @@ class BinanceInteractor @Inject constructor(
                 error.printStackTrace()
             }
             .onErrorComplete()
+    }
+
+    fun getBalances(address: String): Single<List<Balance>> {
+        return binanceRepository
+            .requestAccount(address)
+            .map { accountInfo ->
+                accountInfo
+                    .balances
+                    ?.map { coin ->
+                        Balance().apply {
+                            symbol = coin.symbol
+                            balance = BigDecimal(coin.free)
+                            locked = BigDecimal(coin.locked)
+                            frozen = BigDecimal(coin.frozen)
+                            fetchTime = System.currentTimeMillis()
+                        }
+                    }
+                    .or(emptyList())
+            }
     }
 
     fun updateNodeInfo(): Single<NodeInfo> {

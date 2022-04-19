@@ -4,7 +4,7 @@ import static wannabit.io.cosmostaion.base.BaseConstant.TASK_HDAC_BROAD_BURN;
 
 import retrofit2.Response;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.ApiClient;
 import wannabit.io.cosmostaion.network.req.ReqHdacBurn;
 import wannabit.io.cosmostaion.network.res.ResHdacBurn;
@@ -30,7 +30,7 @@ public class HdacBurnTask extends CommonTask {
         try {
             ReqHdacBurn req = new ReqHdacBurn(mTxHex);
             Response<ResHdacBurn> response;
-            if (baseChain.equals(BaseChain.RIZON_TEST)) {
+            if (baseChain.equals(BaseChain.RIZON_TEST.INSTANCE)) {
                 response = ApiClient.getTestHdac(context).broadTx(req).execute();
             } else {
                 response = ApiClient.getMainHdac(context).broadTx(req).execute();

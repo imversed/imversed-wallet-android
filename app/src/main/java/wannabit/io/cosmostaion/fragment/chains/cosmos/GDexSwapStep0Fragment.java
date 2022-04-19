@@ -1,6 +1,6 @@
 package wannabit.io.cosmostaion.fragment.chains.cosmos;
 
-import static wannabit.io.cosmostaion.base.BaseChain.COSMOS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.COSMOS_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_GDEX_SWAP;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_GRAVITY_MANAGER;
 
@@ -117,7 +117,7 @@ public class GDexSwapStep0Fragment extends BaseFragment implements View.OnClickL
         setDpDecimals(mInputCoinDecimal);
         mAvailableMaxAmount = getBaseDao().getAvailable(getSActivity().mInputDenom);
         BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getContext(), getSActivity().baseChain, CONST_PW_TX_GDEX_SWAP, 0);
-        if (getSActivity().mInputDenom.equals(COSMOS_MAIN.getMainDenom())) {
+        if (getSActivity().mInputDenom.equals(COSMOS_MAIN.INSTANCE.getMainDenom())) {
             mAvailableMaxAmount = mAvailableMaxAmount.subtract(txFee);
         }
         mAvailableMaxAmount = mAvailableMaxAmount.multiply(new BigDecimal("0.9985"));

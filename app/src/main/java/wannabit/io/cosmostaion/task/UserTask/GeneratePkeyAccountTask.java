@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.crypto.EncResult;
@@ -45,7 +45,7 @@ public class GeneratePkeyAccountTask extends CommonTask {
                     context.getBaseDao().setUserHidenChains(mHideChains);
                 }
                 context.getBaseDao().setLastUser(id);
-                context.getBaseDao().setLastChain(mBaseChain.getChain());
+                context.getBaseDao().setLastChain(mBaseChain.getChainName());
 
             } else {
                 result.errorMsg = "Already existed account";
@@ -66,7 +66,7 @@ public class GeneratePkeyAccountTask extends CommonTask {
         }
         EncResult encR = CryptoHelper.doEncryptData(context.getString(R.string.key_private) + newAccount.uuid, mPKey, false);
 
-        newAccount.baseChain = mBaseChain.getChain();
+        newAccount.baseChain = mBaseChain.getChainName();
         newAccount.address = mAddress;
         newAccount.hasPrivateKey = true;
         newAccount.resource = encR.getEncDataString();

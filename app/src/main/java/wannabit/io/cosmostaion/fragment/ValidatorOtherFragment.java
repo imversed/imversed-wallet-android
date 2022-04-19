@@ -1,6 +1,6 @@
 package wannabit.io.cosmostaion.fragment;
 
-import static wannabit.io.cosmostaion.base.BaseChain.ALTHEA_TEST;
+import static com.fulldive.wallet.models.BaseChain.ALTHEA_TEST;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -80,10 +80,10 @@ public class ValidatorOtherFragment extends BaseFragment implements IRefreshTabL
         if (!isAdded()) return;
         if (getMainActivity().baseChain.isGRPC()) {
             mValidatorSize.setText("" + getBaseDao().mGRpcOtherValidators.size());
-            WUtil.onSortByValidatorPowerV1(getBaseDao().mGRpcOtherValidators);
+            getBaseDao().mGRpcOtherValidators = WUtil.onSortByValidatorPowerV1(getBaseDao().mGRpcOtherValidators);
         } else {
             mValidatorSize.setText("" + getBaseDao().mOtherValidators.size());
-            WUtil.onSortByValidatorPower(getBaseDao().mOtherValidators);
+            getBaseDao().mOtherValidators = WUtil.onSortByValidatorPower(getBaseDao().mOtherValidators);
         }
 
         mOtherValidatorAdapter.notifyDataSetChanged();
@@ -111,7 +111,7 @@ public class ValidatorOtherFragment extends BaseFragment implements IRefreshTabL
         @Override
         public void onBindViewHolder(@NonNull final OtherValidatorHolder holder, final int position) {
             holder.itemBandOracleOff.setVisibility(View.INVISIBLE);
-            final int dpDecimal = WDp.mainDivideDecimal(getMainActivity().baseChain);
+            final int dpDecimal = getMainActivity().baseChain.getDivideDecimal();
             if (getMainActivity().baseChain.isGRPC()) {
                 final Staking.Validator validator = getBaseDao().mGRpcOtherValidators.get(position);
                 try {
@@ -141,7 +141,7 @@ public class ValidatorOtherFragment extends BaseFragment implements IRefreshTabL
                     }
                 });
 
-                if (getMainActivity().baseChain.equals(ALTHEA_TEST)) {
+                if (getMainActivity().baseChain.equals(ALTHEA_TEST.INSTANCE)) {
                     holder.itemTvCommission.setText("--");
                 }
 

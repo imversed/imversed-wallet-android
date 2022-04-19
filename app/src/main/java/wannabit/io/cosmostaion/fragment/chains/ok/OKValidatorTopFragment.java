@@ -1,7 +1,7 @@
 package wannabit.io.cosmostaion.fragment.chains.ok;
 
-import static wannabit.io.cosmostaion.base.BaseChain.OKEX_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.OK_TEST;
+import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
+import static com.fulldive.wallet.models.BaseChain.OK_TEST;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -109,7 +109,7 @@ public class OKValidatorTopFragment extends BaseFragment implements IRefreshTabL
         @Override
         public void onBindViewHolder(@NonNull OKTopValidatorHolder holder, int position) {
             final Validator validator = getBaseDao().mTopValidators.get(position);
-            if (getSActivity().baseChain.equals(OKEX_MAIN) || getSActivity().baseChain.equals(OK_TEST)) {
+            if (getSActivity().baseChain.equals(OKEX_MAIN.INSTANCE) || getSActivity().baseChain.equals(OK_TEST.INSTANCE)) {
                 holder.itemTvMoniker.setText(validator.description.moniker);
                 holder.itemTvVotingPower.setText(WDp.getDpAmount2(new BigDecimal(validator.delegator_shares), 0, 0));
                 holder.itemTvCommission.setText(WDp.getCommissionRate("0"));
@@ -176,6 +176,6 @@ public class OKValidatorTopFragment extends BaseFragment implements IRefreshTabL
     }
 
     public void onSortValidator() {
-        WUtil.onSortByOKValidatorPower(getBaseDao().mTopValidators);
+        getBaseDao().mMyValidators = WUtil.onSortByOKValidatorPower(getBaseDao().mTopValidators);
     }
 }

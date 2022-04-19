@@ -5,7 +5,7 @@ import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_NFTOKEN_
 import irismod.nft.QueryGrpc;
 import irismod.nft.QueryOuterClass;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.task.CommonTask;
 import wannabit.io.cosmostaion.task.TaskListener;
@@ -32,14 +32,14 @@ public class NFTokenInfoGrpcTask extends CommonTask {
     @Override
     protected TaskResult doInBackground(String... strings) {
         try {
-            if (mChain.equals(BaseChain.IRIS_MAIN)) {
+            if (mChain.equals(BaseChain.IRIS_MAIN.INSTANCE)) {
                 QueryOuterClass.QueryNFTRequest request = QueryOuterClass.QueryNFTRequest.newBuilder().setDenomId(mDenomId).setTokenId(mTokenId).build();
                 QueryOuterClass.QueryNFTResponse response = mIrisStub.nFT(request);
 
                 result.isSuccess = true;
                 result.resultData = response;
 
-            } else if (mChain.equals(BaseChain.CRYPTO_MAIN)) {
+            } else if (mChain.equals(BaseChain.CRYPTO_MAIN.INSTANCE)) {
                 chainmain.nft.v1.QueryOuterClass.QueryNFTRequest request = chainmain.nft.v1.QueryOuterClass.QueryNFTRequest.newBuilder().setDenomId(mDenomId).setTokenId(mTokenId).build();
                 chainmain.nft.v1.QueryOuterClass.QueryNFTResponse response = mCryptoStub.nFT(request);
 

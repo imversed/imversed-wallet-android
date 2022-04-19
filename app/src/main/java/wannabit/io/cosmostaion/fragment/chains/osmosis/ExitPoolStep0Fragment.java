@@ -25,7 +25,7 @@ import java.math.RoundingMode;
 import osmosis.gamm.poolmodels.balancer.BalancerPool;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.osmosis.ExitPoolActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.task.TaskListener;
@@ -100,7 +100,7 @@ public class ExitPoolStep0Fragment extends BaseFragment implements View.OnClickL
 
         WUtil.DpOsmosisTokenImg(getBaseDao(), mLpCoinImg, lpDenom);
         WUtil.dpOsmosisTokenName(getSActivity(), getBaseDao(), mLpCoinSymbol, lpDenom);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), lpDenom, mAvailableMaxAmount.toString(), mLpCoinDenom, mLpCoinAmount, BaseChain.OSMOSIS_MAIN);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), lpDenom, mAvailableMaxAmount.toString(), mLpCoinDenom, mLpCoinAmount, BaseChain.OSMOSIS_MAIN.INSTANCE);
         onAddAmountWatcher();
     }
 

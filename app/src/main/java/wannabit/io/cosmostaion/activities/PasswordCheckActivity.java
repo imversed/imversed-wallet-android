@@ -1,8 +1,8 @@
 package wannabit.io.cosmostaion.activities;
 
-import static wannabit.io.cosmostaion.base.BaseChain.BNB_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.KAVA_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.getChain;
+import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
+import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
+import static com.fulldive.wallet.models.BaseChain.getChain;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_CHECK_MNEMONIC;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_CHECK_PRIVATE_KEY;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_PURPOSE;
@@ -105,7 +105,7 @@ import starnamed.x.starname.v1beta1.Types;
 import tendermint.liquidity.v1beta1.Liquidity;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.ITimelessActivity;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dao.Account;
@@ -503,7 +503,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
                     new SendGrpcTask(getBaseApplication(), this, baseChain, account, mTargetAddress, mTargetCoins, mTargetMemo, mTargetFee,
                             getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
-                } else if (baseChain.equals(BNB_MAIN)) {
+                } else if (baseChain.equals(BNB_MAIN.INSTANCE)) {
                     new SimpleBnbSendTask(getBaseApplication(), this, account, mTargetAddress, mTargetCoins, mTargetMemo, mTargetFee)
                             .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
@@ -557,11 +557,11 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
                 break;
             case CONST_PW_TX_HTLS_REFUND:
                 showWaitDialog();
-                if (baseChain.equals(BNB_MAIN)) {
+                if (baseChain.equals(BNB_MAIN.INSTANCE)) {
                     new SimpleBnbHtlcRefundTask(getBaseApplication(), this, account,
                             mSwapId, mTargetMemo).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
-                } else if (baseChain.equals(KAVA_MAIN)) {
+                } else if (baseChain.equals(KAVA_MAIN.INSTANCE)) {
                     new SimpleHtlcRefundTask(getBaseApplication(), this, account, mSwapId,
                             mTargetMemo, mTargetFee).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
                 }
@@ -917,7 +917,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
             return;
         }
 
-        if ((baseChain.equals(BNB_MAIN)) && result.taskType == TASK_GEN_TX_BNB_HTLC_REFUND) {
+        if ((baseChain.equals(BNB_MAIN.INSTANCE)) && result.taskType == TASK_GEN_TX_BNB_HTLC_REFUND) {
             Intent txIntent = new Intent(PasswordCheckActivity.this, TxDetailActivity.class);
             txIntent.putExtra("isGen", true);
             txIntent.putExtra("isSuccess", result.isSuccess);

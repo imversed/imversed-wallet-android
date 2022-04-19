@@ -84,7 +84,7 @@ import cosmos.base.abci.v1beta1.Abci;
 import osmosis.lockup.Lock;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseBroadCastActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dao.Account;
@@ -224,7 +224,7 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
 
     private void onCalculateFees() {
         mSelectedGasRate = WUtil.getGasRate(getSActivity().baseChain, mSelectedGasPosition);
-        if (getSActivity().baseChain.equals(BaseChain.SIF_MAIN)) {
+        if (getSActivity().baseChain.equals(BaseChain.SIF_MAIN.INSTANCE)) {
             mFee = new BigDecimal("100000000000000000");
         } else {
             mFee = mSelectedGasRate.multiply(mEstimateGasAmount).setScale(0, RoundingMode.UP);
@@ -234,17 +234,17 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
     private void onUpdateView() {
         onCalculateFees();
 
-        if (getSActivity().baseChain.equals(BaseChain.SIF_MAIN)) {
+        if (getSActivity().baseChain.equals(BaseChain.SIF_MAIN.INSTANCE)) {
             mRateControlCard.setVisibility(View.GONE);
         } else {
             mRateControlCard.setVisibility(View.VISIBLE);
         }
-        mFeeAmount.setText(WDp.getDpAmount2(mFee, WDp.mainDivideDecimal(getSActivity().baseChain), WDp.mainDivideDecimal(getSActivity().baseChain)));
-        mFeeValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getSActivity().baseChain.getMainDenom(), mFee, WDp.mainDivideDecimal(getSActivity().baseChain)));
+        mFeeAmount.setText(WDp.getDpAmount2(mFee, getSActivity().baseChain.getDivideDecimal(), getSActivity().baseChain.getDivideDecimal()));
+        mFeeValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getSActivity().baseChain.getMainDenom(), mFee, getSActivity().baseChain.getDivideDecimal()));
 
         mGasRate.setText(WDp.getDpGasRate(mSelectedGasRate.toPlainString()));
         mGasAmount.setText(mEstimateGasAmount.toPlainString());
-        if (getSActivity().baseChain.equals(BaseChain.INJ_MAIN)) {
+        if (getSActivity().baseChain.equals(BaseChain.INJ_MAIN.INSTANCE)) {
             mGasFee.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
         }
         mGasFee.setText(mFee.toPlainString());

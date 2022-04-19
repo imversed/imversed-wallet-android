@@ -1,7 +1,7 @@
 package wannabit.io.cosmostaion.fragment.chains.ok;
 
-import static wannabit.io.cosmostaion.base.BaseChain.OKEX_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.OK_TEST;
+import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
+import static com.fulldive.wallet.models.BaseChain.OK_TEST;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -64,7 +64,7 @@ public class OKUnbondingFragment3 extends BaseFragment implements View.OnClickLi
         BigDecimal toDeleagteAmount = new BigDecimal(getSActivity().mToWithdrawCoin.amount);
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
 
-        if (getSActivity().baseChain.equals(OKEX_MAIN) || getSActivity().baseChain.equals(OK_TEST)) {
+        if (getSActivity().baseChain.equals(OKEX_MAIN.INSTANCE) || getSActivity().baseChain.equals(OK_TEST.INSTANCE)) {
             mWithdrawAmount.setText(WDp.getDpAmount2(toDeleagteAmount, 0, 18));
             mFeeAmount.setText(WDp.getDpAmount2(feeAmount, 0, 18));
 

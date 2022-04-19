@@ -15,7 +15,7 @@ import com.fulldive.wallet.presentation.chains.choicenet.ChoiceChainDialogFragme
 import com.fulldive.wallet.rx.AppSchedulers
 import com.joom.lightsaber.ProvidedBy
 import wannabit.io.cosmostaion.R
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import java.util.*
 import javax.inject.Inject
 

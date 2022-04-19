@@ -1,6 +1,6 @@
 package wannabit.io.cosmostaion.activities;
 
-import static wannabit.io.cosmostaion.base.BaseChain.OKEX_MAIN;
+import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_FETCH_NODE_INFO;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_NODE_INFO;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_WITHDRAW_ADDRESS;
@@ -40,7 +40,7 @@ import com.fulldive.wallet.rx.AppSchedulers;
 import io.reactivex.disposables.Disposable;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.dialog.Dialog_ChangeNickName;
 import wannabit.io.cosmostaion.dialog.Dialog_RewardAddressChangeInfo;
@@ -231,7 +231,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
             mView.setVisibility(View.GONE);
             mBtnCheckKey.setVisibility(View.VISIBLE);
             mBtnCheckKey.setText(getString(R.string.str_check_private_key));
-            if (baseChain.equals(OKEX_MAIN)) {
+            if (baseChain.equals(OKEX_MAIN.INSTANCE)) {
                 mPathLayer.setVisibility(View.VISIBLE);
                 mAccountPathTitle.setText(R.string.str_address_type);
                 if (account.customPath > 0) {
@@ -274,7 +274,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
 
             } else {
                 Intent restoreIntent = new Intent(AccountDetailActivity.this, MnemonicRestoreActivity.class);
-                restoreIntent.putExtra("chain", baseChain.getChain());
+                restoreIntent.putExtra("chain", baseChain.getChainName());
                 startActivity(restoreIntent);
             }
 
@@ -288,7 +288,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
 
             } else {
                 Intent restoreIntent = new Intent(AccountDetailActivity.this, PrivateKeyRestoreActivity.class);
-                restoreIntent.putExtra("chain", baseChain.getChain());
+                restoreIntent.putExtra("chain", baseChain.getChainName());
                 startActivity(restoreIntent);
             }
 

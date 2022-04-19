@@ -1,7 +1,7 @@
 package wannabit.io.cosmostaion.activities.tokenDetail;
 
-import static wannabit.io.cosmostaion.base.BaseChain.CRYPTO_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.IRIS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.CRYPTO_MAIN;
+import static com.fulldive.wallet.models.BaseChain.IRIS_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SEND_NFT;
 
 import android.content.Intent;
@@ -32,7 +32,7 @@ import irismod.nft.QueryOuterClass;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.nft.NFTSendActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.tokenDetail.TokenDetailSupportHolder;
@@ -76,9 +76,9 @@ public class NFTokenDetailActivity extends BaseActivity implements View.OnClickL
         account = getBaseDao().getAccount(getBaseDao().getLastUser());
         baseChain = BaseChain.getChain(account.baseChain);
         //TODO: Support Imversed nft
-        if (baseChain.equals(IRIS_MAIN)) {
+        if (baseChain.equals(IRIS_MAIN.INSTANCE)) {
             mIrisResponse = (QueryOuterClass.QueryNFTResponse) getIntent().getSerializableExtra("irisResponse");
-        } else if (baseChain.equals(CRYPTO_MAIN)) {
+        } else if (baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
             myCryptoNftInfo = (chainmain.nft.v1.Nft.BaseNFT) getIntent().getSerializableExtra("myNftInfo");
         }
         mDenomId = getIntent().getStringExtra("mDenomId");
@@ -108,10 +108,10 @@ public class NFTokenDetailActivity extends BaseActivity implements View.OnClickL
 
     private void onUpdateView() {
         try {
-            if (baseChain.equals(IRIS_MAIN)) {
+            if (baseChain.equals(IRIS_MAIN.INSTANCE)) {
                 Glide.with(this).load(mIrisResponse.getNft().getUri()).diskCacheStrategy(DiskCacheStrategy.ALL).
                         placeholder(R.drawable.icon_nft_none).error(R.drawable.icon_nft_none).fitCenter().into(mNftImg);
-            } else if (baseChain.equals(CRYPTO_MAIN)) {
+            } else if (baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
                 Glide.with(this).load(WUtil.getNftImgUrl(myCryptoNftInfo.getData())).diskCacheStrategy(DiskCacheStrategy.ALL).
                         placeholder(R.drawable.icon_nft_none).error(R.drawable.icon_nft_none).fitCenter().into(mNftImg);
             }
@@ -123,10 +123,10 @@ public class NFTokenDetailActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         if (v.equals(mNftImg)) {
-            if (baseChain.equals(IRIS_MAIN)) {
+            if (baseChain.equals(IRIS_MAIN.INSTANCE)) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mIrisResponse.getNft().getUri()));
                 startActivity(intent);
-            } else if (baseChain.equals(CRYPTO_MAIN)) {
+            } else if (baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WUtil.getNftImgUrl(myCryptoNftInfo.getData())));
                 startActivity(intent);
             }

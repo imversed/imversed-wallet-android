@@ -18,7 +18,7 @@ import org.json.JSONObject
 import osmosis.gamm.poolmodels.balancer.BalancerPool
 import tendermint.liquidity.v1beta1.Liquidity
 import tendermint.p2p.Types
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dao.Assets
 import wannabit.io.cosmostaion.dao.Cw20Assets
 import wannabit.io.cosmostaion.dao.Cw20BalanceReq

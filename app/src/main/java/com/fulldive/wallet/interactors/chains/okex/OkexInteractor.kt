@@ -6,9 +6,10 @@ import com.fulldive.wallet.rx.AppSchedulers
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.base.BaseConstant
 import wannabit.io.cosmostaion.dao.Account
+import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.model.NodeInfo
 import javax.inject.Inject
 
@@ -19,14 +20,14 @@ class OkexInteractor @Inject constructor(
 ) {
     fun update(account: Account, chain: BaseChain): Completable {
         return Completable
-            .concatArray(
+            .mergeArray(
                 updateValidatorsList().subscribeOn(AppSchedulers.io()),
                 updateTickersList().subscribeOn(AppSchedulers.io())
                     .onErrorComplete(),  //XXX: remove
                 updateTokensList().subscribeOn(AppSchedulers.io())
             )
             .andThen(
-                Completable.concatArray(
+                Completable.mergeArray(
                     updateAccountBalance(account).subscribeOn(AppSchedulers.io()),
                     updateUnbonding(account).subscribeOn(AppSchedulers.io()),
                     updateStakingInfo(account).subscribeOn(AppSchedulers.io())
@@ -67,7 +68,6 @@ class OkexInteractor @Inject constructor(
         return okexRepository.updateStakingInfo(account)
     }
 
-
     fun updateAccount(account: Account): Completable {
         return okexRepository
             .requestAccount(account.address)
@@ -82,6 +82,11 @@ class OkexInteractor @Inject constructor(
                 }
             }
             .flatMapCompletable(okexRepository::setAccount)
+    }
+
+    fun getBalances(address: String): Single<List<Balance>> {
+        return okexRepository
+            .requestAccountBalance(address)
     }
 
     fun updateNodeInfo(): Single<NodeInfo> {

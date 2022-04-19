@@ -19,7 +19,7 @@ import com.fulldive.wallet.presentation.accounts.AddAccountDialogFragment
 import com.fulldive.wallet.presentation.base.BaseMvpDialogFragment
 import com.joom.lightsaber.getInstance
 import wannabit.io.cosmostaion.R
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 
 
 class ChoiceChainDialogFragment : BaseMvpDialogFragment() {
@@ -46,9 +46,9 @@ class ChoiceChainDialogFragment : BaseMvpDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val view = LayoutInflater.from(activity).inflate(R.layout.dialog_list, null)
-        val items = BaseChain.values().toList()
+        val items = BaseChain.chains
             .filter { chain ->
-                chain.isSupported && (chains.isEmpty() || chains.contains(chain.chain))
+                chain.isSupported && (chains.isEmpty() || chains.contains(chain.chainName))
             }
 
         val linearLayout = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -91,7 +91,7 @@ class ChoiceChainDialogFragment : BaseMvpDialogFragment() {
             if (isAddNet) {
                 showDialog(
                     AddAccountDialogFragment.newInstance(
-                        chain.chain
+                        chain.chainName
                     )
                 )
             }

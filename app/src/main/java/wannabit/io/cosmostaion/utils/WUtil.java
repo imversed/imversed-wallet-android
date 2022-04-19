@@ -1,49 +1,49 @@
 package wannabit.io.cosmostaion.utils;
 
-import static wannabit.io.cosmostaion.base.BaseChain.AKASH_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.ALTHEA_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.ALTHEA_TEST;
-import static wannabit.io.cosmostaion.base.BaseChain.AXELAR_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.BAND_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.BITCANNA_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.BITSONG_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.BNB_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.CERBERUS_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.CERTIK_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.CHIHUAHUA_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.COMDEX_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.COSMOS_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.COSMOS_TEST;
-import static wannabit.io.cosmostaion.base.BaseChain.CRYPTO_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.CUDOS_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.DESMOS_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.EMONEY_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.EVMOS_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.FETCHAI_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.GRABRIDGE_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.IMVERSED_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.INJ_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.IOV_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.IRIS_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.IRIS_TEST;
-import static wannabit.io.cosmostaion.base.BaseChain.JUNO_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.KAVA_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.KI_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.KONSTELL_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.LUM_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.MEDI_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.OKEX_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.OMNIFLIX_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.OSMOSIS_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.PERSIS_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.PROVENANCE_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.REGEN_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.RIZON_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.SECRET_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.SENTINEL_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.SIF_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.STARGAZE_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.UMEE_MAIN;
+import static com.fulldive.wallet.models.BaseChain.AKASH_MAIN;
+import static com.fulldive.wallet.models.BaseChain.ALTHEA_MAIN;
+import static com.fulldive.wallet.models.BaseChain.ALTHEA_TEST;
+import static com.fulldive.wallet.models.BaseChain.AXELAR_MAIN;
+import static com.fulldive.wallet.models.BaseChain.BAND_MAIN;
+import static com.fulldive.wallet.models.BaseChain.BITCANNA_MAIN;
+import static com.fulldive.wallet.models.BaseChain.BITSONG_MAIN;
+import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
+import static com.fulldive.wallet.models.BaseChain.CERBERUS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.CERTIK_MAIN;
+import static com.fulldive.wallet.models.BaseChain.CHIHUAHUA_MAIN;
+import static com.fulldive.wallet.models.BaseChain.COMDEX_MAIN;
+import static com.fulldive.wallet.models.BaseChain.COSMOS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.COSMOS_TEST;
+import static com.fulldive.wallet.models.BaseChain.CRYPTO_MAIN;
+import static com.fulldive.wallet.models.BaseChain.CUDOS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.DESMOS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.EMONEY_MAIN;
+import static com.fulldive.wallet.models.BaseChain.EVMOS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.FETCHAI_MAIN;
+import static com.fulldive.wallet.models.BaseChain.GRABRIDGE_MAIN;
+import static com.fulldive.wallet.models.BaseChain.IMVERSED_MAIN;
+import static com.fulldive.wallet.models.BaseChain.INJ_MAIN;
+import static com.fulldive.wallet.models.BaseChain.IOV_MAIN;
+import static com.fulldive.wallet.models.BaseChain.IRIS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.IRIS_TEST;
+import static com.fulldive.wallet.models.BaseChain.JUNO_MAIN;
+import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
+import static com.fulldive.wallet.models.BaseChain.KI_MAIN;
+import static com.fulldive.wallet.models.BaseChain.KONSTELL_MAIN;
+import static com.fulldive.wallet.models.BaseChain.LUM_MAIN;
+import static com.fulldive.wallet.models.BaseChain.MEDI_MAIN;
+import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
+import static com.fulldive.wallet.models.BaseChain.OMNIFLIX_MAIN;
+import static com.fulldive.wallet.models.BaseChain.OSMOSIS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.PERSIS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.PROVENANCE_MAIN;
+import static com.fulldive.wallet.models.BaseChain.REGEN_MAIN;
+import static com.fulldive.wallet.models.BaseChain.RIZON_MAIN;
+import static com.fulldive.wallet.models.BaseChain.SECRET_MAIN;
+import static com.fulldive.wallet.models.BaseChain.SENTINEL_MAIN;
+import static com.fulldive.wallet.models.BaseChain.SIF_MAIN;
+import static com.fulldive.wallet.models.BaseChain.STARGAZE_MAIN;
+import static com.fulldive.wallet.models.BaseChain.UMEE_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.*;
 
 import android.content.Context;
@@ -101,7 +101,7 @@ import wannabit.io.cosmostaion.activities.chains.nft.NFTListActivity;
 import wannabit.io.cosmostaion.activities.chains.osmosis.LabsListActivity;
 import wannabit.io.cosmostaion.activities.chains.sif.SifDexListActivity;
 import wannabit.io.cosmostaion.activities.chains.starname.StarNameListActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.dao.Account;
@@ -582,119 +582,139 @@ public class WUtil {
     /**
      * Sorts
      */
-    public static void onSortByValidatorName(List<Validator> validators) {
-        Collections.sort(validators, (o1, o2) -> {
+    public static List<Validator> onSortByValidatorName(List<Validator> validators) {
+        List<Validator> result = new ArrayList<>(validators);
+        Collections.sort(result, (o1, o2) -> {
             return o1.description.moniker.compareTo(o2.description.moniker);
         });
-        Collections.sort(validators, (o1, o2) -> {
+        Collections.sort(result, (o1, o2) -> {
             if (o1.jailed && !o2.jailed) return 1;
             else if (!o1.jailed && o2.jailed) return -1;
             else return 0;
         });
+        return result;
     }
 
-    public static void onSortByValidatorNameV1(List<Staking.Validator> validators) {
-        Collections.sort(validators, (o1, o2) -> {
+    public static List<Staking.Validator> onSortByValidatorNameV1(List<Staking.Validator> validators) {
+        List<Staking.Validator> result = new ArrayList<>(validators);
+        Collections.sort(result, (o1, o2) -> {
             return o1.getDescription().getMoniker().compareTo(o2.getDescription().getMoniker());
         });
-        Collections.sort(validators, (o1, o2) -> {
+        Collections.sort(result, (o1, o2) -> {
             if (o1.getJailed() && !o2.getJailed()) return 1;
             else if (!o1.getJailed() && o2.getJailed()) return -1;
             else return 0;
         });
+        return result;
     }
 
-    public static void onSortByValidatorPower(List<Validator> validators) {
-        Collections.sort(validators, (o1, o2) -> {
+    public static List<Validator> onSortByValidatorPower(List<Validator> validators) {
+        List<Validator> result = new ArrayList<>(validators);
+        Collections.sort(result, (o1, o2) -> {
             return Double.compare(Double.parseDouble(o2.tokens), Double.parseDouble(o1.tokens));
         });
-        Collections.sort(validators, (o1, o2) -> {
+        Collections.sort(result, (o1, o2) -> {
             if (o1.jailed && !o2.jailed) return 1;
             else if (!o1.jailed && o2.jailed) return -1;
             else return 0;
         });
+        return result;
     }
 
-    public static void onSortByValidatorPowerV1(List<Staking.Validator> validators) {
-        Collections.sort(validators, (o1, o2) -> {
+    public static List<Staking.Validator> onSortByValidatorPowerV1(List<Staking.Validator> validators) {
+        List<Staking.Validator> result = new ArrayList<>(validators);
+        Collections.sort(result, (o1, o2) -> {
             return Double.compare(Double.parseDouble(o2.getTokens()), Double.parseDouble(o1.getTokens()));
         });
-        Collections.sort(validators, (o1, o2) -> {
+        Collections.sort(result, (o1, o2) -> {
             if (o1.getJailed() && !o2.getJailed()) return 1;
             else if (!o1.getJailed() && o2.getJailed()) return -1;
             else return 0;
         });
+        return result;
     }
 
-    public static void onSortByOKValidatorPower(List<Validator> validators) {
-        Collections.sort(validators, (o1, o2) -> Double.compare(Double.parseDouble(o2.delegator_shares), Double.parseDouble(o1.delegator_shares)));
-        Collections.sort(validators, (o1, o2) -> {
+    public static List<Validator> onSortByOKValidatorPower(List<Validator> validators) {
+        List<Validator> result = new ArrayList<>(validators);
+        Collections.sort(result, (o1, o2) -> Double.compare(Double.parseDouble(o2.delegator_shares), Double.parseDouble(o1.delegator_shares)));
+        Collections.sort(result, (o1, o2) -> {
             if (o1.jailed && !o2.jailed) return 1;
             else if (!o1.jailed && o2.jailed) return -1;
             else return 0;
         });
+        return result;
     }
 
 
-    public static void onSortByDelegate(List<Validator> validators, final BaseData dao) {
-        Collections.sort(validators, (o1, o2) -> {
+    public static List<Validator> onSortByDelegate(List<Validator> validators, final BaseData dao) {
+        List<Validator> result = new ArrayList<>(validators);
+        Collections.sort(result, (o1, o2) -> {
             BigDecimal bondingO1 = dao.delegatedAmountByValidator(o1.operator_address);
             BigDecimal bondingO2 = dao.delegatedAmountByValidator(o2.operator_address);
             return bondingO2.compareTo(bondingO1);
 
         });
-        Collections.sort(validators, (o1, o2) -> {
+        Collections.sort(result, (o1, o2) -> {
             if (o1.jailed && !o2.jailed) return 1;
             else if (!o1.jailed && o2.jailed) return -1;
             else return 0;
         });
+        return result;
     }
 
-    public static void onSortByDelegateV1(List<Staking.Validator> validators, final BaseData dao) {
-        Collections.sort(validators, (o1, o2) -> {
+    public static List<Staking.Validator> onSortByDelegateV1(List<Staking.Validator> validators, final BaseData dao) {
+        List<Staking.Validator> result = new ArrayList<>(validators);
+        Collections.sort(result, (o1, o2) -> {
             BigDecimal bondingO1 = dao.getDelegation(o1.getOperatorAddress());
             BigDecimal bondingO2 = dao.getDelegation(o2.getOperatorAddress());
             return bondingO2.compareTo(bondingO1);
         });
-        Collections.sort(validators, (o1, o2) -> {
+        Collections.sort(result, (o1, o2) -> {
             if (o1.getJailed() && !o2.getJailed()) return 1;
             else if (!o1.getJailed() && o2.getJailed()) return -1;
             else return 0;
         });
+        return result;
     }
 
-    public static void onSortByReward(List<Validator> validators, String denom, BaseData basedata) {
-        Collections.sort(validators, (o1, o2) -> {
+    public static List<Validator> onSortByReward(List<Validator> validators, String denom, BaseData basedata) {
+        List<Validator> result = new ArrayList<>(validators);
+        Collections.sort(result, (o1, o2) -> {
             BigDecimal rewardO1 = basedata.rewardAmountByValidator(denom, o1.operator_address);
             BigDecimal rewardO2 = basedata.rewardAmountByValidator(denom, o2.operator_address);
             return rewardO2.compareTo(rewardO1);
         });
-        Collections.sort(validators, (o1, o2) -> {
+        Collections.sort(result, (o1, o2) -> {
             if (o1.jailed && !o2.jailed) return 1;
             else if (!o1.jailed && o2.jailed) return -1;
             else return 0;
         });
+        return result;
     }
 
-    public static void onSortByRewardV1(List<Staking.Validator> validators, String denom, final BaseData dao) {
-        Collections.sort(validators, (o1, o2) -> {
+    public static List<Staking.Validator> onSortByRewardV1(List<Staking.Validator> validators, String denom, final BaseData dao) {
+        List<Staking.Validator> result = new ArrayList<>(validators);
+        Collections.sort(result, (o1, o2) -> {
             BigDecimal rewardO1 = dao.getReward(denom, o1.getOperatorAddress());
             BigDecimal rewardO2 = dao.getReward(denom, o2.getOperatorAddress());
             return rewardO2.compareTo(rewardO1);
         });
-        Collections.sort(validators, (o1, o2) -> {
+        Collections.sort(result, (o1, o2) -> {
             if (o1.getJailed() && !o2.getJailed()) return 1;
             else if (!o1.getJailed() && o2.getJailed()) return -1;
             else return 0;
         });
+        return result;
     }
 
-    public static void onSortByOnlyReward(List<Validator> validators, String denom, BaseData basedata) {
-        Collections.sort(validators, (o1, o2) -> {
+    public static List<Validator> onSortByOnlyReward(List<Validator> validators, String denom, BaseData basedata) {
+        List<Validator> result = new ArrayList<>(validators);
+        Collections.sort(result, (o1, o2) -> {
             BigDecimal rewardO1 = basedata.rewardAmountByValidator(denom, o1.operator_address);
             BigDecimal rewardO2 = basedata.rewardAmountByValidator(denom, o2.operator_address);
             return rewardO2.compareTo(rewardO1);
         });
+        return result;
     }
 
     public static void onSortRewardAmount(ArrayList<Distribution.DelegationDelegatorReward> rewards, String denom) {
@@ -718,33 +738,37 @@ public class WUtil {
         return BigDecimal.ZERO;
     }
 
-    public static void onSortingByCommission(List<Validator> validators) {
-        Collections.sort(validators, (o1, o2) -> {
+    public static List<Validator> onSortingByCommission(List<Validator> validators) {
+        List<Validator> result = new ArrayList<>(validators);
+        Collections.sort(result, (o1, o2) -> {
             if (Float.parseFloat(o1.commission.commission_rates.rate) > Float.parseFloat(o2.commission.commission_rates.rate))
                 return 1;
             else if (Float.parseFloat(o1.commission.commission_rates.rate) < Float.parseFloat(o2.commission.commission_rates.rate))
                 return -1;
             else return 0;
         });
-        Collections.sort(validators, (o1, o2) -> {
+        Collections.sort(result, (o1, o2) -> {
             if (o1.jailed && !o2.jailed) return 1;
             else if (!o1.jailed && o2.jailed) return -1;
             else return 0;
         });
+        return result;
     }
 
-    public static void onSortingByCommissionV1(List<Staking.Validator> validators) {
-        Collections.sort(validators, (o1, o2) -> {
+    public static List<Staking.Validator> onSortingByCommissionV1(List<Staking.Validator> validators) {
+        List<Staking.Validator> result = new ArrayList<>(validators);
+        Collections.sort(result, (o1, o2) -> {
             return Float.compare(
                     Float.parseFloat(o1.getCommission().getCommissionRates().getRate()),
                     Float.parseFloat(o2.getCommission().getCommissionRates().getRate())
             );
         });
-        Collections.sort(validators, (o1, o2) -> {
+        Collections.sort(result, (o1, o2) -> {
             if (o1.getJailed() && !o2.getJailed()) return 1;
             else if (!o1.getJailed() && o2.getJailed()) return -1;
             else return 0;
         });
+        return result;
     }
 
     public static void onSortingDenom(List<String> denom, BaseChain chain) {
@@ -752,7 +776,7 @@ public class WUtil {
             if (o1.equals(chain.getMainDenom())) return -1;
             if (o2.equals(chain.getMainDenom())) return 1;
 
-            if (chain.equals(KAVA_MAIN)) {
+            if (chain.equals(KAVA_MAIN.INSTANCE)) {
                 if (o1.equals(TOKEN_HARD)) return -1;
                 if (o2.equals(TOKEN_HARD)) return 1;
 
@@ -766,11 +790,11 @@ public class WUtil {
             if (o1.symbol.equals(chain.getMainDenom())) return -1;
             if (o2.symbol.equals(chain.getMainDenom())) return 1;
 
-            if (chain.equals(KAVA_MAIN)) {
+            if (chain.equals(KAVA_MAIN.INSTANCE)) {
                 if (o1.symbol.equals(TOKEN_HARD)) return -1;
                 if (o2.symbol.equals(TOKEN_HARD)) return 1;
 
-            } else if (chain.equals(OKEX_MAIN)) {
+            } else if (chain.equals(OKEX_MAIN.INSTANCE)) {
                 if (o1.symbol.equals("okb-c4d")) return -1;
                 if (o2.symbol.equals("okb-c4d")) return 1;
             }
@@ -845,7 +869,7 @@ public class WUtil {
      * @memo size
      */
     public static int getMaxMemoSize(BaseChain chain) {
-        if (chain.equals(BNB_MAIN)) {
+        if (chain.equals(BNB_MAIN.INSTANCE)) {
             return BaseConstant.MEMO_BNB;
         }
         return BaseConstant.MEMO_ATOM;
@@ -915,7 +939,7 @@ public class WUtil {
 
     public static int getSifCoinDecimal(BaseData baseData, String denom) {
         if (denom != null) {
-            if (denom.equalsIgnoreCase(SIF_MAIN.getMainDenom())) {
+            if (denom.equalsIgnoreCase(SIF_MAIN.INSTANCE.getMainDenom())) {
                 return 18;
             } else if (denom.startsWith("ibc/")) {
                 return getIbcDecimal(baseData, denom);
@@ -949,7 +973,7 @@ public class WUtil {
     }
 
     public static int getGBridgeCoinDecimal(BaseData baseData, String denom) {
-        if (denom.equalsIgnoreCase(GRABRIDGE_MAIN.getMainDenom())) {
+        if (denom.equalsIgnoreCase(GRABRIDGE_MAIN.INSTANCE.getMainDenom())) {
             return 6;
         } else if (denom.startsWith("ibc/")) {
             return getIbcDecimal(baseData, denom);
@@ -963,7 +987,7 @@ public class WUtil {
     }
 
     public static int getGBridgeCoinDecimal(String denom) {
-        if (denom.equalsIgnoreCase(GRABRIDGE_MAIN.getMainDenom())) {
+        if (denom.equalsIgnoreCase(GRABRIDGE_MAIN.INSTANCE.getMainDenom())) {
             return 6;
         } else if (denom.equalsIgnoreCase("gravity0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2")) {
             return 18;
@@ -976,7 +1000,7 @@ public class WUtil {
     }
 
     public static int getCosmosCoinDecimal(BaseData baseData, String denom) {
-        if (denom.equalsIgnoreCase(COSMOS_MAIN.getMainDenom())) {
+        if (denom.equalsIgnoreCase(COSMOS_MAIN.INSTANCE.getMainDenom())) {
             return 6;
         } else if (denom.startsWith("pool")) {
             Liquidity.Pool poolInfo = baseData.getGravityPoolByDenom(denom);
@@ -991,7 +1015,7 @@ public class WUtil {
 
     public static int getOsmosisCoinDecimal(BaseData baseData, String denom) {
         if (denom != null) {
-            if (denom.equalsIgnoreCase(OSMOSIS_MAIN.getMainDenom()) || denom.equalsIgnoreCase(TOKEN_ION)) {
+            if (denom.equalsIgnoreCase(OSMOSIS_MAIN.INSTANCE.getMainDenom()) || denom.equalsIgnoreCase(TOKEN_ION)) {
                 return 6;
             } else if (denom.startsWith("gamm/pool/")) {
                 return 18;
@@ -1004,7 +1028,7 @@ public class WUtil {
 
     public static int getInjCoinDecimal(BaseData baseData, String denom) {
         if (denom != null) {
-            if (denom.equalsIgnoreCase(INJ_MAIN.getMainDenom())) {
+            if (denom.equalsIgnoreCase(INJ_MAIN.INSTANCE.getMainDenom())) {
                 return 18;
             } else if (denom.startsWith("ibc/")) {
                 return getIbcDecimal(baseData, denom);
@@ -1031,7 +1055,7 @@ public class WUtil {
      * Token Name
      */
     public static String dpCosmosTokenName(BaseData baseData, String denom) {
-        if (denom.equals(COSMOS_MAIN.getMainDenom())) {
+        if (denom.equals(COSMOS_MAIN.INSTANCE.getMainDenom())) {
             return "ATOM";
 
         } else if (denom.startsWith("pool")) {
@@ -1063,7 +1087,7 @@ public class WUtil {
     }
 
     public static String dpCosmosTokenName(Context c, BaseData baseData, TextView textView, String denom) {
-        if (denom.equals(COSMOS_MAIN.getMainDenom())) {
+        if (denom.equals(COSMOS_MAIN.INSTANCE.getMainDenom())) {
             textView.setTextColor(ContextCompat.getColor(c, R.color.colorAtom));
             textView.setText("ATOM");
 
@@ -1102,7 +1126,7 @@ public class WUtil {
     }
 
     public static String dpKavaTokenName(Context c, BaseData baseData, TextView textView, String denom) {
-        if (denom.equalsIgnoreCase(KAVA_MAIN.getMainDenom())) {
+        if (denom.equalsIgnoreCase(KAVA_MAIN.INSTANCE.getMainDenom())) {
             textView.setTextColor(ContextCompat.getColor(c, R.color.colorKava));
             textView.setText(R.string.str_kava_c);
         } else if (denom.equalsIgnoreCase(TOKEN_HARD)) {
@@ -1365,9 +1389,9 @@ public class WUtil {
      * Token Img
      */
     public static void DpCosmosTokenImg(BaseData baseData, ImageView imageView, String denom) {
-        if (denom.equalsIgnoreCase(COSMOS_MAIN.getMainDenom())) {
+        if (denom.equalsIgnoreCase(COSMOS_MAIN.INSTANCE.getMainDenom())) {
             Picasso.get().cancelRequest(imageView);
-            imageView.setImageResource(COSMOS_MAIN.getCoinIcon());
+            imageView.setImageResource(COSMOS_MAIN.INSTANCE.getCoinIcon());
         } else if (denom.startsWith("pool")) {
             Liquidity.Pool poolInfo = baseData.getGravityPoolByDenom(denom);
             if (poolInfo != null) {
@@ -1384,9 +1408,9 @@ public class WUtil {
 
     public static void DpOsmosisTokenImg(BaseData baseData, ImageView imageView, String denom) {
         if (denom != null) {
-            if (denom.equalsIgnoreCase(OSMOSIS_MAIN.getMainDenom())) {
+            if (denom.equalsIgnoreCase(OSMOSIS_MAIN.INSTANCE.getMainDenom())) {
                 Picasso.get().cancelRequest(imageView);
-                imageView.setImageResource(OSMOSIS_MAIN.getCoinIcon());
+                imageView.setImageResource(OSMOSIS_MAIN.INSTANCE.getCoinIcon());
             } else if (denom.equalsIgnoreCase(TOKEN_ION)) {
                 imageView.setImageResource(R.drawable.token_ion);
             } else if (denom.startsWith("gamm/pool/")) {
@@ -1403,9 +1427,9 @@ public class WUtil {
 
     public static void DpSifTokenImg(BaseData baseData, ImageView imageView, String denom) {
         if (denom != null) {
-            if (denom.equalsIgnoreCase(SIF_MAIN.getMainDenom())) {
+            if (denom.equalsIgnoreCase(SIF_MAIN.INSTANCE.getMainDenom())) {
                 Picasso.get().cancelRequest(imageView);
-                imageView.setImageResource(SIF_MAIN.getCoinIcon());
+                imageView.setImageResource(SIF_MAIN.INSTANCE.getCoinIcon());
             } else if (denom.startsWith("c")) {
                 Assets assets = baseData.getAsset(denom);
                 if (assets != null) {
@@ -1423,9 +1447,9 @@ public class WUtil {
 
     public static void DpKavaTokenImg(BaseData baseData, ImageView imageView, String denom) {
         if (denom != null) {
-            if (denom.equalsIgnoreCase(KAVA_MAIN.getMainDenom())) {
+            if (denom.equalsIgnoreCase(KAVA_MAIN.INSTANCE.getMainDenom())) {
                 Picasso.get().cancelRequest(imageView);
-                imageView.setImageResource(KAVA_MAIN.getCoinIcon());
+                imageView.setImageResource(KAVA_MAIN.INSTANCE.getCoinIcon());
             } else if (denom.startsWith("ibc/")) {
                 IbcToken ibcToken = baseData.getIbcToken(denom.replaceAll("ibc/", ""));
                 if (ibcToken != null) {
@@ -1706,36 +1730,36 @@ public class WUtil {
 
     public static ArrayList<BaseChain> getDesmosAirDropChains() {
         ArrayList<BaseChain> result = new ArrayList<>();
-        result.add(COSMOS_MAIN);
-        result.add(OSMOSIS_MAIN);
-        result.add(AKASH_MAIN);
-        result.add(BAND_MAIN);
-        result.add(CRYPTO_MAIN);
-        result.add(JUNO_MAIN);
-        result.add(KAVA_MAIN);
-        result.add(EMONEY_MAIN);
-        result.add(REGEN_MAIN);
+        result.add(COSMOS_MAIN.INSTANCE);
+        result.add(OSMOSIS_MAIN.INSTANCE);
+        result.add(AKASH_MAIN.INSTANCE);
+        result.add(BAND_MAIN.INSTANCE);
+        result.add(CRYPTO_MAIN.INSTANCE);
+        result.add(JUNO_MAIN.INSTANCE);
+        result.add(KAVA_MAIN.INSTANCE);
+        result.add(EMONEY_MAIN.INSTANCE);
+        result.add(REGEN_MAIN.INSTANCE);
         return result;
     }
 
     public static String getDesmosPrefix(BaseChain baseChain) {
-        if (baseChain.equals(COSMOS_MAIN)) {
+        if (baseChain.equals(COSMOS_MAIN.INSTANCE)) {
             return "cosmos";
-        } else if (baseChain.equals(OSMOSIS_MAIN)) {
+        } else if (baseChain.equals(OSMOSIS_MAIN.INSTANCE)) {
             return "osmo";
-        } else if (baseChain.equals(AKASH_MAIN)) {
+        } else if (baseChain.equals(AKASH_MAIN.INSTANCE)) {
             return "akash";
-        } else if (baseChain.equals(BAND_MAIN)) {
+        } else if (baseChain.equals(BAND_MAIN.INSTANCE)) {
             return "band";
-        } else if (baseChain.equals(CRYPTO_MAIN)) {
+        } else if (baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
             return "cro";
-        } else if (baseChain.equals(JUNO_MAIN)) {
+        } else if (baseChain.equals(JUNO_MAIN.INSTANCE)) {
             return "juno";
-        } else if (baseChain.equals(KAVA_MAIN)) {
+        } else if (baseChain.equals(KAVA_MAIN.INSTANCE)) {
             return "kava";
-        } else if (baseChain.equals(EMONEY_MAIN)) {
+        } else if (baseChain.equals(EMONEY_MAIN.INSTANCE)) {
             return "emoney";
-        } else if (baseChain.equals(REGEN_MAIN)) {
+        } else if (baseChain.equals(REGEN_MAIN.INSTANCE)) {
             return "regen";
         } else {
             return "";
@@ -1743,23 +1767,23 @@ public class WUtil {
     }
 
     public static String getDesmosConfig(BaseChain baseChain) {
-        if (baseChain.equals(COSMOS_MAIN)) {
+        if (baseChain.equals(COSMOS_MAIN.INSTANCE)) {
             return "cosmos";
-        } else if (baseChain.equals(OSMOSIS_MAIN)) {
+        } else if (baseChain.equals(OSMOSIS_MAIN.INSTANCE)) {
             return "osmosis";
-        } else if (baseChain.equals(AKASH_MAIN)) {
+        } else if (baseChain.equals(AKASH_MAIN.INSTANCE)) {
             return "akash";
-        } else if (baseChain.equals(BAND_MAIN)) {
+        } else if (baseChain.equals(BAND_MAIN.INSTANCE)) {
             return "band";
-        } else if (baseChain.equals(CRYPTO_MAIN)) {
+        } else if (baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
             return "cro";
-        } else if (baseChain.equals(JUNO_MAIN)) {
+        } else if (baseChain.equals(JUNO_MAIN.INSTANCE)) {
             return "juno";
-        } else if (baseChain.equals(KAVA_MAIN)) {
+        } else if (baseChain.equals(KAVA_MAIN.INSTANCE)) {
             return "kava";
-        } else if (baseChain.equals(EMONEY_MAIN)) {
+        } else if (baseChain.equals(EMONEY_MAIN.INSTANCE)) {
             return "emoney";
-        } else if (baseChain.equals(REGEN_MAIN)) {
+        } else if (baseChain.equals(REGEN_MAIN.INSTANCE)) {
             return "regen";
         } else {
             return "";
@@ -2091,10 +2115,10 @@ public class WUtil {
             if (ticker.symbol.equals(getBnbTicSymbol(denom))) {
                 if (isBnbBaseMarketToken(denom)) {
                     BigDecimal perPrice = BigDecimal.ONE.divide(new BigDecimal(ticker.lastPrice), 8, RoundingMode.DOWN);
-                    return perPrice.multiply(WDp.perUserCurrencyValue(baseData, BNB_MAIN.getMainDenom()));
+                    return perPrice.multiply(WDp.perUserCurrencyValue(baseData, BNB_MAIN.INSTANCE.getMainDenom()));
                 } else {
                     BigDecimal perPrice = BigDecimal.ONE.multiply(new BigDecimal(ticker.lastPrice)).setScale(8, RoundingMode.DOWN);
-                    return perPrice.multiply(WDp.perUserCurrencyValue(baseData, BNB_MAIN.getMainDenom()));
+                    return perPrice.multiply(WDp.perUserCurrencyValue(baseData, BNB_MAIN.INSTANCE.getMainDenom()));
                 }
             }
         }
@@ -2140,10 +2164,10 @@ public class WUtil {
 
     public static String getBnbTicSymbol(String symbol) {
         if (isBnbBaseMarketToken(symbol)) {
-            return BNB_MAIN.getMainDenom() + "_" + symbol;
+            return BNB_MAIN.INSTANCE.getMainDenom() + "_" + symbol;
 
         } else {
-            return symbol + "_" + BNB_MAIN.getMainDenom();
+            return symbol + "_" + BNB_MAIN.INSTANCE.getMainDenom();
         }
     }
 
@@ -2217,103 +2241,103 @@ public class WUtil {
      * coingeko
      */
     public static Intent getCoingekoIntent(MainActivity mainActivity) {
-        if (mainActivity.baseChain.equals(COSMOS_MAIN)) {
+        if (mainActivity.baseChain.equals(COSMOS_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/cosmos")));
 
-        } else if (mainActivity.baseChain.equals(IMVERSED_MAIN)) {
+        } else if (mainActivity.baseChain.equals(IMVERSED_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/imversed")));
 
-        } else if (mainActivity.baseChain.equals(IRIS_MAIN)) {
+        } else if (mainActivity.baseChain.equals(IRIS_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/irisnet")));
 
-        } else if (mainActivity.baseChain.equals(IOV_MAIN)) {
+        } else if (mainActivity.baseChain.equals(IOV_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/starname")));
 
-        } else if (mainActivity.baseChain.equals(BNB_MAIN)) {
+        } else if (mainActivity.baseChain.equals(BNB_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/binancecoin")));
 
-        } else if (mainActivity.baseChain.equals(KAVA_MAIN)) {
+        } else if (mainActivity.baseChain.equals(KAVA_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/kava")));
 
-        } else if (mainActivity.baseChain.equals(BAND_MAIN)) {
+        } else if (mainActivity.baseChain.equals(BAND_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/band-protocol")));
 
-        } else if (mainActivity.baseChain.equals(CERTIK_MAIN)) {
+        } else if (mainActivity.baseChain.equals(CERTIK_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/certik")));
 
-        } else if (mainActivity.baseChain.equals(SECRET_MAIN)) {
+        } else if (mainActivity.baseChain.equals(SECRET_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/secret")));
 
-        } else if (mainActivity.baseChain.equals(AKASH_MAIN)) {
+        } else if (mainActivity.baseChain.equals(AKASH_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/akash-network")));
 
-        } else if (mainActivity.baseChain.equals(OKEX_MAIN)) {
+        } else if (mainActivity.baseChain.equals(OKEX_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/okexchain")));
 
-        } else if (mainActivity.baseChain.equals(SENTINEL_MAIN)) {
+        } else if (mainActivity.baseChain.equals(SENTINEL_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/sentinel")));
 
-        } else if (mainActivity.baseChain.equals(PERSIS_MAIN)) {
+        } else if (mainActivity.baseChain.equals(PERSIS_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/persistence")));
 
-        } else if (mainActivity.baseChain.equals(FETCHAI_MAIN)) {
+        } else if (mainActivity.baseChain.equals(FETCHAI_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/fetch-ai")));
 
-        } else if (mainActivity.baseChain.equals(CRYPTO_MAIN)) {
+        } else if (mainActivity.baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/crypto-com-chain")));
 
-        } else if (mainActivity.baseChain.equals(SIF_MAIN)) {
+        } else if (mainActivity.baseChain.equals(SIF_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/sifchain")));
 
-        } else if (mainActivity.baseChain.equals(KI_MAIN)) {
+        } else if (mainActivity.baseChain.equals(KI_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/ki")));
 
-        } else if (mainActivity.baseChain.equals(OSMOSIS_MAIN)) {
+        } else if (mainActivity.baseChain.equals(OSMOSIS_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/osmosis")));
 
-        } else if (mainActivity.baseChain.equals(MEDI_MAIN)) {
+        } else if (mainActivity.baseChain.equals(MEDI_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/medibloc")));
 
-        } else if (mainActivity.baseChain.equals(EMONEY_MAIN)) {
+        } else if (mainActivity.baseChain.equals(EMONEY_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/e-money")));
 
-        } else if (mainActivity.baseChain.equals(JUNO_MAIN)) {
+        } else if (mainActivity.baseChain.equals(JUNO_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/juno-network")));
 
-        } else if (mainActivity.baseChain.equals(REGEN_MAIN)) {
+        } else if (mainActivity.baseChain.equals(REGEN_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/regen")));
 
-        } else if (mainActivity.baseChain.equals(BITCANNA_MAIN)) {
+        } else if (mainActivity.baseChain.equals(BITCANNA_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/bitcanna")));
 
-        } else if (mainActivity.baseChain.equals(INJ_MAIN)) {
+        } else if (mainActivity.baseChain.equals(INJ_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/injective-protocol")));
 
-        } else if (mainActivity.baseChain.equals(BITSONG_MAIN)) {
+        } else if (mainActivity.baseChain.equals(BITSONG_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/bitsong")));
 
-        } else if (mainActivity.baseChain.equals(RIZON_MAIN)) {
+        } else if (mainActivity.baseChain.equals(RIZON_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/rizon")));
 
-        } else if (mainActivity.baseChain.equals(COMDEX_MAIN)) {
+        } else if (mainActivity.baseChain.equals(COMDEX_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/comdex")));
 
-        } else if (mainActivity.baseChain.equals(STARGAZE_MAIN)) {
+        } else if (mainActivity.baseChain.equals(STARGAZE_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/stargaze")));
 
-        } else if (mainActivity.baseChain.equals(LUM_MAIN)) {
+        } else if (mainActivity.baseChain.equals(LUM_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/lum-network")));
 
-        } else if (mainActivity.baseChain.equals(DESMOS_MAIN)) {
+        } else if (mainActivity.baseChain.equals(DESMOS_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/desmos")));
 
-        } else if (mainActivity.baseChain.equals(CHIHUAHUA_MAIN)) {
+        } else if (mainActivity.baseChain.equals(CHIHUAHUA_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/chihuahua-chain")));
 
-        } else if (mainActivity.baseChain.equals(UMEE_MAIN)) {
+        } else if (mainActivity.baseChain.equals(UMEE_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/umee")));
 
-        } else if (mainActivity.baseChain.equals(CUDOS_MAIN)) {
+        } else if (mainActivity.baseChain.equals(CUDOS_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/cudos")));
         }
         return null;
@@ -2325,213 +2349,213 @@ public class WUtil {
     public static void getGuide(MainActivity mainActivity, ImageView guideImg, TextView guideTitle, TextView guideMsg, Button guideBtn1, Button guideBtn2) {
         guideBtn1.setText(R.string.str_home);
         guideBtn2.setText(R.string.str_blog);
-        if (mainActivity.baseChain.equals(COSMOS_MAIN) || mainActivity.baseChain.equals(COSMOS_TEST)) {
+        if (mainActivity.baseChain.equals(COSMOS_MAIN.INSTANCE) || mainActivity.baseChain.equals(COSMOS_TEST.INSTANCE)) {
             guideImg.setImageResource(R.drawable.guide_img);
             guideTitle.setText(R.string.str_front_guide_title);
             guideMsg.setText(R.string.str_front_guide_msg);
             guideBtn1.setText(R.string.str_guide);
             guideBtn2.setText(R.string.str_faq);
 
-        } else if (mainActivity.baseChain.equals(IMVERSED_MAIN)) {
+        } else if (mainActivity.baseChain.equals(IMVERSED_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_imversed);
             guideTitle.setText(R.string.str_front_guide_title_imversed);
             guideMsg.setText(R.string.str_front_guide_msg_imversed);
 
-        } else if (mainActivity.baseChain.equals(IRIS_MAIN) || mainActivity.baseChain.equals(IRIS_TEST)) {
+        } else if (mainActivity.baseChain.equals(IRIS_MAIN.INSTANCE) || mainActivity.baseChain.equals(IRIS_TEST.INSTANCE)) {
             guideImg.setImageResource(R.drawable.irisnet_img);
             guideTitle.setText(R.string.str_front_guide_title_iris);
             guideMsg.setText(R.string.str_front_guide_msg_iris);
 
-        } else if (mainActivity.baseChain.equals(BNB_MAIN)) {
+        } else if (mainActivity.baseChain.equals(BNB_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.binance_img);
             guideTitle.setText(R.string.str_front_guide_title_binance);
             guideMsg.setText(R.string.str_front_guide_msg_bnb);
             guideBtn1.setText(R.string.str_faq_bnb);
             guideBtn2.setText(R.string.str_guide_bnb);
 
-        } else if (mainActivity.baseChain.equals(KAVA_MAIN)) {
+        } else if (mainActivity.baseChain.equals(KAVA_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.kavamain_img);
             guideTitle.setText(R.string.str_front_guide_title_kava);
             guideMsg.setText(R.string.str_front_guide_msg_kava);
 
-        } else if (mainActivity.baseChain.equals(IOV_MAIN)) {
+        } else if (mainActivity.baseChain.equals(IOV_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.iov_img);
             guideTitle.setText(R.string.str_front_guide_title_iov);
             guideMsg.setText(R.string.str_front_guide_msg_iov);
 
-        } else if (mainActivity.baseChain.equals(BAND_MAIN)) {
+        } else if (mainActivity.baseChain.equals(BAND_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_bandprotocol);
             guideTitle.setText(R.string.str_front_guide_title_band);
             guideMsg.setText(R.string.str_front_guide_msg_band);
 
-        } else if (mainActivity.baseChain.equals(OKEX_MAIN)) {
+        } else if (mainActivity.baseChain.equals(OKEX_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_okx);
             guideTitle.setText(R.string.str_front_guide_title_ok);
             guideMsg.setText(R.string.str_front_guide_msg_ok);
             guideBtn1.setText(R.string.str_faq_ok);
             guideBtn2.setText(R.string.str_guide_ok);
 
-        } else if (mainActivity.baseChain.equals(CERTIK_MAIN)) {
+        } else if (mainActivity.baseChain.equals(CERTIK_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.certik_img);
             guideTitle.setText(R.string.str_front_guide_title_certik);
             guideMsg.setText(R.string.str_front_guide_msg_certik);
 
-        } else if (mainActivity.baseChain.equals(AKASH_MAIN)) {
+        } else if (mainActivity.baseChain.equals(AKASH_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.akash_img);
             guideTitle.setText(R.string.str_front_guide_title_akash);
             guideMsg.setText(R.string.str_front_guide_msg_akash);
 
-        } else if (mainActivity.baseChain.equals(SECRET_MAIN)) {
+        } else if (mainActivity.baseChain.equals(SECRET_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.secret_img);
             guideTitle.setText(R.string.str_front_guide_title_secret);
             guideMsg.setText(R.string.str_front_guide_msg_secret);
 
-        } else if (mainActivity.baseChain.equals(PERSIS_MAIN)) {
+        } else if (mainActivity.baseChain.equals(PERSIS_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.persistence_img);
             guideTitle.setText(R.string.str_front_guide_title_persis);
             guideMsg.setText(R.string.str_front_guide_msg_persis);
 
-        } else if (mainActivity.baseChain.equals(SENTINEL_MAIN)) {
+        } else if (mainActivity.baseChain.equals(SENTINEL_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.sentinel_img);
             guideTitle.setText(R.string.str_front_guide_title_sentinel);
             guideMsg.setText(R.string.str_front_guide_msg_sentinel);
 
-        } else if (mainActivity.baseChain.equals(FETCHAI_MAIN)) {
+        } else if (mainActivity.baseChain.equals(FETCHAI_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.fetchai_img);
             guideTitle.setText(R.string.str_front_guide_title_fetch);
             guideMsg.setText(R.string.str_front_guide_msg_fetch);
 
-        } else if (mainActivity.baseChain.equals(CRYPTO_MAIN)) {
+        } else if (mainActivity.baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.cryptochain_img);
             guideTitle.setText(R.string.str_front_guide_title_crypto);
             guideMsg.setText(R.string.str_front_guide_msg_crypto);
 
-        } else if (mainActivity.baseChain.equals(SIF_MAIN)) {
+        } else if (mainActivity.baseChain.equals(SIF_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.sifchain_img);
             guideTitle.setText(R.string.str_front_guide_title_sif);
             guideMsg.setText(R.string.str_front_guide_msg_sif);
 
-        } else if (mainActivity.baseChain.equals(KI_MAIN)) {
+        } else if (mainActivity.baseChain.equals(KI_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.kifoundation_img);
             guideTitle.setText(R.string.str_front_guide_title_ki);
             guideMsg.setText(R.string.str_front_guide_msg_ki);
 
-        } else if (mainActivity.baseChain.equals(OSMOSIS_MAIN)) {
+        } else if (mainActivity.baseChain.equals(OSMOSIS_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_osmosis);
             guideTitle.setText(R.string.str_front_guide_title_osmosis);
             guideMsg.setText(R.string.str_front_guide_msg_osmosis);
 
-        } else if (mainActivity.baseChain.equals(RIZON_MAIN)) {
+        } else if (mainActivity.baseChain.equals(RIZON_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_rizon);
             guideTitle.setText(R.string.str_front_guide_title_rizon);
             guideMsg.setText(R.string.str_front_guide_msg_rizon);
 
-        } else if (mainActivity.baseChain.equals(MEDI_MAIN)) {
+        } else if (mainActivity.baseChain.equals(MEDI_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.medibloc_img);
             guideTitle.setText(R.string.str_front_guide_title_medi);
             guideMsg.setText(R.string.str_front_guide_msg_medi);
 
-        } else if (mainActivity.baseChain.equals(EMONEY_MAIN)) {
+        } else if (mainActivity.baseChain.equals(EMONEY_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_emoney);
             guideTitle.setText(R.string.str_front_guide_title_emoney);
             guideMsg.setText(R.string.str_front_guide_msg_emoney);
 
-        } else if (mainActivity.baseChain.equals(JUNO_MAIN)) {
+        } else if (mainActivity.baseChain.equals(JUNO_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_juno);
             guideTitle.setText(R.string.str_front_guide_title_juno);
             guideMsg.setText(R.string.str_front_guide_msg_juno);
 
-        } else if (mainActivity.baseChain.equals(REGEN_MAIN)) {
+        } else if (mainActivity.baseChain.equals(REGEN_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_regen);
             guideTitle.setText(R.string.str_front_guide_title_regen);
             guideMsg.setText(R.string.str_front_guide_msg_regen);
 
-        } else if (mainActivity.baseChain.equals(BITCANNA_MAIN)) {
+        } else if (mainActivity.baseChain.equals(BITCANNA_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_bitcanna);
             guideTitle.setText(R.string.str_front_guide_title_bitcanna);
             guideMsg.setText(R.string.str_front_guide_msg_bitcanna);
 
-        } else if (mainActivity.baseChain.equals(ALTHEA_MAIN)) {
+        } else if (mainActivity.baseChain.equals(ALTHEA_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_althea);
             guideTitle.setText(R.string.str_front_guide_title_althea);
             guideMsg.setText(R.string.str_front_guide_msg_althea);
 
-        } else if (mainActivity.baseChain.equals(STARGAZE_MAIN)) {
+        } else if (mainActivity.baseChain.equals(STARGAZE_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_stargaze);
             guideTitle.setText(R.string.str_front_guide_title_stargaze);
             guideMsg.setText(R.string.str_front_guide_msg_stargaze);
 
-        } else if (mainActivity.baseChain.equals(GRABRIDGE_MAIN)) {
+        } else if (mainActivity.baseChain.equals(GRABRIDGE_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_gravitybridge);
             guideTitle.setText(R.string.str_front_guide_title_grabridge);
             guideMsg.setText(R.string.str_front_guide_msg_grabridge);
 
-        } else if (mainActivity.baseChain.equals(COMDEX_MAIN)) {
+        } else if (mainActivity.baseChain.equals(COMDEX_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_comdex);
             guideTitle.setText(R.string.str_front_guide_title_comdex);
             guideMsg.setText(R.string.str_front_guide_msg_comdex);
 
-        } else if (mainActivity.baseChain.equals(INJ_MAIN)) {
+        } else if (mainActivity.baseChain.equals(INJ_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_injective);
             guideTitle.setText(R.string.str_front_guide_title_inj);
             guideMsg.setText(R.string.str_front_guide_msg_inj);
 
-        } else if (mainActivity.baseChain.equals(BITSONG_MAIN)) {
+        } else if (mainActivity.baseChain.equals(BITSONG_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_bitsong);
             guideTitle.setText(R.string.str_front_guide_title_bitsong);
             guideMsg.setText(R.string.str_front_guide_msg_bitsong);
 
-        } else if (mainActivity.baseChain.equals(DESMOS_MAIN)) {
+        } else if (mainActivity.baseChain.equals(DESMOS_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_desmos);
             guideTitle.setText(R.string.str_front_guide_title_desmos);
             guideMsg.setText(R.string.str_front_guide_msg_desmos);
 
-        } else if (mainActivity.baseChain.equals(LUM_MAIN)) {
+        } else if (mainActivity.baseChain.equals(LUM_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_lumnetwork);
             guideTitle.setText(R.string.str_front_guide_title_lum);
             guideMsg.setText(R.string.str_front_guide_msg_lum);
 
-        } else if (mainActivity.baseChain.equals(CHIHUAHUA_MAIN)) {
+        } else if (mainActivity.baseChain.equals(CHIHUAHUA_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_chihuahua);
             guideTitle.setText(R.string.str_front_guide_title_chihuahua);
             guideMsg.setText(R.string.str_front_guide_msg_chihuahua);
 
-        } else if (mainActivity.baseChain.equals(UMEE_MAIN)) {
+        } else if (mainActivity.baseChain.equals(UMEE_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_umee);
             guideTitle.setText(R.string.str_front_guide_title_umee);
             guideMsg.setText(R.string.str_front_guide_msg_umee);
 
-        } else if (mainActivity.baseChain.equals(AXELAR_MAIN)) {
+        } else if (mainActivity.baseChain.equals(AXELAR_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_axelar);
             guideTitle.setText(R.string.str_front_guide_title_axelar);
             guideMsg.setText(R.string.str_front_guide_msg_axelar);
 
-        } else if (mainActivity.baseChain.equals(KONSTELL_MAIN)) {
+        } else if (mainActivity.baseChain.equals(KONSTELL_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_konstellation);
             guideTitle.setText(R.string.str_front_guide_title_konstellation);
             guideMsg.setText(R.string.str_front_guide_msg_konstellation);
 
-        } else if (mainActivity.baseChain.equals(EVMOS_MAIN)) {
+        } else if (mainActivity.baseChain.equals(EVMOS_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_evmos);
             guideTitle.setText(R.string.str_front_guide_title_evmos);
             guideMsg.setText(R.string.str_front_guide_msg_evmos);
 
-        } else if (mainActivity.baseChain.equals(CUDOS_MAIN)) {
+        } else if (mainActivity.baseChain.equals(CUDOS_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_cudos);
             guideTitle.setText(R.string.str_front_guide_title_cudos);
             guideMsg.setText(R.string.str_front_guide_msg_cudos);
 
-        } else if (mainActivity.baseChain.equals(PROVENANCE_MAIN)) {
+        } else if (mainActivity.baseChain.equals(PROVENANCE_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_provenance);
             guideTitle.setText(R.string.str_front_guide_title_provenance);
             guideMsg.setText(R.string.str_front_guide_msg_provenance);
 
-        } else if (mainActivity.baseChain.equals(CERBERUS_MAIN)) {
+        } else if (mainActivity.baseChain.equals(CERBERUS_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_cerberus);
             guideTitle.setText(R.string.str_front_guide_title_cerberus);
             guideMsg.setText(R.string.str_front_guide_msg_cerberus);
 
-        } else if (mainActivity.baseChain.equals(OMNIFLIX_MAIN)) {
+        } else if (mainActivity.baseChain.equals(OMNIFLIX_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_omniflix);
             guideTitle.setText(R.string.str_front_guide_title_omniflix);
             guideMsg.setText(R.string.str_front_guide_msg_omniflix);
@@ -2542,35 +2566,35 @@ public class WUtil {
     public static void getWalletData(BaseChain chain, ImageView coinImg, TextView coinDenom) {
         coinImg.setImageResource(chain.getCoinIcon());
         coinDenom.setText(chain.getSymbolTitle());
-        coinDenom.setTextColor(ContextCompat.getColor(coinDenom.getContext(), chain.getDenomColor()));
+        coinDenom.setTextColor(ContextCompat.getColor(coinDenom.getContext(), chain.getChainColor()));
     }
 
     public static void getDexTitle(BaseChain chain, RelativeLayout mBtnDex, TextView dexTitle) {
-        if (chain.equals(COSMOS_MAIN)) {
+        if (chain.equals(COSMOS_MAIN.INSTANCE)) {
             mBtnDex.setVisibility(View.VISIBLE);
             dexTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_gravitydex, 0, 0, 0);
-            dexTitle.setText("Gravity Dex");
-        } else if (chain.equals(IRIS_MAIN) || chain.equals(CRYPTO_MAIN)) {
+            dexTitle.setText(R.string.str_gravity_dex);
+        } else if (chain.equals(IRIS_MAIN.INSTANCE) || chain.equals(CRYPTO_MAIN.INSTANCE)) {
             mBtnDex.setVisibility(View.VISIBLE);
             dexTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_nft, 0, 0, 0);
             dexTitle.setText(R.string.str_nft_c);
-        } else if (chain.equals(IOV_MAIN)) {
+        } else if (chain.equals(IOV_MAIN.INSTANCE)) {
             mBtnDex.setVisibility(View.VISIBLE);
             dexTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.name_ic, 0, 0, 0);
             dexTitle.setText(R.string.str_starname_service);
-        } else if (chain.equals(KAVA_MAIN)) {
+        } else if (chain.equals(KAVA_MAIN.INSTANCE)) {
             mBtnDex.setVisibility(View.VISIBLE);
             dexTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.cdp_s_ic, 0, 0, 0);
             dexTitle.setText(R.string.str_kava_dapp);
-        } else if (chain.equals(SIF_MAIN)) {
+        } else if (chain.equals(SIF_MAIN.INSTANCE)) {
             mBtnDex.setVisibility(View.VISIBLE);
             dexTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_sifdex, 0, 0, 0);
             dexTitle.setText(R.string.str_sif_dex_title);
-        } else if (chain.equals(OSMOSIS_MAIN)) {
+        } else if (chain.equals(OSMOSIS_MAIN.INSTANCE)) {
             mBtnDex.setVisibility(View.VISIBLE);
             dexTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_osmosislab, 0, 0, 0);
             dexTitle.setText(R.string.str_osmosis_defi_lab);
-        } else if (chain.equals(DESMOS_MAIN)) {
+        } else if (chain.equals(DESMOS_MAIN.INSTANCE)) {
             mBtnDex.setVisibility(View.VISIBLE);
             dexTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_profile, 0, 0, 0);
             dexTitle.setText(R.string.str_desmos_airdrop);
@@ -2580,17 +2604,17 @@ public class WUtil {
     }
 
     public static Intent getDexIntent(MainActivity mainActivity, BaseChain chain) {
-        if (chain.equals(COSMOS_MAIN)) {
+        if (chain.equals(COSMOS_MAIN.INSTANCE)) {
             return new Intent(mainActivity, GravityListActivity.class);
-        } else if (chain.equals(IRIS_MAIN) || chain.equals(CRYPTO_MAIN)) {
+        } else if (chain.equals(IRIS_MAIN.INSTANCE) || chain.equals(CRYPTO_MAIN.INSTANCE)) {
             return new Intent(mainActivity, NFTListActivity.class);
-        } else if (chain.equals(IOV_MAIN)) {
+        } else if (chain.equals(IOV_MAIN.INSTANCE)) {
             return new Intent(mainActivity, StarNameListActivity.class);
-        } else if (chain.equals(KAVA_MAIN)) {
+        } else if (chain.equals(KAVA_MAIN.INSTANCE)) {
             return new Intent(mainActivity, DAppsList5Activity.class);
-        } else if (chain.equals(SIF_MAIN)) {
+        } else if (chain.equals(SIF_MAIN.INSTANCE)) {
             return new Intent(mainActivity, SifDexListActivity.class);
-        } else if (chain.equals(OSMOSIS_MAIN)) {
+        } else if (chain.equals(OSMOSIS_MAIN.INSTANCE)) {
             return new Intent(mainActivity, LabsListActivity.class);
         } else {
             return null;
@@ -2598,270 +2622,270 @@ public class WUtil {
     }
 
     public static Intent getGuide1Intent(BaseChain chain) {
-        if (chain.equals(COSMOS_MAIN)) {
+        if (chain.equals(COSMOS_MAIN.INSTANCE)) {
             if (Locale.getDefault().getLanguage().equalsIgnoreCase("ko")) {
                 return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.cosmostation.io/files/cosmostation_guide_app_ko.pdf"));
             } else {
                 return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.cosmostation.io/files/cosmostation_guide_app_en.pdf"));
             }
 
-        } else if (chain.equals(IMVERSED_MAIN)) {
+        } else if (chain.equals(IMVERSED_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://imversed.com"));
 
-        } else if (chain.equals(IRIS_MAIN)) {
+        } else if (chain.equals(IRIS_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.irisnet.org/"));
 
-        } else if (chain.equals(BNB_MAIN)) {
+        } else if (chain.equals(BNB_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.binance.org"));
 
-        } else if (chain.equals(KAVA_MAIN)) {
+        } else if (chain.equals(KAVA_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.kava.io/registration/"));
 
-        } else if (chain.equals(IOV_MAIN)) {
+        } else if (chain.equals(IOV_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.starname.me/"));
 
-        } else if (chain.equals(BAND_MAIN)) {
+        } else if (chain.equals(BAND_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://bandprotocol.com/"));
 
-        } else if (chain.equals(OKEX_MAIN)) {
+        } else if (chain.equals(OKEX_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.okex.com/"));
 
-        } else if (chain.equals(CERTIK_MAIN)) {
+        } else if (chain.equals(CERTIK_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.certik.foundation/"));
 
-        } else if (chain.equals(AKASH_MAIN)) {
+        } else if (chain.equals(AKASH_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://akash.network/"));
 
-        } else if (chain.equals(SECRET_MAIN)) {
+        } else if (chain.equals(SECRET_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://scrt.network"));
 
-        } else if (chain.equals(PERSIS_MAIN)) {
+        } else if (chain.equals(PERSIS_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://persistence.one/"));
 
-        } else if (chain.equals(SENTINEL_MAIN)) {
+        } else if (chain.equals(SENTINEL_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://sentinel.co/"));
 
-        } else if (chain.equals(FETCHAI_MAIN)) {
+        } else if (chain.equals(FETCHAI_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://fetch.ai/"));
 
-        } else if (chain.equals(CRYPTO_MAIN)) {
+        } else if (chain.equals(CRYPTO_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://crypto.org/"));
 
-        } else if (chain.equals(SIF_MAIN)) {
+        } else if (chain.equals(SIF_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://sifchain.finance/"));
 
-        } else if (chain.equals(KI_MAIN)) {
+        } else if (chain.equals(KI_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://foundation.ki/en"));
 
-        } else if (chain.equals(OSMOSIS_MAIN)) {
+        } else if (chain.equals(OSMOSIS_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://osmosis.zone/"));
 
-        } else if (chain.equals(MEDI_MAIN)) {
+        } else if (chain.equals(MEDI_MAIN.INSTANCE)) {
             if (Locale.getDefault().getLanguage().equalsIgnoreCase("ko")) {
                 return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medibloc.com"));
             } else {
                 return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medibloc.com/en/ "));
             }
 
-        } else if (chain.equals(EMONEY_MAIN)) {
+        } else if (chain.equals(EMONEY_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.e-money.com/"));
 
-        } else if (chain.equals(RIZON_MAIN)) {
+        } else if (chain.equals(RIZON_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.hdactech.com/en/index.do"));
 
-        } else if (chain.equals(JUNO_MAIN)) {
+        } else if (chain.equals(JUNO_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://junochain.com/"));
 
-        } else if (chain.equals(REGEN_MAIN)) {
+        } else if (chain.equals(REGEN_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.regen.network/"));
 
-        } else if (chain.equals(BITCANNA_MAIN)) {
+        } else if (chain.equals(BITCANNA_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.bitcanna.io/"));
 
-        } else if (chain.equals(ALTHEA_MAIN)) {
+        } else if (chain.equals(ALTHEA_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.althea.net/"));
 
-        } else if (chain.equals(STARGAZE_MAIN)) {
+        } else if (chain.equals(STARGAZE_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://stargaze.zone/"));
 
-        } else if (chain.equals(GRABRIDGE_MAIN)) {
+        } else if (chain.equals(GRABRIDGE_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.gravitybridge.net/"));
 
-        } else if (chain.equals(COMDEX_MAIN)) {
+        } else if (chain.equals(COMDEX_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://comdex.one/home"));
 
-        } else if (chain.equals(INJ_MAIN)) {
+        } else if (chain.equals(INJ_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://injectiveprotocol.com/"));
 
-        } else if (chain.equals(BITSONG_MAIN)) {
+        } else if (chain.equals(BITSONG_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://explorebitsong.com/"));
 
-        } else if (chain.equals(DESMOS_MAIN)) {
+        } else if (chain.equals(DESMOS_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.desmos.network/"));
 
-        } else if (chain.equals(LUM_MAIN)) {
+        } else if (chain.equals(LUM_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://lum.network/"));
 
-        } else if (chain.equals(CHIHUAHUA_MAIN)) {
+        } else if (chain.equals(CHIHUAHUA_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://chi.huahua.wtf/"));
 
-        } else if (chain.equals(UMEE_MAIN)) {
+        } else if (chain.equals(UMEE_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://umee.cc/"));
 
-        } else if (chain.equals(AXELAR_MAIN)) {
+        } else if (chain.equals(AXELAR_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://axelar.network/"));
 
-        } else if (chain.equals(KONSTELL_MAIN)) {
+        } else if (chain.equals(KONSTELL_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://konstellation.tech/"));
 
-        } else if (chain.equals(EVMOS_MAIN)) {
+        } else if (chain.equals(EVMOS_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://evmos.org/"));
 
-        } else if (chain.equals(CUDOS_MAIN)) {
+        } else if (chain.equals(CUDOS_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.cudos.org/"));
 
-        } else if (chain.equals(PROVENANCE_MAIN)) {
+        } else if (chain.equals(PROVENANCE_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.provenance.io/"));
 
-        } else if (chain.equals(CERBERUS_MAIN)) {
+        } else if (chain.equals(CERBERUS_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://cerberus.zone/"));
 
-        } else if (chain.equals(OMNIFLIX_MAIN)) {
+        } else if (chain.equals(OMNIFLIX_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://omniflix.network/"));
         }
         return null;
     }
 
     public static Intent getGuide2Intent(BaseChain chain) {
-        if (chain.equals(COSMOS_MAIN)) {
+        if (chain.equals(COSMOS_MAIN.INSTANCE)) {
             if (Locale.getDefault().getLanguage().equalsIgnoreCase("ko")) {
                 return new Intent(Intent.ACTION_VIEW, Uri.parse("https://guide.cosmostation.io/app_wallet_ko.html"));
             } else {
                 return new Intent(Intent.ACTION_VIEW, Uri.parse("https://guide.cosmostation.io/app_wallet_en.html"));
             }
 
-        } else if (chain.equals(IMVERSED_MAIN)) {
+        } else if (chain.equals(IMVERSED_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://imversed.com"));     // TODO Imversed
 
-        } else if (chain.equals(IRIS_MAIN)) {
+        } else if (chain.equals(IRIS_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/irisnet-blog"));
 
-        } else if (chain.equals(BNB_MAIN)) {
+        } else if (chain.equals(BNB_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/@binance"));
 
-        } else if (chain.equals(KAVA_MAIN)) {
+        } else if (chain.equals(KAVA_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/kava-labs"));
 
-        } else if (chain.equals(IOV_MAIN)) {
+        } else if (chain.equals(IOV_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/iov-internet-of-values"));
 
-        } else if (chain.equals(BAND_MAIN)) {
+        } else if (chain.equals(BAND_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/bandprotocol"));
 
-        } else if (chain.equals(OKEX_MAIN)) {
+        } else if (chain.equals(OKEX_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.okex.com/community"));
 
-        } else if (chain.equals(CERTIK_MAIN)) {
+        } else if (chain.equals(CERTIK_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.certik.foundation/blog"));
 
-        } else if (chain.equals(AKASH_MAIN)) {
+        } else if (chain.equals(AKASH_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://akash.network/"));
 
-        } else if (chain.equals(SECRET_MAIN)) {
+        } else if (chain.equals(SECRET_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://blog.scrt.network"));
 
-        } else if (chain.equals(PERSIS_MAIN)) {
+        } else if (chain.equals(PERSIS_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/persistence-blog"));
 
-        } else if (chain.equals(SENTINEL_MAIN)) {
+        } else if (chain.equals(SENTINEL_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/sentinel"));
 
-        } else if (chain.equals(FETCHAI_MAIN)) {
+        } else if (chain.equals(FETCHAI_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://fetch.ai/blog/"));
 
-        } else if (chain.equals(CRYPTO_MAIN)) {
+        } else if (chain.equals(CRYPTO_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://crypto.org/community/"));
 
-        } else if (chain.equals(SIF_MAIN)) {
+        } else if (chain.equals(SIF_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/sifchain-finance"));
 
-        } else if (chain.equals(KI_MAIN)) {
+        } else if (chain.equals(KI_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/ki-foundation"));
 
-        } else if (chain.equals(OSMOSIS_MAIN)) {
+        } else if (chain.equals(OSMOSIS_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/osmosis"));
 
-        } else if (chain.equals(MEDI_MAIN)) {
+        } else if (chain.equals(MEDI_MAIN.INSTANCE)) {
             if (Locale.getDefault().getLanguage().equalsIgnoreCase("ko")) {
                 return new Intent(Intent.ACTION_VIEW, Uri.parse("https://blog.medibloc.org/"));
             } else {
                 return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/medibloc"));
             }
 
-        } else if (chain.equals(EMONEY_MAIN)) {
+        } else if (chain.equals(EMONEY_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://emoneytokenstandard.org/"));
 
-        } else if (chain.equals(RIZON_MAIN)) {
+        } else if (chain.equals(RIZON_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/hdac"));
 
-        } else if (chain.equals(JUNO_MAIN)) {
+        } else if (chain.equals(JUNO_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/@JunoNetwork"));
 
-        } else if (chain.equals(REGEN_MAIN)) {
+        } else if (chain.equals(REGEN_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/regen-network"));
 
-        } else if (chain.equals(BITCANNA_MAIN)) {
+        } else if (chain.equals(BITCANNA_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/@BitCannaGlobal"));
 
-        } else if (chain.equals(ALTHEA_MAIN)) {
+        } else if (chain.equals(ALTHEA_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://blog.althea.net/"));
 
-        } else if (chain.equals(STARGAZE_MAIN)) {
+        } else if (chain.equals(STARGAZE_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/stargaze-protocol"));
 
-        } else if (chain.equals(GRABRIDGE_MAIN)) {
+        } else if (chain.equals(GRABRIDGE_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.gravitybridge.net/blog"));
 
-        } else if (chain.equals(COMDEX_MAIN)) {
+        } else if (chain.equals(COMDEX_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://blog.comdex.one"));
 
-        } else if (chain.equals(INJ_MAIN)) {
+        } else if (chain.equals(INJ_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://blog.injectiveprotocol.com/"));
 
-        } else if (chain.equals(BITSONG_MAIN)) {
+        } else if (chain.equals(BITSONG_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://bitsongofficial.medium.com/"));
 
-        } else if (chain.equals(DESMOS_MAIN)) {
+        } else if (chain.equals(DESMOS_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/desmosnetwork"));
 
-        } else if (chain.equals(LUM_MAIN)) {
+        } else if (chain.equals(LUM_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/lum-network"));
 
-        } else if (chain.equals(CHIHUAHUA_MAIN)) {
+        } else if (chain.equals(CHIHUAHUA_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://chi.huahua.wtf"));
 
-        } else if (chain.equals(UMEE_MAIN)) {
+        } else if (chain.equals(UMEE_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/umeeblog"));
 
-        } else if (chain.equals(AXELAR_MAIN)) {
+        } else if (chain.equals(AXELAR_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://axelar.network/blog"));
 
-        } else if (chain.equals(KONSTELL_MAIN)) {
+        } else if (chain.equals(KONSTELL_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://konstellation.medium.com/"));
 
-        } else if (chain.equals(EVMOS_MAIN)) {
+        } else if (chain.equals(EVMOS_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://evmos.blog/"));
 
-        } else if (chain.equals(CUDOS_MAIN)) {
+        } else if (chain.equals(CUDOS_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.cudos.org/blog/"));
 
-        } else if (chain.equals(PROVENANCE_MAIN)) {
+        } else if (chain.equals(PROVENANCE_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.provenance.io/blog/"));
 
-        } else if (chain.equals(CERBERUS_MAIN)) {
+        } else if (chain.equals(CERBERUS_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://medium.com/@cerberus_zone"));
 
-        } else if (chain.equals(OMNIFLIX_MAIN)) {
+        } else if (chain.equals(OMNIFLIX_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://blog.omniflix.network/"));
 
         }
@@ -2869,133 +2893,133 @@ public class WUtil {
     }
 
     public static String getExplorer(BaseChain basechain) {
-        if (basechain.equals(BNB_MAIN)) {
+        if (basechain.equals(BNB_MAIN.INSTANCE)) {
             return EXPLORER_BINANCE_MAIN;
 
-        } else if (basechain.equals(OKEX_MAIN)) {
+        } else if (basechain.equals(OKEX_MAIN.INSTANCE)) {
             return EXPLORER_OKEX_MAIN;
 
-        } else if (basechain.equals(SECRET_MAIN)) {
+        } else if (basechain.equals(SECRET_MAIN.INSTANCE)) {
             return EXPLORER_SECRET_MAIN;
 
-        } else if (basechain.equals(COSMOS_MAIN)) {
+        } else if (basechain.equals(COSMOS_MAIN.INSTANCE)) {
             return EXPLORER_COSMOS_MAIN;
 
-        } else if (basechain.equals(IMVERSED_MAIN)) {
+        } else if (basechain.equals(IMVERSED_MAIN.INSTANCE)) {
             return EXPLORER_IMVERSED_MAIN;
 
-        } else if (basechain.equals(IRIS_MAIN)) {
+        } else if (basechain.equals(IRIS_MAIN.INSTANCE)) {
             return EXPLORER_IRIS_MAIN;
 
-        } else if (basechain.equals(AKASH_MAIN)) {
+        } else if (basechain.equals(AKASH_MAIN.INSTANCE)) {
             return EXPLORER_AKASH_MAIN;
 
-        } else if (basechain.equals(SENTINEL_MAIN)) {
+        } else if (basechain.equals(SENTINEL_MAIN.INSTANCE)) {
             return EXPLORER_SENTINEL_MAIN;
 
-        } else if (basechain.equals(PERSIS_MAIN)) {
+        } else if (basechain.equals(PERSIS_MAIN.INSTANCE)) {
             return EXPLORER_PERSIS_MAIN;
 
-        } else if (basechain.equals(CRYPTO_MAIN)) {
+        } else if (basechain.equals(CRYPTO_MAIN.INSTANCE)) {
             return EXPLORER_CRYPTOORG_MAIN;
 
-        } else if (basechain.equals(OSMOSIS_MAIN)) {
+        } else if (basechain.equals(OSMOSIS_MAIN.INSTANCE)) {
             return EXPLORER_OSMOSIS_MAIN;
 
-        } else if (basechain.equals(IOV_MAIN)) {
+        } else if (basechain.equals(IOV_MAIN.INSTANCE)) {
             return EXPLORER_IOV_MAIN;
 
-        } else if (basechain.equals(SIF_MAIN)) {
+        } else if (basechain.equals(SIF_MAIN.INSTANCE)) {
             return EXPLORER_SIF_MAIN;
 
-        } else if (basechain.equals(BAND_MAIN)) {
+        } else if (basechain.equals(BAND_MAIN.INSTANCE)) {
             return EXPLORER_BAND_MAIN;
 
-        } else if (basechain.equals(MEDI_MAIN)) {
+        } else if (basechain.equals(MEDI_MAIN.INSTANCE)) {
             return EXPLORER_MEDI_MAIN;
 
-        } else if (basechain.equals(CERTIK_MAIN)) {
+        } else if (basechain.equals(CERTIK_MAIN.INSTANCE)) {
             return EXPLORER_CERTIK_MAIN;
 
-        } else if (basechain.equals(EMONEY_MAIN)) {
+        } else if (basechain.equals(EMONEY_MAIN.INSTANCE)) {
             return EXPLORER_EMONEY_MAIN;
 
-        } else if (basechain.equals(FETCHAI_MAIN)) {
+        } else if (basechain.equals(FETCHAI_MAIN.INSTANCE)) {
             return EXPLORER_FETCHAI_MAIN;
 
-        } else if (basechain.equals(RIZON_MAIN)) {
+        } else if (basechain.equals(RIZON_MAIN.INSTANCE)) {
             return EXPLORER_RIZON_MAIN;
 
-        } else if (basechain.equals(JUNO_MAIN)) {
+        } else if (basechain.equals(JUNO_MAIN.INSTANCE)) {
             return EXPLORER_JUNO_MAIN;
 
-        } else if (basechain.equals(REGEN_MAIN)) {
+        } else if (basechain.equals(REGEN_MAIN.INSTANCE)) {
             return EXPLORER_REGEN_MAIN;
 
-        } else if (basechain.equals(BITCANNA_MAIN)) {
+        } else if (basechain.equals(BITCANNA_MAIN.INSTANCE)) {
             return EXPLORER_BITCANNA_MAIN;
 
-        } else if (basechain.equals(ALTHEA_MAIN)) {
+        } else if (basechain.equals(ALTHEA_MAIN.INSTANCE)) {
             return EXPLORER_ALTHEA_MAIN;
 
-        } else if (basechain.equals(STARGAZE_MAIN)) {
+        } else if (basechain.equals(STARGAZE_MAIN.INSTANCE)) {
             return EXPLORER_STARGAZE_MAIN;
 
-        } else if (basechain.equals(GRABRIDGE_MAIN)) {
+        } else if (basechain.equals(GRABRIDGE_MAIN.INSTANCE)) {
             return EXPLORER_GRABRIDGE_MAIN;
 
-        } else if (basechain.equals(KI_MAIN)) {
+        } else if (basechain.equals(KI_MAIN.INSTANCE)) {
             return EXPLORER_KI_MAIN;
 
-        } else if (basechain.equals(COMDEX_MAIN)) {
+        } else if (basechain.equals(COMDEX_MAIN.INSTANCE)) {
             return EXPLORER_COMDEX_MAIN;
 
-        } else if (basechain.equals(INJ_MAIN)) {
+        } else if (basechain.equals(INJ_MAIN.INSTANCE)) {
             return EXPLORER_INJ_MAIN;
 
-        } else if (basechain.equals(BITSONG_MAIN)) {
+        } else if (basechain.equals(BITSONG_MAIN.INSTANCE)) {
             return EXPLORER_BITSONG_MAIN;
 
-        } else if (basechain.equals(DESMOS_MAIN)) {
+        } else if (basechain.equals(DESMOS_MAIN.INSTANCE)) {
             return EXPLORER_DESMOS_MAIN;
 
-        } else if (basechain.equals(LUM_MAIN)) {
+        } else if (basechain.equals(LUM_MAIN.INSTANCE)) {
             return EXPLORER_LUM_MAIN;
 
-        } else if (basechain.equals(CHIHUAHUA_MAIN)) {
+        } else if (basechain.equals(CHIHUAHUA_MAIN.INSTANCE)) {
             return EXPLORER_CHIHUAHUA_MAIN;
 
-        } else if (basechain.equals(KAVA_MAIN)) {
+        } else if (basechain.equals(KAVA_MAIN.INSTANCE)) {
             return EXPLORER_KAVA_MAIN;
 
-        } else if (basechain.equals(AXELAR_MAIN)) {
+        } else if (basechain.equals(AXELAR_MAIN.INSTANCE)) {
             return EXPLORER_AXELAR_MAIN;
 
-        } else if (basechain.equals(KONSTELL_MAIN)) {
+        } else if (basechain.equals(KONSTELL_MAIN.INSTANCE)) {
             return EXPLORER_KONSTELL_MAIN;
 
-        } else if (basechain.equals(UMEE_MAIN)) {
+        } else if (basechain.equals(UMEE_MAIN.INSTANCE)) {
             return EXPLORER_UMEE_MAIN;
 
-        } else if (basechain.equals(EVMOS_MAIN)) {
+        } else if (basechain.equals(EVMOS_MAIN.INSTANCE)) {
             return EXPLORER_EVMOS_MAIN;
 
-        } else if (basechain.equals(CUDOS_MAIN)) {
+        } else if (basechain.equals(CUDOS_MAIN.INSTANCE)) {
             return EXPLORER_CUDOS_MAIN;
 
-        } else if (basechain.equals(PROVENANCE_MAIN)) {
+        } else if (basechain.equals(PROVENANCE_MAIN.INSTANCE)) {
             return EXPLORER_PROVENANCE_MAIN;
 
-        } else if (basechain.equals(CERBERUS_MAIN)) {
+        } else if (basechain.equals(CERBERUS_MAIN.INSTANCE)) {
             return EXPLORER_CERBERUS_MAIN;
 
-        } else if (basechain.equals(OMNIFLIX_MAIN)) {
+        } else if (basechain.equals(OMNIFLIX_MAIN.INSTANCE)) {
             return EXPLORER_OMNIFLIX_MAIN;
 
-        } else if (basechain.equals(COSMOS_TEST)) {
+        } else if (basechain.equals(COSMOS_TEST.INSTANCE)) {
             return EXPLORER_COSMOS_TEST;
 
-        } else if (basechain.equals(IRIS_TEST)) {
+        } else if (basechain.equals(IRIS_TEST.INSTANCE)) {
             return EXPLORER_IRIS_TEST;
 
         }
@@ -3003,8 +3027,8 @@ public class WUtil {
     }
 
     public static String getExplorerSuffix(BaseChain basechain) {
-        if (basechain.equals(OKEX_MAIN)) return "tx/0x";
-        else if (basechain.equals(IMVERSED_MAIN)) return "transactions/";
+        if (basechain.equals(OKEX_MAIN.INSTANCE)) return "tx/0x";
+        else if (basechain.equals(IMVERSED_MAIN.INSTANCE)) return "transactions/";
         else return "txs/";
     }
 
@@ -3026,7 +3050,7 @@ public class WUtil {
      */
     public static BigDecimal getEstimateGasAmount(Context c, BaseChain basechain, int txType, int valCnt) {
         BigDecimal result = BigDecimal.ZERO;
-        if (basechain.equals(IOV_MAIN)) {
+        if (basechain.equals(IOV_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_SEND) {
                 return new BigDecimal(IOV_GAS_AMOUNT_SEND);
             } else if (txType == CONST_PW_TX_SIMPLE_DELEGATE) {
@@ -3056,7 +3080,7 @@ public class WUtil {
                 return new BigDecimal(IOV_GAS_AMOUNT_IBC_SEND);
             }
 
-        } else if (basechain.equals(OSMOSIS_MAIN)) {
+        } else if (basechain.equals(OSMOSIS_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_SEND) {
                 return new BigDecimal(OSMOSIS_GAS_AMOUNT_SEND);
             } else if (txType == CONST_PW_TX_SIMPLE_DELEGATE) {
@@ -3087,7 +3111,7 @@ public class WUtil {
             } else if (txType == CONST_PW_TX_IBC_TRANSFER) {
                 return new BigDecimal(OSMOSIS_GAS_AMOUNT_IBC_SEND);
             }
-        } else if (basechain.equals(KAVA_MAIN)) {
+        } else if (basechain.equals(KAVA_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_SEND) {
                 return new BigDecimal(KAVA_GAS_AMOUNT_SEND);
             } else if (txType == CONST_PW_TX_SIMPLE_DELEGATE) {
@@ -3121,7 +3145,7 @@ public class WUtil {
                 return new BigDecimal(KAVA_GAS_AMOUNT_IBC_SEND);
             }
 
-        } else if (basechain.equals(BAND_MAIN)) {
+        } else if (basechain.equals(BAND_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_SEND) {
                 return new BigDecimal(BAND_GAS_AMOUNT_SEND);
             } else if (txType == CONST_PW_TX_SIMPLE_DELEGATE) {
@@ -3143,7 +3167,7 @@ public class WUtil {
                 return new BigDecimal(BAND_GAS_AMOUNT_IBC_SEND);
             }
 
-        } else if (basechain.equals(OKEX_MAIN)) {
+        } else if (basechain.equals(OKEX_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_SEND) {
                 return new BigDecimal(OK_GAS_AMOUNT_SEND);
             } else if (txType == CONST_PW_TX_OK_DEPOSIT || txType == CONST_PW_TX_OK_WITHDRAW) {
@@ -3152,7 +3176,7 @@ public class WUtil {
                 return (new BigDecimal(OK_GAS_AMOUNT_VOTE_MUX).multiply(new BigDecimal("" + valCnt))).add(new BigDecimal(BaseConstant.OK_GAS_AMOUNT_VOTE));
             }
 
-        } else if (basechain.equals(CERTIK_MAIN)) {
+        } else if (basechain.equals(CERTIK_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_SEND) {
                 return new BigDecimal(CERTIK_GAS_AMOUNT_SEND);
             } else if (txType == CONST_PW_TX_SIMPLE_DELEGATE) {
@@ -3174,7 +3198,7 @@ public class WUtil {
                 return new BigDecimal(CERTIK_GAS_AMOUNT_IBC_SEND);
             }
 
-        } else if (basechain.equals(SECRET_MAIN)) {
+        } else if (basechain.equals(SECRET_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_SEND || txType == CONST_PW_TX_IBC_TRANSFER) {
                 return new BigDecimal(SECRET_GAS_AMOUNT_SEND);
             } else if (txType == CONST_PW_TX_SIMPLE_DELEGATE) {
@@ -3194,7 +3218,7 @@ public class WUtil {
                 return new BigDecimal(SECRET_GAS_AMOUNT_VOTE);
             }
 
-        } else if (basechain.equals(CHIHUAHUA_MAIN)) {
+        } else if (basechain.equals(CHIHUAHUA_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_REWARD) {
                 ArrayList<String> rewardGasFees = new ArrayList<String>(Arrays.asList(c.getResources().getStringArray(R.array.gas_multi_reward)));
                 return new BigDecimal(rewardGasFees.get(valCnt - 1));
@@ -3206,7 +3230,7 @@ public class WUtil {
                 return new BigDecimal(V1_GAS_AMOUNT_MID);
             }
 
-        } else if (basechain.equals(SENTINEL_MAIN) || basechain.equals(FETCHAI_MAIN) || basechain.equals(KI_MAIN) || basechain.equals(MEDI_MAIN) || basechain.equals(SIF_MAIN)) {
+        } else if (basechain.equals(SENTINEL_MAIN.INSTANCE) || basechain.equals(FETCHAI_MAIN.INSTANCE) || basechain.equals(KI_MAIN.INSTANCE) || basechain.equals(MEDI_MAIN.INSTANCE) || basechain.equals(SIF_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_SEND || txType == CONST_PW_TX_IBC_TRANSFER) {
                 return new BigDecimal(GAS_AMOUNT_SEND);
             } else if (txType == CONST_PW_TX_SIMPLE_DELEGATE) {
@@ -3230,7 +3254,7 @@ public class WUtil {
                 return new BigDecimal(SIF_GAS_AMOUNT_DEX);
             }
 
-        } else if (basechain.equals(INJ_MAIN)) {
+        } else if (basechain.equals(INJ_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_SEND) {
                 return new BigDecimal(V1_GAS_AMOUNT_MID);
             } else if (txType == CONST_PW_TX_SIMPLE_DELEGATE) {
@@ -3297,154 +3321,154 @@ public class WUtil {
      * Chain Gas Rate
      */
     public static BigDecimal getEstimateGasFeeAmount(Context c, BaseChain basechain, int txType, int valCnt) {
-        if (basechain.equals(COSMOS_MAIN) || basechain.equals(COSMOS_TEST)) {
+        if (basechain.equals(COSMOS_MAIN.INSTANCE) || basechain.equals(COSMOS_TEST.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(COSMOS_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(IMVERSED_MAIN)) {
+        } else if (basechain.equals(IMVERSED_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(IMVERSED_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
-        } else if (basechain.equals(IRIS_MAIN) || basechain.equals(IRIS_TEST)) {
+        } else if (basechain.equals(IRIS_MAIN.INSTANCE) || basechain.equals(IRIS_TEST.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(IRIS_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(AKASH_MAIN)) {
+        } else if (basechain.equals(AKASH_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(COSMOS_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(SENTINEL_MAIN)) {
+        } else if (basechain.equals(SENTINEL_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(SENTINEL_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(PERSIS_MAIN)) {
+        } else if (basechain.equals(PERSIS_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(PERSIS_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(CRYPTO_MAIN)) {
+        } else if (basechain.equals(CRYPTO_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(CRYPTO_GAS_RATE_TINY);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(OSMOSIS_MAIN)) {
+        } else if (basechain.equals(OSMOSIS_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(OSMOSIS_GAS_RATE_TINY);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(IOV_MAIN)) {
+        } else if (basechain.equals(IOV_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(STARNAME_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(SIF_MAIN)) {
+        } else if (basechain.equals(SIF_MAIN.INSTANCE)) {
             return new BigDecimal("100000000000000000");
 
-        } else if (basechain.equals(CERTIK_MAIN)) {
+        } else if (basechain.equals(CERTIK_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(CERTIK_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(BAND_MAIN)) {
+        } else if (basechain.equals(BAND_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(BAND_GAS_RATE_TINY);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(MEDI_MAIN)) {
+        } else if (basechain.equals(MEDI_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(MEDI_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(EMONEY_MAIN)) {
+        } else if (basechain.equals(EMONEY_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(EMONEY_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(FETCHAI_MAIN)) {
+        } else if (basechain.equals(FETCHAI_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(FETCH_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(RIZON_MAIN)) {
+        } else if (basechain.equals(RIZON_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(COSMOS_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(JUNO_MAIN)) {
+        } else if (basechain.equals(JUNO_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(JUNO_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(REGEN_MAIN)) {
+        } else if (basechain.equals(REGEN_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(COSMOS_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(BITCANNA_MAIN)) {
+        } else if (basechain.equals(BITCANNA_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(BITCANNA_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(ALTHEA_MAIN) || basechain.equals(ALTHEA_TEST)) {
+        } else if (basechain.equals(ALTHEA_MAIN.INSTANCE) || basechain.equals(ALTHEA_TEST.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(COSMOS_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(STARGAZE_MAIN)) {
+        } else if (basechain.equals(STARGAZE_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(STARGAZE_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(GRABRIDGE_MAIN)) {
+        } else if (basechain.equals(GRABRIDGE_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(GRAV_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(KI_MAIN)) {
+        } else if (basechain.equals(KI_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(KI_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(COMDEX_MAIN)) {
+        } else if (basechain.equals(COMDEX_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(COMDEX_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(SECRET_MAIN)) {
+        } else if (basechain.equals(SECRET_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(SECRET_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(INJ_MAIN)) {
+        } else if (basechain.equals(INJ_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(INJ_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(BITSONG_MAIN)) {
+        } else if (basechain.equals(BITSONG_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(BITSONG_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(DESMOS_MAIN)) {
+        } else if (basechain.equals(DESMOS_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(DESMOS_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(LUM_MAIN)) {
+        } else if (basechain.equals(LUM_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(LUM_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(CHIHUAHUA_MAIN)) {
+        } else if (basechain.equals(CHIHUAHUA_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(CHIHUAHUA_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(KAVA_MAIN)) {
+        } else if (basechain.equals(KAVA_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_HTLS_REFUND) {
                 return new BigDecimal("12500");
             }
@@ -3452,50 +3476,50 @@ public class WUtil {
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(AXELAR_MAIN)) {
+        } else if (basechain.equals(AXELAR_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(AXELAR_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(KONSTELL_MAIN)) {
+        } else if (basechain.equals(KONSTELL_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(KONSTELL_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(UMEE_MAIN)) {
+        } else if (basechain.equals(UMEE_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(UMEE_GAS_RATE_TINY);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(EVMOS_MAIN)) {
+        } else if (basechain.equals(EVMOS_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(EVMOS_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(CUDOS_MAIN)) {
+        } else if (basechain.equals(CUDOS_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(CUDOS_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(PROVENANCE_MAIN)) {
+        } else if (basechain.equals(PROVENANCE_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(PROVENANCE_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(CERBERUS_MAIN)) {
+        } else if (basechain.equals(CERBERUS_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(CERBERUS_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(OMNIFLIX_MAIN)) {
+        } else if (basechain.equals(OMNIFLIX_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(OMNIFLIX_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(0, RoundingMode.DOWN);
 
-        } else if (basechain.equals(BNB_MAIN)) {
+        } else if (basechain.equals(BNB_MAIN.INSTANCE)) {
             return new BigDecimal(FEE_BNB_SEND).setScale(8);
 
-        } else if (basechain.equals(OKEX_MAIN)) {
+        } else if (basechain.equals(OKEX_MAIN.INSTANCE)) {
             BigDecimal gasRate = new BigDecimal(OK_GAS_RATE_AVERAGE);
             BigDecimal gasAmount = getEstimateGasAmount(c, basechain, txType, valCnt);
             return gasRate.multiply(gasAmount).setScale(18, RoundingMode.DOWN);
@@ -3504,8 +3528,8 @@ public class WUtil {
     }
 
     public static BigDecimal getGasRate(BaseChain basechain, int position) {
-        if (basechain.equals(COSMOS_MAIN) || basechain.equals(AKASH_MAIN) || basechain.equals(RIZON_MAIN) || basechain.equals(REGEN_MAIN) ||
-                basechain.equals(COSMOS_TEST)) {
+        if (basechain.equals(COSMOS_MAIN.INSTANCE) || basechain.equals(AKASH_MAIN.INSTANCE) || basechain.equals(RIZON_MAIN.INSTANCE) || basechain.equals(REGEN_MAIN.INSTANCE) ||
+                basechain.equals(COSMOS_TEST.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(COSMOS_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3513,7 +3537,7 @@ public class WUtil {
             }
             return new BigDecimal(COSMOS_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(IMVERSED_MAIN)) {
+        } else if (basechain.equals(IMVERSED_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(IMVERSED_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3521,7 +3545,7 @@ public class WUtil {
             }
             return new BigDecimal(IMVERSED_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(IRIS_MAIN) || basechain.equals(IRIS_TEST)) {
+        } else if (basechain.equals(IRIS_MAIN.INSTANCE) || basechain.equals(IRIS_TEST.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(IRIS_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3529,7 +3553,7 @@ public class WUtil {
             }
             return new BigDecimal(IRIS_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(SENTINEL_MAIN)) {
+        } else if (basechain.equals(SENTINEL_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(SENTINEL_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3537,7 +3561,7 @@ public class WUtil {
             }
             return new BigDecimal(SENTINEL_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(PERSIS_MAIN)) {
+        } else if (basechain.equals(PERSIS_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(PERSIS_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3545,7 +3569,7 @@ public class WUtil {
             }
             return new BigDecimal(PERSIS_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(CRYPTO_MAIN)) {
+        } else if (basechain.equals(CRYPTO_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(CRYPTO_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3553,7 +3577,7 @@ public class WUtil {
             }
             return new BigDecimal(CRYPTO_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(OSMOSIS_MAIN)) {
+        } else if (basechain.equals(OSMOSIS_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(OSMOSIS_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3561,7 +3585,7 @@ public class WUtil {
             }
             return new BigDecimal(OSMOSIS_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(IOV_MAIN)) {
+        } else if (basechain.equals(IOV_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(STARNAME_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3569,7 +3593,7 @@ public class WUtil {
             }
             return new BigDecimal(STARNAME_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(SIF_MAIN)) {
+        } else if (basechain.equals(SIF_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(SIF_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3577,7 +3601,7 @@ public class WUtil {
             }
             return new BigDecimal(SIF_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(BAND_MAIN)) {
+        } else if (basechain.equals(BAND_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(BAND_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3585,7 +3609,7 @@ public class WUtil {
             }
             return new BigDecimal(BAND_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(MEDI_MAIN)) {
+        } else if (basechain.equals(MEDI_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(MEDI_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3593,7 +3617,7 @@ public class WUtil {
             }
             return new BigDecimal(MEDI_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(CERTIK_MAIN)) {
+        } else if (basechain.equals(CERTIK_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(CERTIK_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3601,7 +3625,7 @@ public class WUtil {
             }
             return new BigDecimal(CERTIK_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(EMONEY_MAIN)) {
+        } else if (basechain.equals(EMONEY_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(EMONEY_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3609,7 +3633,7 @@ public class WUtil {
             }
             return new BigDecimal(EMONEY_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(FETCHAI_MAIN)) {
+        } else if (basechain.equals(FETCHAI_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(FETCH_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3617,7 +3641,7 @@ public class WUtil {
             }
             return new BigDecimal(FETCH_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(BITCANNA_MAIN)) {
+        } else if (basechain.equals(BITCANNA_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(BITCANNA_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3625,7 +3649,7 @@ public class WUtil {
             }
             return new BigDecimal(BITCANNA_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(STARGAZE_MAIN)) {
+        } else if (basechain.equals(STARGAZE_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(STARGAZE_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3633,7 +3657,7 @@ public class WUtil {
             }
             return new BigDecimal(STARGAZE_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(KI_MAIN)) {
+        } else if (basechain.equals(KI_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(KI_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3641,7 +3665,7 @@ public class WUtil {
             }
             return new BigDecimal(KI_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(COMDEX_MAIN)) {
+        } else if (basechain.equals(COMDEX_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(COMDEX_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3649,7 +3673,7 @@ public class WUtil {
             }
             return new BigDecimal(COMDEX_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(SECRET_MAIN)) {
+        } else if (basechain.equals(SECRET_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(SECRET_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3657,7 +3681,7 @@ public class WUtil {
             }
             return new BigDecimal(SECRET_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(BITSONG_MAIN)) {
+        } else if (basechain.equals(BITSONG_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(BITSONG_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3665,7 +3689,7 @@ public class WUtil {
             }
             return new BigDecimal(BITSONG_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(INJ_MAIN)) {
+        } else if (basechain.equals(INJ_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(INJ_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3673,7 +3697,7 @@ public class WUtil {
             }
             return new BigDecimal(INJ_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(DESMOS_MAIN)) {
+        } else if (basechain.equals(DESMOS_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(DESMOS_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3681,7 +3705,7 @@ public class WUtil {
             }
             return new BigDecimal(DESMOS_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(GRABRIDGE_MAIN)) {
+        } else if (basechain.equals(GRABRIDGE_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(GRAV_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3689,7 +3713,7 @@ public class WUtil {
             }
             return new BigDecimal(GRAV_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(LUM_MAIN)) {
+        } else if (basechain.equals(LUM_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(LUM_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3697,7 +3721,7 @@ public class WUtil {
             }
             return new BigDecimal(LUM_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(CHIHUAHUA_MAIN)) {
+        } else if (basechain.equals(CHIHUAHUA_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(CHIHUAHUA_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3705,7 +3729,7 @@ public class WUtil {
             }
             return new BigDecimal(CHIHUAHUA_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(KAVA_MAIN)) {
+        } else if (basechain.equals(KAVA_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(KAVA_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3713,7 +3737,7 @@ public class WUtil {
             }
             return new BigDecimal(KAVA_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(JUNO_MAIN)) {
+        } else if (basechain.equals(JUNO_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(JUNO_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3721,7 +3745,7 @@ public class WUtil {
             }
             return new BigDecimal(JUNO_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(AXELAR_MAIN)) {
+        } else if (basechain.equals(AXELAR_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(AXELAR_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3729,7 +3753,7 @@ public class WUtil {
             }
             return new BigDecimal(AXELAR_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(KONSTELL_MAIN)) {
+        } else if (basechain.equals(KONSTELL_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(KONSTELL_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3737,7 +3761,7 @@ public class WUtil {
             }
             return new BigDecimal(KONSTELL_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(UMEE_MAIN)) {
+        } else if (basechain.equals(UMEE_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(UMEE_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3745,7 +3769,7 @@ public class WUtil {
             }
             return new BigDecimal(UMEE_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(EVMOS_MAIN)) {
+        } else if (basechain.equals(EVMOS_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(EVMOS_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3753,7 +3777,7 @@ public class WUtil {
             }
             return new BigDecimal(EVMOS_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(CUDOS_MAIN)) {
+        } else if (basechain.equals(CUDOS_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(CUDOS_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3761,7 +3785,7 @@ public class WUtil {
             }
             return new BigDecimal(CUDOS_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(PROVENANCE_MAIN)) {
+        } else if (basechain.equals(PROVENANCE_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(PROVENANCE_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3769,7 +3793,7 @@ public class WUtil {
             }
             return new BigDecimal(PROVENANCE_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(CERBERUS_MAIN)) {
+        } else if (basechain.equals(CERBERUS_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(CERBERUS_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3777,7 +3801,7 @@ public class WUtil {
             }
             return new BigDecimal(CERBERUS_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(OMNIFLIX_MAIN)) {
+        } else if (basechain.equals(OMNIFLIX_MAIN.INSTANCE)) {
             if (position == 0) {
                 return new BigDecimal(OMNIFLIX_GAS_RATE_TINY);
             } else if (position == 1) {
@@ -3785,10 +3809,10 @@ public class WUtil {
             }
             return new BigDecimal(OMNIFLIX_GAS_RATE_AVERAGE);
 
-        } else if (basechain.equals(BNB_MAIN)) {
+        } else if (basechain.equals(BNB_MAIN.INSTANCE)) {
             return BigDecimal.ZERO.setScale(3);
 
-        } else if (basechain.equals(OKEX_MAIN)) {
+        } else if (basechain.equals(OKEX_MAIN.INSTANCE)) {
             return new BigDecimal(OK_GAS_RATE_AVERAGE);
 
         }

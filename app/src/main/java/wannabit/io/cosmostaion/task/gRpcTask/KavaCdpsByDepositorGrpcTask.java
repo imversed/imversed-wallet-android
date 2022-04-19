@@ -10,7 +10,7 @@ import kava.cdp.v1beta1.Cdp;
 import kava.cdp.v1beta1.QueryGrpc;
 import kava.cdp.v1beta1.QueryOuterClass;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.task.CommonTask;

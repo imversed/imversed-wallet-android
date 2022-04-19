@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import retrofit2.Response;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.cosmos.MsgGenerator;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
@@ -49,7 +49,7 @@ public class SimpleHtlcRefundTask extends CommonTask {
     @Override
     protected TaskResult doInBackground(String... strings) {
         try {
-            if (BaseChain.getChain(mAccount.baseChain).equals(BaseChain.KAVA_MAIN)) {
+            if (BaseChain.getChain(mAccount.baseChain).equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                 Response<ResLcdKavaAccountInfo> response = ApiClient.getKavaChain(context).getAccountInfo(mAccount.address).execute();
                 if (!response.isSuccessful()) {
                     result.errorCode = BaseConstant.ERROR_CODE_BROADCAST;
@@ -78,7 +78,7 @@ public class SimpleHtlcRefundTask extends CommonTask {
             WLog.w("refundMsg : " + WUtil.prettyPrinter(refundMsg));
 
             ReqBroadCast reqBroadCast = MsgGenerator.getBroadcaseReq(mAccount, msgs, mFees, mMemo, ecKey, context.getBaseDao().getChainId());
-            if (BaseChain.getChain(mAccount.baseChain).equals(BaseChain.KAVA_MAIN)) {
+            if (BaseChain.getChain(mAccount.baseChain).equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                 Response<ResBroadTx> response = ApiClient.getKavaChain(context).broadTx(reqBroadCast).execute();
                 if (response.isSuccessful() && response.body() != null) {
                     if (response.body().txhash != null) {

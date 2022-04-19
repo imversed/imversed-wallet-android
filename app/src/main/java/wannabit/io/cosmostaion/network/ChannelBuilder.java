@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 
 public class ChannelBuilder {
 
@@ -18,16 +18,16 @@ public class ChannelBuilder {
     @Nullable
     public static ManagedChannel getChain(BaseChain chain) {
         ManagedChannel result;
-        result = channelHashMap.get(chain.getChain());
+        result = channelHashMap.get(chain.getChainName());
         if (result == null) {
             synchronized (ChannelBuilder.class) {
-                final String grpcApiUrl = chain.getGrpcApiUrl();
-                final int grpcApiPort = chain.getGrpcApiPort();
+                final String grpcApiUrl = chain.getGrpcApiHost().getUrl();
+                final int grpcApiPort = chain.getGrpcApiHost().getPort();
                 if (!TextUtils.isEmpty(grpcApiUrl)) {
                     result = ManagedChannelBuilder.forAddress(grpcApiUrl, grpcApiPort)
                             .usePlaintext()
                             .build();
-                    channelHashMap.put(chain.getChain(), result);
+                    channelHashMap.put(chain.getChainName(), result);
                 }
             }
         }

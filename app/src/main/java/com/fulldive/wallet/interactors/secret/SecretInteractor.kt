@@ -11,7 +11,7 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import org.bitcoinj.crypto.DeterministicKey
 import org.bitcoinj.crypto.MnemonicCode
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.crypto.CryptoHelper
 import wannabit.io.cosmostaion.crypto.EncResult
 import wannabit.io.cosmostaion.dao.Password
@@ -24,7 +24,7 @@ class SecretInteractor @Inject constructor(
     private val secretRepository: SecretRepository
 ) {
 
-    fun createSecrets(chain: BaseChain): Single<AccountSecrets> {
+    fun createSecrets(chain: BaseChain, path: Int = 0): Single<AccountSecrets> {
         return safeSingle {
             val entropy = getEntropy()
             val words = MnemonicCode.INSTANCE.toMnemonic(entropy)
@@ -39,11 +39,11 @@ class SecretInteractor @Inject constructor(
             val address = MnemonicUtils.createAddress(
                 chain,
                 hexEntropy,
-                0,
+                path,
                 customPath
             )
 
-            AccountSecrets(hexEntropy, words, address, 0, customPath)
+            AccountSecrets(hexEntropy, words, address, path, customPath)
         }
     }
 

@@ -1,7 +1,7 @@
 package wannabit.io.cosmostaion.fragment;
 
-import static wannabit.io.cosmostaion.base.BaseChain.BNB_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.OKEX_MAIN;
+import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
+import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.FEE_BNB_SEND;
 
 import android.os.Bundle;
@@ -88,7 +88,7 @@ public class StepFeeSetOldFragment extends BaseFragment implements View.OnClickL
         mButtonGroup.setSelectedBackground(WDp.getChainColor(getContext(), getSActivity().baseChain));
         mButtonGroup.setRipple(WDp.getChainColor(getContext(), getSActivity().baseChain));
 
-        if (getSActivity().baseChain.equals(OKEX_MAIN)) {
+        if (getSActivity().baseChain.equals(OKEX_MAIN.INSTANCE)) {
             int myValidatorCnt = 0;
             if (getBaseDao().mOkStaking != null && getBaseDao().mOkStaking.validator_address != null) {
                 myValidatorCnt = getBaseDao().mOkStaking.validator_address.size();
@@ -120,9 +120,9 @@ public class StepFeeSetOldFragment extends BaseFragment implements View.OnClickL
 
     private void onCalculateFees() {
         mSelectedGasRate = WUtil.getGasRate(getSActivity().baseChain, mSelectedGasPosition);
-        if (getSActivity().baseChain.equals(BNB_MAIN)) {
+        if (getSActivity().baseChain.equals(BNB_MAIN.INSTANCE)) {
             mFee = new BigDecimal(FEE_BNB_SEND);
-        } else if (getSActivity().baseChain.equals(OKEX_MAIN)) {
+        } else if (getSActivity().baseChain.equals(OKEX_MAIN.INSTANCE)) {
             mFee = mSelectedGasRate.multiply(mEstimateGasAmount).setScale(18, RoundingMode.UP);
         }
     }
@@ -130,8 +130,8 @@ public class StepFeeSetOldFragment extends BaseFragment implements View.OnClickL
     private void onUpdateView() {
         onCalculateFees();
 
-        mFeeAmount.setText(WDp.getDpAmount2(mFee, WDp.mainDivideDecimal(getSActivity().baseChain), WDp.mainDisplayDecimal(getSActivity().baseChain)));
-        mFeeValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getSActivity().baseChain.getMainDenom(), mFee, WDp.mainDivideDecimal(getSActivity().baseChain)));
+        mFeeAmount.setText(WDp.getDpAmount2(mFee, getSActivity().baseChain.getDivideDecimal(), getSActivity().baseChain.getDisplayDecimal()));
+        mFeeValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getSActivity().baseChain.getMainDenom(), mFee, getSActivity().baseChain.getDivideDecimal()));
 
         mGasRate.setText(WDp.getDpGasRate(mSelectedGasRate.toPlainString()));
         mGasAmount.setText(mEstimateGasAmount.toPlainString());

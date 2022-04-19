@@ -13,7 +13,7 @@ import com.joom.lightsaber.getInstance
 import moxy.ktx.moxyPresenter
 import wannabit.io.cosmostaion.R
 import wannabit.io.cosmostaion.activities.MainActivity
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.base.IRefreshTabListener
 import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.databinding.FragmentMainHistoryBinding

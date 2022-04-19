@@ -1,6 +1,6 @@
 package wannabit.io.cosmostaion.activities.tokenDetail;
 
-import static wannabit.io.cosmostaion.base.BaseChain.KAVA_MAIN;
+import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_IBC_TRANSFER;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIMPLE_SEND;
 import static wannabit.io.cosmostaion.base.BaseConstant.EMONEY_COIN_IMG_URL;
@@ -36,7 +36,7 @@ import java.math.BigDecimal;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.SendActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dialog.Dialog_IBC_Send_Warning;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.utils.WDp;
@@ -102,7 +102,7 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
         baseChain = BaseChain.getChain(account.baseChain);
         mNativeGrpcDenom = getIntent().getStringExtra("denom");
 
-        if (baseChain.equals(KAVA_MAIN)) {
+        if (baseChain.equals(KAVA_MAIN.INSTANCE)) {
             if (getBaseDao().onParseRemainVestingsByDenom(mNativeGrpcDenom).size() > 0) {
                 mHasVesting = true;
             }
@@ -145,7 +145,7 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
     private void onUpdateView() {
         mBtnAddressPopup.setCardBackgroundColor(WDp.getChainBgColor(NativeTokenGrpcActivity.this, baseChain));
         mBtnIbcSend.setVisibility(View.VISIBLE);
-        if (baseChain.equals(BaseChain.OSMOSIS_MAIN)) {
+        if (baseChain.equals(BaseChain.OSMOSIS_MAIN.INSTANCE)) {
             WUtil.DpOsmosisTokenImg(getBaseDao(), mToolbarSymbolImg, mNativeGrpcDenom);
             mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorIon));
             mToolbarSymbol.setText(getString(R.string.str_uion_c));
@@ -155,12 +155,12 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
                 mTotalAmount = getBaseDao().getAvailable(mNativeGrpcDenom);
             }
 
-        } else if (baseChain.equals(BaseChain.EMONEY_MAIN)) {
+        } else if (baseChain.equals(BaseChain.EMONEY_MAIN.INSTANCE)) {
             mToolbarSymbol.setText(mNativeGrpcDenom.toUpperCase());
             Picasso.get().load(EMONEY_COIN_IMG_URL + mNativeGrpcDenom + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(mToolbarSymbolImg);
             mTotalAmount = getBaseDao().getAvailable(mNativeGrpcDenom);
 
-        } else if (baseChain.equals(BaseChain.KAVA_MAIN)) {
+        } else if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             if (mNativeGrpcDenom.equalsIgnoreCase(TOKEN_HARD)) {
                 mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorHard));
                 mBtnAddressPopup.setCardBackgroundColor(ContextCompat.getColor(this, R.color.colorTransBghard));
@@ -296,7 +296,7 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
 
         @Override
         public int getItemViewType(int position) {
-            if (baseChain.equals(KAVA_MAIN)) {
+            if (baseChain.equals(KAVA_MAIN.INSTANCE)) {
                 if (mNativeGrpcDenom.equalsIgnoreCase(TOKEN_HARD) || mNativeGrpcDenom.equalsIgnoreCase(TOKEN_SWP)) {
                     if (mHasVesting) {
                         if (position == 0) return TYPE_NATIVE;

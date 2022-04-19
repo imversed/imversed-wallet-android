@@ -31,11 +31,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 
 public class Dialog_Htlc_Send_Coin extends DialogFragment {
 
@@ -85,7 +84,7 @@ public class Dialog_Htlc_Send_Coin extends DialogFragment {
         @Override
         public void onBindViewHolder(@NonNull ToSwapCoinHolder holder, int position) {
             final String tosendCoin = mSwappableCoinList.get(position);
-            if (mBaseChain.equals(BaseChain.BNB_MAIN)) {
+            if (mBaseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
                 if (tosendCoin.equals(TOKEN_HTLC_BINANCE_BNB)) {
                     holder.coinImg.setImageDrawable(getResources().getDrawable(R.drawable.bnb_token_img));
                     holder.coinName.setText(getString(R.string.str_bnb_c));
@@ -112,7 +111,7 @@ public class Dialog_Htlc_Send_Coin extends DialogFragment {
 
                 }
 
-            } else if (mBaseChain.equals(BaseChain.KAVA_MAIN)) {
+            } else if (mBaseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                 if (tosendCoin.equals(TOKEN_HTLC_KAVA_BNB)) {
                     holder.coinImg.setImageDrawable(getResources().getDrawable(R.drawable.bnb_on_kava));
                     holder.coinName.setText(getString(R.string.str_bnb_c));

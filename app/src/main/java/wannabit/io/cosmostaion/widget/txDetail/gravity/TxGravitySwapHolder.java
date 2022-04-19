@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import cosmos.tx.v1beta1.ServiceOuterClass;
 import tendermint.liquidity.v1beta1.Tx;
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.utils.WDp;
@@ -47,7 +47,7 @@ public class TxGravitySwapHolder extends TxHolder {
             itemGravitySwapOrderPrice.setText(WDp.getDpAmount2(new BigDecimal(msg.getOrderPrice()), 18, 18));
 
             Coin coin = new Coin(msg.getOfferCoin().getDenom(), msg.getOfferCoin().getAmount());
-            WDp.showCoinDp(c, baseData, coin, itemGravitySwapOfferSymbol, itemGravitySwapOfferAmount, BaseChain.COSMOS_MAIN);
+            WDp.showCoinDp(c, baseData, coin, itemGravitySwapOfferSymbol, itemGravitySwapOfferAmount, BaseChain.COSMOS_MAIN.INSTANCE);
         } catch (Exception e) {
         }
     }

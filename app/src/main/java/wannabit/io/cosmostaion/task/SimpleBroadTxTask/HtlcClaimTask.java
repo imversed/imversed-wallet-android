@@ -25,7 +25,7 @@ import retrofit2.Response;
 import wannabit.io.cosmostaion.BuildConfig;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.cosmos.Signer;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
@@ -66,7 +66,7 @@ public class HtlcClaimTask extends CommonTask {
     protected TaskResult doInBackground(String... strings) {
 
         try {
-            if (mReceiveChain.equals(BaseChain.BNB_MAIN)) {
+            if (mReceiveChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
                 Response<ResBnbAccountInfo> response = ApiClient.getBnbChain(context).getAccountInfo(mReceiveAccount.address).execute();
                 if (!response.isSuccessful()) {
                     result.errorCode = BaseConstant.ERROR_CODE_BROADCAST;
@@ -108,7 +108,7 @@ public class HtlcClaimTask extends CommonTask {
                     result.isSuccess = false;
                 }
 
-            } else if (mReceiveChain.equals(BaseChain.KAVA_MAIN)) {
+            } else if (mReceiveChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                 ServiceGrpc.ServiceBlockingStub nodeInfoStub = ServiceGrpc.newBlockingStub(ChannelBuilder.getChain(mReceiveChain));
                 Query.GetNodeInfoRequest receiveNodeInfo = Query.GetNodeInfoRequest.newBuilder().build();
                 Query.GetNodeInfoResponse receiveInfo = nodeInfoStub.getNodeInfo(receiveNodeInfo);

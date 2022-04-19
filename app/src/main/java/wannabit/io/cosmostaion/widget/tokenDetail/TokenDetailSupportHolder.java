@@ -1,8 +1,8 @@
 package wannabit.io.cosmostaion.widget.tokenDetail;
 
-import static wannabit.io.cosmostaion.base.BaseChain.COSMOS_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.CRYPTO_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.IRIS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.COSMOS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.CRYPTO_MAIN;
+import static com.fulldive.wallet.models.BaseChain.IRIS_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HARD;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_SWP;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_USDX;
@@ -23,7 +23,7 @@ import java.math.BigDecimal;
 
 import irismod.nft.QueryOuterClass;
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.dao.Assets;
 import wannabit.io.cosmostaion.dao.BnbToken;
@@ -82,7 +82,7 @@ public class TokenDetailSupportHolder extends BaseHolder {
     }
 
     public void onBindNativeTokengRPC(Context c, BaseChain baseChain, BaseData baseData, String denom) {
-        if (baseChain.equals(BaseChain.KAVA_MAIN)) {
+        if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             dpDecimal = WUtil.getKavaCoinDecimal(baseData, denom);
             if (denom.equalsIgnoreCase(TOKEN_HARD)) {
                 mAmountView.setCardBackgroundColor(ContextCompat.getColor(c, R.color.colorTransBghard));
@@ -109,7 +109,7 @@ public class TokenDetailSupportHolder extends BaseHolder {
     }
 
     public void onBindPoolToken(Context c, BaseChain baseChain, BaseData baseData, String denom) {
-        if (baseChain.equals(COSMOS_MAIN)) {
+        if (baseChain.equals(COSMOS_MAIN.INSTANCE)) {
             dpDecimal = 6;
         } else {
             dpDecimal = 18;
@@ -179,13 +179,13 @@ public class TokenDetailSupportHolder extends BaseHolder {
     }
 
     public void onBindNftInfo(Context c, BaseChain baseChain, QueryOuterClass.QueryNFTResponse irisResponse, chainmain.nft.v1.Nft.BaseNFT myCryptoNftInfo, String denomId, String tokenId) {
-        if (baseChain.equals(IRIS_MAIN) && irisResponse != null) {
+        if (baseChain.equals(IRIS_MAIN.INSTANCE) && irisResponse != null) {
             mNftInfo.setCardBackgroundColor(ContextCompat.getColor(c, R.color.colorTransBgIris));
             mNftName.setText(irisResponse.getNft().getName());
             mNftContent.setText(WUtil.getNftDescription(irisResponse.getNft().getData()));
             mNftIssuer.setText(WUtil.getNftIssuer(irisResponse.getNft().getData()));
 
-        } else if (baseChain.equals(CRYPTO_MAIN) && myCryptoNftInfo != null) {
+        } else if (baseChain.equals(CRYPTO_MAIN.INSTANCE) && myCryptoNftInfo != null) {
             mNftInfo.setCardBackgroundColor(ContextCompat.getColor(c, R.color.colorTransBgCryto));
             mNftName.setText(myCryptoNftInfo.getName());
             mNftContent.setText(WUtil.getNftDescription(myCryptoNftInfo.getData()));
@@ -196,14 +196,14 @@ public class TokenDetailSupportHolder extends BaseHolder {
     }
 
     public void onBindNftRawData(Context c, BaseChain baseChain, QueryOuterClass.QueryNFTResponse irisResponse, chainmain.nft.v1.Nft.BaseNFT myCryptoNftInfo) {
-        if (baseChain.equals(IRIS_MAIN) && irisResponse != null) {
+        if (baseChain.equals(IRIS_MAIN.INSTANCE) && irisResponse != null) {
             mNftRawRoot.setCardBackgroundColor(ContextCompat.getColor(c, R.color.colorTransBgIris));
             if (irisResponse.getNft().getData().isEmpty()) {
                 mNftRawData.setText("");
             } else {
                 mNftRawData.setText(new GsonBuilder().setPrettyPrinting().create().toJson(new JsonParser().parse(irisResponse.getNft().getData())));
             }
-        } else if (baseChain.equals(CRYPTO_MAIN) && myCryptoNftInfo != null) {
+        } else if (baseChain.equals(CRYPTO_MAIN.INSTANCE) && myCryptoNftInfo != null) {
             mNftRawRoot.setCardBackgroundColor(ContextCompat.getColor(c, R.color.colorTransBgCryto));
             if (myCryptoNftInfo.getData().isEmpty()) {
                 mNftRawData.setText("");

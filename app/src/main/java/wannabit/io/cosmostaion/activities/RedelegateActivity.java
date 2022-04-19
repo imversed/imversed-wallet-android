@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import cosmos.staking.v1beta1.Staking;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseBroadCastActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
@@ -190,7 +190,7 @@ public class RedelegateActivity extends BaseBroadCastActivity implements TaskLis
                         mGRpcTopValidators.add(val);
                     }
                 }
-                WUtil.onSortByValidatorPowerV1(mGRpcTopValidators);
+                mGRpcTopValidators = new ArrayList<>(WUtil.onSortByValidatorPowerV1(mGRpcTopValidators));
 
             } else {
                 Toast.makeText(getBaseContext(), R.string.error_network_error, Toast.LENGTH_SHORT).show();

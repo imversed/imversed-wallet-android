@@ -14,7 +14,7 @@ import java.math.RoundingMode;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.cosmos.GravityWithdrawPoolActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.utils.WDp;
@@ -68,7 +68,7 @@ public class GDexWithdrawStep3Fragment extends BaseFragment implements View.OnCl
 
     @Override
     public void onRefreshTab() {
-        mDpDecimal = WDp.mainDivideDecimal(getSActivity().baseChain);
+        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
 
         String lpDenom = getSActivity().mLpToken.denom;
@@ -89,8 +89,8 @@ public class GDexWithdrawStep3Fragment extends BaseFragment implements View.OnCl
 
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
         mMemo.setText(getSActivity().mTxMemo);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), coin0Denom, expectCoin0Amount.toPlainString(), mExitOutput0AmountSymbol, mExitOutput0Amount, BaseChain.COSMOS_MAIN);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), coin1Denom, expectCoin1Amount.toPlainString(), mExitOutput1AmountSymbol, mExitOutput1Amount, BaseChain.COSMOS_MAIN);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), coin0Denom, expectCoin0Amount.toPlainString(), mExitOutput0AmountSymbol, mExitOutput0Amount, BaseChain.COSMOS_MAIN.INSTANCE);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), coin1Denom, expectCoin1Amount.toPlainString(), mExitOutput1AmountSymbol, mExitOutput1Amount, BaseChain.COSMOS_MAIN.INSTANCE);
     }
 
     @Override

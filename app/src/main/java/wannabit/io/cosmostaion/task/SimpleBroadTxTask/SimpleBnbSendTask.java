@@ -19,7 +19,7 @@ import retrofit2.Response;
 import wannabit.io.cosmostaion.BuildConfig;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dao.Account;
@@ -63,7 +63,7 @@ public class SimpleBnbSendTask extends CommonTask {
                 return result;
             }
 
-            if (BaseChain.getChain(mAccount.baseChain).equals(BaseChain.BNB_MAIN)) {
+            if (BaseChain.getChain(mAccount.baseChain).equals(BaseChain.BNB_MAIN.INSTANCE)) {
                 Response<ResBnbAccountInfo> response = ApiClient.getBnbChain(context).getAccountInfo(mAccount.address).execute();
                 if (!response.isSuccessful()) {
                     result.errorCode = BaseConstant.ERROR_CODE_BROADCAST;

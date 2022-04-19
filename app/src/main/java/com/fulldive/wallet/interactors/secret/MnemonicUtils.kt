@@ -8,7 +8,7 @@ import org.bitcoinj.crypto.*
 import org.bouncycastle.crypto.digests.RIPEMD160Digest
 import org.bouncycastle.util.encoders.Hex
 import org.web3j.crypto.Keys
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.crypto.Sha256
 import java.io.ByteArrayOutputStream
 import java.math.BigInteger
@@ -37,10 +37,10 @@ object MnemonicUtils {
             }
             BaseChain.EVMOS_MAIN,
             BaseChain.INJ_MAIN -> {
-                generateAddressFromPrivateKey(fetchPrefix(chain), childKey.privateKeyAsHex)
+                generateAddressFromPrivateKey(chain.chainAddressPrefix, childKey.privateKeyAsHex)
             }
             else -> {
-                getDpAddress(fetchPrefix(chain), childKey.publicKeyAsHex)
+                getDpAddress(chain.chainAddressPrefix, childKey.publicKeyAsHex)
             }
         }
     }
@@ -169,14 +169,6 @@ object MnemonicUtils {
     private fun generateAddressFromPrivateKey(prefix: String, privateKey: String): String {
         val publicKey = hexPublicKeyFromPrivateKey(privateKey)
         return generateAddressFromPublicKey(prefix, publicKey)
-    }
-
-    private fun fetchPrefix(chain: BaseChain): String {
-        var prefix = chain.chainAddressPrefix
-        if (prefix.endsWith("1")) {
-            prefix = prefix.substring(0, prefix.length - 1)
-        }
-        return prefix
     }
 
     private fun getDpAddress(prefix: String, publicHexKey: String): String {

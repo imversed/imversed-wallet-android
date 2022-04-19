@@ -1,9 +1,9 @@
 package wannabit.io.cosmostaion.dao;
 
-import static wannabit.io.cosmostaion.base.BaseChain.CERTIK_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.EMONEY_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.EVMOS_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.STARGAZE_MAIN;
+import static com.fulldive.wallet.models.BaseChain.CERTIK_MAIN;
+import static com.fulldive.wallet.models.BaseChain.EMONEY_MAIN;
+import static com.fulldive.wallet.models.BaseChain.EVMOS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.STARGAZE_MAIN;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -14,7 +14,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.utils.WUtil;
@@ -96,25 +96,25 @@ public class ChainParam {
 
 
         public BigDecimal getMintInflation(BaseChain baseChain) {
-            if (baseChain.equals(BaseChain.IRIS_MAIN) || baseChain.equals(BaseChain.IRIS_TEST)) {
+            if (baseChain.equals(BaseChain.IRIS_MAIN.INSTANCE) || baseChain.equals(BaseChain.IRIS_TEST.INSTANCE)) {
                 return new BigDecimal(mMintParams.inflation);
 
-            } else if (baseChain.equals(BaseChain.OSMOSIS_MAIN)) {
+            } else if (baseChain.equals(BaseChain.OSMOSIS_MAIN.INSTANCE)) {
                 BigDecimal epochProvisions = new BigDecimal(mintingEpochProvision.epoch_provisions);
                 BigDecimal epochPeriods = new BigDecimal(osmosisMingtingParams.params.reduction_period_in_epochs);
                 BigDecimal osmoSupply = getMainSupply(baseChain);
                 return epochProvisions.multiply(epochPeriods).divide(osmoSupply, 18, RoundingMode.DOWN);
-            } else if (baseChain.equals(EMONEY_MAIN)) {
+            } else if (baseChain.equals(EMONEY_MAIN.INSTANCE)) {
                 for (Asset asset : mEmoneyInflations.mEmoneyInflation.assets) {
                     if (asset.denom.equalsIgnoreCase(BaseConstant.TOKEN_NGM)) {
                         return new BigDecimal(asset.inflation);
                     }
                 }
                 return new BigDecimal(mEmoneyInflations.mEmoneyInflation.assets.get(0).inflation);
-            } else if (baseChain.equals(STARGAZE_MAIN)) {
+            } else if (baseChain.equals(STARGAZE_MAIN.INSTANCE)) {
                 BigDecimal initialProvision = new BigDecimal(mStargazeMintingParams.params.initial_annual_provisions);
                 return initialProvision.divide(getMainSupply(baseChain), 18, RoundingMode.DOWN);
-            } else if (baseChain.equals(EVMOS_MAIN)) {
+            } else if (baseChain.equals(EVMOS_MAIN.INSTANCE)) {
                 BigDecimal annualProvisions = new BigDecimal(mEvmosEpochMintProvision.epoch_mint_provision).multiply(new BigDecimal("365"));
                 BigDecimal evmosSupply = getMainSupply(baseChain).subtract(new BigDecimal("200000000000000000000000000"));
                 return annualProvisions.divide(evmosSupply, 18, RoundingMode.DOWN);
@@ -182,13 +182,13 @@ public class ChainParam {
                 BigDecimal bondingRate = getBondedAmount(baseChain).divide(getMainSupply(baseChain), 6, RoundingMode.DOWN);
                 if (bondingRate.equals(BigDecimal.ZERO)) return BigDecimal.ZERO;
                 if (BigDecimal.ZERO.compareTo(bondingRate) != 0) {
-                    if (baseChain.equals(BaseChain.OSMOSIS_MAIN)) {
+                    if (baseChain.equals(BaseChain.OSMOSIS_MAIN.INSTANCE)) {
                         BigDecimal stakingDistribution = new BigDecimal(osmosisMingtingParams.params.distributionProportions.staking);
                         return inflation.multiply(calTax).multiply(stakingDistribution).divide(bondingRate, 6, RoundingMode.DOWN);
-                    } else if (baseChain.equals(STARGAZE_MAIN)) {
+                    } else if (baseChain.equals(STARGAZE_MAIN.INSTANCE)) {
                         BigDecimal reductionFactor = BigDecimal.ONE.subtract(new BigDecimal(mStargazeMintingParams.params.reduction_factor));
                         return inflation.multiply(calTax).multiply(reductionFactor).divide(bondingRate, 6, RoundingMode.DOWN);
-                    } else if (baseChain.equals(EVMOS_MAIN)) {
+                    } else if (baseChain.equals(EVMOS_MAIN.INSTANCE)) {
                         BigDecimal ap = new BigDecimal(mEvmosEpochMintProvision.epoch_mint_provision).multiply(new BigDecimal("365"));
                         BigDecimal stakingRewardsFactor = BigDecimal.ZERO;
                         if (mEvmosInflationParams.params.mInflationDistributions.staking_rewards != null) {
@@ -238,7 +238,7 @@ public class ChainParam {
 
         public BigDecimal getBlockPerYear(BaseChain baseChain) {
             if (baseChain.isGRPC()) {
-                if (baseChain.equals(STARGAZE_MAIN)) {
+                if (baseChain.equals(STARGAZE_MAIN.INSTANCE)) {
                     return new BigDecimal(mStargazeMintingParams.params.blocks_per_year);
                 } else if (mMintParams != null && mMintParams.params != null && mMintParams.params.blocks_per_year != null) {
                     return new BigDecimal(mMintParams.params.blocks_per_year);
@@ -279,7 +279,7 @@ public class ChainParam {
         }
 
         public BigDecimal getQuorum(BaseChain baseChain) {
-            if (baseChain.equals(CERTIK_MAIN)) {
+            if (baseChain.equals(CERTIK_MAIN.INSTANCE)) {
                 return new BigDecimal(govTallyings.tallyparams.defaultTally.quorum).movePointRight(2);
             } else if (baseChain.isGRPC()) {
                 return new BigDecimal(govTallyings.tallyparams.quorum).movePointRight(2);

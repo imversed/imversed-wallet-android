@@ -1,8 +1,8 @@
 package wannabit.io.cosmostaion.activities;
 
-import static wannabit.io.cosmostaion.base.BaseChain.KAVA_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.OKEX_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.SIF_MAIN;
+import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
+import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
+import static com.fulldive.wallet.models.BaseChain.SIF_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_PURPOSE;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_SIMPLE_CHECK;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_CLAIM_INCENTIVE;
@@ -52,7 +52,7 @@ import wannabit.io.cosmostaion.activities.chains.kava.ClaimIncentiveActivity;
 import wannabit.io.cosmostaion.activities.chains.sif.SifIncentiveActivity;
 import wannabit.io.cosmostaion.appextensions.PopupManager;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.base.IBusyFetchListener;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
@@ -186,7 +186,7 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
     private void onChainSelect(BaseChain baseChain) {
         invalidateOptionsMenu();
         mSelectedChain = baseChain;
-        getBaseDao().setLastChain(mSelectedChain.getChain());
+        getBaseDao().setLastChain(mSelectedChain.getChainName());
     }
 
     public void onClickSwitchWallet() {
@@ -201,7 +201,7 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
 
     public void onExplorerView() {
         String url = "";
-        if (baseChain.equals(OKEX_MAIN)) {
+        if (baseChain.equals(OKEX_MAIN.INSTANCE)) {
             url = WUtil.getExplorer(baseChain) + "address/" + account.address;
         } else {
             url = WUtil.getExplorer(baseChain) + "account/" + account.address;
@@ -290,7 +290,7 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
             return;
         }
         final BaseData baseData = getBaseDao();
-        if (baseChain.equals(KAVA_MAIN)) {
+        if (baseChain.equals(KAVA_MAIN.INSTANCE)) {
             BigDecimal available = baseData.getAvailable(baseChain.getMainDenom());
             BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, baseChain, CONST_PW_TX_CLAIM_INCENTIVE, 0);
             if (available.compareTo(txFee) <= 0) {
@@ -306,7 +306,7 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
             Intent intent = new Intent(MainActivity.this, ClaimIncentiveActivity.class);
             startActivity(intent);
 
-        } else if (baseChain.equals(SIF_MAIN)) {
+        } else if (baseChain.equals(SIF_MAIN.INSTANCE)) {
             BigDecimal available = baseData.getAvailable(baseChain.getMainDenom());
             BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, baseChain, CONST_PW_TX_SIF_CLAIM_INCENTIVE, 0);
             if (available.compareTo(txFee) <= 0) {

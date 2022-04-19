@@ -4,7 +4,7 @@ import androidx.fragment.app.DialogFragment
 import com.fulldive.wallet.presentation.base.BaseMoxyView
 import moxy.viewstate.strategy.alias.AddToEndSingle
 import moxy.viewstate.strategy.alias.OneExecution
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 
 interface ShowMnemonicMoxyView : BaseMoxyView {
 

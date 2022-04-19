@@ -14,14 +14,13 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fulldive.wallet.extensions.getColorCompat
 import com.fulldive.wallet.extensions.unsafeLazy
-import com.fulldive.wallet.interactors.secret.SecretInteractor
 import com.fulldive.wallet.presentation.base.BaseMvpActivity
 import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity
 import com.fulldive.wallet.presentation.security.password.SetPasswordActivity
 import com.joom.lightsaber.getInstance
 import moxy.ktx.moxyPresenter
 import wannabit.io.cosmostaion.R
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.databinding.ActivityRestoreBinding
 
 class MnemonicRestoreActivity : BaseMvpActivity<ActivityRestoreBinding>(), MnemonicRestoreMoxyView {
@@ -46,8 +45,6 @@ class MnemonicRestoreActivity : BaseMvpActivity<ActivityRestoreBinding>(), Mnemo
             }
     }
 
-    private var secretInteractor: SecretInteractor? = null
-
     override fun getViewBinding() = ActivityRestoreBinding.inflate(layoutInflater)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,8 +54,6 @@ class MnemonicRestoreActivity : BaseMvpActivity<ActivityRestoreBinding>(), Mnemo
             WindowManager.LayoutParams.FLAG_SECURE
         )
         window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-
-        secretInteractor = appInjector.getInstance(SecretInteractor::class.java)
 
         binding {
             setSupportActionBar(toolbar)
@@ -130,7 +125,7 @@ class MnemonicRestoreActivity : BaseMvpActivity<ActivityRestoreBinding>(), Mnemo
     override fun showChain(chain: BaseChain) {
         binding {
             chainImageView.setColorFilter(
-                chainImageView.getColorCompat(chain.denomColor),
+                chainImageView.getColorCompat(chain.chainColor),
                 PorterDuff.Mode.SRC_IN
             )
             contentsLayout.isVisible = true

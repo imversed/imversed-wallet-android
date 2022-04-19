@@ -1,8 +1,8 @@
 package wannabit.io.cosmostaion.activities.tokenDetail;
 
-import static wannabit.io.cosmostaion.base.BaseChain.COSMOS_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.INJ_MAIN;
-import static wannabit.io.cosmostaion.base.BaseChain.OSMOSIS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.COSMOS_MAIN;
+import static com.fulldive.wallet.models.BaseChain.INJ_MAIN;
+import static com.fulldive.wallet.models.BaseChain.OSMOSIS_MAIN;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -28,7 +28,7 @@ import java.math.BigDecimal;
 import tendermint.liquidity.v1beta1.Liquidity;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.tokenDetail.TokenDetailSupportHolder;
@@ -119,7 +119,7 @@ public class POOLTokenDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private void onUpdateView() {
-        if (baseChain.equals(OSMOSIS_MAIN)) {
+        if (baseChain.equals(OSMOSIS_MAIN.INSTANCE)) {
             WUtil.DpOsmosisTokenImg(getBaseDao(), mToolbarSymbolImg, mPoolDenom);
             String[] split = mPoolDenom.split("/");
             mToolbarSymbol.setText("GAMM-" + split[split.length - 1]);
@@ -132,7 +132,7 @@ public class POOLTokenDetailActivity extends BaseActivity implements View.OnClic
 
             mBtnIbcSend.setVisibility(View.VISIBLE);
 
-        } else if (baseChain.equals(COSMOS_MAIN)) {
+        } else if (baseChain.equals(COSMOS_MAIN.INSTANCE)) {
             WUtil.DpCosmosTokenImg(getBaseDao(), mToolbarSymbolImg, mPoolDenom);
             Liquidity.Pool poolInfo = getBaseDao().getGravityPoolByDenom(mPoolDenom);
             if (poolInfo != null) {
@@ -147,7 +147,7 @@ public class POOLTokenDetailActivity extends BaseActivity implements View.OnClic
 
             mBtnIbcSend.setVisibility(View.VISIBLE);
 
-        } else if (baseChain.equals(INJ_MAIN)) {
+        } else if (baseChain.equals(INJ_MAIN.INSTANCE)) {
             mToolbarSymbolImg.setImageResource(R.drawable.token_ic);
             mToolbarSymbol.setText("SHARE" + mPoolDenom.substring(5));
             mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));

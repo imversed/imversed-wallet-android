@@ -20,6 +20,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
 
+import com.fulldive.wallet.interactors.secret.WalletUtils;
 import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
 import com.fulldive.wallet.presentation.security.password.SetPasswordActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -27,7 +28,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dao.Account;
@@ -127,21 +128,21 @@ public class PrivateKeyRestoreActivity extends BaseActivity implements View.OnCl
                 return;
             }
 
-            if (chain.equals(BaseChain.OKEX_MAIN)) {
+            if (chain.equals(BaseChain.OKEX_MAIN.INSTANCE)) {
                 Dialog_Choice_Type_OKex dialog = Dialog_Choice_Type_OKex.newInstance();
                 showDialog(dialog, "dialog", false);
                 return;
             }
 
             String address = "";
-            if (chain.equals(BaseChain.INJ_MAIN)) {
+            if (chain.equals(BaseChain.INJ_MAIN.INSTANCE)) {
                 address = WKey.generateAddressFromPriv("inj", userInput);
-            } else if (chain.equals(BaseChain.EVMOS_MAIN)) {
+            } else if (chain.equals(BaseChain.EVMOS_MAIN.INSTANCE)) {
                 address = WKey.generateAddressFromPriv("evmos", userInput);
             } else {
-                address = WKey.getDpAddress(chain, WKey.generatePubKeyHexFromPriv(userInput));
+                address = WalletUtils.INSTANCE.getDpAddress(chain, WKey.generatePubKeyHexFromPriv(userInput));
             }
-            Account account = getBaseDao().onSelectExistAccount(address, chain);
+            Account account = getBaseDao().getAccount(address, chain.getChainName());
             if (account != null && account.hasPrivateKey) {
                 Toast.makeText(this, R.string.error_already_imported_address, Toast.LENGTH_SHORT).show();
                 return;
@@ -207,7 +208,7 @@ public class PrivateKeyRestoreActivity extends BaseActivity implements View.OnCl
             return;
         }
 
-        Account existAccount = getBaseDao().onSelectExistAccount(okAddress, chain);
+        Account existAccount = getBaseDao().getAccount(okAddress, chain.getChainName());
         if (existAccount != null && existAccount.hasPrivateKey) {
             Toast.makeText(this, R.string.error_already_imported_address, Toast.LENGTH_SHORT).show();
             return;
@@ -232,22 +233,18 @@ public class PrivateKeyRestoreActivity extends BaseActivity implements View.OnCl
 
     private void restoreOrGenerateAccount() {
         String address;
-        switch (chain) {
-            case OKEX_MAIN:
-                address = okAddress;
-                break;
-            case INJ_MAIN:
-                address = WKey.generateAddressFromPriv("inj", userInput);
-                break;
-            case EVMOS_MAIN:
-                address = WKey.generateAddressFromPriv("evmos", userInput);
-                break;
-            default:
-                address = WKey.getDpAddress(chain, WKey.generatePubKeyHexFromPriv(userInput));
+        if (BaseChain.OKEX_MAIN.INSTANCE.equals(chain)) {
+            address = okAddress;
+        } else if (BaseChain.INJ_MAIN.INSTANCE.equals(chain)) {
+            address = WKey.generateAddressFromPriv("inj", userInput);
+        } else if (BaseChain.EVMOS_MAIN.INSTANCE.equals(chain)) {
+            address = WKey.generateAddressFromPriv("evmos", userInput);
+        } else {
+            address = WalletUtils.INSTANCE.getDpAddress(chain, WKey.generatePubKeyHexFromPriv(userInput));
         }
-        Account account = getBaseDao().onSelectExistAccount(address, chain);
+        Account account = getBaseDao().getAccount(address, chain.getChainName());
 
-        int customPath = chain.equals(BaseChain.OKEX_MAIN) ? okAddressType : -1;
+        int customPath = chain.equals(BaseChain.OKEX_MAIN.INSTANCE) ? okAddressType : -1;
         if (account != null) {
             onOverridePkeyAccount(userInput, account, customPath);
         } else {

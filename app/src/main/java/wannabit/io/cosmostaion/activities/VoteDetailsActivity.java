@@ -1,6 +1,6 @@
 package wannabit.io.cosmostaion.activities;
 
-import static wannabit.io.cosmostaion.base.BaseChain.CERTIK_MAIN;
+import static com.fulldive.wallet.models.BaseChain.CERTIK_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_VOTE;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_FETCH_MINTSCAN_PROPOSAL;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_PROPOSAL_MY_VOTE;
@@ -33,7 +33,7 @@ import java.util.ArrayList;
 import cosmos.gov.v1beta1.Gov;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.network.res.ResMyProposal;
@@ -159,7 +159,7 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
         mTaskCount--;
         if (result.taskType == TASK_GRPC_FETCH_PROPOSAL_MY_VOTE) {
             if (result.resultData != null) {
-                if (baseChain.equals(CERTIK_MAIN)) {
+                if (baseChain.equals(CERTIK_MAIN.INSTANCE)) {
                     mResMyProposal = (ResMyProposal) result.resultData;
                 } else {
                     mMyVote_gRPC = (Gov.Vote) result.resultData;
@@ -307,7 +307,7 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
                     }
                 }
 
-                if (baseChain.equals(CERTIK_MAIN) && mResMyProposal != null) {
+                if (baseChain.equals(CERTIK_MAIN.INSTANCE) && mResMyProposal != null) {
                     String voteOption = mResMyProposal.vote.options.get(0).option;
                     if (voteOption.equalsIgnoreCase("VOTE_OPTION_YES")) {
                         holder.itemYesDone.setVisibility(View.VISIBLE);

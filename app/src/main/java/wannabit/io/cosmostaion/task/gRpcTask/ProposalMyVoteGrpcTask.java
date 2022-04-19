@@ -6,7 +6,7 @@ import cosmos.gov.v1beta1.QueryGrpc;
 import cosmos.gov.v1beta1.QueryOuterClass;
 import retrofit2.Response;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.ApiClient;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.network.res.ResMyProposal;
@@ -33,7 +33,7 @@ public class ProposalMyVoteGrpcTask extends CommonTask {
     @Override
     protected TaskResult doInBackground(String... strings) {
         try {
-            if (mChain.equals(BaseChain.CERTIK_MAIN)) {
+            if (mChain.equals(BaseChain.CERTIK_MAIN.INSTANCE)) {
                 Response<ResMyProposal> response = ApiClient.getCertikChain(context).getCertikProposal(mProposalId, mAddress).execute();
                 if (response.isSuccessful() && response.body() != null && response.body().vote != null && response.body().vote.options != null) {
                     result.resultData = response.body();

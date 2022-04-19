@@ -15,7 +15,7 @@ import com.google.zxing.integration.android.IntentResult
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import wannabit.io.cosmostaion.R
-import wannabit.io.cosmostaion.base.BaseChain
+import com.fulldive.wallet.models.BaseChain
 import java.util.*
 import javax.inject.Inject
 
@@ -74,7 +74,7 @@ class WatchAccountPresenter @Inject constructor(
                     val dialog = ChoiceChainDialogFragment
                         .newInstance(
                             requestCode = requestCode,
-                            chains = chains.map(BaseChain::chain)
+                            chains = chains.map(BaseChain::chainName)
                         )
                     viewState.showDialog(dialog, "dialog", true)
                     requestCode

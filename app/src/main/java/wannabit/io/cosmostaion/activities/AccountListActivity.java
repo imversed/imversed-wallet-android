@@ -22,7 +22,7 @@ import java.util.List;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseChain;
+import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.utils.WDp;
 
@@ -86,7 +86,7 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
     public void onChainSelect(BaseChain baseChain) {
         mDisplayChains = getBaseDao().dpSortedChains();
         mSelectedChain = baseChain;
-        getBaseDao().setLastChain(mSelectedChain.getChain());
+        getBaseDao().setLastChain(mSelectedChain.getChainName());
         mDisplayAccounts = getBaseDao().getAccountsByChain(mSelectedChain);
         mChainRecyclerView.scrollToPosition(mDisplayChains.indexOf(getBaseDao().getLastChain()));
 
