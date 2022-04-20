@@ -105,9 +105,6 @@ public class StarNameWalletConnectActivity extends BaseActivity implements View.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mWcURL = getIntent().getStringExtra("wcUrl");
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
-
         mWcThread = new StarNameWcThread();
         mWcThread.start();
 
@@ -144,7 +141,7 @@ public class StarNameWalletConnectActivity extends BaseActivity implements View.
         mWcLayer.setVisibility(View.VISIBLE);
         mLoadingLayer.setVisibility(View.GONE);
 
-        ArrayList<Account> allAccounts = getBaseDao().onSelectAccounts();
+        ArrayList<Account> allAccounts = getBaseDao().getAccounts();
         ExportStarName toExport = getExportResource(allAccounts);
         String jsonData = new Gson().toJson(toExport);
 //        WLog.w("allAccounts "+ allAccounts.size());

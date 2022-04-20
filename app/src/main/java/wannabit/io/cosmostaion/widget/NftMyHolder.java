@@ -45,7 +45,7 @@ public class NftMyHolder extends RecyclerView.ViewHolder {
             @Override
             public void onTaskResponse(TaskResult result) {
                 if (result.isSuccess) {
-                    if (activity.baseChain.equals(IRIS_MAIN.INSTANCE)) {
+                    if (activity.getBaseChain().equals(IRIS_MAIN.INSTANCE)) {
                         QueryOuterClass.QueryNFTResponse irisResponse = (QueryOuterClass.QueryNFTResponse) result.resultData;
                         if (irisResponse != null) {
                             try {
@@ -67,7 +67,7 @@ public class NftMyHolder extends RecyclerView.ViewHolder {
                                 }
                             });
                         }
-                    } else if (activity.baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
+                    } else if (activity.getBaseChain().equals(CRYPTO_MAIN.INSTANCE)) {
                         chainmain.nft.v1.Nft.BaseNFT myCryptoNftInfo = (chainmain.nft.v1.Nft.BaseNFT) result.resultData;
                         if (myCryptoNftInfo != null) {
                             try {
@@ -92,6 +92,6 @@ public class NftMyHolder extends RecyclerView.ViewHolder {
                     }
                 }
             }
-        }, activity.baseChain, denomId, tokenId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }, activity.getBaseChain(), denomId, tokenId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 }

@@ -11,8 +11,9 @@ import android.widget.Button;
 
 import androidx.fragment.app.DialogFragment;
 
+import com.fulldive.wallet.presentation.main.MainActivity;
+
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.MainActivity;
 
 public class Dialog_WalletConnect extends DialogFragment {
 

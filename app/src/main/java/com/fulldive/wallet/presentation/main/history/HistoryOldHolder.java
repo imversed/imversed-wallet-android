@@ -8,10 +8,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
+import com.fulldive.wallet.presentation.main.MainActivity;
+
 import org.jetbrains.annotations.NotNull;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.MainActivity;
 import wannabit.io.cosmostaion.activities.TxDetailActivity;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.model.type.BnbHistory;
@@ -39,7 +40,7 @@ public class HistoryOldHolder extends BaseHolder {
     }
 
     public void onBindOldBnbHistory(@NotNull MainActivity mainActivity, BnbHistory history) {
-        historyType.setText(WDp.DpBNBTxType(mainActivity, history, mainActivity.account.address));
+        historyType.setText(WDp.DpBNBTxType(mainActivity, history, mainActivity.getAccount().address));
         history_time.setText(WDp.getTimeformat(mainActivity, history.timeStamp));
         history_time_gap.setText(WDp.getTimeGap(mainActivity, history.timeStamp));
         history_block.setText(history.blockHeight + "block");
@@ -54,7 +55,7 @@ public class HistoryOldHolder extends BaseHolder {
                 mainActivity.startActivity(txDetail);
 
             } else {
-                String url = WUtil.getTxExplorer(mainActivity.baseChain, history.txHash);
+                String url = WUtil.getTxExplorer(mainActivity.getBaseChain(), history.txHash);
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 mainActivity.startActivity(intent);
             }

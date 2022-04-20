@@ -33,6 +33,10 @@ class AccountsInteractor @Inject constructor(
         return accountsRepository.getSelectedAccount()
     }
 
+    fun getCurrentAccount(): Account {
+        return accountsRepository.getCurrentAccount()
+    }
+
     fun getAccounts(): Single<List<Account>> {
         return accountsRepository.getAccounts()
     }
@@ -54,6 +58,10 @@ class AccountsInteractor @Inject constructor(
             }
     }
 
+
+    fun selectAccount(accountId: Long): Completable {
+        return accountsRepository.selectAccount(accountId)
+    }
 
     fun selectAccount(): Single<Account> {
         return getAccounts()
@@ -112,7 +120,6 @@ class AccountsInteractor @Inject constructor(
             .flatMap(accountsRepository::addAccount)
             .flatMapCompletable(accountsRepository::selectAccount)
             .andThen(showChain(chain.chainName))
-            .andThen(selectChain(chain.chainName))
     }
 
     fun createAccount(
@@ -145,7 +152,6 @@ class AccountsInteractor @Inject constructor(
             .flatMap(accountsRepository::addAccount)
             .flatMapCompletable(accountsRepository::selectAccount)
             .andThen(showChain(chain.chainName))
-            .andThen(selectChain(chain.chainName))
     }
 
     fun createAccount(
@@ -176,7 +182,6 @@ class AccountsInteractor @Inject constructor(
             .flatMap(accountsRepository::addAccount)
             .flatMapCompletable(accountsRepository::selectAccount)
             .andThen(showChain(chain.chainName))
-            .andThen(selectChain(chain.chainName))
     }
 
     fun updateAccount(
@@ -212,7 +217,6 @@ class AccountsInteractor @Inject constructor(
             .flatMapCompletable(accountsRepository::updateAccount)
             .andThen(accountsRepository.selectAccount(accountId))
             .andThen(showChain(chainName))
-            .andThen(selectChain(chainName))
     }
 
     fun updateAccount(
@@ -247,7 +251,6 @@ class AccountsInteractor @Inject constructor(
             .flatMapCompletable(accountsRepository::updateAccount)
             .andThen(accountsRepository.selectAccount(accountId))
             .andThen(showChain(chainName))
-            .andThen(selectChain(chainName))
     }
 
     fun createWatchAccount(chain: BaseChain, address: String): Completable {
@@ -263,11 +266,6 @@ class AccountsInteractor @Inject constructor(
             .flatMap(accountsRepository::addAccount)
             .flatMapCompletable(accountsRepository::selectAccount)
             .andThen(showChain(chain.chainName))
-            .andThen(selectChain(chain.chainName))
-    }
-
-    private fun selectChain(chain: String): Completable {
-        return accountsRepository.selectChain(chain)
     }
 
     private fun showChain(chain: String): Completable {

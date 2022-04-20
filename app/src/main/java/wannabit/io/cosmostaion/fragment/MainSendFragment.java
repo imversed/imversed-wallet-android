@@ -24,9 +24,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
+import com.fulldive.wallet.presentation.main.MainActivity;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.MainActivity;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IBusyFetchListener;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
@@ -142,8 +142,8 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
     }
 
     private void onUpdateView() {
-        if (getMainActivity() == null || getMainActivity().account == null) return;
-        mAccount = getMainActivity().account;
+        if (getMainActivity() == null || getMainActivity().getAccount() == null) return;
+        mAccount = getMainActivity().getAccount();
         mBaseChain = BaseChain.getChain(mAccount.baseChain);
 
         mCardView.setCardBackgroundColor(WDp.getChainBgColor(getMainActivity(), mBaseChain));
@@ -218,12 +218,12 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
 
         @Override
         public int getItemCount() {
-            if (getMainActivity().baseChain == null) {
+            if (getMainActivity().getBaseChain() == null) {
                 return 0;
             }
-            if (getMainActivity().baseChain.equals(KAVA_MAIN.INSTANCE) || getMainActivity().baseChain.equals(DESMOS_MAIN.INSTANCE)) {
+            if (getMainActivity().getBaseChain().equals(KAVA_MAIN.INSTANCE) || getMainActivity().getBaseChain().equals(DESMOS_MAIN.INSTANCE)) {
                 return 5;
-            } else if (getMainActivity().baseChain.isGRPC()) {
+            } else if (getMainActivity().getBaseChain().isGRPC()) {
                 return 4;
             } else {
                 return 3;
@@ -232,7 +232,7 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
 
         @Override
         public int getItemViewType(int position) {
-            if (getMainActivity().baseChain.equals(KAVA_MAIN.INSTANCE)) {
+            if (getMainActivity().getBaseChain().equals(KAVA_MAIN.INSTANCE)) {
                 if (position == 0) {
                     return TYPE_WALLET;
                 } else if (position == 1) {
@@ -245,7 +245,7 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
                     return TYPE_GIUDE;
                 }
 
-            } else if (getMainActivity().baseChain.equals(DESMOS_MAIN.INSTANCE)) {
+            } else if (getMainActivity().getBaseChain().equals(DESMOS_MAIN.INSTANCE)) {
                 if (position == 0) {
                     return TYPE_WALLET;
                 } else if (position == 1) {
@@ -258,7 +258,7 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
                     return TYPE_GIUDE;
                 }
 
-            } else if (getMainActivity().baseChain.isGRPC()) {
+            } else if (getMainActivity().getBaseChain().isGRPC()) {
                 if (position == 0) {
                     return TYPE_WALLET;
                 } else if (position == 1) {
@@ -269,11 +269,11 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
                     return TYPE_GIUDE;
                 }
 
-            } else if (getMainActivity().baseChain.equals(BNB_MAIN.INSTANCE) || getMainActivity().baseChain.equals(OKEX_MAIN.INSTANCE)) {
+            } else if (getMainActivity().getBaseChain().equals(BNB_MAIN.INSTANCE) || getMainActivity().getBaseChain().equals(OKEX_MAIN.INSTANCE)) {
                 if (position == 0) {
-                    if (getMainActivity().baseChain.equals(BNB_MAIN.INSTANCE)) {
+                    if (getMainActivity().getBaseChain().equals(BNB_MAIN.INSTANCE)) {
                         return TYPE_BINANCE;
-                    } else if (getMainActivity().baseChain.equals(OKEX_MAIN.INSTANCE)) {
+                    } else if (getMainActivity().getBaseChain().equals(OKEX_MAIN.INSTANCE)) {
                         return TYPE_OKEX;
                     }
                 } else if (position == 1) {

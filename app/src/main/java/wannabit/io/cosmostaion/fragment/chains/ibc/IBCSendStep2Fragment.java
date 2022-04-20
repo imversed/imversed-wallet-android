@@ -87,20 +87,20 @@ public class IBCSendStep2Fragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onRefreshTab() {
         mToIbcDenom = getSActivity().mToIbcDenom;
-        mDpDecimal = WDp.tokenDivideDecimal(getBaseDao(), getSActivity().baseChain, mToIbcDenom);
+        mDpDecimal = WDp.tokenDivideDecimal(getBaseDao(), getSActivity().getBaseChain(), mToIbcDenom);
         setDisplayDecimals(mDpDecimal);
         onUpdateInitInfo();
     }
 
     private void onUpdateInitInfo() {
-        final String mainDenom = getSActivity().baseChain.getMainDenom();
-        final BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getContext(), getSActivity().baseChain, CONST_PW_TX_IBC_TRANSFER, 0);
+        final String mainDenom = getSActivity().getBaseChain().getMainDenom();
+        final BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getContext(), getSActivity().getBaseChain(), CONST_PW_TX_IBC_TRANSFER, 0);
 
         mMaxAvailable = getBaseDao().getAvailable(getSActivity().mToIbcDenom);
         if (mainDenom.equalsIgnoreCase(getSActivity().mToIbcDenom)) {
             mMaxAvailable = mMaxAvailable.subtract(feeAmount);
         }
-        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mToIbcDenom, mMaxAvailable.toPlainString(), mDenomTitle, mAvailableAmount, getSActivity().baseChain);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mToIbcDenom, mMaxAvailable.toPlainString(), mDenomTitle, mAvailableAmount, getSActivity().getBaseChain());
 
         mAmountInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -235,7 +235,7 @@ public class IBCSendStep2Fragment extends BaseFragment implements View.OnClickLi
     }
 
     private void onShowEmptyBalanceWarnDialog() {
-        if (getSActivity().baseChain.getMainDenom().equalsIgnoreCase(getSActivity().mToIbcDenom)) {
+        if (getSActivity().getBaseChain().getMainDenom().equalsIgnoreCase(getSActivity().mToIbcDenom)) {
             Dialog_Empty_Warning dialog = Dialog_Empty_Warning.newInstance();
             showDialog(dialog);
             return;

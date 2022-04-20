@@ -18,7 +18,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.fulldive.wallet.models.BaseChain;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -59,9 +58,6 @@ public class StarNameListActivity extends BaseActivity implements TaskListener {
         mNameServiceTapLayer = findViewById(R.id.name_service_tab);
         mNameServicePager = findViewById(R.id.name_service_view_pager);
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
-
         mPageAdapter = new StarNamePageAdapter(getSupportFragmentManager());
         mNameServicePager.setAdapter(mPageAdapter);
         mNameServiceTapLayer.setupWithViewPager(mNameServicePager);
@@ -75,17 +71,17 @@ public class StarNameListActivity extends BaseActivity implements TaskListener {
         View tab0 = LayoutInflater.from(this).inflate(R.layout.view_tab_myvalidator, null);
         TextView tabItemText0 = tab0.findViewById(R.id.tabItemText);
         tabItemText0.setText(R.string.str_my_domain);
-        tabItemText0.setTextColor(WDp.getTabColor(this, baseChain));
+        tabItemText0.setTextColor(WDp.getTabColor(this, getBaseChain()));
         mNameServiceTapLayer.getTabAt(0).setCustomView(tab0);
 
         View tab1 = LayoutInflater.from(this).inflate(R.layout.view_tab_myvalidator, null);
         TextView tabItemText1 = tab1.findViewById(R.id.tabItemText);
-        tabItemText1.setTextColor(WDp.getTabColor(this, baseChain));
+        tabItemText1.setTextColor(WDp.getTabColor(this, getBaseChain()));
         tabItemText1.setText(R.string.str_my_account);
         mNameServiceTapLayer.getTabAt(1).setCustomView(tab1);
 
-        mNameServiceTapLayer.setTabIconTint(WDp.getChainTintColor(this, baseChain));
-        mNameServiceTapLayer.setSelectedTabIndicatorColor(WDp.getChainColor(this, baseChain));
+        mNameServiceTapLayer.setTabIconTint(WDp.getChainTintColor(this, getBaseChain()));
+        mNameServiceTapLayer.setSelectedTabIndicatorColor(WDp.getChainColor(this, getBaseChain()));
 
         mNameServicePager.setOffscreenPageLimit(2);
         mNameServicePager.setCurrentItem(0, false);
@@ -135,8 +131,8 @@ public class StarNameListActivity extends BaseActivity implements TaskListener {
         mDomains_gRPC.clear();
         mDomainResolves_gRPC.clear();
         mAccounts_gRPC.clear();
-        new StarNameGrpcAccountTask(getBaseApplication(), this, baseChain, account).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new StarNameGrpcDomainTask(getBaseApplication(), this, baseChain, account).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new StarNameGrpcAccountTask(getBaseApplication(), this, getBaseChain(), getAccount()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new StarNameGrpcDomainTask(getBaseApplication(), this, getBaseChain(), getAccount()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
 
@@ -165,7 +161,7 @@ public class StarNameListActivity extends BaseActivity implements TaskListener {
             }
             mTaskCount = mTaskCount + mDomains_gRPC.size();
             for (Types.Domain domain : mDomains_gRPC) {
-                new StarNameGrpcResolveTask(getBaseApplication(), this, baseChain, "", domain.getName()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new StarNameGrpcResolveTask(getBaseApplication(), this, getBaseChain(), "", domain.getName()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
 
         } else if (result.taskType == TASK_GRPC_FETCH_STARNAME_RESOLVE) {

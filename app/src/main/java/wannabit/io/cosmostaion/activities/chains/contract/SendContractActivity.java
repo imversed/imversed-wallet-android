@@ -15,7 +15,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fulldive.wallet.extensions.ActivityExtensionsKt;
-import com.fulldive.wallet.models.BaseChain;
 
 import java.util.ArrayList;
 
@@ -58,8 +57,6 @@ public class SendContractActivity extends BaseBroadCastActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mTvStep.setText(getString(R.string.str_send_step_0));
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_EXECUTE_CONTRACT;
 
         mContractAddress = getIntent().getStringExtra("mCw20SendContract");
@@ -106,7 +103,7 @@ public class SendContractActivity extends BaseBroadCastActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (account == null) finish();
+        if (getAccount() == null) finish();
     }
 
 

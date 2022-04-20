@@ -59,7 +59,7 @@ public class KavaSwapStep3Fragment extends BaseFragment implements View.OnClickL
         mBeforeBtn = rootView.findViewById(R.id.btn_before);
         mConfirmBtn = rootView.findViewById(R.id.confirmButton);
 
-        WDp.DpMainDenom(getSActivity().account.baseChain, mFeeAmountSymbol);
+        WDp.DpMainDenom(getSActivity().getAccount().baseChain, mFeeAmountSymbol);
 
         mBeforeBtn.setOnClickListener(this);
         mConfirmBtn.setOnClickListener(this);
@@ -70,14 +70,14 @@ public class KavaSwapStep3Fragment extends BaseFragment implements View.OnClickL
     @Override
     public void onRefreshTab() {
         mSlippageLayer.setVisibility(View.VISIBLE);
-        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
+        mDpDecimal = getSActivity().getBaseChain().getDivideDecimal();
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
         BigDecimal swapFee = new BigDecimal(getBaseDao().mSwapParams.getSwapFee()).movePointLeft(18);
 
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
         mSwapFee.setText(WDp.getPercentDp(swapFee.movePointLeft(16)));
-        WDp.showCoinDp(getContext(), getBaseDao(), getSActivity().mKavaSwapIn, mSwapInAmountSymbol, mSwapInAmount, getSActivity().baseChain);
-        WDp.showCoinDp(getContext(), getBaseDao(), getSActivity().mKavaSwapOut, mSwapOutAmountSymbol, mSwapOutAmount, getSActivity().baseChain);
+        WDp.showCoinDp(getContext(), getBaseDao(), getSActivity().mKavaSwapIn, mSwapInAmountSymbol, mSwapInAmount, getSActivity().getBaseChain());
+        WDp.showCoinDp(getContext(), getBaseDao(), getSActivity().mKavaSwapOut, mSwapOutAmountSymbol, mSwapOutAmount, getSActivity().getBaseChain());
         mSlippage.setText(WDp.getPercentDp(new BigDecimal(3)));
         mMemo.setText(getSActivity().mTxMemo);
     }

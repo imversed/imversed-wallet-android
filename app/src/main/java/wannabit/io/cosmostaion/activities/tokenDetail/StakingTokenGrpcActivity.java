@@ -21,7 +21,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.squareup.picasso.Picasso;
 
@@ -92,13 +91,11 @@ public class StakingTokenGrpcActivity extends BaseActivity implements View.OnCli
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
-        mMainDenom = baseChain.getMainDenom();
-        mDivideDecimal = baseChain.getDivideDecimal();
-        mDisplayDecimal = baseChain.getDivideDecimal();
+        mMainDenom = getBaseChain().getMainDenom();
+        mDivideDecimal = getBaseChain().getDivideDecimal();
+        mDisplayDecimal = getBaseChain().getDivideDecimal();
 
-        if (getBaseDao().onParseRemainVestingsByDenom(baseChain.getMainDenom()).size() > 0) {
+        if (getBaseDao().onParseRemainVestingsByDenom(getBaseChain().getMainDenom()).size() > 0) {
             mHasVesting = true;
         }
         mBtnIbcSend.setVisibility(View.VISIBLE);
@@ -135,8 +132,8 @@ public class StakingTokenGrpcActivity extends BaseActivity implements View.OnCli
 
     private void onUpdateView() {
         Picasso.get().cancelRequest(mToolbarSymbolImg);
-        mToolbarSymbolImg.setImageResource(baseChain.getCoinIcon());
-        WDp.DpMainDenom(baseChain, mToolbarSymbol);
+        mToolbarSymbolImg.setImageResource(getBaseChain().getCoinIcon());
+        WDp.DpMainDenom(getBaseChain(), mToolbarSymbol);
 
         mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), mMainDenom));
         mItemUpDownPrice.setText(WDp.dpValueChange(getBaseDao(), mMainDenom));
@@ -151,11 +148,11 @@ public class StakingTokenGrpcActivity extends BaseActivity implements View.OnCli
             mItemUpDownImg.setVisibility(View.INVISIBLE);
         }
 
-        mBtnAddressPopup.setCardBackgroundColor(WDp.getChainBgColor(StakingTokenGrpcActivity.this, baseChain));
-        mAddress.setText(account.address);
+        mBtnAddressPopup.setCardBackgroundColor(WDp.getChainBgColor(StakingTokenGrpcActivity.this, getBaseChain()));
+        mAddress.setText(getAccount().address);
         mKeyState.setColorFilter(ContextCompat.getColor(getBaseContext(), R.color.colorGray0), android.graphics.PorterDuff.Mode.SRC_IN);
-        if (account.hasPrivateKey) {
-            mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), baseChain), android.graphics.PorterDuff.Mode.SRC_IN);
+        if (getAccount().hasPrivateKey) {
+            mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), getBaseChain()), android.graphics.PorterDuff.Mode.SRC_IN);
         }
         mTotalAmount = getBaseDao().getAllMainAsset(mMainDenom);
         mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), mMainDenom, mTotalAmount, mDivideDecimal));
@@ -166,19 +163,19 @@ public class StakingTokenGrpcActivity extends BaseActivity implements View.OnCli
     public void onClick(View v) {
         if (v.equals(mBtnAddressPopup)) {
             AccountShowDialogFragment show = AccountShowDialogFragment.Companion.newInstance(
-                    account.getAccountTitle(this),
-                    account.address
+                    getAccount().getAccountTitle(this),
+                    getAccount().address
             );
             showDialog(show);
 
         } else if (v.equals(mBtnIbcSend)) {
-            if (!account.hasPrivateKey) {
+            if (!getAccount().hasPrivateKey) {
                 Dialog_WatchMode add = Dialog_WatchMode.newInstance();
                 showDialog(add);
                 return;
             }
-            final String mainDenom = baseChain.getMainDenom();
-            final BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(this, baseChain, CONST_PW_TX_IBC_TRANSFER, 0);
+            final String mainDenom = getBaseChain().getMainDenom();
+            final BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_IBC_TRANSFER, 0);
 
             mTotalAmount = getBaseDao().getAvailable(mMainDenom);
             if (mainDenom.equalsIgnoreCase(mMainDenom)) {
@@ -193,14 +190,14 @@ public class StakingTokenGrpcActivity extends BaseActivity implements View.OnCli
             Dialog_IBC_Send_Warning warning = Dialog_IBC_Send_Warning.newInstance(bundle);
             showDialog(warning);
         } else if (v.equals(mBtnSend)) {
-            if (!account.hasPrivateKey) {
+            if (!getAccount().hasPrivateKey) {
                 Dialog_WatchMode add = Dialog_WatchMode.newInstance();
                 showDialog(add);
                 return;
             }
             Intent intent = new Intent(getBaseContext(), SendActivity.class);
-            BigDecimal mainAvailable = getBaseDao().getAvailable(baseChain.getMainDenom());
-            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), baseChain, CONST_PW_TX_SIMPLE_SEND, 0);
+            BigDecimal mainAvailable = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_SEND, 0);
             if (mainAvailable.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return;
@@ -233,12 +230,12 @@ public class StakingTokenGrpcActivity extends BaseActivity implements View.OnCli
         @Override
         public void onBindViewHolder(@NonNull BaseHolder holder, int position) {
             if (getItemViewType(position) == TYPE_STAKE_NEW) {
-                holder.onBindTokenHolder(getBaseContext(), baseChain, getBaseDao(), baseChain.getMainDenom());
+                holder.onBindTokenHolder(getBaseContext(), getBaseChain(), getBaseDao(), getBaseChain().getMainDenom());
             } else if (getItemViewType(position) == TYPE_VESTING) {
-                holder.onBindTokenHolder(getBaseContext(), baseChain, getBaseDao(), baseChain.getMainDenom());
+                holder.onBindTokenHolder(getBaseContext(), getBaseChain(), getBaseDao(), getBaseChain().getMainDenom());
 
             } else if (getItemViewType(position) == TYPE_UNBONDING) {
-                holder.onBindTokenHolder(getBaseContext(), baseChain, getBaseDao(), baseChain.getMainDenom());
+                holder.onBindTokenHolder(getBaseContext(), getBaseChain(), getBaseDao(), getBaseChain().getMainDenom());
 
             }
         }

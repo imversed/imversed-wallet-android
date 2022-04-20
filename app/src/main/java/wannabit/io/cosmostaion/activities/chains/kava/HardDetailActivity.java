@@ -24,17 +24,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.fulldive.wallet.models.BaseChain;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import cosmos.base.v1beta1.CoinOuterClass;
-import kava.hard.v1beta1.Hard;
 import kava.hard.v1beta1.QueryOuterClass;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.model.kava.IncentiveReward;
 import wannabit.io.cosmostaion.model.type.Coin;
@@ -60,11 +56,8 @@ public class HardDetailActivity extends BaseActivity implements TaskListener {
     private RelativeLayout mLoadingLayer;
 
     private HardDetailAdapter mAdapter;
-    private Account mAccount;
-    private BaseChain mBaseChain;
 
     private String mHardMoneyMarketDenom;
-    private Hard.Params mHardParams;
     private ArrayList<QueryOuterClass.MoneyMarketInterestRate> mInterestRates = new ArrayList<>();
     private ArrayList<Coin> mModuleCoins = new ArrayList<>();
     private ArrayList<CoinOuterClass.Coin> mReserveCoins = new ArrayList<>();
@@ -86,10 +79,7 @@ public class HardDetailActivity extends BaseActivity implements TaskListener {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mAccount = getBaseDao().getAccount(getBaseDao().getLastUser());
-        mBaseChain = BaseChain.getChain(mAccount.baseChain);
         mHardMoneyMarketDenom = getIntent().getStringExtra("hard_money_market_denom");
-        mHardParams = getBaseDao().mHardParams;
         mIncentiveRewards = getBaseDao().mIncentiveRewards;
 
         mSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary));
@@ -131,13 +121,13 @@ public class HardDetailActivity extends BaseActivity implements TaskListener {
         mMyDeposit.clear();
         mMyBorrow.clear();
         mTaskCount = 7;
-        new KavaHardInterestRateGrpcTask(getBaseApplication(), this, mBaseChain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new KavaHardInterestRateGrpcTask(getBaseApplication(), this, getBaseChain()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new KavaHardModuleAccountTask(getBaseApplication(), this).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new KavaHardReservesGrpcTask(getBaseApplication(), this, mBaseChain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new KavaHardTotalDepositGrpcTask(getBaseApplication(), this, mBaseChain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new KavaHardTotalBorrowGrpcTask(getBaseApplication(), this, mBaseChain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new KavaHardMyDepositGrpcTask(getBaseApplication(), this, mBaseChain, mAccount).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new KavaHardMyBorrowGrpcTask(getBaseApplication(), this, mBaseChain, mAccount).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new KavaHardReservesGrpcTask(getBaseApplication(), this, getBaseChain()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new KavaHardTotalDepositGrpcTask(getBaseApplication(), this, getBaseChain()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new KavaHardTotalBorrowGrpcTask(getBaseApplication(), this, getBaseChain()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new KavaHardMyDepositGrpcTask(getBaseApplication(), this, getBaseChain(), getAccount()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new KavaHardMyBorrowGrpcTask(getBaseApplication(), this, getBaseChain(), getAccount()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -249,7 +239,7 @@ public class HardDetailActivity extends BaseActivity implements TaskListener {
     }
 
     private boolean onCommonCheck() {
-        if (!mAccount.hasPrivateKey) {
+        if (!getAccount().hasPrivateKey) {
             Dialog_WatchMode add = Dialog_WatchMode.newInstance();
             showDialog(add);
             return false;
@@ -278,11 +268,11 @@ public class HardDetailActivity extends BaseActivity implements TaskListener {
         @Override
         public void onBindViewHolder(@NonNull BaseHolder holder, int position) {
             if (getItemViewType(position) == TYPE_HARD_INFO) {
-                holder.onBindHardDetailInfo(HardDetailActivity.this, mBaseChain, getBaseDao(), mHardMoneyMarketDenom, mIncentiveRewards, mInterestRates, mTotalDeposit, mTotalBorrow, mModuleCoins, mReserveCoins, position);
+                holder.onBindHardDetailInfo(HardDetailActivity.this, getBaseChain(), getBaseDao(), mHardMoneyMarketDenom, mIncentiveRewards, mInterestRates, mTotalDeposit, mTotalBorrow, mModuleCoins, mReserveCoins, position);
             } else if (getItemViewType(position) == TYPE_MY_STATUS) {
-                holder.onBindHardDetailMyStatus(HardDetailActivity.this, getBaseDao(), mBaseChain, mHardMoneyMarketDenom, mMyDeposit, mMyBorrow, mModuleCoins, mReserveCoins);
+                holder.onBindHardDetailMyStatus(HardDetailActivity.this, getBaseDao(), getBaseChain(), mHardMoneyMarketDenom, mMyDeposit, mMyBorrow, mModuleCoins, mReserveCoins);
             } else if (getItemViewType(position) == TYPE_MY_AVAILABLE) {
-                holder.onBindHardDetailAvailable(HardDetailActivity.this, getBaseDao(), mBaseChain, mHardMoneyMarketDenom);
+                holder.onBindHardDetailAvailable(HardDetailActivity.this, getBaseDao(), getBaseChain(), mHardMoneyMarketDenom);
             }
         }
 

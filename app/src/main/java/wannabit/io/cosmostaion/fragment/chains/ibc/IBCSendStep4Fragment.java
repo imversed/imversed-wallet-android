@@ -54,7 +54,7 @@ public class IBCSendStep4Fragment extends BaseFragment implements View.OnClickLi
         mBeforeBtn = rootView.findViewById(R.id.btn_before);
         mConfirmBtn = rootView.findViewById(R.id.confirmButton);
 
-        WDp.DpMainDenom(getSActivity().account.baseChain, mFeeAmountSymbol);
+        WDp.DpMainDenom(getSActivity().getAccount().baseChain, mFeeAmountSymbol);
 
         mBeforeBtn.setOnClickListener(this);
         mConfirmBtn.setOnClickListener(this);
@@ -64,12 +64,12 @@ public class IBCSendStep4Fragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public void onRefreshTab() {
-        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
+        mDpDecimal = getSActivity().getBaseChain().getDivideDecimal();
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
         BigDecimal toSendAmount = new BigDecimal(getSActivity().mAmounts.get(0).amount);
 
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
-        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mToIbcDenom, toSendAmount.toPlainString(), mSendAmountSymbol, mSendAmount, getSActivity().baseChain);
+        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mToIbcDenom, toSendAmount.toPlainString(), mSendAmountSymbol, mSendAmount, getSActivity().getBaseChain());
 
         BaseChain toChain = WDp.getChainTypeByChainId(getSActivity().mIbcSelectedRelayer.chain_id);
         WDp.getChainHint(toChain, mRecipientChain);

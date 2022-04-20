@@ -27,7 +27,10 @@ class AccountsRepository @Inject constructor(
 
     fun getSelectedAccount(): Single<Account> {
         return accountsLocalStorage.getSelectedAccount()
-            .flatMap(::getAccount)
+    }
+
+    fun getCurrentAccount(): Account {
+        return accountsLocalStorage.getCurrentAccount()
     }
 
     fun getAccountsByAddress(address: String): Single<List<Account>> {
@@ -64,10 +67,6 @@ class AccountsRepository @Inject constructor(
 
     fun checkExistsPassword(): Single<Boolean> {
         return accountsLocalStorage.checkExistsPassword()
-    }
-
-    fun selectChain(chain: String): Completable {
-        return accountsLocalStorage.selectChain(chain)
     }
 
     fun setHiddenChains(items: List<BaseChain>): Completable {

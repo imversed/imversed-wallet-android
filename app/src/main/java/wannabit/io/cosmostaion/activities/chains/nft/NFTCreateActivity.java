@@ -15,7 +15,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fulldive.wallet.extensions.ActivityExtensionsKt;
-import com.fulldive.wallet.models.BaseChain;
 
 import java.util.ArrayList;
 
@@ -56,9 +55,6 @@ public class NFTCreateActivity extends BaseBroadCastActivity {
 
         mIvStep.setImageResource(R.drawable.step_4_img_1);
         mTvStep.setText(R.string.str_issue_nft_step_0);
-
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_MINT_NFT;
 
         mPageAdapter = new NFTCreateAdapter(getSupportFragmentManager());

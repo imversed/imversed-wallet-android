@@ -19,7 +19,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fulldive.wallet.extensions.ActivityExtensionsKt;
-import com.fulldive.wallet.models.BaseChain;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -80,8 +79,6 @@ public class CreateCdpActivity extends BaseBroadCastActivity implements TaskList
         mIvStep.setImageResource(R.drawable.step_4_img_1);
         mTvStep.setText(R.string.str_create_cdp_step_1);
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_CREATE_CDP;
 
         mCollateralType = getIntent().getStringExtra("collateralParamType");
@@ -231,7 +228,7 @@ public class CreateCdpActivity extends BaseBroadCastActivity implements TaskList
     public void onFetchCdpInfo() {
         showWaitDialog();
         mTaskCount = 1;
-        new KavaMarketPriceTokenGrpcTask(getBaseApplication(), this, baseChain, mMaketId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new KavaMarketPriceTokenGrpcTask(getBaseApplication(), this, getBaseChain(), mMaketId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override

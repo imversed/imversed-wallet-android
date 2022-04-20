@@ -139,7 +139,7 @@ public class IBCSendStep0Fragment extends BaseFragment implements View.OnClickLi
             mToChainLayer.setBackgroundResource(R.drawable.btn_trans_with_border);
             mDialogImg.setVisibility(View.VISIBLE);
         }
-        BaseChain chain = getSActivity().baseChain;
+        BaseChain chain = getSActivity().getBaseChain();
         mFromChainImg.setImageResource(chain.getChainIcon());
         mFromChainTv.setText(chain.getChainAlterTitle());
 

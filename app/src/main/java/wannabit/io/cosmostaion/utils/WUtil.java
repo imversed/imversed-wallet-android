@@ -61,6 +61,7 @@ import androidx.core.content.ContextCompat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.presentation.main.MainActivity;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf2.Any;
 import com.squareup.picasso.Picasso;
@@ -95,13 +96,6 @@ import sifnode.clp.v1.Querier;
 import starnamed.x.starname.v1beta1.Types;
 import tendermint.liquidity.v1beta1.Liquidity;
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.MainActivity;
-import wannabit.io.cosmostaion.activities.chains.cosmos.GravityListActivity;
-import wannabit.io.cosmostaion.activities.chains.kava.DAppsList5Activity;
-import wannabit.io.cosmostaion.activities.chains.nft.NFTListActivity;
-import wannabit.io.cosmostaion.activities.chains.osmosis.LabsListActivity;
-import wannabit.io.cosmostaion.activities.chains.sif.SifDexListActivity;
-import wannabit.io.cosmostaion.activities.chains.starname.StarNameListActivity;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.dao.Account;
@@ -2241,103 +2235,103 @@ public class WUtil {
      * coingeko
      */
     public static Intent getCoingekoIntent(MainActivity mainActivity) {
-        if (mainActivity.baseChain.equals(COSMOS_MAIN.INSTANCE)) {
+        if (mainActivity.getBaseChain().equals(COSMOS_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/cosmos")));
 
-        } else if (mainActivity.baseChain.equals(IMVERSED_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(IMVERSED_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/imversed")));
 
-        } else if (mainActivity.baseChain.equals(IRIS_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(IRIS_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/irisnet")));
 
-        } else if (mainActivity.baseChain.equals(IOV_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(IOV_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/starname")));
 
-        } else if (mainActivity.baseChain.equals(BNB_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(BNB_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/binancecoin")));
 
-        } else if (mainActivity.baseChain.equals(KAVA_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(KAVA_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/kava")));
 
-        } else if (mainActivity.baseChain.equals(BAND_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(BAND_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/band-protocol")));
 
-        } else if (mainActivity.baseChain.equals(CERTIK_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(CERTIK_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/certik")));
 
-        } else if (mainActivity.baseChain.equals(SECRET_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(SECRET_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/secret")));
 
-        } else if (mainActivity.baseChain.equals(AKASH_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(AKASH_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/akash-network")));
 
-        } else if (mainActivity.baseChain.equals(OKEX_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(OKEX_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/okexchain")));
 
-        } else if (mainActivity.baseChain.equals(SENTINEL_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(SENTINEL_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/sentinel")));
 
-        } else if (mainActivity.baseChain.equals(PERSIS_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(PERSIS_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/persistence")));
 
-        } else if (mainActivity.baseChain.equals(FETCHAI_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(FETCHAI_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/fetch-ai")));
 
-        } else if (mainActivity.baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(CRYPTO_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/crypto-com-chain")));
 
-        } else if (mainActivity.baseChain.equals(SIF_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(SIF_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/sifchain")));
 
-        } else if (mainActivity.baseChain.equals(KI_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(KI_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/ki")));
 
-        } else if (mainActivity.baseChain.equals(OSMOSIS_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(OSMOSIS_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/osmosis")));
 
-        } else if (mainActivity.baseChain.equals(MEDI_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(MEDI_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/medibloc")));
 
-        } else if (mainActivity.baseChain.equals(EMONEY_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(EMONEY_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/e-money")));
 
-        } else if (mainActivity.baseChain.equals(JUNO_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(JUNO_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/juno-network")));
 
-        } else if (mainActivity.baseChain.equals(REGEN_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(REGEN_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/regen")));
 
-        } else if (mainActivity.baseChain.equals(BITCANNA_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(BITCANNA_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/bitcanna")));
 
-        } else if (mainActivity.baseChain.equals(INJ_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(INJ_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/injective-protocol")));
 
-        } else if (mainActivity.baseChain.equals(BITSONG_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(BITSONG_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/bitsong")));
 
-        } else if (mainActivity.baseChain.equals(RIZON_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(RIZON_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/rizon")));
 
-        } else if (mainActivity.baseChain.equals(COMDEX_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(COMDEX_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/comdex")));
 
-        } else if (mainActivity.baseChain.equals(STARGAZE_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(STARGAZE_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/stargaze")));
 
-        } else if (mainActivity.baseChain.equals(LUM_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(LUM_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/lum-network")));
 
-        } else if (mainActivity.baseChain.equals(DESMOS_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(DESMOS_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/desmos")));
 
-        } else if (mainActivity.baseChain.equals(CHIHUAHUA_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(CHIHUAHUA_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/chihuahua-chain")));
 
-        } else if (mainActivity.baseChain.equals(UMEE_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(UMEE_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/umee")));
 
-        } else if (mainActivity.baseChain.equals(CUDOS_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(CUDOS_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/cudos")));
         }
         return null;
@@ -2349,213 +2343,213 @@ public class WUtil {
     public static void getGuide(MainActivity mainActivity, ImageView guideImg, TextView guideTitle, TextView guideMsg, Button guideBtn1, Button guideBtn2) {
         guideBtn1.setText(R.string.str_home);
         guideBtn2.setText(R.string.str_blog);
-        if (mainActivity.baseChain.equals(COSMOS_MAIN.INSTANCE) || mainActivity.baseChain.equals(COSMOS_TEST.INSTANCE)) {
+        if (mainActivity.getBaseChain().equals(COSMOS_MAIN.INSTANCE) || mainActivity.getBaseChain().equals(COSMOS_TEST.INSTANCE)) {
             guideImg.setImageResource(R.drawable.guide_img);
             guideTitle.setText(R.string.str_front_guide_title);
             guideMsg.setText(R.string.str_front_guide_msg);
             guideBtn1.setText(R.string.str_guide);
             guideBtn2.setText(R.string.str_faq);
 
-        } else if (mainActivity.baseChain.equals(IMVERSED_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(IMVERSED_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_imversed);
             guideTitle.setText(R.string.str_front_guide_title_imversed);
             guideMsg.setText(R.string.str_front_guide_msg_imversed);
 
-        } else if (mainActivity.baseChain.equals(IRIS_MAIN.INSTANCE) || mainActivity.baseChain.equals(IRIS_TEST.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(IRIS_MAIN.INSTANCE) || mainActivity.getBaseChain().equals(IRIS_TEST.INSTANCE)) {
             guideImg.setImageResource(R.drawable.irisnet_img);
             guideTitle.setText(R.string.str_front_guide_title_iris);
             guideMsg.setText(R.string.str_front_guide_msg_iris);
 
-        } else if (mainActivity.baseChain.equals(BNB_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(BNB_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.binance_img);
             guideTitle.setText(R.string.str_front_guide_title_binance);
             guideMsg.setText(R.string.str_front_guide_msg_bnb);
             guideBtn1.setText(R.string.str_faq_bnb);
             guideBtn2.setText(R.string.str_guide_bnb);
 
-        } else if (mainActivity.baseChain.equals(KAVA_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(KAVA_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.kavamain_img);
             guideTitle.setText(R.string.str_front_guide_title_kava);
             guideMsg.setText(R.string.str_front_guide_msg_kava);
 
-        } else if (mainActivity.baseChain.equals(IOV_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(IOV_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.iov_img);
             guideTitle.setText(R.string.str_front_guide_title_iov);
             guideMsg.setText(R.string.str_front_guide_msg_iov);
 
-        } else if (mainActivity.baseChain.equals(BAND_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(BAND_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_bandprotocol);
             guideTitle.setText(R.string.str_front_guide_title_band);
             guideMsg.setText(R.string.str_front_guide_msg_band);
 
-        } else if (mainActivity.baseChain.equals(OKEX_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(OKEX_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_okx);
             guideTitle.setText(R.string.str_front_guide_title_ok);
             guideMsg.setText(R.string.str_front_guide_msg_ok);
             guideBtn1.setText(R.string.str_faq_ok);
             guideBtn2.setText(R.string.str_guide_ok);
 
-        } else if (mainActivity.baseChain.equals(CERTIK_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(CERTIK_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.certik_img);
             guideTitle.setText(R.string.str_front_guide_title_certik);
             guideMsg.setText(R.string.str_front_guide_msg_certik);
 
-        } else if (mainActivity.baseChain.equals(AKASH_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(AKASH_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.akash_img);
             guideTitle.setText(R.string.str_front_guide_title_akash);
             guideMsg.setText(R.string.str_front_guide_msg_akash);
 
-        } else if (mainActivity.baseChain.equals(SECRET_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(SECRET_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.secret_img);
             guideTitle.setText(R.string.str_front_guide_title_secret);
             guideMsg.setText(R.string.str_front_guide_msg_secret);
 
-        } else if (mainActivity.baseChain.equals(PERSIS_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(PERSIS_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.persistence_img);
             guideTitle.setText(R.string.str_front_guide_title_persis);
             guideMsg.setText(R.string.str_front_guide_msg_persis);
 
-        } else if (mainActivity.baseChain.equals(SENTINEL_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(SENTINEL_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.sentinel_img);
             guideTitle.setText(R.string.str_front_guide_title_sentinel);
             guideMsg.setText(R.string.str_front_guide_msg_sentinel);
 
-        } else if (mainActivity.baseChain.equals(FETCHAI_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(FETCHAI_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.fetchai_img);
             guideTitle.setText(R.string.str_front_guide_title_fetch);
             guideMsg.setText(R.string.str_front_guide_msg_fetch);
 
-        } else if (mainActivity.baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(CRYPTO_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.cryptochain_img);
             guideTitle.setText(R.string.str_front_guide_title_crypto);
             guideMsg.setText(R.string.str_front_guide_msg_crypto);
 
-        } else if (mainActivity.baseChain.equals(SIF_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(SIF_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.sifchain_img);
             guideTitle.setText(R.string.str_front_guide_title_sif);
             guideMsg.setText(R.string.str_front_guide_msg_sif);
 
-        } else if (mainActivity.baseChain.equals(KI_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(KI_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.kifoundation_img);
             guideTitle.setText(R.string.str_front_guide_title_ki);
             guideMsg.setText(R.string.str_front_guide_msg_ki);
 
-        } else if (mainActivity.baseChain.equals(OSMOSIS_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(OSMOSIS_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_osmosis);
             guideTitle.setText(R.string.str_front_guide_title_osmosis);
             guideMsg.setText(R.string.str_front_guide_msg_osmosis);
 
-        } else if (mainActivity.baseChain.equals(RIZON_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(RIZON_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_rizon);
             guideTitle.setText(R.string.str_front_guide_title_rizon);
             guideMsg.setText(R.string.str_front_guide_msg_rizon);
 
-        } else if (mainActivity.baseChain.equals(MEDI_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(MEDI_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.medibloc_img);
             guideTitle.setText(R.string.str_front_guide_title_medi);
             guideMsg.setText(R.string.str_front_guide_msg_medi);
 
-        } else if (mainActivity.baseChain.equals(EMONEY_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(EMONEY_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_emoney);
             guideTitle.setText(R.string.str_front_guide_title_emoney);
             guideMsg.setText(R.string.str_front_guide_msg_emoney);
 
-        } else if (mainActivity.baseChain.equals(JUNO_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(JUNO_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_juno);
             guideTitle.setText(R.string.str_front_guide_title_juno);
             guideMsg.setText(R.string.str_front_guide_msg_juno);
 
-        } else if (mainActivity.baseChain.equals(REGEN_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(REGEN_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_regen);
             guideTitle.setText(R.string.str_front_guide_title_regen);
             guideMsg.setText(R.string.str_front_guide_msg_regen);
 
-        } else if (mainActivity.baseChain.equals(BITCANNA_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(BITCANNA_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_bitcanna);
             guideTitle.setText(R.string.str_front_guide_title_bitcanna);
             guideMsg.setText(R.string.str_front_guide_msg_bitcanna);
 
-        } else if (mainActivity.baseChain.equals(ALTHEA_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(ALTHEA_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_althea);
             guideTitle.setText(R.string.str_front_guide_title_althea);
             guideMsg.setText(R.string.str_front_guide_msg_althea);
 
-        } else if (mainActivity.baseChain.equals(STARGAZE_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(STARGAZE_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_stargaze);
             guideTitle.setText(R.string.str_front_guide_title_stargaze);
             guideMsg.setText(R.string.str_front_guide_msg_stargaze);
 
-        } else if (mainActivity.baseChain.equals(GRABRIDGE_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(GRABRIDGE_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_gravitybridge);
             guideTitle.setText(R.string.str_front_guide_title_grabridge);
             guideMsg.setText(R.string.str_front_guide_msg_grabridge);
 
-        } else if (mainActivity.baseChain.equals(COMDEX_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(COMDEX_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_comdex);
             guideTitle.setText(R.string.str_front_guide_title_comdex);
             guideMsg.setText(R.string.str_front_guide_msg_comdex);
 
-        } else if (mainActivity.baseChain.equals(INJ_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(INJ_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_injective);
             guideTitle.setText(R.string.str_front_guide_title_inj);
             guideMsg.setText(R.string.str_front_guide_msg_inj);
 
-        } else if (mainActivity.baseChain.equals(BITSONG_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(BITSONG_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_bitsong);
             guideTitle.setText(R.string.str_front_guide_title_bitsong);
             guideMsg.setText(R.string.str_front_guide_msg_bitsong);
 
-        } else if (mainActivity.baseChain.equals(DESMOS_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(DESMOS_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_desmos);
             guideTitle.setText(R.string.str_front_guide_title_desmos);
             guideMsg.setText(R.string.str_front_guide_msg_desmos);
 
-        } else if (mainActivity.baseChain.equals(LUM_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(LUM_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_lumnetwork);
             guideTitle.setText(R.string.str_front_guide_title_lum);
             guideMsg.setText(R.string.str_front_guide_msg_lum);
 
-        } else if (mainActivity.baseChain.equals(CHIHUAHUA_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(CHIHUAHUA_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_chihuahua);
             guideTitle.setText(R.string.str_front_guide_title_chihuahua);
             guideMsg.setText(R.string.str_front_guide_msg_chihuahua);
 
-        } else if (mainActivity.baseChain.equals(UMEE_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(UMEE_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_umee);
             guideTitle.setText(R.string.str_front_guide_title_umee);
             guideMsg.setText(R.string.str_front_guide_msg_umee);
 
-        } else if (mainActivity.baseChain.equals(AXELAR_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(AXELAR_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_axelar);
             guideTitle.setText(R.string.str_front_guide_title_axelar);
             guideMsg.setText(R.string.str_front_guide_msg_axelar);
 
-        } else if (mainActivity.baseChain.equals(KONSTELL_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(KONSTELL_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_konstellation);
             guideTitle.setText(R.string.str_front_guide_title_konstellation);
             guideMsg.setText(R.string.str_front_guide_msg_konstellation);
 
-        } else if (mainActivity.baseChain.equals(EVMOS_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(EVMOS_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_evmos);
             guideTitle.setText(R.string.str_front_guide_title_evmos);
             guideMsg.setText(R.string.str_front_guide_msg_evmos);
 
-        } else if (mainActivity.baseChain.equals(CUDOS_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(CUDOS_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_cudos);
             guideTitle.setText(R.string.str_front_guide_title_cudos);
             guideMsg.setText(R.string.str_front_guide_msg_cudos);
 
-        } else if (mainActivity.baseChain.equals(PROVENANCE_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(PROVENANCE_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_provenance);
             guideTitle.setText(R.string.str_front_guide_title_provenance);
             guideMsg.setText(R.string.str_front_guide_msg_provenance);
 
-        } else if (mainActivity.baseChain.equals(CERBERUS_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(CERBERUS_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_cerberus);
             guideTitle.setText(R.string.str_front_guide_title_cerberus);
             guideMsg.setText(R.string.str_front_guide_msg_cerberus);
 
-        } else if (mainActivity.baseChain.equals(OMNIFLIX_MAIN.INSTANCE)) {
+        } else if (mainActivity.getBaseChain().equals(OMNIFLIX_MAIN.INSTANCE)) {
             guideImg.setImageResource(R.drawable.infoicon_omniflix);
             guideTitle.setText(R.string.str_front_guide_title_omniflix);
             guideMsg.setText(R.string.str_front_guide_msg_omniflix);
@@ -2600,24 +2594,6 @@ public class WUtil {
             dexTitle.setText(R.string.str_desmos_airdrop);
         } else {
             mBtnDex.setVisibility(View.GONE);
-        }
-    }
-
-    public static Intent getDexIntent(MainActivity mainActivity, BaseChain chain) {
-        if (chain.equals(COSMOS_MAIN.INSTANCE)) {
-            return new Intent(mainActivity, GravityListActivity.class);
-        } else if (chain.equals(IRIS_MAIN.INSTANCE) || chain.equals(CRYPTO_MAIN.INSTANCE)) {
-            return new Intent(mainActivity, NFTListActivity.class);
-        } else if (chain.equals(IOV_MAIN.INSTANCE)) {
-            return new Intent(mainActivity, StarNameListActivity.class);
-        } else if (chain.equals(KAVA_MAIN.INSTANCE)) {
-            return new Intent(mainActivity, DAppsList5Activity.class);
-        } else if (chain.equals(SIF_MAIN.INSTANCE)) {
-            return new Intent(mainActivity, SifDexListActivity.class);
-        } else if (chain.equals(OSMOSIS_MAIN.INSTANCE)) {
-            return new Intent(mainActivity, LabsListActivity.class);
-        } else {
-            return null;
         }
     }
 

@@ -58,7 +58,7 @@ public class JoinPoolStep3Fragment extends BaseFragment implements View.OnClickL
         mBeforeBtn = rootView.findViewById(R.id.btn_before);
         mConfirmBtn = rootView.findViewById(R.id.confirmButton);
 
-        WDp.DpMainDenom(getSActivity().account.baseChain, mFeeAmountSymbol);
+        WDp.DpMainDenom(getSActivity().getAccount().baseChain, mFeeAmountSymbol);
 
         mBeforeBtn.setOnClickListener(this);
         mConfirmBtn.setOnClickListener(this);
@@ -67,7 +67,7 @@ public class JoinPoolStep3Fragment extends BaseFragment implements View.OnClickL
 
     @Override
     public void onRefreshTab() {
-        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
+        mDpDecimal = getSActivity().getBaseChain().getDivideDecimal();
         String InputAmount0 = getSActivity().mPoolCoin0.amount;
         String InputDenom0 = getSActivity().mPoolCoin0.denom;
         String InputAmount1 = getSActivity().mPoolCoin1.amount;

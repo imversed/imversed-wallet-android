@@ -7,10 +7,11 @@ import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 
+import com.fulldive.wallet.presentation.main.MainActivity;
+
 import org.jetbrains.annotations.NotNull;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.MainActivity;
 import wannabit.io.cosmostaion.widget.BaseHolder;
 
 public class WalletDesmosAppHolder extends BaseHolder {

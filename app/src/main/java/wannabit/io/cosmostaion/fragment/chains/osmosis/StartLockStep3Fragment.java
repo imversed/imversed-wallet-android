@@ -55,7 +55,7 @@ public class StartLockStep3Fragment extends BaseFragment implements View.OnClick
         mBeforeBtn = rootView.findViewById(R.id.btn_before);
         mConfirmBtn = rootView.findViewById(R.id.confirmButton);
 
-        WDp.DpMainDenom(getSActivity().account.baseChain, mFeeAmountSymbol);
+        WDp.DpMainDenom(getSActivity().getAccount().baseChain, mFeeAmountSymbol);
 
         mBeforeBtn.setOnClickListener(this);
         mConfirmBtn.setOnClickListener(this);
@@ -65,7 +65,7 @@ public class StartLockStep3Fragment extends BaseFragment implements View.OnClick
 
     @Override
     public void onRefreshTab() {
-        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
+        mDpDecimal = getSActivity().getBaseChain().getDivideDecimal();
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
         final Coin LpCoin = new Coin(getSActivity().mLpToken.denom, getSActivity().mLpToken.amount);
         long UnbondingDuraion = getSActivity().mOsmosisLockupDuration;

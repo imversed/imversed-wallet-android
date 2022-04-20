@@ -19,7 +19,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fulldive.wallet.extensions.ActivityExtensionsKt;
-import com.fulldive.wallet.models.BaseChain;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -76,8 +75,6 @@ public class DepositCdpActivity extends BaseBroadCastActivity implements TaskLis
         mIvStep.setImageResource(R.drawable.step_4_img_1);
         mTvStep.setText(R.string.str_deposit_cdp_step_1);
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_DEPOSIT_CDP;
 
         mCollateralType = getIntent().getStringExtra("collateralParamType");
@@ -226,7 +223,7 @@ public class DepositCdpActivity extends BaseBroadCastActivity implements TaskLis
     public void onFetchCdpInfo() {
         showWaitDialog();
         mTaskCount = 1;
-        new KavaCdpsByOwnerGrpcTask(getBaseApplication(), this, baseChain, account).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new KavaCdpsByOwnerGrpcTask(getBaseApplication(), this, getBaseChain(), getAccount()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override

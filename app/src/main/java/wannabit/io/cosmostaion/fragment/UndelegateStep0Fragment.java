@@ -76,11 +76,11 @@ public class UndelegateStep0Fragment extends BaseFragment implements View.OnClic
     @Override
     public void onResume() {
         super.onResume();
-        if (!isAdded() || getSActivity() == null || getSActivity().account == null)
+        if (!isAdded() || getSActivity() == null || getSActivity().getAccount() == null)
             getSActivity().onBackPressed();
-        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
+        mDpDecimal = getSActivity().getBaseChain().getDivideDecimal();
         setDpDecimals(mDpDecimal);
-        WDp.DpMainDenom(getSActivity().account.baseChain, mDenomTitle);
+        WDp.DpMainDenom(getSActivity().getAccount().baseChain, mDenomTitle);
 
         mMaxAvailable = getBaseDao().getDelegation(getSActivity().mValAddress);
         mAvailableAmount.setText(WDp.getDpAmount2(mMaxAvailable, mDpDecimal, mDpDecimal));
@@ -210,7 +210,7 @@ public class UndelegateStep0Fragment extends BaseFragment implements View.OnClic
             BigDecimal userInput = new BigDecimal(mAmountInput.getText().toString().trim()).movePointRight(mDpDecimal).setScale(0);
             if (userInput.compareTo(BigDecimal.ZERO) <= 0) return false;
             if (userInput.compareTo(mMaxAvailable) > 0) return false;
-            Coin coin = new Coin(getSActivity().baseChain.getMainDenom(), userInput.toPlainString());
+            Coin coin = new Coin(getSActivity().getBaseChain().getMainDenom(), userInput.toPlainString());
             getSActivity().mAmount = coin;
             return true;
 

@@ -11,12 +11,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.fulldive.wallet.presentation.main.MainActivity;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.MainActivity;
 import wannabit.io.cosmostaion.activities.chains.ok.OKStakingActivity;
 import wannabit.io.cosmostaion.activities.chains.ok.OKUnbondingActivity;
 import wannabit.io.cosmostaion.activities.chains.ok.OKValidatorListActivity;
@@ -54,7 +55,7 @@ public class WalletOkexHolder extends BaseHolder {
 
     public void onBindHolder(@NotNull MainActivity mainActivity) {
         final BaseData baseData = mainActivity.getBaseDao();
-        final String denom = mainActivity.baseChain.getMainDenom();
+        final String denom = mainActivity.getBaseChain().getMainDenom();
         final BigDecimal availableAmount = baseData.availableAmount(denom);
         final BigDecimal lockedAmount = baseData.lockedAmount(denom);
         final BigDecimal depositAmount = baseData.okDepositAmount();
@@ -69,14 +70,14 @@ public class WalletOkexHolder extends BaseHolder {
         mOkWithdrawing.setText(WDp.getDpAmount2(withdrawAmount, 0, 6));
         mOkTotalValue.setText(WDp.dpUserCurrencyValue(baseData, denom, totalAmount, 0));
 
-        mainActivity.getBaseDao().onUpdateLastTotalAccount(mainActivity.account, totalAmount.toPlainString());
+        mainActivity.getBaseDao().onUpdateLastTotalAccount(mainActivity.getAccount(), totalAmount.toPlainString());
 
         mBtnOkDeposit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mainActivity.getBaseDao().mTopValidators == null && mainActivity.getBaseDao().mTopValidators.size() == 0)
                     return;
-                if (!mainActivity.account.hasPrivateKey) {
+                if (!mainActivity.getAccount().hasPrivateKey) {
                     Dialog_WatchMode add = Dialog_WatchMode.newInstance();
                     mainActivity.showDialog(add);
                     return;
@@ -103,7 +104,7 @@ public class WalletOkexHolder extends BaseHolder {
         mBtnOkWithdraw.setOnClickListener(v -> {
             if (mainActivity.getBaseDao().mTopValidators == null && mainActivity.getBaseDao().mTopValidators.size() == 0)
                 return;
-            if (!mainActivity.account.hasPrivateKey) {
+            if (!mainActivity.getAccount().hasPrivateKey) {
                 Dialog_WatchMode add = Dialog_WatchMode.newInstance();
                 mainActivity.showDialog(add);
                 return;

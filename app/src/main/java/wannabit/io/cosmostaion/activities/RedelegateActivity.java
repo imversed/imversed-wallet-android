@@ -18,7 +18,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fulldive.wallet.extensions.ActivityExtensionsKt;
-import com.fulldive.wallet.models.BaseChain;
 
 import java.util.ArrayList;
 
@@ -67,9 +66,6 @@ public class RedelegateActivity extends BaseBroadCastActivity implements TaskLis
 
         mIvStep.setImageDrawable(getDrawable(R.drawable.step_1_img));
         mTvStep.setText(getString(R.string.str_redelegate_step_0));
-
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_SIMPLE_REDELEGATE;
 
         mValAddress = getIntent().getStringExtra("valOpAddress");
@@ -117,7 +113,7 @@ public class RedelegateActivity extends BaseBroadCastActivity implements TaskLis
     @Override
     protected void onResume() {
         super.onResume();
-        if (account == null) finish();
+        if (getAccount() == null) finish();
     }
 
     @Override
@@ -175,7 +171,7 @@ public class RedelegateActivity extends BaseBroadCastActivity implements TaskLis
     private void onFetchValidtors() {
         if (mTaskCount > 0) return;
         mTaskCount = 1;
-        new BondedValidatorsGrpcTask(getBaseApplication(), this, baseChain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new BondedValidatorsGrpcTask(getBaseApplication(), this, getBaseChain()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override

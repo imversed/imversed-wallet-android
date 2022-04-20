@@ -17,7 +17,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.fulldive.wallet.models.BaseChain;
 import com.google.android.material.tabs.TabLayout;
 
 import java.math.BigDecimal;
@@ -58,9 +57,6 @@ public class OKValidatorListActivity extends BaseActivity implements FetchCallBa
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mToolbarTitle.setText(R.string.str_validator_vote);
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
-
         mPageAdapter = new OKValidatorPageAdapter(getSupportFragmentManager());
         mValidatorPager.setAdapter(mPageAdapter);
         mValidatorTapLayer.setupWithViewPager(mValidatorPager);
@@ -69,23 +65,23 @@ public class OKValidatorListActivity extends BaseActivity implements FetchCallBa
         View tab0 = LayoutInflater.from(this).inflate(R.layout.view_tab_myvalidator, null);
         TextView tabItemText0 = tab0.findViewById(R.id.tabItemText);
         tabItemText0.setText(R.string.str_my_validators);
-        tabItemText0.setTextColor(WDp.getTabColor(this, baseChain));
+        tabItemText0.setTextColor(WDp.getTabColor(this, getBaseChain()));
         mValidatorTapLayer.getTabAt(0).setCustomView(tab0);
 
         View tab1 = LayoutInflater.from(this).inflate(R.layout.view_tab_myvalidator, null);
         TextView tabItemText1 = tab1.findViewById(R.id.tabItemText);
-        tabItemText1.setTextColor(WDp.getTabColor(this, baseChain));
+        tabItemText1.setTextColor(WDp.getTabColor(this, getBaseChain()));
         tabItemText1.setText(R.string.str_top_100_validators);
         mValidatorTapLayer.getTabAt(1).setCustomView(tab1);
 
         View tab2 = LayoutInflater.from(this).inflate(R.layout.view_tab_myvalidator, null);
         TextView tabItemText2 = tab2.findViewById(R.id.tabItemText);
-        tabItemText2.setTextColor(WDp.getTabColor(this, baseChain));
+        tabItemText2.setTextColor(WDp.getTabColor(this, getBaseChain()));
         tabItemText2.setText(R.string.str_other_validators);
         mValidatorTapLayer.getTabAt(2).setCustomView(tab2);
 
-        mValidatorTapLayer.setTabIconTint(WDp.getChainTintColor(this, baseChain));
-        mValidatorTapLayer.setSelectedTabIndicatorColor(WDp.getChainColor(this, baseChain));
+        mValidatorTapLayer.setTabIconTint(WDp.getChainTintColor(this, getBaseChain()));
+        mValidatorTapLayer.setSelectedTabIndicatorColor(WDp.getChainColor(this, getBaseChain()));
 
         mValidatorPager.setOffscreenPageLimit(3);
         mValidatorPager.setCurrentItem(0, false);
@@ -128,8 +124,8 @@ public class OKValidatorListActivity extends BaseActivity implements FetchCallBa
     }
 
     public void onStartDirectVote() {
-        if (account == null) return;
-        if (!account.hasPrivateKey) {
+        if (getAccount() == null) return;
+        if (!getAccount().hasPrivateKey) {
             Dialog_WatchMode add = Dialog_WatchMode.newInstance();
             showDialog(add);
             return;

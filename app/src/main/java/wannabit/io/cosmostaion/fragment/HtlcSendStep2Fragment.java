@@ -109,7 +109,7 @@ public class HtlcSendStep2Fragment extends BaseFragment implements View.OnClickL
     }
 
     private void onUpdateInitInfo() {
-        if (getSActivity().baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
+        if (getSActivity().getBaseChain().equals(BaseChain.BNB_MAIN.INSTANCE)) {
             mDecimal = 8;
             setDpDecimals(mDecimal);
             if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_BNB) || mToSwapDenom.equals(TOKEN_HTLC_BINANCE_TEST_BNB)) {
@@ -143,7 +143,7 @@ public class HtlcSendStep2Fragment extends BaseFragment implements View.OnClickL
             mMinAvailable = getSActivity().mKavaBep3Param2.getSupportedSwapAssetMin(mToSwapDenom).movePointLeft(8);
             mMinAmount.setText(WDp.getDpAmount2(mMinAvailable, 0, mDecimal));
 
-        } else if (getSActivity().baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
+        } else if (getSActivity().getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             mDecimal = WUtil.getKavaCoinDecimal(getBaseDao(), getSActivity().mToSwapDenom);
             setDpDecimals(mDecimal);
             if (mToSwapDenom.equals(TOKEN_HTLC_KAVA_BNB) || mToSwapDenom.equals(TOKEN_HTLC_KAVA_TEST_BNB)) {
@@ -217,7 +217,7 @@ public class HtlcSendStep2Fragment extends BaseFragment implements View.OnClickL
                             return;
                         }
 
-                        if (getSActivity().baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
+                        if (getSActivity().getBaseChain().equals(BaseChain.BNB_MAIN.INSTANCE)) {
                             if (mMaxAvailable.compareTo(inputAmount) < 0) {
                                 mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
 
@@ -228,7 +228,7 @@ public class HtlcSendStep2Fragment extends BaseFragment implements View.OnClickL
                                 mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
                             }
 
-                        } else if (getSActivity().baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
+                        } else if (getSActivity().getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                             if (mMaxAvailable.compareTo(checkPosition) < 0) {
                                 mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
 
@@ -251,7 +251,7 @@ public class HtlcSendStep2Fragment extends BaseFragment implements View.OnClickL
     private boolean isValidateAmount() {
         mToSendCoins.clear();
         try {
-            if (getSActivity().baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
+            if (getSActivity().getBaseChain().equals(BaseChain.BNB_MAIN.INSTANCE)) {
                 BigDecimal sendTemp = new BigDecimal(mAmountInput.getText().toString().trim());
                 if (sendTemp.compareTo(BigDecimal.ZERO) <= 0) return false;
                 if (sendTemp.compareTo(mMinAvailable) <= 0) return false;
@@ -260,7 +260,7 @@ public class HtlcSendStep2Fragment extends BaseFragment implements View.OnClickL
                 mToSendCoins.add(token);
                 return true;
 
-            } else if (getSActivity().baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
+            } else if (getSActivity().getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                 BigDecimal sendTemp = new BigDecimal(mAmountInput.getText().toString().trim()).movePointRight(mDecimal);
                 if (sendTemp.compareTo(BigDecimal.ZERO) <= 0) return false;
                 if (sendTemp.compareTo(mMinAvailable) <= 0) return false;
@@ -327,19 +327,19 @@ public class HtlcSendStep2Fragment extends BaseFragment implements View.OnClickL
             mAmountInput.setText(existed.add(new BigDecimal("100")).toPlainString());
 
         } else if (v.equals(mAddHalf)) {
-            if (getSActivity().baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
+            if (getSActivity().getBaseChain().equals(BaseChain.BNB_MAIN.INSTANCE)) {
                 mAmountInput.setText(mMaxAvailable.divide(new BigDecimal("2"), mDecimal, RoundingMode.DOWN).toPlainString());
-            } else if (getSActivity().baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
+            } else if (getSActivity().getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                 mAmountInput.setText(mMaxAvailable.movePointLeft(mDecimal).divide(new BigDecimal("2"), mDecimal, RoundingMode.DOWN).toPlainString());
             }
 
         } else if (v.equals(mAddMax)) {
-            if (getSActivity().baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
+            if (getSActivity().getBaseChain().equals(BaseChain.BNB_MAIN.INSTANCE)) {
                 mAmountInput.setText(mMaxAvailable.toPlainString());
                 if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_BNB) || mToSwapDenom.equals(TOKEN_HTLC_BINANCE_TEST_BNB)) {
                     onShowEmptyBlanaceWarnDialog();
                 }
-            } else if (getSActivity().baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
+            } else if (getSActivity().getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                 mAmountInput.setText(mMaxAvailable.movePointLeft(mDecimal).toPlainString());
             }
 

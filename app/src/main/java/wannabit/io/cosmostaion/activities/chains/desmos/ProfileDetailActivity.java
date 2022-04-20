@@ -23,7 +23,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.fulldive.wallet.models.BaseChain;
 
 import desmos.profiles.v1beta1.ModelsProfile;
 import wannabit.io.cosmostaion.R;
@@ -66,9 +65,6 @@ public class ProfileDetailActivity extends BaseActivity implements View.OnClickL
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
-
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setHasFixedSize(true);
         mAdapter = new ProfileDetailAdapter();
@@ -99,9 +95,9 @@ public class ProfileDetailActivity extends BaseActivity implements View.OnClickL
 
 
     private void onFetchProfile() {
-        if (account == null) return;
+        if (getAccount() == null) return;
         mProfile = null;
-        new ProfileInfoGrpcTask(getBaseApplication(), this, baseChain, account.address).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new ProfileInfoGrpcTask(getBaseApplication(), this, getBaseChain(), getAccount().address).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -134,7 +130,7 @@ public class ProfileDetailActivity extends BaseActivity implements View.OnClickL
 
         @Override
         public void onBindViewHolder(@NonNull ProfileHolder profileHolder, int position) {
-            profileHolder.card_root.setCardBackgroundColor(WDp.getChainBgColor(ProfileDetailActivity.this, baseChain));
+            profileHolder.card_root.setCardBackgroundColor(WDp.getChainBgColor(ProfileDetailActivity.this, getBaseChain()));
             if (mProfile != null) {
                 profileHolder.profile_nickname.setText(mProfile.getNickname());
                 profileHolder.profile_bio.setText(mProfile.getBio());

@@ -20,7 +20,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.chains.osmo.OsmoLockupDurationDialogFragment;
 import com.fulldive.wallet.presentation.chains.osmo.OsmoUnbondingAllDialogFragment;
 import com.fulldive.wallet.presentation.chains.osmo.OsmoUnlockAll;
@@ -91,9 +90,6 @@ public class EarningDetailActivity extends BaseActivity implements View.OnClickL
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
 
         try {
             mPool = BalancerPool.Pool.parseFrom(getIntent().getByteArrayExtra("osmosisPool"));
@@ -200,7 +196,7 @@ public class EarningDetailActivity extends BaseActivity implements View.OnClickL
 
     public void onCheckNewEarning() {
         WLog.w("onCheckNewEarning");
-        if (!account.hasPrivateKey) {
+        if (!getAccount().hasPrivateKey) {
             Dialog_WatchMode add = Dialog_WatchMode.newInstance();
             showDialog(add);
             return;
@@ -226,7 +222,7 @@ public class EarningDetailActivity extends BaseActivity implements View.OnClickL
 
     public void onCheckUnbonding(Lock.PeriodLock lockup) {
         WLog.w("onCheckUnbonding " + lockup.getID());
-        if (!account.hasPrivateKey) {
+        if (!getAccount().hasPrivateKey) {
             Dialog_WatchMode add = Dialog_WatchMode.newInstance();
             showDialog(add);
             return;
@@ -264,7 +260,7 @@ public class EarningDetailActivity extends BaseActivity implements View.OnClickL
 
     public void onCheckUnlock(Lock.PeriodLock lockup) {
         WLog.w("onCheckUnlock " + lockup.getID());
-        if (!account.hasPrivateKey) {
+        if (!getAccount().hasPrivateKey) {
             Dialog_WatchMode add = Dialog_WatchMode.newInstance();
             showDialog(add);
             return;

@@ -85,13 +85,13 @@ public class DelegateStep0Fragment extends BaseFragment implements View.OnClickL
     @Override
     public void onResume() {
         super.onResume();
-        if (!isAdded() || getSActivity() == null || getSActivity().account == null)
+        if (!isAdded() || getSActivity() == null || getSActivity().getAccount() == null)
             getSActivity().onBackPressed();
-        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
+        mDpDecimal = getSActivity().getBaseChain().getDivideDecimal();
         setDpDecimals(mDpDecimal);
-        WDp.DpMainDenom(getSActivity().account.baseChain, mDenomTitle);
-        BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getContext(), getSActivity().baseChain, CONST_PW_TX_SIMPLE_DELEGATE, 0);
-        mMaxAvailable = getSActivity().getBaseDao().getDelegatable(getSActivity().baseChain.getMainDenom()).subtract(feeAmount);
+        WDp.DpMainDenom(getSActivity().getAccount().baseChain, mDenomTitle);
+        BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getContext(), getSActivity().getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
+        mMaxAvailable = getSActivity().getBaseDao().getDelegatable(getSActivity().getBaseChain().getMainDenom()).subtract(feeAmount);
         mAvailableAmount.setText(WDp.getDpAmount2(mMaxAvailable, mDpDecimal, mDpDecimal));
         onAddAmountWatcher();
     }
@@ -207,7 +207,7 @@ public class DelegateStep0Fragment extends BaseFragment implements View.OnClickL
             mAmountInput.setText(half.toPlainString());
 
         } else if (v.equals(mAddMax)) {
-            if (getSActivity().baseChain.equals(KAVA_MAIN.INSTANCE) || getSActivity().baseChain.equals(BAND_MAIN.INSTANCE) || getSActivity().baseChain.equals(FETCHAI_MAIN.INSTANCE)) {
+            if (getSActivity().getBaseChain().equals(KAVA_MAIN.INSTANCE) || getSActivity().getBaseChain().equals(BAND_MAIN.INSTANCE) || getSActivity().getBaseChain().equals(FETCHAI_MAIN.INSTANCE)) {
                 BigDecimal max = mMaxAvailable.movePointLeft(mDpDecimal).setScale(mDpDecimal, RoundingMode.DOWN);
                 mAmountInput.setText(max.toPlainString());
 
@@ -230,7 +230,7 @@ public class DelegateStep0Fragment extends BaseFragment implements View.OnClickL
             if (amountTemp.compareTo(BigDecimal.ZERO) <= 0) return false;
             if (amountTemp.compareTo(mMaxAvailable.movePointLeft(mDpDecimal).setScale(mDpDecimal, RoundingMode.CEILING)) > 0)
                 return false;
-            Coin coin = new Coin(getSActivity().baseChain.getMainDenom(), amountTemp.movePointRight(mDpDecimal).setScale(0).toPlainString());
+            Coin coin = new Coin(getSActivity().getBaseChain().getMainDenom(), amountTemp.movePointRight(mDpDecimal).setScale(0).toPlainString());
             getSActivity().mAmount = coin;
             return true;
 

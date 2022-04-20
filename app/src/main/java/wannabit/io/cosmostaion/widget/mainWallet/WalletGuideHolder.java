@@ -8,10 +8,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
+import com.fulldive.wallet.presentation.main.MainActivity;
+
 import org.jetbrains.annotations.NotNull;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.MainActivity;
 import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.BaseHolder;
 
@@ -36,7 +37,7 @@ public class WalletGuideHolder extends BaseHolder {
     public void onBindHolder(@NotNull MainActivity mainActivity) {
         WUtil.getGuide(mainActivity, itemGuideImg, itemGuideTitle, itemGuideMsg, itemBtnGuide1, itemBtnGuide2);
 
-        itemBtnGuide1.setOnClickListener(v -> mainActivity.startActivity(WUtil.getGuide1Intent(mainActivity.baseChain)));
-        itemBtnGuide2.setOnClickListener(v -> mainActivity.startActivity(WUtil.getGuide2Intent(mainActivity.baseChain)));
+        itemBtnGuide1.setOnClickListener(v -> mainActivity.startActivity(WUtil.getGuide1Intent(mainActivity.getBaseChain())));
+        itemBtnGuide2.setOnClickListener(v -> mainActivity.startActivity(WUtil.getGuide2Intent(mainActivity.getBaseChain())));
     }
 }

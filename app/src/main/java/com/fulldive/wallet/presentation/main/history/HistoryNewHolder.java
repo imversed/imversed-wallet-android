@@ -9,10 +9,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
+import com.fulldive.wallet.presentation.main.MainActivity;
+
 import org.jetbrains.annotations.NotNull;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.MainActivity;
 import wannabit.io.cosmostaion.activities.TxDetailgRPCActivity;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.model.type.Coin;
@@ -37,15 +38,15 @@ public class HistoryNewHolder extends BaseHolder {
     }
 
     public void onBindNewHistory(@NotNull MainActivity mainActivity, BaseData baseData, ResApiNewTxListCustom history) {
-        historyType.setText(history.getMsgType(mainActivity, mainActivity.account.address));
+        historyType.setText(history.getMsgType(mainActivity, mainActivity.getAccount().address));
         history_time.setText(WDp.getTimeTxformat(mainActivity, history.data.timestamp));
         history_time_gap.setText(WDp.getTimeTxGap(mainActivity, history.data.timestamp));
-        final Coin coin = history.getDpCoin(mainActivity.baseChain);
+        final Coin coin = history.getDpCoin(mainActivity.getBaseChain());
         if (coin != null) {
             history_amount_symbol.setVisibility(View.VISIBLE);
             history_amount.setVisibility(View.VISIBLE);
-            WDp.showCoinDp(mainActivity, baseData, coin.denom, coin.amount, history_amount_symbol, history_amount, mainActivity.baseChain);
-        } else if (history.getMsgType(mainActivity, mainActivity.account.address).equals(mainActivity.getString(R.string.tx_vote))) {
+            WDp.showCoinDp(mainActivity, baseData, coin.denom, coin.amount, history_amount_symbol, history_amount, mainActivity.getBaseChain());
+        } else if (history.getMsgType(mainActivity, mainActivity.getAccount().address).equals(mainActivity.getString(R.string.tx_vote))) {
             history_amount_symbol.setVisibility(View.VISIBLE);
             history_amount_symbol.setText(history.getVoteOption());
             history_amount_symbol.setTextColor(mainActivity.getResources().getColor(R.color.colorWhite));
@@ -61,7 +62,7 @@ public class HistoryNewHolder extends BaseHolder {
         }
         historyRoot.setOnClickListener(v -> {
             if (!TextUtils.isEmpty(history.header.chain_id) && !mainActivity.getBaseDao().getChainIdGrpc().equals(history.header.chain_id)) {
-                String url = WUtil.getTxExplorer(mainActivity.baseChain, history.data.txhash);
+                String url = WUtil.getTxExplorer(mainActivity.getBaseChain(), history.data.txhash);
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                 mainActivity.startActivity(intent);
             } else {

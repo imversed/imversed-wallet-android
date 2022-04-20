@@ -14,12 +14,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
+import com.fulldive.wallet.presentation.main.MainActivity;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.MainActivity;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
@@ -47,7 +48,7 @@ public class WalletPriceHolder extends BaseHolder {
 
     public void onBindHolder(@NotNull MainActivity mainActivity) {
         final BaseData data = mainActivity.getBaseDao();
-        final String denom = mainActivity.baseChain.getMainDenom();
+        final String denom = mainActivity.getBaseChain().getMainDenom();
 
         itemPerPrice.setText(WDp.dpPerUserCurrencyValue(data, denom));
         itemUpDownPrice.setText(WDp.dpValueChange(data, denom));
@@ -64,15 +65,15 @@ public class WalletPriceHolder extends BaseHolder {
 
         if (SUPPORT_MOONPAY) {
             itemBuyLayer.setVisibility(View.VISIBLE);
-            if (mainActivity.baseChain.equals(COSMOS_MAIN.INSTANCE)) {
+            if (mainActivity.getBaseChain().equals(COSMOS_MAIN.INSTANCE)) {
                 itemBuyCoinTv.setText(R.string.str_buy_atom);
-            } else if (mainActivity.baseChain.equals(BNB_MAIN.INSTANCE)) {
+            } else if (mainActivity.getBaseChain().equals(BNB_MAIN.INSTANCE)) {
                 itemBuyCoinTv.setText(R.string.str_buy_bnb);
-            } else if (mainActivity.baseChain.equals(KAVA_MAIN.INSTANCE)) {
+            } else if (mainActivity.getBaseChain().equals(KAVA_MAIN.INSTANCE)) {
                 itemBuyCoinTv.setText(R.string.str_buy_kava);
             }
             itemBuyCoinBtn.setOnClickListener(v -> {
-                if (mainActivity.account.hasPrivateKey) {
+                if (mainActivity.getAccount().hasPrivateKey) {
                     mainActivity.onShowBuySelectFiat();
                 } else {
                     mainActivity.onShowBuyWarnNoKey();

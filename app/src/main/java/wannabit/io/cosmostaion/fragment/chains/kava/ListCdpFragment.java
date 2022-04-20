@@ -78,8 +78,8 @@ public class ListCdpFragment extends BaseFragment implements TaskListener, IRefr
         mAdapter = new CdpMarketAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
-        mAccount = getSActivity().account;
-        mBaseChain = getSActivity().baseChain;
+        mAccount = getSActivity().getAccount();
+        mBaseChain = getSActivity().getBaseChain();
         return rootView;
     }
 

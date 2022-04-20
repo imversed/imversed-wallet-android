@@ -19,7 +19,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fulldive.wallet.extensions.ActivityExtensionsKt;
-import com.fulldive.wallet.models.BaseChain;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -66,9 +65,6 @@ public class ReInvestActivity extends BaseBroadCastActivity implements TaskListe
 
         mIvStep.setImageResource(R.drawable.step_4_img_1);
         mTvStep.setText(R.string.str_reinvest_step_0);
-
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_REINVEST;
 
         mValAddress = getIntent().getStringExtra("valOpAddress");
@@ -108,13 +104,13 @@ public class ReInvestActivity extends BaseBroadCastActivity implements TaskListe
         mViewPager.setCurrentItem(0);
 
         mRootView.setOnClickListener(v -> ActivityExtensionsKt.hideKeyboard(this));
-        new AllRewardGrpcTask(getBaseApplication(), this, baseChain, account).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new AllRewardGrpcTask(getBaseApplication(), this, getBaseChain(), getAccount()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (account == null) finish();
+        if (getAccount() == null) finish();
     }
 
     @Override
@@ -173,7 +169,7 @@ public class ReInvestActivity extends BaseBroadCastActivity implements TaskListe
             ArrayList<Distribution.DelegationDelegatorReward> rewards = (ArrayList<Distribution.DelegationDelegatorReward>) result.resultData;
             if (rewards != null) {
                 getBaseDao().mGrpcRewards = rewards;
-                mAmount = new Coin(baseChain.getMainDenom(), getBaseDao().getReward(baseChain.getMainDenom(), mValAddress).toPlainString());
+                mAmount = new Coin(getBaseChain().getMainDenom(), getBaseDao().getReward(getBaseChain().getMainDenom(), mValAddress).toPlainString());
                 ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
             } else {
                 onBackPressed();

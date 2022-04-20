@@ -9,11 +9,11 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.app.ActivityOptionsCompat
 import com.fulldive.wallet.presentation.base.BaseMvpActivity
+import com.fulldive.wallet.presentation.main.MainActivity
 import com.joom.lightsaber.getInstance
 import moxy.ktx.moxyPresenter
 import wannabit.io.cosmostaion.R
 import wannabit.io.cosmostaion.activities.AppLockActivity
-import wannabit.io.cosmostaion.activities.MainActivity
 import wannabit.io.cosmostaion.base.ITimelessActivity
 import wannabit.io.cosmostaion.databinding.ActivityIntroBinding
 

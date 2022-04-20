@@ -116,17 +116,17 @@ public class SendContractStep0Fragment extends BaseFragment implements View.OnCl
         if (v.equals(mNextBtn)) {
             String userInput = mAddressInput.getText().toString().trim();
 
-            if (getSActivity().account.address.equals(userInput)) {
+            if (getSActivity().getAccount().address.equals(userInput)) {
                 Toast.makeText(getContext(), R.string.error_self_sending, Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (WUtil.isValidStarName(userInput.toLowerCase())) {
-                onCheckNameService(userInput.toLowerCase(), getSActivity().baseChain);
+                onCheckNameService(userInput.toLowerCase(), getSActivity().getBaseChain());
                 return;
             }
 
-            if (WDp.isValidChainAddress(getSActivity().baseChain, userInput)) {
+            if (WDp.isValidChainAddress(getSActivity().getBaseChain(), userInput)) {
                 getSActivity().mToAddress = userInput;
                 getSActivity().onNextStep();
             } else {
@@ -197,7 +197,7 @@ public class SendContractStep0Fragment extends BaseFragment implements View.OnCl
                         return;
                     }
 
-                    if (getSActivity().account.address.equals(matchAddress)) {
+                    if (getSActivity().getAccount().address.equals(matchAddress)) {
                         Toast.makeText(getContext(), R.string.error_starname_self_send, Toast.LENGTH_SHORT).show();
                         return;
                     }

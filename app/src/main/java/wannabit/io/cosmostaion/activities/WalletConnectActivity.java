@@ -29,7 +29,6 @@ import com.binance.dex.api.client.encoding.message.NewOrderMessage;
 import com.binance.dex.api.client.encoding.message.SignData;
 import com.binance.dex.api.client.encoding.message.TransactionRequestAssembler;
 import com.binance.dex.api.client.encoding.message.TransferMessage;
-import com.fulldive.wallet.models.BaseChain;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.squareup.moshi.Moshi;
@@ -105,7 +104,7 @@ public class WalletConnectActivity extends BaseActivity implements View.OnClickL
 
                 case MSG_WC_APPROVED:
                     Toast.makeText(getBaseContext(), getString(R.string.str_wc_approved), Toast.LENGTH_SHORT).show();
-                    mWcAccount.setText(account.address);
+                    mWcAccount.setText(getAccount().address);
                     break;
 
                 case MSG_WC_CLOSED:
@@ -180,9 +179,6 @@ public class WalletConnectActivity extends BaseActivity implements View.OnClickL
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mWcURL = getIntent().getStringExtra("wcUrl");
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
-
         mWcThread = new WcThread();
         mWcThread.start();
 
@@ -333,7 +329,7 @@ public class WalletConnectActivity extends BaseActivity implements View.OnClickL
                 mSession.init();
                 Thread.sleep(2000);
                 List<String> approv = new ArrayList<>();
-                approv.add(account.address);
+                approv.add(getAccount().address);
                 mSession.approve(approv, 4);
 
 
@@ -357,8 +353,8 @@ public class WalletConnectActivity extends BaseActivity implements View.OnClickL
         public void run() {
             WLog.w("SignRunnable ");
             try {
-                String entropy = CryptoHelper.doDecryptData(getBaseContext().getString(R.string.key_mnemonic) + account.uuid, account.resource, account.spec);
-                DeterministicKey deterministicKey = WKey.getKeyWithPathfromEntropy(account, entropy);
+                String entropy = CryptoHelper.doDecryptData(getBaseContext().getString(R.string.key_mnemonic) + getAccount().uuid, getAccount().resource, getAccount().spec);
+                DeterministicKey deterministicKey = WKey.getKeyWithPathfromEntropy(getAccount(), entropy);
 
                 String rawString = mCustom.getParams().get(0).toString();
                 String memo = "";

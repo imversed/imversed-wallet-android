@@ -26,7 +26,7 @@ public class BaseConstant {
     public final static String PRE_FCM_TOKEN = "PRE_FCM_TOKEN";
     public final static String PRE_USER_HIDEN_CHAINS = "PRE_USER_HIDEN_CHAINS";
     public final static String PRE_USER_SORTED_CHAINS = "PRE_USER_SORTED_CHAINS";
-    public final static String PRE_USER_EXPENDED_CHAINS = "PRE_USER_EXPENDED_CHAINS";
+    public final static String PRE_USER_EXPANDED_CHAINS = "PRE_USER_EXPANDED_CHAINS";
 
 
     public final static int TASK_GEN_TX_SIMPLE_SEND = 2018;

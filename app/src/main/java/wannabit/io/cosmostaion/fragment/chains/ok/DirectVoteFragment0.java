@@ -100,11 +100,11 @@ public class DirectVoteFragment0 extends BaseFragment implements View.OnClickLis
         @Override
         public void onBindViewHolder(@NonNull ToValidatorHolder holder, @SuppressLint("RecyclerView") int position) {
             final Validator validator = getBaseDao().mAllValidators.get(position);
-            if (getSActivity().baseChain.equals(OKEX_MAIN.INSTANCE) || getSActivity().baseChain.equals(OK_TEST.INSTANCE)) {
+            if (getSActivity().getBaseChain().equals(OKEX_MAIN.INSTANCE) || getSActivity().getBaseChain().equals(OK_TEST.INSTANCE)) {
                 holder.itemTvVotingPower.setText(WDp.getDpAmount2(new BigDecimal(validator.delegator_shares), 0, 8));
                 holder.itemTvCommission.setText(WDp.getCommissionRate("0"));
                 try {
-                    Picasso.get().load(WDp.getMonikerImgUrl(getSActivity().baseChain, validator.operator_address)).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
+                    Picasso.get().load(WDp.getMonikerImgUrl(getSActivity().getBaseChain(), validator.operator_address)).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
                 } catch (Exception e) {
                 }
 

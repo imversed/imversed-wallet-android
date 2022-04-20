@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.squareup.picasso.Picasso;
 
@@ -88,8 +87,6 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
         for (Coin coin : getBaseDao().mGrpcBalance) {
             if (coin.denom.equalsIgnoreCase(getIntent().getStringExtra("denom"))) {
                 mBridgeDenom = coin.denom;
@@ -123,7 +120,7 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
     }
 
     private void onUpdateView() {
-        mBtnAddressPopup.setCardBackgroundColor(WDp.getChainBgColor(BridgeTokenGrpcActivity.this, baseChain));
+        mBtnAddressPopup.setCardBackgroundColor(WDp.getChainBgColor(BridgeTokenGrpcActivity.this, getBaseChain()));
         final Assets assets = getBaseDao().getAsset(mBridgeDenom);
         Picasso.get().load(ASSET_IMG_URL + assets.logo).fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(mToolbarSymbolImg);
         mToolbarSymbol.setText(assets.origin_symbol);
@@ -143,10 +140,10 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
             mItemUpDownImg.setVisibility(View.INVISIBLE);
         }
 
-        mAddress.setText(account.address);
+        mAddress.setText(getAccount().address);
         mKeyState.setColorFilter(ContextCompat.getColor(getBaseContext(), R.color.colorGray0), android.graphics.PorterDuff.Mode.SRC_IN);
-        if (account.hasPrivateKey) {
-            mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), baseChain), android.graphics.PorterDuff.Mode.SRC_IN);
+        if (getAccount().hasPrivateKey) {
+            mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), getBaseChain()), android.graphics.PorterDuff.Mode.SRC_IN);
         }
         mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), assets.origin_symbol, mTotalAmount, assets.decimal));
         mSwipeRefreshLayout.setRefreshing(false);
@@ -157,19 +154,19 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
     public void onClick(View v) {
         if (v.equals(mBtnAddressPopup)) {
             AccountShowDialogFragment show = AccountShowDialogFragment.Companion.newInstance(
-                    account.getAccountTitle(this),
-                    account.address
+                    getAccount().getAccountTitle(this),
+                    getAccount().address
             );
             showDialog(show);
 
         } else if (v.equals(mBtnIbcSend)) {
-            if (!account.hasPrivateKey) {
+            if (!getAccount().hasPrivateKey) {
                 Dialog_WatchMode add = Dialog_WatchMode.newInstance();
                 showDialog(add);
                 return;
             }
-            final String mainDenom = baseChain.getMainDenom();
-            final BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(this, baseChain, CONST_PW_TX_IBC_TRANSFER, 0);
+            final String mainDenom = getBaseChain().getMainDenom();
+            final BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_IBC_TRANSFER, 0);
             BigDecimal mainDenomAmount = getBaseDao().getAvailable(mainDenom);
             BigDecimal availableAmount = mainDenomAmount.subtract(feeAmount);
             if (availableAmount.compareTo(BigDecimal.ZERO) <= 0) {
@@ -182,14 +179,14 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
             showDialog(warning);
 
         } else if (v.equals(mBtnSend)) {
-            if (!account.hasPrivateKey) {
+            if (!getAccount().hasPrivateKey) {
                 Dialog_WatchMode add = Dialog_WatchMode.newInstance();
                 showDialog(add);
                 return;
             }
             Intent intent = new Intent(getBaseContext(), SendActivity.class);
-            BigDecimal mainAvailable = getBaseDao().getAvailable(baseChain.getMainDenom());
-            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), baseChain, CONST_PW_TX_SIMPLE_SEND, 0);
+            BigDecimal mainAvailable = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_SEND, 0);
             if (mainAvailable.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return;
@@ -220,7 +217,7 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
             if (getItemViewType(position) == TYPE_ETH) {
                 TokenDetailSupportHolder holder = (TokenDetailSupportHolder) viewHolder;
-                holder.onBindBridgeToken(BridgeTokenGrpcActivity.this, baseChain, getBaseDao(), mBridgeDenom);
+                holder.onBindBridgeToken(BridgeTokenGrpcActivity.this, getBaseChain(), getBaseDao(), mBridgeDenom);
             }
         }
 

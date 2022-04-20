@@ -59,7 +59,7 @@ public class SifDexWithdrawStep3Fragment extends BaseFragment implements View.On
         mBeforeBtn = rootView.findViewById(R.id.btn_before);
         mConfirmBtn = rootView.findViewById(R.id.confirmButton);
 
-        WDp.DpMainDenom(getSActivity().account.baseChain, mFeeAmountSymbol);
+        WDp.DpMainDenom(getSActivity().getAccount().baseChain, mFeeAmountSymbol);
 
         mBeforeBtn.setOnClickListener(this);
         mConfirmBtn.setOnClickListener(this);
@@ -68,7 +68,7 @@ public class SifDexWithdrawStep3Fragment extends BaseFragment implements View.On
 
     @Override
     public void onRefreshTab() {
-        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
+        mDpDecimal = getSActivity().getBaseChain().getDivideDecimal();
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
 
         BigDecimal lpRoWanAmount = WUtil.getNativeAmount(getSActivity().mSifPool);

@@ -153,7 +153,7 @@ public class IBCSendStep1Fragment extends BaseFragment implements View.OnClickLi
                 return;
             }
 
-            if (getSActivity().account.address.equals(userInput)) {
+            if (getSActivity().getAccount().address.equals(userInput)) {
                 Toast.makeText(getContext(), R.string.error_self_sending, Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -242,7 +242,7 @@ public class IBCSendStep1Fragment extends BaseFragment implements View.OnClickLi
                         return;
                     }
 
-                    if (getSActivity().account.address.equals(matchAddress)) {
+                    if (getSActivity().getAccount().address.equals(matchAddress)) {
                         Toast.makeText(getContext(), R.string.error_starname_self_send, Toast.LENGTH_SHORT).show();
                         return;
                     }

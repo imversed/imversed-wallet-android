@@ -22,7 +22,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.fulldive.wallet.models.BaseChain;
 import com.google.protobuf.ByteString;
 
 import java.math.BigDecimal;
@@ -72,9 +71,6 @@ public class NFTListActivity extends BaseActivity implements TaskListener {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
-
         mSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(this, R.color.colorPrimary));
         mSwipeRefreshLayout.setOnRefreshListener(() -> onFetchNftListInfo());
 
@@ -86,15 +82,15 @@ public class NFTListActivity extends BaseActivity implements TaskListener {
         mBtnCreateNft.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (account == null) return;
-                if (!account.hasPrivateKey) {
+                if (getAccount() == null) return;
+                if (!getAccount().hasPrivateKey) {
                     Dialog_WatchMode dialog = Dialog_WatchMode.newInstance();
                     showDialog(dialog);
                     return;
                 }
                 Intent intent = new Intent(NFTListActivity.this, NFTCreateActivity.class);
-                BigDecimal mainAvailable = getBaseDao().getAvailable(baseChain.getMainDenom());
-                BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(NFTListActivity.this, baseChain, CONST_PW_TX_MINT_NFT, 0);
+                BigDecimal mainAvailable = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+                BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(NFTListActivity.this, getBaseChain(), CONST_PW_TX_MINT_NFT, 0);
                 if (mainAvailable.compareTo(feeAmount) <= 0) {
                     Toast.makeText(NFTListActivity.this, R.string.error_not_enough_budget, Toast.LENGTH_SHORT).show();
                     return;
@@ -129,7 +125,7 @@ public class NFTListActivity extends BaseActivity implements TaskListener {
         mMyIrisNFTs.clear();
         mMyCryptoNFTs.clear();
         mTokenIds.clear();
-        new NFTokenListGrpcTask(getBaseApplication(), this, baseChain, account, mPageKey).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new NFTokenListGrpcTask(getBaseApplication(), this, getBaseChain(), getAccount(), mPageKey).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -138,7 +134,7 @@ public class NFTListActivity extends BaseActivity implements TaskListener {
         mTaskCount--;
         if (result.taskType == TASK_GRPC_FETCH_NFTOKEN_LIST) {
             if (result.isSuccess && result.resultData != null && result.resultByteData != null) {
-                if (baseChain.equals(IRIS_MAIN.INSTANCE)) {
+                if (getBaseChain().equals(IRIS_MAIN.INSTANCE)) {
                     ArrayList<Nft.IDCollection> tempList = (ArrayList<Nft.IDCollection>) result.resultData;
                     mPageKey = result.resultByteData;
                     if (tempList.size() > 0) {
@@ -152,7 +148,7 @@ public class NFTListActivity extends BaseActivity implements TaskListener {
                         mEmptyNfts.setVisibility(View.VISIBLE);
                     }
 
-                } else if (baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
+                } else if (getBaseChain().equals(CRYPTO_MAIN.INSTANCE)) {
                     ArrayList<chainmain.nft.v1.Nft.IDCollection> tempList = (ArrayList<chainmain.nft.v1.Nft.IDCollection>) result.resultData;
                     mPageKey = result.resultByteData;
                     if (tempList.size() > 0) {
@@ -190,14 +186,14 @@ public class NFTListActivity extends BaseActivity implements TaskListener {
         @Override
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
             final NftMyHolder holder = (NftMyHolder) viewHolder;
-            if (baseChain.equals(IRIS_MAIN.INSTANCE)) {
+            if (getBaseChain().equals(IRIS_MAIN.INSTANCE)) {
                 if (mMyIrisNFTs != null && mMyIrisNFTs.size() > 0) {
                     final Nft.IDCollection collection = mMyIrisNFTs.get(position);
                     final String tokenId = mTokenIds.get(position);
                     holder.onBindNFT(NFTListActivity.this, collection.getDenomId(), tokenId);
                 }
 
-            } else if (baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
+            } else if (getBaseChain().equals(CRYPTO_MAIN.INSTANCE)) {
                 if (mMyCryptoNFTs != null && mMyCryptoNFTs.size() > 0) {
                     final chainmain.nft.v1.Nft.IDCollection collection = mMyCryptoNFTs.get(position);
                     final String tokenId = mTokenIds.get(position);
@@ -208,9 +204,9 @@ public class NFTListActivity extends BaseActivity implements TaskListener {
 
         @Override
         public int getItemCount() {
-            if (baseChain.equals(IRIS_MAIN.INSTANCE)) {
+            if (getBaseChain().equals(IRIS_MAIN.INSTANCE)) {
                 return mMyIrisNFTs.size();
-            } else if (baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
+            } else if (getBaseChain().equals(CRYPTO_MAIN.INSTANCE)) {
                 return mMyCryptoNFTs.size();
             } else {
                 return 0;

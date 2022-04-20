@@ -89,9 +89,6 @@ public class HtlcSendActivity extends BaseActivity {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
         mToSwapDenom = getIntent().getStringExtra("toSwapDenom");
 
         mIvStep.setImageResource(R.drawable.step_4_img_1);
@@ -174,17 +171,17 @@ public class HtlcSendActivity extends BaseActivity {
 
 
     public Fee onInitSendFee() {
-        if (baseChain.equals(BNB_MAIN.INSTANCE)) {
+        if (getBaseChain().equals(BNB_MAIN.INSTANCE)) {
             Coin gasCoin = new Coin();
-            gasCoin.denom = baseChain.getMainDenom();
+            gasCoin.denom = getBaseChain().getMainDenom();
             gasCoin.amount = FEE_BNB_SEND;
             ArrayList<Coin> gasCoins = new ArrayList<>();
             gasCoins.add(gasCoin);
             mSendFee = new Fee("", gasCoins);
 
-        } else if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
+        } else if (getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             Coin gasCoin = new Coin();
-            gasCoin.denom = baseChain.getMainDenom();
+            gasCoin.denom = getBaseChain().getMainDenom();
             gasCoin.amount = "12500";
             ArrayList<Coin> gasCoins = new ArrayList<>();
             gasCoins.add(gasCoin);
@@ -222,10 +219,10 @@ public class HtlcSendActivity extends BaseActivity {
     }
 
     public BigDecimal getAvailable() {
-        if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
+        if (getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             return getBaseDao().getAvailable(mToSwapDenom);
         } else {
-            return account.getTokenBalance(mToSwapDenom);
+            return getAccount().getTokenBalance(mToSwapDenom);
         }
     }
 

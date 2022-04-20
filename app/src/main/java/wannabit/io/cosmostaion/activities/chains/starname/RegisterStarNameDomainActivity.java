@@ -17,7 +17,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fulldive.wallet.extensions.ActivityExtensionsKt;
-import com.fulldive.wallet.models.BaseChain;
 
 import java.util.ArrayList;
 
@@ -61,8 +60,6 @@ public class RegisterStarNameDomainActivity extends BaseBroadCastActivity {
         mIvStep.setImageResource(R.drawable.step_4_img_1);
         mTvStep.setText(R.string.str_register_domain_step_0);
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_REGISTER_DOMAIN;
 
         mPageAdapter = new RegisterDomainPageAdapter(getSupportFragmentManager());
@@ -106,7 +103,7 @@ public class RegisterStarNameDomainActivity extends BaseBroadCastActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (account == null) finish();
+        if (getAccount() == null) finish();
     }
 
 

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.fulldive.wallet.presentation.main.MainActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.gun0912.tedpermission.PermissionListener;
 import com.gun0912.tedpermission.TedPermission;
@@ -20,7 +21,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.MainActivity;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.utils.WDp;
@@ -43,7 +43,7 @@ public class WalletBinanceHolder extends BaseHolder {
 
     public void onBindHolder(@NotNull MainActivity mainActivity) {
         final BaseData baseData = mainActivity.getBaseDao();
-        final String denom = mainActivity.baseChain.getMainDenom();
+        final String denom = mainActivity.getBaseChain().getMainDenom();
         final BigDecimal availableAmount = baseData.availableAmount(denom);
         final BigDecimal lockedAmount = baseData.lockedAmount(denom);
         final BigDecimal frozenAmount = baseData.frozenAmount(denom);
@@ -55,12 +55,12 @@ public class WalletBinanceHolder extends BaseHolder {
         mTvBnbFrozen.setText(WDp.getDpAmount2(frozenAmount, 0, 6));
         mTvBnbValue.setText(WDp.dpUserCurrencyValue(baseData, denom, totalAmount, 0));
 
-        mainActivity.getBaseDao().onUpdateLastTotalAccount(mainActivity.account, totalAmount.toPlainString());
+        mainActivity.getBaseDao().onUpdateLastTotalAccount(mainActivity.getAccount(), totalAmount.toPlainString());
 
         mBtnWalletConnect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mainActivity.account.hasPrivateKey) {
+                if (!mainActivity.getAccount().hasPrivateKey) {
                     Dialog_WatchMode dialog = Dialog_WatchMode.newInstance();
                     mainActivity.showDialog(dialog);
                     return;

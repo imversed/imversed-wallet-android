@@ -10,13 +10,13 @@ import com.fulldive.wallet.extensions.hideKeyboard
 import com.fulldive.wallet.extensions.unsafeLazy
 import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.base.BaseMvpActivity
+import com.fulldive.wallet.presentation.main.MainActivity
 import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity
 import com.fulldive.wallet.presentation.security.password.SetPasswordActivity
 import com.google.zxing.integration.android.IntentIntegrator
 import com.joom.lightsaber.getInstance
 import moxy.ktx.moxyPresenter
 import wannabit.io.cosmostaion.R
-import wannabit.io.cosmostaion.activities.MainActivity
 import wannabit.io.cosmostaion.databinding.ActivityRestoreKeyBinding
 
 class PrivateKeyRestoreActivity : BaseMvpActivity<ActivityRestoreKeyBinding>(),
