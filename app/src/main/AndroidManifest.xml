@@ -109,7 +109,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
-            android:name=".activities.MainActivity"
+            android:name="com.fulldive.wallet.presentation.main.MainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
@@ -666,7 +666,7 @@
             android:theme="@style/stealthTheme">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".activities.MainActivity" />
+                android:value="com.fulldive.wallet.presentation.main.MainActivity" />
         </activity>
 
         <provider
