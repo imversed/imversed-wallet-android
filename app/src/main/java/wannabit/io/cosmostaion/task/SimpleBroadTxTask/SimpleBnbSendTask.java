@@ -7,6 +7,7 @@ import com.binance.dex.api.client.Wallet;
 import com.binance.dex.api.client.domain.TransactionMetadata;
 import com.binance.dex.api.client.domain.broadcast.TransactionOption;
 import com.binance.dex.api.client.domain.broadcast.Transfer;
+import com.fulldive.wallet.models.BaseChain;
 
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.crypto.DeterministicKey;
@@ -19,7 +20,6 @@ import retrofit2.Response;
 import wannabit.io.cosmostaion.BuildConfig;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dao.Account;
@@ -39,7 +39,6 @@ public class SimpleBnbSendTask extends CommonTask {
     private final String mToAddress;
     private final ArrayList<Coin> mToSendAmount;
     private final String mToSendMemo;
-    private final Fee mToFees;
 
     private ECKey ecKey;
 
@@ -49,7 +48,6 @@ public class SimpleBnbSendTask extends CommonTask {
         this.mToAddress = mToAddress;
         this.mToSendAmount = mToSendAmount;
         this.mToSendMemo = mToSendMemo;
-        this.mToFees = mToFees;
         this.result.taskType = BaseConstant.TASK_GEN_TX_BNB_SIMPLE_SEND;
     }
 

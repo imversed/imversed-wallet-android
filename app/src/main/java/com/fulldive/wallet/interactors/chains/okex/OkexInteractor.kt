@@ -2,11 +2,11 @@ package com.fulldive.wallet.interactors.chains.okex
 
 import com.fulldive.wallet.di.modules.DefaultInteractorsModule
 import com.fulldive.wallet.interactors.chains.StationInteractor
+import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.rx.AppSchedulers
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.base.BaseConstant
 import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.dao.Balance

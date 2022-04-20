@@ -35,7 +35,6 @@ import java.math.BigDecimal;
 import starnamed.x.starname.v1beta1.Types;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.task.TaskListener;
 import wannabit.io.cosmostaion.task.TaskResult;
@@ -72,8 +71,6 @@ public class StarNameAccountDetailActivity extends BaseActivity implements View.
         mBtnRenew = findViewById(R.id.btn_renew);
         mBtnEdit = findViewById(R.id.btn_edit);
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
         mMyDomain = getIntent().getStringExtra("domain");
         mMyAccount = getIntent().getStringExtra("account");
         WLog.w("mMyDomain " + mMyDomain);
@@ -112,13 +109,13 @@ public class StarNameAccountDetailActivity extends BaseActivity implements View.
     @Override
     public void onClick(View v) {
         if (v.equals(mBtnDelete)) {
-            if (!account.hasPrivateKey) {
+            if (!getAccount().hasPrivateKey) {
                 Dialog_WatchMode add = Dialog_WatchMode.newInstance();
                 showDialog(add);
                 return;
             }
-            BigDecimal available = getBaseDao().getAvailable(baseChain.getMainDenom());
-            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, baseChain, CONST_PW_TX_DELETE_DOMAIN, 0);
+            BigDecimal available = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_DELETE_DOMAIN, 0);
             if (available.compareTo(txFee) < 0) {
                 Toast.makeText(this, R.string.error_not_enough_starname_fee, Toast.LENGTH_SHORT).show();
                 return;
@@ -131,15 +128,15 @@ public class StarNameAccountDetailActivity extends BaseActivity implements View.
             startActivity(intent);
 
         } else if (v.equals(mBtnRenew)) {
-            if (!account.hasPrivateKey) {
+            if (!getAccount().hasPrivateKey) {
                 Dialog_WatchMode add = Dialog_WatchMode.newInstance();
                 showDialog(add);
                 return;
             }
 
-            BigDecimal available = getBaseDao().getAvailable(baseChain.getMainDenom());
+            BigDecimal available = getBaseDao().getAvailable(getBaseChain().getMainDenom());
             BigDecimal starNameFee = getBaseDao().getStarNameRenewAccountFee(mDomain_gRPC.getType());
-            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getBaseContext(), baseChain, CONST_PW_TX_RENEW_ACCOUNT, 0);
+            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_RENEW_ACCOUNT, 0);
             if (available.compareTo(starNameFee.add(txFee)) < 0) {
                 Toast.makeText(this, R.string.error_not_enough_starname_fee, Toast.LENGTH_SHORT).show();
                 return;
@@ -154,15 +151,15 @@ public class StarNameAccountDetailActivity extends BaseActivity implements View.
             startActivity(intent);
 
         } else if (v.equals(mBtnEdit)) {
-            if (!account.hasPrivateKey) {
+            if (!getAccount().hasPrivateKey) {
                 Dialog_WatchMode add = Dialog_WatchMode.newInstance();
                 showDialog(add);
                 return;
             }
 
-            BigDecimal available = getBaseDao().getAvailable(baseChain.getMainDenom());
+            BigDecimal available = getBaseDao().getAvailable(getBaseChain().getMainDenom());
             BigDecimal starNameFee = getBaseDao().getReplaceFee();
-            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getBaseContext(), baseChain, CONST_PW_TX_REPLACE_STARNAME, 0);
+            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_REPLACE_STARNAME, 0);
             if (available.compareTo(starNameFee.add(txFee)) < 0) {
                 Toast.makeText(this, R.string.error_not_enough_starname_fee, Toast.LENGTH_SHORT).show();
                 return;
@@ -179,8 +176,8 @@ public class StarNameAccountDetailActivity extends BaseActivity implements View.
 
     private void onFetchData() {
         mTaskCount = 2;
-        new StarNameGrpcDomainInfoTask(getBaseApplication(), this, baseChain, mMyDomain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new StarNameGrpcResolveTask(getBaseApplication(), this, baseChain, mMyAccount, mMyDomain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new StarNameGrpcDomainInfoTask(getBaseApplication(), this, getBaseChain(), mMyDomain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new StarNameGrpcResolveTask(getBaseApplication(), this, getBaseChain(), mMyAccount, mMyDomain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
 

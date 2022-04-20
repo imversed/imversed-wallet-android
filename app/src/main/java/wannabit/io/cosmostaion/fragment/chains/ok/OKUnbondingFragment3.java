@@ -51,8 +51,8 @@ public class OKUnbondingFragment3 extends BaseFragment implements View.OnClickLi
         mBeforeBtn = rootView.findViewById(R.id.btn_before);
         mConfirmBtn = rootView.findViewById(R.id.confirmButton);
 
-        WDp.DpMainDenom(getSActivity().account.baseChain, mWithdrawDenom);
-        WDp.DpMainDenom(getSActivity().account.baseChain, mFeeDenom);
+        WDp.DpMainDenom(getSActivity().getAccount().baseChain, mWithdrawDenom);
+        WDp.DpMainDenom(getSActivity().getAccount().baseChain, mFeeDenom);
 
         mBeforeBtn.setOnClickListener(this);
         mConfirmBtn.setOnClickListener(this);
@@ -64,12 +64,12 @@ public class OKUnbondingFragment3 extends BaseFragment implements View.OnClickLi
         BigDecimal toDeleagteAmount = new BigDecimal(getSActivity().mToWithdrawCoin.amount);
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
 
-        if (getSActivity().baseChain.equals(OKEX_MAIN.INSTANCE) || getSActivity().baseChain.equals(OK_TEST.INSTANCE)) {
+        if (getSActivity().getBaseChain().equals(OKEX_MAIN.INSTANCE) || getSActivity().getBaseChain().equals(OK_TEST.INSTANCE)) {
             mWithdrawAmount.setText(WDp.getDpAmount2(toDeleagteAmount, 0, 18));
             mFeeAmount.setText(WDp.getDpAmount2(feeAmount, 0, 18));
 
         }
-        mTime.setText(WDp.getUnbondTime(getContext(), getBaseDao(), getSActivity().baseChain));
+        mTime.setText(WDp.getUnbondTime(getContext(), getBaseDao(), getSActivity().getBaseChain()));
         mMemo.setText(getSActivity().mTxMemo);
     }
 

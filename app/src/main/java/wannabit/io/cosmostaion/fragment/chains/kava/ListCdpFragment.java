@@ -16,13 +16,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.util.ArrayList;
 
 import kava.cdp.v1beta1.Genesis;
 import kava.cdp.v1beta1.QueryOuterClass;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.kava.DAppsList5Activity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.dao.Account;
@@ -77,8 +78,8 @@ public class ListCdpFragment extends BaseFragment implements TaskListener, IRefr
         mAdapter = new CdpMarketAdapter();
         mRecyclerView.setAdapter(mAdapter);
 
-        mAccount = getSActivity().account;
-        mBaseChain = getSActivity().baseChain;
+        mAccount = getSActivity().getAccount();
+        mBaseChain = getSActivity().getBaseChain();
         return rootView;
     }
 

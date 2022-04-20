@@ -14,12 +14,12 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fulldive.wallet.extensions.ActivityExtensionsKt;
+import com.fulldive.wallet.models.BaseChain;
 
 import java.util.ArrayList;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseBroadCastActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
@@ -56,12 +56,10 @@ public class SendActivity extends BaseBroadCastActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mTvStep.setText(R.string.str_send_step_0);
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_SIMPLE_SEND;
 
         mDenom = getIntent().getStringExtra("sendTokenDenom");
-        if (baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
+        if (getBaseChain().equals(BaseChain.BNB_MAIN.INSTANCE)) {
             mBnbToken = getBaseDao().getBnbToken(mDenom);
         }
 
@@ -107,7 +105,7 @@ public class SendActivity extends BaseBroadCastActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (account == null) finish();
+        if (getAccount() == null) finish();
     }
 
 
@@ -171,7 +169,7 @@ public class SendActivity extends BaseBroadCastActivity {
             mFragments.add(SendStep0Fragment.newInstance(null));
             mFragments.add(SendStep1Fragment.newInstance(null));
             mFragments.add(StepMemoFragment.newInstance(null));
-            if (baseChain.isGRPC()) {
+            if (getBaseChain().isGRPC()) {
                 mFragments.add(StepFeeSetFragment.newInstance(null));
             } else {
                 mFragments.add(StepFeeSetOldFragment.newInstance(null));

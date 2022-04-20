@@ -2,10 +2,11 @@ package wannabit.io.cosmostaion.task.gRpcTask;
 
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_NFTOKEN_INFO;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import irismod.nft.QueryGrpc;
 import irismod.nft.QueryOuterClass;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.task.CommonTask;
 import wannabit.io.cosmostaion.task.TaskListener;

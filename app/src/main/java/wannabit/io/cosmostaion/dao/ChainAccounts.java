@@ -1,8 +1,8 @@
 package wannabit.io.cosmostaion.dao;
 
-import java.util.List;
-
 import com.fulldive.wallet.models.BaseChain;
+
+import java.util.List;
 
 public class ChainAccounts {
     public boolean opened = false;

@@ -27,7 +27,6 @@ import kava.cdp.v1beta1.Genesis;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.PasswordCheckActivity;
 import wannabit.io.cosmostaion.base.BaseBroadCastActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
@@ -76,8 +75,6 @@ public class BorrowCdpActivity extends BaseBroadCastActivity implements TaskList
         mIvStep.setImageResource(R.drawable.step_4_img_1);
         mTvStep.setText(R.string.str_draw_debt_cdp_step_1);
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_DRAW_DEBT_CDP;
 
         mCollateralType = getIntent().getStringExtra("collateralParamType");
@@ -223,7 +220,7 @@ public class BorrowCdpActivity extends BaseBroadCastActivity implements TaskList
     public void onFetchCdpInfo() {
         showWaitDialog();
         mTaskCount = 1;
-        new KavaCdpsByOwnerGrpcTask(getBaseApplication(), this, baseChain, account).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new KavaCdpsByOwnerGrpcTask(getBaseApplication(), this, getBaseChain(), getAccount()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override

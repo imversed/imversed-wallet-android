@@ -35,7 +35,6 @@ import osmosis.incentives.GaugeOuterClass;
 import osmosis.lockup.Lock;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.utils.OsmosisGaugeWrapper;
@@ -91,9 +90,6 @@ public class EarningDetailActivity extends BaseActivity implements View.OnClickL
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
 
         try {
             mPool = BalancerPool.Pool.parseFrom(getIntent().getByteArrayExtra("osmosisPool"));
@@ -200,7 +196,7 @@ public class EarningDetailActivity extends BaseActivity implements View.OnClickL
 
     public void onCheckNewEarning() {
         WLog.w("onCheckNewEarning");
-        if (!account.hasPrivateKey) {
+        if (!getAccount().hasPrivateKey) {
             Dialog_WatchMode add = Dialog_WatchMode.newInstance();
             showDialog(add);
             return;
@@ -226,7 +222,7 @@ public class EarningDetailActivity extends BaseActivity implements View.OnClickL
 
     public void onCheckUnbonding(Lock.PeriodLock lockup) {
         WLog.w("onCheckUnbonding " + lockup.getID());
-        if (!account.hasPrivateKey) {
+        if (!getAccount().hasPrivateKey) {
             Dialog_WatchMode add = Dialog_WatchMode.newInstance();
             showDialog(add);
             return;
@@ -264,7 +260,7 @@ public class EarningDetailActivity extends BaseActivity implements View.OnClickL
 
     public void onCheckUnlock(Lock.PeriodLock lockup) {
         WLog.w("onCheckUnlock " + lockup.getID());
-        if (!account.hasPrivateKey) {
+        if (!getAccount().hasPrivateKey) {
             Dialog_WatchMode add = Dialog_WatchMode.newInstance();
             showDialog(add);
             return;

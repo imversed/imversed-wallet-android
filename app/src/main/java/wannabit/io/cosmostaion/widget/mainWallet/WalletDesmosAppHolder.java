@@ -7,10 +7,11 @@ import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 
+import com.fulldive.wallet.presentation.main.MainActivity;
+
 import org.jetbrains.annotations.NotNull;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.MainActivity;
 import wannabit.io.cosmostaion.widget.BaseHolder;
 
 public class WalletDesmosAppHolder extends BaseHolder {
@@ -22,12 +23,9 @@ public class WalletDesmosAppHolder extends BaseHolder {
     }
 
     public void onBindHolder(@NotNull MainActivity mainActivity) {
-        mBtnDownloadApp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://dpm.desmos.network/"));
-                mainActivity.startActivity(intent);
-            }
+        mBtnDownloadApp.setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://dpm.desmos.network/"));
+            mainActivity.startActivity(intent);
         });
     }
 }

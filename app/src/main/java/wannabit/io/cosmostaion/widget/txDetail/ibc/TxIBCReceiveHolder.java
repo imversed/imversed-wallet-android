@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import org.json.JSONObject;
 
 import java.math.BigDecimal;
@@ -15,7 +17,6 @@ import java.math.BigDecimal;
 import cosmos.tx.v1beta1.ServiceOuterClass;
 import ibc.core.channel.v1.Tx;
 import wannabit.io.cosmostaion.R;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;

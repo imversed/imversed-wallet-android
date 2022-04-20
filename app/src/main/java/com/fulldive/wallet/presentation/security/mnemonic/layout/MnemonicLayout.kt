@@ -9,12 +9,12 @@ import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import com.fulldive.wallet.extensions.getColorCompat
 import com.fulldive.wallet.interactors.secret.MnemonicUtils
+import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.base.BaseMvpFrameLayout
 import com.joom.lightsaber.getInstance
 import moxy.presenter.InjectPresenter
 import moxy.presenter.ProvidePresenter
 import wannabit.io.cosmostaion.R
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.databinding.LayoutMnemonicBinding
 
 class MnemonicLayout : BaseMvpFrameLayout<LayoutMnemonicBinding>, MnemonicMoxyView {

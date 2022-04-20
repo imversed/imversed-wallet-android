@@ -10,11 +10,11 @@ import com.fulldive.wallet.interactors.chains.binance.BinanceInteractor
 import com.fulldive.wallet.interactors.chains.grpc.GrpcInteractor
 import com.fulldive.wallet.interactors.chains.okex.OkexInteractor
 import com.fulldive.wallet.interactors.secret.MnemonicUtils
+import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Single
 import wannabit.io.cosmostaion.R
-import com.fulldive.wallet.models.BaseChain
 import java.math.BigDecimal
 import javax.inject.Inject
 

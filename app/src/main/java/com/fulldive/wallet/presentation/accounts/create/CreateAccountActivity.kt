@@ -8,14 +8,14 @@ import android.view.WindowManager
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.app.ActivityOptionsCompat
+import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.base.BaseMvpActivity
+import com.fulldive.wallet.presentation.main.MainActivity
 import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity
 import com.fulldive.wallet.presentation.security.password.SetPasswordActivity
 import com.joom.lightsaber.getInstance
 import moxy.ktx.moxyPresenter
 import wannabit.io.cosmostaion.R
-import wannabit.io.cosmostaion.activities.MainActivity
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.databinding.ActivityCreateBinding
 
 class CreateAccountActivity : BaseMvpActivity<ActivityCreateBinding>(), CreateAccountMoxyView {
@@ -25,14 +25,6 @@ class CreateAccountActivity : BaseMvpActivity<ActivityCreateBinding>(), CreateAc
     ) { result: ActivityResult ->
         if (result.resultCode == RESULT_OK) {
             presenter.onCheckPasswordSuccessfully()
-        }
-    }
-
-    private val launcherSetPassword = registerForActivityResult(
-        StartActivityForResult()
-    ) { result: ActivityResult ->
-        if (result.resultCode == RESULT_OK) {
-            presenter.onSetPasswordSuccessfully()
         }
     }
 
@@ -105,7 +97,6 @@ class CreateAccountActivity : BaseMvpActivity<ActivityCreateBinding>(), CreateAc
         }
     }
 
-
     override fun requestCheckPassword() {
         launcher.launch(
             Intent(this, CheckPasswordActivity::class.java),
@@ -114,7 +105,7 @@ class CreateAccountActivity : BaseMvpActivity<ActivityCreateBinding>(), CreateAc
     }
 
     override fun requestCreatePassword() {
-        launcherSetPassword.launch(
+        launcher.launch(
             Intent(this, SetPasswordActivity::class.java),
             ActivityOptionsCompat.makeCustomAnimation(this, R.anim.slide_in_bottom, R.anim.fade_out)
         )

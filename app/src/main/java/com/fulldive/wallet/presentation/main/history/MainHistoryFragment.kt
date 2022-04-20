@@ -7,13 +7,13 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment
 import com.fulldive.wallet.presentation.base.BaseMvpFragment
+import com.fulldive.wallet.presentation.main.MainActivity
 import com.joom.lightsaber.getInstance
 import moxy.ktx.moxyPresenter
 import wannabit.io.cosmostaion.R
-import wannabit.io.cosmostaion.activities.MainActivity
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.base.IRefreshTabListener
 import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.databinding.FragmentMainHistoryBinding

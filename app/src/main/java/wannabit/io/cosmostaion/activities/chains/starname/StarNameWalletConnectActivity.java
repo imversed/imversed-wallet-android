@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.google.gson.Gson;
 import com.squareup.moshi.Moshi;
 import com.squareup.picasso.Picasso;
@@ -33,7 +34,6 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.dialog.Dialog_StarName_Export_Confirm;
 import wannabit.io.cosmostaion.model.ExportStarName;
@@ -105,9 +105,6 @@ public class StarNameWalletConnectActivity extends BaseActivity implements View.
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mWcURL = getIntent().getStringExtra("wcUrl");
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
-
         mWcThread = new StarNameWcThread();
         mWcThread.start();
 
@@ -144,7 +141,7 @@ public class StarNameWalletConnectActivity extends BaseActivity implements View.
         mWcLayer.setVisibility(View.VISIBLE);
         mLoadingLayer.setVisibility(View.GONE);
 
-        ArrayList<Account> allAccounts = getBaseDao().onSelectAccounts();
+        ArrayList<Account> allAccounts = getBaseDao().getAccounts();
         ExportStarName toExport = getExportResource(allAccounts);
         String jsonData = new Gson().toJson(toExport);
 //        WLog.w("allAccounts "+ allAccounts.size());

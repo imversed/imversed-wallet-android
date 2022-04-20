@@ -56,10 +56,10 @@ public class ReInvestStep3Fragment extends BaseFragment implements View.OnClickL
         mBeforeBtn = rootView.findViewById(R.id.btn_before);
         mConfirmBtn = rootView.findViewById(R.id.confirmButton);
 
-        WDp.DpMainDenom(getSActivity().account.baseChain, mRewardDenom);
-        WDp.DpMainDenom(getSActivity().account.baseChain, mFeeDenom);
-        WDp.DpMainDenom(getSActivity().account.baseChain, mCurrentDenom);
-        WDp.DpMainDenom(getSActivity().account.baseChain, mExpectedDenom);
+        WDp.DpMainDenom(getSActivity().getAccount().baseChain, mRewardDenom);
+        WDp.DpMainDenom(getSActivity().getAccount().baseChain, mFeeDenom);
+        WDp.DpMainDenom(getSActivity().getAccount().baseChain, mCurrentDenom);
+        WDp.DpMainDenom(getSActivity().getAccount().baseChain, mExpectedDenom);
 
         mBeforeBtn.setOnClickListener(this);
         mConfirmBtn.setOnClickListener(this);
@@ -69,7 +69,7 @@ public class ReInvestStep3Fragment extends BaseFragment implements View.OnClickL
 
     @Override
     public void onRefreshTab() {
-        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
+        mDpDecimal = getSActivity().getBaseChain().getDivideDecimal();
         mRewardAmount.setText(WDp.getDpAmount2(new BigDecimal(getSActivity().mAmount.amount).setScale(0, BigDecimal.ROUND_DOWN), mDpDecimal, mDpDecimal));
         mFeeAmount.setText(WDp.getDpAmount2(new BigDecimal(getSActivity().mTxFee.amount.get(0).amount), mDpDecimal, mDpDecimal));
         BigDecimal current = getSActivity().getBaseDao().getDelegation(getSActivity().mValAddress);

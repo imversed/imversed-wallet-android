@@ -9,13 +9,13 @@ import com.fulldive.wallet.interactors.ScreensInteractor
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
 import com.fulldive.wallet.interactors.accounts.DuplicateAccountException
 import com.fulldive.wallet.interactors.secret.SecretInteractor
+import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.models.local.AccountSecrets
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
 import com.fulldive.wallet.presentation.chains.choicenet.ChoiceChainDialogFragment
 import com.fulldive.wallet.rx.AppSchedulers
 import com.joom.lightsaber.ProvidedBy
 import wannabit.io.cosmostaion.R
-import com.fulldive.wallet.models.BaseChain
 import java.util.*
 import javax.inject.Inject
 
@@ -83,17 +83,17 @@ class CreateAccountPresenter @Inject constructor(
         accountSecrets?.mnemonic?.let(viewState::showMnemonic)
     }
 
-    fun onSetPasswordSuccessfully() {
-        accountSecrets?.mnemonic?.let(viewState::showMnemonic)
-    }
-
     private fun requestChain() {
         singleCallable { UUID.randomUUID().toString() }
             .subscribeOn(AppSchedulers.ui())
             .observeOn(AppSchedulers.ui())
             .flatMap { requestCode ->
                 completeCallable {
-                    val dialog = ChoiceChainDialogFragment.newInstance(false, requestCode, isCheckLimit = true)
+                    val dialog = ChoiceChainDialogFragment.newInstance(
+                        false,
+                        requestCode,
+                        isCheckLimit = true
+                    )
                     viewState.showDialog(dialog, "dialog", false)
                 }
                     .toSingleDefault(requestCode)

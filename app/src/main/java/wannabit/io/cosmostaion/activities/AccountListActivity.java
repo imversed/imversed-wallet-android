@@ -17,21 +17,20 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.utils.WDp;
 
 public class AccountListActivity extends BaseActivity implements View.OnClickListener {
 
-    private Toolbar mToolbar;
-    private TextView mBtnEdit;
-    private RecyclerView mChainRecyclerView;
-    private RecyclerView mAccountRecyclerView;
+    private TextView editButton;
+    private RecyclerView chainRecyclerView;
 
     private ChainListAdapter mChainListAdapter;
     private AccountListAdapter mAccountListAdapter;
@@ -43,28 +42,28 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_account_list);
-        mToolbar = findViewById(R.id.toolbar);
-        mBtnEdit = findViewById(R.id.btn_edit);
-        mChainRecyclerView = findViewById(R.id.chain_recycler);
-        mAccountRecyclerView = findViewById(R.id.account_recycler);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        editButton = findViewById(R.id.btn_edit);
+        chainRecyclerView = findViewById(R.id.chain_recycler);
+        RecyclerView accountRecyclerView = findViewById(R.id.account_recycler);
 
-        mSelectedChain = getBaseDao().getLastChain();
+        mSelectedChain = getBaseChain();
 
-        mBtnEdit.setOnClickListener(this);
+        editButton.setOnClickListener(this);
 
-        setSupportActionBar(mToolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mChainRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mChainRecyclerView.setHasFixedSize(true);
+        chainRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        chainRecyclerView.setHasFixedSize(true);
         mChainListAdapter = new ChainListAdapter();
-        mChainRecyclerView.setAdapter(mChainListAdapter);
+        chainRecyclerView.setAdapter(mChainListAdapter);
 
-        mAccountRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mAccountRecyclerView.setHasFixedSize(true);
+        accountRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        accountRecyclerView.setHasFixedSize(true);
         mAccountListAdapter = new AccountListAdapter();
-        mAccountRecyclerView.setAdapter(mAccountListAdapter);
+        accountRecyclerView.setAdapter(mAccountListAdapter);
 
     }
 
@@ -80,15 +79,14 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onResume() {
         super.onResume();
-        onChainSelect(getBaseDao().getLastChain());
+        onChainSelect(mSelectedChain);
     }
 
     public void onChainSelect(BaseChain baseChain) {
         mDisplayChains = getBaseDao().dpSortedChains();
         mSelectedChain = baseChain;
-        getBaseDao().setLastChain(mSelectedChain.getChainName());
         mDisplayAccounts = getBaseDao().getAccountsByChain(mSelectedChain);
-        mChainRecyclerView.scrollToPosition(mDisplayChains.indexOf(getBaseDao().getLastChain()));
+        chainRecyclerView.scrollToPosition(mDisplayChains.indexOf(baseChain));
 
         mChainListAdapter.notifyDataSetChanged();
         mAccountListAdapter.notifyDataSetChanged();
@@ -96,7 +94,7 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        if (v.equals(mBtnEdit)) {
+        if (v.equals(editButton)) {
             Intent intent = new Intent(AccountListActivity.this, WalletEditActivity.class);
             startActivity(intent);
         }

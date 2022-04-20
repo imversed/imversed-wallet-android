@@ -7,10 +7,10 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import com.fulldive.wallet.extensions.hideKeyboard
 import com.fulldive.wallet.presentation.base.BaseMvpActivity
+import com.fulldive.wallet.presentation.main.MainActivity
 import com.google.zxing.integration.android.IntentIntegrator
 import com.joom.lightsaber.getInstance
 import moxy.ktx.moxyPresenter
-import wannabit.io.cosmostaion.activities.MainActivity
 import wannabit.io.cosmostaion.databinding.ActivityWatchAccountBinding
 
 class WatchAccountActivity : BaseMvpActivity<ActivityWatchAccountBinding>(),

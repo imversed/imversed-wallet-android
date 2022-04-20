@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -37,7 +38,6 @@ import starnamed.x.starname.v1beta1.QueryGrpc;
 import starnamed.x.starname.v1beta1.QueryOuterClass;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.ibc.IBCSendActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.dao.Account;
@@ -153,7 +153,7 @@ public class IBCSendStep1Fragment extends BaseFragment implements View.OnClickLi
                 return;
             }
 
-            if (getSActivity().account.address.equals(userInput)) {
+            if (getSActivity().getAccount().address.equals(userInput)) {
                 Toast.makeText(getContext(), R.string.error_self_sending, Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -242,7 +242,7 @@ public class IBCSendStep1Fragment extends BaseFragment implements View.OnClickLi
                         return;
                     }
 
-                    if (getSActivity().account.address.equals(matchAddress)) {
+                    if (getSActivity().getAccount().address.equals(matchAddress)) {
                         Toast.makeText(getContext(), R.string.error_starname_self_send, Toast.LENGTH_SHORT).show();
                         return;
                     }

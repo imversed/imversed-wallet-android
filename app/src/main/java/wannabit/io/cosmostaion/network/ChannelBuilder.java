@@ -4,11 +4,12 @@ import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.util.HashMap;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import com.fulldive.wallet.models.BaseChain;
 
 public class ChannelBuilder {
 

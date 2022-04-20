@@ -49,7 +49,7 @@ public class DirectVoteFragment3 extends BaseFragment implements View.OnClickLis
         mBeforeBtn = rootView.findViewById(R.id.btn_before);
         mConfirmBtn = rootView.findViewById(R.id.confirmButton);
 
-        WDp.DpMainDenom(getSActivity().account.baseChain, mFeeDenom);
+        WDp.DpMainDenom(getSActivity().getAccount().baseChain, mFeeDenom);
 
         mBeforeBtn.setOnClickListener(this);
         mConfirmBtn.setOnClickListener(this);
@@ -62,7 +62,7 @@ public class DirectVoteFragment3 extends BaseFragment implements View.OnClickLis
     public void onRefreshTab() {
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
 
-        if (getSActivity().baseChain.equals(OKEX_MAIN.INSTANCE) || getSActivity().baseChain.equals(OK_TEST.INSTANCE)) {
+        if (getSActivity().getBaseChain().equals(OKEX_MAIN.INSTANCE) || getSActivity().getBaseChain().equals(OK_TEST.INSTANCE)) {
             mFeeAmount.setText(WDp.getDpAmount2(feeAmount, 0, 18));
 
             String monikers = "";

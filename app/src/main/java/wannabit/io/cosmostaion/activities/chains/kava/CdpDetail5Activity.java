@@ -30,8 +30,6 @@ import kava.cdp.v1beta1.Genesis;
 import kava.cdp.v1beta1.QueryOuterClass;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import com.fulldive.wallet.models.BaseChain;
-import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.model.kava.CdpDeposit;
 import wannabit.io.cosmostaion.task.FetchTask.KavaCdpByDepositorTask;
@@ -52,7 +50,6 @@ public class CdpDetail5Activity extends BaseActivity implements TaskListener, Vi
     private Button mBtnOpenCdp;
     private RelativeLayout mLoadingLayer;
 
-    private Account mAccount;
     private CdpDetailAdapter mAdapter;
 
     private String mCollateralType;
@@ -73,9 +70,6 @@ public class CdpDetail5Activity extends BaseActivity implements TaskListener, Vi
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        mAccount = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(mAccount.baseChain);
 
         mCdpParams = getBaseDao().mCdpParams;
         mCollateralType = getIntent().getStringExtra("collateralParamType");
@@ -114,9 +108,9 @@ public class CdpDetail5Activity extends BaseActivity implements TaskListener, Vi
     public void onFetchCdpData() {
         mTaskCount = 3;
         mMyCdps = null;
-        new KavaCdpsByOwnerGrpcTask(getBaseApplication(), this, baseChain, mAccount).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new KavaCdpByDepositorTask(getBaseApplication(), this, baseChain, mAccount.address, mCollateralType).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new TotalSupplyGrpcTask(getBaseApplication(), this, baseChain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new KavaCdpsByOwnerGrpcTask(getBaseApplication(), this, getBaseChain(), getAccount()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new KavaCdpByDepositorTask(getBaseApplication(), this, getBaseChain(), getAccount().address, mCollateralType).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new TotalSupplyGrpcTask(getBaseApplication(), this, getBaseChain()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
 
@@ -139,7 +133,7 @@ public class CdpDetail5Activity extends BaseActivity implements TaskListener, Vi
             if (result.isSuccess && result.resultData != null) {
                 ArrayList<CdpDeposit> deposits = (ArrayList<CdpDeposit>) result.resultData;
                 for (CdpDeposit deposit : deposits) {
-                    if (deposit.depositor.equals(mAccount.address)) {
+                    if (deposit.depositor.equals(getAccount().address)) {
                         mSelfDepositAmount = new BigDecimal(deposit.amount.amount);
                     }
                 }
@@ -296,7 +290,7 @@ public class CdpDetail5Activity extends BaseActivity implements TaskListener, Vi
 
 
     private boolean onCommonCheck() {
-        if (!mAccount.hasPrivateKey) {
+        if (!getAccount().hasPrivateKey) {
             Dialog_WatchMode add = Dialog_WatchMode.newInstance();
             showDialog(add);
             return false;

@@ -28,7 +28,6 @@ import starnamed.x.starname.v1beta1.Types;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.PasswordCheckActivity;
 import wannabit.io.cosmostaion.base.BaseBroadCastActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.fragment.StepFeeSetFragment;
@@ -78,8 +77,6 @@ public class ReplaceStarNameActivity extends BaseBroadCastActivity implements Ta
         mIvStep.setImageResource(R.drawable.step_4_img_1);
         mTvStep.setText(R.string.str_replace_starname_step_0);
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_REPLACE_STARNAME;
 
         mPageAdapter = new ReplaceStarNamePageAdapter(getSupportFragmentManager());
@@ -162,11 +159,11 @@ public class ReplaceStarNameActivity extends BaseBroadCastActivity implements Ta
 
     public void onFetchData() {
         mTaskCount = 2;
-        new StarNameGrpcDomainInfoTask(getBaseApplication(), this, baseChain, mStarNameDomain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new StarNameGrpcDomainInfoTask(getBaseApplication(), this, getBaseChain(), mStarNameDomain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         if (mIsDomain) {
-            new StarNameGrpcResolveTask(getBaseApplication(), this, baseChain, "", mStarNameDomain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new StarNameGrpcResolveTask(getBaseApplication(), this, getBaseChain(), "", mStarNameDomain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } else {
-            new StarNameGrpcResolveTask(getBaseApplication(), this, baseChain, mStarNameAccount, mStarNameDomain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            new StarNameGrpcResolveTask(getBaseApplication(), this, getBaseChain(), mStarNameAccount, mStarNameDomain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
 

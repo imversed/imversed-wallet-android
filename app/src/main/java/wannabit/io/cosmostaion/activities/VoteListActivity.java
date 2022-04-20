@@ -21,13 +21,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.res.ResProposal;
 import wannabit.io.cosmostaion.task.FetchTask.MintScanProposalListTask;
 import wannabit.io.cosmostaion.task.TaskListener;
@@ -60,9 +61,7 @@ public class VoteListActivity extends BaseActivity implements TaskListener {
         mEmptyProposal = findViewById(R.id.empty_proposal);
         mLoadingLayer = findViewById(R.id.loadingLayer);
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
-        mChain = WDp.getChainNameByBaseChain(baseChain);
+        mChain = WDp.getChainNameByBaseChain(getBaseChain());
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -81,8 +80,6 @@ public class VoteListActivity extends BaseActivity implements TaskListener {
     @Override
     protected void onResume() {
         super.onResume();
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
         onFetchProposals();
     }
 
@@ -98,7 +95,7 @@ public class VoteListActivity extends BaseActivity implements TaskListener {
     }
 
     private void onFetchProposals() {
-        if (account == null) return;
+        if (getAccount() == null) return;
         mApiProposalList.clear();
         new MintScanProposalListTask(getBaseApplication(), this, mChain).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
@@ -112,7 +109,7 @@ public class VoteListActivity extends BaseActivity implements TaskListener {
                 ArrayList<ResProposal> temp = (ArrayList<ResProposal>) result.resultData;
                 if (temp != null && temp.size() > 0) {
                     mApiProposalList = temp;
-                    onSortingProposal(mApiProposalList, baseChain);
+                    onSortingProposal(mApiProposalList, getBaseChain());
                     mGrpcProposalsAdapter.notifyDataSetChanged();
                     mRecyclerView.setVisibility(View.VISIBLE);
                 }
@@ -159,7 +156,7 @@ public class VoteListActivity extends BaseActivity implements TaskListener {
                 public void onClick(View v) {
                     if (proposal.proposal_status.contains("PASSED") ||
                             proposal.proposal_status.contains("REJECTED")) {
-                        String url = WUtil.getExplorer(baseChain) + "proposals/" + proposal.id;
+                        String url = WUtil.getExplorer(getBaseChain()) + "proposals/" + proposal.id;
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                         startActivity(intent);
                     } else {

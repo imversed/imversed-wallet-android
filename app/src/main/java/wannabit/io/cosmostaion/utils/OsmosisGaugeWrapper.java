@@ -1,7 +1,6 @@
 package wannabit.io.cosmostaion.utils;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import osmosis.incentives.GaugeOuterClass;

@@ -1,6 +1,5 @@
 package wannabit.io.cosmostaion.activities;
 
-import static com.fulldive.wallet.models.BaseChain.getChain;
 import static wannabit.io.cosmostaion.base.BaseConstant.ERROR_CODE_UNKNOWN;
 
 import android.content.Intent;
@@ -159,8 +158,6 @@ public class TxDetailgRPCActivity extends BaseActivity implements View.OnClickLi
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = getChain(account.baseChain);
         mIsGen = getIntent().getBooleanExtra("isGen", false);
         mIsSuccess = getIntent().getBooleanExtra("isSuccess", false);
         mErrorCode = getIntent().getIntExtra("errorCode", ERROR_CODE_UNKNOWN);
@@ -226,12 +223,12 @@ public class TxDetailgRPCActivity extends BaseActivity implements View.OnClickLi
         } else if (v.equals(mShareBtn)) {
             Intent shareIntent = new Intent();
             shareIntent.setAction(Intent.ACTION_SEND);
-            shareIntent.putExtra(Intent.EXTRA_TEXT, WUtil.getTxExplorer(baseChain, mResponse.getTxResponse().getTxhash()));
+            shareIntent.putExtra(Intent.EXTRA_TEXT, WUtil.getTxExplorer(getBaseChain(), mResponse.getTxResponse().getTxhash()));
             shareIntent.setType("text/plain");
             startActivity(Intent.createChooser(shareIntent, "send"));
 
         } else if (v.equals(mExplorerBtn)) {
-            String url = WUtil.getTxExplorer(baseChain, mResponse.getTxResponse().getTxhash());
+            String url = WUtil.getTxExplorer(getBaseChain(), mResponse.getTxResponse().getTxhash());
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
         }
@@ -589,11 +586,11 @@ public class TxDetailgRPCActivity extends BaseActivity implements View.OnClickLi
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             if (position == 0) {
                 final TxCommonHolder viewHolder = (TxCommonHolder) holder;
-                viewHolder.onBindCommon(TxDetailgRPCActivity.this, getBaseDao(), baseChain, mResponse, mIsGen);
+                viewHolder.onBindCommon(TxDetailgRPCActivity.this, getBaseDao(), getBaseChain(), mResponse, mIsGen);
 
             } else {
                 final TxHolder viewHolder = (TxHolder) holder;
-                viewHolder.onBindMsg(getBaseContext(), getBaseDao(), baseChain, mResponse, position - 1, account.address, mIsGen);
+                viewHolder.onBindMsg(getBaseContext(), getBaseDao(), getBaseChain(), mResponse, position - 1, getAccount().address, mIsGen);
             }
         }
 
@@ -794,7 +791,7 @@ public class TxDetailgRPCActivity extends BaseActivity implements View.OnClickLi
 
     private void onFetchTx(String hash) {
 //        WLog.w("onFetchTx " + hash);
-        ServiceGrpc.ServiceStub mStub = ServiceGrpc.newStub(ChannelBuilder.getChain(baseChain));
+        ServiceGrpc.ServiceStub mStub = ServiceGrpc.newStub(ChannelBuilder.getChain(getBaseChain()));
         ServiceOuterClass.GetTxRequest request = ServiceOuterClass.GetTxRequest.newBuilder().setHash(mTxHash).build();
         mStub.getTx(request, new StreamObserver<ServiceOuterClass.GetTxResponse>() {
             @Override

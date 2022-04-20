@@ -2,9 +2,9 @@ package com.fulldive.wallet.interactors
 
 import android.content.Context
 import com.fulldive.wallet.di.modules.DefaultInteractorsModule
+import com.fulldive.wallet.models.BaseChain
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Single
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.model.type.BnbHistory
 import wannabit.io.cosmostaion.network.ApiClient
 import wannabit.io.cosmostaion.network.res.ResApiNewTxListCustom

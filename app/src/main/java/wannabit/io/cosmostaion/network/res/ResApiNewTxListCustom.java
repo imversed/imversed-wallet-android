@@ -2,6 +2,7 @@ package wannabit.io.cosmostaion.network.res;
 
 import android.content.Context;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.google.gson.annotations.SerializedName;
 
 import org.json.JSONArray;
@@ -11,7 +12,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import wannabit.io.cosmostaion.R;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.utils.WLog;

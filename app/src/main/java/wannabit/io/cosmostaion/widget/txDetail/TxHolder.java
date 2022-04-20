@@ -6,8 +6,9 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import cosmos.tx.v1beta1.ServiceOuterClass;
 import com.fulldive.wallet.models.BaseChain;
+
+import cosmos.tx.v1beta1.ServiceOuterClass;
 import wannabit.io.cosmostaion.base.BaseData;
 
 public class TxHolder extends RecyclerView.ViewHolder {

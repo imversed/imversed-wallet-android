@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import cosmos.gov.v1beta1.Gov;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.network.res.ResMyProposal;
@@ -77,9 +76,7 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
         mVoteBtn.setOnClickListener(this);
 
         mProposalId = getIntent().getStringExtra("proposalId");
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
-        mChain = WDp.getChainNameByBaseChain(baseChain);
+        mChain = WDp.getChainNameByBaseChain(getBaseChain());
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -119,13 +116,13 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         if (v.equals(mVoteBtn)) {
-            if (!account.hasPrivateKey) {
+            if (!getAccount().hasPrivateKey) {
                 Dialog_WatchMode add = Dialog_WatchMode.newInstance();
                 showDialog(add);
                 return;
             }
-            BigDecimal mainDenomAvailable = getBaseDao().getAvailable(baseChain.getMainDenom());
-            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), baseChain, CONST_PW_TX_VOTE, 0);
+            BigDecimal mainDenomAvailable = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_VOTE, 0);
 
             if (!mApiProposal.proposal_status.contains("VOTING")) {
                 Toast.makeText(getBaseContext(), getString(R.string.error_not_voting_period), Toast.LENGTH_SHORT).show();
@@ -150,7 +147,7 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
 
     public void onFetch() {
         mTaskCount = 2;
-        new ProposalMyVoteGrpcTask(getBaseApplication(), this, baseChain, mProposalId, account.address).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new ProposalMyVoteGrpcTask(getBaseApplication(), this, getBaseChain(), mProposalId, getAccount().address).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         new MintScanProposalTask(getBaseApplication(), this, mChain, mProposalId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -159,7 +156,7 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
         mTaskCount--;
         if (result.taskType == TASK_GRPC_FETCH_PROPOSAL_MY_VOTE) {
             if (result.resultData != null) {
-                if (baseChain.equals(CERTIK_MAIN.INSTANCE)) {
+                if (getBaseChain().equals(CERTIK_MAIN.INSTANCE)) {
                     mResMyProposal = (ResMyProposal) result.resultData;
                 } else {
                     mMyVote_gRPC = (Gov.Vote) result.resultData;
@@ -239,11 +236,11 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
                     holder.itemFinishTime.setText(WDp.getTimeVoteformat(VoteDetailsActivity.this, mApiProposal.voting_end_time));
                 }
                 holder.itemMsg.setText(mApiProposal.description);
-                if (baseChain.isGRPC()) {
+                if (getBaseChain().isGRPC()) {
                     if (mApiProposal.content != null && mApiProposal.content.amount != null && mApiProposal.content.amount.size() != 0) {
                         holder.itemRequestLayer.setVisibility(View.VISIBLE);
                         ArrayList<Coin> requestCoin = mApiProposal.content.amount;
-                        WDp.showCoinDp(getBaseContext(), getBaseDao(), requestCoin.get(0), holder.itemRequestAmountDenom, holder.itemRequestAmount, baseChain);
+                        WDp.showCoinDp(getBaseContext(), getBaseDao(), requestCoin.get(0), holder.itemRequestAmountDenom, holder.itemRequestAmount, getBaseChain());
                     } else {
                         holder.itemRequestLayer.setVisibility(View.GONE);
                     }
@@ -251,7 +248,7 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
                     if (mApiProposal.content != null && mApiProposal.content.recipients != null && mApiProposal.content.recipients.get(0).amount != null) {
                         holder.itemRequestLayer.setVisibility(View.VISIBLE);
                         ArrayList<Coin> requestCoin = mApiProposal.content.recipients.get(0).amount;
-                        WDp.showCoinDp(getBaseContext(), getBaseDao(), requestCoin.get(0), holder.itemRequestAmountDenom, holder.itemRequestAmount, baseChain);
+                        WDp.showCoinDp(getBaseContext(), getBaseDao(), requestCoin.get(0), holder.itemRequestAmountDenom, holder.itemRequestAmount, getBaseChain());
                     } else {
                         holder.itemRequestLayer.setVisibility(View.GONE);
                     }
@@ -301,13 +298,13 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
                         mApiProposal.proposal_status.equalsIgnoreCase("VotingPeriod")) {
                     onDisplayVote(holder);
                     holder.itemTurnoutLayer.setVisibility(View.VISIBLE);
-                    holder.itemTurnout.setText(WDp.getDpString(WDp.getTurnout(baseChain, getBaseDao(), mApiProposal).setScale(2).toPlainString() + "%", 3));
-                    if (getBaseDao().mChainParam != null && getBaseDao().mChainParam.getQuorum(baseChain) != null) {
-                        holder.itemQuorum.setText(WDp.getPercentDp(getBaseDao().mChainParam.getQuorum(baseChain)));
+                    holder.itemTurnout.setText(WDp.getDpString(WDp.getTurnout(getBaseChain(), getBaseDao(), mApiProposal).setScale(2).toPlainString() + "%", 3));
+                    if (getBaseDao().mChainParam != null && getBaseDao().mChainParam.getQuorum(getBaseChain()) != null) {
+                        holder.itemQuorum.setText(WDp.getPercentDp(getBaseDao().mChainParam.getQuorum(getBaseChain())));
                     }
                 }
 
-                if (baseChain.equals(CERTIK_MAIN.INSTANCE) && mResMyProposal != null) {
+                if (getBaseChain().equals(CERTIK_MAIN.INSTANCE) && mResMyProposal != null) {
                     String voteOption = mResMyProposal.vote.options.get(0).option;
                     if (voteOption.equalsIgnoreCase("VOTE_OPTION_YES")) {
                         holder.itemYesDone.setVisibility(View.VISIBLE);
@@ -371,7 +368,7 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
         }
 
         private void onExplorerLink() {
-            String url = WUtil.getExplorer(baseChain) + "proposals/" + mProposalId;
+            String url = WUtil.getExplorer(getBaseChain()) + "proposals/" + mProposalId;
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
         }

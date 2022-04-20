@@ -27,7 +27,6 @@ import cosmos.distribution.v1beta1.Distribution;
 import cosmos.staking.v1beta1.Staking;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IBusyFetchListener;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
@@ -56,9 +55,6 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
-
         pageAdapter = new ValidatorPageAdapter(getSupportFragmentManager());
         validatorPager.setAdapter(pageAdapter);
         validatorTapLayer.setupWithViewPager(validatorPager);
@@ -67,23 +63,23 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
         View tab0 = LayoutInflater.from(this).inflate(R.layout.view_tab_myvalidator, null);
         TextView tabItemText0 = tab0.findViewById(R.id.tabItemText);
         tabItemText0.setText(R.string.str_my_validators);
-        tabItemText0.setTextColor(WDp.getTabColor(this, baseChain));
+        tabItemText0.setTextColor(WDp.getTabColor(this, getBaseChain()));
         validatorTapLayer.getTabAt(0).setCustomView(tab0);
 
         View tab1 = LayoutInflater.from(this).inflate(R.layout.view_tab_myvalidator, null);
         TextView tabItemText1 = tab1.findViewById(R.id.tabItemText);
-        tabItemText1.setTextColor(WDp.getTabColor(this, baseChain));
+        tabItemText1.setTextColor(WDp.getTabColor(this, getBaseChain()));
         tabItemText1.setText(R.string.str_top_100_validators);
         validatorTapLayer.getTabAt(1).setCustomView(tab1);
 
         View tab2 = LayoutInflater.from(this).inflate(R.layout.view_tab_myvalidator, null);
         TextView tabItemText2 = tab2.findViewById(R.id.tabItemText);
-        tabItemText2.setTextColor(WDp.getTabColor(this, baseChain));
+        tabItemText2.setTextColor(WDp.getTabColor(this, getBaseChain()));
         tabItemText2.setText(R.string.str_other_validators);
         validatorTapLayer.getTabAt(2).setCustomView(tab2);
 
-        validatorTapLayer.setTabIconTint(WDp.getChainTintColor(this, baseChain));
-        validatorTapLayer.setSelectedTabIndicatorColor(WDp.getChainColor(this, baseChain));
+        validatorTapLayer.setTabIconTint(WDp.getChainTintColor(this, getBaseChain()));
+        validatorTapLayer.setSelectedTabIndicatorColor(WDp.getChainColor(this, getBaseChain()));
 
         validatorPager.setOffscreenPageLimit(3);
         validatorPager.setCurrentItem(0, false);
@@ -137,15 +133,15 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
     }
 
     public void onStartDelegate() {
-        if (!account.hasPrivateKey) {
+        if (!getAccount().hasPrivateKey) {
             Dialog_WatchMode dialog = Dialog_WatchMode.newInstance();
             showDialog(dialog);
             return;
         }
-        if (baseChain.isGRPC()) {
+        if (getBaseChain().isGRPC()) {
             String cosmostation = "";
-            BigDecimal delegatableAmount = getBaseDao().getDelegatable(baseChain.getMainDenom());
-            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), baseChain, CONST_PW_TX_SIMPLE_DELEGATE, 0);
+            BigDecimal delegatableAmount = getBaseDao().getDelegatable(getBaseChain().getMainDenom());
+            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
             if (delegatableAmount.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_to_delegate, Toast.LENGTH_SHORT).show();
                 return;
@@ -162,8 +158,8 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
             }
         } else {
             Validator toValidator = null;
-            BigDecimal delegatableAmount = getBaseDao().delegatableAmount(baseChain.getMainDenom());
-            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), baseChain, CONST_PW_TX_SIMPLE_DELEGATE, 0);
+            BigDecimal delegatableAmount = getBaseDao().delegatableAmount(getBaseChain().getMainDenom());
+            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
             if (delegatableAmount.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_to_delegate, Toast.LENGTH_SHORT).show();
                 return;
@@ -182,13 +178,13 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
     }
 
     public void onStartRewardAll() {
-        if (!account.hasPrivateKey) {
+        if (!getAccount().hasPrivateKey) {
             Dialog_WatchMode add = Dialog_WatchMode.newInstance();
             showDialog(add);
             return;
         }
 
-        if (baseChain.isGRPC()) {
+        if (getBaseChain().isGRPC()) {
             ArrayList<String> toClaimValaddr = new ArrayList<>();
             ArrayList<Distribution.DelegationDelegatorReward> toClaimRewards = new ArrayList<>();
             if (getBaseDao().mGrpcRewards == null) {
@@ -196,9 +192,9 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
                 return;
             }
 
-            BigDecimal singlefeeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), baseChain, CONST_PW_TX_SIMPLE_REWARD, 1);
+            BigDecimal singlefeeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_REWARD, 1);
             for (Distribution.DelegationDelegatorReward reward : getBaseDao().mGrpcRewards) {
-                if (getBaseDao().getReward(baseChain.getMainDenom(), reward.getValidatorAddress()).compareTo(singlefeeAmount) > 0) {
+                if (getBaseDao().getReward(getBaseChain().getMainDenom(), reward.getValidatorAddress()).compareTo(singlefeeAmount) > 0) {
                     toClaimRewards.add(reward);
                 }
             }
@@ -206,15 +202,15 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_reward, Toast.LENGTH_SHORT).show();
                 return;
             }
-            WUtil.onSortRewardAmount(toClaimRewards, baseChain.getMainDenom());
+            WUtil.onSortRewardAmount(toClaimRewards, getBaseChain().getMainDenom());
             if (toClaimRewards.size() >= 17) {
                 ArrayList<Distribution.DelegationDelegatorReward> temp = new ArrayList(toClaimRewards.subList(0, 16));
                 toClaimRewards = temp;
                 Toast.makeText(getBaseContext(), R.string.str_multi_reward_max_16, Toast.LENGTH_SHORT).show();
             }
 
-            BigDecimal available = getBaseDao().getAvailable(baseChain.getMainDenom());
-            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), baseChain, CONST_PW_TX_SIMPLE_REWARD, toClaimRewards.size());
+            BigDecimal available = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_REWARD, toClaimRewards.size());
             if (available.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return;
@@ -229,14 +225,14 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
 
         } else {
             ArrayList<Validator> toClaimValidators = new ArrayList<>();
-            if (getBaseDao().rewardAmount(baseChain.getMainDenom()).compareTo(BigDecimal.ZERO) <= 0) {
+            if (getBaseDao().rewardAmount(getBaseChain().getMainDenom()).compareTo(BigDecimal.ZERO) <= 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_reward, Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            BigDecimal singlefeeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), baseChain, CONST_PW_TX_SIMPLE_REWARD, 1);
+            BigDecimal singlefeeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_REWARD, 1);
             for (Validator validator : getBaseDao().mAllValidators) {
-                if (getBaseDao().rewardAmountByValidator(baseChain.getMainDenom(), validator.operator_address).compareTo(singlefeeAmount) > 0) {
+                if (getBaseDao().rewardAmountByValidator(getBaseChain().getMainDenom(), validator.operator_address).compareTo(singlefeeAmount) > 0) {
                     toClaimValidators.add(validator);
                 }
             }
@@ -246,14 +242,14 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
                 return;
             }
 
-            toClaimValidators = new ArrayList<>(WUtil.onSortByOnlyReward(toClaimValidators, baseChain.getMainDenom(), getBaseDao()));
+            toClaimValidators = new ArrayList<>(WUtil.onSortByOnlyReward(toClaimValidators, getBaseChain().getMainDenom(), getBaseDao()));
             if (toClaimValidators.size() >= 17) {
                 toClaimValidators = new ArrayList<>(getBaseDao().getMyValidators().subList(0, 16));
                 Toast.makeText(getBaseContext(), R.string.str_multi_reward_max_16, Toast.LENGTH_SHORT).show();
             }
 
-            BigDecimal available = account.getTokenBalance(baseChain.getMainDenom());
-            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), baseChain, CONST_PW_TX_SIMPLE_REWARD, toClaimValidators.size());
+            BigDecimal available = getAccount().getTokenBalance(getBaseChain().getMainDenom());
+            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_REWARD, toClaimValidators.size());
 
             if (available.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();

@@ -4,6 +4,7 @@ import static com.fulldive.wallet.models.BaseChain.CRYPTO_MAIN;
 import static com.fulldive.wallet.models.BaseChain.IRIS_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_NFTOKEN_LIST;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.google.protobuf.ByteString;
 
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ import irismod.nft.Nft;
 import irismod.nft.QueryGrpc;
 import irismod.nft.QueryOuterClass;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.task.CommonTask;

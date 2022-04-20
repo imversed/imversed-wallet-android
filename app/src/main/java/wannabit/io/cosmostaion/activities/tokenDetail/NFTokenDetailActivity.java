@@ -32,7 +32,6 @@ import irismod.nft.QueryOuterClass;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.nft.NFTSendActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.tokenDetail.TokenDetailSupportHolder;
@@ -73,12 +72,10 @@ public class NFTokenDetailActivity extends BaseActivity implements View.OnClickL
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
         //TODO: Support Imversed nft
-        if (baseChain.equals(IRIS_MAIN.INSTANCE)) {
+        if (getBaseChain().equals(IRIS_MAIN.INSTANCE)) {
             mIrisResponse = (QueryOuterClass.QueryNFTResponse) getIntent().getSerializableExtra("irisResponse");
-        } else if (baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
+        } else if (getBaseChain().equals(CRYPTO_MAIN.INSTANCE)) {
             myCryptoNftInfo = (chainmain.nft.v1.Nft.BaseNFT) getIntent().getSerializableExtra("myNftInfo");
         }
         mDenomId = getIntent().getStringExtra("mDenomId");
@@ -108,10 +105,10 @@ public class NFTokenDetailActivity extends BaseActivity implements View.OnClickL
 
     private void onUpdateView() {
         try {
-            if (baseChain.equals(IRIS_MAIN.INSTANCE)) {
+            if (getBaseChain().equals(IRIS_MAIN.INSTANCE)) {
                 Glide.with(this).load(mIrisResponse.getNft().getUri()).diskCacheStrategy(DiskCacheStrategy.ALL).
                         placeholder(R.drawable.icon_nft_none).error(R.drawable.icon_nft_none).fitCenter().into(mNftImg);
-            } else if (baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
+            } else if (getBaseChain().equals(CRYPTO_MAIN.INSTANCE)) {
                 Glide.with(this).load(WUtil.getNftImgUrl(myCryptoNftInfo.getData())).diskCacheStrategy(DiskCacheStrategy.ALL).
                         placeholder(R.drawable.icon_nft_none).error(R.drawable.icon_nft_none).fitCenter().into(mNftImg);
             }
@@ -123,16 +120,16 @@ public class NFTokenDetailActivity extends BaseActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         if (v.equals(mNftImg)) {
-            if (baseChain.equals(IRIS_MAIN.INSTANCE)) {
+            if (getBaseChain().equals(IRIS_MAIN.INSTANCE)) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(mIrisResponse.getNft().getUri()));
                 startActivity(intent);
-            } else if (baseChain.equals(CRYPTO_MAIN.INSTANCE)) {
+            } else if (getBaseChain().equals(CRYPTO_MAIN.INSTANCE)) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(WUtil.getNftImgUrl(myCryptoNftInfo.getData())));
                 startActivity(intent);
             }
 
         } else if (v.equals(mBtnIbcSend)) {
-            if (!account.hasPrivateKey) {
+            if (!getAccount().hasPrivateKey) {
                 Dialog_WatchMode add = Dialog_WatchMode.newInstance();
                 showDialog(add);
                 return;
@@ -142,15 +139,15 @@ public class NFTokenDetailActivity extends BaseActivity implements View.OnClickL
             }
 
         } else if (v.equals(mBtnSend)) {
-            if (!account.hasPrivateKey) {
+            if (!getAccount().hasPrivateKey) {
                 Dialog_WatchMode add = Dialog_WatchMode.newInstance();
                 showDialog(add);
                 return;
 
             } else {
                 Intent intent = new Intent(getBaseContext(), NFTSendActivity.class);
-                BigDecimal mainAvailable = getBaseDao().getAvailable(baseChain.getMainDenom());
-                BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), baseChain, CONST_PW_TX_SEND_NFT, 0);
+                BigDecimal mainAvailable = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+                BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SEND_NFT, 0);
                 if (mainAvailable.compareTo(feeAmount) < 0) {
                     Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                     return;
@@ -182,10 +179,10 @@ public class NFTokenDetailActivity extends BaseActivity implements View.OnClickL
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
             if (getItemViewType(position) == TYPE_INFO) {
                 TokenDetailSupportHolder holder = (TokenDetailSupportHolder) viewHolder;
-                holder.onBindNftInfo(NFTokenDetailActivity.this, baseChain, mIrisResponse, myCryptoNftInfo, mDenomId, mTokenId);
+                holder.onBindNftInfo(NFTokenDetailActivity.this, getBaseChain(), mIrisResponse, myCryptoNftInfo, mDenomId, mTokenId);
             } else if (getItemViewType(position) == TYPE_RAW) {
                 TokenDetailSupportHolder holder = (TokenDetailSupportHolder) viewHolder;
-                holder.onBindNftRawData(NFTokenDetailActivity.this, baseChain, mIrisResponse, myCryptoNftInfo);
+                holder.onBindNftRawData(NFTokenDetailActivity.this, getBaseChain(), mIrisResponse, myCryptoNftInfo);
             }
         }
 

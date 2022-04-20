@@ -5,9 +5,9 @@ import static wannabit.io.cosmostaion.base.BaseConstant.CHAIN_IMG_URL;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-
 import com.fulldive.wallet.models.BaseChain;
+
+import java.util.ArrayList;
 
 public class StarnameAssets implements Parcelable {
     public String name;

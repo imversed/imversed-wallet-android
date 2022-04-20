@@ -56,7 +56,7 @@ class ClipboardInteractor @Inject constructor(
     }
 
     fun getSafeClip(): Single<String> {
-        return if(baseData.mCopySalt != null && baseData.mCopyEncResult != null){
+        return if (baseData.mCopySalt != null && baseData.mCopyEncResult != null) {
             secretInteractor
                 .encrypt(
                     baseData.mCopySalt,

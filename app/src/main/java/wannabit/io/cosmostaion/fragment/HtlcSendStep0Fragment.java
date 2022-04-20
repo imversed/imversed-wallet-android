@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
@@ -36,7 +37,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.HtlcSendActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.dialog.Dialog_Htlc_Receive_Chain;
 import wannabit.io.cosmostaion.dialog.Dialog_Htlc_Send_Coin;
@@ -119,13 +119,13 @@ public class HtlcSendStep0Fragment extends BaseFragment implements View.OnClickL
         mBtnToChain.setOnClickListener(this);
         mBtnToSendCoin.setOnClickListener(this);
 
-        mToChainList = BaseChain.Companion.getHtlcSendable(getSActivity().baseChain);
+        mToChainList = BaseChain.Companion.getHtlcSendable(getSActivity().getBaseChain());
         if (mToChainList.size() <= 0) {
             getSActivity().onBeforeStep();
         }
         mToChain = mToChainList.get(0);
 
-        mSwappableCoinList = BaseChain.Companion.getHtlcSwappableCoin(getSActivity().baseChain);
+        mSwappableCoinList = BaseChain.Companion.getHtlcSwappableCoin(getSActivity().getBaseChain());
         if (mSwappableCoinList.size() <= 0) {
             getSActivity().onBeforeStep();
         }
@@ -140,11 +140,11 @@ public class HtlcSendStep0Fragment extends BaseFragment implements View.OnClickL
         if (mToChain == null) {
             getSActivity().onBeforeStep();
         }
-        WDp.onDpSwapChain(getContext(), getSActivity().baseChain, mFromChainImg, mFromChainTv);
+        WDp.onDpSwapChain(getContext(), getSActivity().getBaseChain(), mFromChainImg, mFromChainTv);
         WDp.onDpSwapChain(getContext(), mToChain, mToChainImg, mToChainTv);
         mToSendCoindenom.setText("(" + mToSwapDenom + ")");
 
-        if (getSActivity().baseChain.equals(BaseChain.BNB_MAIN.INSTANCE) && (mKavaBep3Param2 != null && mKavaSuppies2 != null)) {
+        if (getSActivity().getBaseChain().equals(BaseChain.BNB_MAIN.INSTANCE) && (mKavaBep3Param2 != null && mKavaSuppies2 != null)) {
             mCapLayer.setVisibility(View.VISIBLE);
             if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_BNB)) {
                 mToSendCoinImg.setImageDrawable(getResources().getDrawable(R.drawable.bnb_token_img));
@@ -171,13 +171,13 @@ public class HtlcSendStep0Fragment extends BaseFragment implements View.OnClickL
                 }
 
             }
-            available_amount = getSActivity().account.getTokenBalance(mToSwapDenom);
+            available_amount = getSActivity().getAccount().getTokenBalance(mToSwapDenom);
             supply_limit = mKavaBep3Param2.getSupportedSwapAssetLimit(mToSwapDenom);
             supply_remain = mKavaSuppies2.getRemainCap(mToSwapDenom, supply_limit);
             onetime_max = mKavaBep3Param2.getSupportedSwapAssetMaxOnce(mToSwapDenom);
             mToSendCoinAvailable.setText(WDp.getDpAmount2(available_amount, 0, 8));
 
-        } else if (getSActivity().baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE) && (mKavaBep3Param2 != null && mKavaSuppies2 != null)) {
+        } else if (getSActivity().getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE) && (mKavaBep3Param2 != null && mKavaSuppies2 != null)) {
             mCapLayer.setVisibility(View.GONE);
             if (mToSwapDenom.equals(TOKEN_HTLC_KAVA_BNB)) {
                 mToSendCoinImg.setImageDrawable(getResources().getDrawable(R.drawable.bnb_on_kava));
@@ -231,14 +231,14 @@ public class HtlcSendStep0Fragment extends BaseFragment implements View.OnClickL
     public void onClick(View v) {
         if (v.equals(mBtnToChain)) {
             Bundle bundle = new Bundle();
-            bundle.putString("chainName", getSActivity().baseChain.getChainName());
+            bundle.putString("chainName", getSActivity().getBaseChain().getChainName());
             Dialog_Htlc_Receive_Chain dialog = Dialog_Htlc_Receive_Chain.newInstance(bundle);
             dialog.setTargetFragment(this, SELECT_DESTINATION_CHAIN);
             showDialog(dialog);
 
         } else if (v.equals(mBtnToSendCoin)) {
             Bundle bundle = new Bundle();
-            bundle.putString("chainName", getSActivity().baseChain.getChainName());
+            bundle.putString("chainName", getSActivity().getBaseChain().getChainName());
             Dialog_Htlc_Send_Coin dialog = Dialog_Htlc_Send_Coin.newInstance(bundle);
             dialog.setTargetFragment(this, SELECT_TO_SEND_COIN);
             showDialog(dialog);
@@ -277,7 +277,7 @@ public class HtlcSendStep0Fragment extends BaseFragment implements View.OnClickL
     }
 
     private void onCheckSwapParam() {
-        if (getSActivity().baseChain.equals(BaseChain.BNB_MAIN.INSTANCE) || getSActivity().baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
+        if (getSActivity().getBaseChain().equals(BaseChain.BNB_MAIN.INSTANCE) || getSActivity().getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             ApiClient.getKavaChain(getContext()).getSwapParams2().enqueue(new Callback<ResKavaBep3Param>() {
                 @Override
                 public void onResponse(Call<ResKavaBep3Param> call, Response<ResKavaBep3Param> response) {
@@ -300,7 +300,7 @@ public class HtlcSendStep0Fragment extends BaseFragment implements View.OnClickL
     }
 
     private void onCheckSwapSupply() {
-        if (getSActivity().baseChain.equals(BaseChain.BNB_MAIN.INSTANCE) || getSActivity().baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
+        if (getSActivity().getBaseChain().equals(BaseChain.BNB_MAIN.INSTANCE) || getSActivity().getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             ApiClient.getKavaChain(getContext()).getSupplies2().enqueue(new Callback<ResKavaSwapSupply>() {
                 @Override
                 public void onResponse(Call<ResKavaSwapSupply> call, Response<ResKavaSwapSupply> response) {
@@ -322,10 +322,10 @@ public class HtlcSendStep0Fragment extends BaseFragment implements View.OnClickL
     }
 
     private boolean onCheckMinBalance() {
-        if (getSActivity().baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
+        if (getSActivity().getBaseChain().equals(BaseChain.BNB_MAIN.INSTANCE)) {
             return available_amount.compareTo(mKavaBep3Param2.getSupportedSwapAssetMin(mToSwapDenom).movePointLeft(8)) > 0;
 
-        } else if (getSActivity().baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
+        } else if (getSActivity().getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             return available_amount.compareTo(mKavaBep3Param2.getSupportedSwapAssetMin(mToSwapDenom)) > 0;
         }
         return false;

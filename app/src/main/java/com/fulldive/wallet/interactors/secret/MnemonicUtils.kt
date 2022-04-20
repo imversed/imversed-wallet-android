@@ -2,13 +2,13 @@ package com.fulldive.wallet.interactors.secret
 
 import com.fulldive.wallet.extensions.getPath
 import com.fulldive.wallet.extensions.safe
+import com.fulldive.wallet.models.BaseChain
 import org.bitcoinj.core.Bech32
 import org.bitcoinj.core.ECKey
 import org.bitcoinj.crypto.*
 import org.bouncycastle.crypto.digests.RIPEMD160Digest
 import org.bouncycastle.util.encoders.Hex
 import org.web3j.crypto.Keys
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.crypto.Sha256
 import java.io.ByteArrayOutputStream
 import java.math.BigInteger
@@ -41,6 +41,30 @@ object MnemonicUtils {
             }
             else -> {
                 getDpAddress(chain.chainAddressPrefix, childKey.publicKeyAsHex)
+            }
+        }
+    }
+
+    @Throws(Exception::class)
+    fun createAddress(
+        chain: BaseChain,
+        privateKey: String,
+        customPath: Int = 0
+    ): String {
+        return when (chain) {
+            BaseChain.OKEX_MAIN -> {
+                when (customPath) {
+                    0 -> generateTenderAddressFromPrivateKey(privateKey)
+                    1, 2 -> generateEthAddressFromPrivateKey(privateKey)
+                    else -> throw IllegalStateException("custom path $customPath for OKEX")
+                }
+            }
+            BaseChain.EVMOS_MAIN,
+            BaseChain.INJ_MAIN -> {
+                generateAddressFromPrivateKey(chain.chainAddressPrefix, privateKey)
+            }
+            else -> {
+                getDpAddress(chain.chainAddressPrefix, hexPublicKeyFromPrivateKey(privateKey))
             }
         }
     }

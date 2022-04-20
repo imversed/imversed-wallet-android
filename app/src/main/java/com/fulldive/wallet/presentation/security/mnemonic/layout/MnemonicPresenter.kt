@@ -1,9 +1,9 @@
 package com.fulldive.wallet.presentation.security.mnemonic.layout
 
 import com.fulldive.wallet.di.modules.DefaultPresentersModule
+import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
 import com.joom.lightsaber.ProvidedBy
-import com.fulldive.wallet.models.BaseChain
 import javax.inject.Inject
 
 @ProvidedBy(DefaultPresentersModule::class)

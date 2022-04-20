@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fulldive.wallet.extensions.ActivityExtensionsKt;
+import com.fulldive.wallet.models.BaseChain;
 
 import java.util.ArrayList;
 
@@ -24,7 +25,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseBroadCastActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
@@ -71,9 +71,6 @@ public class HtlcRefundActivity extends BaseBroadCastActivity {
 
         mIvStep.setImageResource(R.drawable.step_4_img_1);
         mTvStep.setText(R.string.str_htlc_refund_step_0);
-
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
         mTxType = CONST_PW_TX_HTLS_REFUND;
 
         mPageAdapter = new HtlcRefundPageAdapter(getSupportFragmentManager());
@@ -209,7 +206,7 @@ public class HtlcRefundActivity extends BaseBroadCastActivity {
 
 
     private void onFetchHtlcStatus(String swapId) {
-        if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
+        if (getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             ApiClient.getKavaChain(getBaseContext()).getSwapById(swapId).enqueue(new Callback<ResKavaSwapInfo>() {
                 @Override
                 public void onResponse(Call<ResKavaSwapInfo> call, Response<ResKavaSwapInfo> response) {
@@ -229,7 +226,7 @@ public class HtlcRefundActivity extends BaseBroadCastActivity {
                 }
             });
 
-        } else if (baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
+        } else if (getBaseChain().equals(BaseChain.BNB_MAIN.INSTANCE)) {
             ApiClient.getBnbChain(getBaseContext()).getSwapById(swapId).enqueue(new Callback<ResBnbSwapInfo>() {
                 @Override
                 public void onResponse(Call<ResBnbSwapInfo> call, Response<ResBnbSwapInfo> response) {

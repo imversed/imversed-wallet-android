@@ -53,7 +53,7 @@ public class BaseApplication extends Application implements IInjectorHolder {
         if (!isReturnedForeground() ||
                 !baseData.hasPassword() ||
                 !baseData.getUsingAppLock() ||
-                (baseData.onSelectAccounts().size() <= 0)) return false;
+                (baseData.getAccounts().size() <= 0)) return false;
 
         switch (baseData.getAppLockTriggerTime()) {
             case 0:

@@ -1,20 +1,24 @@
 package com.fulldive.wallet.interactors.accounts
 
 import com.fulldive.wallet.di.modules.DefaultLocalStorageModule
+import com.fulldive.wallet.extensions.or
 import com.fulldive.wallet.extensions.safeCompletable
 import com.fulldive.wallet.extensions.safeSingle
+import com.fulldive.wallet.models.BaseChain
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.base.BaseData
 import wannabit.io.cosmostaion.dao.Account
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 @ProvidedBy(DefaultLocalStorageModule::class)
 class AccountsLocalStorage @Inject constructor(
     private val baseData: BaseData
 ) {
+    private var currentAccount: Account? = null
 
     fun getAccount(accountId: Long): Single<Account> {
         return safeSingle {
@@ -40,13 +44,13 @@ class AccountsLocalStorage @Inject constructor(
 
     fun getAccounts(): Single<List<Account>> {
         return safeSingle {
-            baseData.onSelectAccounts()
+            baseData.accounts
         }
     }
 
-    fun getSelectedAccount(): Single<Long> {
+    fun getSelectedAccount(): Single<Account> {
         return safeSingle {
-            baseData.lastUserId
+            getCurrentAccount()
         }
     }
 
@@ -58,6 +62,7 @@ class AccountsLocalStorage @Inject constructor(
 
     fun selectAccount(id: Long): Completable {
         return safeCompletable {
+            currentAccount = baseData.getAccount("$id")
             baseData.setLastUser(id)
         }
     }
@@ -93,12 +98,6 @@ class AccountsLocalStorage @Inject constructor(
         }
     }
 
-    fun selectChain(chain: String): Completable {
-        return safeCompletable {
-            baseData.setLastChain(chain)
-        }
-    }
-
     fun getHiddenChains(): Single<List<BaseChain>> {
         return safeSingle {
             baseData.userHideChains()
@@ -109,5 +108,16 @@ class AccountsLocalStorage @Inject constructor(
         return safeCompletable {
             baseData.setUserHidenChains(items)
         }
+    }
+
+    fun getCurrentAccount(): Account {
+        return currentAccount
+            .or {
+                baseData
+                    .getAccount("${baseData.lastUserId}")
+                    .also {
+                        currentAccount = it
+                    }
+            }
     }
 }

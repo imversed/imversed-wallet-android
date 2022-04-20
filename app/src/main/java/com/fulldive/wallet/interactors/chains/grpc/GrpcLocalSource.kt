@@ -4,6 +4,7 @@ import com.fulldive.wallet.di.modules.DefaultLocalStorageModule
 import com.fulldive.wallet.extensions.completeCallable
 import com.fulldive.wallet.extensions.safeCompletable
 import com.fulldive.wallet.extensions.singleCallable
+import com.fulldive.wallet.models.BaseChain
 import com.google.protobuf2.Any
 import com.joom.lightsaber.ProvidedBy
 import cosmos.distribution.v1beta1.Distribution
@@ -13,7 +14,6 @@ import io.reactivex.Single
 import osmosis.gamm.poolmodels.balancer.BalancerPool
 import tendermint.liquidity.v1beta1.Liquidity
 import tendermint.p2p.Types
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.base.BaseData
 import wannabit.io.cosmostaion.dao.Assets
 import wannabit.io.cosmostaion.dao.Balance

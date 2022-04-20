@@ -28,7 +28,6 @@ import java.math.BigDecimal;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.contract.SendContractActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dao.Cw20Assets;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.utils.WDp;
@@ -84,8 +83,6 @@ public class ContractTokenGrpcActivity extends BaseActivity implements View.OnCl
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
         mCw20Asset = getIntent().getParcelableExtra("cw20Asset");
         mBtnIbcSend.setVisibility(View.VISIBLE);
 
@@ -120,7 +117,7 @@ public class ContractTokenGrpcActivity extends BaseActivity implements View.OnCl
     }
 
     private void onUpdateView() {
-        mBtnAddressPopup.setCardBackgroundColor(WDp.getChainBgColor(ContractTokenGrpcActivity.this, baseChain));
+        mBtnAddressPopup.setCardBackgroundColor(WDp.getChainBgColor(ContractTokenGrpcActivity.this, getBaseChain()));
         if (mCw20Asset != null) {
             Picasso.get().load(mCw20Asset.logo).fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(mToolbarSymbolImg);
             mToolbarSymbol.setText(mCw20Asset.denom.toUpperCase());
@@ -140,10 +137,10 @@ public class ContractTokenGrpcActivity extends BaseActivity implements View.OnCl
                 mItemUpDownImg.setVisibility(View.INVISIBLE);
             }
 
-            mAddress.setText(account.address);
+            mAddress.setText(getAccount().address);
             mKeyState.setColorFilter(ContextCompat.getColor(getBaseContext(), R.color.colorGray0), android.graphics.PorterDuff.Mode.SRC_IN);
-            if (account.hasPrivateKey) {
-                mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), baseChain), android.graphics.PorterDuff.Mode.SRC_IN);
+            if (getAccount().hasPrivateKey) {
+                mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), getBaseChain()), android.graphics.PorterDuff.Mode.SRC_IN);
             }
             mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), mCw20Asset.denom, mTotalAmount, mCw20Asset.decimal));
             mSwipeRefreshLayout.setRefreshing(false);
@@ -155,8 +152,8 @@ public class ContractTokenGrpcActivity extends BaseActivity implements View.OnCl
     public void onClick(View v) {
         if (v.equals(mBtnAddressPopup)) {
             AccountShowDialogFragment show = AccountShowDialogFragment.Companion.newInstance(
-                    account.getAccountTitle(this),
-                    account.address
+                    getAccount().getAccountTitle(this),
+                    getAccount().address
             );
             showDialog(show);
 
@@ -165,14 +162,14 @@ public class ContractTokenGrpcActivity extends BaseActivity implements View.OnCl
             return;
 
         } else if (v.equals(mBtnSend)) {
-            if (!account.hasPrivateKey) {
+            if (!getAccount().hasPrivateKey) {
                 Dialog_WatchMode add = Dialog_WatchMode.newInstance();
                 showDialog(add);
                 return;
             }
             Intent intent = new Intent(getBaseContext(), SendContractActivity.class);
-            BigDecimal mainAvailable = getBaseDao().getAvailable(baseChain.getMainDenom());
-            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), baseChain, CONST_PW_TX_EXECUTE_CONTRACT, 0);
+            BigDecimal mainAvailable = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_EXECUTE_CONTRACT, 0);
             if (mainAvailable.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return;
@@ -203,7 +200,7 @@ public class ContractTokenGrpcActivity extends BaseActivity implements View.OnCl
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
             if (getItemViewType(position) == TYPE_CW20) {
                 TokenDetailSupportHolder holder = (TokenDetailSupportHolder) viewHolder;
-                holder.onBindCw20Token(ContractTokenGrpcActivity.this, baseChain, getBaseDao(), mCw20Asset);
+                holder.onBindCw20Token(ContractTokenGrpcActivity.this, getBaseChain(), getBaseDao(), mCw20Asset);
             }
         }
 

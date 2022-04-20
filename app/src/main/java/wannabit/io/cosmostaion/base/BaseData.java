@@ -1,7 +1,6 @@
 package wannabit.io.cosmostaion.base;
 
 import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
-import static com.fulldive.wallet.models.BaseChain.COSMOS_MAIN;
 import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
 import static com.fulldive.wallet.models.BaseChain.LUM_MAIN;
 import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
@@ -9,7 +8,7 @@ import static com.fulldive.wallet.models.BaseChain.SECRET_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.FEE_BNB_SEND;
 import static wannabit.io.cosmostaion.base.BaseConstant.IOV_MSG_TYPE_RENEW_ACCOUNT;
 import static wannabit.io.cosmostaion.base.BaseConstant.IOV_MSG_TYPE_RENEW_DOMAIN;
-import static wannabit.io.cosmostaion.base.BaseConstant.PRE_USER_EXPENDED_CHAINS;
+import static wannabit.io.cosmostaion.base.BaseConstant.PRE_USER_EXPANDED_CHAINS;
 import static wannabit.io.cosmostaion.base.BaseConstant.PRE_USER_HIDEN_CHAINS;
 import static wannabit.io.cosmostaion.base.BaseConstant.PRE_USER_SORTED_CHAINS;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_OK;
@@ -887,23 +886,6 @@ public class BaseData {
         return getSharedPreferences().getLong(BaseConstant.PRE_USER_ID, -1);
     }
 
-    public String getLastUser() {
-        return String.valueOf(getLastUserId());
-    }
-
-    public BaseChain getLastChain() {
-        String chainName = getSharedPreferences().getString(BaseConstant.PRE_SELECTED_CHAINS, COSMOS_MAIN.INSTANCE.getChainName());
-        if (userSortedChains().contains(BaseChain.getChain(chainName))) {
-            return BaseChain.getChain(chainName);
-        } else {
-            return COSMOS_MAIN.INSTANCE;
-        }
-    }
-
-    public void setLastChain(String chainName) {
-        getSharedPreferences().edit().putString(BaseConstant.PRE_SELECTED_CHAINS, chainName).commit();
-    }
-
     public int getCurrency() {
         return getSharedPreferences().getInt(BaseConstant.PRE_CURRENCY, 0);
     }
@@ -1172,20 +1154,20 @@ public class BaseData {
         return result;
     }
 
-    public void setExpendedChains(ArrayList<BaseChain> chains) {
+    public void setExpandedChains(ArrayList<BaseChain> chains) {
         JSONArray array = new JSONArray();
         for (BaseChain baseChain : chains) {
             array.put(baseChain.getChainName());
         }
         if (!chains.isEmpty()) {
-            getSharedPreferences().edit().putString(PRE_USER_EXPENDED_CHAINS, array.toString()).commit();
+            getSharedPreferences().edit().putString(PRE_USER_EXPANDED_CHAINS, array.toString()).commit();
         } else {
-            getSharedPreferences().edit().putString(PRE_USER_EXPENDED_CHAINS, null).commit();
+            getSharedPreferences().edit().putString(PRE_USER_EXPANDED_CHAINS, null).commit();
         }
     }
 
-    public ArrayList<BaseChain> getExpendedChains() {
-        String json = getSharedPreferences().getString(PRE_USER_EXPENDED_CHAINS, null);
+    public ArrayList<BaseChain> getExpandedChains() {
+        String json = getSharedPreferences().getString(PRE_USER_EXPANDED_CHAINS, null);
         ArrayList<BaseChain> chains = new ArrayList<>();
         if (json != null) {
             try {
@@ -1235,7 +1217,7 @@ public class BaseData {
     }
 
 
-    public ArrayList<Account> onSelectAccounts() {
+    public ArrayList<Account> getAccounts() {
         ArrayList<Account> result = new ArrayList<>();
         Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_ACCOUNT, new String[]{"id", "uuid", "nickName", "isFavo", "address", "baseChain",
                 "hasPrivateKey", "resource", "spec", "fromMnemonic", "path",
@@ -1283,7 +1265,7 @@ public class BaseData {
 
     public List<Account> getAccountsByChain(BaseChain chain) {
         ArrayList<Account> result = new ArrayList<>();
-        ArrayList<Account> accounts = onSelectAccounts();
+        ArrayList<Account> accounts = getAccounts();
         for (Account account : accounts) {
             if (chain.hasChainName(account.baseChain)) {
                 result.add(account);
@@ -1294,7 +1276,7 @@ public class BaseData {
 
     public ArrayList<Account> onSelectAllAccountsByChainWithKey(BaseChain chain) {
         ArrayList<Account> result = new ArrayList<>();
-        ArrayList<Account> AllAccount = onSelectAccounts();
+        ArrayList<Account> AllAccount = getAccounts();
         for (Account account : AllAccount) {
             if (BaseChain.getChain(account.baseChain).equals(chain) && account.hasPrivateKey) {
                 result.add(account);
@@ -1305,7 +1287,7 @@ public class BaseData {
 
     public ArrayList<Account> onSelectAccountsByHtlcClaim(BaseChain chain) {
         ArrayList<Account> result = new ArrayList<>();
-        ArrayList<Account> AllAccount = onSelectAccounts();
+        ArrayList<Account> AllAccount = getAccounts();
         for (Account account : AllAccount) {
             if (BaseChain.getChain(account.baseChain).equals(chain) && account.hasPrivateKey) {
                 if (chain.equals(BNB_MAIN.INSTANCE)) {
@@ -1356,7 +1338,7 @@ public class BaseData {
         }
         cursor.close();
         if (!BaseChain.Companion.isSupported(result.baseChain)) {
-            return onSelectAccounts().get(0);
+            return getAccounts().get(0);
         }
         return result;
     }

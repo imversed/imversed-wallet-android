@@ -1,10 +1,10 @@
 package com.fulldive.wallet.interactors.accounts
 
 import com.fulldive.wallet.di.modules.DefaultRepositoryModule
+import com.fulldive.wallet.models.BaseChain
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dao.Account
 import javax.inject.Inject
 
@@ -27,7 +27,10 @@ class AccountsRepository @Inject constructor(
 
     fun getSelectedAccount(): Single<Account> {
         return accountsLocalStorage.getSelectedAccount()
-            .flatMap(::getAccount)
+    }
+
+    fun getCurrentAccount(): Account {
+        return accountsLocalStorage.getCurrentAccount()
     }
 
     fun getAccountsByAddress(address: String): Single<List<Account>> {
@@ -64,10 +67,6 @@ class AccountsRepository @Inject constructor(
 
     fun checkExistsPassword(): Single<Boolean> {
         return accountsLocalStorage.checkExistsPassword()
-    }
-
-    fun selectChain(chain: String): Completable {
-        return accountsLocalStorage.selectChain(chain)
     }
 
     fun setHiddenChains(items: List<BaseChain>): Completable {

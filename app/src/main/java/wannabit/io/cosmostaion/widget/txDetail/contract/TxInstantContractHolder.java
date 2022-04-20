@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 
@@ -15,7 +16,6 @@ import org.json.JSONObject;
 import cosmos.tx.v1beta1.ServiceOuterClass;
 import cosmwasm.wasm.v1.Tx;
 import wannabit.io.cosmostaion.R;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.widget.txDetail.TxHolder;

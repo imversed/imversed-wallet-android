@@ -131,8 +131,8 @@ public class DrawDebtCdpStep0Fragment extends BaseFragment implements View.OnCli
         }
 
         mMaxLoanableAmount = WUtil.getMoreLoanableAmount(getContext(), getOwenCdp(), getCParam());
-        WDp.showCoinDp(getContext(), getBaseDao(), mPrincipalDenom, mMinLoanableAmount.toPlainString(), mLoanableDenomTx, mLoanableMinTx, getSActivity().baseChain);
-        WDp.showCoinDp(getContext(), getBaseDao(), mPrincipalDenom, mMaxLoanableAmount.toPlainString(), mLoanableDenomTx, mLoanableMaxTx, getSActivity().baseChain);
+        WDp.showCoinDp(getContext(), getBaseDao(), mPrincipalDenom, mMinLoanableAmount.toPlainString(), mLoanableDenomTx, mLoanableMinTx, getSActivity().getBaseChain());
+        WDp.showCoinDp(getContext(), getBaseDao(), mPrincipalDenom, mMaxLoanableAmount.toPlainString(), mLoanableDenomTx, mLoanableMaxTx, getSActivity().getBaseChain());
 
         mPrincipalSymbol.setText(WUtil.getKavaTokenName(getBaseDao(), mPrincipalDenom));
         WUtil.DpKavaTokenImg(getBaseDao(), mPrincipalImg, mPrincipalDenom);

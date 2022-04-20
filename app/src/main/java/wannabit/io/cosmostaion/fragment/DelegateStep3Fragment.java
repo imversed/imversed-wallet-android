@@ -54,8 +54,8 @@ public class DelegateStep3Fragment extends BaseFragment implements View.OnClickL
         mBeforeBtn = rootView.findViewById(R.id.btn_before);
         mConfirmBtn = rootView.findViewById(R.id.confirmButton);
 
-        WDp.DpMainDenom(getSActivity().account.baseChain, mDenomDelegateAmount);
-        WDp.DpMainDenom(getSActivity().account.baseChain, mDenomFeeType);
+        WDp.DpMainDenom(getSActivity().getAccount().baseChain, mDenomDelegateAmount);
+        WDp.DpMainDenom(getSActivity().getAccount().baseChain, mDenomFeeType);
 
         mBeforeBtn.setOnClickListener(this);
         mConfirmBtn.setOnClickListener(this);
@@ -64,7 +64,7 @@ public class DelegateStep3Fragment extends BaseFragment implements View.OnClickL
 
     @Override
     public void onRefreshTab() {
-        mDpDecimal = getSActivity().baseChain.getDivideDecimal();
+        mDpDecimal = getSActivity().getBaseChain().getDivideDecimal();
         BigDecimal toDeleagteAmount = new BigDecimal(getSActivity().mAmount.amount);
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
         mDelegateAmount.setText(WDp.getDpAmount2(toDeleagteAmount, mDpDecimal, mDpDecimal));
@@ -80,7 +80,7 @@ public class DelegateStep3Fragment extends BaseFragment implements View.OnClickL
 
         } else if (v.equals(mConfirmBtn)) {
             Bundle bundle = new Bundle();
-            bundle.putInt("day", getBaseDao().mChainParam.getUnbonding(getSActivity().baseChain));
+            bundle.putInt("day", getBaseDao().mChainParam.getUnbonding(getSActivity().getBaseChain()));
             Dialog_Delegate_Warning dialog = Dialog_Delegate_Warning.newInstance(bundle);
             dialog.setTargetFragment(DelegateStep3Fragment.this, SELECT_DELEGATE_CHECK);
             showDialog(dialog);

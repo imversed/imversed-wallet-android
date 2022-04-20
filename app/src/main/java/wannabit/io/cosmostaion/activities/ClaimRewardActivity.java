@@ -1,6 +1,5 @@
 package wannabit.io.cosmostaion.activities;
 
-import static com.fulldive.wallet.models.BaseChain.getChain;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_PURPOSE;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIMPLE_REWARD;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_ALL_REWARDS;
@@ -65,8 +64,6 @@ public class ClaimRewardActivity extends BaseBroadCastActivity implements TaskLi
         mIvStep.setImageResource(R.drawable.step_4_img_1);
         mTvStep.setText(R.string.str_reward_step_1);
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = getChain(account.baseChain);
         mTxType = CONST_PW_TX_SIMPLE_REWARD;
 
         mValAddresses = getIntent().getStringArrayListExtra("valOpAddresses");
@@ -113,7 +110,7 @@ public class ClaimRewardActivity extends BaseBroadCastActivity implements TaskLi
     @Override
     protected void onResume() {
         super.onResume();
-        if (account == null) finish();
+        if (getAccount() == null) finish();
     }
 
     @Override
@@ -156,8 +153,8 @@ public class ClaimRewardActivity extends BaseBroadCastActivity implements TaskLi
     private void onFetchReward() {
         if (mTaskCount > 0) return;
         mTaskCount = 2;
-        new AllRewardGrpcTask(getBaseApplication(), this, baseChain, account).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new WithdrawAddressGrpcTask(getBaseApplication(), this, baseChain, account).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new AllRewardGrpcTask(getBaseApplication(), this, getBaseChain(), getAccount()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new WithdrawAddressGrpcTask(getBaseApplication(), this, getBaseChain(), getAccount()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     public void onStartReward() {

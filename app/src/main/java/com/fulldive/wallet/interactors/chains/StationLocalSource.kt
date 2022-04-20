@@ -3,9 +3,9 @@ package com.fulldive.wallet.interactors.chains
 import com.fulldive.wallet.di.modules.DefaultLocalStorageModule
 import com.fulldive.wallet.extensions.completeCallable
 import com.fulldive.wallet.extensions.safeCompletable
+import com.fulldive.wallet.models.BaseChain
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.base.BaseData
 import wannabit.io.cosmostaion.dao.ChainParam
 import wannabit.io.cosmostaion.dao.IbcPath

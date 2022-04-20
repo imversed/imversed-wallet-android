@@ -1696,7 +1696,7 @@
     <string name="error_reserve_1_account">Please reserve at least 1 account to displayed.</string>
     <string name="error_hided_chain">Hidden Chain.</string>
     <string name="error_rizon_swap_finished">Rizon Swap Disabled.</string>
-    <string name="error_invalid_private_Key">Invalid private key.</string>
+    <string name="error_invalid_private_key">Invalid private key.</string>
     <string name="error_fail_upload_img">Image uploading failed.</string>
     <string name="error_no_nft_image">Add NFT Image.</string>
     <string name="error_no_nft_title">Add NFT Name.</string>
@@ -2012,7 +2012,7 @@
     <string name="str_closed_upper">CLOSED</string>
     <string name="str_agreements_and_terms">Accept User Service Agreement and Privacy Policy</string>
     <string name="error_duplicate_account">This account is already exists</string>
-    <string name="str_mnemonic_counter_template" translatable="false">"%2d: "</string>
+    <string name="str_mnemonic_counter_template" translatable="false">"%02d: "</string>
     <string name="str_version_short">v%s</string>
     <string name="str_words_count">" %d words"</string>
     <string name="str_address_type">Address Type</string>

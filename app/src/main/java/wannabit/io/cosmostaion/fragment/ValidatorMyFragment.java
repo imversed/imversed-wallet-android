@@ -89,7 +89,7 @@ public class ValidatorMyFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onRefreshTab() {
         if (!isAdded()) return;
-        if (getMainActivity().baseChain.isGRPC()) {
+        if (getMainActivity().getBaseChain().isGRPC()) {
             mValidatorSize.setText("" + getBaseDao().mGRpcMyValidators.size());
         } else {
             mValidatorSize.setText("" + getBaseDao().getMyValidators().size());
@@ -140,7 +140,7 @@ public class ValidatorMyFragment extends BaseFragment implements View.OnClickLis
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
             if (getItemViewType(position) == TYPE_PROMOTION) {
                 RewardPromotionHolder holder = (RewardPromotionHolder) viewHolder;
-                holder.itemRoot.setCardBackgroundColor(WDp.getChainBgColor(getMainActivity(), getMainActivity().baseChain));
+                holder.itemRoot.setCardBackgroundColor(WDp.getChainBgColor(getMainActivity(), getMainActivity().getBaseChain()));
 
                 holder.itemRoot.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -151,14 +151,14 @@ public class ValidatorMyFragment extends BaseFragment implements View.OnClickLis
 
             } else if (getItemViewType(position) == TYPE_HEADER_WITHDRAW_ALL) {
                 final RewardWithdrawHolder holder = (RewardWithdrawHolder) viewHolder;
-                WDp.DpMainDenom(getMainActivity().account.baseChain, holder.itemTvDenom);
-                final int dpDecimal = getMainActivity().baseChain.getDivideDecimal();
-                if (getMainActivity().baseChain.isGRPC()) {
-                    final BigDecimal allRewardAmount = getBaseDao().getRewardSum(getMainActivity().baseChain.getMainDenom());
+                WDp.DpMainDenom(getMainActivity().getAccount().baseChain, holder.itemTvDenom);
+                final int dpDecimal = getMainActivity().getBaseChain().getDivideDecimal();
+                if (getMainActivity().getBaseChain().isGRPC()) {
+                    final BigDecimal allRewardAmount = getBaseDao().getRewardSum(getMainActivity().getBaseChain().getMainDenom());
                     holder.itemTvAllRewards.setText(WDp.getDpAmount2(allRewardAmount, dpDecimal, 6));
 
                 } else {
-                    final BigDecimal allRewardAmount = getBaseDao().rewardAmount(getMainActivity().baseChain.getMainDenom());
+                    final BigDecimal allRewardAmount = getBaseDao().rewardAmount(getMainActivity().getBaseChain().getMainDenom());
                     holder.itemTvAllRewards.setText(WDp.getDpAmount2(allRewardAmount, dpDecimal, 6));
                 }
 
@@ -167,19 +167,19 @@ public class ValidatorMyFragment extends BaseFragment implements View.OnClickLis
             } else if (getItemViewType(position) == TYPE_MY_VALIDATOR) {
                 final RewardMyValidatorHolder holder = (RewardMyValidatorHolder) viewHolder;
                 holder.itemBandOracleOff.setVisibility(View.INVISIBLE);
-                final int dpDecimal = getMainActivity().baseChain.getDivideDecimal();
-                if (getMainActivity().baseChain.isGRPC()) {
+                final int dpDecimal = getMainActivity().getBaseChain().getDivideDecimal();
+                if (getMainActivity().getBaseChain().isGRPC()) {
                     final Staking.Validator validator = getBaseDao().mGRpcMyValidators.get(position);
                     final BigDecimal delegationAmount = getBaseDao().getDelegation(validator.getOperatorAddress());
                     final BigDecimal undelegationAmount = getBaseDao().getUndelegation(validator.getOperatorAddress());
-                    final BigDecimal rewardAmount = getBaseDao().getReward(getMainActivity().baseChain.getMainDenom(), validator.getOperatorAddress());
+                    final BigDecimal rewardAmount = getBaseDao().getReward(getMainActivity().getBaseChain().getMainDenom(), validator.getOperatorAddress());
                     try {
-                        Picasso.get().load(WDp.getMonikerImgUrl(getMainActivity().baseChain, validator.getOperatorAddress())).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
+                        Picasso.get().load(WDp.getMonikerImgUrl(getMainActivity().getBaseChain(), validator.getOperatorAddress())).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
                     } catch (Exception e) {
                     }
 
                     holder.itemTvMoniker.setText(validator.getDescription().getMoniker());
-                    holder.itemRoot.setCardBackgroundColor(WDp.getChainBgColor(getMainActivity(), getMainActivity().baseChain));
+                    holder.itemRoot.setCardBackgroundColor(WDp.getChainBgColor(getMainActivity(), getMainActivity().getBaseChain()));
                     holder.itemTvDelegateAmount.setText(WDp.getDpAmount2(delegationAmount, dpDecimal, 6));
                     holder.itemTvUndelegateAmount.setText(WDp.getDpAmount2(undelegationAmount, dpDecimal, 6));
                     holder.itemTvReward.setText(WDp.getDpAmount2(rewardAmount, dpDecimal, 6));
@@ -193,7 +193,7 @@ public class ValidatorMyFragment extends BaseFragment implements View.OnClickLis
                     }
                     holder.itemRoot.setOnClickListener(v -> getMainActivity().onStartValidatorDetailV1(validator.getOperatorAddress()));
 
-                    if (getMainActivity().baseChain.equals(BAND_MAIN.INSTANCE)) {
+                    if (getMainActivity().getBaseChain().equals(BAND_MAIN.INSTANCE)) {
                         if (getBaseDao().mChainParam != null && !getBaseDao().mChainParam.isOracleEnable(validator.getOperatorAddress())) {
                             holder.itemBandOracleOff.setVisibility(View.VISIBLE);
                         } else {
@@ -205,13 +205,13 @@ public class ValidatorMyFragment extends BaseFragment implements View.OnClickLis
                     final Validator validator = getBaseDao().getMyValidators().get(position);
                     final BigDecimal delegationAmount = getBaseDao().delegatedAmountByValidator(validator.operator_address);
                     final BigDecimal undelegationAmount = getBaseDao().unbondingAmountByValidator(validator.operator_address);
-                    final BigDecimal rewardAmount = getBaseDao().rewardAmountByValidator(getMainActivity().baseChain.getMainDenom(), validator.operator_address);
+                    final BigDecimal rewardAmount = getBaseDao().rewardAmountByValidator(getMainActivity().getBaseChain().getMainDenom(), validator.operator_address);
                     try {
-                        Picasso.get().load(WDp.getMonikerImgUrl(getMainActivity().baseChain, validator.operator_address)).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
+                        Picasso.get().load(WDp.getMonikerImgUrl(getMainActivity().getBaseChain(), validator.operator_address)).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
                     } catch (Exception e) {
                     }
 
-                    holder.itemRoot.setCardBackgroundColor(WDp.getChainBgColor(getMainActivity(), getMainActivity().baseChain));
+                    holder.itemRoot.setCardBackgroundColor(WDp.getChainBgColor(getMainActivity(), getMainActivity().getBaseChain()));
                     holder.itemTvMoniker.setText(validator.description.moniker);
                     holder.itemTvDelegateAmount.setText(WDp.getDpAmount2(delegationAmount, dpDecimal, 6));
                     holder.itemTvUndelegateAmount.setText(WDp.getDpAmount2(undelegationAmount, dpDecimal, 6));
@@ -231,7 +231,7 @@ public class ValidatorMyFragment extends BaseFragment implements View.OnClickLis
 
         @Override
         public int getItemCount() {
-            if (getMainActivity().baseChain.isGRPC()) {
+            if (getMainActivity().getBaseChain().isGRPC()) {
                 if (getBaseDao().mGRpcMyValidators == null || getBaseDao().mGRpcMyValidators.size() < 1) {
                     return 1;
                 } else if (getBaseDao().mGRpcMyValidators.size() == 1) {
@@ -248,7 +248,7 @@ public class ValidatorMyFragment extends BaseFragment implements View.OnClickLis
 
         @Override
         public int getItemViewType(int position) {
-            if (getMainActivity().baseChain.isGRPC()) {
+            if (getMainActivity().getBaseChain().isGRPC()) {
                 if (getBaseDao().mGRpcMyValidators == null || getBaseDao().mGRpcMyValidators.size() < 1) {
                     return TYPE_PROMOTION;
                 } else if (getBaseDao().mGRpcMyValidators.size() > 1 && position == getBaseDao().mGRpcMyValidators.size()) {
@@ -323,10 +323,10 @@ public class ValidatorMyFragment extends BaseFragment implements View.OnClickLis
 
     public void onSortValidator() {
         final BaseData baseDao = getBaseDao();
-        if (getMainActivity().baseChain.isGRPC()) {
+        if (getMainActivity().getBaseChain().isGRPC()) {
             if (baseDao.getMyValSorting() == 2) {
                 mSortType.setText(getString(R.string.str_sorting_by_reward));
-                baseDao.mGRpcMyValidators = WUtil.onSortByRewardV1(baseDao.mGRpcMyValidators, getMainActivity().baseChain.getMainDenom(), baseDao);
+                baseDao.mGRpcMyValidators = WUtil.onSortByRewardV1(baseDao.mGRpcMyValidators, getMainActivity().getBaseChain().getMainDenom(), baseDao);
 
             } else if (baseDao.getMyValSorting() == 0) {
                 baseDao.mGRpcMyValidators = WUtil.onSortByValidatorNameV1(baseDao.mGRpcMyValidators);
@@ -340,7 +340,7 @@ public class ValidatorMyFragment extends BaseFragment implements View.OnClickLis
 
         } else {
             if (baseDao.getMyValSorting() == 2) {
-                baseDao.mMyValidators = WUtil.onSortByReward(baseDao.getMyValidators(), getMainActivity().baseChain.getMainDenom(), baseDao);
+                baseDao.mMyValidators = WUtil.onSortByReward(baseDao.getMyValidators(), getMainActivity().getBaseChain().getMainDenom(), baseDao);
                 mSortType.setText(getString(R.string.str_sorting_by_reward));
 
             } else if (baseDao.getMyValSorting() == 0) {

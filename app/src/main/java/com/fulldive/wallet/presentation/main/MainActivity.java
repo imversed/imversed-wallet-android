@@ -1,4 +1,4 @@
-package wannabit.io.cosmostaion.activities;
+package com.fulldive.wallet.presentation.main;
 
 import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
 import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
@@ -6,7 +6,6 @@ import static com.fulldive.wallet.models.BaseChain.SIF_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_PURPOSE;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_SIMPLE_CHECK;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_CLAIM_INCENTIVE;
-import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_PROFILE;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIF_CLAIM_INCENTIVE;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HARD;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_KAVA;
@@ -18,50 +17,40 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.DrawableRes;
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-import com.fulldive.wallet.presentation.main.history.MainHistoryFragment;
+import com.fulldive.wallet.models.BaseChain;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
 
-import desmos.profiles.v1beta1.ModelsProfile;
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.chains.desmos.ProfileActivity;
-import wannabit.io.cosmostaion.activities.chains.desmos.ProfileDetailActivity;
+import wannabit.io.cosmostaion.activities.PasswordCheckActivity;
+import wannabit.io.cosmostaion.activities.WalletConnectActivity;
+import wannabit.io.cosmostaion.activities.WalletSwitchActivity;
 import wannabit.io.cosmostaion.activities.chains.kava.ClaimIncentiveActivity;
 import wannabit.io.cosmostaion.activities.chains.sif.SifIncentiveActivity;
 import wannabit.io.cosmostaion.appextensions.PopupManager;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.base.IBusyFetchListener;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.dialog.Dialog_WalletConnect;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
-import wannabit.io.cosmostaion.fragment.MainSendFragment;
-import wannabit.io.cosmostaion.fragment.MainSettingFragment;
-import wannabit.io.cosmostaion.fragment.MainTokensFragment;
 import wannabit.io.cosmostaion.model.kava.IncentiveReward;
 import wannabit.io.cosmostaion.utils.FetchCallBack;
 import wannabit.io.cosmostaion.utils.WDp;
@@ -79,7 +68,8 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
     public MainViewPageAdapter adapter;
     public FloatingActionButton floatingActionButton;
 
-    private BaseChain mSelectedChain;
+    private String lastAccountChainName = null;
+    private long lastAccountCheckId = -1L;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,8 +112,8 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
 
             @Override
             public void onPageSelected(int position) {
-                if (adapter != null && adapter.currentFragment != null) {
-                    ((IRefreshTabListener) adapter.currentFragment).onRefreshTab();
+                if (adapter != null && adapter.getCurrentFragment() != null) {
+                    ((IRefreshTabListener) adapter.getCurrentFragment()).onRefreshTab();
                 }
                 if (position != 0) floatingActionButton.hide();
                 else if (!floatingActionButton.isShown()) floatingActionButton.show();
@@ -146,26 +136,17 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
     @Override
     protected void onResume() {
         super.onResume();
-        onAccountSwitched();
-        onChainSelect(baseChain);
+        checkAccountChanges();
+        checkChainChanges();
     }
 
-    public void onAccountSwitched() {
-        boolean needFetch = false;
-        Account supportedAccount = getBaseDao().getAccount(getBaseDao().getLastUser());
+    public void checkAccountChanges() {
+        final Account account = getAccount();
 
-        if (account == null) {
-            needFetch = true;
-        } else if (!supportedAccount.id.toString().equals(getBaseDao().getLastUser())) {
-            getBaseDao().setLastUser(supportedAccount.id);
-            needFetch = true;
-        } else if (!getBaseDao().getLastUser().equals(account.id.toString())) {
-            needFetch = true;
-        }
+        if (lastAccountCheckId != account.id) {
+            lastAccountCheckId = account.id;
+            final BaseChain baseChain = getBaseChain();
 
-        account = getBaseDao().getAccount(getBaseDao().getLastUser());
-        baseChain = BaseChain.getChain(account.baseChain);
-        if (needFetch) {
             showWaitDialog();
             onFetchAllData();
 
@@ -176,17 +157,18 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
             floatingActionButton.setImageTintList(ContextCompat.getColorStateList(this, baseChain.getFloatButtonColor()));
             floatingActionButton.setBackgroundTintList(ContextCompat.getColorStateList(this, baseChain.getFloatButtonBackground()));
 
-            mSelectedChain = baseChain;
-            onChainSelect(mSelectedChain);
+            checkChainChanges();
         }
 
         toolbarTitleTextView.setText(account.getAccountTitle(this));
     }
 
-    private void onChainSelect(BaseChain baseChain) {
-        invalidateOptionsMenu();
-        mSelectedChain = baseChain;
-        getBaseDao().setLastChain(mSelectedChain.getChainName());
+    private void checkChainChanges() {
+        final String chainName = getBaseChain().getChainName();
+        if (!chainName.equals(lastAccountChainName)) {
+            invalidateOptionsMenu();
+            lastAccountChainName = chainName;
+        }
     }
 
     public void onClickSwitchWallet() {
@@ -201,10 +183,10 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
 
     public void onExplorerView() {
         String url = "";
-        if (baseChain.equals(OKEX_MAIN.INSTANCE)) {
-            url = WUtil.getExplorer(baseChain) + "address/" + account.address;
+        if (getBaseChain().equals(OKEX_MAIN.INSTANCE)) {
+            url = WUtil.getExplorer(getBaseChain()) + "address/" + getAccount().address;
         } else {
-            url = WUtil.getExplorer(baseChain) + "account/" + account.address;
+            url = WUtil.getExplorer(getBaseChain()) + "account/" + getAccount().address;
         }
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
@@ -212,44 +194,6 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
 
     public void onFetchAllData() {
         fetchAllData(this);
-    }
-
-    public void onClickProfile() {
-        if (getBaseDao().mGRpcNodeInfo != null && getBaseDao().mGRpcAccount != null) {
-            if (getBaseDao().mGRpcAccount.getTypeUrl().contains(ModelsProfile.Profile.getDescriptor().getFullName())) {
-                Intent airdrop = new Intent(this, ProfileDetailActivity.class);
-                startActivity(airdrop);
-
-            } else {
-                if (!account.hasPrivateKey) {
-                    Dialog_WatchMode dialog = Dialog_WatchMode.newInstance();
-                    showDialog(dialog);
-                    return;
-                }
-                BigDecimal available = getBaseDao().getAvailable(baseChain.getMainDenom());
-                BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, baseChain, CONST_PW_TX_PROFILE, 0);
-                if (available.compareTo(txFee) <= 0) {
-                    Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                Intent profile = new Intent(this, ProfileActivity.class);
-                startActivity(profile);
-            }
-        } else {
-            if (!account.hasPrivateKey) {
-                Dialog_WatchMode add = Dialog_WatchMode.newInstance();
-                showDialog(add);
-                return;
-            }
-            BigDecimal available = getBaseDao().getAvailable(baseChain.getMainDenom());
-            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, baseChain, CONST_PW_TX_PROFILE, 0);
-            if (available.compareTo(txFee) <= 0) {
-                Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
-                return;
-            }
-            Intent profile = new Intent(this, ProfileActivity.class);
-            startActivity(profile);
-        }
     }
 
     public void onStartBinanceWalletConnect(String wcUrl) {
@@ -276,23 +220,23 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
     public void fetchBusy() {
         if (!isFinishing()) {
             hideWaitDialog();
-            Fragment fragment = adapter.currentFragment;
+            final Fragment fragment = adapter.getCurrentFragment();
             if (fragment instanceof IBusyFetchListener) {
-                ((IBusyFetchListener) adapter.currentFragment).onBusyFetch();
+                ((IBusyFetchListener) fragment).onBusyFetch();
             }
         }
     }
 
     public void onClickIncentive() {
-        if (!account.hasPrivateKey) {
+        if (!getAccount().hasPrivateKey) {
             Dialog_WatchMode add = Dialog_WatchMode.newInstance();
             showDialog(add);
             return;
         }
         final BaseData baseData = getBaseDao();
-        if (baseChain.equals(KAVA_MAIN.INSTANCE)) {
-            BigDecimal available = baseData.getAvailable(baseChain.getMainDenom());
-            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, baseChain, CONST_PW_TX_CLAIM_INCENTIVE, 0);
+        if (getBaseChain().equals(KAVA_MAIN.INSTANCE)) {
+            BigDecimal available = baseData.getAvailable(getBaseChain().getMainDenom());
+            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_CLAIM_INCENTIVE, 0);
             if (available.compareTo(txFee) <= 0) {
                 Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return;
@@ -306,9 +250,9 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
             Intent intent = new Intent(MainActivity.this, ClaimIncentiveActivity.class);
             startActivity(intent);
 
-        } else if (baseChain.equals(SIF_MAIN.INSTANCE)) {
-            BigDecimal available = baseData.getAvailable(baseChain.getMainDenom());
-            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, baseChain, CONST_PW_TX_SIF_CLAIM_INCENTIVE, 0);
+        } else if (getBaseChain().equals(SIF_MAIN.INSTANCE)) {
+            BigDecimal available = baseData.getAvailable(getBaseChain().getMainDenom());
+            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_SIF_CLAIM_INCENTIVE, 0);
             if (available.compareTo(txFee) <= 0) {
                 Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return;
@@ -319,47 +263,6 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
             }
             Intent intent = new Intent(MainActivity.this, SifIncentiveActivity.class);
             startActivity(intent);
-        }
-    }
-
-    private static class MainViewPageAdapter extends FragmentPagerAdapter {
-
-        private final ArrayList<Fragment> fragments = new ArrayList<>();
-        private Fragment currentFragment;
-
-        public MainViewPageAdapter(FragmentManager fm) {
-            super(fm);
-            fragments.add(MainSendFragment.newInstance(null));
-            fragments.add(MainTokensFragment.newInstance(null));
-            fragments.add(MainHistoryFragment.Companion.newInstance());
-            fragments.add(MainSettingFragment.newInstance(null));
-        }
-
-        @NonNull
-        @Override
-        public Fragment getItem(int position) {
-            return fragments.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return fragments.size();
-        }
-
-        @Override
-        public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
-            if (getCurrentFragment() != object) {
-                currentFragment = ((Fragment) object);
-            }
-            super.setPrimaryItem(container, position, object);
-        }
-
-        public Fragment getCurrentFragment() {
-            return currentFragment;
-        }
-
-        public List<Fragment> getFragments() {
-            return fragments;
         }
     }
 

@@ -69,6 +69,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityOptionsCompat;
 
 import com.addisonelliott.segmentedbutton.SegmentedButtonGroup;
+import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
 import com.google.gson.Gson;
 
@@ -84,7 +85,6 @@ import cosmos.base.abci.v1beta1.Abci;
 import osmosis.lockup.Lock;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseBroadCastActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dao.Account;
@@ -204,11 +204,11 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
         mBtnBefore = rootView.findViewById(R.id.btn_before);
         mBtnNext = rootView.findViewById(R.id.nextButton);
 
-        WDp.DpMainDenom(getSActivity().baseChain, mFeeDenom);
-        mFeeTotalCard.setCardBackgroundColor(WDp.getChainBgColor(getContext(), getSActivity().baseChain));
-        mButtonGroup.setSelectedBackground(WDp.getChainColor(getContext(), getSActivity().baseChain));
-        mButtonGroup.setRipple(WDp.getChainColor(getContext(), getSActivity().baseChain));
-        mEstimateGasAmount = WUtil.getEstimateGasAmount(getContext(), getSActivity().baseChain, getSActivity().mTxType, (getSActivity().mValAddresses.size()));
+        WDp.DpMainDenom(getSActivity().getBaseChain(), mFeeDenom);
+        mFeeTotalCard.setCardBackgroundColor(WDp.getChainBgColor(getContext(), getSActivity().getBaseChain()));
+        mButtonGroup.setSelectedBackground(WDp.getChainColor(getContext(), getSActivity().getBaseChain()));
+        mButtonGroup.setRipple(WDp.getChainColor(getContext(), getSActivity().getBaseChain()));
+        mEstimateGasAmount = WUtil.getEstimateGasAmount(getContext(), getSActivity().getBaseChain(), getSActivity().mTxType, (getSActivity().mValAddresses.size()));
 
         onUpdateView();
 
@@ -223,8 +223,8 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
     }
 
     private void onCalculateFees() {
-        mSelectedGasRate = WUtil.getGasRate(getSActivity().baseChain, mSelectedGasPosition);
-        if (getSActivity().baseChain.equals(BaseChain.SIF_MAIN.INSTANCE)) {
+        mSelectedGasRate = WUtil.getGasRate(getSActivity().getBaseChain(), mSelectedGasPosition);
+        if (getSActivity().getBaseChain().equals(BaseChain.SIF_MAIN.INSTANCE)) {
             mFee = new BigDecimal("100000000000000000");
         } else {
             mFee = mSelectedGasRate.multiply(mEstimateGasAmount).setScale(0, RoundingMode.UP);
@@ -234,17 +234,17 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
     private void onUpdateView() {
         onCalculateFees();
 
-        if (getSActivity().baseChain.equals(BaseChain.SIF_MAIN.INSTANCE)) {
+        if (getSActivity().getBaseChain().equals(BaseChain.SIF_MAIN.INSTANCE)) {
             mRateControlCard.setVisibility(View.GONE);
         } else {
             mRateControlCard.setVisibility(View.VISIBLE);
         }
-        mFeeAmount.setText(WDp.getDpAmount2(mFee, getSActivity().baseChain.getDivideDecimal(), getSActivity().baseChain.getDivideDecimal()));
-        mFeeValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getSActivity().baseChain.getMainDenom(), mFee, getSActivity().baseChain.getDivideDecimal()));
+        mFeeAmount.setText(WDp.getDpAmount2(mFee, getSActivity().getBaseChain().getDivideDecimal(), getSActivity().getBaseChain().getDivideDecimal()));
+        mFeeValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getSActivity().getBaseChain().getMainDenom(), mFee, getSActivity().getBaseChain().getDivideDecimal()));
 
         mGasRate.setText(WDp.getDpGasRate(mSelectedGasRate.toPlainString()));
         mGasAmount.setText(mEstimateGasAmount.toPlainString());
-        if (getSActivity().baseChain.equals(BaseChain.INJ_MAIN.INSTANCE)) {
+        if (getSActivity().getBaseChain().equals(BaseChain.INJ_MAIN.INSTANCE)) {
             mGasFee.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 12);
         }
         mGasFee.setText(mFee.toPlainString());
@@ -281,7 +281,7 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
     private void onSetFee() {
         Fee fee = new Fee();
         Coin gasCoin = new Coin();
-        gasCoin.denom = getSActivity().baseChain.getMainDenom();
+        gasCoin.denom = getSActivity().getBaseChain().getMainDenom();
         gasCoin.amount = mFee.toPlainString();
         ArrayList<Coin> amount = new ArrayList<>();
         amount.add(gasCoin);
@@ -293,7 +293,7 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
 
     private boolean onCheckValidate() {
         if (getSActivity().mTxType == CONST_PW_TX_SIMPLE_SEND) {
-            final String mainDenom = getSActivity().baseChain.getMainDenom();
+            final String mainDenom = getSActivity().getBaseChain().getMainDenom();
             final BigDecimal mainDenomAvailable = getBaseDao().getAvailable(mainDenom);
             if (getSActivity().mDenom.equals(mainDenom)) {
                 BigDecimal toSend = new BigDecimal(getSActivity().mAmounts.get(0).amount);
@@ -310,7 +310,7 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
             }
 
         } else if (getSActivity().mTxType == CONST_PW_TX_SIMPLE_DELEGATE) {
-            BigDecimal delegatable = getBaseDao().getDelegatable(getSActivity().baseChain.getMainDenom());
+            BigDecimal delegatable = getBaseDao().getDelegatable(getSActivity().getBaseChain().getMainDenom());
             BigDecimal todelegate = new BigDecimal(getSActivity().mAmount.amount);
             if ((todelegate.add(mFee)).compareTo(delegatable) > 0) {
                 Toast.makeText(getContext(), getString(R.string.error_not_enough_fee), Toast.LENGTH_SHORT).show();
@@ -318,14 +318,14 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
             }
 
         } else if (getSActivity().mTxType == CONST_PW_TX_SIMPLE_REWARD) {
-            BigDecimal available = getBaseDao().getAvailable(getSActivity().baseChain.getMainDenom());
+            BigDecimal available = getBaseDao().getAvailable(getSActivity().getBaseChain().getMainDenom());
             if (mFee.compareTo(available) > 0) {
                 Toast.makeText(getContext(), getString(R.string.error_not_enough_fee), Toast.LENGTH_SHORT).show();
                 return false;
             }
             BigDecimal rewardSum = BigDecimal.ZERO;
             for (String opAddress : getSActivity().mValAddresses) {
-                rewardSum = rewardSum.add(getSActivity().getBaseDao().getReward(getSActivity().baseChain.getMainDenom(), opAddress));
+                rewardSum = rewardSum.add(getSActivity().getBaseDao().getReward(getSActivity().getBaseChain().getMainDenom(), opAddress));
             }
 
             if (mFee.compareTo(rewardSum) > 0) {
@@ -334,7 +334,7 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
             }
 
         } else if (getSActivity().mTxType == CONST_PW_TX_REINVEST) {
-            BigDecimal available = getBaseDao().getAvailable(getSActivity().baseChain.getMainDenom());
+            BigDecimal available = getBaseDao().getAvailable(getSActivity().getBaseChain().getMainDenom());
             if (mFee.compareTo(available) > 0) {
                 Toast.makeText(getContext(), getString(R.string.error_not_enough_fee), Toast.LENGTH_SHORT).show();
                 return false;
@@ -365,113 +365,113 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
         getSActivity().showWaitDialog();
         switch (getSActivity().mTxType) {
             case CONST_PW_TX_SIMPLE_SEND:
-                new SimulSendGrpcTask(getBaseApplication(), this, getSActivity().baseChain, getSActivity().account, getSActivity().mToAddress, getSActivity().mAmounts,
+                new SimulSendGrpcTask(getBaseApplication(), this, getSActivity().getBaseChain(), getSActivity().getAccount(), getSActivity().mToAddress, getSActivity().mAmounts,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_SIMPLE_DELEGATE:
-                new SimulDelegateGrpcTask(getBaseApplication(), this, getSActivity().baseChain, getSActivity().account, getSActivity().mValAddress, getSActivity().mAmount,
+                new SimulDelegateGrpcTask(getBaseApplication(), this, getSActivity().getBaseChain(), getSActivity().getAccount(), getSActivity().mValAddress, getSActivity().mAmount,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_SIMPLE_UNDELEGATE:
-                new SimulUndelegateGrpcTask(getBaseApplication(), this, getSActivity().baseChain, getSActivity().account, getSActivity().mValAddress, getSActivity().mAmount,
+                new SimulUndelegateGrpcTask(getBaseApplication(), this, getSActivity().getBaseChain(), getSActivity().getAccount(), getSActivity().mValAddress, getSActivity().mAmount,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_SIMPLE_REDELEGATE:
-                new SimulRedelegateGrpcTask(getBaseApplication(), this, getSActivity().baseChain, getSActivity().account, getSActivity().mValAddress, getSActivity().mToValAddress, getSActivity().mAmount,
+                new SimulRedelegateGrpcTask(getBaseApplication(), this, getSActivity().getBaseChain(), getSActivity().getAccount(), getSActivity().mValAddress, getSActivity().mToValAddress, getSActivity().mAmount,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_SIMPLE_REWARD:
-                new SimulClaimRewardsGrpcTask(getBaseApplication(), this, getSActivity().baseChain, getSActivity().account, getSActivity().mValAddresses,
+                new SimulClaimRewardsGrpcTask(getBaseApplication(), this, getSActivity().getBaseChain(), getSActivity().getAccount(), getSActivity().mValAddresses,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_REINVEST:
-                new SimulReInvestGrpcTask(getBaseApplication(), this, getSActivity().baseChain, getSActivity().account, getSActivity().mValAddress, getSActivity().mAmount,
+                new SimulReInvestGrpcTask(getBaseApplication(), this, getSActivity().getBaseChain(), getSActivity().getAccount(), getSActivity().mValAddress, getSActivity().mAmount,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_SIMPLE_CHANGE_REWARD_ADDRESS:
-                new SimulChangeRewardAddressGrpcTask(getBaseApplication(), this, getSActivity().baseChain, getSActivity().account, getSActivity().mNewRewardAddress,
+                new SimulChangeRewardAddressGrpcTask(getBaseApplication(), this, getSActivity().getBaseChain(), getSActivity().getAccount(), getSActivity().mNewRewardAddress,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_VOTE:
-                new SimulVoteGrpcTask(getBaseApplication(), this, getSActivity().baseChain, getSActivity().account, getSActivity().mProposalId, getSActivity().mOpinion,
+                new SimulVoteGrpcTask(getBaseApplication(), this, getSActivity().getBaseChain(), getSActivity().getAccount(), getSActivity().mProposalId, getSActivity().mOpinion,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 break;
             case CONST_PW_TX_REGISTER_DOMAIN:
-                new SimulRegisterDomainGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain,
+                new SimulRegisterDomainGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(),
                         getSActivity().mStarNameDomain, getSActivity().mStarNameDomainType,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
                 break;
             case CONST_PW_TX_REGISTER_ACCOUNT:
-                new SimulRegisterAccountGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain,
+                new SimulRegisterAccountGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(),
                         getSActivity().mStarNameDomain, getSActivity().mStarNameAccount, getSActivity().mStarNameResources,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_DELETE_DOMAIN:
-                new SimulDeleteDomainGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain,
+                new SimulDeleteDomainGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(),
                         getSActivity().mStarNameDomain,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_DELETE_ACCOUNT:
-                new SimulDeleteAccountGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain,
+                new SimulDeleteAccountGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(),
                         getSActivity().mStarNameDomain, getSActivity().mStarNameAccount,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_RENEW_DOMAIN:
-                new SimulRenewDomainGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain,
+                new SimulRenewDomainGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(),
                         getSActivity().mStarNameDomain,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_RENEW_ACCOUNT:
-                new SimulRenewAccountGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain,
+                new SimulRenewAccountGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(),
                         getSActivity().mStarNameDomain, getSActivity().mStarNameAccount,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_REPLACE_STARNAME:
                 if (getSActivity().mIsDomain) {
-                    new SimulReplaceStarNameGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain,
+                    new SimulReplaceStarNameGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(),
                             getSActivity().mStarNameDomain, "", getSActivity().mStarNameResources,
                             getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 } else {
-                    new SimulReplaceStarNameGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain,
+                    new SimulReplaceStarNameGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(),
                             getSActivity().mStarNameDomain, getSActivity().mStarNameAccount, getSActivity().mStarNameResources,
                             getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 }
                 break;
             case CONST_PW_TX_OSMOSIS_SWAP:
-                new SimulOsmosisSwaplnGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain,
+                new SimulOsmosisSwaplnGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(),
                         getSActivity().mOsmosisSwapAmountInRoute, getSActivity().mSwapInCoin, getSActivity().mSwapOutCoin,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
                 break;
             case CONST_PW_TX_OSMOSIS_JOIN_POOL:
-                new SimulOsmosisJoinPoolGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain,
+                new SimulOsmosisJoinPoolGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(),
                         getSActivity().mOsmosisPoolId, getSActivity().mPoolCoin0, getSActivity().mPoolCoin1, getSActivity().mLpToken.amount,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_OSMOSIS_EXIT_POOL:
-                new SimulOsmosisExitPoolGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain,
+                new SimulOsmosisExitPoolGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(),
                         getSActivity().mOsmosisPoolId, getSActivity().mPoolCoin0, getSActivity().mPoolCoin1, getSActivity().mLpToken.amount,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_OSMOSIS_EARNING:
-                new SimulOsmosisStartLockGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain,
+                new SimulOsmosisStartLockGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(),
                         getSActivity().mOsmosisLockupDuration, getSActivity().mLpToken,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -481,45 +481,45 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
                 for (Lock.PeriodLock lockup : getSActivity().mOsmosisLockups) {
                     tempList.add(lockup.getID());
                 }
-                new SimulOsmosisBeginUnbondingGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain,
+                new SimulOsmosisBeginUnbondingGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(),
                         tempList, getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 break;
             case CONST_PW_TX_GDEX_SWAP:
                 BigDecimal offerFee = new BigDecimal(getSActivity().mSwapInCoin.amount).multiply(new BigDecimal("0.0015")).setScale(0, RoundingMode.CEILING);
                 Coin coinFee = new Coin(getSActivity().mSwapInCoin.denom, offerFee.toPlainString());
-                new SimulGravitySwapGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain,
+                new SimulGravitySwapGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(),
                         getSActivity().mGDexPool.getId(), getSActivity().mSwapInCoin, getSActivity().mSwapOutCoin.denom, coinFee, getSActivity().mGDexSwapOrderPrice,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_GDEX_DEPOSIT:
-                new SimulGravityDepositGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain,
+                new SimulGravityDepositGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(),
                         getSActivity().mGDexPoolId, getSActivity().mPoolCoin0, getSActivity().mPoolCoin1, getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_GDEX_WITHDRAW:
-                new SimulGravityWithdrawGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain,
+                new SimulGravityWithdrawGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(),
                         getSActivity().mGDexPoolId, getSActivity().mLpToken, getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_IBC_TRANSFER:
-                new SimulIBCTransferGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address, getSActivity().mToAddress,
+                new SimulIBCTransferGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address, getSActivity().mToAddress,
                         getSActivity().mAmounts.get(0).denom, getSActivity().mAmounts.get(0).amount, getSActivity().mPath.port_id, getSActivity().mPath.channel_id, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_SIF_CLAIM_INCENTIVE:
-                new SimulSifIncentiveGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address,
+                new SimulSifIncentiveGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_SIF_SWAP:
-                new SimulSifSwapGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address,
+                new SimulSifSwapGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address,
                         getSActivity().mSifSwapInCoin.denom, getSActivity().mSifSwapInCoin.amount, getSActivity().mSifSwapOutCoin.denom, getSActivity().mSifSwapOutCoin.amount,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_SIF_JOIN_POOL:
-                new SimulSifDepositGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address,
+                new SimulSifDepositGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address,
                         getSActivity().mSifDepositCoin1.denom, getSActivity().mSifDepositCoin0.amount, getSActivity().mSifDepositCoin1.amount,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -528,20 +528,20 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
                 BigDecimal myShareAllAmount = new BigDecimal(getSActivity().mMyProvider.getLiquidityProvider().getLiquidityProviderUnits());
                 BigDecimal myShareWithdrawAmount = new BigDecimal(getSActivity().mSifWithdrawCoin.amount);
                 String basisPoint = myShareWithdrawAmount.movePointRight(4).divide(myShareAllAmount, 0, RoundingMode.DOWN).toPlainString();
-                new SimulSifWithdrawGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address,
+                new SimulSifWithdrawGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address,
                         getSActivity().mSifWithdrawCoin.denom, basisPoint, getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 break;
             case CONST_PW_TX_MINT_NFT:
-                StationNFTData nftData = new StationNFTData(getSActivity().account.address, getSActivity().mNftName, getSActivity().mNftDescription, getSActivity().mNftDenomId, NFT_INFURA + getSActivity().mNftHash);
+                StationNFTData nftData = new StationNFTData(getSActivity().getAccount().address, getSActivity().mNftName, getSActivity().mNftDescription, getSActivity().mNftDenomId, NFT_INFURA + getSActivity().mNftHash);
                 Gson gson = new Gson();
                 String jsonData = gson.toJson(nftData);
-                new SimulMintNFTGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address,
+                new SimulMintNFTGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address,
                         getSActivity().mNftDenomId, getSActivity().mNftDenomName, getSActivity().mNftHash.toLowerCase(), getSActivity().mNftName, NFT_INFURA + getSActivity().mNftHash, jsonData,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_SEND_NFT:
-                new SimulTransferNFTGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address,
+                new SimulTransferNFTGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address,
                         getSActivity().mToAddress, getSActivity().mNftDenomId, getSActivity().mNftTokenId, getSActivity().mIrisResponse, getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 break;
             case CONST_PW_TX_PROFILE:
@@ -557,8 +557,8 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
                 } else {
                     coverUri = "";
                 }
-                new SimulCreateProfileGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().mDtag, getSActivity().mNickname, getSActivity().mBio,
-                        profileUri, coverUri, getSActivity().account.address, getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                new SimulCreateProfileGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().mDtag, getSActivity().mNickname, getSActivity().mBio,
+                        profileUri, coverUri, getSActivity().getAccount().address, getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_LINK_ACCOUNT:
@@ -572,77 +572,77 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
                     String privateKey = CryptoHelper.doDecryptData(getSActivity().getString(R.string.key_private) + toAccount.uuid, toAccount.resource, toAccount.spec);
                     ecKey = ECKey.fromPrivate(new BigInteger(privateKey, 16));
                 }
-                new SimulLinkAccountGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address, getSActivity().mDesmosToLinkChain,
+                new SimulLinkAccountGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address, getSActivity().mDesmosToLinkChain,
                         toAccount, ecKey, getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_KAVA_SWAP:
-                new SimulKavaSwapGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address, getSActivity().mKavaSwapIn, getSActivity().mKavaSwapOut,
+                new SimulKavaSwapGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address, getSActivity().mKavaSwapIn, getSActivity().mKavaSwapOut,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_KAVA_JOIN_POOL:
-                new SimulKavaDepositGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address, getSActivity().mKavaPoolTokenA, getSActivity().mKavaPoolTokenB,
+                new SimulKavaDepositGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address, getSActivity().mKavaPoolTokenA, getSActivity().mKavaPoolTokenB,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_KAVA_EXIT_POOL:
-                new SimulKavaWithdrawGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address, getSActivity().mKavaShareAmount.toPlainString(), getSActivity().mKavaMinTokenA, getSActivity().mKavaMinTokenB,
+                new SimulKavaWithdrawGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address, getSActivity().mKavaShareAmount.toPlainString(), getSActivity().mKavaMinTokenA, getSActivity().mKavaMinTokenB,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_CREATE_CDP:
-                new SimulKavaCreateCdpGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address, getSActivity().mCollateral, getSActivity().mPrincipal,
+                new SimulKavaCreateCdpGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address, getSActivity().mCollateral, getSActivity().mPrincipal,
                         getSActivity().mCollateralType, getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_DEPOSIT_CDP:
-                new SimulKavaDepositCdpGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address, getSActivity().account.address, getSActivity().mCollateral,
+                new SimulKavaDepositCdpGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address, getSActivity().getAccount().address, getSActivity().mCollateral,
                         getSActivity().mCollateralType, getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_WITHDRAW_CDP:
-                new SimulKavaWithDrawCdpGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address, getSActivity().account.address, getSActivity().mCollateral,
+                new SimulKavaWithDrawCdpGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address, getSActivity().getAccount().address, getSActivity().mCollateral,
                         getSActivity().mCollateralType, getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_DRAW_DEBT_CDP:
-                new SimulKavaDrawDebtCdpGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address, getSActivity().mPrincipal,
+                new SimulKavaDrawDebtCdpGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address, getSActivity().mPrincipal,
                         getSActivity().mCollateralType, getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_REPAY_CDP:
-                new SimulKavaRepayCdpGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address, getSActivity().mPayment,
+                new SimulKavaRepayCdpGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address, getSActivity().mPayment,
                         getSActivity().mCollateralType, getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_DEPOSIT_HARD:
-                new SimulKavaDepositHardGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address, getSActivity().mHardPoolCoins,
+                new SimulKavaDepositHardGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address, getSActivity().mHardPoolCoins,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_WITHDRAW_HARD:
-                new SimulKavaWithdrawHardGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address, getSActivity().mHardPoolCoins,
+                new SimulKavaWithdrawHardGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address, getSActivity().mHardPoolCoins,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_BORROW_HARD:
-                new SimulKavaBorrowHardGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address, getSActivity().mHardPoolCoins,
+                new SimulKavaBorrowHardGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address, getSActivity().mHardPoolCoins,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_REPAY_HARD:
-                new SimulKavaRepayHardGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address, getSActivity().account.address, getSActivity().mHardPoolCoins,
+                new SimulKavaRepayHardGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address, getSActivity().getAccount().address, getSActivity().mHardPoolCoins,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_CLAIM_INCENTIVE:
-                new SimulKavaClaimIncentiveAllGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address, getSActivity().mIncentiveMultiplier, getSActivity().getBaseDao(),
+                new SimulKavaClaimIncentiveAllGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address, getSActivity().mIncentiveMultiplier, getSActivity().getBaseDao(),
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
                 break;
             case CONST_PW_TX_EXECUTE_CONTRACT:
-                new SimulCw20SendGrpcTask(getBaseApplication(), this, getSActivity().account, getSActivity().baseChain, getSActivity().account.address, getSActivity().mToAddress, getSActivity().mContractAddress, getSActivity().mAmounts,
+                new SimulCw20SendGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address, getSActivity().mToAddress, getSActivity().mContractAddress, getSActivity().mAmounts,
                         getSActivity().mTxMemo, getSActivity().mTxFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 break;
         }

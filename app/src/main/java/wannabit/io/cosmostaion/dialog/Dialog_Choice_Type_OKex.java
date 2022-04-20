@@ -11,8 +11,9 @@ import android.widget.LinearLayout;
 
 import androidx.fragment.app.DialogFragment;
 
-import wannabit.io.cosmostaion.R;
 import com.fulldive.wallet.presentation.accounts.restore.PrivateKeyRestoreActivity;
+
+import wannabit.io.cosmostaion.R;
 
 public class Dialog_Choice_Type_OKex extends DialogFragment {
 
@@ -33,24 +34,18 @@ public class Dialog_Choice_Type_OKex extends DialogFragment {
         LinearLayout mOldAddress = view.findViewById(R.id.old_address);
         LinearLayout mNewAddress = view.findViewById(R.id.new_address);
 
-        mOldAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((PrivateKeyRestoreActivity) getActivity()).onCheckOecAddressType(0);
-                dismiss();
-            }
+        mOldAddress.setOnClickListener(v -> {
+            ((PrivateKeyRestoreActivity) getActivity()).onCheckOecAddressType(0);
+            dismiss();
         });
 
-        mNewAddress.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((PrivateKeyRestoreActivity) getActivity()).onCheckOecAddressType(1);
-                dismiss();
-            }
+        mNewAddress.setOnClickListener(v -> {
+            ((PrivateKeyRestoreActivity) getActivity()).onCheckOecAddressType(1);
+            dismiss();
         });
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(view);
-        return builder.create();
+        return new AlertDialog.Builder(getActivity())
+                .setView(view)
+                .create();
     }
 }

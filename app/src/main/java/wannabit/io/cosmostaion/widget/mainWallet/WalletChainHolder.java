@@ -1,5 +1,7 @@
 package wannabit.io.cosmostaion.widget.mainWallet;
 
+import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_PROFILE;
+
 import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,16 +12,28 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
+import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.presentation.main.MainActivity;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
 
+import desmos.profiles.v1beta1.ModelsProfile;
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.MainActivity;
 import wannabit.io.cosmostaion.activities.ValidatorListActivity;
 import wannabit.io.cosmostaion.activities.VoteListActivity;
-import com.fulldive.wallet.models.BaseChain;
+import wannabit.io.cosmostaion.activities.chains.cosmos.GravityListActivity;
+import wannabit.io.cosmostaion.activities.chains.desmos.ProfileActivity;
+import wannabit.io.cosmostaion.activities.chains.desmos.ProfileDetailActivity;
+import wannabit.io.cosmostaion.activities.chains.kava.DAppsList5Activity;
+import wannabit.io.cosmostaion.activities.chains.nft.NFTListActivity;
+import wannabit.io.cosmostaion.activities.chains.osmosis.LabsListActivity;
+import wannabit.io.cosmostaion.activities.chains.sif.SifDexListActivity;
+import wannabit.io.cosmostaion.activities.chains.starname.StarNameListActivity;
 import wannabit.io.cosmostaion.base.BaseData;
+import wannabit.io.cosmostaion.dao.Account;
+import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.BaseHolder;
@@ -58,10 +72,10 @@ public class WalletChainHolder extends BaseHolder {
 
     public void onBindHolder(@NotNull MainActivity mainActivity) {
         final BaseData baseData = mainActivity.getBaseDao();
-        final String denom = mainActivity.baseChain.getMainDenom();
-        final int decimal = mainActivity.baseChain.getDivideDecimal();
-        mTvChainCard.setCardBackgroundColor(WDp.getChainBgColor(mainActivity, mainActivity.baseChain));
-        WUtil.getWalletData(mainActivity.baseChain, mTvChainIcon, mTvChainDenom);
+        final String denom = mainActivity.getBaseChain().getMainDenom();
+        final int decimal = mainActivity.getBaseChain().getDivideDecimal();
+        mTvChainCard.setCardBackgroundColor(WDp.getChainBgColor(mainActivity, mainActivity.getBaseChain()));
+        WUtil.getWalletData(mainActivity.getBaseChain(), mTvChainIcon, mTvChainDenom);
 
         final BigDecimal availableAmount = baseData.getAvailable(denom);
         final BigDecimal vestingAmount = baseData.getVesting(denom);
@@ -84,7 +98,7 @@ public class WalletChainHolder extends BaseHolder {
             mChainVestingLayer.setVisibility(View.GONE);
         }
 
-        mainActivity.getBaseDao().onUpdateLastTotalAccount(mainActivity.account, totalAmount.toPlainString());
+        mainActivity.getBaseDao().onUpdateLastTotalAccount(mainActivity.getAccount(), totalAmount.toPlainString());
 
         mBtnStake.setOnClickListener(v -> {
             Intent validators = new Intent(mainActivity, ValidatorListActivity.class);
@@ -96,16 +110,16 @@ public class WalletChainHolder extends BaseHolder {
         });
 
         // dex, nft, desmos profile setting
-        WUtil.getDexTitle(mainActivity.baseChain, mBtnDex, mBtnDexTitle);
+        WUtil.getDexTitle(mainActivity.getBaseChain(), mBtnDex, mBtnDexTitle);
         mBtnDex.setOnClickListener(v -> {
-            if (mainActivity.baseChain.equals(BaseChain.DESMOS_MAIN.INSTANCE)) {
-                mainActivity.onClickProfile();
+            if (mainActivity.getBaseChain().equals(BaseChain.DESMOS_MAIN.INSTANCE)) {
+                onClickProfile(mainActivity.getBaseDao(), mainActivity.getBaseChain(), mainActivity.getAccount(), mainActivity);
             } else {
-                mainActivity.startActivity(WUtil.getDexIntent(mainActivity, mainActivity.baseChain));
+                mainActivity.startActivity(getDexIntent(mainActivity, mainActivity.getBaseChain()));
             }
         });
 
-        if (mainActivity.baseChain.equals(BaseChain.COSMOS_MAIN.INSTANCE)) {
+        if (mainActivity.getBaseChain().equals(BaseChain.COSMOS_MAIN.INSTANCE)) {
             mBtnWalletConnect.setVisibility(View.VISIBLE);
         } else {
             mBtnWalletConnect.setVisibility(View.GONE);
@@ -113,5 +127,41 @@ public class WalletChainHolder extends BaseHolder {
         mBtnWalletConnect.setOnClickListener(v -> {
             Toast.makeText(mainActivity, R.string.error_prepare, Toast.LENGTH_SHORT).show();
         });
+    }
+
+    public void onClickProfile(BaseData baseDao, BaseChain baseChain, Account account, MainActivity activity) {
+        if (baseDao.mGRpcNodeInfo != null && baseDao.mGRpcAccount != null && baseDao.mGRpcAccount.getTypeUrl().contains(ModelsProfile.Profile.getDescriptor().getFullName())) {
+            Intent airdrop = new Intent(activity, ProfileDetailActivity.class);
+            activity.startActivity(airdrop);
+        } else if (account.hasPrivateKey) {
+            BigDecimal available = baseDao.getAvailable(baseChain.getMainDenom());
+            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(activity, baseChain, CONST_PW_TX_PROFILE, 0);
+            if (available.compareTo(txFee) <= 0) {
+                Toast.makeText(activity, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Intent profile = new Intent(activity, ProfileActivity.class);
+            activity.startActivity(profile);
+        } else {
+            activity.showDialog(Dialog_WatchMode.newInstance());
+        }
+    }
+
+    public static Intent getDexIntent(MainActivity mainActivity, BaseChain chain) {
+        if (chain.equals(BaseChain.COSMOS_MAIN.INSTANCE)) {
+            return new Intent(mainActivity, GravityListActivity.class);
+        } else if (chain.equals(BaseChain.IRIS_MAIN.INSTANCE) || chain.equals(BaseChain.CRYPTO_MAIN.INSTANCE)) {
+            return new Intent(mainActivity, NFTListActivity.class);
+        } else if (chain.equals(BaseChain.IOV_MAIN.INSTANCE)) {
+            return new Intent(mainActivity, StarNameListActivity.class);
+        } else if (chain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
+            return new Intent(mainActivity, DAppsList5Activity.class);
+        } else if (chain.equals(BaseChain.SIF_MAIN.INSTANCE)) {
+            return new Intent(mainActivity, SifDexListActivity.class);
+        } else if (chain.equals(BaseChain.OSMOSIS_MAIN.INSTANCE)) {
+            return new Intent(mainActivity, LabsListActivity.class);
+        } else {
+            return null;
+        }
     }
 }

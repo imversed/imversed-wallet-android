@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -28,7 +30,6 @@ import java.util.ArrayList;
 import kava.swap.v1beta1.QueryOuterClass;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.kava.DepositPoolActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.task.TaskListener;
@@ -132,7 +133,7 @@ public class DepositPoolStep0Fragment extends BaseFragment implements View.OnCli
     private void onInitView() {
         mProgress.setVisibility(View.GONE);
 
-        BigDecimal txFeeAmount = WUtil.getEstimateGasFeeAmount(getSActivity(), getSActivity().baseChain, CONST_PW_TX_KAVA_JOIN_POOL, 0);
+        BigDecimal txFeeAmount = WUtil.getEstimateGasFeeAmount(getSActivity(), getSActivity().getBaseChain(), CONST_PW_TX_KAVA_JOIN_POOL, 0);
         mCoin0Denom = mSwapPool.get(0).getCoins(0).getDenom();
         mCoin1Denom = mSwapPool.get(0).getCoins(1).getDenom();
         mCoin0Decimal = WUtil.getKavaCoinDecimal(getBaseDao(), mCoin0Denom);
@@ -442,7 +443,7 @@ public class DepositPoolStep0Fragment extends BaseFragment implements View.OnCli
 
     public void onFetchPoolInfo() {
         mTaskCount = 1;
-        new KavaSwapPoolInfoGrpcTask(getBaseApplication(), this, getSActivity().baseChain, getSActivity().mKavaSwapPool.getName()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new KavaSwapPoolInfoGrpcTask(getBaseApplication(), this, getSActivity().getBaseChain(), getSActivity().mKavaSwapPool.getName()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override

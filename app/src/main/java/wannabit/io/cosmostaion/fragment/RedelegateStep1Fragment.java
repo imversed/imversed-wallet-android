@@ -88,7 +88,7 @@ public class RedelegateStep1Fragment extends BaseFragment implements View.OnClic
             if (mCheckedGRpcValidator == null) {
                 Toast.makeText(getContext(), R.string.error_no_to_validator, Toast.LENGTH_SHORT).show();
             } else {
-                new ReDelegationsFromToGrpcTask(getBaseApplication(), this, getSActivity().baseChain, getSActivity().account,
+                new ReDelegationsFromToGrpcTask(getBaseApplication(), this, getSActivity().getBaseChain(), getSActivity().getAccount(),
                         getSActivity().mValAddress, mCheckedGRpcValidator.getOperatorAddress()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             }
         }
@@ -123,10 +123,10 @@ public class RedelegateStep1Fragment extends BaseFragment implements View.OnClic
         @Override
         public void onBindViewHolder(@NonNull final ToValidatorHolder holder, final int position) {
             final Staking.Validator mGrpcValidator = mGRpcTopValidators.get(position);
-            holder.itemTvVotingPower.setText(WDp.getDpAmount2(new BigDecimal(mGrpcValidator.getTokens()), getSActivity().baseChain.getDivideDecimal(), 6));
-            holder.itemTvYieldRate.setText(WDp.getDpEstAprCommission(getBaseDao(), getSActivity().baseChain, new BigDecimal(mGrpcValidator.getCommission().getCommissionRates().getRate()).movePointLeft(18)));
+            holder.itemTvVotingPower.setText(WDp.getDpAmount2(new BigDecimal(mGrpcValidator.getTokens()), getSActivity().getBaseChain().getDivideDecimal(), 6));
+            holder.itemTvYieldRate.setText(WDp.getDpEstAprCommission(getBaseDao(), getSActivity().getBaseChain(), new BigDecimal(mGrpcValidator.getCommission().getCommissionRates().getRate()).movePointLeft(18)));
             try {
-                Picasso.get().load(WDp.getMonikerImgUrl(getSActivity().baseChain, mGrpcValidator.getOperatorAddress())).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
+                Picasso.get().load(WDp.getMonikerImgUrl(getSActivity().getBaseChain(), mGrpcValidator.getOperatorAddress())).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
             } catch (Exception e) {
             }
 
@@ -147,7 +147,7 @@ public class RedelegateStep1Fragment extends BaseFragment implements View.OnClic
             }
             holder.itemChecked.setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorGray0), PorterDuff.Mode.SRC_IN);
             if (mCheckedGRpcValidator != null && mGrpcValidator.getOperatorAddress().equals(mCheckedGRpcValidator.getOperatorAddress())) {
-                holder.itemChecked.setColorFilter(WDp.getChainColor(requireContext(), getSActivity().baseChain), PorterDuff.Mode.SRC_IN);
+                holder.itemChecked.setColorFilter(WDp.getChainColor(requireContext(), getSActivity().getBaseChain()), PorterDuff.Mode.SRC_IN);
                 holder.itemCheckedBorder.setVisibility(View.VISIBLE);
                 holder.itemRoot.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorTrans));
             } else {

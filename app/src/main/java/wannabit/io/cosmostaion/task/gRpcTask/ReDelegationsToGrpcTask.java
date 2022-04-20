@@ -2,10 +2,11 @@ package wannabit.io.cosmostaion.task.gRpcTask;
 
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_REDELEGATIONS_TO;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import cosmos.staking.v1beta1.QueryGrpc;
 import cosmos.staking.v1beta1.QueryOuterClass;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.task.CommonTask;

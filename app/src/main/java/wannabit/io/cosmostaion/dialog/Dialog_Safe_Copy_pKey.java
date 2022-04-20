@@ -11,8 +11,9 @@ import android.widget.Button;
 
 import androidx.fragment.app.DialogFragment;
 
-import wannabit.io.cosmostaion.R;
 import com.fulldive.wallet.presentation.security.key.ShowPrivateKeyActivity;
+
+import wannabit.io.cosmostaion.R;
 
 public class Dialog_Safe_Copy_pKey extends DialogFragment {
 

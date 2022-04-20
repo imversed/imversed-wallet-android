@@ -4,9 +4,7 @@ import android.content.Intent
 import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import android.view.WindowManager
-import android.widget.EditText
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.app.ActivityOptionsCompat
@@ -14,13 +12,13 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fulldive.wallet.extensions.getColorCompat
 import com.fulldive.wallet.extensions.unsafeLazy
+import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.base.BaseMvpActivity
 import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity
 import com.fulldive.wallet.presentation.security.password.SetPasswordActivity
 import com.joom.lightsaber.getInstance
 import moxy.ktx.moxyPresenter
 import wannabit.io.cosmostaion.R
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.databinding.ActivityRestoreBinding
 
 class MnemonicRestoreActivity : BaseMvpActivity<ActivityRestoreBinding>(), MnemonicRestoreMoxyView {
@@ -94,18 +92,10 @@ class MnemonicRestoreActivity : BaseMvpActivity<ActivityRestoreBinding>(), Mnemo
                 presenter.onNextKeyClicked()
             }
 
-            mnemonicsContainer
-                .applyToViews<EditText>(EDIT_FIELD_PREFIX, 24) { position, editText ->
-                    editText.showSoftInputOnFocus = false
-                    editText.onFocusChangeListener =
-                        View.OnFocusChangeListener { _: View?, hasFocus: Boolean ->
-                            if (hasFocus) {
-                                presenter.onFieldClicked(position)
-                            }
-                        }
-                }
+            mnemonicsLayout.onFocusChangeListener = { index ->
+                presenter.onFieldClicked(index)
+            }
         }
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -129,32 +119,26 @@ class MnemonicRestoreActivity : BaseMvpActivity<ActivityRestoreBinding>(), Mnemo
                 PorterDuff.Mode.SRC_IN
             )
             contentsLayout.isVisible = true
-            mnemonicsEditText0.requestFocus()
+            mnemonicsLayout.focusOnFirst()
+        }
+    }
+
+    override fun setFieldError(index: Int, isError: Boolean) {
+        binding {
+            mnemonicsLayout.setFieldError(index, isError)
         }
     }
 
     override fun updateField(index: Int, text: String, requestFocus: Boolean) {
         binding {
-            mnemonicsContainer.applyToView<EditText>(EDIT_FIELD_PREFIX, index) { editText ->
-                editText.setText(text)
-                if (requestFocus) {
-                    editText.requestFocus()
-                }
-                editText.setSelection(editText.text.length)
-                mnemonicAdapter?.filter?.filter(text)
-            }
+            mnemonicsLayout.updateField(index, text, requestFocus)
+            mnemonicAdapter?.filter?.filter(text)
         }
     }
 
-    override fun updateFields(items: Array<String>, focusedFieldIndex: Int) {
+    override fun updateFields(items: Array<String>, errors: List<Boolean>, focusedFieldIndex: Int) {
         binding {
-            mnemonicsContainer
-                .applyToViews<EditText>(EDIT_FIELD_PREFIX, items.size) { index, editText ->
-                    editText.setText(items[index])
-                    if (index == focusedFieldIndex) {
-                        editText.requestFocus()
-                    }
-                }
+            mnemonicsLayout.updateFields(items, errors, focusedFieldIndex)
         }
     }
 
@@ -189,44 +173,7 @@ class MnemonicRestoreActivity : BaseMvpActivity<ActivityRestoreBinding>(), Mnemo
             .let(::startActivity)
     }
 
-    private fun <T> View.applyToView(
-        prefix: String,
-        index: Int,
-        block: (T) -> Unit
-    ) {
-        block(
-            findViewById(
-                resources.getIdentifier(
-                    "$prefix$index",
-                    "id",
-                    context.packageName
-                )
-            )
-        )
-    }
-
-    private fun <T> View.applyToViews(
-        prefix: String,
-        count: Int,
-        block: (Int, T) -> Unit
-    ) {
-        for (index in (0 until count)) {
-            block(
-                index,
-                findViewById(
-                    resources.getIdentifier(
-                        "$prefix$index",
-                        "id",
-                        context.packageName
-                    )
-                )
-            )
-        }
-    }
-
     companion object {
         const val KEY_CHAIN = "chain"
-
-        private const val EDIT_FIELD_PREFIX = "mnemonicsEditText"
     }
 }

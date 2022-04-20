@@ -20,6 +20,7 @@ import android.util.Base64;
 
 import com.binance.dex.api.client.domain.broadcast.HtltReq;
 import com.binance.dex.api.client.encoding.message.Token;
+import com.fulldive.wallet.models.BaseChain;
 
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.core.Sha256Hash;
@@ -35,7 +36,6 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.crypto.Sha256;
 import wannabit.io.cosmostaion.dao.Account;

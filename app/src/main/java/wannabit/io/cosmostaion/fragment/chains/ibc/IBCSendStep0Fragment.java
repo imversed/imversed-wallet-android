@@ -17,13 +17,14 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.ibc.IBCSendActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.dao.IbcPath;
 import wannabit.io.cosmostaion.dao.IbcToken;
@@ -138,7 +139,7 @@ public class IBCSendStep0Fragment extends BaseFragment implements View.OnClickLi
             mToChainLayer.setBackgroundResource(R.drawable.btn_trans_with_border);
             mDialogImg.setVisibility(View.VISIBLE);
         }
-        BaseChain chain = getSActivity().baseChain;
+        BaseChain chain = getSActivity().getBaseChain();
         mFromChainImg.setImageResource(chain.getChainIcon());
         mFromChainTv.setText(chain.getChainAlterTitle());
 

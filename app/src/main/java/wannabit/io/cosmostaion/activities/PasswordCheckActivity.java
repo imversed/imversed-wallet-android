@@ -2,7 +2,6 @@ package wannabit.io.cosmostaion.activities;
 
 import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
 import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
-import static com.fulldive.wallet.models.BaseChain.getChain;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_CHECK_MNEMONIC;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_CHECK_PRIVATE_KEY;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_PURPOSE;
@@ -80,6 +79,7 @@ import android.widget.Toast;
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.interactors.secret.InvalidPasswordException;
 import com.fulldive.wallet.interactors.secret.SecretInteractor;
+import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.security.key.ShowPrivateKeyActivity;
 import com.fulldive.wallet.presentation.security.mnemonic.ShowMnemonicActivity;
 import com.fulldive.wallet.presentation.system.keyboard.KeyboardListener;
@@ -105,7 +105,6 @@ import starnamed.x.starname.v1beta1.Types;
 import tendermint.liquidity.v1beta1.Liquidity;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.ITimelessActivity;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dao.Account;
@@ -311,10 +310,6 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
 
         mPurpose = getIntent().getIntExtra(CONST_PW_PURPOSE, CONST_PW_SIMPLE_CHECK);
 
-        if (mPurpose != CONST_PW_SIMPLE_CHECK) {
-            account = getBaseDao().getAccount(getBaseDao().getLastUser());
-            baseChain = getChain(account.baseChain);
-        }
         mTargetAddress = getIntent().getStringExtra("toAddress");
         mTargetCoins = getIntent().getParcelableArrayListExtra("amount");
         mTargetMemo = getIntent().getStringExtra("memo");
@@ -490,152 +485,152 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
 
                 break;
             case CONST_PW_CHECK_MNEMONIC:
-                fetchEntropy(ShowMnemonicActivity.class);
+                fetchEntropy(ShowMnemonicActivity.class, true);
 
                 break;
             case CONST_PW_CHECK_PRIVATE_KEY:
-                fetchEntropy(ShowPrivateKeyActivity.class);
+                fetchEntropy(ShowPrivateKeyActivity.class, false);
 
                 break;
             case CONST_PW_TX_SIMPLE_SEND:
                 showWaitDialog();
-                if (baseChain.isGRPC()) {
-                    new SendGrpcTask(getBaseApplication(), this, baseChain, account, mTargetAddress, mTargetCoins, mTargetMemo, mTargetFee,
+                if (getBaseChain().isGRPC()) {
+                    new SendGrpcTask(getBaseApplication(), this, getBaseChain(), getAccount(), mTargetAddress, mTargetCoins, mTargetMemo, mTargetFee,
                             getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
-                } else if (baseChain.equals(BNB_MAIN.INSTANCE)) {
-                    new SimpleBnbSendTask(getBaseApplication(), this, account, mTargetAddress, mTargetCoins, mTargetMemo, mTargetFee)
+                } else if (getBaseChain().equals(BNB_MAIN.INSTANCE)) {
+                    new SimpleBnbSendTask(getBaseApplication(), this, getAccount(), mTargetAddress, mTargetCoins, mTargetMemo, mTargetFee)
                             .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 } else {
-                    new SimpleSendTask(getBaseApplication(), this, account, mTargetAddress, mTargetCoins, mTargetMemo, mTargetFee)
+                    new SimpleSendTask(getBaseApplication(), this, getAccount(), mTargetAddress, mTargetCoins, mTargetMemo, mTargetFee)
                             .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
                 }
 
                 break;
             case CONST_PW_TX_SIMPLE_DELEGATE:
                 showWaitDialog();
-                new DelegateGrpcTask(getBaseApplication(), this, baseChain, account, mTargetAddress, mDAmount, mTargetMemo, mTargetFee,
+                new DelegateGrpcTask(getBaseApplication(), this, getBaseChain(), getAccount(), mTargetAddress, mDAmount, mTargetMemo, mTargetFee,
                         getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_SIMPLE_UNDELEGATE:
                 showWaitDialog();
-                new UndelegateGrpcTask(getBaseApplication(), this, baseChain, account, mTargetAddress, mUAmount, mTargetMemo, mTargetFee,
+                new UndelegateGrpcTask(getBaseApplication(), this, getBaseChain(), getAccount(), mTargetAddress, mUAmount, mTargetMemo, mTargetFee,
                         getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_SIMPLE_REWARD:
                 showWaitDialog();
-                new ClaimRewardsGrpcTask(getBaseApplication(), this, baseChain, account, mValOpAddresses_V1, mTargetMemo, mTargetFee,
+                new ClaimRewardsGrpcTask(getBaseApplication(), this, getBaseChain(), getAccount(), mValOpAddresses_V1, mTargetMemo, mTargetFee,
                         getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_SIMPLE_REDELEGATE:
                 showWaitDialog();
-                new RedelegateGrpcTask(getBaseApplication(), this, baseChain, account, mFromReDelegateAddr, mToReDelegateAddr, mRAmount, mTargetMemo, mTargetFee,
+                new RedelegateGrpcTask(getBaseApplication(), this, getBaseChain(), getAccount(), mFromReDelegateAddr, mToReDelegateAddr, mRAmount, mTargetMemo, mTargetFee,
                         getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_SIMPLE_CHANGE_REWARD_ADDRESS:
                 showWaitDialog();
-                new ChangeRewardAddressGrpcTask(getBaseApplication(), this, baseChain, account, mNewRewardAddress, mTargetMemo, mTargetFee,
+                new ChangeRewardAddressGrpcTask(getBaseApplication(), this, getBaseChain(), getAccount(), mNewRewardAddress, mTargetMemo, mTargetFee,
                         getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_REINVEST:
                 showWaitDialog();
-                new ReInvestGrpcTask(getBaseApplication(), this, baseChain, account, mReInvestValAddr, mReInvestAmount, mTargetMemo, mTargetFee,
+                new ReInvestGrpcTask(getBaseApplication(), this, getBaseChain(), getAccount(), mReInvestValAddr, mReInvestAmount, mTargetMemo, mTargetFee,
                         getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_VOTE:
                 showWaitDialog();
-                new VoteGrpcTask(getBaseApplication(), this, baseChain, account, mProposalId, mOpinion, mTargetMemo, mTargetFee,
+                new VoteGrpcTask(getBaseApplication(), this, getBaseChain(), getAccount(), mProposalId, mOpinion, mTargetMemo, mTargetFee,
                         getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_HTLS_REFUND:
                 showWaitDialog();
-                if (baseChain.equals(BNB_MAIN.INSTANCE)) {
-                    new SimpleBnbHtlcRefundTask(getBaseApplication(), this, account,
+                if (getBaseChain().equals(BNB_MAIN.INSTANCE)) {
+                    new SimpleBnbHtlcRefundTask(getBaseApplication(), this, getAccount(),
                             mSwapId, mTargetMemo).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
-                } else if (baseChain.equals(KAVA_MAIN.INSTANCE)) {
-                    new SimpleHtlcRefundTask(getBaseApplication(), this, account, mSwapId,
+                } else if (getBaseChain().equals(KAVA_MAIN.INSTANCE)) {
+                    new SimpleHtlcRefundTask(getBaseApplication(), this, getAccount(), mSwapId,
                             mTargetMemo, mTargetFee).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
                 }
 
                 break;
             case CONST_PW_TX_OK_DEPOSIT:
-                new SimpleOkDepositTask(getBaseApplication(), this, account, mOkStakeCoin, mTargetMemo, mTargetFee).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
+                new SimpleOkDepositTask(getBaseApplication(), this, getAccount(), mOkStakeCoin, mTargetMemo, mTargetFee).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_OK_WITHDRAW:
-                new SimpleOkWithdrawTask(getBaseApplication(), this, account, mOkStakeCoin, mTargetMemo, mTargetFee).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
+                new SimpleOkWithdrawTask(getBaseApplication(), this, getAccount(), mOkStakeCoin, mTargetMemo, mTargetFee).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_OK_DIRECT_VOTE:
-                new SimpleOkDirectVoteTask(getBaseApplication(), this, account, mOKVoteValidator, mTargetMemo, mTargetFee).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
+                new SimpleOkDirectVoteTask(getBaseApplication(), this, getAccount(), mOKVoteValidator, mTargetMemo, mTargetFee).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_REGISTER_DOMAIN:
-                new RegisterDomainGrpcTask(getBaseApplication(), this, account, baseChain,
+                new RegisterDomainGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(),
                         mDomain, mDomainType, mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_REGISTER_ACCOUNT:
-                new RegisterAccountGrpcTask(getBaseApplication(), this, account, baseChain, mDomain,
+                new RegisterAccountGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), mDomain,
                         mName, mResources, mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_DELETE_DOMAIN:
-                new DeleteDomainGrpcTask(getBaseApplication(), this, account, baseChain,
+                new DeleteDomainGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(),
                         mDomain, mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_DELETE_ACCOUNT:
-                new DeleteAccountGrpcTask(getBaseApplication(), this, account, baseChain,
+                new DeleteAccountGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(),
                         mDomain, mName, mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_RENEW_DOMAIN:
-                new RenewDomainGrpcTask(getBaseApplication(), this, account, baseChain,
+                new RenewDomainGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(),
                         mDomain, mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_RENEW_ACCOUNT:
-                new RenewAccountGrpcTask(getBaseApplication(), this, account, baseChain, mDomain,
+                new RenewAccountGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), mDomain,
                         mName, mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_REPLACE_STARNAME:
-                new ReplaceStarNameGrpcTask(getBaseApplication(), this, account, baseChain, mDomain,
+                new ReplaceStarNameGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), mDomain,
                         mName, mResources, mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_CLAIM_HARVEST_REWARD:
-                new SimpleClaimHarvestRewardTask(getBaseApplication(), this, account, mMultiplierName,
+                new SimpleClaimHarvestRewardTask(getBaseApplication(), this, getAccount(), mMultiplierName,
                         mTargetMemo, mTargetFee).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_OSMOSIS_SWAP:
-                new OsmosisSwapInTask(getBaseApplication(), this, account, baseChain, mSwapAmountInRoute, mSwapInCoin, mSwapOutCoin,
+                new OsmosisSwapInTask(getBaseApplication(), this, getAccount(), getBaseChain(), mSwapAmountInRoute, mSwapInCoin, mSwapOutCoin,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_OSMOSIS_JOIN_POOL:
-                new OsmosisJoinPoolGrpcTask(getBaseApplication(), this, account, baseChain, Long.parseLong(mPoolId), mPoolCoin0, mPoolCoin1, mLpToken.amount,
+                new OsmosisJoinPoolGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), Long.parseLong(mPoolId), mPoolCoin0, mPoolCoin1, mLpToken.amount,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_OSMOSIS_EXIT_POOL:
-                new OsmosisExitPooGrpcTask(getBaseApplication(), this, account, baseChain, Long.parseLong(mPoolId), mPoolCoin0, mPoolCoin1, mLpToken.amount,
+                new OsmosisExitPooGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), Long.parseLong(mPoolId), mPoolCoin0, mPoolCoin1, mLpToken.amount,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_OSMOSIS_EARNING:
-                new OsmosisStartLockGrpcTask(getBaseApplication(), this, account, baseChain, mOsmosisLockupDuration, mLpToken,
+                new OsmosisStartLockGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), mOsmosisLockupDuration, mLpToken,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
@@ -644,46 +639,46 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
                 for (Lock.PeriodLock lockup : mOsmosisLockups) {
                     tempList.add(lockup.getID());
                 }
-                new OsmosisBeginUnbondingGrpcTask(getBaseApplication(), this, account, baseChain, tempList,
+                new OsmosisBeginUnbondingGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), tempList,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_GDEX_SWAP:
                 BigDecimal offerFee = new BigDecimal(mSwapInCoin.amount).multiply(new BigDecimal("0.0015")).setScale(0, RoundingMode.CEILING);
                 Coin coinFee = new Coin(mSwapInCoin.denom, offerFee.toPlainString());
-                new GravitySwapGrpcTask(getBaseApplication(), this, account, baseChain,
+                new GravitySwapGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(),
                         mGDexPool.getId(), mSwapInCoin, mSwapOutCoin.denom, coinFee, mGDexSwapOrderPrice, mTargetMemo, mTargetFee,
                         getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_GDEX_DEPOSIT:
-                new GravityDepositGrpcTask(getBaseApplication(), this, account, baseChain, Long.parseLong(mPoolId), mPoolCoin0, mPoolCoin1,
+                new GravityDepositGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), Long.parseLong(mPoolId), mPoolCoin0, mPoolCoin1,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_GDEX_WITHDRAW:
-                new GravityWithdrawGrpcTask(getBaseApplication(), this, account, baseChain, Long.parseLong(mPoolId), mLpToken,
+                new GravityWithdrawGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), Long.parseLong(mPoolId), mLpToken,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_IBC_TRANSFER:
-                new IBCTransferGrpcTask(getBaseApplication(), this, account, baseChain, account.address, mTargetAddress, mTargetCoins.get(0).denom, mTargetCoins.get(0).amount,
+                new IBCTransferGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, mTargetAddress, mTargetCoins.get(0).denom, mTargetCoins.get(0).amount,
                         mPortId, mChannelId, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_SIF_CLAIM_INCENTIVE:
-                new SifIncentiveGrpcTask(getBaseApplication(), this, account, baseChain, account.address,
+                new SifIncentiveGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_SIF_SWAP:
-                new SifSwapGrpcTask(getBaseApplication(), this, account, baseChain, account.address,
+                new SifSwapGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address,
                         mSifSwapInCoin.denom, mSifSwapInCoin.amount, mSifSwapOutCoin.denom, mSifSwapOutCoin.amount,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_SIF_JOIN_POOL:
-                new SifDepositGrpcTask(getBaseApplication(), this, account, baseChain, account.address, mSifDepositCoin1.denom, mSifDepositCoin0.amount, mSifDepositCoin1.amount,
+                new SifDepositGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, mSifDepositCoin1.denom, mSifDepositCoin0.amount, mSifDepositCoin1.amount,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
@@ -691,21 +686,21 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
                 BigDecimal myShareAllAmount = new BigDecimal(mMyprovider.getLiquidityProvider().getLiquidityProviderUnits());
                 BigDecimal myShareWithdrawAmount = new BigDecimal(mSifWithdrawCoin.amount);
                 String basisPoint = myShareWithdrawAmount.movePointRight(4).divide(myShareAllAmount, 0, RoundingMode.DOWN).toPlainString();
-                new SifWithdrawGrpcTask(getBaseApplication(), this, account, baseChain, account.address, mSifWithdrawCoin.denom, basisPoint,
+                new SifWithdrawGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, mSifWithdrawCoin.denom, basisPoint,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_MINT_NFT:
-                StationNFTData nftData = new StationNFTData(account.address, mNftName, mNftDescription, mNftDenomId, NFT_INFURA + mNftHash);
+                StationNFTData nftData = new StationNFTData(getAccount().address, mNftName, mNftDescription, mNftDenomId, NFT_INFURA + mNftHash);
                 Gson gson = new Gson();
                 String jsonData = gson.toJson(nftData);
-                new MintNFTGrpcTask(getBaseApplication(), this, account, baseChain, account.address,
+                new MintNFTGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address,
                         mNftDenomId, mNftDenomName, mNftHash.toLowerCase(), mNftName, NFT_INFURA + mNftHash, jsonData,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_SEND_NFT:
-                new TransferNFTGrpcTask(getBaseApplication(), this, account, baseChain, account.address,
+                new TransferNFTGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address,
                         mTargetAddress, mNftDenomId, mNftTokenId, mIrisResponse, mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
@@ -718,8 +713,8 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
                 if (mCoverUri != null) {
                     coverUri = "https://ipfs.infura.io/ipfs/" + mCoverUri;
                 }
-                new CreateProfileGrpcTask(getBaseApplication(), this, account, baseChain, mDtag, mNickname, mBio, profileUri, coverUri,
-                        account.address, mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
+                new CreateProfileGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), mDtag, mNickname, mBio, profileUri, coverUri,
+                        getAccount().address, mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_LINK_ACCOUNT:
@@ -733,81 +728,81 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
                     String privateKey = CryptoHelper.doDecryptData(getString(R.string.key_private) + toAccount.uuid, toAccount.resource, toAccount.spec);
                     ecKey = ECKey.fromPrivate(new BigInteger(privateKey, 16));
                 }
-                new LinkAccountGrpcTask(getBaseApplication(), this, account, baseChain, account.address, BaseChain.getChain(mDesmosToLinkChain),
+                new LinkAccountGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, BaseChain.getChain(mDesmosToLinkChain),
                         toAccount, ecKey, mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_KAVA_SWAP:
-                new KavaSwapGrpcTask(getBaseApplication(), this, account, baseChain, account.address, mKavaSwapin, mKavaSwapOut,
+                new KavaSwapGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, mKavaSwapin, mKavaSwapOut,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_KAVA_JOIN_POOL:
-                new KavaDepositGrpcTask(getBaseApplication(), this, account, baseChain, account.address, mKavaPoolTokenA, mKavaPoolTokenB,
+                new KavaDepositGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, mKavaPoolTokenA, mKavaPoolTokenB,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_KAVA_EXIT_POOL:
-                new KavaWithdrawGrpcTask(getBaseApplication(), this, account, baseChain, account.address, mKavaShareAmount, mKavaMinTokenA, mKavaMinTokenB,
+                new KavaWithdrawGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, mKavaShareAmount, mKavaMinTokenA, mKavaMinTokenB,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_CREATE_CDP:
-                new KavaCreateCdpGrpcTask(getBaseApplication(), this, account, baseChain, account.address, mCollateral, mPrincipal, mCollateralType,
+                new KavaCreateCdpGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, mCollateral, mPrincipal, mCollateralType,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_DEPOSIT_CDP:
-                new KavaDepositCdpGrpcTask(getBaseApplication(), this, account, baseChain, account.address, account.address, mCollateral, mCollateralType,
+                new KavaDepositCdpGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, getAccount().address, mCollateral, mCollateralType,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_WITHDRAW_CDP:
-                new KavaWithdrawCdpGrpcTask(getBaseApplication(), this, account, baseChain, account.address, account.address, mCollateral, mCollateralType,
+                new KavaWithdrawCdpGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, getAccount().address, mCollateral, mCollateralType,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_DRAW_DEBT_CDP:
-                new KavaDrawDebtCdpGrpcTask(getBaseApplication(), this, account, baseChain, account.address, mPrincipal, mCollateralType,
+                new KavaDrawDebtCdpGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, mPrincipal, mCollateralType,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_REPAY_CDP:
-                new KavaRepayCdpGrpcTask(getBaseApplication(), this, account, baseChain, account.address, mPayment, mCollateralType,
+                new KavaRepayCdpGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, mPayment, mCollateralType,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_DEPOSIT_HARD:
-                new KavaDepositHardGrpcTask(getBaseApplication(), this, account, baseChain, account.address, mHardPoolCoins,
+                new KavaDepositHardGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, mHardPoolCoins,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_WITHDRAW_HARD:
-                new KavaWithdrawHardGrpcTask(getBaseApplication(), this, account, baseChain, account.address, mHardPoolCoins,
+                new KavaWithdrawHardGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, mHardPoolCoins,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_BORROW_HARD:
-                new KavaBorrowHardGrpcTask(getBaseApplication(), this, account, baseChain, account.address, mHardPoolCoins,
+                new KavaBorrowHardGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, mHardPoolCoins,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_REPAY_HARD:
-                new KavaRepayHardGrpcTask(getBaseApplication(), this, account, baseChain, account.address, account.address, mHardPoolCoins,
+                new KavaRepayHardGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, getAccount().address, mHardPoolCoins,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_CLAIM_INCENTIVE:
-                new KavaClaimIncentiveAllGrpcTask(getBaseApplication(), this, account, baseChain, account.address, mMultiplierName, getBaseDao(),
+                new KavaClaimIncentiveAllGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, mMultiplierName, getBaseDao(),
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
 
                 break;
             case CONST_PW_TX_EXECUTE_CONTRACT:
-                new Cw20SendGrpcTask(getBaseApplication(), this, account, baseChain, account.address, mTargetAddress, mContractAddress, mTargetCoins,
+                new Cw20SendGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, mTargetAddress, mContractAddress, mTargetCoins,
                         mTargetMemo, mTargetFee, getBaseDao().getChainIdGrpc()).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
                 break;
             case CONST_PW_TX_RIZON_SWAP:
-                new HdacBurnTask(getBaseApplication(), this, baseChain, mHdacBurnRawTx).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
+                new HdacBurnTask(getBaseApplication(), this, getBaseChain(), mHdacBurnRawTx).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
                 break;
         }
     }
@@ -840,15 +835,21 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
         compositeDisposable.add(disposable);
     }
 
-    private void fetchEntropy(Class<?> cls) {
+    private void fetchEntropy(Class<?> cls, boolean fromMnemonic) {
         showWaitDialog();
 
         Disposable disposable = secretInteractor
                 .checkPassword(userInput)
                 .andThen(accountsInteractor.getAccount(mIdToCheck))
-                .flatMap(account ->
-                        secretInteractor.entropyToMnemonic(account.uuid, account.resource, account.spec)
+                .flatMap(account -> {
+                            if (fromMnemonic) {
+                                return secretInteractor.entropyToMnemonic(account.uuid, account.resource, account.spec);
+                            } else {
+                                return secretInteractor.entropyToPrivateKey(account.uuid, account.resource, account.spec);
+                            }
+                        }
                 )
+                .doOnSuccess(a -> WLog.w("step 3: " + a))
                 .subscribeOn(AppSchedulers.INSTANCE.io())
                 .observeOn(AppSchedulers.INSTANCE.ui())
                 .doOnError(error -> WLog.e(error.toString()))
@@ -860,6 +861,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
                             startActivity(checkintent);
                         },
                         error -> {
+                            error.printStackTrace();
                             hideWaitDialog();
                             onShakeView();
                             onInitView();
@@ -917,7 +919,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
             return;
         }
 
-        if ((baseChain.equals(BNB_MAIN.INSTANCE)) && result.taskType == TASK_GEN_TX_BNB_HTLC_REFUND) {
+        if ((getBaseChain().equals(BNB_MAIN.INSTANCE)) && result.taskType == TASK_GEN_TX_BNB_HTLC_REFUND) {
             Intent txIntent = new Intent(PasswordCheckActivity.this, TxDetailActivity.class);
             txIntent.putExtra("isGen", true);
             txIntent.putExtra("isSuccess", result.isSuccess);
@@ -928,7 +930,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
                 txIntent.putExtra("txHash", hash);
             startActivity(txIntent);
 
-        } else if (baseChain.isGRPC()) {
+        } else if (getBaseChain().isGRPC()) {
             Intent txIntent = new Intent(PasswordCheckActivity.this, TxDetailgRPCActivity.class);
             txIntent.putExtra("isGen", true);
             txIntent.putExtra("isSuccess", result.isSuccess);

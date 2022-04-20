@@ -6,11 +6,11 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fulldive.wallet.extensions.unsafeLazy
 import com.fulldive.wallet.interactors.secret.MnemonicUtils
+import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.base.BaseMvpActivity
+import com.fulldive.wallet.presentation.main.MainActivity
 import com.joom.lightsaber.getInstance
 import moxy.ktx.moxyPresenter
-import wannabit.io.cosmostaion.activities.MainActivity
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.databinding.ActivityRestorePathBinding
 
 class RestorePathActivity : BaseMvpActivity<ActivityRestorePathBinding>(), RestorePathMoxyView {
