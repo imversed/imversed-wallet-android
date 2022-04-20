@@ -3,13 +3,14 @@ package wannabit.io.cosmostaion.task.gRpcTask;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_PROFILE_INFO;
 import static wannabit.io.cosmostaion.network.ChannelBuilder.TIME_OUT;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.util.concurrent.TimeUnit;
 
 import desmos.profiles.v1beta1.ModelsProfile;
 import desmos.profiles.v1beta1.QueryGrpc;
 import desmos.profiles.v1beta1.QueryProfile;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.task.CommonTask;
 import wannabit.io.cosmostaion.task.TaskListener;

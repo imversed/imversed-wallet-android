@@ -3,6 +3,8 @@ package wannabit.io.cosmostaion.task.gRpcTask;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_TOTAL_SUPPLY;
 import static wannabit.io.cosmostaion.network.ChannelBuilder.TIME_OUT;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -11,7 +13,6 @@ import cosmos.bank.v1beta1.QueryOuterClass;
 import cosmos.base.query.v1beta1.Pagination;
 import cosmos.base.v1beta1.CoinOuterClass;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.task.CommonTask;
 import wannabit.io.cosmostaion.task.TaskListener;

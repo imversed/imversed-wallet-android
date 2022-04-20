@@ -29,12 +29,12 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import wannabit.io.cosmostaion.R;
-import com.fulldive.wallet.models.BaseChain;
 
 public class Dialog_Htlc_Send_Coin extends DialogFragment {
 

@@ -3,6 +3,7 @@ package wannabit.io.cosmostaion.network;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -18,7 +19,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
 import wannabit.io.cosmostaion.BuildConfig;
 import wannabit.io.cosmostaion.R;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.utils.WLog;
 
 public class ApiClient {

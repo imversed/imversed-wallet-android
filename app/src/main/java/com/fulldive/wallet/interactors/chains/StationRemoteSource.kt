@@ -3,9 +3,9 @@ package com.fulldive.wallet.interactors.chains
 import android.content.Context
 import com.fulldive.wallet.di.modules.DefaultLocalStorageModule
 import com.fulldive.wallet.extensions.safeSingle
+import com.fulldive.wallet.models.BaseChain
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Single
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dao.ChainParam
 import wannabit.io.cosmostaion.dao.IbcPath
 import wannabit.io.cosmostaion.dao.IbcToken

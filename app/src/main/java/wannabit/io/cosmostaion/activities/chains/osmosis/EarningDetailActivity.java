@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.chains.osmo.OsmoLockupDurationDialogFragment;
 import com.fulldive.wallet.presentation.chains.osmo.OsmoUnbondingAllDialogFragment;
 import com.fulldive.wallet.presentation.chains.osmo.OsmoUnlockAll;
@@ -35,7 +36,6 @@ import osmosis.incentives.GaugeOuterClass;
 import osmosis.lockup.Lock;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.utils.OsmosisGaugeWrapper;

@@ -123,6 +123,12 @@ class MnemonicRestoreActivity : BaseMvpActivity<ActivityRestoreBinding>(), Mnemo
         }
     }
 
+    override fun setFieldError(index: Int, isError: Boolean) {
+        binding {
+            mnemonicsLayout.setFieldError(index, isError)
+        }
+    }
+
     override fun updateField(index: Int, text: String, requestFocus: Boolean) {
         binding {
             mnemonicsLayout.updateField(index, text, requestFocus)
@@ -130,9 +136,9 @@ class MnemonicRestoreActivity : BaseMvpActivity<ActivityRestoreBinding>(), Mnemo
         }
     }
 
-    override fun updateFields(items: Array<String>, focusedFieldIndex: Int) {
+    override fun updateFields(items: Array<String>, errors: List<Boolean>, focusedFieldIndex: Int) {
         binding {
-            mnemonicsLayout.updateFields(items, focusedFieldIndex)
+            mnemonicsLayout.updateFields(items, errors, focusedFieldIndex)
         }
     }
 

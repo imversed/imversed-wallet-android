@@ -43,8 +43,6 @@ public class BaseConstant {
     public final static int TASK_GEN_TX_KAVA_CLAIM_HARVEST = 2109;
     public final static int TASK_FETCH_KAVA_HARD_MODULE_ACCOUNT = 2123;
     public final static int TASK_FETCH_NODE_INFO = 2126;
-    public final static int TASK_INIT_PKEY_ACCOUNT = 2136;
-    public final static int TASK_OVERRIDE_PKEY_ACCOUNT = 2137;
 
     public final static int TASK_FETCH_API_STAKE_HISTORY = 2301;
 
@@ -59,7 +57,6 @@ public class BaseConstant {
 
 
     //gRPC
-    public final static int TASK_GRPC_FETCH_BALANCE = 4001;
     public final static int TASK_GRPC_FETCH_BONDED_VALIDATORS = 4002;
     public final static int TASK_GRPC_FETCH_DELEGATIONS = 4005;
     public final static int TASK_GRPC_FETCH_UNDELEGATIONS = 4006;

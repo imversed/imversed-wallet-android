@@ -69,6 +69,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityOptionsCompat;
 
 import com.addisonelliott.segmentedbutton.SegmentedButtonGroup;
+import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
 import com.google.gson.Gson;
 
@@ -84,7 +85,6 @@ import cosmos.base.abci.v1beta1.Abci;
 import osmosis.lockup.Lock;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseBroadCastActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dao.Account;

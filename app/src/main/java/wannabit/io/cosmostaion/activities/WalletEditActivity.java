@@ -17,12 +17,13 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.utils.WDp;
 
 public class WalletEditActivity extends BaseActivity implements View.OnClickListener {

@@ -112,6 +112,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import com.fulldive.wallet.interactors.secret.WalletUtils;
+import com.fulldive.wallet.models.BaseChain;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -141,7 +142,6 @@ import kava.cdp.v1beta1.Genesis;
 import kava.cdp.v1beta1.QueryOuterClass;
 import osmosis.gamm.poolmodels.balancer.BalancerPool;
 import wannabit.io.cosmostaion.R;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.dao.Assets;

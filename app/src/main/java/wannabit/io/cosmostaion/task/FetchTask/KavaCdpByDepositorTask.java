@@ -1,8 +1,9 @@
 package wannabit.io.cosmostaion.task.FetchTask;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import retrofit2.Response;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.network.ApiClient;
 import wannabit.io.cosmostaion.network.res.ResCdpDepositStatus;

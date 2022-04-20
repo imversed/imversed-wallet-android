@@ -17,6 +17,7 @@ import wannabit.io.cosmostaion.dialog.*
 import java.util.*
 import javax.inject.Inject
 import kotlin.math.max
+import kotlin.math.min
 
 @ProvidedBy(DefaultPresentersModule::class)
 class MnemonicRestorePresenter @Inject constructor(
@@ -73,20 +74,18 @@ class MnemonicRestorePresenter @Inject constructor(
             fields[currentField] = text
             updateField(currentField, text, false)
         } else if (currentField > 0) {
-            --currentField
-            updateField(currentField, fields[currentField], true)
+            selectField(currentField - 1)
         }
     }
 
     fun onFieldClicked(position: Int) {
-        currentField = position
-        updateField(currentField, fields[currentField], true)
+        selectField(position)
     }
 
     fun onClearAllClicked() {
         currentField = 0
         fields.fill("")
-        viewState.updateFields(fields, currentField)
+        viewState.updateFields(fields, emptyList(), currentField)
         updateWordsCount()
     }
 
@@ -105,11 +104,13 @@ class MnemonicRestorePresenter @Inject constructor(
             .compositeSubscribe(
                 onSuccess = { words ->
                     val wordsArray = words.toTypedArray()
-                    if (secretInteractor.isValidMnemonicWords(wordsArray)) {
+                    if (wordsArray.isNotEmpty()) {
+                        val errors = secretInteractor.checkMnemonicWords(wordsArray)
                         fields.fill("")
-                        wordsArray.copyInto(fields)
-                        currentField = max(0, wordsArray.size - 1)
-                        viewState.updateFields(fields, currentField)
+                        val maxIndex = min(wordsArray.size, WORDS_COUNT)
+                        wordsArray.copyInto(fields, startIndex = 0, endIndex = maxIndex)
+                        currentField = max(0, maxIndex - 1)
+                        viewState.updateFields(fields, errors.subList(0, maxIndex), currentField)
                         updateWordsCount()
                     } else {
                         viewState.showMessage(R.string.error_clipboard_no_data)
@@ -214,9 +215,20 @@ class MnemonicRestorePresenter @Inject constructor(
 
     private fun nextField() {
         if (currentField < WORDS_COUNT - 1) {
-            ++currentField
-            updateField(currentField, fields[currentField], true)
+            selectField(currentField + 1)
         }
+    }
+
+    private fun selectField(index: Int) {
+        if (currentField != index) {
+            val text = fields[currentField].trim()
+            viewState.setFieldError(
+                currentField,
+                text.isNotEmpty() && !secretInteractor.isValidMnemonicWord(text)
+            )
+        }
+        currentField = index
+        updateField(currentField, fields[currentField], true)
     }
 
     private fun updateWordsCount() {

@@ -15,11 +15,11 @@ import com.fulldive.wallet.extensions.orFalse
 import com.fulldive.wallet.extensions.unsafeLazy
 import com.fulldive.wallet.interactors.ScreensInteractor
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
+import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.accounts.AddAccountDialogFragment
 import com.fulldive.wallet.presentation.base.BaseMvpDialogFragment
 import com.joom.lightsaber.getInstance
 import wannabit.io.cosmostaion.R
-import com.fulldive.wallet.models.BaseChain
 
 
 class ChoiceChainDialogFragment : BaseMvpDialogFragment() {

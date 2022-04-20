@@ -3,12 +3,12 @@ package com.fulldive.wallet.interactors.chains.grpc
 import com.fulldive.wallet.di.modules.DefaultRepositoryModule
 import com.fulldive.wallet.extensions.safe
 import com.fulldive.wallet.extensions.safeSingle
+import com.fulldive.wallet.models.BaseChain
 import com.joom.lightsaber.ProvidedBy
 import cosmos.staking.v1beta1.Staking
 import io.reactivex.Completable
 import io.reactivex.Single
 import tendermint.p2p.Types
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.dao.Cw20Assets

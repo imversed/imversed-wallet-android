@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
@@ -21,7 +22,6 @@ import kava.hard.v1beta1.Hard;
 import kava.hard.v1beta1.QueryOuterClass;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.kava.HardDetailActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.model.kava.IncentiveReward;
 import wannabit.io.cosmostaion.model.type.Coin;

@@ -29,6 +29,7 @@ import androidx.core.content.ContextCompat;
 
 import com.fulldive.wallet.extensions.ChainExtensionsKt;
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
+import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.fulldive.wallet.presentation.accounts.DeleteConfirmDialogFragment;
 import com.fulldive.wallet.presentation.accounts.restore.MnemonicRestoreActivity;
@@ -40,7 +41,6 @@ import com.fulldive.wallet.rx.AppSchedulers;
 import io.reactivex.disposables.Disposable;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.dialog.Dialog_ChangeNickName;
 import wannabit.io.cosmostaion.dialog.Dialog_RewardAddressChangeInfo;

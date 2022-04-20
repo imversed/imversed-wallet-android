@@ -2,9 +2,10 @@ package wannabit.io.cosmostaion.task.SimpleBroadTxTask;
 
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_HDAC_BROAD_BURN;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import retrofit2.Response;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.ApiClient;
 import wannabit.io.cosmostaion.network.req.ReqHdacBurn;
 import wannabit.io.cosmostaion.network.res.ResHdacBurn;

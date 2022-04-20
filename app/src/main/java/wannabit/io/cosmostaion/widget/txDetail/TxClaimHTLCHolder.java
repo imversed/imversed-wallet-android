@@ -8,6 +8,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,7 +17,6 @@ import cosmos.base.abci.v1beta1.Abci;
 import cosmos.tx.v1beta1.ServiceOuterClass;
 import kava.bep3.v1beta1.Tx;
 import wannabit.io.cosmostaion.R;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.utils.WDp;

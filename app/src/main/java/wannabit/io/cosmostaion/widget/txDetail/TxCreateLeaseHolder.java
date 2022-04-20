@@ -7,10 +7,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import akash.market.v1beta2.LeaseOuterClass;
 import cosmos.tx.v1beta1.ServiceOuterClass;
 import wannabit.io.cosmostaion.R;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.utils.WDp;
 

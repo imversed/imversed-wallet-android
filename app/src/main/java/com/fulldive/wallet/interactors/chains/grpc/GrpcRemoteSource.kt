@@ -3,6 +3,7 @@ package com.fulldive.wallet.interactors.chains.grpc
 import android.content.Context
 import com.fulldive.wallet.di.modules.DefaultLocalStorageModule
 import com.fulldive.wallet.extensions.safeSingle
+import com.fulldive.wallet.models.BaseChain
 import com.google.gson.Gson
 import com.google.protobuf.ByteString
 import com.google.protobuf2.Any
@@ -18,7 +19,6 @@ import org.json.JSONObject
 import osmosis.gamm.poolmodels.balancer.BalancerPool
 import tendermint.liquidity.v1beta1.Liquidity
 import tendermint.p2p.Types
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dao.Assets
 import wannabit.io.cosmostaion.dao.Cw20Assets
 import wannabit.io.cosmostaion.dao.Cw20BalanceReq

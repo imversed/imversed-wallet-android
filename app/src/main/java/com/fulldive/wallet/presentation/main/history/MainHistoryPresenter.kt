@@ -4,9 +4,9 @@ import android.content.Context
 import com.fulldive.wallet.di.modules.DefaultPresentersModule
 import com.fulldive.wallet.extensions.withDefaults
 import com.fulldive.wallet.interactors.HistoryInteractor
+import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
 import com.joom.lightsaber.ProvidedBy
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.utils.WDp
 import javax.inject.Inject

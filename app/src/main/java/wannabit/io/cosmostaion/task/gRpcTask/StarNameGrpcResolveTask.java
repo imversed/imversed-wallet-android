@@ -3,12 +3,13 @@ package wannabit.io.cosmostaion.task.gRpcTask;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_STARNAME_RESOLVE;
 import static wannabit.io.cosmostaion.network.ChannelBuilder.TIME_OUT;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.util.concurrent.TimeUnit;
 
 import starnamed.x.starname.v1beta1.QueryGrpc;
 import starnamed.x.starname.v1beta1.QueryOuterClass;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.task.CommonTask;
 import wannabit.io.cosmostaion.task.TaskListener;

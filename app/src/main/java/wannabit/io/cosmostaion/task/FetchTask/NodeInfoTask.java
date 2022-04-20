@@ -4,10 +4,11 @@ import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
 import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_FETCH_NODE_INFO;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import kotlin.Deprecated;
 import retrofit2.Response;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.ApiClient;
 import wannabit.io.cosmostaion.network.res.ResNodeInfo;
 import wannabit.io.cosmostaion.task.CommonTask;

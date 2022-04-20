@@ -80,6 +80,7 @@ import android.widget.Toast;
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.interactors.secret.InvalidPasswordException;
 import com.fulldive.wallet.interactors.secret.SecretInteractor;
+import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.security.key.ShowPrivateKeyActivity;
 import com.fulldive.wallet.presentation.security.mnemonic.ShowMnemonicActivity;
 import com.fulldive.wallet.presentation.system.keyboard.KeyboardListener;
@@ -105,7 +106,6 @@ import starnamed.x.starname.v1beta1.Types;
 import tendermint.liquidity.v1beta1.Liquidity;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.ITimelessActivity;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dao.Account;
@@ -490,11 +490,11 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
 
                 break;
             case CONST_PW_CHECK_MNEMONIC:
-                fetchEntropy(ShowMnemonicActivity.class);
+                fetchEntropy(ShowMnemonicActivity.class, true);
 
                 break;
             case CONST_PW_CHECK_PRIVATE_KEY:
-                fetchEntropy(ShowPrivateKeyActivity.class);
+                fetchEntropy(ShowPrivateKeyActivity.class, false);
 
                 break;
             case CONST_PW_TX_SIMPLE_SEND:
@@ -840,15 +840,21 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
         compositeDisposable.add(disposable);
     }
 
-    private void fetchEntropy(Class<?> cls) {
+    private void fetchEntropy(Class<?> cls, boolean fromMnemonic) {
         showWaitDialog();
 
         Disposable disposable = secretInteractor
                 .checkPassword(userInput)
                 .andThen(accountsInteractor.getAccount(mIdToCheck))
-                .flatMap(account ->
-                        secretInteractor.entropyToMnemonic(account.uuid, account.resource, account.spec)
+                .flatMap(account -> {
+                            if (fromMnemonic) {
+                                return secretInteractor.entropyToMnemonic(account.uuid, account.resource, account.spec);
+                            } else {
+                                return secretInteractor.entropyToPrivateKey(account.uuid, account.resource, account.spec);
+                            }
+                        }
                 )
+                .doOnSuccess(a -> WLog.w("step 3: " + a))
                 .subscribeOn(AppSchedulers.INSTANCE.io())
                 .observeOn(AppSchedulers.INSTANCE.ui())
                 .doOnError(error -> WLog.e(error.toString()))
@@ -860,6 +866,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
                             startActivity(checkintent);
                         },
                         error -> {
+                            error.printStackTrace();
                             hideWaitDialog();
                             onShakeView();
                             onInitView();

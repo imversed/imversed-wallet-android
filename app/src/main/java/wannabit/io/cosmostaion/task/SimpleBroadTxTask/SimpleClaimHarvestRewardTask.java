@@ -2,6 +2,8 @@ package wannabit.io.cosmostaion.task.SimpleBroadTxTask;
 
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GEN_TX_KAVA_CLAIM_HARVEST;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.crypto.DeterministicKey;
 
@@ -12,7 +14,6 @@ import retrofit2.Response;
 import wannabit.io.cosmostaion.BuildConfig;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.cosmos.MsgGenerator;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;

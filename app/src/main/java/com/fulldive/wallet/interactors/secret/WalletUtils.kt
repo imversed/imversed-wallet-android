@@ -3,13 +3,22 @@ package com.fulldive.wallet.interactors.secret
 import android.text.TextUtils
 import com.fulldive.wallet.interactors.secret.MnemonicUtils.hexStringToByteArray
 import com.fulldive.wallet.interactors.secret.utils.Bech32Utils
+import com.fulldive.wallet.models.BaseChain
 import org.bouncycastle.crypto.digests.RIPEMD160Digest
 import org.web3j.crypto.WalletUtils
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.crypto.Sha256
 import java.io.ByteArrayOutputStream
+import java.util.regex.Pattern
 
 object WalletUtils {
+
+    fun isValidStringPrivateKey(text: String): Boolean {
+        return Pattern
+            .compile("^(0x|0X)?[a-fA-F0-9]{64}")
+            .matcher(text)
+            .matches()
+    }
+
     fun isValidEthAddress(address: String): Boolean {
         return WalletUtils.isValidAddress(address)
     }

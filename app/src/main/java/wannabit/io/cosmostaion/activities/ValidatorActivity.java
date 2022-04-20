@@ -1,8 +1,8 @@
 package wannabit.io.cosmostaion.activities;
 
-import static cosmos.staking.v1beta1.Staking.BondStatus.BOND_STATUS_BONDED;
 import static com.fulldive.wallet.models.BaseChain.ALTHEA_TEST;
 import static com.fulldive.wallet.models.BaseChain.BAND_MAIN;
+import static cosmos.staking.v1beta1.Staking.BondStatus.BOND_STATUS_BONDED;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_REINVEST;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIMPLE_DELEGATE;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIMPLE_REDELEGATE;
@@ -38,6 +38,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fulldive.wallet.interactors.secret.WalletUtils;
+import com.fulldive.wallet.models.BaseChain;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
@@ -49,7 +50,6 @@ import cosmos.staking.v1beta1.Staking;
 import de.hdodenhof.circleimageview.CircleImageView;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.dialog.Dialog_Not_Top_100;
 import wannabit.io.cosmostaion.dialog.Dialog_RedelegationLimited;

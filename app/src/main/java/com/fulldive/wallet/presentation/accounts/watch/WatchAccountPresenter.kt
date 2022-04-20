@@ -8,6 +8,7 @@ import com.fulldive.wallet.interactors.ScreensInteractor
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
 import com.fulldive.wallet.interactors.accounts.DuplicateAccountException
 import com.fulldive.wallet.interactors.accounts.MaxAccountsException
+import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
 import com.fulldive.wallet.presentation.chains.choicenet.ChoiceChainDialogFragment
 import com.fulldive.wallet.rx.AppSchedulers
@@ -15,7 +16,6 @@ import com.google.zxing.integration.android.IntentResult
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import wannabit.io.cosmostaion.R
-import com.fulldive.wallet.models.BaseChain
 import java.util.*
 import javax.inject.Inject
 

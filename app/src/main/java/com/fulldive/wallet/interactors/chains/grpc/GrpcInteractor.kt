@@ -3,6 +3,7 @@ package com.fulldive.wallet.interactors.chains.grpc
 import com.fulldive.wallet.di.modules.DefaultInteractorsModule
 import com.fulldive.wallet.extensions.*
 import com.fulldive.wallet.interactors.chains.StationInteractor
+import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.rx.AppSchedulers
 import com.joom.lightsaber.ProvidedBy
 import cosmos.staking.v1beta1.Staking
@@ -11,7 +12,6 @@ import io.grpc.StatusRuntimeException
 import io.reactivex.Completable
 import io.reactivex.Single
 import tendermint.p2p.Types
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.utils.WDp

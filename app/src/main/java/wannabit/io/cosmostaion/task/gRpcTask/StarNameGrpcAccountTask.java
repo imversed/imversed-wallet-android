@@ -5,6 +5,8 @@ import static wannabit.io.cosmostaion.network.ChannelBuilder.TIME_OUT;
 
 import android.text.TextUtils;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -13,7 +15,6 @@ import starnamed.x.starname.v1beta1.QueryGrpc;
 import starnamed.x.starname.v1beta1.QueryOuterClass;
 import starnamed.x.starname.v1beta1.Types;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.task.CommonTask;

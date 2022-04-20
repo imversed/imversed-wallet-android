@@ -8,12 +8,12 @@ import com.fulldive.wallet.extensions.withPrefix
 import com.fulldive.wallet.interactors.ClipboardInteractor
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
 import com.fulldive.wallet.interactors.secret.SecretInteractor
+import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
 import com.fulldive.wallet.rx.AppSchedulers
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Single
 import wannabit.io.cosmostaion.R
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.dialog.Dialog_Safe_Copy_pKey
 import javax.inject.Inject
@@ -82,8 +82,7 @@ class ShowPrivateKeyPresenter @Inject constructor(
     }
 
     fun onCopyClicked() {
-        val delete = Dialog_Safe_Copy_pKey.newInstance() // TODO: refactoring
-        viewState.showDialog(delete, "dialog", true)
+        viewState.showDialog(Dialog_Safe_Copy_pKey.newInstance(), "dialog", true)
     }
 
     fun onRawCopyClicked() {

@@ -3,12 +3,13 @@ package wannabit.io.cosmostaion.task.gRpcTask;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_SIF_POOL_INFO;
 import static wannabit.io.cosmostaion.network.ChannelBuilder.TIME_OUT;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.util.concurrent.TimeUnit;
 
 import sifnode.clp.v1.Querier;
 import sifnode.clp.v1.QueryGrpc;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.task.CommonTask;
 import wannabit.io.cosmostaion.task.TaskListener;

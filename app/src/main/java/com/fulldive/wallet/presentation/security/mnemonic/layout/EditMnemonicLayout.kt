@@ -7,6 +7,8 @@ import android.view.View
 import android.view.View.OnFocusChangeListener
 import android.widget.EditText
 import android.widget.TextView
+import com.fulldive.wallet.extensions.getColorCompat
+import com.fulldive.wallet.extensions.orFalse
 import com.fulldive.wallet.interactors.secret.MnemonicUtils
 import com.fulldive.wallet.presentation.base.BaseMvpFrameLayout
 import wannabit.io.cosmostaion.R
@@ -53,6 +55,22 @@ class EditMnemonicLayout : BaseMvpFrameLayout<LayoutMnemonicEditBinding> {
         binding?.mnemonicsEditText0?.requestFocus()
     }
 
+    fun setFieldError(index: Int, isError: Boolean) {
+        binding {
+            mnemonicsContainer.applyToView<EditText>(EDIT_FIELD_PREFIX, index) { editText ->
+                editText.setTextColor(
+                    getColorCompat(
+                        if (isError) {
+                            R.color.colorRed
+                        } else {
+                            R.color.colorWhite
+                        }
+                    )
+                )
+            }
+        }
+    }
+
     fun updateField(index: Int, text: String, requestFocus: Boolean) {
         binding {
             mnemonicsContainer.applyToView<EditText>(EDIT_FIELD_PREFIX, index) { editText ->
@@ -61,15 +79,27 @@ class EditMnemonicLayout : BaseMvpFrameLayout<LayoutMnemonicEditBinding> {
                     editText.requestFocus()
                 }
                 editText.setSelection(editText.text.length)
+                editText.setTextColor(getColorCompat(R.color.colorWhite))
             }
         }
     }
 
-    fun updateFields(items: Array<String>, focusedFieldIndex: Int) {
+    fun updateFields(items: Array<String>, errors: List<Boolean>, focusedFieldIndex: Int) {
         binding {
             mnemonicsContainer
                 .applyToViews<EditText>(EDIT_FIELD_PREFIX, items.size) { index, editText ->
+                    val incorrectWord = errors.getOrNull(index).orFalse()
+
                     editText.setText(items[index])
+                    editText.setTextColor(
+                        getColorCompat(
+                            if (incorrectWord) {
+                                R.color.colorRed
+                            } else {
+                                R.color.colorWhite
+                            }
+                        )
+                    )
                     if (index == focusedFieldIndex) {
                         editText.requestFocus()
                     }

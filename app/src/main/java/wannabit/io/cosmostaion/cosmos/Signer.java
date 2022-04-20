@@ -4,6 +4,7 @@ import static cosmos.tx.signing.v1beta1.Signing.SignMode.SIGN_MODE_DIRECT;
 import static wannabit.io.cosmostaion.utils.WUtil.integerToBytes;
 
 import com.fulldive.wallet.interactors.secret.MnemonicUtils;
+import com.fulldive.wallet.models.BaseChain;
 import com.google.gson.Gson;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Duration;
@@ -36,7 +37,6 @@ import desmos.profiles.v1beta1.MsgsChainLinks;
 import desmos.profiles.v1beta1.MsgsProfile;
 import ibc.core.client.v1.Client;
 import starnamed.x.starname.v1beta1.Types;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.crypto.Sha256;
 import wannabit.io.cosmostaion.dao.Account;

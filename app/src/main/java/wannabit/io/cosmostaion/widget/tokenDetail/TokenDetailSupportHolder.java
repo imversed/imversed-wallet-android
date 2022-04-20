@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 
@@ -23,7 +24,6 @@ import java.math.BigDecimal;
 
 import irismod.nft.QueryOuterClass;
 import wannabit.io.cosmostaion.R;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.dao.Assets;
 import wannabit.io.cosmostaion.dao.BnbToken;

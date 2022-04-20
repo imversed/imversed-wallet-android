@@ -12,13 +12,14 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.WalletSwitchActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.dao.ChainAccounts;
 import wannabit.io.cosmostaion.utils.WDp;

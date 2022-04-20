@@ -5,13 +5,13 @@ import com.fulldive.wallet.extensions.orNull
 import com.fulldive.wallet.extensions.safeCompletable
 import com.fulldive.wallet.extensions.safeSingle
 import com.fulldive.wallet.extensions.toSingle
+import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.models.local.AccountSecrets
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
 import org.bitcoinj.crypto.DeterministicKey
 import org.bitcoinj.crypto.MnemonicCode
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.crypto.CryptoHelper
 import wannabit.io.cosmostaion.crypto.EncResult
 import wannabit.io.cosmostaion.dao.Password
@@ -173,6 +173,11 @@ class SecretInteractor @Inject constructor(
     fun isValidMnemonicWords(words: Array<String>): Boolean {
         val mnemonics = MnemonicCode.INSTANCE.wordList
         return words.all(mnemonics::contains)
+    }
+
+    fun checkMnemonicWords(words: Array<String>): List<Boolean> {
+        val mnemonics = MnemonicCode.INSTANCE.wordList
+        return words.map { word -> !mnemonics.contains(word) }
     }
 
     fun isValidMnemonicWord(word: String): Boolean {

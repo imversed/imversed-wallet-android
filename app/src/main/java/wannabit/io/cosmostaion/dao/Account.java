@@ -6,12 +6,13 @@ import android.content.Context;
 import android.text.SpannableString;
 import android.text.TextUtils;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.UUID;
 
 import wannabit.io.cosmostaion.R;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.utils.WDp;
 
 public class Account {

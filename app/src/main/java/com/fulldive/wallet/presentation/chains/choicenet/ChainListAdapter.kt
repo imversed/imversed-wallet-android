@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import wannabit.io.cosmostaion.R
 import com.fulldive.wallet.models.BaseChain
+import wannabit.io.cosmostaion.R
 
 class ChainListAdapter(
     private var items: List<BaseChain>,

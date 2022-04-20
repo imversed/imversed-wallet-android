@@ -5,6 +5,7 @@ import static com.fulldive.wallet.models.BaseChain.EMONEY_MAIN;
 import static com.fulldive.wallet.models.BaseChain.EVMOS_MAIN;
 import static com.fulldive.wallet.models.BaseChain.STARGAZE_MAIN;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
@@ -14,7 +15,6 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.utils.WUtil;

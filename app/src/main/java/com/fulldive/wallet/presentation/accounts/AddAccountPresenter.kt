@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.Intent
 import com.fulldive.wallet.di.modules.DefaultPresentersModule
 import com.fulldive.wallet.presentation.accounts.create.CreateAccountActivity
+import com.fulldive.wallet.presentation.accounts.restore.MnemonicRestoreActivity
+import com.fulldive.wallet.presentation.accounts.restore.PrivateKeyRestoreActivity
 import com.fulldive.wallet.presentation.accounts.watch.WatchAccountActivity
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
 import com.joom.lightsaber.ProvidedBy
-import com.fulldive.wallet.presentation.accounts.restore.MnemonicRestoreActivity
-import com.fulldive.wallet.presentation.accounts.restore.PrivateKeyRestoreActivity
 import javax.inject.Inject
 
 @ProvidedBy(DefaultPresentersModule::class)

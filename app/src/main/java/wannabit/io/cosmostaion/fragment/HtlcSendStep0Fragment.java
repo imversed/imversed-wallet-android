@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
@@ -36,7 +37,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.HtlcSendActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.dialog.Dialog_Htlc_Receive_Chain;
 import wannabit.io.cosmostaion.dialog.Dialog_Htlc_Send_Coin;

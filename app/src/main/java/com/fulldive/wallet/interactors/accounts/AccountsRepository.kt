@@ -1,10 +1,10 @@
 package com.fulldive.wallet.interactors.accounts
 
 import com.fulldive.wallet.di.modules.DefaultRepositoryModule
+import com.fulldive.wallet.models.BaseChain
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dao.Account
 import javax.inject.Inject
 

@@ -2,11 +2,12 @@ package wannabit.io.cosmostaion.task.gRpcTask;
 
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_PROPOSAL_MY_VOTE;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import cosmos.gov.v1beta1.QueryGrpc;
 import cosmos.gov.v1beta1.QueryOuterClass;
 import retrofit2.Response;
 import wannabit.io.cosmostaion.base.BaseApplication;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.network.ApiClient;
 import wannabit.io.cosmostaion.network.ChannelBuilder;
 import wannabit.io.cosmostaion.network.res.ResMyProposal;

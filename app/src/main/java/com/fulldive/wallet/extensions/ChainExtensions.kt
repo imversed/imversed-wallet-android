@@ -1,8 +1,8 @@
 package com.fulldive.wallet.extensions
 
+import com.fulldive.wallet.models.BaseChain
 import com.google.gson.JsonParser
 import org.bitcoinj.crypto.ChildNumber
-import com.fulldive.wallet.models.BaseChain
 
 private fun fetchPath(json: String, customPath: Int): Triple<Int, Boolean, Boolean> {
     var lastZero = true

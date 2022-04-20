@@ -60,6 +60,7 @@ import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fulldive.wallet.models.BaseChain;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf2.Any;
 import com.squareup.picasso.Picasso;
@@ -101,7 +102,6 @@ import wannabit.io.cosmostaion.activities.chains.nft.NFTListActivity;
 import wannabit.io.cosmostaion.activities.chains.osmosis.LabsListActivity;
 import wannabit.io.cosmostaion.activities.chains.sif.SifDexListActivity;
 import wannabit.io.cosmostaion.activities.chains.starname.StarNameListActivity;
-import com.fulldive.wallet.models.BaseChain;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.dao.Account;
