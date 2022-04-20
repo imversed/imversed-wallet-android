@@ -2012,7 +2012,7 @@
     <string name="str_closed_upper">CLOSED</string>
     <string name="str_agreements_and_terms">Accept User Service Agreement and Privacy Policy</string>
     <string name="error_duplicate_account">This account is already exists</string>
-    <string name="str_mnemonic_counter_template" translatable="false">"%2d: "</string>
+    <string name="str_mnemonic_counter_template" translatable="false">"%02d: "</string>
     <string name="str_version_short">v%s</string>
     <string name="str_words_count">" %d words"</string>
     <string name="str_address_type">Address Type</string>

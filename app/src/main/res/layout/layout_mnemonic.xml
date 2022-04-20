@@ -176,7 +176,7 @@
                 style="@style/font_ss_10_gray1"
                 android:layout_width="@dimen/space_18"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_5" />
+                android:layout_marginStart="@dimen/space_4" />
 
             <TextView
                 android:id="@+id/mnemonicTextView5"
@@ -296,7 +296,7 @@
                 style="@style/font_ss_10_gray1"
                 android:layout_width="@dimen/space_18"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_5" />
+                android:layout_marginStart="@dimen/space_4" />
 
             <TextView
                 android:id="@+id/mnemonicTextView9"
@@ -415,7 +415,7 @@
                 style="@style/font_ss_10_gray1"
                 android:layout_width="@dimen/space_18"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_5" />
+                android:layout_marginStart="@dimen/space_4" />
 
             <TextView
                 android:id="@+id/mnemonicTextView13"
@@ -534,7 +534,7 @@
                 style="@style/font_ss_10_gray1"
                 android:layout_width="@dimen/space_18"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_5" />
+                android:layout_marginStart="@dimen/space_4" />
 
             <TextView
                 android:id="@+id/mnemonicTextView17"
@@ -653,7 +653,7 @@
                 style="@style/font_ss_10_gray1"
                 android:layout_width="@dimen/space_18"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/space_5" />
+                android:layout_marginStart="@dimen/space_4" />
 
             <TextView
                 android:id="@+id/mnemonicTextView21"

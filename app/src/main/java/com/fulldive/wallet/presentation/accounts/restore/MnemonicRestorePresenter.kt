@@ -7,12 +7,12 @@ import com.fulldive.wallet.interactors.ClipboardInteractor
 import com.fulldive.wallet.interactors.ScreensInteractor
 import com.fulldive.wallet.interactors.secret.MnemonicUtils
 import com.fulldive.wallet.interactors.secret.SecretInteractor
+import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
 import com.fulldive.wallet.presentation.chains.choicenet.ChoiceChainDialogFragment
 import com.fulldive.wallet.rx.AppSchedulers
 import com.joom.lightsaber.ProvidedBy
 import wannabit.io.cosmostaion.R
-import com.fulldive.wallet.models.BaseChain
 import wannabit.io.cosmostaion.dialog.*
 import java.util.*
 import javax.inject.Inject
