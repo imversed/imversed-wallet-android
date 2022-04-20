@@ -57,38 +57,30 @@ public class WalletBinanceHolder extends BaseHolder {
 
         mainActivity.getBaseDao().onUpdateLastTotalAccount(mainActivity.getAccount(), totalAmount.toPlainString());
 
-        mBtnWalletConnect.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!mainActivity.getAccount().hasPrivateKey) {
-                    Dialog_WatchMode dialog = Dialog_WatchMode.newInstance();
-                    mainActivity.showDialog(dialog);
-                    return;
+        mBtnWalletConnect.setOnClickListener(v -> {
+            if (!mainActivity.getAccount().hasPrivateKey) {
+                Dialog_WatchMode dialog = Dialog_WatchMode.newInstance();
+                mainActivity.showDialog(dialog);
+                return;
+            }
+            new TedPermission(mainActivity).setPermissionListener(new PermissionListener() {
+                @Override
+                public void onPermissionGranted() {
+                    IntentIntegrator integrator = new IntentIntegrator(mainActivity);
+                    integrator.setOrientationLocked(true);
+                    integrator.initiateScan();
                 }
-                new TedPermission(mainActivity).setPermissionListener(new PermissionListener() {
-                    @Override
-                    public void onPermissionGranted() {
-                        IntentIntegrator integrator = new IntentIntegrator(mainActivity);
-                        integrator.setOrientationLocked(true);
-                        integrator.initiateScan();
-                    }
 
-                    @Override
-                    public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                        Toast.makeText(mainActivity, R.string.error_permission, Toast.LENGTH_SHORT).show();
-                    }
-                })
-                        .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                        .setRationaleMessage(mainActivity.getString(R.string.str_permission_qr))
-                        .check();
-            }
+                @Override
+                public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                    Toast.makeText(mainActivity, R.string.error_permission, Toast.LENGTH_SHORT).show();
+                }
+            })
+                    .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    .setRationaleMessage(mainActivity.getString(R.string.str_permission_qr))
+                    .check();
         });
-        mBtnBep3Send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainActivity.startHTLCSendActivity(TOKEN_HTLC_BINANCE_BNB);
-            }
-        });
+        mBtnBep3Send.setOnClickListener(v -> mainActivity.startHTLCSendActivity(TOKEN_HTLC_BINANCE_BNB));
     }
 }
 

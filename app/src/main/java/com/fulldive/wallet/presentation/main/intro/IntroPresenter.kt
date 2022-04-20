@@ -8,6 +8,7 @@ import com.fulldive.wallet.interactors.accounts.AccountsInteractor
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
 import com.fulldive.wallet.presentation.chains.choicenet.ChoiceChainDialogFragment
 import com.joom.lightsaber.ProvidedBy
+import io.reactivex.Completable
 import wannabit.io.cosmostaion.base.BaseApplication
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -23,9 +24,8 @@ class IntroPresenter @Inject constructor(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
 
-        accountsInteractor
-            .upgradeAccountAddressForPath()
-            .onErrorComplete()
+        Completable
+            .complete()
             .delay(2500, TimeUnit.MILLISECONDS)
             .andThen(accountsInteractor.getAccounts())
             .map { it.isNotEmpty() }

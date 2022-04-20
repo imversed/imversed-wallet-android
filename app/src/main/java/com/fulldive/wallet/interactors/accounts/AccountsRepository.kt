@@ -61,10 +61,6 @@ class AccountsRepository @Inject constructor(
         return accountsLocalStorage.deleteAccount(accountId)
     }
 
-    fun upgradeAccountAddressForPath(): Completable {
-        return accountsLocalStorage.upgradeAccountAddressForPath()
-    }
-
     fun checkExistsPassword(): Single<Boolean> {
         return accountsLocalStorage.checkExistsPassword()
     }

@@ -304,10 +304,6 @@ class AccountsInteractor @Inject constructor(
             }
     }
 
-    fun upgradeAccountAddressForPath(): Completable {
-        return accountsRepository.upgradeAccountAddressForPath()
-    }
-
     fun checkExistsPassword(): Single<Boolean> {
         return accountsRepository.checkExistsPassword()
     }

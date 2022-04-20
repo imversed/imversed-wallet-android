@@ -74,12 +74,6 @@ class AccountsLocalStorage @Inject constructor(
         }
     }
 
-    fun upgradeAccountAddressForPath(): Completable {
-        return safeCompletable {
-            baseData.upgradeAccountAddressForPath()
-        }
-    }
-
     fun checkExistsPassword(): Single<Boolean> {
         return safeSingle {
             baseData.hasPassword()
