@@ -4,6 +4,9 @@ import com.fulldive.wallet.models.BaseChain;
 
 import java.util.List;
 
+import kotlin.Deprecated;
+
+@Deprecated(message = "Remove")
 public class ChainAccounts {
     public boolean opened = false;
     public BaseChain baseChain;

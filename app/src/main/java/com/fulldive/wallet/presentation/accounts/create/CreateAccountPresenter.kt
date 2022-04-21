@@ -91,8 +91,7 @@ class CreateAccountPresenter @Inject constructor(
                 completeCallable {
                     val dialog = ChoiceChainDialogFragment.newInstance(
                         false,
-                        requestCode,
-                        isCheckLimit = true
+                        requestCode
                     )
                     viewState.showDialog(dialog, "dialog", false)
                 }

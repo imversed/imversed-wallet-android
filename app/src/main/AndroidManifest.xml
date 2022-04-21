@@ -338,7 +338,7 @@
             android:windowSoftInputMode="adjustResize|stateHidden" />
 
         <activity
-            android:name=".activities.WalletSwitchActivity"
+            android:name="com.fulldive.wallet.presentation.chains.switcher.WalletSwitchActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize|stateHidden" />

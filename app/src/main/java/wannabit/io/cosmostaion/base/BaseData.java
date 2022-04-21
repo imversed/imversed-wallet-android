@@ -2,9 +2,6 @@ package wannabit.io.cosmostaion.base;
 
 import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
 import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
-import static com.fulldive.wallet.models.BaseChain.LUM_MAIN;
-import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
-import static com.fulldive.wallet.models.BaseChain.SECRET_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.FEE_BNB_SEND;
 import static wannabit.io.cosmostaion.base.BaseConstant.IOV_MSG_TYPE_RENEW_ACCOUNT;
 import static wannabit.io.cosmostaion.base.BaseConstant.IOV_MSG_TYPE_RENEW_DOMAIN;
@@ -22,7 +19,6 @@ import android.text.TextUtils;
 import androidx.annotation.Nullable;
 
 import com.fulldive.wallet.interactors.accounts.DuplicateAccountException;
-import com.fulldive.wallet.interactors.secret.WalletUtils;
 import com.fulldive.wallet.models.BaseChain;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf2.Any;
@@ -1037,7 +1033,7 @@ public class BaseData {
         }
     }
 
-    public ArrayList<String> getUserHiddenChains() {
+    public List<String> getUserHiddenChains() {
         String json = getSharedPreferences().getString(PRE_USER_HIDEN_CHAINS, null);
         ArrayList<String> hideChains = new ArrayList<>();
         if (json != null) {
@@ -1066,7 +1062,7 @@ public class BaseData {
         }
     }
 
-    public ArrayList<String> getUserSortedChains() {
+    public List<String> getUserSortedChains() {
         String json = getSharedPreferences().getString(PRE_USER_SORTED_CHAINS, null);
         ArrayList<String> displayChains = new ArrayList<>();
         if (json != null) {
@@ -1154,26 +1150,26 @@ public class BaseData {
         return result;
     }
 
-    public void setExpandedChains(ArrayList<BaseChain> chains) {
+    public void setExpandedChains(List<String> items) {
         JSONArray array = new JSONArray();
-        for (BaseChain baseChain : chains) {
-            array.put(baseChain.getChainName());
+        for (String chainName : items) {
+            array.put(chainName);
         }
-        if (!chains.isEmpty()) {
-            getSharedPreferences().edit().putString(PRE_USER_EXPANDED_CHAINS, array.toString()).commit();
+        if (!items.isEmpty()) {
+            getSharedPreferences().edit().putString(PRE_USER_EXPANDED_CHAINS, array.toString()).apply();
         } else {
-            getSharedPreferences().edit().putString(PRE_USER_EXPANDED_CHAINS, null).commit();
+            getSharedPreferences().edit().putString(PRE_USER_EXPANDED_CHAINS, null).apply();
         }
     }
 
-    public ArrayList<BaseChain> getExpandedChains() {
+    public List<String> getExpandedChains() {
         String json = getSharedPreferences().getString(PRE_USER_EXPANDED_CHAINS, null);
-        ArrayList<BaseChain> chains = new ArrayList<>();
+        ArrayList<String> chains = new ArrayList<>();
         if (json != null) {
             try {
                 JSONArray array = new JSONArray(json);
                 for (int i = 0; i < array.length(); i++) {
-                    chains.add(BaseChain.getChain(array.optString(i)));
+                    chains.add(array.optString(i));
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

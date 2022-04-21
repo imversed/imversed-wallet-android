@@ -45,7 +45,7 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
         Toolbar toolbar = findViewById(R.id.toolbar);
         editButton = findViewById(R.id.btn_edit);
         chainRecyclerView = findViewById(R.id.chain_recycler);
-        RecyclerView accountRecyclerView = findViewById(R.id.account_recycler);
+        RecyclerView accountRecyclerView = findViewById(R.id.recyclerView);
 
         mSelectedChain = getBaseChain();
 

@@ -7,14 +7,12 @@ import com.fulldive.wallet.interactors.ClipboardInteractor
 import com.fulldive.wallet.interactors.ScreensInteractor
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
 import com.fulldive.wallet.interactors.accounts.DuplicateAccountException
-import com.fulldive.wallet.interactors.accounts.MaxAccountsException
 import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
 import com.fulldive.wallet.presentation.chains.choicenet.ChoiceChainDialogFragment
 import com.fulldive.wallet.rx.AppSchedulers
 import com.google.zxing.integration.android.IntentResult
 import com.joom.lightsaber.ProvidedBy
-import io.reactivex.Completable
 import wannabit.io.cosmostaion.R
 import java.util.*
 import javax.inject.Inject
@@ -92,17 +90,11 @@ class WatchAccountPresenter @Inject constructor(
 
     private fun createAccount(chain: BaseChain, address: String) {
         viewState.showWaitDialog()
-        singleCallable { accountsInteractor.getAccountsByChain(chain) }
-            .flatMapCompletable { chains ->
-                if (chains.size >= 5) {
-                    Completable.error(MaxAccountsException())
-                } else {
-                    accountsInteractor.createWatchAccount(
-                        chain,
-                        address
-                    )
-                }
-            }
+        accountsInteractor
+            .createWatchAccount(
+                chain,
+                address
+            )
             .withDefaults()
             .doAfterTerminate { viewState.hideWaitDialog() }
             .compositeSubscribe(
@@ -111,7 +103,6 @@ class WatchAccountPresenter @Inject constructor(
                     override fun onError(error: Throwable) {
                         viewState.showMessage(
                             when (error) {
-                                is MaxAccountsException -> R.string.error_max_account_number
                                 is DuplicateAccountException -> R.string.error_already_imported_address
                                 else -> R.string.error_import_errer
                             }

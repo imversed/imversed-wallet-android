@@ -33,6 +33,7 @@ class AccountsInteractor @Inject constructor(
         return accountsRepository.getSelectedAccount()
     }
 
+
     fun getCurrentAccount(): Account {
         return accountsRepository.getCurrentAccount()
     }

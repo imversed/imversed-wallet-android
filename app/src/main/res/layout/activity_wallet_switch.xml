@@ -28,7 +28,7 @@
                 android:layout_height="@dimen/toolbar_bar_height">
 
                 <ImageView
-                    android:id="@+id/btn_close"
+                    android:id="@+id/closeButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -56,7 +56,7 @@
                     android:paddingTop="@dimen/space_4">
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/account_recycler"
+                        android:id="@+id/recyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:clipToPadding="false"

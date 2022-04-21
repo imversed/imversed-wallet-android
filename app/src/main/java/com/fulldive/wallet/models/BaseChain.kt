@@ -36,7 +36,8 @@ sealed class BaseChain constructor(
     val pathConfig: String = "{\"default\":\"118\"}",
     val isSupported: Boolean = true,
     val isTestNet: Boolean = false,
-    val isGRPC: Boolean = true
+    val isGRPC: Boolean = true,
+    val sortValue: Int = 0,
 ) {
 
     object COSMOS_MAIN : BaseChain(
@@ -57,7 +58,8 @@ sealed class BaseChain constructor(
         chainTabColor = R.color.color_tab_myvalidator,
         blockTime = BigDecimal("7.6597"),
         historyApiUrl = "https://api.cosmostation.io/",
-        grpcApiHost = ApiHost.from("lcd-cosmos-app-and.cosmostation.io")
+        grpcApiHost = ApiHost.from("lcd-cosmos-app-and.cosmostation.io"),
+        sortValue = 20
     )
 
     object IMVERSED_MAIN : BaseChain(
@@ -74,7 +76,8 @@ sealed class BaseChain constructor(
         symbolTitle = R.string.str_imversed_c,
         chainBackground = R.color.colorTransBgImversed,
         chainTabColor = R.color.color_tab_myvalidator_imversed,
-        grpcApiHost = ApiHost.from("qc.imversed.com")
+        grpcApiHost = ApiHost.from("qc.imversed.com"),
+        sortValue = 10
     )
 
     object IRIS_MAIN : BaseChain(

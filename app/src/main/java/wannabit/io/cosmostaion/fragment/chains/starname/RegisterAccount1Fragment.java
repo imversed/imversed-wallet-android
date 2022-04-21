@@ -247,8 +247,8 @@ public class RegisterAccount1Fragment extends BaseFragment implements View.OnCli
             public ResourceHolder(@NonNull View itemView) {
                 super(itemView);
                 itemRoot = itemView.findViewById(R.id.cardView);
-                itemChainImg = itemView.findViewById(R.id.chain_img);
-                itemChainName = itemView.findViewById(R.id.chain_name);
+                itemChainImg = itemView.findViewById(R.id.chainImageView);
+                itemChainName = itemView.findViewById(R.id.chainNameTextView);
                 itemChainAddress = itemView.findViewById(R.id.chain_address);
                 itemBtnRemove = itemView.findViewById(R.id.btn_remove);
             }

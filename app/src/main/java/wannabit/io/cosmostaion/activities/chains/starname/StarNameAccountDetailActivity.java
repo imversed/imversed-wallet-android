@@ -298,8 +298,8 @@ public class StarNameAccountDetailActivity extends BaseActivity implements View.
             public MyResourceHolder(View v) {
                 super(v);
                 itemRoot = itemView.findViewById(R.id.cardView);
-                itemChainImg = itemView.findViewById(R.id.chain_img);
-                itemChainName = itemView.findViewById(R.id.chain_name);
+                itemChainImg = itemView.findViewById(R.id.chainImageView);
+                itemChainName = itemView.findViewById(R.id.chainNameTextView);
                 itemAddress = itemView.findViewById(R.id.chain_address);
             }
         }

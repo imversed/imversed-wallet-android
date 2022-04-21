@@ -32,18 +32,18 @@
                 android:layout_margin="@dimen/space_8">
 
                 <ImageView
-                    android:id="@+id/chain_img"
+                    android:id="@+id/chainImageView"
                     android:layout_width="@dimen/space_20"
                     android:layout_height="@dimen/space_20"
                     android:layout_centerVertical="true"
                     android:src="@drawable/default_chain_img" />
 
                 <TextView
-                    android:id="@+id/chain_name"
+                    android:id="@+id/chainNameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/chain_img"
+                    android:layout_toRightOf="@+id/chainImageView"
                     android:layout_marginLeft="@dimen/space_8"
                     style="@style/font_ss_14_white"
                     android:text="Chain Name" />

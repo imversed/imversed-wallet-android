@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
+        app:cardBackgroundColor="@color/colorTransBg"
+        app:cardCornerRadius="@dimen/space_6"
+        app:cardElevation="1.5dp"
+        app:cardPreventCornerOverlap="true">
+
+
+        <LinearLayout
+            android:id="@+id/contentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginTop="@dimen/space_8"
+            android:layout_marginEnd="@dimen/space_16"
+            android:layout_marginBottom="@dimen/space_4"
+            android:background="@drawable/box_round_darkgray"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="@dimen/space_8"
+            tools:background="@drawable/box_round_selected_white">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/keyImageView"
+                    android:layout_width="@dimen/space_24"
+                    android:layout_height="@dimen/space_24"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/key_off" />
+
+                <TextView
+                    android:id="@+id/walletNameTextView"
+                    style="@style/font_ss_14_white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/space_4"
+                    android:layout_toLeftOf="@+id/addressTextView"
+                    android:layout_toRightOf="@+id/keyImageView"
+                    android:maxWidth="@dimen/space_120"
+                    tools:text="Wallet Name" />
+
+                <TextView
+                    android:id="@+id/addressTextView"
+                    style="@style/font_ss_14_white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:ellipsize="middle"
+                    android:gravity="right"
+                    android:maxWidth="@dimen/space_120"
+                    android:singleLine="true"
+                    tools:text="@tools:sample/lorem/random" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_4"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/amountTextView"
+                    style="@style/font_ss_14_white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_2"
+                    android:text="-" />
+
+                <TextView
+                    android:id="@+id/denomTextView"
+                    style="@style/font_ss_11_atom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_2"
+                    android:text="@string/str_atom_c" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

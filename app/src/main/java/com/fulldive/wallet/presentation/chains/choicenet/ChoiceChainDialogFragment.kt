@@ -12,17 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.fulldive.wallet.extensions.orFalse
 import com.fulldive.wallet.extensions.unsafeLazy
 import com.fulldive.wallet.interactors.ScreensInteractor
-import com.fulldive.wallet.interactors.accounts.AccountsInteractor
 import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.accounts.AddAccountDialogFragment
 import com.fulldive.wallet.presentation.base.BaseMvpDialogFragment
 import com.joom.lightsaber.getInstance
-import wannabit.io.cosmostaion.R
 import wannabit.io.cosmostaion.databinding.DialogListBinding
 
 
 class ChoiceChainDialogFragment : BaseMvpDialogFragment<DialogListBinding>() {
-    private val isCheckLimit by unsafeLazy { arguments?.getBoolean(KEY_ADD, false).orFalse() }
     private val isAddNet by unsafeLazy { arguments?.getBoolean(KEY_ADD, false).orFalse() }
     private val requestCode by unsafeLazy { arguments?.getString(KEY_REQUEST_CODE).orEmpty() }
     private val chains: List<String> by unsafeLazy {
@@ -80,25 +77,18 @@ class ChoiceChainDialogFragment : BaseMvpDialogFragment<DialogListBinding>() {
     }
 
     private fun onChainClicked(chain: BaseChain) {
-        if (isCheckLimit && getInjector().getInstance<AccountsInteractor>()
-                .getAccountsByChain(chain).size >= 5
-        ) {
-            showMessage(R.string.error_max_account_number)
-        } else {
-            sendResult(chain)
-            if (isAddNet) {
-                showDialog(
-                    AddAccountDialogFragment.newInstance(
-                        chain.chainName
-                    )
+        sendResult(chain)
+        if (isAddNet) {
+            showDialog(
+                AddAccountDialogFragment.newInstance(
+                    chain.chainName
                 )
-            }
-            dialog?.dismiss()
+            )
         }
+        dialog?.dismiss()
     }
 
     companion object {
-        private const val KEY_CHECK_LIMIT = "KEY_CHECK_LIMIT"
         private const val KEY_ADD = "KEY_ADD"
         private const val KEY_REQUEST_CODE = "KEY_REQUEST_CODE"
         private const val KEY_CHAINS = "KEY_CHAINS"
@@ -107,12 +97,10 @@ class ChoiceChainDialogFragment : BaseMvpDialogFragment<DialogListBinding>() {
         fun newInstance(
             isAdd: Boolean = true,
             requestCode: String = "",
-            chains: List<String> = emptyList(),
-            isCheckLimit: Boolean = false
+            chains: List<String> = emptyList()
         ) = ChoiceChainDialogFragment().apply {
             arguments = bundleOf(
                 KEY_ADD to isAdd,
-                KEY_CHECK_LIMIT to isCheckLimit,
                 KEY_REQUEST_CODE to requestCode,
                 KEY_CHAINS to ArrayList(chains)
             )

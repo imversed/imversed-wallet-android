@@ -34,7 +34,7 @@
                 android:layout_marginTop="@dimen/space_8">
 
                 <ImageView
-                    android:id="@+id/chain_img"
+                    android:id="@+id/chainImageView"
                     android:layout_width="@dimen/space_20"
                     android:layout_height="@dimen/space_20"
                     android:layout_marginLeft="@dimen/space_8"
@@ -42,7 +42,7 @@
                     android:src="@drawable/default_chain_img" />
 
                 <TextView
-                    android:id="@+id/chain_name"
+                    android:id="@+id/chainNameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/space_8"

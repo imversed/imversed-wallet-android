@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginTop="@dimen/space_8"
+        android:layout_marginEnd="@dimen/space_12"
+        android:padding="@dimen/space_4"
+        app:cardBackgroundColor="@color/colorTransBg"
+        app:cardCornerRadius="@dimen/space_6"
+        app:cardElevation="1.5dp"
+        app:cardPreventCornerOverlap="true">
+
+        <RelativeLayout
+            android:id="@+id/chain_layer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/chainImageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/cosmos_wh_main" />
+
+            <TextView
+                android:id="@+id/chainNameTextView"
+                style="@style/font_ss_14_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/space_4"
+                android:layout_toEndOf="@+id/chainImageView"
+                android:singleLine="true"
+                tools:text="@string/str_cosmos" />
+
+            <TextView
+                android:id="@+id/accountsCountTextView"
+                style="@style/font_ss_14_white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/space_8"
+                tools:text="@string/str_expand_group" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

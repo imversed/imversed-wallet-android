@@ -194,8 +194,8 @@ public class WalletEditActivity extends BaseActivity implements View.OnClickList
                 chainCard = itemView.findViewById(R.id.chain_card);
                 chainRemoveImg = itemView.findViewById(R.id.chain_remove_img);
                 chainSort = itemView.findViewById(R.id.chainSort);
-                chainTokenImg = itemView.findViewById(R.id.chain_img);
-                chainName = itemView.findViewById(R.id.chain_name);
+                chainTokenImg = itemView.findViewById(R.id.chainImageView);
+                chainName = itemView.findViewById(R.id.chainNameTextView);
             }
         }
     }
@@ -246,8 +246,8 @@ public class WalletEditActivity extends BaseActivity implements View.OnClickList
                 super(itemView);
                 chainCard = itemView.findViewById(R.id.chain_card);
                 chainAddImg = itemView.findViewById(R.id.chain_add_img);
-                chainTokenImg = itemView.findViewById(R.id.chain_img);
-                chainName = itemView.findViewById(R.id.chain_name);
+                chainTokenImg = itemView.findViewById(R.id.chainImageView);
+                chainName = itemView.findViewById(R.id.chainNameTextView);
             }
         }
     }

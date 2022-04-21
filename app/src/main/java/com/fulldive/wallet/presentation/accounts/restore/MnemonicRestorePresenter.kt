@@ -180,11 +180,11 @@ class MnemonicRestorePresenter @Inject constructor(
             .observeOn(AppSchedulers.ui())
             .flatMap { requestCode ->
                 completeCallable {
-                    val dialog = ChoiceChainDialogFragment.newInstance(
-                        false,
-                        requestCode,
-                        isCheckLimit = true
-                    )
+                    val dialog = ChoiceChainDialogFragment
+                        .newInstance(
+                            false,
+                            requestCode
+                        )
                     viewState.showDialog(dialog, "dialog", false)
                 }
                     .toSingleDefault(requestCode)

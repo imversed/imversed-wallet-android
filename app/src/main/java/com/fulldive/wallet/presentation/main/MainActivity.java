@@ -30,6 +30,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.presentation.chains.switcher.WalletSwitchActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -40,7 +41,6 @@ import java.math.BigDecimal;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.PasswordCheckActivity;
 import wannabit.io.cosmostaion.activities.WalletConnectActivity;
-import wannabit.io.cosmostaion.activities.WalletSwitchActivity;
 import wannabit.io.cosmostaion.activities.chains.kava.ClaimIncentiveActivity;
 import wannabit.io.cosmostaion.activities.chains.sif.SifIncentiveActivity;
 import wannabit.io.cosmostaion.appextensions.PopupManager;
@@ -120,8 +120,12 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
             }
         });
 
-        viewPager.setCurrentItem(getIntent().getIntExtra("page", 0), false);
-        PopupManager.INSTANCE.onAppStarted(this);
+        int page = getIntent().getIntExtra("page", 0);
+        viewPager.setCurrentItem(page, false);
+
+        if (savedInstanceState == null && page == 0) {
+            PopupManager.INSTANCE.onAppStarted(this);
+        }
     }
 
     private void createTab(TabLayout tabLayer, int index, @DrawableRes int iconResId, @StringRes int titleResId) {

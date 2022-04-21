@@ -59,7 +59,7 @@
                     android:paddingBottom="@dimen/space_8">
 
                     <ImageView
-                        android:id="@+id/chain_img"
+                        android:id="@+id/chainImageView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
@@ -82,7 +82,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="@dimen/space_8"
                         android:layout_toLeftOf="@+id/account_edit"
-                        android:layout_toRightOf="@+id/chain_img"
+                        android:layout_toRightOf="@+id/chainImageView"
                         tools:text="Wallet Name" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
