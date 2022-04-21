@@ -680,7 +680,7 @@ public class BaseConstant {
     public final static String ASSET_IMG_URL = "https://raw.githubusercontent.com/cosmostation/cosmostation_token_resource/master/assets/images/ethereum/";
 
     public final static String EXPLORER_COSMOS_MAIN = "https://www.mintscan.io/cosmos/";
-    public final static String EXPLORER_IMVERSED_MAIN = "https://tex.imversed.com/";
+    public final static String EXPLORER_IMVERSED_MAIN = "https://tex-c.imversed.com/";
     public final static String EXPLORER_IRIS_MAIN = "https://www.mintscan.io/iris/";
     public final static String EXPLORER_KAVA_MAIN = "https://www.mintscan.io/kava/";
     public final static String EXPLORER_IOV_MAIN = "https://www.mintscan.io/starname/";

@@ -1,7 +1,6 @@
 package com.fulldive.wallet.presentation.accounts
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,8 +13,10 @@ import com.fulldive.wallet.presentation.base.BaseMvpDialogFragment
 import com.joom.lightsaber.getInstance
 import moxy.ktx.moxyPresenter
 import wannabit.io.cosmostaion.R
+import wannabit.io.cosmostaion.databinding.DialogAddAccountBinding
 
-class AddAccountDialogFragment : BaseMvpDialogFragment(), AddAccountMoxyView {
+class AddAccountDialogFragment : BaseMvpDialogFragment<DialogAddAccountBinding>(),
+    AddAccountMoxyView {
     private val chain by unsafeLazy {
         arguments?.getString(KEY_CHAIN).orEmpty()
     }
@@ -27,6 +28,8 @@ class AddAccountDialogFragment : BaseMvpDialogFragment(), AddAccountMoxyView {
             }
     }
 
+    override fun getViewBinding() = DialogAddAccountBinding.inflate(layoutInflater)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,24 +39,23 @@ class AddAccountDialogFragment : BaseMvpDialogFragment(), AddAccountMoxyView {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val view = LayoutInflater.from(activity).inflate(R.layout.dialog_add_account, null)
-        view.findViewById<View>(R.id.btn_import_key).setOnClickListener {
-            presenter.onImportKeyClicked(requireActivity())
-        }
-        view.findViewById<View>(R.id.btn_import_mnemonic).setOnClickListener {
-            presenter.onImportMnemonicClicked(requireActivity())
-        }
-        view.findViewById<View>(R.id.btn_watch_address).setOnClickListener {
-            presenter.onWatchAddressClicked(requireActivity())
-        }
-        view.findViewById<View>(R.id.btn_create).setOnClickListener {
-            presenter.onCreateClicked(requireActivity())
-        }
+    override fun onDialogCreated(alertDialog: AlertDialog) {
+        super.onDialogCreated(alertDialog)
 
-        return AlertDialog.Builder(activity)
-            .setView(view)
-            .create()
+        binding {
+            btnImportKey.setOnClickListener {
+                presenter.onImportKeyClicked(requireActivity())
+            }
+            btnImportMnemonic.setOnClickListener {
+                presenter.onImportMnemonicClicked(requireActivity())
+            }
+            btnWatchAddress.setOnClickListener {
+                presenter.onWatchAddressClicked(requireActivity())
+            }
+            btnCreate.setOnClickListener {
+                presenter.onCreateClicked(requireActivity())
+            }
+        }
     }
 
     companion object {

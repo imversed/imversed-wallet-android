@@ -77,7 +77,6 @@ public class CryptoHelper {
         } catch (Exception ignore) {
         }
         return result;
-
     }
 
     public static String signData(String inputStr, String alias) {

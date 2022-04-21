@@ -1,7 +1,6 @@
 package com.fulldive.wallet.presentation.accounts
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,9 +11,10 @@ import com.fulldive.wallet.extensions.unsafeLazy
 import com.fulldive.wallet.presentation.base.BaseMvpDialogFragment
 import com.joom.lightsaber.getInstance
 import moxy.ktx.moxyPresenter
-import wannabit.io.cosmostaion.R
+import wannabit.io.cosmostaion.databinding.DialogShareTypeBinding
 
-class ShareAccountDialogFragment : BaseMvpDialogFragment(), ShareAccountMoxyView {
+class ShareAccountDialogFragment : BaseMvpDialogFragment<DialogShareTypeBinding>(),
+    ShareAccountMoxyView {
 
     private val address by unsafeLazy {
         arguments?.getString(KEY_ADDRESS)
@@ -28,6 +28,8 @@ class ShareAccountDialogFragment : BaseMvpDialogFragment(), ShareAccountMoxyView
             }
     }
 
+    override fun getViewBinding() = DialogShareTypeBinding.inflate(layoutInflater)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,18 +39,18 @@ class ShareAccountDialogFragment : BaseMvpDialogFragment(), ShareAccountMoxyView
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val view = LayoutInflater.from(activity).inflate(R.layout.dialog_share_type, null)
-        view.findViewById<View>(R.id.shareQRCodeButton).setOnClickListener {
-            presenter.onShareQRClicked(view.context.applicationContext)
+    override fun onDialogCreated(alertDialog: AlertDialog) {
+        super.onDialogCreated(alertDialog)
+
+        binding {
+            shareQRCodeButton.setOnClickListener {
+                presenter.onShareQRClicked(it.context.applicationContext)
+            }
+            shareTextButton.setOnClickListener {
+                presenter.onShareTextClicked(it.context.applicationContext)
+                dismiss()
+            }
         }
-        view.findViewById<View>(R.id.shareTextButton).setOnClickListener {
-            presenter.onShareTextClicked(view.context.applicationContext)
-            dismiss()
-        }
-        val builder = AlertDialog.Builder(activity)
-        builder.setView(view)
-        return builder.create()
     }
 
     companion object {

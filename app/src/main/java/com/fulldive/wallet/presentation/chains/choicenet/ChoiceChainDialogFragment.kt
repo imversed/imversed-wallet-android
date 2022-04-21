@@ -1,7 +1,6 @@
 package com.fulldive.wallet.presentation.chains.choicenet
 
 import android.app.AlertDialog
-import android.app.Dialog
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +9,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.fulldive.wallet.extensions.orFalse
 import com.fulldive.wallet.extensions.unsafeLazy
 import com.fulldive.wallet.interactors.ScreensInteractor
@@ -20,9 +18,10 @@ import com.fulldive.wallet.presentation.accounts.AddAccountDialogFragment
 import com.fulldive.wallet.presentation.base.BaseMvpDialogFragment
 import com.joom.lightsaber.getInstance
 import wannabit.io.cosmostaion.R
+import wannabit.io.cosmostaion.databinding.DialogListBinding
 
 
-class ChoiceChainDialogFragment : BaseMvpDialogFragment() {
+class ChoiceChainDialogFragment : BaseMvpDialogFragment<DialogListBinding>() {
     private val isCheckLimit by unsafeLazy { arguments?.getBoolean(KEY_ADD, false).orFalse() }
     private val isAddNet by unsafeLazy { arguments?.getBoolean(KEY_ADD, false).orFalse() }
     private val requestCode by unsafeLazy { arguments?.getString(KEY_REQUEST_CODE).orEmpty() }
@@ -34,6 +33,8 @@ class ChoiceChainDialogFragment : BaseMvpDialogFragment() {
     private var adapter: ChainListAdapter? = null
     private lateinit var screensInteractor: ScreensInteractor
 
+    override fun getViewBinding() = DialogListBinding.inflate(layoutInflater)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,15 +45,15 @@ class ChoiceChainDialogFragment : BaseMvpDialogFragment() {
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val view = LayoutInflater.from(activity).inflate(R.layout.dialog_list, null)
-        val items = BaseChain.chains
-            .filter { chain ->
+    override fun onDialogCreated(alertDialog: AlertDialog) {
+        super.onDialogCreated(alertDialog)
+
+        binding {
+            val items = BaseChain.chains.filter { chain ->
                 chain.isSupported && (chains.isEmpty() || chains.contains(chain.chainName))
             }
 
-        val linearLayout = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        view.findViewById<RecyclerView?>(R.id.recyclerView).also { recyclerView ->
+            val linearLayout = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             recyclerView.layoutManager = linearLayout
             recyclerView.addItemDecoration(
                 DividerItemDecoration(
@@ -64,9 +65,6 @@ class ChoiceChainDialogFragment : BaseMvpDialogFragment() {
             adapter = ChainListAdapter(items, ::onChainClicked)
             recyclerView.adapter = adapter
         }
-        return AlertDialog.Builder(activity)
-            .setView(view)
-            .create()
     }
 
     override fun onDestroy() {
