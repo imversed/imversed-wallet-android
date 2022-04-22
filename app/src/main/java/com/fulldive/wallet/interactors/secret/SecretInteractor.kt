@@ -14,7 +14,6 @@ import org.bitcoinj.crypto.DeterministicKey
 import org.bitcoinj.crypto.MnemonicCode
 import wannabit.io.cosmostaion.crypto.CryptoHelper
 import wannabit.io.cosmostaion.crypto.EncResult
-import wannabit.io.cosmostaion.dao.Password
 import java.security.SecureRandom
 import java.util.regex.Pattern
 import javax.inject.Inject
@@ -68,39 +67,6 @@ class SecretInteractor @Inject constructor(
         }
     }
 
-    fun setPassword(
-        password: String
-    ): Completable {
-        return safeSingle {
-            Password(
-                CryptoHelper.signData(
-                    password,
-                    PASSWORD_KEY
-                )
-            )
-        }
-            .flatMapCompletable(secretRepository::setPassword)
-    }
-
-    fun checkPassword(
-        password: String
-    ): Completable {
-        return secretRepository
-            .getPassword()
-            .flatMapCompletable { selectedPassword ->
-                safeCompletable {
-                    if (!CryptoHelper.verifyData(
-                            password,
-                            selectedPassword.resource,
-                            PASSWORD_KEY
-                        )
-                    ) {
-                        throw InvalidPasswordException()
-                    }
-                }
-            }
-    }
-
     fun deleteMnemonicKey(uuid: String): Completable {
         return safeCompletable {
             CryptoHelper.deleteKey(MNEMONIC_KEY + uuid)
@@ -115,7 +81,7 @@ class SecretInteractor @Inject constructor(
 
     fun entropyToMnemonic(uuid: String, resource: String, spec: String): Single<String> {
         return safeSingle {
-            CryptoHelper.doDecryptData(
+            CryptoHelper.decryptData(
                 MNEMONIC_KEY + uuid,
                 resource,
                 spec
@@ -129,7 +95,7 @@ class SecretInteractor @Inject constructor(
 
     fun entropyToPrivateKey(uuid: String, resource: String, spec: String): Single<String> {
         return safeSingle {
-            CryptoHelper.doDecryptData(
+            CryptoHelper.decryptData(
                 PRIVATE_KEY + uuid,
                 resource,
                 spec
@@ -143,7 +109,7 @@ class SecretInteractor @Inject constructor(
 
     fun encryptText(key: String, text: String): Single<EncResult> {
         return safeSingle {
-            CryptoHelper.doEncryptData(key, text, false)
+            CryptoHelper.encryptData(key, text, false)
         }
     }
 
@@ -190,7 +156,7 @@ class SecretInteractor @Inject constructor(
 
     fun encrypt(salt: String, encDataString: String, ivDataString: String): Single<String> {
         return safeSingle {
-            CryptoHelper.doDecryptData(
+            CryptoHelper.decryptData(
                 salt,
                 encDataString,
                 ivDataString
@@ -200,10 +166,17 @@ class SecretInteractor @Inject constructor(
         }
     }
 
-    fun isPasswordExists(): Single<Boolean> {
-        return secretRepository.getPassword()
-            .map { true }
-            .onErrorReturnItem(false)
+
+    fun setPassword(password: String): Completable {
+        return secretRepository.setPassword(password)
+    }
+
+    fun checkPassword(password: String): Completable {
+        return secretRepository.checkPassword(password)
+    }
+
+    fun hasPassword(): Single<Boolean> {
+        return secretRepository.hasPassword()
     }
 
     private fun getEntropy(): ByteArray {
@@ -217,7 +190,6 @@ class SecretInteractor @Inject constructor(
         private const val ENTROPY_SIZE = 32
         private val MNEMONIC_SIZES = listOf(12, 16, 24)
 
-        private const val PASSWORD_KEY = "PASSWORD_KEY"
         private const val PRIVATE_KEY = "PRIVATE_KEY"
         private const val MNEMONIC_KEY = "MNEMONIC_KEY"
     }

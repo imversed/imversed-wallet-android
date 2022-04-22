@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -16,17 +15,23 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 
+import com.fulldive.wallet.extensions.ContextExtensionsKt;
+import com.fulldive.wallet.interactors.secret.SecretInteractor;
 import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
+import com.fulldive.wallet.rx.AppSchedulers;
 
+import io.reactivex.disposables.Disposable;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.dialog.Dialog_LockTime;
+import wannabit.io.cosmostaion.utils.WLog;
 
 public class AppLockSetActivity extends BaseActivity implements View.OnClickListener {
 
     private FrameLayout mBtnUsingAppLock, mBtnUsingFingerprint, mBtnAppLockTime;
     private SwitchCompat mSwitchUsingAppLock, mSwitchUsingFingerprint;
     private TextView mTvAppLockTime;
+    private SecretInteractor secretInteractor;
 
     private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == Activity.RESULT_OK) {
@@ -39,6 +44,8 @@ public class AppLockSetActivity extends BaseActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_applock_set);
+        secretInteractor = getAppInjector().getInstance(SecretInteractor.class);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         mBtnUsingAppLock = findViewById(R.id.card_using_applock);
         mBtnUsingFingerprint = findViewById(R.id.card_using_fingerprint);
@@ -101,12 +108,23 @@ public class AppLockSetActivity extends BaseActivity implements View.OnClickList
                 );
 
             } else {
-                if (getBaseDao().hasPassword()) {
-                    getBaseDao().setUsingAppLock(true);
-                    onUpdateView();
-                } else {
-                    Toast.makeText(getBaseContext(), getString(R.string.error_no_password), Toast.LENGTH_SHORT).show();
-                }
+                Disposable disposable = secretInteractor
+                        .hasPassword()
+                        .subscribeOn(AppSchedulers.INSTANCE.io())
+                        .observeOn(AppSchedulers.INSTANCE.ui())
+                        .doOnError(error -> WLog.e(error.toString()))
+                        .subscribe(
+                                hasPassword -> {
+                                    if (hasPassword) {
+                                        getBaseDao().setUsingAppLock(true);
+                                        onUpdateView();
+                                    } else {
+                                        ContextExtensionsKt.toast(getBaseContext(), R.string.error_no_password);
+                                    }
+                                },
+                                error -> ContextExtensionsKt.toast(getBaseContext(), R.string.str_unknown_error_msg)
+                        );
+                compositeDisposable.add(disposable);
             }
 
         } else if (v.equals(mBtnUsingFingerprint)) {

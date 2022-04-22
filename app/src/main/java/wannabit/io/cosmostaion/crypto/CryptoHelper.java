@@ -58,7 +58,7 @@ public class CryptoHelper {
     }
 
 
-    public static EncResult doEncryptData(String alias, String resource, boolean withAuth) {
+    public static EncResult encryptData(String alias, String resource, boolean withAuth) {
         EncResult result = null;
         try {
             Cipher cipher = getEncodeCipher(alias, withAuth);
@@ -69,7 +69,7 @@ public class CryptoHelper {
         return result;
     }
 
-    public static String doDecryptData(String alias, String resource, String iv) {
+    public static String decryptData(String alias, String resource, String iv) {
         String result = null;
         try {
             Cipher cipher = getDecodeCipher(alias, Base64.decode(iv, Base64.DEFAULT));
@@ -106,7 +106,6 @@ public class CryptoHelper {
     public static boolean verifyData(String input, String signatureStr, String alias) {
         boolean result = false;
         try {
-
             final byte[] data = input.getBytes();
             final KeyStore keyStore = loadKeyStore();
 

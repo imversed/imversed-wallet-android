@@ -565,11 +565,11 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
                 Account toAccount = getBaseDao().getAccount(getSActivity().mDesmosToLinkAccountId.toString());
                 ECKey ecKey;
                 if (toAccount.fromMnemonic) {
-                    String entropy = CryptoHelper.doDecryptData(getSActivity().getString(R.string.key_mnemonic) + toAccount.uuid, toAccount.resource, toAccount.spec);
+                    String entropy = CryptoHelper.decryptData(getSActivity().getString(R.string.key_mnemonic) + toAccount.uuid, toAccount.resource, toAccount.spec);
                     DeterministicKey deterministicKey = WKey.getKeyWithPathfromEntropy(toAccount, entropy);
                     ecKey = ECKey.fromPrivate(new BigInteger(deterministicKey.getPrivateKeyAsHex(), 16));
                 } else {
-                    String privateKey = CryptoHelper.doDecryptData(getSActivity().getString(R.string.key_private) + toAccount.uuid, toAccount.resource, toAccount.spec);
+                    String privateKey = CryptoHelper.decryptData(getSActivity().getString(R.string.key_private) + toAccount.uuid, toAccount.resource, toAccount.spec);
                     ecKey = ECKey.fromPrivate(new BigInteger(privateKey, 16));
                 }
                 new SimulLinkAccountGrpcTask(getBaseApplication(), this, getSActivity().getAccount(), getSActivity().getBaseChain(), getSActivity().getAccount().address, getSActivity().mDesmosToLinkChain,

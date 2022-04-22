@@ -74,12 +74,6 @@ class AccountsLocalStorage @Inject constructor(
         }
     }
 
-    fun checkExistsPassword(): Single<Boolean> {
-        return safeSingle {
-            baseData.hasPassword()
-        }
-    }
-
     fun addAccount(account: Account): Single<Long> {
         return safeSingle {
             baseData.insertAccount(account)

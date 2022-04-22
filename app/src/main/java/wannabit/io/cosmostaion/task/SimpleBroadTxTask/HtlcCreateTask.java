@@ -104,11 +104,11 @@ public class HtlcCreateTask extends CommonTask {
                 mSendAccount = context.getBaseDao().getAccount("" + mSendAccount.id);
 
                 if (mSendAccount.fromMnemonic) {
-                    String entropy = CryptoHelper.doDecryptData(context.getString(R.string.key_mnemonic) + mSendAccount.uuid, mSendAccount.resource, mSendAccount.spec);
+                    String entropy = CryptoHelper.decryptData(context.getString(R.string.key_mnemonic) + mSendAccount.uuid, mSendAccount.resource, mSendAccount.spec);
                     DeterministicKey deterministicKey = WKey.getKeyWithPathfromEntropy(mSendAccount, entropy);
                     ecKey = ECKey.fromPrivate(new BigInteger(deterministicKey.getPrivateKeyAsHex(), 16));
                 } else {
-                    String privateKey = CryptoHelper.doDecryptData(context.getString(R.string.key_private) + mSendAccount.uuid, mSendAccount.resource, mSendAccount.spec);
+                    String privateKey = CryptoHelper.decryptData(context.getString(R.string.key_private) + mSendAccount.uuid, mSendAccount.resource, mSendAccount.spec);
                     ecKey = ECKey.fromPrivate(new BigInteger(privateKey, 16));
                 }
 
@@ -162,11 +162,11 @@ public class HtlcCreateTask extends CommonTask {
 
             } else if (mSendChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                 if (mSendAccount.fromMnemonic) {
-                    String entropy = CryptoHelper.doDecryptData(context.getString(R.string.key_mnemonic) + mSendAccount.uuid, mSendAccount.resource, mSendAccount.spec);
+                    String entropy = CryptoHelper.decryptData(context.getString(R.string.key_mnemonic) + mSendAccount.uuid, mSendAccount.resource, mSendAccount.spec);
                     DeterministicKey deterministicKey = WKey.getKeyWithPathfromEntropy(mSendAccount, entropy);
                     ecKey = ECKey.fromPrivate(new BigInteger(deterministicKey.getPrivateKeyAsHex(), 16));
                 } else {
-                    String privateKey = CryptoHelper.doDecryptData(context.getString(R.string.key_private) + mSendAccount.uuid, mSendAccount.resource, mSendAccount.spec);
+                    String privateKey = CryptoHelper.decryptData(context.getString(R.string.key_private) + mSendAccount.uuid, mSendAccount.resource, mSendAccount.spec);
                     ecKey = ECKey.fromPrivate(new BigInteger(privateKey, 16));
                 }
 

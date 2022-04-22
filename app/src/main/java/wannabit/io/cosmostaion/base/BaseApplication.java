@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import com.fulldive.wallet.di.EnrichableLifecycleCallbacks;
 import com.fulldive.wallet.di.IInjectorHolder;
 import com.fulldive.wallet.di.components.ApplicationComponent;
+import com.fulldive.wallet.interactors.secret.SecretInteractor;
 import com.joom.lightsaber.Injector;
 import com.joom.lightsaber.Lightsaber;
 import com.squareup.picasso.Picasso;
@@ -21,11 +22,14 @@ public class BaseApplication extends Application implements IInjectorHolder {
 
     private BaseData mBaseData;
     private AppStatus mAppStatus;
+    private SecretInteractor secretInteractor;
 
     @Override
     public void onCreate() {
         super.onCreate();
         appInjector = new Lightsaber.Builder().build().createInjector(new ApplicationComponent(getApplicationContext()));
+
+        secretInteractor = appInjector.getInstance(SecretInteractor.class);
 
         registerActivityLifecycleCallbacks(new LifecycleCallbacks());
         registerActivityLifecycleCallbacks(new EnrichableLifecycleCallbacks(this));
@@ -51,7 +55,7 @@ public class BaseApplication extends Application implements IInjectorHolder {
     public boolean needShowLockScreen() {
         final BaseData baseData = getBaseDao();
         if (!isReturnedForeground() ||
-                !baseData.hasPassword() ||
+                !secretInteractor.hasPassword().blockingGet() ||    // TODO: it will be refactored
                 !baseData.getUsingAppLock() ||
                 (baseData.getAccounts().size() <= 0)) return false;
 

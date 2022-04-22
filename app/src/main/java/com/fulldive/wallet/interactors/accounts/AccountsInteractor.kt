@@ -305,10 +305,6 @@ class AccountsInteractor @Inject constructor(
             }
     }
 
-    fun checkExistsPassword(): Single<Boolean> {
-        return accountsRepository.checkExistsPassword()
-    }
-
     private fun deleteAccount(account: Account): Completable {
         return Completable.merge(
             listOf(

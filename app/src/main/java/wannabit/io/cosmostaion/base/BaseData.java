@@ -1,7 +1,5 @@
 package wannabit.io.cosmostaion.base;
 
-import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
-import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.FEE_BNB_SEND;
 import static wannabit.io.cosmostaion.base.BaseConstant.IOV_MSG_TYPE_RENEW_ACCOUNT;
 import static wannabit.io.cosmostaion.base.BaseConstant.IOV_MSG_TYPE_RENEW_DOMAIN;
@@ -64,7 +62,6 @@ import wannabit.io.cosmostaion.dao.Cw20Assets;
 import wannabit.io.cosmostaion.dao.IbcPath;
 import wannabit.io.cosmostaion.dao.IbcToken;
 import wannabit.io.cosmostaion.dao.OkToken;
-import wannabit.io.cosmostaion.dao.Password;
 import wannabit.io.cosmostaion.dao.Price;
 import wannabit.io.cosmostaion.model.BondingInfo;
 import wannabit.io.cosmostaion.model.GDexManager;
@@ -111,7 +108,6 @@ public class BaseData {
         }
         return mSQLiteDatabase;
     }
-
 
     public List<Price> mPrices = new ArrayList<>();
     public ChainParam.Params mChainParam;
@@ -1013,14 +1009,6 @@ public class BaseData {
         }
     }
 
-    public void setFCMToken(String token) {
-        getSharedPreferences().edit().putString(BaseConstant.PRE_FCM_TOKEN, token).commit();
-    }
-
-    public String getFCMToken() {
-        return getSharedPreferences().getString(BaseConstant.PRE_FCM_TOKEN, "");
-    }
-
     public void setUserHidenChains(List<BaseChain> hidedChains) {
         JSONArray array = new JSONArray();
         for (BaseChain baseChain : hidedChains) {
@@ -1178,40 +1166,6 @@ public class BaseData {
         return chains;
     }
 
-    @Nullable
-    public Password getPassword() {
-        Password result = null;
-        Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_PASSWORD, new String[]{"resource", "spec"}, null, null, null, null, null);
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                result = new Password(cursor.getString(0), cursor.getString(1));
-            }
-            cursor.close();
-        }
-        return result;
-    }
-
-    public boolean hasPassword() {
-        boolean existed = false;
-        Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_PASSWORD, new String[]{"resource", "spec"}, null, null, null, null, null);
-        if (cursor != null) {
-            existed = cursor.getCount() > 0;
-            cursor.close();
-        }
-        return existed;
-    }
-
-    public long setPassword(Password password) {
-        long result = -1;
-        if (hasPassword()) return result;
-
-        ContentValues values = new ContentValues();
-        values.put("resource", password.resource);
-        values.put("spec", password.spec);
-        return getBaseDB().insertOrThrow(BaseConstant.DB_TABLE_PASSWORD, null, values);
-    }
-
-
     public ArrayList<Account> getAccounts() {
         ArrayList<Account> result = new ArrayList<>();
         Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_ACCOUNT, new String[]{"id", "uuid", "nickName", "address", "baseChain",
@@ -1280,11 +1234,11 @@ public class BaseData {
         ArrayList<Account> AllAccount = getAccounts();
         for (Account account : AllAccount) {
             if (BaseChain.getChain(account.baseChain).equals(chain) && account.hasPrivateKey) {
-                if (chain.equals(BNB_MAIN.INSTANCE)) {
+                if (chain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
                     if (getTokenAmount(account.balances, chain.getMainDenom()).compareTo(new BigDecimal(FEE_BNB_SEND)) >= 0) {
                         result.add(account);
                     }
-                } else if (chain.equals(KAVA_MAIN.INSTANCE)) {
+                } else if (chain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                     if (getTokenAmount(account.balances, chain.getMainDenom()).compareTo(new BigDecimal("12500")) >= 0) {
                         result.add(account);
                     }

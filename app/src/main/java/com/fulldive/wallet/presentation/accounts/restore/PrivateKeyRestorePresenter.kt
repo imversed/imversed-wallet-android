@@ -7,6 +7,7 @@ import com.fulldive.wallet.interactors.ClipboardInteractor
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
 import com.fulldive.wallet.interactors.accounts.DuplicateAccountException
 import com.fulldive.wallet.interactors.secret.MnemonicUtils
+import com.fulldive.wallet.interactors.secret.SecretInteractor
 import com.fulldive.wallet.interactors.secret.WalletUtils
 import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
@@ -21,6 +22,7 @@ import javax.inject.Inject
 @ProvidedBy(DefaultPresentersModule::class)
 class PrivateKeyRestorePresenter @Inject constructor(
     private val accountsInteractor: AccountsInteractor,
+    private val secretInteractor: SecretInteractor,
     private val clipboardInteractor: ClipboardInteractor
 ) : BaseMoxyPresenter<PrivateKeyRestoreMoxyView>() {
 
@@ -144,8 +146,8 @@ class PrivateKeyRestorePresenter @Inject constructor(
     }
 
     private fun checkPassword() {
-        accountsInteractor
-            .checkExistsPassword()
+        secretInteractor
+            .hasPassword()
             .withDefaults()
             .compositeSubscribe(
                 onSuccess = { hasPassword ->

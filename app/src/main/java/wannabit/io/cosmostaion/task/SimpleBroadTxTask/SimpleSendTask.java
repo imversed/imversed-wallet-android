@@ -60,8 +60,7 @@ public class SimpleSendTask extends CommonTask {
     @Override
     protected TaskResult doInBackground(String... strings) {
         try {
-            Password checkPw = context.getBaseDao().getPassword();
-            if (!CryptoHelper.verifyData(strings[0], checkPw.resource, context.getString(R.string.key_password))) {
+            if (!checkPassword(strings[0])) {
                 result.isSuccess = false;
                 result.errorCode = ERROR_CODE_INVALID_PASSWORD;
                 return result;
@@ -76,11 +75,11 @@ public class SimpleSendTask extends CommonTask {
 
             ECKey ecKey;
             if (mAccount.fromMnemonic) {
-                String entropy = CryptoHelper.doDecryptData(context.getString(R.string.key_mnemonic) + mAccount.uuid, mAccount.resource, mAccount.spec);
+                String entropy = CryptoHelper.decryptData(context.getString(R.string.key_mnemonic) + mAccount.uuid, mAccount.resource, mAccount.spec);
                 DeterministicKey deterministicKey = WKey.getKeyWithPathfromEntropy(mAccount, entropy);
                 ecKey = ECKey.fromPrivate(new BigInteger(deterministicKey.getPrivateKeyAsHex(), 16));
             } else {
-                String privateKey = CryptoHelper.doDecryptData(context.getString(R.string.key_private) + mAccount.uuid, mAccount.resource, mAccount.spec);
+                String privateKey = CryptoHelper.decryptData(context.getString(R.string.key_private) + mAccount.uuid, mAccount.resource, mAccount.spec);
                 ecKey = ECKey.fromPrivate(new BigInteger(privateKey, 16));
             }
 

@@ -61,10 +61,6 @@ class AccountsRepository @Inject constructor(
         return accountsLocalStorage.deleteAccount(accountId)
     }
 
-    fun checkExistsPassword(): Single<Boolean> {
-        return accountsLocalStorage.checkExistsPassword()
-    }
-
     fun setHiddenChains(items: List<BaseChain>): Completable {
         return accountsLocalStorage.setHiddenChains(items)
     }

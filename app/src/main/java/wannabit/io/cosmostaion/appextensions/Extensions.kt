@@ -5,8 +5,8 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 
-fun Context.getPrivateSharedPreferences(): SharedPreferences {
-    return this.getSharedPreferences(packageName + "_preference", Context.MODE_PRIVATE)
+fun Context.getPrivateSharedPreferences(key: String = "preference"): SharedPreferences {
+    return this.getSharedPreferences(packageName + "_$key", Context.MODE_PRIVATE)
 }
 
 fun SharedPreferences.setProperty(tag: String, value: Int) {

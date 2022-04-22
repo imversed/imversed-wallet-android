@@ -37,8 +37,8 @@ class CreateAccountPresenter @Inject constructor(
     }
 
     fun onShowMnemonicClicked() {
-        accountsInteractor
-            .checkExistsPassword()
+        secretInteractor
+            .hasPassword()
             .withDefaults()
             .compositeSubscribe(
                 onSuccess = { hasPassword ->

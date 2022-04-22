@@ -249,7 +249,7 @@ class MnemonicRestorePresenter @Inject constructor(
 
     private fun checkPassword() {
         secretInteractor
-            .isPasswordExists()
+            .hasPassword()
             .withDefaults()
             .compositeSubscribe(
                 onSuccess = { hasPassword ->

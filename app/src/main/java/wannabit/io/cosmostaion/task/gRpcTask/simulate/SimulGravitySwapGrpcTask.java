@@ -66,11 +66,11 @@ public class SimulGravitySwapGrpcTask extends CommonTask {
     protected TaskResult doInBackground(String... strings) {
         try {
             if (mAccount.fromMnemonic) {
-                String entropy = CryptoHelper.doDecryptData(context.getString(R.string.key_mnemonic) + mAccount.uuid, mAccount.resource, mAccount.spec);
+                String entropy = CryptoHelper.decryptData(context.getString(R.string.key_mnemonic) + mAccount.uuid, mAccount.resource, mAccount.spec);
                 DeterministicKey deterministicKey = WKey.getKeyWithPathfromEntropy(mAccount, entropy);
                 ecKey = ECKey.fromPrivate(new BigInteger(deterministicKey.getPrivateKeyAsHex(), 16));
             } else {
-                String privateKey = CryptoHelper.doDecryptData(context.getString(R.string.key_private) + mAccount.uuid, mAccount.resource, mAccount.spec);
+                String privateKey = CryptoHelper.decryptData(context.getString(R.string.key_private) + mAccount.uuid, mAccount.resource, mAccount.spec);
                 ecKey = ECKey.fromPrivate(new BigInteger(privateKey, 16));
             }
 

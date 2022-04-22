@@ -94,7 +94,7 @@ class CheckPasswordPresenter @Inject constructor(
             .withDefaults()
             .compositeSubscribe(
                 onSuccess = {
-                    WLog.w("Account was checked")
+                    WLog.w("Password was checked")
                     viewState.finishWithResult(MvpAppCompatActivity.RESULT_OK)
                 }
             ) { error: Throwable ->

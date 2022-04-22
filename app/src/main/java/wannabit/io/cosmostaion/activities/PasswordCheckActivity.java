@@ -485,11 +485,11 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
 
                 break;
             case CONST_PW_CHECK_MNEMONIC:
-                fetchEntropy(ShowMnemonicActivity.class, true);
+                fetchEntropy(ShowMnemonicActivity.class);
 
                 break;
             case CONST_PW_CHECK_PRIVATE_KEY:
-                fetchEntropy(ShowPrivateKeyActivity.class, false);
+                fetchEntropy(ShowPrivateKeyActivity.class);
 
                 break;
             case CONST_PW_TX_SIMPLE_SEND:
@@ -721,11 +721,11 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
                 Account toAccount = getBaseDao().getAccount(mDesmosToLinkAccountId.toString());
                 ECKey ecKey;
                 if (toAccount.fromMnemonic) {
-                    String entropy = CryptoHelper.doDecryptData(getString(R.string.key_mnemonic) + toAccount.uuid, toAccount.resource, toAccount.spec);
+                    String entropy = CryptoHelper.decryptData(getString(R.string.key_mnemonic) + toAccount.uuid, toAccount.resource, toAccount.spec);
                     DeterministicKey deterministicKey = WKey.getKeyWithPathfromEntropy(toAccount, entropy);
                     ecKey = ECKey.fromPrivate(new BigInteger(deterministicKey.getPrivateKeyAsHex(), 16));
                 } else {
-                    String privateKey = CryptoHelper.doDecryptData(getString(R.string.key_private) + toAccount.uuid, toAccount.resource, toAccount.spec);
+                    String privateKey = CryptoHelper.decryptData(getString(R.string.key_private) + toAccount.uuid, toAccount.resource, toAccount.spec);
                     ecKey = ECKey.fromPrivate(new BigInteger(privateKey, 16));
                 }
                 new LinkAccountGrpcTask(getBaseApplication(), this, getAccount(), getBaseChain(), getAccount().address, BaseChain.getChain(mDesmosToLinkChain),
@@ -835,21 +835,21 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
         compositeDisposable.add(disposable);
     }
 
-    private void fetchEntropy(Class<?> cls, boolean fromMnemonic) {
+    private void fetchEntropy(Class<?> cls) {
         showWaitDialog();
 
         Disposable disposable = secretInteractor
                 .checkPassword(userInput)
                 .andThen(accountsInteractor.getAccount(mIdToCheck))
                 .flatMap(account -> {
-                            if (fromMnemonic) {
+                            WLog.w("fftf, fetchEntropy: " + account.fromMnemonic + ", " + account.uuid + ", " + account.resource + ", " + account.spec);
+                            if (account.fromMnemonic) {
                                 return secretInteractor.entropyToMnemonic(account.uuid, account.resource, account.spec);
                             } else {
                                 return secretInteractor.entropyToPrivateKey(account.uuid, account.resource, account.spec);
                             }
                         }
                 )
-                .doOnSuccess(a -> WLog.w("step 3: " + a))
                 .subscribeOn(AppSchedulers.INSTANCE.io())
                 .observeOn(AppSchedulers.INSTANCE.ui())
                 .doOnError(error -> WLog.e(error.toString()))

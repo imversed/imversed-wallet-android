@@ -77,11 +77,11 @@ public class HtlcClaimTask extends CommonTask {
                 mReceiveAccount = context.getBaseDao().getAccount("" + mReceiveAccount.id);
 
                 if (mReceiveAccount.fromMnemonic) {
-                    String entropy = CryptoHelper.doDecryptData(context.getString(R.string.key_mnemonic) + mReceiveAccount.uuid, mReceiveAccount.resource, mReceiveAccount.spec);
+                    String entropy = CryptoHelper.decryptData(context.getString(R.string.key_mnemonic) + mReceiveAccount.uuid, mReceiveAccount.resource, mReceiveAccount.spec);
                     DeterministicKey deterministicKey = WKey.getKeyWithPathfromEntropy(mReceiveAccount, entropy);
                     ecKey = ECKey.fromPrivate(new BigInteger(deterministicKey.getPrivateKeyAsHex(), 16));
                 } else {
-                    String privateKey = CryptoHelper.doDecryptData(context.getString(R.string.key_private) + mReceiveAccount.uuid, mReceiveAccount.resource, mReceiveAccount.spec);
+                    String privateKey = CryptoHelper.decryptData(context.getString(R.string.key_private) + mReceiveAccount.uuid, mReceiveAccount.resource, mReceiveAccount.spec);
                     ecKey = ECKey.fromPrivate(new BigInteger(privateKey, 16));
                 }
 
@@ -114,11 +114,11 @@ public class HtlcClaimTask extends CommonTask {
                 Query.GetNodeInfoResponse receiveInfo = nodeInfoStub.getNodeInfo(receiveNodeInfo);
 
                 if (mReceiveAccount.fromMnemonic) {
-                    String entropy = CryptoHelper.doDecryptData(context.getString(R.string.key_mnemonic) + mReceiveAccount.uuid, mReceiveAccount.resource, mReceiveAccount.spec);
+                    String entropy = CryptoHelper.decryptData(context.getString(R.string.key_mnemonic) + mReceiveAccount.uuid, mReceiveAccount.resource, mReceiveAccount.spec);
                     DeterministicKey deterministicKey = WKey.getKeyWithPathfromEntropy(mReceiveAccount, entropy);
                     ecKey = ECKey.fromPrivate(new BigInteger(deterministicKey.getPrivateKeyAsHex(), 16));
                 } else {
-                    String privateKey = CryptoHelper.doDecryptData(context.getString(R.string.key_private) + mReceiveAccount.uuid, mReceiveAccount.resource, mReceiveAccount.spec);
+                    String privateKey = CryptoHelper.decryptData(context.getString(R.string.key_private) + mReceiveAccount.uuid, mReceiveAccount.resource, mReceiveAccount.spec);
                     ecKey = ECKey.fromPrivate(new BigInteger(privateKey, 16));
                 }
 
