@@ -91,6 +91,5 @@ abstract class BaseMvpActivity<VB : ViewBinding> : MvpAppCompatActivity(), IEnri
 
     companion object {
         private const val TAG_WAIT_DIALOG = "wait"
-
     }
 }

@@ -34,13 +34,14 @@ import com.fulldive.wallet.presentation.accounts.DeleteConfirmDialogFragment;
 import com.fulldive.wallet.presentation.accounts.restore.MnemonicRestoreActivity;
 import com.fulldive.wallet.presentation.accounts.restore.PrivateKeyRestoreActivity;
 import com.fulldive.wallet.presentation.main.intro.IntroActivity;
+import com.fulldive.wallet.presentation.security.key.ShowPrivateKeyActivity;
+import com.fulldive.wallet.presentation.security.mnemonic.ShowMnemonicActivity;
 import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
 import com.fulldive.wallet.rx.AppSchedulers;
 
 import io.reactivex.disposables.Disposable;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.dialog.Dialog_ChangeNickName;
 import wannabit.io.cosmostaion.dialog.Dialog_RewardAddressChangeInfo;
@@ -80,6 +81,22 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
             new ActivityResultContracts.StartActivityForResult(), result -> {
                 if (result.getResultCode() == Activity.RESULT_OK) {
                     actionDeleteAccount(account.id);
+                }
+            }
+    );
+
+    private final ActivityResultLauncher<Intent> launcherCheckMnemonic = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    actionCheckMnemonic(account.id);
+                }
+            }
+    );
+
+    private final ActivityResultLauncher<Intent> launcherCheckProvateKey = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    actionCheckPrivateKey(account.id);
                 }
             }
     );
@@ -152,27 +169,6 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
         } else {
             actionDeleteAccount(accountId);
         }
-    }
-
-    private void actionDeleteAccount(Long accountId) {
-        showWaitDialog();
-        Disposable disposable = accountsInteractor.deleteAccount(accountId)
-                .subscribeOn(AppSchedulers.INSTANCE.io())
-                .observeOn(AppSchedulers.INSTANCE.ui())
-                .doOnError(error -> WLog.e(error.toString()))
-                .subscribe(
-                        () -> {
-                            WLog.w("Account was selected after removing");
-                            startMainActivity(0);
-                        },
-                        error -> {
-                            Toast.makeText(getBaseContext(), R.string.str_unknown_error_msg, Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(this, IntroActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                        }
-                );
-        compositeDisposable.add(disposable);
     }
 
     public void onStartChangeRewardAddress() {
@@ -277,12 +273,11 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
     public void onClick(View v) {
         if (v.equals(mBtnCheck)) {
             if (account.hasPrivateKey) {
-                Intent intent = new Intent(AccountDetailActivity.this, PasswordCheckActivity.class);
-                intent.putExtra(BaseConstant.CONST_PW_PURPOSE, BaseConstant.CONST_PW_CHECK_MNEMONIC);
-                intent.putExtra("checkid", account.id);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_bottom, R.anim.fade_out);
-
+                final Intent intent = new Intent(this, CheckPasswordActivity.class);
+                launcherCheckMnemonic.launch(
+                        intent,
+                        ActivityOptionsCompat.makeCustomAnimation(this, R.anim.slide_in_bottom, R.anim.fade_out)
+                );
             } else {
                 Intent restoreIntent = new Intent(AccountDetailActivity.this, MnemonicRestoreActivity.class);
                 restoreIntent.putExtra("chain", baseChain.getChainName());
@@ -291,12 +286,11 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
 
         } else if (v.equals(mBtnCheckKey)) {
             if (account.hasPrivateKey) {
-                Intent intent = new Intent(AccountDetailActivity.this, PasswordCheckActivity.class);
-                intent.putExtra(BaseConstant.CONST_PW_PURPOSE, BaseConstant.CONST_PW_CHECK_PRIVATE_KEY);
-                intent.putExtra("checkid", account.id);
-                startActivity(intent);
-                overridePendingTransition(R.anim.slide_in_bottom, R.anim.fade_out);
-
+                final Intent intent = new Intent(this, CheckPasswordActivity.class);
+                launcherCheckProvateKey.launch(
+                        intent,
+                        ActivityOptionsCompat.makeCustomAnimation(this, R.anim.slide_in_bottom, R.anim.fade_out)
+                );
             } else {
                 Intent restoreIntent = new Intent(AccountDetailActivity.this, PrivateKeyRestoreActivity.class);
                 restoreIntent.putExtra("chain", baseChain.getChainName());
@@ -373,5 +367,39 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
 
             }
         }
+    }
+
+
+    private void actionDeleteAccount(Long accountId) {
+        showWaitDialog();
+        Disposable disposable = accountsInteractor.deleteAccount(accountId)
+                .subscribeOn(AppSchedulers.INSTANCE.io())
+                .observeOn(AppSchedulers.INSTANCE.ui())
+                .doOnError(error -> WLog.e(error.toString()))
+                .subscribe(
+                        () -> {
+                            WLog.w("Account was selected after removing");
+                            startMainActivity(0);
+                        },
+                        error -> {
+                            Toast.makeText(getBaseContext(), R.string.str_unknown_error_msg, Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(this, IntroActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                        }
+                );
+        compositeDisposable.add(disposable);
+    }
+
+    private void actionCheckMnemonic(Long accountId) {
+        Intent checkintent = new Intent(AccountDetailActivity.this, ShowMnemonicActivity.class);
+        checkintent.putExtra(ShowMnemonicActivity.KEY_ACCOUNT_ID, accountId);
+        startActivity(checkintent);
+    }
+
+    private void actionCheckPrivateKey(Long accountId) {
+        Intent checkintent = new Intent(AccountDetailActivity.this, ShowPrivateKeyActivity.class);
+        checkintent.putExtra(ShowMnemonicActivity.KEY_ACCOUNT_ID, accountId);
+        startActivity(checkintent);
     }
 }

@@ -26,13 +26,13 @@ class ShowPrivateKeyPresenter @Inject constructor(
 ) : BaseMoxyPresenter<ShowPrivateKeyMoxyView>() {
 
     var accountId: Long = -1
-    var entropy = ""
     private var privateKey: String = ""
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
 
         val accountSingle = accountsInteractor.getAccount(accountId)
+
         val chainSingle = accountSingle
             .map(Account::baseChain)
             .flatMap { chainName ->
@@ -44,9 +44,17 @@ class ShowPrivateKeyPresenter @Inject constructor(
             .flatMap { (account, chain) ->
                 if (account.fromMnemonic) {
                     secretInteractor
-                        .createKeyWithPathFromEntropy(
-                            chain, entropy, account.path, account.customPath
+                        .entropyToMnemonic(
+                            account.uuid,
+                            account.resource,
+                            account.spec
                         )
+                        .flatMap { entropy ->
+                            secretInteractor
+                                .createKeyWithPathFromEntropy(
+                                    chain, entropy, account.path, account.customPath
+                                )
+                        }
                         .map { key ->
                             key.privateKeyAsHex
                         }

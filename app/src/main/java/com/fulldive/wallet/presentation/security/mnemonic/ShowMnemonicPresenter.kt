@@ -23,24 +23,14 @@ class ShowMnemonicPresenter @Inject constructor(
 ) : BaseMoxyPresenter<ShowMnemonicMoxyView>() {
 
     var accountId: Long = -1
-    var entropy = ""
     private var mnemonicWords: List<String> = emptyList()
 
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
 
-        secretInteractor
-            .getRandomMnemonic(entropy)
-            .withDefaults()
-            .compositeSubscribe(
-                onSuccess = { words ->
-                    this.mnemonicWords = words
-                    viewState.showMnemonicWords(words)
-                }
-            )
+        val getAccount = accountsInteractor.getAccount(accountId)
 
-        accountsInteractor
-            .getAccount(accountId)
+        getAccount
             .map(Account::baseChain)
             .flatMap { chainName ->
                 safeSingle {
@@ -50,6 +40,34 @@ class ShowMnemonicPresenter @Inject constructor(
             .withDefaults()
             .compositeSubscribe(
                 onSuccess = viewState::showChain
+            )
+
+        getAccount
+            .flatMap { account ->
+                if (account.fromMnemonic) {
+                    secretInteractor.entropyToMnemonic(
+                        account.uuid,
+                        account.resource,
+                        account.spec
+                    )
+                } else {
+                    secretInteractor.entropyToPrivateKey(
+                        account.uuid,
+                        account.resource,
+                        account.spec
+                    )
+                }
+            }
+            .flatMap { entropy ->
+                secretInteractor
+                    .getRandomMnemonic(entropy)
+            }
+            .withDefaults()
+            .compositeSubscribe(
+                onSuccess = { words ->
+                    this.mnemonicWords = words
+                    viewState.showMnemonicWords(words)
+                }
             )
     }
 
