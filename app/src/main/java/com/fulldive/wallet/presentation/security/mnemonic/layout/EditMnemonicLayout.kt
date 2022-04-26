@@ -144,8 +144,6 @@ class EditMnemonicLayout : BaseMvpFrameLayout<LayoutMnemonicEditBinding> {
 
     companion object {
         private const val EDIT_FIELD_PREFIX = "mnemonicsEditText"
-        private const val LAYOUT_PREFIX = "mnemonicLayout"
         private const val HINT_PREFIX = "hintTextView"
-        private const val WORD_PREFIX = "mnemonicTextView"
     }
 }
