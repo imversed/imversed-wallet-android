@@ -3,34 +3,36 @@ package com.fulldive.wallet.presentation.main;
 import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
 import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
 import static com.fulldive.wallet.models.BaseChain.SIF_MAIN;
-import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_PURPOSE;
-import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_SIMPLE_CHECK;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_CLAIM_INCENTIVE;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIF_CLAIM_INCENTIVE;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HARD;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_KAVA;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_SWP;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.DrawableRes;
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.chains.switcher.WalletSwitchActivity;
+import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -39,7 +41,6 @@ import com.google.zxing.integration.android.IntentResult;
 import java.math.BigDecimal;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.PasswordCheckActivity;
 import wannabit.io.cosmostaion.activities.WalletConnectActivity;
 import wannabit.io.cosmostaion.activities.chains.kava.ClaimIncentiveActivity;
 import wannabit.io.cosmostaion.activities.chains.sif.SifIncentiveActivity;
@@ -68,8 +69,17 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
     public MainViewPageAdapter adapter;
     public FloatingActionButton floatingActionButton;
 
+    private String wcUrl = "";
     private String lastAccountChainName = null;
     private long lastAccountCheckId = -1L;
+
+    private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    actionWalletConnect(wcUrl);
+                }
+            }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -201,11 +211,13 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
     }
 
     public void onStartBinanceWalletConnect(String wcUrl) {
-        Intent intent = new Intent(this, PasswordCheckActivity.class);
-        intent.putExtra(CONST_PW_PURPOSE, CONST_PW_SIMPLE_CHECK);
-        intent.putExtra("wcUrl", wcUrl);
-        startActivityForResult(intent, CONST_PW_SIMPLE_CHECK);
-        overridePendingTransition(R.anim.slide_in_bottom, R.anim.fade_out);
+        final Intent intent = new Intent(this, CheckPasswordActivity.class);
+        launcher.launch(
+                intent,
+                ActivityOptionsCompat.makeCustomAnimation(this, R.anim.slide_in_bottom, R.anim.fade_out)
+        );
+
+        this.wcUrl = wcUrl;
     }
 
     @Override
@@ -272,21 +284,20 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == CONST_PW_SIMPLE_CHECK && resultCode == RESULT_OK && !TextUtils.isEmpty(data.getStringExtra("wcUrl"))) {
-            Intent wcIntent = new Intent(this, WalletConnectActivity.class);
-            wcIntent.putExtra("wcUrl", data.getStringExtra("wcUrl"));
-            startActivity(wcIntent);
-
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null && result.getContents() != null && result.getContents().trim().contains("wallet-bridge.binance.org")) {
+            Bundle bundle = new Bundle();
+            bundle.putString("wcUrl", result.getContents().trim());
+            Dialog_WalletConnect dialog = Dialog_WalletConnect.newInstance(bundle);
+            showDialog(dialog);
         } else {
-            IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-            if (result != null && result.getContents() != null && result.getContents().trim().contains("wallet-bridge.binance.org")) {
-                Bundle bundle = new Bundle();
-                bundle.putString("wcUrl", result.getContents().trim());
-                Dialog_WalletConnect dialog = Dialog_WalletConnect.newInstance(bundle);
-                showDialog(dialog);
-            } else {
-                super.onActivityResult(requestCode, resultCode, data);
-            }
+            super.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private void actionWalletConnect(String wcUrl) {
+        Intent wcIntent = new Intent(this, WalletConnectActivity.class);
+        wcIntent.putExtra("wcUrl", wcUrl);
+        startActivity(wcIntent);
     }
 }

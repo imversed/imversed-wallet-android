@@ -166,12 +166,11 @@ class SecretInteractor @Inject constructor(
         }
     }
 
-
     fun setPassword(password: String): Completable {
         return secretRepository.setPassword(password)
     }
 
-    fun checkPassword(password: String): Completable {
+    fun checkPassword(password: String): Single<Boolean> {
         return secretRepository.checkPassword(password)
     }
 

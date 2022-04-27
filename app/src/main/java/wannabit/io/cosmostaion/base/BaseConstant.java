@@ -271,12 +271,10 @@ public class BaseConstant {
     public final static String ETHERMINT_KEY_TYPE_PUBLIC = "ethermint/PubKeyEthSecp256k1";
 
     public final static String CONST_PW_PURPOSE = "CONST_PW_PURPOSE";
-    public final static int CONST_PW_SIMPLE_CHECK = 5002;
     public final static int CONST_PW_TX_SIMPLE_SEND = 5003;
     public final static int CONST_PW_TX_SIMPLE_DELEGATE = 5004;
     public final static int CONST_PW_TX_SIMPLE_UNDELEGATE = 5005;
     public final static int CONST_PW_TX_SIMPLE_REWARD = 5006;
-    public final static int CONST_PW_CHECK_MNEMONIC = 5008;
     public final static int CONST_PW_TX_SIMPLE_REDELEGATE = 5009;
     public final static int CONST_PW_TX_SIMPLE_CHANGE_REWARD_ADDRESS = 5010;
     public final static int CONST_PW_TX_REINVEST = 5011;
@@ -321,7 +319,6 @@ public class BaseConstant {
     public final static int CONST_PW_TX_SIF_SWAP = 5051;
     public final static int CONST_PW_TX_SIF_JOIN_POOL = 5052;
     public final static int CONST_PW_TX_SIF_EXIT_POOL = 5053;
-    public final static int CONST_PW_CHECK_PRIVATE_KEY = 5054;
     public final static int CONST_PW_TX_MINT_NFT = 5055;
     public final static int CONST_PW_TX_SEND_NFT = 5056;
     public final static int CONST_PW_TX_PROFILE = 5057;

@@ -2,7 +2,6 @@ package com.fulldive.wallet.presentation.security.password
 
 import com.fulldive.wallet.di.modules.DefaultPresentersModule
 import com.fulldive.wallet.extensions.withDefaults
-import com.fulldive.wallet.interactors.secret.InvalidPasswordException
 import com.fulldive.wallet.interactors.secret.SecretInteractor
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
 import com.fulldive.wallet.presentation.system.keyboard.KeyboardType
@@ -93,21 +92,22 @@ class CheckPasswordPresenter @Inject constructor(
             .checkPassword(userInput)
             .withDefaults()
             .compositeSubscribe(
-                onSuccess = {
+                onSuccess = { isCorrect ->
                     WLog.w("Password was checked")
-                    viewState.finishWithResult(MvpAppCompatActivity.RESULT_OK)
+                    if (isCorrect) {
+                        viewState.finishWithResult(MvpAppCompatActivity.RESULT_OK)
+                    } else {
+                        viewState.hideWaitDialog()
+                        viewState.shakeView()
+                        clear()
+                        viewState.showMessage(R.string.error_invalid_password)
+                    }
                 }
             ) { error: Throwable ->
-                viewState.hideWaitDialog()
+                viewState.showMessage(R.string.str_unknown_error_msg)
                 viewState.shakeView()
+                viewState.hideWaitDialog()
                 clear()
-                viewState.showMessage(
-                    if (error is InvalidPasswordException) {
-                        R.string.error_invalid_password
-                    } else {
-                        R.string.str_unknown_error_msg
-                    }
-                )
             }
     }
 }

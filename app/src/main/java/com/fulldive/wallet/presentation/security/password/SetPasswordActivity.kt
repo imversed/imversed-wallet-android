@@ -115,7 +115,7 @@ class SetPasswordActivity : BaseMvpActivity<ActivityPasswordSetBinding>(),
         binding {
             listOf(circleImage0, circleImage1, circleImage2, circleImage3, circleImage4)
                 .forEach { imageView ->
-                    imageView.setBackgroundResource(R.drawable.ic_pass_gr)
+                    imageView.setImageResource(R.drawable.ic_pass_gr)
                 }
         }
     }

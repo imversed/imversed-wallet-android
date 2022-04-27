@@ -17,15 +17,11 @@ class ShowPrivateKeyActivity : BaseMvpActivity<ActivityShowPrivateKeyBinding>(),
     ShowPrivateKeyMoxyView {
 
     private val accountId by unsafeLazy { intent.getLongExtra(KEY_ACCOUNT_ID, -1) }
-    private val entropy by unsafeLazy {
-        intent.getStringExtra(KEY_ENTROPY) ?: throw  IllegalStateException("Entropy can't be null")
-    }
 
     private val presenter by moxyPresenter {
         appInjector.getInstance<ShowPrivateKeyPresenter>()
             .also {
                 it.accountId = accountId
-                it.entropy = entropy
             }
     }
 
@@ -86,7 +82,6 @@ class ShowPrivateKeyActivity : BaseMvpActivity<ActivityShowPrivateKeyBinding>(),
     }
 
     companion object {
-        const val KEY_ENTROPY = "entropy"
         const val KEY_ACCOUNT_ID = "accountId"
     }
 }

@@ -117,7 +117,6 @@ class MnemonicRestorePresenter @Inject constructor(
                     }
                 }
             )
-
     }
 
     fun onConfirmClicked() {

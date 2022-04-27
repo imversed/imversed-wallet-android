@@ -36,7 +36,6 @@ public class CommonTask extends AsyncTask<String, Void, TaskResult> {
     protected boolean checkPassword(String password) {
         return secretInteractor
                 .checkPassword(password)
-                .toSingleDefault(true)
                 .onErrorReturnItem(false)
                 .blockingGet();
     }

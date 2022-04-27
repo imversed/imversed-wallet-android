@@ -23,32 +23,40 @@ class SecretLocalSource @Inject constructor(
         }
     }
 
-    fun checkPassword(password: String): Completable {
+    fun checkPassword(password: String): Single<Boolean> {
         return getPassword()
-            .flatMapCompletable { encodedData ->
-                safeCompletable {
-                    if (!CryptoHelper.verifyData(
-                            password,
-                            encodedData,
-                            KEY_CRYPTO_PASSWORD
-                        )
-                    ) {
-                        throw InvalidPasswordException()
-                    }
+            .flatMap { encodedData ->
+                safeSingle {
+                    CryptoHelper.verifyData(
+                        password,
+                        encodedData,
+                        KEY_CRYPTO_PASSWORD
+                    )
                 }
             }
     }
 
     fun setPassword(password: String): Completable {
-        return safeCompletable {
+        return safeSingle {
             CryptoHelper.signData(
                 password,
                 KEY_CRYPTO_PASSWORD
             )
-                .let { encodedData ->
+        }
+            .onErrorResumeNext {
+                safeSingle {
+                    CryptoHelper.deleteKey(KEY_CRYPTO_PASSWORD)
+                    CryptoHelper.signData(
+                        password,
+                        KEY_CRYPTO_PASSWORD
+                    )
+                }
+            }
+            .flatMapCompletable { encodedData ->
+                safeCompletable {
                     sharedPreferences.edit().putString(KEY_CRYPTO, encodedData).apply()
                 }
-        }
+            }
     }
 
     companion object {

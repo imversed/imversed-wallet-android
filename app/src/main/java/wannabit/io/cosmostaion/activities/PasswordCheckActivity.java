@@ -2,10 +2,7 @@ package wannabit.io.cosmostaion.activities;
 
 import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
 import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
-import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_CHECK_MNEMONIC;
-import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_CHECK_PRIVATE_KEY;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_PURPOSE;
-import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_SIMPLE_CHECK;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_BORROW_HARD;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_CLAIM_HARVEST_REWARD;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_CLAIM_INCENTIVE;
@@ -76,15 +73,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
-import com.fulldive.wallet.interactors.secret.InvalidPasswordException;
 import com.fulldive.wallet.interactors.secret.SecretInteractor;
 import com.fulldive.wallet.models.BaseChain;
-import com.fulldive.wallet.presentation.security.key.ShowPrivateKeyActivity;
-import com.fulldive.wallet.presentation.security.mnemonic.ShowMnemonicActivity;
 import com.fulldive.wallet.presentation.system.keyboard.KeyboardListener;
 import com.fulldive.wallet.presentation.system.keyboard.KeyboardPagerAdapter;
-import com.fulldive.wallet.rx.AppSchedulers;
 import com.google.gson.Gson;
 
 import org.bitcoinj.core.ECKey;
@@ -96,7 +88,6 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.disposables.Disposable;
 import irismod.nft.QueryOuterClass;
 import osmosis.gamm.v1beta1.Tx;
 import osmosis.lockup.Lock;
@@ -177,11 +168,11 @@ import wannabit.io.cosmostaion.widget.LockedViewPager;
 public class PasswordCheckActivity extends BaseActivity implements ITimelessActivity, KeyboardListener, TaskListener {
 
     private LinearLayout mLayerContents;
-    private TextView mPassowrdTitle, mPassowrdMsg1, mPassowrdMsg2;
+    private TextView mPassowrdTitle;
+    private TextView mPassowrdMsg1;
     private final ImageView[] circleImageView = new ImageView[5];
 
     private LockedViewPager mViewPager;
-    private KeyboardPagerAdapter adapter;
 
     private String userInput = "";
     private int mPurpose;
@@ -276,12 +267,8 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
 
     private String mHdacBurnRawTx;                 //for hdac burn & swap
 
-    private long mIdToCheck;
-
-
     public ArrayList<String> mValOpAddresses_V1;
 
-    private AccountsInteractor accountsInteractor;
     private SecretInteractor secretInteractor;
 
     @Override
@@ -290,13 +277,12 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_set);
 
-        accountsInteractor = getAppInjector().getInstance(AccountsInteractor.class);
         secretInteractor = getAppInjector().getInstance(SecretInteractor.class);
 
         mLayerContents = findViewById(R.id.layerContents);
         mPassowrdTitle = findViewById(R.id.titleTextView);
         mPassowrdMsg1 = findViewById(R.id.subtitleTextView);
-        mPassowrdMsg2 = findViewById(R.id.hintTextView);
+        TextView mPassowrdMsg2 = findViewById(R.id.hintTextView);
         mViewPager = findViewById(R.id.keyboardPager);
         mPassowrdMsg2.setVisibility(View.INVISIBLE);
 
@@ -305,10 +291,10 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
         }
 
         mViewPager.setOffscreenPageLimit(2);
-        adapter = new KeyboardPagerAdapter(getSupportFragmentManager(), this);
+        KeyboardPagerAdapter adapter = new KeyboardPagerAdapter(getSupportFragmentManager(), this);
         mViewPager.setAdapter(adapter);
 
-        mPurpose = getIntent().getIntExtra(CONST_PW_PURPOSE, CONST_PW_SIMPLE_CHECK);
+        mPurpose = getIntent().getIntExtra(CONST_PW_PURPOSE, 0);
 
         mTargetAddress = getIntent().getStringExtra("toAddress");
         mTargetCoins = getIntent().getParcelableArrayListExtra("amount");
@@ -406,8 +392,6 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
         mHdacBurnRawTx = getIntent().getStringExtra("hdacBurnRawTx");
 
 
-        mIdToCheck = getIntent().getLongExtra("checkid", -1);
-
         mValOpAddresses_V1 = getIntent().getStringArrayListExtra("valOpAddresses");
 
         onInitView();
@@ -480,18 +464,6 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
 
     private void onFinishInput() {
         switch (mPurpose) {
-            case CONST_PW_SIMPLE_CHECK:
-                actionCheckPassword();
-
-                break;
-            case CONST_PW_CHECK_MNEMONIC:
-                fetchEntropy(ShowMnemonicActivity.class);
-
-                break;
-            case CONST_PW_CHECK_PRIVATE_KEY:
-                fetchEntropy(ShowPrivateKeyActivity.class);
-
-                break;
             case CONST_PW_TX_SIMPLE_SEND:
                 showWaitDialog();
                 if (getBaseChain().isGRPC()) {
@@ -805,73 +777,6 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
                 new HdacBurnTask(getBaseApplication(), this, getBaseChain(), mHdacBurnRawTx).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userInput);
                 break;
         }
-    }
-
-    private void actionCheckPassword() {
-        showWaitDialog();
-        Disposable disposable = secretInteractor
-                .checkPassword(userInput)
-                .subscribeOn(AppSchedulers.INSTANCE.io())
-                .observeOn(AppSchedulers.INSTANCE.ui())
-                .doOnError(error -> WLog.e(error.toString()))
-                .subscribe(
-                        () -> {
-                            WLog.w("Account was checked");
-                            setResult(Activity.RESULT_OK, getIntent());
-                            finish();
-                            overridePendingTransition(R.anim.fade_in, R.anim.slide_out_bottom);
-                        },
-                        error -> {
-                            hideWaitDialog();
-                            onShakeView();
-                            onInitView();
-                            if (error instanceof InvalidPasswordException) {
-                                Toast.makeText(getBaseContext(), R.string.error_invalid_password, Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getBaseContext(), R.string.str_unknown_error_msg, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                );
-        compositeDisposable.add(disposable);
-    }
-
-    private void fetchEntropy(Class<?> cls) {
-        showWaitDialog();
-
-        Disposable disposable = secretInteractor
-                .checkPassword(userInput)
-                .andThen(accountsInteractor.getAccount(mIdToCheck))
-                .flatMap(account -> {
-                            if (account.fromMnemonic) {
-                                return secretInteractor.entropyToMnemonic(account.uuid, account.resource, account.spec);
-                            } else {
-                                return secretInteractor.entropyToPrivateKey(account.uuid, account.resource, account.spec);
-                            }
-                        }
-                )
-                .subscribeOn(AppSchedulers.INSTANCE.io())
-                .observeOn(AppSchedulers.INSTANCE.ui())
-                .doOnError(error -> WLog.e(error.toString()))
-                .subscribe(
-                        entropy -> {
-                            Intent checkintent = new Intent(PasswordCheckActivity.this, cls);
-                            checkintent.putExtra(ShowMnemonicActivity.KEY_ACCOUNT_ID, mIdToCheck);
-                            checkintent.putExtra(ShowMnemonicActivity.KEY_ENTROPY, entropy);
-                            startActivity(checkintent);
-                        },
-                        error -> {
-                            error.printStackTrace();
-                            hideWaitDialog();
-                            onShakeView();
-                            onInitView();
-                            if (error instanceof InvalidPasswordException) {
-                                Toast.makeText(getBaseContext(), R.string.error_invalid_password, Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getBaseContext(), R.string.str_unknown_error_msg, Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                );
-        compositeDisposable.add(disposable);
     }
 
     private void onShakeView() {

@@ -15,7 +15,6 @@ import androidx.core.content.ContextCompat;
 import androidx.core.hardware.fingerprint.FingerprintManagerCompat;
 import androidx.core.os.CancellationSignal;
 
-import com.fulldive.wallet.interactors.secret.InvalidPasswordException;
 import com.fulldive.wallet.interactors.secret.SecretInteractor;
 import com.fulldive.wallet.presentation.system.keyboard.KeyboardListener;
 import com.fulldive.wallet.presentation.system.keyboard.KeyboardPagerAdapter;
@@ -193,15 +192,19 @@ public class AppLockActivity extends BaseActivity implements ITimelessActivity, 
                 .doOnError(error -> WLog.e(error.toString()))
                 .doAfterTerminate(this::hideWaitDialog)
                 .subscribe(
-                        this::onUnlock,
+                        isCorrect -> {
+                            if (isCorrect) {
+                                onUnlock();
+                            } else {
+                                onShakeView();
+                                onInitView();
+                                Toast.makeText(getBaseContext(), R.string.error_invalid_password, Toast.LENGTH_SHORT).show();
+                            }
+                        },
                         error -> {
                             onShakeView();
                             onInitView();
-                            if (error instanceof InvalidPasswordException) {
-                                Toast.makeText(getBaseContext(), R.string.error_invalid_password, Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getBaseContext(), R.string.str_unknown_error_msg, Toast.LENGTH_SHORT).show();
-                            }
+                            Toast.makeText(getBaseContext(), R.string.str_unknown_error_msg, Toast.LENGTH_SHORT).show();
                         }
                 );
         compositeDisposable.add(disposable);

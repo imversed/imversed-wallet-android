@@ -14,15 +14,11 @@ import wannabit.io.cosmostaion.databinding.ActivityMnemonicCheckBinding
 
 class ShowMnemonicActivity : BaseMvpActivity<ActivityMnemonicCheckBinding>(), ShowMnemonicMoxyView {
     private val accountId by unsafeLazy { intent.getLongExtra(KEY_ACCOUNT_ID, -1) }
-    private val entropy by unsafeLazy {
-        intent.getStringExtra(KEY_ENTROPY) ?: throw  IllegalStateException("Entropy can't be null")
-    }
 
     private val presenter by moxyPresenter {
         appInjector.getInstance<ShowMnemonicPresenter>()
             .also {
                 it.accountId = accountId
-                it.entropy = entropy
             }
     }
 
@@ -87,7 +83,6 @@ class ShowMnemonicActivity : BaseMvpActivity<ActivityMnemonicCheckBinding>(), Sh
     }
 
     companion object {
-        const val KEY_ENTROPY = "entropy"
         const val KEY_ACCOUNT_ID = "accountId"
     }
 }

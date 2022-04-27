@@ -11,7 +11,7 @@ class SecretRepository @Inject constructor(
     private val secretLocalSource: SecretLocalSource
 ) {
 
-    fun checkPassword(password: String): Completable {
+    fun checkPassword(password: String): Single<Boolean> {
         return secretLocalSource.checkPassword(password)
     }
 
