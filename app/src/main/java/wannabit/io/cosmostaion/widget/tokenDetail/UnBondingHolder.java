@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import wannabit.io.cosmostaion.R;
+import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.model.UnbondingInfo;
 import wannabit.io.cosmostaion.utils.WDp;
@@ -76,12 +77,12 @@ public class UnBondingHolder extends BaseHolder {
     }
 
     @Override
-    public void onBindTokenHolder(Context c, BaseChain chain, BaseData baseData, String denom) {
-        mUndelegateCard.setCardBackgroundColor(WDp.getChainBgColor(c, chain));
+    public void onBindTokenHolder(BaseActivity baseActivity, BaseChain chain, BaseData baseData, String denom) {
+        mUndelegateCard.setCardBackgroundColor(WDp.getChainBgColor(baseActivity, chain));
         if (chain.isGRPC()) {
-            onBindUnbondingGRPC(c, chain, baseData, denom);
+            onBindUnbondingGRPC(baseActivity, chain, baseData, denom);
         } else {
-            onBindUnbonding(c, chain, baseData, denom);
+            onBindUnbonding(baseActivity, chain, baseData, denom);
         }
     }
 

@@ -233,7 +233,7 @@ public class POOLTokenDetailActivity extends BaseActivity implements View.OnClic
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
             if (getItemViewType(position) == TYPE_POOL_TOKEN) {
                 TokenDetailSupportHolder holder = (TokenDetailSupportHolder) viewHolder;
-                holder.onBindPoolToken(POOLTokenDetailActivity.this, getBaseChain(), getBaseDao(), mPoolDenom);
+                holder.onBindPoolToken(POOLTokenDetailActivity.this, getBaseChain(), mPoolDenom);
             }
 //
 //            } else if (getItemViewType(position) == TYPE_HISTORY) {

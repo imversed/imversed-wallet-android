@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseData;
+import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.widget.BaseHolder;
@@ -48,9 +49,10 @@ public class WalletBinanceHolder extends BaseHolder {
         final SettingsInteractor settingsInteractor = mainActivity.getAppInjector().getInstance(SettingsInteractor.class);
         final BaseData baseData = mainActivity.getBaseDao();
         final String denom = mainActivity.getBaseChain().getMainDenom();
-        final BigDecimal availableAmount = baseData.availableAmount(denom);
-        final BigDecimal lockedAmount = baseData.lockedAmount(denom);
-        final BigDecimal frozenAmount = baseData.frozenAmount(denom);
+        final Balance balance = mainActivity.getFullBalance(denom);
+        final BigDecimal availableAmount = balance.balance;
+        final BigDecimal lockedAmount = balance.locked;
+        final BigDecimal frozenAmount = balance.frozen;
         final BigDecimal totalAmount = availableAmount.add(lockedAmount).add(frozenAmount);
 
         mTvBnbTotal.setText(WDp.getDpAmount2(totalAmount, 0, 6));

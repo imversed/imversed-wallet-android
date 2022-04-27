@@ -99,7 +99,7 @@ public class WalletEditActivity extends BaseActivity implements View.OnClickList
 
     public void onSaveUserChains() {
         getBaseDao().setUserHiddenBaseChains(mHideChains);
-        getBaseDao().setUserSortedChains(mDisplayChains);
+        getBaseDao().setUserSortedBaseChains(mDisplayChains);
     }
 
     @Override

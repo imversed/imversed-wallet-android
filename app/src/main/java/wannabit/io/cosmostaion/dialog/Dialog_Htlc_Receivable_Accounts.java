@@ -90,7 +90,7 @@ public class Dialog_Htlc_Receivable_Accounts extends DialogFragment {
                 if (account.hasPrivateKey) {
                     holder.accountKeyState.setColorFilter(ContextCompat.getColor(requireContext(), R.color.colorBnb), android.graphics.PorterDuff.Mode.SRC_IN);
                 }
-                WDp.showCoinDp(getContext(), getSActivity().getBaseDao(), baseChain.getMainDenom(), account.getBnbBalanceScale().toPlainString(), holder.accountDenom, holder.accountAvailable, baseChain);
+                WDp.showCoinDp(getContext(), getSActivity().getBaseDao(), baseChain.getMainDenom(), account.getTokenBalance(baseChain.getMainDenom()).toPlainString(), holder.accountDenom, holder.accountAvailable, baseChain);
 
             } else if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                 if (account.hasPrivateKey) {

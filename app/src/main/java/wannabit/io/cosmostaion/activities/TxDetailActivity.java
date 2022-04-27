@@ -241,7 +241,7 @@ public class TxDetailActivity extends BaseActivity implements View.OnClickListen
             }
 
             if (getBaseChain().equals(BNB_MAIN.INSTANCE)) {
-                if ((getBaseDao().availableAmount(BNB_MAIN.INSTANCE.getMainDenom())).compareTo(new BigDecimal(FEE_BNB_SEND)) < 0) {
+                if ((getBalance(BNB_MAIN.INSTANCE.getMainDenom())).compareTo(new BigDecimal(FEE_BNB_SEND)) < 0) {
                     Toast.makeText(getBaseContext(), R.string.error_not_enough_budget, Toast.LENGTH_SHORT).show();
                     return;
                 }

@@ -3,12 +3,14 @@ package wannabit.io.cosmostaion.task.SimpleBroadTxTask;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GEN_TX_KAVA_CLAIM_HARVEST;
 
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.WalletBalance;
 
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.crypto.DeterministicKey;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Response;
 import wannabit.io.cosmostaion.BuildConfig;
@@ -18,7 +20,6 @@ import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.cosmos.MsgGenerator;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dao.Account;
-import wannabit.io.cosmostaion.dao.Password;
 import wannabit.io.cosmostaion.model.type.Fee;
 import wannabit.io.cosmostaion.model.type.Msg;
 import wannabit.io.cosmostaion.network.ApiClient;
@@ -73,7 +74,11 @@ public class SimpleClaimHarvestRewardTask extends CommonTask {
                         account.sequenceNumber,
                         account.accountNumber
                 );
-                context.getBaseDao().updateBalances(mAccount.id, WUtil.getBalancesFromKavaLcd(mAccount.id, response.body()));
+                final List<WalletBalance> balances = WUtil.getBalancesFromKavaLcd(mAccount.id, response.body());
+                final Throwable error = balancesInteractor.updateBalances(mAccount.id, balances).blockingGet();
+                if (error != null) {
+                    error.printStackTrace();
+                }
                 mAccount = accountsInteractor.getAccount(mAccount.id).blockingGet();
             }
 

@@ -39,7 +39,7 @@ public class BaseHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void onBindTokenHolder(Context context, BaseChain chain, BaseData baseData, String denom) {
+    public void onBindTokenHolder(BaseActivity baseActivity, BaseChain chain, BaseData baseData, String denom) {
     }
 
     public void onBindMyCdp(Context context, BaseData baseData, kava.cdp.v1beta1.QueryOuterClass.CDPResponse myCdp) {

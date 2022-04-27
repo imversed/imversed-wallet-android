@@ -28,6 +28,7 @@ import com.binance.dex.api.client.domain.broadcast.HtltReq;
 import com.binance.dex.api.client.domain.broadcast.TransactionOption;
 import com.fulldive.wallet.interactors.secret.MnemonicUtils;
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.WalletBalance;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.RandomUtils;
@@ -52,6 +53,7 @@ import wannabit.io.cosmostaion.cosmos.Signer;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.crypto.Sha256;
 import wannabit.io.cosmostaion.dao.Account;
+import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.model.type.Fee;
 import wannabit.io.cosmostaion.network.ApiClient;
@@ -106,7 +108,11 @@ public class HtlcCreateTask extends CommonTask {
                         account.sequenceNumber,
                         account.accountNumber
                 );
-                context.getBaseDao().updateBalances(mSendAccount.id, WUtil.getBalancesFromBnbLcd(mSendAccount.id, response.body()));
+                final List<WalletBalance> balances = WUtil.getBalancesFromBnbLcd(mReceiveAccount.id, response.body());
+                final Throwable error = balancesInteractor.updateBalances(mReceiveAccount.id, balances).blockingGet();
+                if (error != null) {
+                    error.printStackTrace();
+                }
                 mSendAccount = accountsInteractor.getAccount(mSendAccount.id).blockingGet();
 
                 if (mSendAccount.fromMnemonic) {

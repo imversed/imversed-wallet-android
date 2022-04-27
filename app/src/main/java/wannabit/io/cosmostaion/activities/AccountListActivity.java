@@ -115,7 +115,7 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
                 if (chain != mSelectedChain) {
                     new Handler().postDelayed(() -> {
                         onChainSelect(chain);
-                        getBaseDao().setUserSortedChains(mDisplayChains);
+                        getBaseDao().setUserSortedBaseChains(mDisplayChains);
                     }, 150);
                 }
             });

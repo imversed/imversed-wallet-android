@@ -25,6 +25,7 @@ import wannabit.io.cosmostaion.activities.chains.ok.OKUnbondingActivity;
 import wannabit.io.cosmostaion.activities.chains.ok.OKValidatorListActivity;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.base.BaseData;
+import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.widget.BaseHolder;
@@ -59,8 +60,10 @@ public class WalletOkexHolder extends BaseHolder {
         final SettingsInteractor settingsInteractor = mainActivity.getAppInjector().getInstance(SettingsInteractor.class);
         final BaseData baseData = mainActivity.getBaseDao();
         final String denom = mainActivity.getBaseChain().getMainDenom();
-        final BigDecimal availableAmount = baseData.availableAmount(denom);
-        final BigDecimal lockedAmount = baseData.lockedAmount(denom);
+
+        final Balance balance = mainActivity.getFullBalance(denom);
+        final BigDecimal availableAmount = balance.balance;
+        final BigDecimal lockedAmount = balance.locked;
         final BigDecimal depositAmount = baseData.okDepositAmount();
         final BigDecimal withdrawAmount = baseData.okWithdrawAmount();
         final BigDecimal totalAmount = availableAmount.add(lockedAmount).add(depositAmount).add(withdrawAmount);

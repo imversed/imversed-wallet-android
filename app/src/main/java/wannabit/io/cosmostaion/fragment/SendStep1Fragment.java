@@ -129,9 +129,9 @@ public class SendStep1Fragment extends BaseFragment implements View.OnClickListe
 
             setDisplayDecimals(mDpDecimal);
             if (toSendDenom.equals(mainDenom)) {
-                mMaxAvailable = getBaseDao().availableAmount(toSendDenom).subtract(feeAmount);
+                mMaxAvailable = getSActivity().getBalance(toSendDenom).subtract(feeAmount);
             } else {
-                mMaxAvailable = getBaseDao().availableAmount(toSendDenom);
+                mMaxAvailable = getSActivity().getBalance(toSendDenom);
             }
         }
 

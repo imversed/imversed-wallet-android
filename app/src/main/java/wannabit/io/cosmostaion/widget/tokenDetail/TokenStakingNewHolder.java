@@ -13,6 +13,7 @@ import com.fulldive.wallet.models.BaseChain;
 import java.math.BigDecimal;
 
 import wannabit.io.cosmostaion.R;
+import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.widget.BaseHolder;
@@ -42,7 +43,7 @@ public class TokenStakingNewHolder extends BaseHolder {
     }
 
     @Override
-    public void onBindTokenHolder(Context c, BaseChain chain, BaseData baseData, String denom) {
+    public void onBindTokenHolder(BaseActivity baseActivity, BaseChain chain, BaseData baseData, String denom) {
         final int stakingDivideDecimal = chain.getDivideDecimal();
         final int stakingDisplayDecimal = chain.getDisplayDecimal();
         final BigDecimal totalToken = baseData.getAllMainAsset(denom);
@@ -57,6 +58,6 @@ public class TokenStakingNewHolder extends BaseHolder {
             mVestingLayer.setVisibility(View.VISIBLE);
             mVestingAmount.setText(WDp.getDpAmount2(vestingAmount, stakingDivideDecimal, stakingDisplayDecimal));
         }
-        mCardRoot.setCardBackgroundColor(WDp.getChainBgColor(c, chain));
+        mCardRoot.setCardBackgroundColor(WDp.getChainBgColor(baseActivity, chain));
     }
 }

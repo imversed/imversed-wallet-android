@@ -1,15 +1,12 @@
 package com.fulldive.wallet.interactors.chains.okex
 
 import com.fulldive.wallet.di.modules.DefaultLocalStorageModule
-import com.fulldive.wallet.extensions.or
 import com.fulldive.wallet.extensions.safeCompletable
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import wannabit.io.cosmostaion.base.BaseData
-import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.model.type.Validator
 import wannabit.io.cosmostaion.network.res.*
-import java.math.BigDecimal
 import javax.inject.Inject
 
 @ProvidedBy(DefaultLocalStorageModule::class)
@@ -49,25 +46,6 @@ class OkexLocalSource @Inject constructor(
         return safeCompletable {
             baseData.mOkStaking = stakingInfo
             baseData.mMyValidators.clear() // TODO: remove
-        }
-    }
-
-    fun setBalance(accountId: Long, accountToken: ResOkAccountToken): Completable {
-        return safeCompletable {
-            baseData.updateBalances(accountId,
-                accountToken
-                    .data.currencies
-                    ?.map { currency ->
-                        Balance().apply {
-                            this.accountId = accountId
-                            symbol = currency.symbol
-                            balance = BigDecimal(currency.available)
-                            locked = BigDecimal(currency.locked)
-                            fetchTime = System.currentTimeMillis()
-                        }
-                    }
-                    .or(emptyList())
-            )
         }
     }
 

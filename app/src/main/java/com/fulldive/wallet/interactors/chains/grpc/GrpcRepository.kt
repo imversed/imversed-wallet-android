@@ -2,19 +2,16 @@ package com.fulldive.wallet.interactors.chains.grpc
 
 import com.fulldive.wallet.di.modules.DefaultRepositoryModule
 import com.fulldive.wallet.extensions.safe
-import com.fulldive.wallet.extensions.safeSingle
 import com.fulldive.wallet.models.BaseChain
 import com.joom.lightsaber.ProvidedBy
+import cosmos.base.v1beta1.CoinOuterClass
 import cosmos.staking.v1beta1.Staking
 import io.reactivex.Completable
 import io.reactivex.Single
 import tendermint.p2p.Types
 import wannabit.io.cosmostaion.dao.Account
-import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.dao.Cw20Assets
 import wannabit.io.cosmostaion.model.type.Coin
-import java.math.BigDecimal
-import java.util.*
 import javax.inject.Inject
 
 @ProvidedBy(DefaultRepositoryModule::class)
@@ -94,41 +91,13 @@ class GrpcRepository @Inject constructor(
                 }
                 items
             }
-            .flatMap { balances ->
-                grpcLocalSource
-                    .setBalances(chain, balances)
-                    .toSingleDefault(balances)
-            }
-            .map { balances ->
-                balances.map { coin ->
-                    Balance(
-                        account.id,
-                        coin.denom,
-                        coin.amount,
-                        Calendar.getInstance().time.time,
-                        "0",
-                        "0"
-                    )
-                }
-            }
-            .flatMapCompletable { snapBalances ->
-                grpcLocalSource.updateBalances(account.id, snapBalances)
+            .flatMapCompletable { balances ->
+                grpcLocalSource.setBalances(chain, balances)
             }
     }
 
-    fun getBalances(chain: BaseChain, address: String): Single<List<Balance>> {
-        return grpcRemoteSource
-            .requestBalance(chain, address)
-            .flatMap { coins ->
-                safeSingle {
-                    coins.map { coin ->
-                        Balance().apply {
-                            symbol = coin.denom
-                            balance = BigDecimal(coin.amount)
-                        }
-                    }
-                }
-            }
+    fun requestBalance(chain: BaseChain, address: String): Single<List<CoinOuterClass.Coin>> {
+        return grpcRemoteSource.requestBalance(chain, address)
     }
 
     fun getTopValidators(): Single<List<Staking.Validator>> {

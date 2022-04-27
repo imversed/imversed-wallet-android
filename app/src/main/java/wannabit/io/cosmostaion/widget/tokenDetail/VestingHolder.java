@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import cosmos.vesting.v1beta1.Vesting;
 import wannabit.io.cosmostaion.R;
+import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.widget.BaseHolder;
@@ -73,14 +74,14 @@ public class VestingHolder extends BaseHolder {
     }
 
     @Override
-    public void onBindTokenHolder(Context c, BaseChain chain, BaseData baseData, String denom) {
-        mVestingRoot.setCardBackgroundColor(WDp.getChainBgColor(c, chain));
+    public void onBindTokenHolder(BaseActivity baseActivity, BaseChain chain, BaseData baseData, String denom) {
+        mVestingRoot.setCardBackgroundColor(WDp.getChainBgColor(baseActivity, chain));
         if (denom.equals(TOKEN_HARD)) {
-            mVestingRoot.setCardBackgroundColor(ContextCompat.getColor(c, R.color.colorTransBghard));
+            mVestingRoot.setCardBackgroundColor(ContextCompat.getColor(baseActivity, R.color.colorTransBghard));
         } else if (denom.equals(TOKEN_SWP)) {
-            mVestingRoot.setCardBackgroundColor(ContextCompat.getColor(c, R.color.colorTransBgswp));
+            mVestingRoot.setCardBackgroundColor(ContextCompat.getColor(baseActivity, R.color.colorTransBgswp));
         }
-        onBindGRPC(c, baseData, denom);
+        onBindGRPC(baseActivity, baseData, denom);
     }
 
     private void onBindGRPC(Context c, BaseData baseData, String denom) {

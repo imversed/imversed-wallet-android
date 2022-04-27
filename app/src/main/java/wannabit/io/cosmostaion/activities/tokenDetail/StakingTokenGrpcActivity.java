@@ -232,12 +232,12 @@ public class StakingTokenGrpcActivity extends BaseActivity implements View.OnCli
         @Override
         public void onBindViewHolder(@NonNull BaseHolder holder, int position) {
             if (getItemViewType(position) == TYPE_STAKE_NEW) {
-                holder.onBindTokenHolder(getBaseContext(), getBaseChain(), getBaseDao(), getBaseChain().getMainDenom());
+                holder.onBindTokenHolder(StakingTokenGrpcActivity.this, getBaseChain(), getBaseDao(), getBaseChain().getMainDenom());
             } else if (getItemViewType(position) == TYPE_VESTING) {
-                holder.onBindTokenHolder(getBaseContext(), getBaseChain(), getBaseDao(), getBaseChain().getMainDenom());
+                holder.onBindTokenHolder(StakingTokenGrpcActivity.this, getBaseChain(), getBaseDao(), getBaseChain().getMainDenom());
 
             } else if (getItemViewType(position) == TYPE_UNBONDING) {
-                holder.onBindTokenHolder(getBaseContext(), getBaseChain(), getBaseDao(), getBaseChain().getMainDenom());
+                holder.onBindTokenHolder(StakingTokenGrpcActivity.this, getBaseChain(), getBaseDao(), getBaseChain().getMainDenom());
 
             }
         }

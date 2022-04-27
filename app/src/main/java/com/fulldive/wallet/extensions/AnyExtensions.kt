@@ -33,6 +33,16 @@ inline fun <R> safe(block: () -> R?): R? {
     }
 }
 
+inline fun <R> safe(block: () -> R?, defaultValue: R): R {
+    return try {
+        block.invoke().or(defaultValue)
+    } catch (ex: Exception) {
+        ex.printStackTrace()
+        WLog.e(ex.toString())
+        defaultValue
+    }
+}
+
 inline fun <reified T> unsafeLazy(noinline initializer: () -> T): Lazy<T> =
     lazy(LazyThreadSafetyMode.NONE, initializer)
 

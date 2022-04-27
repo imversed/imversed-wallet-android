@@ -1,16 +1,10 @@
 package com.fulldive.wallet.presentation.accounts.restore
 
 import com.fulldive.wallet.di.modules.DefaultPresentersModule
-import com.fulldive.wallet.extensions.getPathString
-import com.fulldive.wallet.extensions.or
-import com.fulldive.wallet.extensions.safeSingle
-import com.fulldive.wallet.extensions.withDefaults
+import com.fulldive.wallet.extensions.*
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
-import com.fulldive.wallet.interactors.chains.binance.BinanceInteractor
-import com.fulldive.wallet.interactors.chains.grpc.GrpcInteractor
-import com.fulldive.wallet.interactors.chains.okex.OkexInteractor
+import com.fulldive.wallet.interactors.balances.BalancesInteractor
 import com.fulldive.wallet.interactors.secret.MnemonicUtils
-import com.fulldive.wallet.interactors.secret.SecretInteractor
 import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
 import com.joom.lightsaber.ProvidedBy
@@ -22,10 +16,7 @@ import javax.inject.Inject
 @ProvidedBy(DefaultPresentersModule::class)
 class RestorePathPresenter @Inject constructor(
     private val accountsInteractor: AccountsInteractor,
-    private val secretInteractor: SecretInteractor,
-    private val binanceInteractor: BinanceInteractor,
-    private val okexInteractor: OkexInteractor,
-    private val grpcInteractor: GrpcInteractor
+    private val balancesInteractor: BalancesInteractor
 ) : BaseMoxyPresenter<RestorePathMoxyView>() {
     lateinit var chain: BaseChain
     var entropy: String = ""
@@ -146,19 +137,19 @@ class RestorePathPresenter @Inject constructor(
                 Single
                     .concat(
                         items.map { item ->
-                            when (chain) {
-                                BaseChain.BNB_MAIN -> binanceInteractor.getBalances(item.address)
-                                BaseChain.OKEX_MAIN -> okexInteractor.getBalances(item.address)
-                                else -> grpcInteractor.getBalances(chain, item.address)
-                            }
+                            balancesInteractor.requestBalances(chain, item.address)
                                 .map { balances ->
                                     balances
                                         .find { balance ->
                                             balance.symbol == chain.mainDenom
                                         }
                                         ?.let { balance ->
+                                            val amount = safe(
+                                                { BigDecimal(balance.balance) },
+                                                defaultValue = BigDecimal.ZERO
+                                            )
                                             item.copy(
-                                                amount = balance.balance
+                                                amount = amount
                                             )
                                         }
                                         .or(item)

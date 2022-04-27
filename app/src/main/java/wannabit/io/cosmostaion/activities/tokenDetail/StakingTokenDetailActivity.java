@@ -30,6 +30,8 @@ import java.math.BigDecimal;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.SendActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
+import wannabit.io.cosmostaion.base.BaseData;
+import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
@@ -128,14 +130,15 @@ public class StakingTokenDetailActivity extends BaseActivity implements View.OnC
     }
 
     private void onUpdateView() {
+        final BaseData baseData = getBaseDao();
         final Currency currency = settingsInteractor.getCurrency();
         Picasso.get().cancelRequest(mToolbarSymbolImg);
         mToolbarSymbolImg.setImageResource(getBaseChain().getCoinIcon());
         WDp.DpMainDenom(getBaseChain(), mToolbarSymbol);
 
-        mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, mMainDenom));
-        mItemUpDownPrice.setText(WDp.dpValueChange(getBaseDao(), mMainDenom));
-        final BigDecimal lastUpDown = WDp.valueChange(getBaseDao(), mMainDenom);
+        mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(baseData, currency, mMainDenom));
+        mItemUpDownPrice.setText(WDp.dpValueChange(baseData, mMainDenom));
+        final BigDecimal lastUpDown = WDp.valueChange(baseData, mMainDenom);
         if (lastUpDown.compareTo(BigDecimal.ZERO) > 0) {
             mItemUpDownImg.setVisibility(View.VISIBLE);
             mItemUpDownImg.setImageResource(R.drawable.ic_price_up);
@@ -152,8 +155,9 @@ public class StakingTokenDetailActivity extends BaseActivity implements View.OnC
         if (getAccount().hasPrivateKey) {
             mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), getBaseChain()), android.graphics.PorterDuff.Mode.SRC_IN);
         }
-        mTotalAmount = getBaseDao().getAllMainAssetOld(mMainDenom);
-        mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mMainDenom, mTotalAmount, mDivideDecimal));
+        final Balance balance = getFullBalance(mMainDenom);
+        mTotalAmount = balance.getDelegatableAmount().add(baseData.getAllMainAssetOld(balance.symbol));
+        mTotalValue.setText(WDp.dpUserCurrencyValue(baseData, currency, mMainDenom, mTotalAmount, mDivideDecimal));
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
@@ -176,7 +180,7 @@ public class StakingTokenDetailActivity extends BaseActivity implements View.OnC
                 return;
             }
             Intent intent = new Intent(getBaseContext(), SendActivity.class);
-            BigDecimal mainAvailable = getBaseDao().availableAmount(getBaseChain().getMainDenom());
+            BigDecimal mainAvailable = getBalance(getBaseChain().getMainDenom());
             BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_SEND, 0);
             if (mainAvailable.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
@@ -211,12 +215,12 @@ public class StakingTokenDetailActivity extends BaseActivity implements View.OnC
         @Override
         public void onBindViewHolder(@NonNull BaseHolder holder, int position) {
             if (getItemViewType(position) == TYPE_STAKE_OLD) {
-                holder.onBindTokenHolder(getBaseContext(), getBaseChain(), getBaseDao(), getBaseChain().getMainDenom());
+                holder.onBindTokenHolder(StakingTokenDetailActivity.this, getBaseChain(), getBaseDao(), getBaseChain().getMainDenom());
             } else if (getItemViewType(position) == TYPE_VESTING) {
-                holder.onBindTokenHolder(getBaseContext(), getBaseChain(), getBaseDao(), getBaseChain().getMainDenom());
+                holder.onBindTokenHolder(StakingTokenDetailActivity.this, getBaseChain(), getBaseDao(), getBaseChain().getMainDenom());
 
             } else if (getItemViewType(position) == TYPE_UNBONDING) {
-                holder.onBindTokenHolder(getBaseContext(), getBaseChain(), getBaseDao(), getBaseChain().getMainDenom());
+                holder.onBindTokenHolder(StakingTokenDetailActivity.this, getBaseChain(), getBaseDao(), getBaseChain().getMainDenom());
 
             } else if (getItemViewType(position) == TYPE_HISTORY) {
 

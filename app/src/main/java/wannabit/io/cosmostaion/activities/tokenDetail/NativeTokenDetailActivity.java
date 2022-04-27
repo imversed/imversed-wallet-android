@@ -35,6 +35,7 @@ import java.math.BigDecimal;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.SendActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
+import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dao.BnbToken;
 import wannabit.io.cosmostaion.dao.OkToken;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
@@ -143,7 +144,7 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
             mToolbarSymbol.setText(okToken.original_symbol.toUpperCase());
             mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
 
-            BigDecimal convertedOktAmount = WDp.convertTokenToOkt(getBaseDao(), mDenom);
+            BigDecimal convertedOktAmount = WDp.convertTokenToOkt(this, getBaseDao(), mDenom);
             mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, TOKEN_OK, convertedOktAmount, 0));
 
             if (okToken.original_symbol.equalsIgnoreCase("okb")) {
@@ -166,7 +167,8 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
             }
 
         } else if (getBaseChain().equals(BNB_MAIN.INSTANCE)) {
-            final BigDecimal amount = getBaseDao().getAllBnbTokenAmount(mDenom);
+            final Balance balance = getFullBalance(mDenom);
+            final BigDecimal amount = balance.getTotalAmount();
             final BnbToken bnbToken = getBaseDao().getBnbToken(mDenom);
             Picasso.get().load(BINANCE_TOKEN_IMG_URL + bnbToken.original_symbol + ".png").placeholder(R.drawable.token_ic).error(R.drawable.token_ic).fit().into(mToolbarSymbolImg);
             mToolbarSymbol.setText(bnbToken.original_symbol.toUpperCase());
@@ -212,7 +214,7 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
                 return;
             }
             Intent intent = new Intent(getBaseContext(), SendActivity.class);
-            BigDecimal mainAvailable = getBaseDao().availableAmount(getBaseChain().getMainDenom());
+            BigDecimal mainAvailable = getBalance(getBaseChain().getMainDenom());
             BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_SEND, 0);
             if (mainAvailable.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
@@ -263,7 +265,7 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
 
             } else if (getItemViewType(position) == TYPE_VESTING) {
                 VestingHolder holder = (VestingHolder) viewHolder;
-                holder.onBindTokenHolder(getBaseContext(), getBaseChain(), getBaseDao(), mDenom);
+                holder.onBindTokenHolder(NativeTokenDetailActivity.this, getBaseChain(), getBaseDao(), mDenom);
 //
 //            } else if (getItemViewType(position) == TYPE_HISTORY) {
 //

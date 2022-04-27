@@ -7,21 +7,16 @@ import static wannabit.io.cosmostaion.base.BaseConstant.PRE_USER_HIDEN_CHAINS;
 import static wannabit.io.cosmostaion.base.BaseConstant.PRE_USER_SORTED_CHAINS;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_OK;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.fulldive.wallet.models.BaseChain;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf2.Any;
-
-import net.sqlcipher.Cursor;
-import net.sqlcipher.database.SQLiteDatabase;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -47,7 +42,6 @@ import tendermint.liquidity.v1beta1.Liquidity;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.crypto.EncResult;
 import wannabit.io.cosmostaion.dao.Assets;
-import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dao.BnbTicker;
 import wannabit.io.cosmostaion.dao.BnbToken;
 import wannabit.io.cosmostaion.dao.ChainParam;
@@ -72,34 +66,25 @@ import wannabit.io.cosmostaion.network.res.ResOkTickersList;
 import wannabit.io.cosmostaion.network.res.ResOkTokenList;
 import wannabit.io.cosmostaion.network.res.ResOkUnbonding;
 import wannabit.io.cosmostaion.utils.WDp;
-import wannabit.io.cosmostaion.utils.WLog;
 import wannabit.io.cosmostaion.utils.WUtil;
 
 public class BaseData {
 
     private final Context context;
     private SharedPreferences mSharedPreferences;
-    private SQLiteDatabase mSQLiteDatabase;
     public String mCopySalt;
     public EncResult mCopyEncResult;
+    private Gson gson = new Gson();
 
     public BaseData(Context context) {
         this.context = context.getApplicationContext();
         this.mSharedPreferences = getSharedPreferences();
-        SQLiteDatabase.loadLibs(this.context);
     }
 
     private SharedPreferences getSharedPreferences() {
         if (mSharedPreferences == null)
             mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return mSharedPreferences;
-    }
-
-    public SQLiteDatabase getBaseDB() {
-        if (mSQLiteDatabase == null) {
-            mSQLiteDatabase = BaseDB.getInstance(context).getWritableDatabase(context.getString(R.string.db_password));
-        }
-        return mSQLiteDatabase;
     }
 
     public List<Price> mPrices = new ArrayList<>();
@@ -277,7 +262,6 @@ public class BaseData {
         }
     }
 
-    public List<Balance> mBalances = new ArrayList<>();
     public ArrayList<BondingInfo> mMyDelegations = new ArrayList<>();
     public ArrayList<UnbondingInfo> mMyUnbondings = new ArrayList<>();
     public ArrayList<RewardInfo> mMyRewards = new ArrayList<>();
@@ -314,40 +298,6 @@ public class BaseData {
             return mNodeInfo.network;
         }
         return "";
-    }
-
-    public BigDecimal availableAmount(String denom) {
-        BigDecimal result = BigDecimal.ZERO;
-        for (Balance balance : mBalances) {
-            if (balance.symbol.equalsIgnoreCase(denom)) {
-                result = balance.balance;
-            }
-        }
-        return result;
-    }
-
-    public BigDecimal lockedAmount(String denom) {
-        BigDecimal result = BigDecimal.ZERO;
-        for (Balance balance : mBalances) {
-            if (balance.symbol.equalsIgnoreCase(denom)) {
-                result = balance.locked;
-            }
-        }
-        return result;
-    }
-
-    public BigDecimal delegatableAmount(String denom) {
-        return availableAmount(denom).add(lockedAmount(denom));
-    }
-
-    public BigDecimal frozenAmount(String denom) {
-        BigDecimal result = BigDecimal.ZERO;
-        for (Balance balance : mBalances) {
-            if (balance.symbol.equalsIgnoreCase(denom)) {
-                result = balance.frozen;
-            }
-        }
-        return result;
     }
 
     public BigDecimal delegatedSumAmount() {
@@ -449,11 +399,7 @@ public class BaseData {
     }
 
     public BigDecimal getAllMainAssetOld(String denom) {
-        return availableAmount(denom).add(lockedAmount(denom)).add(delegatedSumAmount()).add(unbondingSumAmount()).add(rewardAmount(denom));
-    }
-
-    public BigDecimal getAllBnbTokenAmount(String denom) {
-        return availableAmount(denom).add(lockedAmount(denom)).add(frozenAmount(denom));
+        return delegatedSumAmount().add(unbondingSumAmount()).add(rewardAmount(denom));
     }
 
     public BnbToken getBnbToken(String denom) {
@@ -466,11 +412,11 @@ public class BaseData {
     }
 
     public BigDecimal getAllExToken(String denom) {
+        BigDecimal result = BigDecimal.ZERO;
         if (denom.equals(TOKEN_OK)) {
-            return availableAmount(denom).add(lockedAmount(denom)).add(okDepositAmount()).add(okWithdrawAmount());
-        } else {
-            return availableAmount(denom).add(lockedAmount(denom));
+            result = okDepositAmount().add(okWithdrawAmount());
         }
+        return result;
     }
 
     //gRPC
@@ -834,14 +780,6 @@ public class BaseData {
         return getSharedPreferences().getInt(BaseConstant.PRE_MY_VALIDATOR_SORTING, 1);
     }
 
-    public void setLastUser(long user) {
-        getSharedPreferences().edit().putLong(BaseConstant.PRE_USER_ID, user).apply();
-    }
-
-    public long getLastUserId() {
-        return getSharedPreferences().getLong(BaseConstant.PRE_USER_ID, -1);
-    }
-
     public boolean getUsingAppLock() {
         return getSharedPreferences().getBoolean(BaseConstant.PRE_USING_APP_LOCK, false);
     }
@@ -874,87 +812,80 @@ public class BaseData {
         getSharedPreferences().edit().putLong(BaseConstant.PRE_APP_LOCK_LEAVE_TIME, System.currentTimeMillis()).commit();
     }
 
-    public String getAppLockLeaveTimeString(Context c) {
-        WLog.w("getAppLockLeaveTime " + getAppLockTriggerTime());
-        if (getAppLockTriggerTime() == 1) {
-            return c.getString(R.string.str_applock_time_10sec);
-        } else if (getAppLockTriggerTime() == 2) {
-            return c.getString(R.string.str_applock_time_30sec);
-        } else if (getAppLockTriggerTime() == 3) {
-            return c.getString(R.string.str_applock_time_60sec);
-        } else {
-            return c.getString(R.string.str_applock_time_immediately);
+    public int getAppLockLeaveTimeString() {
+        switch (getAppLockTriggerTime()) {
+            case 1:
+                return R.string.str_applock_time_10sec;
+            case 2:
+                return R.string.str_applock_time_30sec;
+            case 3:
+                return R.string.str_applock_time_60sec;
+            default:
+                return R.string.str_applock_time_immediately;
         }
     }
 
     public void setUserHiddenChains(List<String> chains) {
         if (!chains.isEmpty()) {
-            JSONArray array = new JSONArray();
-            for (String chain : chains) {
-                array.put(chain);
-            }
-            getSharedPreferences().edit().putString(PRE_USER_HIDEN_CHAINS, array.toString()).commit();
+            final String json = gson.toJson(chains);
+            getSharedPreferences().edit().putString(PRE_USER_HIDEN_CHAINS, json).commit();
         } else {
             getSharedPreferences().edit().putString(PRE_USER_HIDEN_CHAINS, null).commit();
         }
     }
 
     public void setUserHiddenBaseChains(List<BaseChain> hidedChains) {
-        JSONArray array = new JSONArray();
+        final ArrayList<String> items = new ArrayList<>();
         for (BaseChain baseChain : hidedChains) {
-            array.put(baseChain.getChainName());
+            items.add(baseChain.getChainName());
         }
-        if (!hidedChains.isEmpty()) {
-            getSharedPreferences().edit().putString(PRE_USER_HIDEN_CHAINS, array.toString()).commit();
-        } else {
-            getSharedPreferences().edit().putString(PRE_USER_HIDEN_CHAINS, null).commit();
-        }
+        setUserHiddenChains(items);
     }
 
     public List<String> getUserHiddenChains() {
         String json = getSharedPreferences().getString(PRE_USER_HIDEN_CHAINS, null);
-        ArrayList<String> hideChains = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         if (json != null) {
             try {
-                JSONArray array = new JSONArray(json);
-                for (int i = 0; i < array.length(); i++) {
-                    hideChains.add(array.optString(i));
-                }
-            } catch (JSONException e) {
+                result = gson.fromJson(json, new TypeToken<List<Coin>>() {
+                }.getType());
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
         }
-        return hideChains;
+        return result;
     }
 
-    public void setUserSortedChains(List<BaseChain> displayedChains) {
-        JSONArray array = new JSONArray();
-        for (BaseChain baseChain : displayedChains) {
-            array.put(baseChain.getChainName());
+    public void setUserSortedBaseChains(List<BaseChain> chains) {
+        final ArrayList<String> items = new ArrayList<>();
+        for (BaseChain baseChain : chains) {
+            items.add(baseChain.getChainName());
         }
-        if (!displayedChains.isEmpty()) {
-            getSharedPreferences().edit().putString(PRE_USER_SORTED_CHAINS, array.toString()).commit();
+        setUserSortedChains(items);
+    }
+
+    public void setUserSortedChains(List<String> items) {
+        if (!items.isEmpty()) {
+            final String json = gson.toJson(items);
+            getSharedPreferences().edit().putString(PRE_USER_SORTED_CHAINS, json).apply();
         } else {
-            getSharedPreferences().edit().putString(PRE_USER_SORTED_CHAINS, null).commit();
+            getSharedPreferences().edit().putString(PRE_USER_SORTED_CHAINS, null).apply();
         }
     }
 
     public List<String> getUserSortedChains() {
         String json = getSharedPreferences().getString(PRE_USER_SORTED_CHAINS, null);
-        ArrayList<String> displayChains = new ArrayList<>();
+        List<String> result = new ArrayList<>();
         if (json != null) {
             try {
-                JSONArray array = new JSONArray(json);
-                for (int i = 0; i < array.length(); i++) {
-                    displayChains.add(array.optString(i));
-                }
-            } catch (JSONException e) {
+                result = gson.fromJson(json, new TypeToken<List<String>>() {
+                }.getType());
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
-        return displayChains;
+        return result;
     }
 
     public List<BaseChain> userHideChains() {
@@ -1029,12 +960,9 @@ public class BaseData {
     }
 
     public void setExpandedChains(List<String> items) {
-        JSONArray array = new JSONArray();
-        for (String chainName : items) {
-            array.put(chainName);
-        }
+        final String json = gson.toJson(items);
         if (!items.isEmpty()) {
-            getSharedPreferences().edit().putString(PRE_USER_EXPANDED_CHAINS, array.toString()).apply();
+            getSharedPreferences().edit().putString(PRE_USER_EXPANDED_CHAINS, json).apply();
         } else {
             getSharedPreferences().edit().putString(PRE_USER_EXPANDED_CHAINS, null).apply();
         }
@@ -1042,88 +970,16 @@ public class BaseData {
 
     public List<String> getExpandedChains() {
         String json = getSharedPreferences().getString(PRE_USER_EXPANDED_CHAINS, null);
-        ArrayList<String> chains = new ArrayList<>();
+        ArrayList<String> result = new ArrayList<>();
         if (json != null) {
             try {
-                JSONArray array = new JSONArray(json);
-                for (int i = 0; i < array.length(); i++) {
-                    chains.add(array.optString(i));
-                }
-            } catch (JSONException e) {
+                result = gson.fromJson(json, new TypeToken<List<String>>() {
+                }.getType());
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
-        return chains;
-    }
-
-    public List<Balance> onSelectBalance(long accountId) {
-        List<Balance> result = new ArrayList<>();
-        Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_BALANCE, new String[]{"accountId", "symbol", "balance", "fetchTime", "frozen", "locked"}, "accountId == ?", new String[]{"" + accountId}, null, null, null);
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                do {
-                    Balance balance = new Balance(
-                            cursor.getLong(0),
-                            cursor.getString(1),
-                            cursor.getString(2),
-                            cursor.getLong(3),
-                            cursor.getString(4),
-                            cursor.getString(5));
-                    result.add(balance);
-                } while (cursor.moveToNext());
-            }
-            cursor.close();
-        }
         return result;
-    }
-
-    public long onInsertBalance(Balance balance) {
-        if (onHasBalance(balance)) {
-            return onUpdateBalance(balance);
-        } else {
-            ContentValues values = new ContentValues();
-            values.put("accountId", balance.accountId);
-            values.put("symbol", balance.symbol);
-            values.put("balance", balance.balance.toPlainString());
-            values.put("fetchTime", balance.fetchTime);
-            if (balance.frozen != null)
-                values.put("frozen", balance.frozen.toPlainString());
-            if (balance.locked != null)
-                values.put("locked", balance.locked.toPlainString());
-            return getBaseDB().insertOrThrow(BaseConstant.DB_TABLE_BALANCE, null, values);
-        }
-    }
-
-    public long onUpdateBalance(Balance balance) {
-        onDeleteBalance("" + balance.accountId);
-        return onInsertBalance(balance);
-    }
-
-    public void updateBalances(long accountId, List<Balance> balances) {
-        if (balances == null || balances.size() == 0) {
-            onDeleteBalance("" + accountId);
-            return;
-        }
-        onDeleteBalance("" + balances.get(0).accountId);
-        for (Balance balance : balances) {
-            onInsertBalance(balance);
-        }
-    }
-
-    public boolean onHasBalance(Balance balance) {
-        boolean existed = false;
-        Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_BALANCE, new String[]{"accountId", "symbol", "balance", "fetchTime"}, "accountId == ? AND symbol == ? ", new String[]{"" + balance.accountId, balance.symbol}, null, null, null);
-        if (cursor != null) {
-            if (cursor.getCount() > 0) {
-                existed = true;
-            }
-            cursor.close();
-        }
-        return existed;
-    }
-
-    public boolean onDeleteBalance(String accountId) {
-        return getBaseDB().delete(BaseConstant.DB_TABLE_BALANCE, "accountId = ?", new String[]{accountId}) > 0;
     }
 
     public void clear() {
@@ -1141,7 +997,6 @@ public class BaseData {
         mTopValidators = new ArrayList<>();
         mOtherValidators = new ArrayList<>();
 
-        mBalances = new ArrayList<>();
         mMyDelegations = new ArrayList<>();
         mMyUnbondings = new ArrayList<>();
         mMyRewards = new ArrayList<>();

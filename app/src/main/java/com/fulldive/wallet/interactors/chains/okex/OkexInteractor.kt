@@ -1,6 +1,7 @@
 package com.fulldive.wallet.interactors.chains.okex
 
 import com.fulldive.wallet.di.modules.DefaultInteractorsModule
+import com.fulldive.wallet.extensions.or
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
 import com.fulldive.wallet.interactors.chains.StationInteractor
 import com.fulldive.wallet.models.BaseChain
@@ -12,6 +13,8 @@ import wannabit.io.cosmostaion.base.BaseConstant
 import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.model.NodeInfo
+import wannabit.io.cosmostaion.network.res.ResOkAccountToken
+import java.math.BigDecimal
 import javax.inject.Inject
 
 @ProvidedBy(DefaultInteractorsModule::class)
@@ -20,7 +23,7 @@ class OkexInteractor @Inject constructor(
     private val stationInteractor: StationInteractor,
     private val accountsInteractor: AccountsInteractor
 ) {
-    fun update(account: Account, chain: BaseChain): Completable {
+    fun update(account: Account): Completable {
         return Completable
             .mergeArray(
                 updateValidatorsList().subscribeOn(AppSchedulers.io()),
@@ -30,7 +33,6 @@ class OkexInteractor @Inject constructor(
             )
             .andThen(
                 Completable.mergeArray(
-                    updateAccountBalance(account).subscribeOn(AppSchedulers.io()),
                     updateUnbonding(account).subscribeOn(AppSchedulers.io()),
                     updateStakingInfo(account).subscribeOn(AppSchedulers.io())
                 )
@@ -39,7 +41,7 @@ class OkexInteractor @Inject constructor(
             .flatMapCompletable { nodeInfo ->
                 stationInteractor
                     .updateStationParams(
-                        chain,
+                        BaseChain.OKEX_MAIN,
                         nodeInfo.network
                     )
             }
@@ -58,8 +60,8 @@ class OkexInteractor @Inject constructor(
         return okexRepository.updateTokensList()
     }
 
-    fun updateAccountBalance(account: Account): Completable {
-        return okexRepository.updateAccountBalance(account)
+    fun requestAccountBalance(address: String): Single<ResOkAccountToken> {
+        return okexRepository.requestAccountBalance(address)
     }
 
     fun updateUnbonding(account: Account): Completable {
@@ -90,6 +92,19 @@ class OkexInteractor @Inject constructor(
     fun getBalances(address: String): Single<List<Balance>> {
         return okexRepository
             .requestAccountBalance(address)
+            .map { accountToken ->
+                accountToken
+                    .data.currencies
+                    ?.map { currency ->
+                        Balance().apply {
+                            symbol = currency.symbol
+                            balance = BigDecimal(currency.available)
+                            locked = BigDecimal(currency.locked)
+                            fetchTime = System.currentTimeMillis()
+                        }
+                    }
+                    .or(emptyList())
+            }
     }
 
     fun updateNodeInfo(): Single<NodeInfo> {

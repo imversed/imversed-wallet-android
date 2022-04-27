@@ -1,7 +1,5 @@
 package wannabit.io.cosmostaion.dao;
 
-import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
-
 import android.content.Context;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -9,7 +7,6 @@ import android.text.TextUtils;
 import com.fulldive.wallet.models.BaseChain;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -120,56 +117,6 @@ public class Account {
             result = context.getString(R.string.str_my_wallet) + id;
         } else {
             result = nickName;
-        }
-        return result;
-    }
-
-    public List<Balance> getBalances() {
-        return balances;
-    }
-
-    public void setBalances(List<Balance> balances) {
-        this.balances = balances;
-    }
-
-    public BigDecimal getBnbBalance() {
-        BigDecimal result = BigDecimal.ZERO;
-        if (balances == null || balances.size() == 0) {
-            return result;
-        }
-        for (Balance balance : balances) {
-            if (balance.symbol.equals(BNB_MAIN.INSTANCE.getMainDenom())) {
-                result = balance.balance;
-                break;
-            }
-        }
-        return result;
-    }
-
-    public BigDecimal getBnbBalanceScale() {
-        BigDecimal result = BigDecimal.ZERO;
-        if (balances == null || balances.size() == 0) {
-            return result;
-        }
-        for (Balance balance : balances) {
-            if (balance.symbol.equals(BNB_MAIN.INSTANCE.getMainDenom())) {
-                result = balance.balance;
-                break;
-            }
-        }
-        return result;
-    }
-
-    public BigDecimal getBnbTokenBalance(String symbol) {
-        BigDecimal result = BigDecimal.ZERO;
-        if (balances == null || balances.size() == 0) {
-            return result;
-        }
-        for (Balance balance : balances) {
-            if (balance.symbol.equals(symbol)) {
-                result = balance.balance;
-                break;
-            }
         }
         return result;
     }

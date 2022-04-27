@@ -27,6 +27,7 @@ import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IBusyFetchListener;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
+import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.fragment.chains.ok.OKValidatorMyFragment;
 import wannabit.io.cosmostaion.fragment.chains.ok.OKValidatorOtherFragment;
@@ -124,13 +125,15 @@ public class OKValidatorListActivity extends BaseActivity implements FetchCallBa
     }
 
     public void onStartDirectVote() {
-        if (getAccount() == null) return;
-        if (!getAccount().hasPrivateKey) {
+        final Account account = getAccount();
+        if (account == null) return;
+        if (!account.hasPrivateKey) {
             Dialog_WatchMode add = Dialog_WatchMode.newInstance();
             showDialog(add);
             return;
         }
-        BigDecimal availableAmount = getBaseDao().availableAmount(TOKEN_OK);
+        BigDecimal availableAmount = getBalance(TOKEN_OK);
+
         if (availableAmount.compareTo(new BigDecimal("0.1")) <= 0) {
             Toast.makeText(getBaseContext(), R.string.error_not_enough_balance_to_vote, Toast.LENGTH_SHORT).show();
             return;

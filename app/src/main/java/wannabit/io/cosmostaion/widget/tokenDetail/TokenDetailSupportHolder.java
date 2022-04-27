@@ -24,8 +24,10 @@ import java.math.BigDecimal;
 
 import irismod.nft.QueryOuterClass;
 import wannabit.io.cosmostaion.R;
+import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.dao.Assets;
+import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dao.BnbToken;
 import wannabit.io.cosmostaion.dao.Cw20Assets;
 import wannabit.io.cosmostaion.dao.OkToken;
@@ -81,18 +83,18 @@ public class TokenDetailSupportHolder extends BaseHolder {
         mNftRawData = itemView.findViewById(R.id.nft_raw_data);
     }
 
-    public void onBindNativeTokengRPC(Context c, BaseChain baseChain, BaseData baseData, String denom) {
+    public void onBindNativeTokengRPC(BaseActivity baseActivity, BaseChain baseChain, BaseData baseData, String denom) {
         if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             dpDecimal = WUtil.getKavaCoinDecimal(baseData, denom);
             if (denom.equalsIgnoreCase(TOKEN_HARD)) {
-                mAmountView.setCardBackgroundColor(ContextCompat.getColor(c, R.color.colorTransBghard));
+                mAmountView.setCardBackgroundColor(ContextCompat.getColor(baseActivity, R.color.colorTransBghard));
             } else if (denom.equalsIgnoreCase(TOKEN_USDX)) {
-                mAmountView.setCardBackgroundColor(ContextCompat.getColor(c, R.color.colorTransBgusdx));
+                mAmountView.setCardBackgroundColor(ContextCompat.getColor(baseActivity, R.color.colorTransBgusdx));
             } else if (denom.equalsIgnoreCase(TOKEN_SWP)) {
-                mAmountView.setCardBackgroundColor(ContextCompat.getColor(c, R.color.colorTransBgswp));
+                mAmountView.setCardBackgroundColor(ContextCompat.getColor(baseActivity, R.color.colorTransBgswp));
             }
 
-            mAvailableAmount = baseData.getAvailable(denom);
+            mAvailableAmount = baseActivity.getFullBalance(denom).balance;
             BigDecimal vestingAmount = baseData.getVesting(denom);
             mTvTotal.setText(WDp.getDpAmount2(mAvailableAmount.add(vestingAmount), dpDecimal, dpDecimal));
             mTvAvailable.setText(WDp.getDpAmount2(mAvailableAmount, dpDecimal, dpDecimal));
@@ -108,29 +110,31 @@ public class TokenDetailSupportHolder extends BaseHolder {
         }
     }
 
-    public void onBindPoolToken(Context c, BaseChain baseChain, BaseData baseData, String denom) {
+    public void onBindPoolToken(BaseActivity baseActivity, BaseChain baseChain, String denom) {
         if (baseChain.equals(COSMOS_MAIN.INSTANCE)) {
             dpDecimal = 6;
         } else {
             dpDecimal = 18;
         }
-        mAvailableAmount = baseData.getAvailable(denom);
+        final Balance balance = baseActivity.getFullBalance(denom);
+        mAvailableAmount = balance.balance;
         mTvTotal.setText(WDp.getDpAmount2(mAvailableAmount, dpDecimal, dpDecimal));
         mTvAvailable.setText(WDp.getDpAmount2(mAvailableAmount, dpDecimal, dpDecimal));
     }
 
-    public void onBindKavaToken(Context c, BaseData baseData, String denom) {
+    public void onBindKavaToken(BaseActivity baseActivity, BaseData baseData, String denom) {
         dpDecimal = WUtil.getKavaCoinDecimal(baseData, denom);
-        mAvailableAmount = baseData.availableAmount(denom);
+        final Balance balance = baseActivity.getFullBalance(denom);
+        mAvailableAmount = balance.balance;
         if (denom.equalsIgnoreCase(TOKEN_HARD)) {
-            mAmountView.setCardBackgroundColor(ContextCompat.getColor(c, R.color.colorTransBghard));
+            mAmountView.setCardBackgroundColor(ContextCompat.getColor(baseActivity, R.color.colorTransBghard));
         } else if (denom.equalsIgnoreCase(TOKEN_USDX)) {
-            mAmountView.setCardBackgroundColor(ContextCompat.getColor(c, R.color.colorTransBgusdx));
+            mAmountView.setCardBackgroundColor(ContextCompat.getColor(baseActivity, R.color.colorTransBgusdx));
         } else if (denom.equalsIgnoreCase(TOKEN_SWP)) {
-            mAmountView.setCardBackgroundColor(ContextCompat.getColor(c, R.color.colorTransBgswp));
+            mAmountView.setCardBackgroundColor(ContextCompat.getColor(baseActivity, R.color.colorTransBgswp));
         }
 
-        BigDecimal vestingAmount = baseData.lockedAmount(denom);
+        BigDecimal vestingAmount = balance.locked;
         mTvTotal.setText(WDp.getDpAmount2(mAvailableAmount.add(vestingAmount), dpDecimal, dpDecimal));
         mTvAvailable.setText(WDp.getDpAmount2(mAvailableAmount, dpDecimal, dpDecimal));
         if (vestingAmount.compareTo(BigDecimal.ZERO) > 0) {
@@ -140,28 +144,30 @@ public class TokenDetailSupportHolder extends BaseHolder {
 
     }
 
-    public void onBindBNBTokens(Context c, BaseData baseData, String denom) {
+    public void onBindBNBTokens(BaseActivity baseActivity, BaseData baseData, String denom) {
         BnbToken bnbToken = baseData.getBnbToken(denom);
         if (bnbToken != null) {
             mLockedLayout.setVisibility(View.VISIBLE);
             mFrozenLayout.setVisibility(View.VISIBLE);
         }
-        mAvailableAmount = baseData.availableAmount(denom);
-        final BigDecimal lockedAmount = baseData.lockedAmount(denom);
-        final BigDecimal frozenAmount = baseData.frozenAmount(denom);
+        final Balance balance = baseActivity.getFullBalance(denom);
+        mAvailableAmount = balance.balance;
+        final BigDecimal lockedAmount = balance.locked;
+        final BigDecimal frozenAmount = balance.frozen;
         mTvTotal.setText(WDp.getDpAmount2(mAvailableAmount, 0, 8));
         mTvAvailable.setText(WDp.getDpAmount2(mAvailableAmount, 0, 8));
         mTvLocked.setText(WDp.getDpAmount2(lockedAmount, 0, 8));
         mTvFrozen.setText(WDp.getDpAmount2(frozenAmount, 0, 8));
     }
 
-    public void onBindOKTokens(Context c, BaseData baseData, String denom) {
+    public void onBindOKTokens(BaseActivity baseActivity, BaseData baseData, String denom) {
         final OkToken okToken = baseData.okToken(denom);
         if (okToken != null) {
             mLockedLayout.setVisibility(View.VISIBLE);
         }
-        mAvailableAmount = baseData.availableAmount(denom);
-        final BigDecimal lockedAmount = baseData.lockedAmount(denom);
+        final Balance balance = baseActivity.getFullBalance(denom);
+        mAvailableAmount = balance.balance;
+        final BigDecimal lockedAmount = balance.locked;
         final BigDecimal totalAmount = mAvailableAmount.add(lockedAmount);
 
         mTvTotal.setText(WDp.getDpAmount2(totalAmount, 0, 18));

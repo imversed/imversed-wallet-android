@@ -343,15 +343,13 @@ class AccountsInteractor @Inject constructor(
     }
 
     private fun deleteAccount(account: Account): Completable {
-        return Completable.merge(
-            listOf(
-                secretInteractor.deleteMnemonicKey(account.uuid).onErrorComplete()
-                    .subscribeOn(AppSchedulers.io()),
-                secretInteractor.deletePrivateKey(account.uuid).onErrorComplete()
-                    .subscribeOn(AppSchedulers.io()),
-                accountsRepository.deleteAccount(account.id).onErrorComplete()
-                    .subscribeOn(AppSchedulers.io())
-            )
+        return Completable.mergeArray(
+            secretInteractor.deleteMnemonicKey(account.uuid).onErrorComplete()
+                .subscribeOn(AppSchedulers.io()),
+            secretInteractor.deletePrivateKey(account.uuid).onErrorComplete()
+                .subscribeOn(AppSchedulers.io()),
+            accountsRepository.deleteAccount(account.id).onErrorComplete()
+                .subscribeOn(AppSchedulers.io())
         )
     }
 }

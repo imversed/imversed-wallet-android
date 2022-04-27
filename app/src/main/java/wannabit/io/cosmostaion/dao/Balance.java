@@ -1,11 +1,10 @@
 package wannabit.io.cosmostaion.dao;
 
-import android.os.Parcel;
-import android.os.Parcelable;
+import android.text.TextUtils;
 
 import java.math.BigDecimal;
 
-public class Balance implements Parcelable {
+public class Balance {
     public Long accountId;
     public String symbol;
     public BigDecimal balance;
@@ -19,61 +18,36 @@ public class Balance implements Parcelable {
     public Balance(Long accountId, String symbol, String balance, Long fetchTime, String frozen, String locked) {
         this.accountId = accountId;
         this.symbol = symbol;
-        if (balance != null) {
-            this.balance = new BigDecimal(balance);
-        } else {
-            this.balance = BigDecimal.ZERO;
-        }
         this.fetchTime = fetchTime;
-        if (frozen != null) {
-            this.frozen = new BigDecimal(frozen);
-        } else {
-            this.frozen = BigDecimal.ZERO;
+        this.balance = BigDecimal.ZERO;
+        this.frozen = BigDecimal.ZERO;
+        this.locked = BigDecimal.ZERO;
+
+        if (balance != null && !TextUtils.isEmpty(balance)) {
+            try {
+                this.balance = new BigDecimal(balance);
+            } catch (Exception ignore) {
+            }
         }
-        if (locked != null) {
-            this.locked = new BigDecimal(locked);
-        } else {
-            this.locked = BigDecimal.ZERO;
+        if (frozen != null && !TextUtils.isEmpty(frozen)) {
+            try {
+                this.frozen = new BigDecimal(frozen);
+            } catch (Exception ignore) {
+            }
+        }
+        if (locked != null && !TextUtils.isEmpty(locked)) {
+            try {
+                this.locked = new BigDecimal(locked);
+            } catch (Exception ignore) {
+            }
         }
     }
 
-    protected Balance(Parcel in) {
-        readFromParcel(in);
+    public BigDecimal getTotalAmount() {
+        return balance.add(locked).add(frozen);
     }
 
-    public void readFromParcel(Parcel in) {
-        accountId = in.readLong();
-        symbol = in.readString();
-        balance = new BigDecimal(in.readString());
-        fetchTime = in.readLong();
-        frozen = new BigDecimal(in.readString());
-        locked = new BigDecimal(in.readString());
+    public BigDecimal getDelegatableAmount() {
+        return balance.add(locked);
     }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeLong(accountId);
-        dest.writeString(symbol);
-        dest.writeString(balance.toPlainString());
-        dest.writeLong(fetchTime);
-        dest.writeString(frozen.toPlainString());
-        dest.writeString(locked.toPlainString());
-    }
-
-    public static final Creator<Balance> CREATOR = new Creator<Balance>() {
-        @Override
-        public Balance createFromParcel(Parcel in) {
-            return new Balance(in);
-        }
-
-        @Override
-        public Balance[] newArray(int size) {
-            return new Balance[size];
-        }
-    };
 }

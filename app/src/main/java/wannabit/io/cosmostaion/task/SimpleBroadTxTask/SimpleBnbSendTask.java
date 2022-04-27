@@ -8,6 +8,7 @@ import com.binance.dex.api.client.domain.TransactionMetadata;
 import com.binance.dex.api.client.domain.broadcast.TransactionOption;
 import com.binance.dex.api.client.domain.broadcast.Transfer;
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.WalletBalance;
 
 import org.bitcoinj.core.ECKey;
 import org.bitcoinj.crypto.DeterministicKey;
@@ -23,7 +24,7 @@ import wannabit.io.cosmostaion.base.BaseApplication;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dao.Account;
-import wannabit.io.cosmostaion.dao.Password;
+import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.model.type.Fee;
 import wannabit.io.cosmostaion.network.ApiClient;
@@ -73,7 +74,11 @@ public class SimpleBnbSendTask extends CommonTask {
                         account.sequenceNumber,
                         account.accountNumber
                 );
-                context.getBaseDao().updateBalances(mAccount.id, WUtil.getBalancesFromBnbLcd(mAccount.id, response.body()));
+                final List<WalletBalance> balances = WUtil.getBalancesFromBnbLcd(mAccount.id, response.body());
+                final Throwable error = balancesInteractor.updateBalances(mAccount.id, balances).blockingGet();
+                if (error != null) {
+                    error.printStackTrace();
+                }
                 mAccount = accountsInteractor.getAccount(mAccount.id).blockingGet();
 
                 if (mAccount.fromMnemonic) {

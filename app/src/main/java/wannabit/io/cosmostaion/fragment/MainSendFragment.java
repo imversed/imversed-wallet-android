@@ -22,16 +22,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.fulldive.wallet.interactors.balances.BalancesInteractor;
 import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.fulldive.wallet.presentation.main.MainActivity;
+
+import java.util.List;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IBusyFetchListener;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.dao.Account;
+import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.widget.BaseHolder;
 import wannabit.io.cosmostaion.widget.mainWallet.WalletBinanceHolder;
@@ -56,6 +60,7 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
     private Account mAccount;
     private BaseChain mBaseChain;
     private SettingsInteractor settingsInteractor;
+    private BalancesInteractor balancesInteractor;
 
     public static MainSendFragment newInstance(Bundle bundle) {
         MainSendFragment fragment = new MainSendFragment();
@@ -67,6 +72,7 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         settingsInteractor = getAppInjector().getInstance(SettingsInteractor.class);
+        balancesInteractor = getAppInjector().getInstance(BalancesInteractor.class);
         setHasOptionsMenu(true);
     }
 
@@ -156,8 +162,12 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
             itemKeyStatus.setColorFilter(ContextCompat.getColor(getMainActivity(), R.color.colorGray0), android.graphics.PorterDuff.Mode.SRC_IN);
         }
         mWalletAddress.setText(mAccount.address);
-        mTotalValue.setText(WDp.dpAllAssetValueUserCurrency(mBaseChain, settingsInteractor.getCurrency(), getBaseDao()));
+        mTotalValue.setText(WDp.dpAllAssetValueUserCurrency(mBaseChain, settingsInteractor.getCurrency(), getBaseDao(), getBalances()));
         mMainWalletAdapter.notifyDataSetChanged();
+    }
+
+    private List<Balance> getBalances() {
+        return balancesInteractor.getBalances(mAccount.id).blockingGet();
     }
 
     private void showAddressDialog() {

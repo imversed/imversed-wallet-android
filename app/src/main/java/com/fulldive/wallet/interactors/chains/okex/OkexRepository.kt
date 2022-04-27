@@ -9,6 +9,7 @@ import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.network.res.ResNodeInfo
 import wannabit.io.cosmostaion.network.res.ResOkAccountInfo
+import wannabit.io.cosmostaion.network.res.ResOkAccountToken
 import java.math.BigDecimal
 import javax.inject.Inject
 
@@ -40,14 +41,6 @@ class OkexRepository @Inject constructor(
             .flatMapCompletable(okexLocalSource::setTokens)
     }
 
-    fun updateAccountBalance(account: Account): Completable {
-        return okexRemoteSource
-            .requestAccountBalance(account.address)
-            .flatMapCompletable { balance ->
-                okexLocalSource.setBalance(account.id, balance)
-            }
-    }
-
     fun updateUnbonding(account: Account): Completable {
         return okexRemoteSource
             .requestUnbonding(account.address)
@@ -64,21 +57,8 @@ class OkexRepository @Inject constructor(
         return okexRemoteSource.requestNodeInfo()
     }
 
-    fun requestAccountBalance(address: String): Single<List<Balance>> {
+    fun requestAccountBalance(address: String): Single<ResOkAccountToken> {
         return okexRemoteSource.requestAccountBalance(address)
-            .map { accountToken ->
-                accountToken
-                    .data.currencies
-                    ?.map { currency ->
-                        Balance().apply {
-                            symbol = currency.symbol
-                            balance = BigDecimal(currency.available)
-                            locked = BigDecimal(currency.locked)
-                            fetchTime = System.currentTimeMillis()
-                        }
-                    }
-                    .or(emptyList())
-            }
     }
 
     fun setNodeInfo(nodeInfo: ResNodeInfo): Completable {

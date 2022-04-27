@@ -7,8 +7,8 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.fulldive.wallet.interactors.settings.SettingsInteractor
 import com.fulldive.wallet.models.BaseChain
+import com.fulldive.wallet.models.Currency
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment
 import com.fulldive.wallet.presentation.base.BaseMvpFragment
 import com.fulldive.wallet.presentation.main.MainActivity
@@ -17,6 +17,7 @@ import moxy.ktx.moxyPresenter
 import wannabit.io.cosmostaion.R
 import wannabit.io.cosmostaion.base.IRefreshTabListener
 import wannabit.io.cosmostaion.dao.Account
+import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.databinding.FragmentMainHistoryBinding
 import wannabit.io.cosmostaion.model.type.BnbHistory
 import wannabit.io.cosmostaion.network.res.ResApiNewTxListCustom
@@ -26,6 +27,9 @@ import wannabit.io.cosmostaion.utils.WDp
 class MainHistoryFragment : BaseMvpFragment<FragmentMainHistoryBinding>(),
     MainHistoryMoxyView,
     IRefreshTabListener {
+    private var balances: List<Balance> = emptyList()
+    private var currency: Currency = Currency.getDefault()
+
     private var historyAdapter: HistoryAdapter? = null
     private val account: Account?
         get() {
@@ -40,7 +44,6 @@ class MainHistoryFragment : BaseMvpFragment<FragmentMainHistoryBinding>(),
     private val mainActivity: MainActivity?
         get() = getBaseActivity() as? MainActivity
 
-    private lateinit var settingsInteractor: SettingsInteractor
 
     private val presenter by moxyPresenter {
         getInjector().getInstance<MainHistoryPresenter>()
@@ -50,7 +53,6 @@ class MainHistoryFragment : BaseMvpFragment<FragmentMainHistoryBinding>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        settingsInteractor = getInjector().getInstance()
         setHasOptionsMenu(true)
     }
 
@@ -96,11 +98,16 @@ class MainHistoryFragment : BaseMvpFragment<FragmentMainHistoryBinding>(),
             walletAddress.text = account.address
             totalValue.text = WDp.dpAllAssetValueUserCurrency(
                 chain,
-                settingsInteractor.getCurrency(),
-                mainActivity!!.baseDao
+                currency,
+                mainActivity!!.baseDao,
+                balances
             )
 
         }
+    }
+
+    override fun setBalances(balances: List<Balance>) {
+        this.balances = balances
     }
 
     override fun onRefreshTab() {
@@ -168,6 +175,10 @@ class MainHistoryFragment : BaseMvpFragment<FragmentMainHistoryBinding>(),
         binding {
             layerRefresher.isRefreshing = false
         }
+    }
+
+    override fun setCurrency(currency: Currency) {
+        this.currency = currency
     }
 
     private fun showAddressDialog() {

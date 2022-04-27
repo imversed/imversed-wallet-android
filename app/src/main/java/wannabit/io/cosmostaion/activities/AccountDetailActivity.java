@@ -39,6 +39,7 @@ import com.fulldive.wallet.presentation.security.mnemonic.ShowMnemonicActivity;
 import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
 import com.fulldive.wallet.rx.AppSchedulers;
 
+import io.reactivex.Completable;
 import io.reactivex.disposables.Disposable;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
@@ -383,22 +384,26 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
 
     private void actionDeleteAccount(Long accountId) {
         showWaitDialog();
-        Disposable disposable = accountsInteractor.deleteAccount(accountId)
-                .subscribeOn(AppSchedulers.INSTANCE.io())
-                .observeOn(AppSchedulers.INSTANCE.ui())
-                .doOnError(error -> WLog.e(error.toString()))
-                .subscribe(
-                        () -> {
-                            WLog.w("Account was selected after removing");
-                            startMainActivity(0);
-                        },
-                        error -> {
-                            Toast.makeText(getBaseContext(), R.string.str_unknown_error_msg, Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(this, IntroActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                        }
-                );
+        Disposable disposable =
+                Completable.mergeArray(
+                        accountsInteractor.deleteAccount(accountId),
+                        balancesInteractor.deleteBalances(accountId)
+                )
+                        .subscribeOn(AppSchedulers.INSTANCE.io())
+                        .observeOn(AppSchedulers.INSTANCE.ui())
+                        .doOnError(error -> WLog.e(error.toString()))
+                        .subscribe(
+                                () -> {
+                                    WLog.w("Account was selected after removing");
+                                    startMainActivity(0);
+                                },
+                                error -> {
+                                    Toast.makeText(getBaseContext(), R.string.str_unknown_error_msg, Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(this, IntroActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                    startActivity(intent);
+                                }
+                        );
         compositeDisposable.add(disposable);
     }
 

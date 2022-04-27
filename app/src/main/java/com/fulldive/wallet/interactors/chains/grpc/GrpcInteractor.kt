@@ -6,6 +6,7 @@ import com.fulldive.wallet.interactors.chains.StationInteractor
 import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.rx.AppSchedulers
 import com.joom.lightsaber.ProvidedBy
+import cosmos.base.v1beta1.CoinOuterClass
 import cosmos.staking.v1beta1.Staking
 import io.grpc.Status
 import io.grpc.StatusRuntimeException
@@ -145,8 +146,8 @@ class GrpcInteractor @Inject constructor(
             }
     }
 
-    fun getBalances(chain: BaseChain, address: String): Single<List<Balance>> {
-        return grpcRepository.getBalances(chain, address)
+    fun requestBalances(chain: BaseChain, address: String): Single<List<CoinOuterClass.Coin>> {
+        return grpcRepository.requestBalance(chain, address)
     }
 
     private fun updateValidators(chain: BaseChain): Completable {

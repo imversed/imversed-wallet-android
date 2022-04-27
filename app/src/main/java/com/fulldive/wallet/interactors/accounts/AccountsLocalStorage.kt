@@ -32,6 +32,7 @@ class AccountsLocalStorage @Inject constructor(
     private val accountsDao = appDatabase.accountsDao()
     private val gson = Gson()
 
+    private var userId: Long = -1L
     private var lastTotalMap: MutableMap<String, String>? = null
     private var sharedPreferences =
         context.getPrivateSharedPreferences(KEY_ACCOUNTS_PREFERENCES)
@@ -67,7 +68,7 @@ class AccountsLocalStorage @Inject constructor(
             currentAccount
         }
             .onErrorResumeNext {
-                getAccount(baseData.lastUserId)
+                getAccount(getLastUserId())
                     .doOnSuccess { account ->
                         currentAccount = account
                     }
@@ -85,7 +86,7 @@ class AccountsLocalStorage @Inject constructor(
             .flatMapCompletable { account ->
                 safeCompletable {
                     currentAccount = account
-                    baseData.setLastUser(id)
+                    setLastUser(id)
                 }
             }
     }
@@ -93,7 +94,6 @@ class AccountsLocalStorage @Inject constructor(
     fun deleteAccount(accountId: Long): Completable {
         return safeCompletable {
             accountsDao.deleteAccount(accountId)
-            baseData.onDeleteBalance("$accountId")
         }
     }
 
@@ -152,8 +152,21 @@ class AccountsLocalStorage @Inject constructor(
         sharedPreferences.edit().putString(KEY_LAST_TOTAL, gson.toJson(map)).apply()
     }
 
+    private fun setLastUser(userId: Long) {
+        this.userId = userId
+        sharedPreferences.edit().putLong(KEY_USER_ID, userId).apply()
+    }
+
+    private fun getLastUserId(): Long {
+        if (userId == -1L) {
+            userId = sharedPreferences.getLong(KEY_USER_ID, -1)
+        }
+        return userId
+    }
+
     companion object {
         private const val KEY_ACCOUNTS_PREFERENCES = "accounts_preferences"
         private const val KEY_LAST_TOTAL = "KEY_LAST_TOTAL"
+        private const val KEY_USER_ID = "KEY_USER_ID"
     }
 }

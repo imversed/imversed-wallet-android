@@ -2,6 +2,7 @@ package com.fulldive.wallet.presentation.main.history;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -40,7 +41,7 @@ public class HistoryOldHolder extends BaseHolder {
     }
 
     public void onBindOldBnbHistory(@NotNull MainActivity mainActivity, BnbHistory history) {
-        historyType.setText(WDp.DpBNBTxType(mainActivity, history, mainActivity.getAccount().address));
+        historyType.setText(getBNBTxType(history, mainActivity.getAccount().address));
         history_time.setText(WDp.getTimeformat(mainActivity, history.timeStamp));
         history_time_gap.setText(WDp.getTimeGap(mainActivity, history.timeStamp));
         history_block.setText(history.blockHeight + "block");
@@ -78,5 +79,33 @@ public class HistoryOldHolder extends BaseHolder {
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             mainActivity.startActivity(intent);
         });
+    }
+
+    private int getBNBTxType(BnbHistory history, String address) {
+        switch (history.txType) {
+            case "NEW_ORDER":
+                return R.string.tx_new_order;
+            case "CANCEL_ORDER":
+                return R.string.tx_Cancel_order;
+            case "TRANSFER":
+                if (!TextUtils.isEmpty(history.fromAddr) && address.equals(history.fromAddr)) {
+                    return R.string.tx_send;
+                }
+                return R.string.tx_receive;
+            case "HTL_TRANSFER":
+                if (history.fromAddr.equals(address)) {
+                    return R.string.tx_send_htlc;
+                } else if (history.toAddr.equals(address)) {
+                    return R.string.tx_receive_htlc;
+                }
+                return R.string.tx_create_htlc;
+            case "CLAIM_HTL":
+                return R.string.tx_claim_htlc;
+            case "REFUND_HTL":
+                return R.string.tx_refund_htlc;
+            default:
+        }
+        return R.string.tx_known;
+
     }
 }

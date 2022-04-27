@@ -4,6 +4,7 @@ import com.fulldive.wallet.di.modules.DefaultInteractorsModule
 import com.fulldive.wallet.extensions.concat
 import com.fulldive.wallet.extensions.or
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
+import com.fulldive.wallet.interactors.balances.BalancesInteractor
 import com.fulldive.wallet.interactors.chains.StationInteractor
 import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.rx.AppSchedulers
@@ -13,6 +14,7 @@ import io.reactivex.Single
 import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.model.NodeInfo
+import wannabit.io.cosmostaion.network.res.ResBnbAccountInfo
 import wannabit.io.cosmostaion.utils.WLog
 import java.math.BigDecimal
 import javax.inject.Inject
@@ -23,7 +25,7 @@ class BinanceInteractor @Inject constructor(
     private val stationInteractor: StationInteractor,
     private val accountsInteractor: AccountsInteractor
 ) {
-    fun update(account: Account, chain: BaseChain): Completable {
+    fun update(account: Account): Completable {
         return Completable
             .mergeArray(
                 updateTokensList().subscribeOn(AppSchedulers.io()),
@@ -35,7 +37,7 @@ class BinanceInteractor @Inject constructor(
             .flatMapCompletable { nodeInfo ->
                 stationInteractor
                     .updateStationParams(
-                        chain,
+                        BaseChain.BNB_MAIN,
                         nodeInfo.network
                     )
                     .doOnError { error ->
@@ -72,6 +74,10 @@ class BinanceInteractor @Inject constructor(
             .flatMapCompletable(binanceRepository::setFees)
     }
 
+    fun requestAccount(address: String): Single<ResBnbAccountInfo> {
+        return binanceRepository.requestAccount(address)
+    }
+
     fun updateAccount(account: Account): Completable {
         return binanceRepository
             .requestAccount(account.address)
@@ -83,48 +89,12 @@ class BinanceInteractor @Inject constructor(
                         accountInfo.sequence.toInt(),
                         accountInfo.account_number.toInt()
                     )
-                    .andThen {
-                        val balances = accountInfo
-                            .balances
-                            ?.map { coin ->
-                                Balance().apply {
-                                    accountId = account.id
-                                    symbol = coin.symbol
-                                    balance = BigDecimal(coin.free)
-                                    locked = BigDecimal(coin.locked)
-                                    frozen = BigDecimal(coin.frozen)
-                                    fetchTime = System.currentTimeMillis()
-                                }
-                            }
-                            .or(emptyList())
-
-                        binanceRepository.setAccountBalances(account.id, balances)
-                    }
             }
             .doOnError { error ->
                 WLog.e(error.message)
                 error.printStackTrace()
             }
             .onErrorComplete()
-    }
-
-    fun getBalances(address: String): Single<List<Balance>> {
-        return binanceRepository
-            .requestAccount(address)
-            .map { accountInfo ->
-                accountInfo
-                    .balances
-                    ?.map { coin ->
-                        Balance().apply {
-                            symbol = coin.symbol
-                            balance = BigDecimal(coin.free)
-                            locked = BigDecimal(coin.locked)
-                            frozen = BigDecimal(coin.frozen)
-                            fetchTime = System.currentTimeMillis()
-                        }
-                    }
-                    .or(emptyList())
-            }
     }
 
     fun updateNodeInfo(): Single<NodeInfo> {

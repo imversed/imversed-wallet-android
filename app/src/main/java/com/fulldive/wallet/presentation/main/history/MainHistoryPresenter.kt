@@ -1,9 +1,10 @@
 package com.fulldive.wallet.presentation.main.history
 
-import android.content.Context
 import com.fulldive.wallet.di.modules.DefaultPresentersModule
 import com.fulldive.wallet.extensions.withDefaults
 import com.fulldive.wallet.interactors.HistoryInteractor
+import com.fulldive.wallet.interactors.balances.BalancesInteractor
+import com.fulldive.wallet.interactors.settings.SettingsInteractor
 import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
 import com.joom.lightsaber.ProvidedBy
@@ -13,9 +14,10 @@ import javax.inject.Inject
 
 @ProvidedBy(DefaultPresentersModule::class)
 class MainHistoryPresenter @Inject constructor(
-    context: Context
+    private val balancesInteractor: BalancesInteractor,
+    private val settingsInteractor: SettingsInteractor,
+    private val historyInteractor: HistoryInteractor
 ) : BaseMoxyPresenter<MainHistoryMoxyView>() {
-    private val historyInteractor = HistoryInteractor(context)
     private val historyErrorConsumer = object : OnErrorConsumer() {
         override fun onError(error: Throwable) {
             logError(error)
@@ -23,7 +25,20 @@ class MainHistoryPresenter @Inject constructor(
         }
     }
 
+    override fun attachView(view: MainHistoryMoxyView) {
+        super.attachView(view)
+        viewState.setCurrency(settingsInteractor.getCurrency())
+    }
+
     fun onFetchHistory(account: Account, chain: BaseChain) {
+        balancesInteractor
+            .getBalances(account.id)
+            .withDefaults()
+            .compositeSubscribe(
+                onSuccess = { balances ->
+                    viewState.setBalances(balances)
+                }
+            )
         when (chain) {
             BaseChain.BNB_MAIN -> {
                 historyInteractor

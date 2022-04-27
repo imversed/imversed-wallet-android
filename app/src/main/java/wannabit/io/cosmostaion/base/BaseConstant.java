@@ -6,13 +6,6 @@ public class BaseConstant {
     public final static boolean SUPPORT_MOONPAY = false;
     public final static boolean SUPPORT_BEP3_SWAP = true;
 
-    public final static String DB_NAME = "FDWallet";
-    public final static int DB_VERSION = 1;
-    public final static String DB_TABLE_BALANCE = "balan";
-    public final static String DB_TABLE_BONDING = "bondi";
-    public final static String DB_TABLE_UNBONDING = "unbond";
-
-    public final static String PRE_USER_ID = "PRE_USER_ID";
     public final static String PRE_VALIDATOR_SORTING = "PRE_VALIDATOR_SORTING";
     public final static String PRE_MY_VALIDATOR_SORTING = "PRE_MY_VALIDATOR_SORTING";
     public final static String PRE_USING_APP_LOCK = "PRE_USING_APP_LOCK";

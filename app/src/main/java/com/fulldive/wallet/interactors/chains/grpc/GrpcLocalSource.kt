@@ -117,12 +117,6 @@ class GrpcLocalSource @Inject constructor(
         }
     }
 
-    fun updateBalances(id: Long, balances: List<Balance>): Completable {
-        return completeCallable {
-            baseData.updateBalances(id, balances)
-        }
-    }
-
     fun setMintScanAssets(chain: BaseChain, items: List<Assets>): Completable {
         return completeCallable {
             baseData.mAssets = items

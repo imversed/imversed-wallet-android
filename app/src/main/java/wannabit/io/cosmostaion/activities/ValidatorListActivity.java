@@ -30,6 +30,7 @@ import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IBusyFetchListener;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
+import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.fragment.ValidatorAllFragment;
 import wannabit.io.cosmostaion.fragment.ValidatorMyFragment;
@@ -158,7 +159,8 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
             }
         } else {
             Validator toValidator = null;
-            BigDecimal delegatableAmount = getBaseDao().delegatableAmount(getBaseChain().getMainDenom());
+            final Balance balance = getFullBalance(getBaseChain().getMainDenom());
+            BigDecimal delegatableAmount = balance.getDelegatableAmount();
             BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
             if (delegatableAmount.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_to_delegate, Toast.LENGTH_SHORT).show();

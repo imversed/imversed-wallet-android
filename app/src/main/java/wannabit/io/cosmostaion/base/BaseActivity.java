@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment;
 import com.fulldive.wallet.di.IEnrichableActivity;
 import com.fulldive.wallet.extensions.ViewExtensionsKt;
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
+import com.fulldive.wallet.interactors.balances.BalancesInteractor;
 import com.fulldive.wallet.interactors.chains.StationInteractor;
 import com.fulldive.wallet.interactors.chains.binance.BinanceInteractor;
 import com.fulldive.wallet.interactors.chains.grpc.GrpcInteractor;
@@ -46,6 +47,7 @@ import wannabit.io.cosmostaion.activities.PasswordCheckActivity;
 import wannabit.io.cosmostaion.activities.SendActivity;
 import wannabit.io.cosmostaion.activities.chains.ibc.IBCSendActivity;
 import wannabit.io.cosmostaion.dao.Account;
+import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dialog.Dialog_Buy_Select_Fiat;
 import wannabit.io.cosmostaion.dialog.Dialog_Buy_Without_Key;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
@@ -76,6 +78,7 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
     protected OkexInteractor okexInteractor;
     protected GrpcInteractor grpcInteractor;
     protected StationInteractor stationInteractor;
+    protected BalancesInteractor balancesInteractor;
 
     @Override
     public void setAppInjector(@NonNull Injector appInjector) {
@@ -97,6 +100,7 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
         okexInteractor = getAppInjector().getInstance(OkexInteractor.class);
         grpcInteractor = getAppInjector().getInstance(GrpcInteractor.class);
         stationInteractor = getAppInjector().getInstance(StationInteractor.class);
+        balancesInteractor = getAppInjector().getInstance(BalancesInteractor.class);
         rootView = findViewById(android.R.id.content);
     }
 
@@ -167,20 +171,44 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
         startActivity(intent);
     }
 
+    public BigDecimal getBalance(String denom) {
+        return getFullBalance(denom).balance;
+    }
+
+    public Balance getFullBalance(String denom) {
+        Balance result;
+        final Account account = getAccount();
+        try {
+            result = balancesInteractor.getBalance(account.id, denom).blockingGet();
+        } catch (Exception exception) {
+            WLog.e(exception.toString());
+            exception.printStackTrace();
+            result = new Balance(0L, denom, "", System.currentTimeMillis(), "", "");
+        }
+        return result;
+    }
+
     public void startSendMainDenom() {
-        if (getAccount() == null) return;
-        if (!getAccount().hasPrivateKey) {
+        final Account account = getAccount();
+        if (account == null) return;
+        if (!account.hasPrivateKey) {
             Dialog_WatchMode add = Dialog_WatchMode.newInstance();
             showDialog(add);
             return;
         }
 
         Intent intent = new Intent(getBaseContext(), SendActivity.class);
-        BigDecimal mainAvailable;
+        final BaseChain chain = getBaseChain();
+        final String mainDenom = chain.getMainDenom();
+        BigDecimal mainAvailable = BigDecimal.ZERO;
         if (getBaseChain().isGRPC()) {
             mainAvailable = getBaseDao().getAvailable(getBaseChain().getMainDenom());
         } else {
-            mainAvailable = getBaseDao().availableAmount(getBaseChain().getMainDenom());
+            try {
+                mainAvailable = getBalance(mainDenom);
+            } catch (Exception exception) {
+                WLog.e(exception.toString());
+            }
         }
         BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_SEND, 0);
         if (mainAvailable.compareTo(feeAmount) <= 0) {
@@ -206,7 +234,7 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
         }
 
         boolean hasBalance = true;
-        BigDecimal mainDenomAvailable = getBaseDao().availableAmount(getBaseChain().getMainDenom());
+        BigDecimal mainDenomAvailable = getBalance(getBaseChain().getMainDenom());
         if (getBaseChain().equals(BaseChain.BNB_MAIN.INSTANCE)) {
             if (mainDenomAvailable.compareTo(new BigDecimal(FEE_BNB_SEND)) <= 0) {
                 hasBalance = false;
@@ -272,30 +300,37 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
     }
 
     private Completable updateBinanceAccount() {
-        return binanceInteractor
-                .update(getAccount(), getBaseChain())
-                .andThen(updateBalance());
+        return accountsInteractor.getCurrentAccount()
+                .flatMapCompletable(account ->
+                        binanceInteractor
+                                .update(account)
+                                .andThen(updateBalance(BaseChain.BNB_MAIN.INSTANCE, account))
+                );
     }
 
     private Completable updateOkexAccount() {
-        return okexInteractor
-                .update(getAccount(), getBaseChain())
-                .andThen(updateBalance());
+        return accountsInteractor.getCurrentAccount()
+                .flatMapCompletable(account -> okexInteractor
+                        .update(account)
+                        .andThen(updateBalance(BaseChain.OKEX_MAIN.INSTANCE, account))
+                );
     }
 
     private Completable updateGrpcAccount() {
-        return grpcInteractor
-                .update(getAccount(), getBaseChain())
-                .andThen(updateGrpcBalance());
+        return accountsInteractor.getCurrentAccount()
+                .flatMapCompletable(account -> grpcInteractor
+                        .update(account, getBaseChain())
+                        .andThen(updateGrpcBalance())
+                        .andThen(updateBalance(getBaseChain(), account))
+                );
     }
 
-    private Completable updateBalance() {
-        return Completable.fromCallable(() -> {
-            // TODO: It will be refactored
-            getBaseDao().mBalances = getBaseDao().onSelectBalance(getAccount().id);
-            return true;
-        });
+    private Completable updateBalance(final BaseChain chain, final Account account) {
+        return balancesInteractor
+                .requestBalances(chain, account.address, account.id)
+                .ignoreElement();
     }
+
 
     private Completable updateGrpcBalance() {
         return Completable.fromCallable(() -> {

@@ -5,12 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.fulldive.wallet.models.WalletAccount
+import com.fulldive.wallet.models.WalletBalance
 import net.sqlcipher.database.SQLiteDatabase
 import net.sqlcipher.database.SupportFactory
 
-@Database(entities = [WalletAccount::class], version = 1)
+@Database(entities = [WalletAccount::class, WalletBalance::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun accountsDao(): WalletAccountDao
+    abstract fun balancesDao(): WalletBalanceDao
 
     companion object {
         @Volatile

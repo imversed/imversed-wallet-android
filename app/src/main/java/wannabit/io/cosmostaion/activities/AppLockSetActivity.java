@@ -79,7 +79,7 @@ public class AppLockSetActivity extends BaseActivity implements View.OnClickList
     private void onUpdateView() {
         mSwitchUsingAppLock.setChecked(getBaseDao().getUsingAppLock());
         mSwitchUsingFingerprint.setChecked(getBaseDao().getUsingFingerPrint());
-        mTvAppLockTime.setText(getBaseDao().getAppLockLeaveTimeString(getBaseContext()));
+        mTvAppLockTime.setText(getBaseDao().getAppLockLeaveTimeString());
         if (getBaseDao().getUsingAppLock()) {
             mBtnAppLockTime.setVisibility(View.VISIBLE);
             FingerprintManagerCompat fingerprintManager = FingerprintManagerCompat.from(this);

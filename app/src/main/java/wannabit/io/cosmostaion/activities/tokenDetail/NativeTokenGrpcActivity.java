@@ -282,7 +282,7 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
 
             } else if (getItemViewType(position) == TYPE_VESTING) {
                 VestingHolder holder = (VestingHolder) viewHolder;
-                holder.onBindTokenHolder(getBaseContext(), getBaseChain(), getBaseDao(), mNativeGrpcDenom);
+                holder.onBindTokenHolder(NativeTokenGrpcActivity.this, getBaseChain(), getBaseDao(), mNativeGrpcDenom);
             }
         }
 
