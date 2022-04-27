@@ -200,10 +200,11 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     private void onInitView() {
-        if (getIntent() == null || TextUtils.isEmpty(getIntent().getStringExtra("id"))) {
+        if (getIntent() == null || getIntent().getLongExtra("id", -1L) <= 0L) {
             onBackPressed();
         }
-        account = getBaseDao().getAccount(getIntent().getStringExtra("id"));
+
+        account = accountsInteractor.getAccount(getIntent().getLongExtra("id", -1L)).blockingGet();
 
         if (account == null) onBackPressed();
 
@@ -268,9 +269,19 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
 
     public void onChangeNickName(String name) {
         account.nickName = name;
-        if (getBaseDao().updateAccount(account) > 0) {
-            onInitView();
-        }
+
+        Disposable disposable = accountsInteractor
+                .updateAccountNickName(
+                        account.id,
+                        name
+                )
+                .subscribeOn(AppSchedulers.INSTANCE.io())
+                .observeOn(AppSchedulers.INSTANCE.ui())
+                .doOnError(error -> WLog.e(error.toString()))
+                .subscribe(
+                        this::onInitView
+                );
+        compositeDisposable.add(disposable);
     }
 
     @Override
@@ -306,7 +317,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
         } else if (v.equals(mBtnDelete)) {
             int accountSum = 0;
             for (BaseChain baseChain : getBaseDao().dpSortedChains()) {
-                accountSum = accountSum + getBaseDao().getAccountsByChain(baseChain).size();
+                accountSum = accountSum + accountsInteractor.getChainAccounts(baseChain).size();
             }
             if (accountSum <= 1) {
                 Toast.makeText(AccountDetailActivity.this, getString(R.string.error_reserve_1_account), Toast.LENGTH_SHORT).show();

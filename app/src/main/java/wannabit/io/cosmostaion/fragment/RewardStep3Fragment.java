@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.fulldive.wallet.interactors.settings.SettingsInteractor;
+
 import java.math.BigDecimal;
 
 import cosmos.staking.v1beta1.Staking;
@@ -33,6 +35,7 @@ public class RewardStep3Fragment extends BaseFragment implements View.OnClickLis
     private Button mBeforeBtn, mConfirmBtn;
     private TextView mDenomRewardAmount, mDenomFeeType, mDenomResultAmount;
     private int mDpDecimal = 6;
+    private SettingsInteractor settingsInteractor;
 
     public static RewardStep3Fragment newInstance(Bundle bundle) {
         RewardStep3Fragment fragment = new RewardStep3Fragment();
@@ -43,6 +46,7 @@ public class RewardStep3Fragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        settingsInteractor = getAppInjector().getInstance(SettingsInteractor.class);
     }
 
     @Override
@@ -76,20 +80,21 @@ public class RewardStep3Fragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onRefreshTab() {
         mDpDecimal = getSActivity().getBaseChain().getDivideDecimal();
+        final String mainDenom = getSActivity().getBaseChain().getMainDenom();
         BigDecimal rewardSum = BigDecimal.ZERO;
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
         for (String opAddress : getSActivity().mValAddresses) {
-            rewardSum = rewardSum.add(getSActivity().getBaseDao().getReward(getSActivity().getBaseChain().getMainDenom(), opAddress));
+            rewardSum = rewardSum.add(getSActivity().getBaseDao().getReward(mainDenom, opAddress));
         }
         mTvRewardAmount.setText(WDp.getDpAmount2(rewardSum, mDpDecimal, mDpDecimal));
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
         if (getSActivity().mWithdrawAddress.equals(getSActivity().getAccount().address)) {
             mTvGoalLayer.setVisibility(View.GONE);
             mExpectedLayer.setVisibility(View.VISIBLE);
-            BigDecimal availableAmount = getBaseDao().getAvailable(getSActivity().getBaseChain().getMainDenom());
+            BigDecimal availableAmount = getBaseDao().getAvailable(mainDenom);
             BigDecimal expectedAmount = availableAmount.add(rewardSum).subtract(feeAmount);
             mExpectedAmount.setText(WDp.getDpAmount2(expectedAmount, mDpDecimal, mDpDecimal));
-            mExpectedPrice.setText(WDp.dpUserCurrencyValue(getBaseDao(), getSActivity().getBaseChain().getMainDenom(), expectedAmount, mDpDecimal));
+            mExpectedPrice.setText(WDp.dpUserCurrencyValue(getBaseDao(), settingsInteractor.getCurrency(), mainDenom, expectedAmount, mDpDecimal));
 
         } else {
             mTvGoalLayer.setVisibility(View.VISIBLE);

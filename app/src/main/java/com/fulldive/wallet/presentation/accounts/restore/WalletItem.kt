@@ -19,8 +19,7 @@ data class WalletItem(
     val amount: BigDecimal,
     val divideDecimal: Int,
     val displayDecimal: Int,
-    val accountId: Long = 0L,
-    val accountUuid: String = ""
+    val accountId: Long = 0L
 )
 
 

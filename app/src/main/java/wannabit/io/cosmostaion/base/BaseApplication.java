@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import com.fulldive.wallet.di.EnrichableLifecycleCallbacks;
 import com.fulldive.wallet.di.IInjectorHolder;
 import com.fulldive.wallet.di.components.ApplicationComponent;
+import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.interactors.secret.SecretInteractor;
 import com.joom.lightsaber.Injector;
 import com.joom.lightsaber.Lightsaber;
@@ -23,6 +24,7 @@ public class BaseApplication extends Application implements IInjectorHolder {
     private BaseData mBaseData;
     private AppStatus mAppStatus;
     private SecretInteractor secretInteractor;
+    private AccountsInteractor accountsInteractor;
 
     @Override
     public void onCreate() {
@@ -30,6 +32,7 @@ public class BaseApplication extends Application implements IInjectorHolder {
         appInjector = new Lightsaber.Builder().build().createInjector(new ApplicationComponent(getApplicationContext()));
 
         secretInteractor = appInjector.getInstance(SecretInteractor.class);
+        accountsInteractor = appInjector.getInstance(AccountsInteractor.class);
 
         registerActivityLifecycleCallbacks(new LifecycleCallbacks());
         registerActivityLifecycleCallbacks(new EnrichableLifecycleCallbacks(this));
@@ -57,7 +60,7 @@ public class BaseApplication extends Application implements IInjectorHolder {
         if (!isReturnedForeground() ||
                 !secretInteractor.hasPassword().blockingGet() ||    // TODO: it will be refactored
                 !baseData.getUsingAppLock() ||
-                (baseData.getAccounts().size() <= 0)) return false;
+                (accountsInteractor.getAccounts().blockingGet().size() <= 0)) return false;
 
         switch (baseData.getAppLockTriggerTime()) {
             case 0:

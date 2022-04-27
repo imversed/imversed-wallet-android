@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.models.BaseChain;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -61,6 +62,7 @@ public class IBCSendStep1Fragment extends BaseFragment implements View.OnClickLi
     private BaseChain mTochain;
     private List<Account> mToAccountList;
     private Account mToAccount;
+    private AccountsInteractor accountsInteractor;
 
     public static IBCSendStep1Fragment newInstance(Bundle bundle) {
         IBCSendStep1Fragment fragment = new IBCSendStep1Fragment();
@@ -76,6 +78,8 @@ public class IBCSendStep1Fragment extends BaseFragment implements View.OnClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_ibc_send_step1, container, false);
+
+        accountsInteractor = getAppInjector().getInstance(AccountsInteractor.class);
         mDesitination = rootView.findViewById(R.id.desitination_chain);
         mAddressInput = rootView.findViewById(R.id.receiver_account);
         mNextBtn = rootView.findViewById(R.id.nextButton);
@@ -127,7 +131,7 @@ public class IBCSendStep1Fragment extends BaseFragment implements View.OnClickLi
     @Override
     public void onRefreshTab() {
         mTochain = WDp.getChainTypeByChainId(getSActivity().mIbcSelectedRelayer.chain_id);
-        mToAccountList = getBaseDao().getAccountsByChain(mTochain);
+        mToAccountList = accountsInteractor.getChainAccounts(mTochain);
         WDp.getChainHint(mTochain, mDesitination);
         mDesitination.setTextColor(WDp.getChainColor(getSActivity(), mTochain));
         String userInput = mAddressInput.getText().toString().trim();

@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.squareup.picasso.Picasso;
 
@@ -118,21 +119,22 @@ public class ContractTokenGrpcActivity extends BaseActivity implements View.OnCl
 
     private void onUpdateView() {
         mBtnAddressPopup.setCardBackgroundColor(WDp.getChainBgColor(ContractTokenGrpcActivity.this, getBaseChain()));
+        final Currency currency = settingsInteractor.getCurrency();
         if (mCw20Asset != null) {
             Picasso.get().load(mCw20Asset.logo).fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(mToolbarSymbolImg);
             mToolbarSymbol.setText(mCw20Asset.denom.toUpperCase());
             mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
             mTotalAmount = mCw20Asset.getAmount();
 
-            mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), mCw20Asset.denom));
+            mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, mCw20Asset.denom));
             mItemUpDownPrice.setText(WDp.dpValueChange(getBaseDao(), mCw20Asset.denom));
             final BigDecimal lastUpDown = WDp.valueChange(getBaseDao(), mCw20Asset.denom);
             if (lastUpDown.compareTo(BigDecimal.ZERO) > 0) {
                 mItemUpDownImg.setVisibility(View.VISIBLE);
-                mItemUpDownImg.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_up));
+                mItemUpDownImg.setImageResource(R.drawable.ic_price_up);
             } else if (lastUpDown.compareTo(BigDecimal.ZERO) < 0) {
                 mItemUpDownImg.setVisibility(View.VISIBLE);
-                mItemUpDownImg.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_down));
+                mItemUpDownImg.setImageResource(R.drawable.ic_price_down);
             } else {
                 mItemUpDownImg.setVisibility(View.INVISIBLE);
             }
@@ -142,7 +144,7 @@ public class ContractTokenGrpcActivity extends BaseActivity implements View.OnCl
             if (getAccount().hasPrivateKey) {
                 mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), getBaseChain()), android.graphics.PorterDuff.Mode.SRC_IN);
             }
-            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), mCw20Asset.denom, mTotalAmount, mCw20Asset.decimal));
+            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mCw20Asset.denom, mTotalAmount, mCw20Asset.decimal));
             mSwipeRefreshLayout.setRefreshing(false);
         }
     }

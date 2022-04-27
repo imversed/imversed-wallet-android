@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.squareup.picasso.Picasso;
 
@@ -128,8 +129,9 @@ public class IBCTokenDetailActivity extends BaseActivity implements View.OnClick
 
     private void onUpdateView() {
         final String baseDenom = getBaseDao().getBaseDenom(mIbcDenom);
+        final Currency currency = settingsInteractor.getCurrency();
         if (mIbcToken == null) {
-            mToolbarSymbolImg.setImageDrawable(getResources().getDrawable(R.drawable.token_default_ibc));
+            mToolbarSymbolImg.setImageResource(R.drawable.token_default_ibc);
             mToolbarSymbol.setText(R.string.str_unknown);
             mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
 
@@ -142,26 +144,26 @@ public class IBCTokenDetailActivity extends BaseActivity implements View.OnClick
                 }
                 mToolbarSymbol.setText(mIbcToken.display_denom.toUpperCase());
                 mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
-                mTotalValue.setText("" + WDp.dpUserCurrencyValue(getBaseDao(), baseDenom, getBaseDao().getAvailable(mIbcDenom), mIbcDivideDecimal));
+                mTotalValue.setText("" + WDp.dpUserCurrencyValue(getBaseDao(), currency, baseDenom, getBaseDao().getAvailable(mIbcDenom), mIbcDivideDecimal));
 
-                mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), baseDenom));
+                mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, baseDenom));
                 mItemUpDownPrice.setText(WDp.dpValueChange(getBaseDao(), baseDenom));
                 final BigDecimal lastUpDown = WDp.valueChange(getBaseDao(), baseDenom);
                 if (lastUpDown.compareTo(BigDecimal.ZERO) > 0) {
                     mItemUpDownImg.setVisibility(View.VISIBLE);
-                    mItemUpDownImg.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_up));
+                    mItemUpDownImg.setImageResource(R.drawable.ic_price_up);
                 } else if (lastUpDown.compareTo(BigDecimal.ZERO) < 0) {
                     mItemUpDownImg.setVisibility(View.VISIBLE);
-                    mItemUpDownImg.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_down));
+                    mItemUpDownImg.setImageResource(R.drawable.ic_price_down);
                 } else {
                     mItemUpDownImg.setVisibility(View.INVISIBLE);
                 }
 
             } else {
-                mToolbarSymbolImg.setImageDrawable(getResources().getDrawable(R.drawable.token_default_ibc));
+                mToolbarSymbolImg.setImageResource(R.drawable.token_default_ibc);
                 mToolbarSymbol.setText(R.string.str_unknown);
                 mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
-                mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), baseDenom, BigDecimal.ZERO, mIbcDivideDecimal));
+                mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, baseDenom, BigDecimal.ZERO, mIbcDivideDecimal));
 
                 mItemPerPrice.setText("");
                 mItemUpDownPrice.setText("");
@@ -226,12 +228,7 @@ public class IBCTokenDetailActivity extends BaseActivity implements View.OnClick
     }
 
     private void onForceBack() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                onBackPressed();
-            }
-        }, 300);
+        new Handler().postDelayed(() -> onBackPressed(), 300);
     }
 
     private class IBCTokenAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {

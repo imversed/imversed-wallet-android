@@ -15,10 +15,6 @@ class ChainsRepository @Inject constructor(
         return chainsLocalSource.getChains()
     }
 
-    fun getHiddenChains(): Single<List<String>> {
-        return chainsLocalSource.getHiddenChains()
-    }
-
     fun getSortedChains(): Single<List<String>> {
         return chainsLocalSource.getSortedChains()
     }
@@ -29,5 +25,13 @@ class ChainsRepository @Inject constructor(
 
     fun setExpandedChains(items: List<String>): Completable {
         return chainsLocalSource.setExpandedChains(items)
+    }
+
+    fun getHiddenChains(): Single<List<String>> {
+        return chainsLocalSource.getHiddenChains()
+    }
+
+    fun setHiddenChains(items: List<String>): Completable {
+        return chainsLocalSource.setHiddenChains(items)
     }
 }

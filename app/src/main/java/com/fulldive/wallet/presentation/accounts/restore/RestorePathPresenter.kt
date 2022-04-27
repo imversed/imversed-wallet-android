@@ -10,6 +10,7 @@ import com.fulldive.wallet.interactors.chains.binance.BinanceInteractor
 import com.fulldive.wallet.interactors.chains.grpc.GrpcInteractor
 import com.fulldive.wallet.interactors.chains.okex.OkexInteractor
 import com.fulldive.wallet.interactors.secret.MnemonicUtils
+import com.fulldive.wallet.interactors.secret.SecretInteractor
 import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
 import com.joom.lightsaber.ProvidedBy
@@ -21,6 +22,7 @@ import javax.inject.Inject
 @ProvidedBy(DefaultPresentersModule::class)
 class RestorePathPresenter @Inject constructor(
     private val accountsInteractor: AccountsInteractor,
+    private val secretInteractor: SecretInteractor,
     private val binanceInteractor: BinanceInteractor,
     private val okexInteractor: OkexInteractor,
     private val grpcInteractor: GrpcInteractor
@@ -48,12 +50,12 @@ class RestorePathPresenter @Inject constructor(
         viewState.showWaitDialog()
         accountsInteractor
             .createAccount(
-                chain,
+                chain.chainName,
                 item.address,
                 entropy,
-                mnemonicSize,
                 item.path,
-                customPath
+                customPath,
+                mnemonicSize
             )
             .withDefaults()
             .doAfterTerminate {
@@ -69,16 +71,12 @@ class RestorePathPresenter @Inject constructor(
 
         accountsInteractor
             .updateAccount(
-                accountId = item.accountId,
-                uuid = item.accountUuid,
-                entropy = entropy,
-                chainName = chain.chainName,
-                address = item.address,
-                hasPrivateKey = true,
-                fromMnemonic = true,
-                path = item.path,
-                mnemonicSize = mnemonicSize,
-                customPath = customPath
+                item.accountId,
+                item.address,
+                entropy,
+                item.path,
+                customPath,
+                mnemonicSize
             )
             .withDefaults()
             .doAfterTerminate {
@@ -123,8 +121,7 @@ class RestorePathPresenter @Inject constructor(
                                     } else {
                                         item.copy(
                                             state = WalletState.OverrideState,
-                                            accountId = account.id,
-                                            accountUuid = account.uuid
+                                            accountId = account.id
                                         )
                                     }
                                 }

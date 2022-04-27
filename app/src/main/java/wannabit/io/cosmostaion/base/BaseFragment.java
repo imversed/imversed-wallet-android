@@ -1,10 +1,12 @@
 package wannabit.io.cosmostaion.base;
 
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.fulldive.wallet.extensions.ViewExtensionsKt;
+import com.joom.lightsaber.Injector;
 
 public class BaseFragment extends Fragment {
 
@@ -17,6 +19,11 @@ public class BaseFragment extends Fragment {
 
     }
 
+    @NonNull
+    public Injector getAppInjector() {
+        return getBaseApplication().getInjector();
+    }
+
     protected BaseActivity getBaseActivity() {
         return (BaseActivity) getActivity();
     }
@@ -27,7 +34,6 @@ public class BaseFragment extends Fragment {
 
         } else {
             return getBaseApplication().getBaseDao();
-
         }
     }
 

@@ -26,7 +26,7 @@ class WalletSwitchPresenter @Inject constructor(
     override fun onFirstViewAttach() {
         super.onFirstViewAttach()
 
-        account = accountsInteractor.getCurrentAccount()
+        account = accountsInteractor.getCurrentAccount().blockingGet()
 
         Single.zip(
             chainsInteractor.getSortedChains(),
@@ -94,7 +94,8 @@ class WalletSwitchPresenter @Inject constructor(
                         ChainsAccountItem(
                             chain,
                             account = account,
-                            selected = account.id == currentAccount?.id
+                            selected = account.id == currentAccount?.id,
+                            lastTotal = accountsInteractor.getLastTotal(account.id)
                         )
                     }
             }

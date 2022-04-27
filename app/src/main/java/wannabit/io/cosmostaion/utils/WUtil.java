@@ -61,6 +61,7 @@ import androidx.core.content.ContextCompat;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.presentation.main.MainActivity;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf2.Any;
@@ -554,24 +555,6 @@ public class WUtil {
         }
         return bytes;
     }
-
-    public static String bytes2Hex(byte[] raw) {
-        String HEXES = "0123456789ABCDEF";
-        if (raw == null) {
-            return null;
-        }
-        final StringBuilder hex = new StringBuilder(2 * raw.length);
-        for (final byte b : raw) {
-            hex.append(HEXES.charAt((b & 0xF0) >> 4))
-                    .append(HEXES.charAt((b & 0x0F)));
-        }
-        return hex.toString();
-    }
-
-    public static byte[] hex2Byte(String hex) {
-        return new BigInteger(hex, 16).toByteArray();
-    }
-
 
     /**
      * Sorts
@@ -2103,24 +2086,24 @@ public class WUtil {
         return "";
     }
 
-    public static BigDecimal getBnbTokenUserCurrencyPrice(BaseData baseData, String denom) {
+    public static BigDecimal getBnbTokenUserCurrencyPrice(BaseData baseData, Currency currency, String denom) {
         BigDecimal result = BigDecimal.ZERO;
         for (BnbTicker ticker : baseData.mBnbTickers) {
             if (ticker.symbol.equals(getBnbTicSymbol(denom))) {
+                BigDecimal perPrice;
                 if (isBnbBaseMarketToken(denom)) {
-                    BigDecimal perPrice = BigDecimal.ONE.divide(new BigDecimal(ticker.lastPrice), 8, RoundingMode.DOWN);
-                    return perPrice.multiply(WDp.perUserCurrencyValue(baseData, BNB_MAIN.INSTANCE.getMainDenom()));
+                    perPrice = BigDecimal.ONE.divide(new BigDecimal(ticker.lastPrice), 8, RoundingMode.DOWN);
                 } else {
-                    BigDecimal perPrice = BigDecimal.ONE.multiply(new BigDecimal(ticker.lastPrice)).setScale(8, RoundingMode.DOWN);
-                    return perPrice.multiply(WDp.perUserCurrencyValue(baseData, BNB_MAIN.INSTANCE.getMainDenom()));
+                    perPrice = BigDecimal.ONE.multiply(new BigDecimal(ticker.lastPrice)).setScale(8, RoundingMode.DOWN);
                 }
+                return perPrice.multiply(WDp.perUserCurrencyValue(baseData, currency, BNB_MAIN.INSTANCE.getMainDenom()));
             }
         }
         return result;
     }
 
-    public static SpannableString dpBnbTokenUserCurrencyPrice(BaseData baseData, String denom) {
-        final String formatted = baseData.getCurrencySymbol() + " " + WDp.getDecimalFormat(3).format(getBnbTokenUserCurrencyPrice(baseData, denom));
+    public static SpannableString dpBnbTokenUserCurrencyPrice(BaseData baseData, Currency currency, String denom) {
+        final String formatted = currency.getSymbol() + " " + WDp.getDecimalFormat(3).format(getBnbTokenUserCurrencyPrice(baseData, currency, denom));
         return WDp.getDpString(formatted, 3);
     }
 

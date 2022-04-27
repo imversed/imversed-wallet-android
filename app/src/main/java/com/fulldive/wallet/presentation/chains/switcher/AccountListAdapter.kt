@@ -67,9 +67,8 @@ class AccountListAdapter(
                     if (item.selected) R.drawable.box_round_selected_white else R.drawable.box_round_darkgray
                 )
                 val chainColor = ContextCompat.getColor(context, chain.chainColor)
-
                 addressTextView.text = account.address
-                amountTextView.text = account.getLastTotal(chain)
+                amountTextView.text = account.getLastTotal(chain, item.lastTotal)
                 keyImageView.setColorFilter(
                     ContextCompat.getColor(context, R.color.colorGray0),
                     PorterDuff.Mode.SRC_IN

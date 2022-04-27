@@ -59,10 +59,6 @@ class BinanceRepository @Inject constructor(
         return binanceRemoteSource.requestAccount(address)
     }
 
-    fun setAccount(account: Account): Completable {
-        return binanceLocalSource.setAccount(account)
-    }
-
     fun setAccountBalances(accountId: Long, balances: List<Balance>): Completable {
         return binanceLocalSource.setAccountBalances(accountId, balances)
     }

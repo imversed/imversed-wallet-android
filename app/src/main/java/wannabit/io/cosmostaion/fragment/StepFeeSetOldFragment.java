@@ -17,6 +17,8 @@ import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
 import com.addisonelliott.segmentedbutton.SegmentedButtonGroup;
+import com.fulldive.wallet.interactors.settings.SettingsInteractor;
+import com.fulldive.wallet.models.BaseChain;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -50,6 +52,7 @@ public class StepFeeSetOldFragment extends BaseFragment implements View.OnClickL
     private BigDecimal mSelectedGasRate = BigDecimal.ZERO;
     private BigDecimal mEstimateGasAmount = BigDecimal.ZERO;
     private BigDecimal mFee = BigDecimal.ZERO;
+    private SettingsInteractor settingsInteractor;
 
     public static StepFeeSetOldFragment newInstance(Bundle bundle) {
         StepFeeSetOldFragment fragment = new StepFeeSetOldFragment();
@@ -60,6 +63,7 @@ public class StepFeeSetOldFragment extends BaseFragment implements View.OnClickL
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        settingsInteractor = getAppInjector().getInstance(SettingsInteractor.class);
     }
 
     @Override
@@ -83,28 +87,27 @@ public class StepFeeSetOldFragment extends BaseFragment implements View.OnClickL
         mBtnBefore = rootView.findViewById(R.id.btn_before);
         mBtnNext = rootView.findViewById(R.id.nextButton);
 
-        WDp.DpMainDenom(getSActivity().getBaseChain(), mFeeDenom);
-        mFeeTotalCard.setCardBackgroundColor(WDp.getChainBgColor(getContext(), getSActivity().getBaseChain()));
-        mButtonGroup.setSelectedBackground(WDp.getChainColor(getContext(), getSActivity().getBaseChain()));
-        mButtonGroup.setRipple(WDp.getChainColor(getContext(), getSActivity().getBaseChain()));
+        final BaseChain baseChain = getSActivity().getBaseChain();
 
-        if (getSActivity().getBaseChain().equals(OKEX_MAIN.INSTANCE)) {
+        WDp.DpMainDenom(baseChain, mFeeDenom);
+        mFeeTotalCard.setCardBackgroundColor(WDp.getChainBgColor(getContext(), baseChain));
+        mButtonGroup.setSelectedBackground(WDp.getChainColor(getContext(), baseChain));
+        mButtonGroup.setRipple(WDp.getChainColor(getContext(), baseChain));
+
+        if (baseChain.equals(OKEX_MAIN.INSTANCE)) {
             int myValidatorCnt = 0;
             if (getBaseDao().mOkStaking != null && getBaseDao().mOkStaking.validator_address != null) {
                 myValidatorCnt = getBaseDao().mOkStaking.validator_address.size();
             }
-            mEstimateGasAmount = WUtil.getEstimateGasAmount(getContext(), getSActivity().getBaseChain(), getSActivity().mTxType, myValidatorCnt);
+            mEstimateGasAmount = WUtil.getEstimateGasAmount(getContext(), baseChain, getSActivity().mTxType, myValidatorCnt);
         } else {
-            mEstimateGasAmount = WUtil.getEstimateGasAmount(getContext(), getSActivity().getBaseChain(), getSActivity().mTxType, (getSActivity().mValidators.size()));
+            mEstimateGasAmount = WUtil.getEstimateGasAmount(getContext(), baseChain, getSActivity().mTxType, (getSActivity().mValidators.size()));
         }
         onUpdateView();
 
-        mButtonGroup.setOnPositionChangedListener(new SegmentedButtonGroup.OnPositionChangedListener() {
-            @Override
-            public void onPositionChanged(int position) {
-                mSelectedGasPosition = position;
-                onUpdateView();
-            }
+        mButtonGroup.setOnPositionChangedListener(position -> {
+            mSelectedGasPosition = position;
+            onUpdateView();
         });
         mBtnBefore.setOnClickListener(this);
         mBtnNext.setOnClickListener(this);
@@ -119,19 +122,21 @@ public class StepFeeSetOldFragment extends BaseFragment implements View.OnClickL
     }
 
     private void onCalculateFees() {
-        mSelectedGasRate = WUtil.getGasRate(getSActivity().getBaseChain(), mSelectedGasPosition);
-        if (getSActivity().getBaseChain().equals(BNB_MAIN.INSTANCE)) {
+        final BaseChain baseChain = getSActivity().getBaseChain();
+        mSelectedGasRate = WUtil.getGasRate(baseChain, mSelectedGasPosition);
+        if (baseChain.equals(BNB_MAIN.INSTANCE)) {
             mFee = new BigDecimal(FEE_BNB_SEND);
-        } else if (getSActivity().getBaseChain().equals(OKEX_MAIN.INSTANCE)) {
+        } else if (baseChain.equals(OKEX_MAIN.INSTANCE)) {
             mFee = mSelectedGasRate.multiply(mEstimateGasAmount).setScale(18, RoundingMode.UP);
         }
     }
 
     private void onUpdateView() {
         onCalculateFees();
+        final BaseChain baseChain = getSActivity().getBaseChain();
 
-        mFeeAmount.setText(WDp.getDpAmount2(mFee, getSActivity().getBaseChain().getDivideDecimal(), getSActivity().getBaseChain().getDisplayDecimal()));
-        mFeeValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getSActivity().getBaseChain().getMainDenom(), mFee, getSActivity().getBaseChain().getDivideDecimal()));
+        mFeeAmount.setText(WDp.getDpAmount2(mFee, baseChain.getDivideDecimal(), baseChain.getDisplayDecimal()));
+        mFeeValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), settingsInteractor.getCurrency(), baseChain.getMainDenom(), mFee, baseChain.getDivideDecimal()));
 
         mGasRate.setText(WDp.getDpGasRate(mSelectedGasRate.toPlainString()));
         mGasAmount.setText(mEstimateGasAmount.toPlainString());

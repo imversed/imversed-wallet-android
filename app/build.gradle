@@ -4,16 +4,22 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.joom.lightsaber.android'
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.fulldive.extension.fdwallet"
         minSdkVersion 23
-        targetSdkVersion 31
+        targetSdkVersion 32
         versionCode 145
         versionName "1.5.46"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         debug {
@@ -49,7 +55,6 @@ android {
             excludes += ['lib/x86_64/darwin/libscrypt.dylib']
         }
     }
-
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -88,7 +93,8 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.12.3'
     //sqliteChiper
-    implementation 'net.zetetic:android-database-sqlcipher:3.5.9@aar'
+    implementation "net.zetetic:android-database-sqlcipher:4.5.0"
+    implementation "androidx.sqlite:sqlite-ktx:2.2.0"
     //picasso for images
     implementation 'com.squareup.picasso:picasso:2.71828'
     //glide for images
@@ -110,6 +116,17 @@ dependencies {
     implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.20'
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.20"
     implementation "androidx.core:core-ktx:1.7.0"
+
+
+    implementation("androidx.room:room-runtime:2.4.2")
+    annotationProcessor("androidx.room:room-compiler:2.4.2")
+
+    // To use Kotlin annotation processing tool (kapt)
+    kapt("androidx.room:room-compiler:2.4.2")
+    implementation("androidx.room:room-ktx:2.4.2")
+    // optional - RxJava2 support for Room
+    implementation("androidx.room:room-rxjava2:2.4.2")
+
 
     implementation 'com.squareup.moshi:moshi:1.8.0'
     implementation files('libs/httpclient-4.5.3.jar')

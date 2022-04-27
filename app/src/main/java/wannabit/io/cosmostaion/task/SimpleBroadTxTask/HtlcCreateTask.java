@@ -99,9 +99,15 @@ public class HtlcCreateTask extends CommonTask {
                     result.errorCode = ERROR_CODE_BROADCAST;
                     return result;
                 }
-                context.getBaseDao().updateAccount(WUtil.getAccountFromBnbLcd(mSendAccount.id, response.body()));
+                final Account account = WUtil.getAccountFromBnbLcd(mReceiveAccount.id, response.body());
+                accountsInteractor.updateAccount(
+                        mReceiveAccount.id,
+                        account.address,
+                        account.sequenceNumber,
+                        account.accountNumber
+                );
                 context.getBaseDao().updateBalances(mSendAccount.id, WUtil.getBalancesFromBnbLcd(mSendAccount.id, response.body()));
-                mSendAccount = context.getBaseDao().getAccount("" + mSendAccount.id);
+                mSendAccount = accountsInteractor.getAccount(mSendAccount.id).blockingGet();
 
                 if (mSendAccount.fromMnemonic) {
                     String entropy = CryptoHelper.decryptData(context.getString(R.string.key_mnemonic) + mSendAccount.uuid, mSendAccount.resource, mSendAccount.spec);

@@ -85,7 +85,7 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
     public void onChainSelect(BaseChain baseChain) {
         mDisplayChains = getBaseDao().dpSortedChains();
         mSelectedChain = baseChain;
-        mDisplayAccounts = getBaseDao().getAccountsByChain(mSelectedChain);
+        mDisplayAccounts = accountsInteractor.getChainAccounts(mSelectedChain);
         chainRecyclerView.scrollToPosition(mDisplayChains.indexOf(baseChain));
 
         mChainListAdapter.notifyDataSetChanged();
@@ -169,10 +169,10 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
             final AccountHolder holder = (AccountHolder) viewHolder;
             final Account account = mDisplayAccounts.get(position);
-
+            final String lastTotal = accountsInteractor.getLastTotal(account.id);
             WDp.DpMainDenom(account.baseChain, holder.accountDenom);
             holder.accountAddress.setText(account.address);
-            holder.accountAvailable.setText(account.getLastTotal(BaseChain.getChain(account.baseChain)));
+            holder.accountAvailable.setText(account.getLastTotal(BaseChain.getChain(account.baseChain), lastTotal));
             holder.accountKeyState.setColorFilter(ContextCompat.getColor(getBaseContext(), R.color.colorGray0), android.graphics.PorterDuff.Mode.SRC_IN);
             if (account.hasPrivateKey) {
                 holder.accountKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), BaseChain.getChain(account.baseChain)), android.graphics.PorterDuff.Mode.SRC_IN);
@@ -182,7 +182,7 @@ public class AccountListActivity extends BaseActivity implements View.OnClickLis
 
             holder.accountCard.setOnClickListener(v -> {
                 Intent intent = new Intent(AccountListActivity.this, AccountDetailActivity.class);
-                intent.putExtra("id", "" + account.id);
+                intent.putExtra("id", account.id);
                 startActivity(intent);
             });
         }

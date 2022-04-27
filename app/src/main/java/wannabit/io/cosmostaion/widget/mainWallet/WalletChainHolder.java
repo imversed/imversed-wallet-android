@@ -12,6 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
+import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
+import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.main.MainActivity;
 
@@ -71,6 +73,7 @@ public class WalletChainHolder extends BaseHolder {
     }
 
     public void onBindHolder(@NotNull MainActivity mainActivity) {
+        final SettingsInteractor settingsInteractor = mainActivity.getAppInjector().getInstance(SettingsInteractor.class);
         final BaseData baseData = mainActivity.getBaseDao();
         final String denom = mainActivity.getBaseChain().getMainDenom();
         final int decimal = mainActivity.getBaseChain().getDivideDecimal();
@@ -90,7 +93,7 @@ public class WalletChainHolder extends BaseHolder {
         mTvChainDelegated.setText(WDp.getDpAmount2(delegateAmount, decimal, 6));
         mTvChainUnBonding.setText(WDp.getDpAmount2(unbondingAmount, decimal, 6));
         mTvChainRewards.setText(WDp.getDpAmount2(rewardAmount, decimal, 6));
-        mTvChainValue.setText(WDp.dpUserCurrencyValue(baseData, denom, totalAmount, decimal));
+        mTvChainValue.setText(WDp.dpUserCurrencyValue(baseData, settingsInteractor.getCurrency(), denom, totalAmount, decimal));
 
         if (!vestingAmount.equals(BigDecimal.ZERO)) {
             mChainVestingLayer.setVisibility(View.VISIBLE);
@@ -98,7 +101,7 @@ public class WalletChainHolder extends BaseHolder {
             mChainVestingLayer.setVisibility(View.GONE);
         }
 
-        mainActivity.getBaseDao().onUpdateLastTotalAccount(mainActivity.getAccount(), totalAmount.toPlainString());
+        mainActivity.getAppInjector().getInstance(AccountsInteractor.class).updateLastTotal(mainActivity.getAccount().id, totalAmount.toPlainString());
 
         mBtnStake.setOnClickListener(v -> {
             Intent validators = new Intent(mainActivity, ValidatorListActivity.class);

@@ -22,10 +22,6 @@ class OkexRepository @Inject constructor(
         return okexRemoteSource.requestAccount(address)
     }
 
-    fun setAccount(account: Account): Completable {
-        return okexLocalSource.setAccount(account)
-    }
-
     fun updateValidatorsList(): Completable {
         return okexRemoteSource
             .requestValidatorsList()

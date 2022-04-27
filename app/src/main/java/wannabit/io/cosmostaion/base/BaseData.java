@@ -1,6 +1,5 @@
 package wannabit.io.cosmostaion.base;
 
-import static wannabit.io.cosmostaion.base.BaseConstant.FEE_BNB_SEND;
 import static wannabit.io.cosmostaion.base.BaseConstant.IOV_MSG_TYPE_RENEW_ACCOUNT;
 import static wannabit.io.cosmostaion.base.BaseConstant.IOV_MSG_TYPE_RENEW_DOMAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.PRE_USER_EXPANDED_CHAINS;
@@ -14,15 +13,11 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
-import androidx.annotation.Nullable;
-
-import com.fulldive.wallet.interactors.accounts.DuplicateAccountException;
 import com.fulldive.wallet.models.BaseChain;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.google.protobuf2.Any;
 
 import net.sqlcipher.Cursor;
-import net.sqlcipher.SQLException;
 import net.sqlcipher.database.SQLiteDatabase;
 
 import org.json.JSONArray;
@@ -34,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -52,7 +46,6 @@ import osmosis.gamm.poolmodels.balancer.BalancerPool;
 import tendermint.liquidity.v1beta1.Liquidity;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.crypto.EncResult;
-import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.dao.Assets;
 import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dao.BnbTicker;
@@ -153,14 +146,6 @@ public class BaseData {
             }
         }
         return null;
-    }
-
-    public void setCw20Balance(String contAddress, String amount) {
-        for (Cw20Assets assets : mCw20Assets) {
-            if (assets.contract_address.equalsIgnoreCase(contAddress)) {
-                assets.setAmount(amount);
-            }
-        }
     }
 
     public ArrayList<Cw20Assets> getCw20sGrpc(BaseChain baseChain) {
@@ -445,18 +430,6 @@ public class BaseData {
             }
         }
         return null;
-    }
-
-    public BigDecimal getTokenAmount(ArrayList<Balance> balances, String symbol) {
-        BigDecimal result = BigDecimal.ZERO;
-        if (balances != null) {
-            for (Balance balance : balances) {
-                if (balance.symbol.equalsIgnoreCase(symbol)) {
-                    result = balance.balance;
-                }
-            }
-        }
-        return result;
     }
 
     public BigDecimal okDepositAmount() {
@@ -862,106 +835,11 @@ public class BaseData {
     }
 
     public void setLastUser(long user) {
-        getSharedPreferences().edit().putLong(BaseConstant.PRE_USER_ID, user).commit();
+        getSharedPreferences().edit().putLong(BaseConstant.PRE_USER_ID, user).apply();
     }
 
     public long getLastUserId() {
-        Account account = getAccount(String.valueOf(getSharedPreferences().getLong(BaseConstant.PRE_USER_ID, -1)));
-        BaseChain mBaseChain = BaseChain.getChain(account.baseChain);
-        if (!dpSortedChains().contains(mBaseChain)) {
-            for (BaseChain chain : dpSortedChains()) {
-                if (getAccountsByChain(chain).size() > 0) {
-                    return getAccountsByChain(chain).get(0).id;
-                }
-            }
-        }
         return getSharedPreferences().getLong(BaseConstant.PRE_USER_ID, -1);
-    }
-
-    public int getCurrency() {
-        return getSharedPreferences().getInt(BaseConstant.PRE_CURRENCY, 0);
-    }
-
-    public String getCurrencyString() {
-        if (getCurrency() == 0) {
-            return "USD";
-        } else if (getCurrency() == 1) {
-            return "EUR";
-        } else if (getCurrency() == 2) {
-            return "KRW";
-        } else if (getCurrency() == 3) {
-            return "JPY";
-        } else if (getCurrency() == 4) {
-            return "CNY";
-        } else if (getCurrency() == 5) {
-            return "RUB";
-        } else if (getCurrency() == 6) {
-            return "GBP";
-        } else if (getCurrency() == 7) {
-            return "INR";
-        } else if (getCurrency() == 8) {
-            return "BRL";
-        } else if (getCurrency() == 9) {
-            return "IDR";
-        } else if (getCurrency() == 10) {
-            return "DKK";
-        } else if (getCurrency() == 11) {
-            return "NOK";
-        } else if (getCurrency() == 12) {
-            return "SEK";
-        } else if (getCurrency() == 13) {
-            return "CHF";
-        } else if (getCurrency() == 14) {
-            return "AUD";
-        } else if (getCurrency() == 15) {
-            return "CAD";
-        } else if (getCurrency() == 16) {
-            return "MYR";
-        }
-        return "";
-    }
-
-    public String getCurrencySymbol() {
-        if (getCurrency() == 0) {
-            return "$";
-        } else if (getCurrency() == 1) {
-            return "€";
-        } else if (getCurrency() == 2) {
-            return "₩";
-        } else if (getCurrency() == 3) {
-            return "¥";
-        } else if (getCurrency() == 4) {
-            return "¥";
-        } else if (getCurrency() == 5) {
-            return "₽";
-        } else if (getCurrency() == 6) {
-            return "£";
-        } else if (getCurrency() == 7) {
-            return "₹";
-        } else if (getCurrency() == 8) {
-            return "R$";
-        } else if (getCurrency() == 9) {
-            return "Rp";
-        } else if (getCurrency() == 10) {
-            return "Kr";
-        } else if (getCurrency() == 11) {
-            return "Kr";
-        } else if (getCurrency() == 12) {
-            return "Kr";
-        } else if (getCurrency() == 13) {
-            return "sFr";
-        } else if (getCurrency() == 14) {
-            return "AU$";
-        } else if (getCurrency() == 15) {
-            return "$";
-        } else if (getCurrency() == 16) {
-            return "RM";
-        }
-        return "";
-    }
-
-    public void setCurrency(int currency) {
-        getSharedPreferences().edit().putInt(BaseConstant.PRE_CURRENCY, currency).commit();
     }
 
     public boolean getUsingAppLock() {
@@ -1009,7 +887,19 @@ public class BaseData {
         }
     }
 
-    public void setUserHidenChains(List<BaseChain> hidedChains) {
+    public void setUserHiddenChains(List<String> chains) {
+        if (!chains.isEmpty()) {
+            JSONArray array = new JSONArray();
+            for (String chain : chains) {
+                array.put(chain);
+            }
+            getSharedPreferences().edit().putString(PRE_USER_HIDEN_CHAINS, array.toString()).commit();
+        } else {
+            getSharedPreferences().edit().putString(PRE_USER_HIDEN_CHAINS, null).commit();
+        }
+    }
+
+    public void setUserHiddenBaseChains(List<BaseChain> hidedChains) {
         JSONArray array = new JSONArray();
         for (BaseChain baseChain : hidedChains) {
             array.put(baseChain.getChainName());
@@ -1166,260 +1056,8 @@ public class BaseData {
         return chains;
     }
 
-    public ArrayList<Account> getAccounts() {
-        ArrayList<Account> result = new ArrayList<>();
-        Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_ACCOUNT, new String[]{"id", "uuid", "nickName", "address", "baseChain",
-                "hasPrivateKey", "resource", "spec", "fromMnemonic", "path",
-                "sequenceNumber", "accountNumber", "msize", "importTime", "lastTotal", "customPath"}, null, null, null, null, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                Account account = new Account(
-                        cursor.getLong(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getString(4),
-                        cursor.getInt(5) > 0,
-                        cursor.getString(6),
-                        cursor.getString(7),
-                        cursor.getInt(8) > 0,
-                        cursor.getInt(9),
-                        cursor.getInt(10),
-                        cursor.getInt(11),
-                        cursor.getInt(12),
-                        cursor.getLong(13),
-                        cursor.getString(14),
-                        cursor.getInt(15)
-                );
-                account.setBalances(onSelectBalance(account.id));
-                result.add(account);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-
-        Iterator<Account> iterator = result.iterator();
-        while (iterator.hasNext()) {
-            Account account = iterator.next();
-            if (!BaseChain.Companion.isSupported(account.baseChain)) {
-                iterator.remove();
-            }
-        }
-        return result;
-    }
-
-    public List<Account> getAccountsByChain(BaseChain chain) {
-        ArrayList<Account> result = new ArrayList<>();
-        ArrayList<Account> accounts = getAccounts();
-        for (Account account : accounts) {
-            if (chain.hasChainName(account.baseChain)) {
-                result.add(account);
-            }
-        }
-        return result;
-    }
-
-    public ArrayList<Account> onSelectAllAccountsByChainWithKey(BaseChain chain) {
-        ArrayList<Account> result = new ArrayList<>();
-        ArrayList<Account> AllAccount = getAccounts();
-        for (Account account : AllAccount) {
-            if (BaseChain.getChain(account.baseChain).equals(chain) && account.hasPrivateKey) {
-                result.add(account);
-            }
-        }
-        return result;
-    }
-
-    public ArrayList<Account> onSelectAccountsByHtlcClaim(BaseChain chain) {
-        ArrayList<Account> result = new ArrayList<>();
-        ArrayList<Account> AllAccount = getAccounts();
-        for (Account account : AllAccount) {
-            if (BaseChain.getChain(account.baseChain).equals(chain) && account.hasPrivateKey) {
-                if (chain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
-                    if (getTokenAmount(account.balances, chain.getMainDenom()).compareTo(new BigDecimal(FEE_BNB_SEND)) >= 0) {
-                        result.add(account);
-                    }
-                } else if (chain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
-                    if (getTokenAmount(account.balances, chain.getMainDenom()).compareTo(new BigDecimal("12500")) >= 0) {
-                        result.add(account);
-                    }
-                }
-            }
-        }
-
-        return result;
-    }
-
-    public Account getAccount(String id) {
-        Account result = null;
-        Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_ACCOUNT, new String[]{"id", "uuid", "nickName", "address", "baseChain",
-                "hasPrivateKey", "resource", "spec", "fromMnemonic", "path",
-                "sequenceNumber", "accountNumber", "msize", "importTime", "lastTotal", "customPath"}, "id == ?", new String[]{id}, null, null, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            result = new Account(
-                    cursor.getLong(0),
-                    cursor.getString(1),
-                    cursor.getString(2),
-                    cursor.getString(3),
-                    cursor.getString(4),
-                    cursor.getInt(5) > 0,
-                    cursor.getString(6),
-                    cursor.getString(7),
-                    cursor.getInt(8) > 0,
-                    cursor.getInt(9),
-                    cursor.getInt(10),
-                    cursor.getInt(11),
-                    cursor.getInt(12),
-                    cursor.getLong(13),
-                    cursor.getString(14),
-                    cursor.getInt(15)
-            );
-            result.setBalances(onSelectBalance(result.id));
-        }
-        cursor.close();
-        if (!BaseChain.Companion.isSupported(result.baseChain)) {
-            return getAccounts().get(0);
-        }
-        return result;
-    }
-
-    public List<Account> getAccountsByAddress(String address) {
-        ArrayList<Account> result = new ArrayList<>();
-        Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_ACCOUNT, new String[]{"id", "uuid", "nickName", "address", "baseChain",
-                "hasPrivateKey", "resource", "spec", "fromMnemonic", "path",
-                "sequenceNumber", "accountNumber", "msize", "importTime", "lastTotal", "customPath"}, "address == ?", new String[]{address}, null, null, null);
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                do {
-                    Account account = new Account(
-                            cursor.getLong(0),
-                            cursor.getString(1),
-                            cursor.getString(2),
-                            cursor.getString(3),
-                            cursor.getString(4),
-                            cursor.getInt(5) > 0,
-                            cursor.getString(6),
-                            cursor.getString(7),
-                            cursor.getInt(8) > 0,
-                            cursor.getInt(9),
-                            cursor.getInt(10),
-                            cursor.getInt(11),
-                            cursor.getInt(12),
-                            cursor.getLong(13),
-                            cursor.getString(14),
-                            cursor.getInt(15)
-                    );
-                    account.setBalances(onSelectBalance(account.id));
-                    result.add(account);
-                } while (cursor.moveToNext());
-            }
-            cursor.close();
-        }
-        return result;
-    }
-
-    @Nullable
-    public Account getAccount(String address, String chain) {
-        Account result = null;
-        Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_ACCOUNT, new String[]{"id", "uuid", "nickName", "address", "baseChain",
-                "hasPrivateKey", "resource", "spec", "fromMnemonic", "path",
-                "sequenceNumber", "accountNumber", "msize", "importTime", "lastTotal", "customPath"}, "address == ? AND baseChain == ?", new String[]{address, chain}, null, null, null);
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                result = new Account(
-                        cursor.getLong(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getString(4),
-                        cursor.getInt(5) > 0,
-                        cursor.getString(6),
-                        cursor.getString(7),
-                        cursor.getInt(8) > 0,
-                        cursor.getInt(9),
-                        cursor.getInt(10),
-                        cursor.getInt(11),
-                        cursor.getInt(12),
-                        cursor.getLong(13),
-                        cursor.getString(14),
-                        cursor.getInt(15)
-                );
-            }
-            cursor.close();
-        }
-        return result;
-    }
-
-    public long insertAccount(Account account) throws DuplicateAccountException, SQLException {
-        if (isAccountExists(account.address, account.baseChain)) {
-            throw new DuplicateAccountException();
-        }
-        ContentValues values = new ContentValues();
-        values.put("uuid", account.uuid);
-        values.put("nickName", account.nickName);
-        values.put("address", account.address);
-        values.put("baseChain", account.baseChain);
-        values.put("hasPrivateKey", account.hasPrivateKey);
-        values.put("resource", account.resource);
-        values.put("spec", account.spec);
-        values.put("fromMnemonic", account.fromMnemonic);
-        values.put("path", account.path);
-        values.put("sequenceNumber", account.sequenceNumber);
-        values.put("accountNumber", account.accountNumber);
-        values.put("msize", account.msize);
-        values.put("importTime", account.importTime);
-        values.put("customPath", account.customPath);
-        return getBaseDB().insertOrThrow(BaseConstant.DB_TABLE_ACCOUNT, null, values);
-    }
-
-    public long updateAccount(Account account) {
-        ContentValues values = new ContentValues();
-        if (!TextUtils.isEmpty(account.nickName))
-            values.put("nickName", account.nickName);
-        if (account.sequenceNumber != null)
-            values.put("sequenceNumber", account.sequenceNumber);
-        if (account.accountNumber != null)
-            values.put("accountNumber", account.accountNumber);
-        if (account.baseChain != null)
-            values.put("baseChain", account.baseChain);
-        return getBaseDB().update(BaseConstant.DB_TABLE_ACCOUNT, values, "id = ?", new String[]{"" + account.id});
-    }
-
-    public long onUpdateLastTotalAccount(Account account, String amount) {
-        ContentValues values = new ContentValues();
-        values.put("lastTotal", amount);
-        return getBaseDB().update(BaseConstant.DB_TABLE_ACCOUNT, values, "id = ?", new String[]{"" + account.id});
-    }
-
-    public long overrideAccount(Account account) {
-        ContentValues values = new ContentValues();
-        values.put("hasPrivateKey", account.hasPrivateKey);
-        values.put("resource", account.resource);
-        values.put("spec", account.spec);
-        values.put("fromMnemonic", account.fromMnemonic);
-        values.put("path", account.path);
-        values.put("msize", account.msize);
-        values.put("customPath", account.customPath);
-        return getBaseDB().update(BaseConstant.DB_TABLE_ACCOUNT, values, "id = ?", new String[]{"" + account.id});
-    }
-
-
-    public boolean isAccountExists(String address, String chain) {
-        boolean result = false;
-        Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_ACCOUNT, new String[]{"id"}, "address == ? AND baseChain == ?", new String[]{address, chain}, null, null, null);
-        if (cursor != null) {
-            result = cursor.getCount() > 0;
-            cursor.close();
-        }
-        return result;
-    }
-
-    public boolean onDeleteAccount(String id) {
-        //TODO delete Tx or else data with this account
-        return getBaseDB().delete(BaseConstant.DB_TABLE_ACCOUNT, "id = ?", new String[]{id}) > 0;
-    }
-
-    public ArrayList<Balance> onSelectBalance(long accountId) {
-        ArrayList<Balance> result = new ArrayList<>();
+    public List<Balance> onSelectBalance(long accountId) {
+        List<Balance> result = new ArrayList<>();
         Cursor cursor = getBaseDB().query(BaseConstant.DB_TABLE_BALANCE, new String[]{"accountId", "symbol", "balance", "fetchTime", "frozen", "locked"}, "accountId == ?", new String[]{"" + accountId}, null, null, null);
         if (cursor != null) {
             if (cursor.moveToFirst()) {

@@ -98,7 +98,7 @@ public class WalletEditActivity extends BaseActivity implements View.OnClickList
     }
 
     public void onSaveUserChains() {
-        getBaseDao().setUserHidenChains(mHideChains);
+        getBaseDao().setUserHiddenBaseChains(mHideChains);
         getBaseDao().setUserSortedChains(mDisplayChains);
     }
 
@@ -126,11 +126,11 @@ public class WalletEditActivity extends BaseActivity implements View.OnClickList
             holder.chainName.setText(chain.getChainAlterTitle());
 
             holder.chainRemoveImg.setOnClickListener(v -> {
-                if (getBaseDao().getAccountsByChain(BaseChain.COSMOS_MAIN.INSTANCE).size() <= 0) {
+                if (accountsInteractor.getChainAccounts(BaseChain.COSMOS_MAIN.INSTANCE).size() <= 0) {
                     int dpAccountSum = 0;
                     for (BaseChain baseChain : mDisplayChains) {
                         if (!baseChain.equals(chain)) {
-                            dpAccountSum = dpAccountSum + getBaseDao().getAccountsByChain(baseChain).size();
+                            dpAccountSum = dpAccountSum + accountsInteractor.getChainAccounts(baseChain).size();
                         }
                     }
                     if (dpAccountSum <= 0) {
@@ -158,15 +158,12 @@ public class WalletEditActivity extends BaseActivity implements View.OnClickList
                     mHideListAdapter.notifyDataSetChanged();
                 }
             });
-            holder.chainSort.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View v, MotionEvent event) {
-                    if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
-                        if (mItemTouchHelper != null)
-                            mItemTouchHelper.startDrag(holder);
-                    }
-                    return false;
+            holder.chainSort.setOnTouchListener((v, event) -> {
+                if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
+                    if (mItemTouchHelper != null)
+                        mItemTouchHelper.startDrag(holder);
                 }
+                return false;
             });
         }
 

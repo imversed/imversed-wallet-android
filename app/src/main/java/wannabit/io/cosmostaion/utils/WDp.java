@@ -113,6 +113,7 @@ import androidx.core.content.ContextCompat;
 
 import com.fulldive.wallet.interactors.secret.WalletUtils;
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.Currency;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -1280,12 +1281,12 @@ public class WDp {
         return perUsdValue(baseData, denom).multiply(amount).movePointLeft(divider).setScale(3, RoundingMode.DOWN);
     }
 
-    public static BigDecimal perUserCurrencyValue(BaseData baseData, String denom) {
-        if (baseData.getCurrency() == 0) {
+    public static BigDecimal perUserCurrencyValue(BaseData baseData, Currency currency, String denom) {
+        if (currency == Currency.USD.INSTANCE) {
             return perUsdValue(baseData, denom);
         } else if (baseData.getPrice("usdt") != null) {
             final Price usdtInfo = baseData.getPrice("usdt");
-            final BigDecimal usdtPrice = usdtInfo.currencyPrice(baseData.getCurrencyString().toLowerCase());
+            final BigDecimal usdtPrice = usdtInfo.currencyPrice(currency.getTitle().toLowerCase());
             return perUsdValue(baseData, denom).multiply(usdtPrice).setScale(3, RoundingMode.DOWN);
         }
         return BigDecimal.ZERO.setScale(3, RoundingMode.DOWN);
@@ -1300,19 +1301,19 @@ public class WDp {
         return BigDecimal.ZERO.setScale(8, RoundingMode.DOWN);
     }
 
-    public static SpannableString dpPerUserCurrencyValue(BaseData baseData, String denom) {
-        BigDecimal totalValue = perUserCurrencyValue(baseData, denom);
-        final String formatted = baseData.getCurrencySymbol() + " " + getDecimalFormat(3).format(totalValue);
+    public static SpannableString dpPerUserCurrencyValue(BaseData baseData, Currency currency, String denom) {
+        BigDecimal totalValue = perUserCurrencyValue(baseData, currency, denom);
+        final String formatted = currency.getSymbol() + " " + getDecimalFormat(3).format(totalValue);
         return dpCurrencyValue(formatted, 3);
     }
 
-    public static BigDecimal userCurrencyValue(BaseData baseData, String denom, BigDecimal amount, int divider) {
-        return perUserCurrencyValue(baseData, denom).multiply(amount).movePointLeft(divider).setScale(3, RoundingMode.DOWN);
+    public static BigDecimal userCurrencyValue(BaseData baseData, Currency currency, String denom, BigDecimal amount, int divider) {
+        return perUserCurrencyValue(baseData, currency, denom).multiply(amount).movePointLeft(divider).setScale(3, RoundingMode.DOWN);
     }
 
-    public static SpannableString dpUserCurrencyValue(BaseData baseData, String denom, BigDecimal amount, int divider) {
-        BigDecimal totalValue = userCurrencyValue(baseData, denom, amount, divider);
-        final String formatted = baseData.getCurrencySymbol() + " " + getDecimalFormat(3).format(totalValue);
+    public static SpannableString dpUserCurrencyValue(BaseData baseData, Currency currency, String denom, BigDecimal amount, int divider) {
+        BigDecimal totalValue = userCurrencyValue(baseData, currency, denom, amount, divider);
+        final String formatted = currency.getSymbol() + " " + getDecimalFormat(3).format(totalValue);
         return dpCurrencyValue(formatted, 3);
     }
 
@@ -1320,54 +1321,54 @@ public class WDp {
         return perBtcValue(baseData, denom).multiply(amount).movePointLeft(divider).setScale(8, RoundingMode.DOWN);
     }
 
-    public static BigDecimal allAssetToUserCurrency(BaseChain baseChain, BaseData baseData) {
+    public static BigDecimal allAssetToUserCurrency(BaseChain baseChain, Currency currency, BaseData baseData) {
         BigDecimal totalValue = BigDecimal.ZERO;
         if (baseChain.isGRPC()) {
             for (Coin coin : baseData.mGrpcBalance) {
                 if (coin.denom.equals(baseChain.getMainDenom())) {
                     BigDecimal amount = baseData.getAllMainAsset(baseChain.getMainDenom());
-                    BigDecimal assetValue = userCurrencyValue(baseData, coin.denom, amount, baseChain.getDivideDecimal());
+                    BigDecimal assetValue = userCurrencyValue(baseData, currency, coin.denom, amount, baseChain.getDivideDecimal());
                     totalValue = totalValue.add(assetValue);
                 } else if (baseChain.equals(BaseChain.COSMOS_MAIN.INSTANCE) && coin.denom.startsWith("pool")) {
                     BigDecimal amount = baseData.getAvailable(coin.denom);
-                    BigDecimal assetValue = userCurrencyValue(baseData, coin.denom, amount, 6);
+                    BigDecimal assetValue = userCurrencyValue(baseData, currency, coin.denom, amount, 6);
                     totalValue = totalValue.add(assetValue);
                 } else if (baseChain.equals(BaseChain.OSMOSIS_MAIN.INSTANCE) && coin.denom.equals(TOKEN_ION)) {
                     BigDecimal amount = baseData.getAvailable(coin.denom);
-                    BigDecimal assetValue = userCurrencyValue(baseData, coin.denom, amount, 6);
+                    BigDecimal assetValue = userCurrencyValue(baseData, currency, coin.denom, amount, 6);
                     totalValue = totalValue.add(assetValue);
                 } else if (baseChain.equals(BaseChain.OSMOSIS_MAIN.INSTANCE) && coin.denom.contains("gamm/pool")) {
                     BigDecimal amount = baseData.getAvailable(coin.denom);
-                    BigDecimal assetValue = userCurrencyValue(baseData, coin.denom, amount, 18);
+                    BigDecimal assetValue = userCurrencyValue(baseData, currency, coin.denom, amount, 18);
                     totalValue = totalValue.add(assetValue);
                 } else if (baseChain.equals(BaseChain.SIF_MAIN.INSTANCE) && coin.denom.startsWith("c")) {
                     BigDecimal amount = baseData.getAvailable(coin.denom);
                     int decimal = WUtil.getSifCoinDecimal(baseData, coin.denom);
-                    BigDecimal assetValue = userCurrencyValue(baseData, coin.denom.substring(1), amount, decimal);
+                    BigDecimal assetValue = userCurrencyValue(baseData, currency, coin.denom.substring(1), amount, decimal);
                     totalValue = totalValue.add(assetValue);
                 } else if (baseChain.equals(BaseChain.EMONEY_MAIN.INSTANCE) || coin.denom.startsWith("e")) {
                     BigDecimal available = baseData.getAvailable(coin.denom);
-                    totalValue = totalValue.add(userCurrencyValue(baseData, coin.denom, available, 6));
+                    totalValue = totalValue.add(userCurrencyValue(baseData, currency, coin.denom, available, 6));
                 } else if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE) && !coin.isIbc()) {
                     BigDecimal amount = baseData.getAvailable(coin.denom);
                     amount = amount.add(baseData.getVesting(coin.denom));
                     String kavaDenom = WDp.getKavaBaseDenom(coin.denom);
                     int kavaDecimal = WUtil.getKavaCoinDecimal(baseData, coin.denom);
-                    BigDecimal assetValue = userCurrencyValue(baseData, kavaDenom, amount, kavaDecimal);
+                    BigDecimal assetValue = userCurrencyValue(baseData, currency, kavaDenom, amount, kavaDecimal);
                     totalValue = totalValue.add(assetValue);
                 } else if (baseChain.equals(BaseChain.GRABRIDGE_MAIN.INSTANCE) && coin.denom.startsWith("gravity")) {
                     Assets assets = baseData.getAsset(coin.denom);
                     BigDecimal available = baseData.getAvailable(assets.denom);
-                    totalValue = totalValue.add(userCurrencyValue(baseData, assets.origin_symbol, available, assets.decimal));
+                    totalValue = totalValue.add(userCurrencyValue(baseData, currency, assets.origin_symbol, available, assets.decimal));
                 } else if (baseChain.equals(BaseChain.INJ_MAIN.INSTANCE) && coin.denom.startsWith("peggy")) {
                     Assets assets = baseData.getAsset(coin.denom);
                     BigDecimal available = baseData.getAvailable(assets.denom);
-                    totalValue = totalValue.add(userCurrencyValue(baseData, assets.origin_symbol, available, assets.decimal));
+                    totalValue = totalValue.add(userCurrencyValue(baseData, currency, assets.origin_symbol, available, assets.decimal));
                 } else if (coin.isIbc()) {
                     BigDecimal amount = baseData.getAvailable(coin.denom);
                     IbcToken ibcToken = baseData.getIbcToken(coin.denom);
                     if (ibcToken != null && ibcToken.auth) {
-                        BigDecimal assetValue = userCurrencyValue(baseData, ibcToken.base_denom, amount, ibcToken.decimal);
+                        BigDecimal assetValue = userCurrencyValue(baseData, currency, ibcToken.base_denom, amount, ibcToken.decimal);
                         totalValue = totalValue.add(assetValue);
                     }
                 }
@@ -1376,19 +1377,19 @@ public class WDp {
             if (baseData.getCw20sGrpc(baseChain).size() > 0) {
                 for (Cw20Assets assets : baseData.getCw20sGrpc(baseChain)) {
                     BigDecimal amount = assets.getAmount();
-                    totalValue = totalValue.add(userCurrencyValue(baseData, assets.denom, amount, assets.decimal));
+                    totalValue = totalValue.add(userCurrencyValue(baseData, currency, assets.denom, amount, assets.decimal));
                 }
             }
         } else if (baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
             for (Balance balance : baseData.mBalances) {
                 if (balance.symbol.equals(baseChain.getMainDenom())) {
                     BigDecimal amount = baseData.getAllBnbTokenAmount(balance.symbol);
-                    BigDecimal assetValue = userCurrencyValue(baseData, baseChain.getMainDenom(), amount, baseChain.getDivideDecimal());
+                    BigDecimal assetValue = userCurrencyValue(baseData, currency, baseChain.getMainDenom(), amount, baseChain.getDivideDecimal());
                     totalValue = totalValue.add(assetValue);
                 } else {
                     BigDecimal amount = baseData.getAllBnbTokenAmount(balance.symbol);
                     BigDecimal convertAmount = WUtil.getBnbConvertAmount(baseData, balance.symbol, amount);
-                    BigDecimal assetValue = userCurrencyValue(baseData, baseChain.getMainDenom(), convertAmount, baseChain.getDivideDecimal());
+                    BigDecimal assetValue = userCurrencyValue(baseData, currency, baseChain.getMainDenom(), convertAmount, baseChain.getDivideDecimal());
                     totalValue = totalValue.add(assetValue);
                 }
             }
@@ -1397,11 +1398,11 @@ public class WDp {
             for (Balance balance : baseData.mBalances) {
                 if (balance.symbol.equals(baseChain.getMainDenom())) {
                     BigDecimal amount = baseData.getAllExToken(balance.symbol);
-                    BigDecimal assetValue = userCurrencyValue(baseData, baseChain.getMainDenom(), amount, baseChain.getDivideDecimal());
+                    BigDecimal assetValue = userCurrencyValue(baseData, currency, baseChain.getMainDenom(), amount, baseChain.getDivideDecimal());
                     totalValue = totalValue.add(assetValue);
                 } else {
                     BigDecimal convertAmount = convertTokenToOkt(baseData, balance.symbol);
-                    BigDecimal assetValue = userCurrencyValue(baseData, baseChain.getMainDenom(), convertAmount, baseChain.getDivideDecimal());
+                    BigDecimal assetValue = userCurrencyValue(baseData, currency, baseChain.getMainDenom(), convertAmount, baseChain.getDivideDecimal());
                     totalValue = totalValue.add(assetValue);
                 }
             }
@@ -1409,7 +1410,7 @@ public class WDp {
             for (Balance balance : baseData.mBalances) {
                 if (balance.symbol.equals(baseChain.getMainDenom())) {
                     BigDecimal amount = baseData.getAllMainAssetOld(balance.symbol);
-                    BigDecimal assetValue = userCurrencyValue(baseData, balance.symbol, amount, baseChain.getDivideDecimal());
+                    BigDecimal assetValue = userCurrencyValue(baseData, currency, balance.symbol, amount, baseChain.getDivideDecimal());
                     totalValue = totalValue.add(assetValue);
                 }
             }
@@ -1494,9 +1495,9 @@ public class WDp {
         return totalValue;
     }
 
-    public static SpannableString dpAllAssetValueUserCurrency(BaseChain baseChain, BaseData baseData) {
-        BigDecimal totalValue = allAssetToUserCurrency(baseChain, baseData);
-        final String formatted = baseData.getCurrencySymbol() + " " + getDecimalFormat(3).format(totalValue);
+    public static SpannableString dpAllAssetValueUserCurrency(BaseChain baseChain, Currency currency, BaseData baseData) {
+        BigDecimal totalValue = allAssetToUserCurrency(baseChain, currency, baseData);
+        final String formatted = currency.getSymbol() + " " + getDecimalFormat(3).format(totalValue);
         return dpCurrencyValue(formatted, 3);
     }
 

@@ -2,6 +2,7 @@ package wannabit.io.cosmostaion.task;
 
 import android.os.AsyncTask;
 
+import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.interactors.secret.SecretInteractor;
 import com.joom.lightsaber.Injector;
 
@@ -13,12 +14,14 @@ public class CommonTask extends AsyncTask<String, Void, TaskResult> {
     protected TaskListener mListener;
     protected TaskResult result;
     protected SecretInteractor secretInteractor;
+    protected AccountsInteractor accountsInteractor;
 
     public CommonTask(BaseApplication app, TaskListener listener) {
         this.context = app;
         this.mListener = listener;
         this.result = new TaskResult();
         secretInteractor = getInjector().getInstance(SecretInteractor.class);
+        accountsInteractor = getInjector().getInstance(AccountsInteractor.class);
     }
 
     @Override

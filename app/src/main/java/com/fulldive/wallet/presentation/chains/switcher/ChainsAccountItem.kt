@@ -7,6 +7,7 @@ data class ChainsAccountItem(
     val chain: BaseChain,
     val count: Int = 0,
     val account: Account? = null,
+    val lastTotal: String = "",
     val selected: Boolean = false,
     val expanded: Boolean = false
 )

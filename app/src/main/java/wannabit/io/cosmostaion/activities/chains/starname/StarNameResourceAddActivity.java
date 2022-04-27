@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.fulldive.wallet.extensions.ActivityExtensionsKt;
+import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.models.BaseChain;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -42,10 +43,14 @@ public class StarNameResourceAddActivity extends BaseActivity implements View.On
     private BaseChain mTochain;
     private Types.Resource mStarNameResource;
 
+    protected AccountsInteractor accountsInteractor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_starname_resource_add);
+
+        accountsInteractor = getAppInjector().getInstance(AccountsInteractor.class);
 
         mCancel = findViewById(R.id.cancelButton);
         mConfirm = findViewById(R.id.confirmButton);
@@ -122,7 +127,7 @@ public class StarNameResourceAddActivity extends BaseActivity implements View.On
                     Toast.makeText(getBaseContext(), R.string.error_unsupported_chain, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (getBaseDao().getAccountsByChain(mTochain).size() <= 0) {
+                if (accountsInteractor.getChainAccounts(mTochain).size() <= 0) {
                     Toast.makeText(this, getString(R.string.error_no_wallet_this_chain), Toast.LENGTH_SHORT).show();
                     return;
                 }

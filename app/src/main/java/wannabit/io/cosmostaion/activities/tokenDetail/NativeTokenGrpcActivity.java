@@ -29,6 +29,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.squareup.picasso.Picasso;
 
@@ -141,6 +142,7 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
     }
 
     private void onUpdateView() {
+        final Currency currency = settingsInteractor.getCurrency();
         mBtnAddressPopup.setCardBackgroundColor(WDp.getChainBgColor(NativeTokenGrpcActivity.this, getBaseChain()));
         mBtnIbcSend.setVisibility(View.VISIBLE);
         if (getBaseChain().equals(BaseChain.OSMOSIS_MAIN.INSTANCE)) {
@@ -177,7 +179,7 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
             }
         }
 
-        mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), mNativeGrpcDenom));
+        mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, mNativeGrpcDenom));
         mItemUpDownPrice.setText(WDp.dpValueChange(getBaseDao(), mNativeGrpcDenom));
         final BigDecimal lastUpDown = WDp.valueChange(getBaseDao(), mNativeGrpcDenom);
         if (lastUpDown.compareTo(BigDecimal.ZERO) > 0) {
@@ -191,7 +193,7 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
         }
 
         mAddress.setText(getAccount().address);
-        mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), mNativeGrpcDenom, mTotalAmount, mDivideDecimal));
+        mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mNativeGrpcDenom, mTotalAmount, mDivideDecimal));
         mKeyState.setColorFilter(ContextCompat.getColor(getBaseContext(), R.color.colorGray0), android.graphics.PorterDuff.Mode.SRC_IN);
         if (getAccount().hasPrivateKey) {
             mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), getBaseChain()), android.graphics.PorterDuff.Mode.SRC_IN);

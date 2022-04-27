@@ -2,6 +2,7 @@ package com.fulldive.wallet.interactors.accounts
 
 import com.fulldive.wallet.di.modules.DefaultRepositoryModule
 import com.fulldive.wallet.models.BaseChain
+import com.fulldive.wallet.models.WalletAccount
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -21,15 +22,15 @@ class AccountsRepository @Inject constructor(
         return accountsLocalStorage.getAccount(accountId)
     }
 
-    fun getAccount(chain: BaseChain, address: String): Single<Account> {
+    fun getWalletAccount(accountId: Long): Single<WalletAccount> {
+        return accountsLocalStorage.getWalletAccount(accountId)
+    }
+
+    fun getAccount(chain: String, address: String): Single<Account> {
         return accountsLocalStorage.getAccount(chain, address)
     }
 
-    fun getSelectedAccount(): Single<Account> {
-        return accountsLocalStorage.getSelectedAccount()
-    }
-
-    fun getCurrentAccount(): Account {
+    fun getCurrentAccount(): Single<Account> {
         return accountsLocalStorage.getCurrentAccount()
     }
 
@@ -37,8 +38,8 @@ class AccountsRepository @Inject constructor(
         return accountsLocalStorage.getAccountsByAddress(address)
     }
 
-    fun getAccountsByChain(chain: BaseChain): List<Account> {
-        return accountsLocalStorage.getAccountsByChain(chain)
+    fun getChainAccounts(chain: String): Single<List<Account>> {
+        return accountsLocalStorage.getChainAccounts(chain)
     }
 
     fun getSortedChains(): Single<List<BaseChain>> {
@@ -49,7 +50,7 @@ class AccountsRepository @Inject constructor(
         return accountsLocalStorage.selectAccount(id)
     }
 
-    fun addAccount(account: Account): Single<Long> {
+    fun addAccount(account: WalletAccount): Single<Long> {
         return accountsLocalStorage.addAccount(account)
     }
 
@@ -57,15 +58,19 @@ class AccountsRepository @Inject constructor(
         return accountsLocalStorage.updateAccount(account)
     }
 
+    fun updateAccount(account: WalletAccount): Completable {
+        return accountsLocalStorage.updateAccount(account)
+    }
+
     fun deleteAccount(accountId: Long): Completable {
         return accountsLocalStorage.deleteAccount(accountId)
     }
 
-    fun setHiddenChains(items: List<BaseChain>): Completable {
-        return accountsLocalStorage.setHiddenChains(items)
+    fun getLastTotal(accountId: Long): String {
+        return accountsLocalStorage.getLastTotal(accountId)
     }
 
-    fun getHiddenChains(): Single<List<BaseChain>> {
-        return accountsLocalStorage.getHiddenChains()
+    fun updateLastTotal(accountId: Long, amount: String) {
+        accountsLocalStorage.updateLastTotal(accountId, amount)
     }
 }

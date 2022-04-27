@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.squareup.picasso.Picasso;
 
@@ -134,6 +135,8 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
 
     private void onUpdateView() {
         mBtnAddressPopup.setCardBackgroundColor(WDp.getChainBgColor(NativeTokenDetailActivity.this, getBaseChain()));
+        final Currency currency = settingsInteractor.getCurrency();
+
         if (getBaseChain().equals(OKEX_MAIN.INSTANCE)) {
             final OkToken okToken = getBaseDao().okToken(mDenom);
             Picasso.get().load(OKEX_COIN_IMG_URL + okToken.original_symbol + ".png").placeholder(R.drawable.token_ic).error(R.drawable.token_ic).fit().into(mToolbarSymbolImg);
@@ -141,18 +144,18 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
             mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
 
             BigDecimal convertedOktAmount = WDp.convertTokenToOkt(getBaseDao(), mDenom);
-            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), TOKEN_OK, convertedOktAmount, 0));
+            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, TOKEN_OK, convertedOktAmount, 0));
 
             if (okToken.original_symbol.equalsIgnoreCase("okb")) {
-                mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), "okb"));
+                mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, "okb"));
                 mItemUpDownPrice.setText(WDp.dpValueChange(getBaseDao(), "okb"));
                 final BigDecimal lastUpDown = WDp.valueChange(getBaseDao(), "okb");
                 if (lastUpDown.compareTo(BigDecimal.ZERO) > 0) {
                     mItemUpDownImg.setVisibility(View.VISIBLE);
-                    mItemUpDownImg.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_up));
+                    mItemUpDownImg.setImageResource(R.drawable.ic_price_up);
                 } else if (lastUpDown.compareTo(BigDecimal.ZERO) < 0) {
                     mItemUpDownImg.setVisibility(View.VISIBLE);
-                    mItemUpDownImg.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_down));
+                    mItemUpDownImg.setImageResource(R.drawable.ic_price_down);
                 } else {
                     mItemUpDownImg.setVisibility(View.INVISIBLE);
                 }
@@ -170,9 +173,9 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
             mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
 
             BigDecimal convertedBnbAmount = WUtil.getBnbConvertAmount(getBaseDao(), mDenom, amount);
-            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), BNB_MAIN.INSTANCE.getMainDenom(), convertedBnbAmount, 0));
+            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, BNB_MAIN.INSTANCE.getMainDenom(), convertedBnbAmount, 0));
 
-            mItemPerPrice.setText(WUtil.dpBnbTokenUserCurrencyPrice(getBaseDao(), mDenom));
+            mItemPerPrice.setText(WUtil.dpBnbTokenUserCurrencyPrice(getBaseDao(), currency, mDenom));
             mItemUpDownPrice.setText("");
             mItemUpDownImg.setVisibility(View.INVISIBLE);
         }

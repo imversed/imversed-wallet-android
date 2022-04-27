@@ -10,15 +10,16 @@ import com.fulldive.wallet.models.BaseChain;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.utils.WDp;
 
 public class Account {
-    public Long id;
+    public Long id = 0L;
     public String uuid;
-    public String nickName;
+    public String nickName = "";
     public String address;
     public String baseChain;
 
@@ -33,10 +34,9 @@ public class Account {
     public int msize;
     public Long importTime;
 
-    public String lastTotal;
     public Integer customPath;
 
-    public ArrayList<Balance> balances;
+    public List<Balance> balances;
 
     public static Account getNewInstance() {
         Account result = new Account();
@@ -85,13 +85,17 @@ public class Account {
         this.hasPrivateKey = false;
         this.fromMnemonic = false;
         this.importTime = importTime;
+        this.resource = "";
+        this.spec = "";
+        this.path = 0;
+        this.customPath = 0;
     }
 
     public Account(
             Long id, String uuid, String nickName, String address,
             String baseChain, boolean hasPrivateKey, String resource, String spec,
             boolean fromMnemonic, int path, int sequenceNumber,
-            int accountNumber, int msize, long importTime, String lastTotal, int customPath
+            int accountNumber, int msize, long importTime, int customPath
     ) {
         this.id = id;
         this.uuid = uuid;
@@ -107,7 +111,6 @@ public class Account {
         this.accountNumber = accountNumber;
         this.msize = msize;
         this.importTime = importTime;
-        this.lastTotal = lastTotal;
         this.customPath = customPath;
     }
 
@@ -121,11 +124,11 @@ public class Account {
         return result;
     }
 
-    public ArrayList<Balance> getBalances() {
+    public List<Balance> getBalances() {
         return balances;
     }
 
-    public void setBalances(ArrayList<Balance> balances) {
+    public void setBalances(List<Balance> balances) {
         this.balances = balances;
     }
 
@@ -185,7 +188,7 @@ public class Account {
         return result;
     }
 
-    public SpannableString getLastTotal(BaseChain chain) {
+    public SpannableString getLastTotal(BaseChain chain, String lastTotal) {
         SpannableString result = SpannableString.valueOf("--");
         try {
             if (!TextUtils.isEmpty(lastTotal)) {

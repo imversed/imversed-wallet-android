@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 
 import java.math.BigDecimal;
@@ -116,6 +117,7 @@ public class POOLTokenDetailActivity extends BaseActivity implements View.OnClic
     }
 
     private void onUpdateView() {
+        final Currency currency = settingsInteractor.getCurrency();
         if (getBaseChain().equals(OSMOSIS_MAIN.INSTANCE)) {
             WUtil.DpOsmosisTokenImg(getBaseDao(), mToolbarSymbolImg, mPoolDenom);
             String[] split = mPoolDenom.split("/");
@@ -125,7 +127,7 @@ public class POOLTokenDetailActivity extends BaseActivity implements View.OnClic
             mDivideDecimal = 18;
             mDisplayDecimal = 18;
             mTotalAmount = getBaseDao().getAvailable(mPoolDenom);
-            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), mPoolDenom, mTotalAmount, mDivideDecimal));
+            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mPoolDenom, mTotalAmount, mDivideDecimal));
 
             mBtnIbcSend.setVisibility(View.VISIBLE);
 
@@ -140,7 +142,7 @@ public class POOLTokenDetailActivity extends BaseActivity implements View.OnClic
             mDivideDecimal = 6;
             mDisplayDecimal = 6;
             mTotalAmount = getBaseDao().getAvailable(mPoolDenom);
-            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), mPoolDenom, mTotalAmount, mDivideDecimal));
+            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mPoolDenom, mTotalAmount, mDivideDecimal));
 
             mBtnIbcSend.setVisibility(View.VISIBLE);
 
@@ -152,20 +154,20 @@ public class POOLTokenDetailActivity extends BaseActivity implements View.OnClic
             mDivideDecimal = 18;
             mDisplayDecimal = 18;
             mTotalAmount = getBaseDao().getAvailable(mPoolDenom);
-            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), mPoolDenom, mTotalAmount, mDivideDecimal));
+            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mPoolDenom, mTotalAmount, mDivideDecimal));
 
             mBtnIbcSend.setVisibility(View.VISIBLE);
         }
 
-        mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), mPoolDenom));
+        mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, mPoolDenom));
         mItemUpDownPrice.setText(WDp.dpValueChange(getBaseDao(), mPoolDenom));
         final BigDecimal lastUpDown = WDp.valueChange(getBaseDao(), mPoolDenom);
         if (lastUpDown.compareTo(BigDecimal.ZERO) > 0) {
             mItemUpDownImg.setVisibility(View.VISIBLE);
-            mItemUpDownImg.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_up));
+            mItemUpDownImg.setImageResource(R.drawable.ic_price_up);
         } else if (lastUpDown.compareTo(BigDecimal.ZERO) < 0) {
             mItemUpDownImg.setVisibility(View.VISIBLE);
-            mItemUpDownImg.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_down));
+            mItemUpDownImg.setImageResource(R.drawable.ic_price_down);
         } else {
             mItemUpDownImg.setVisibility(View.INVISIBLE);
         }

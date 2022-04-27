@@ -66,9 +66,15 @@ public class SimpleBnbSendTask extends CommonTask {
                     result.errorCode = BaseConstant.ERROR_CODE_BROADCAST;
                     return result;
                 }
-                context.getBaseDao().updateAccount(WUtil.getAccountFromBnbLcd(mAccount.id, response.body()));
+                final Account account = WUtil.getAccountFromBnbLcd(mAccount.id, response.body());
+                accountsInteractor.updateAccount(
+                        mAccount.id,
+                        account.address,
+                        account.sequenceNumber,
+                        account.accountNumber
+                );
                 context.getBaseDao().updateBalances(mAccount.id, WUtil.getBalancesFromBnbLcd(mAccount.id, response.body()));
-                mAccount = context.getBaseDao().getAccount("" + mAccount.id);
+                mAccount = accountsInteractor.getAccount(mAccount.id).blockingGet();
 
                 if (mAccount.fromMnemonic) {
                     String entropy = CryptoHelper.decryptData(context.getString(R.string.key_mnemonic) + mAccount.uuid, mAccount.resource, mAccount.spec);

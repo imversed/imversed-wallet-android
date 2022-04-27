@@ -229,7 +229,7 @@ public class HtlcSendActivity extends BaseActivity {
     private void showResultActivity() {
         Intent intent = new Intent(HtlcSendActivity.this, HtlcResultActivity.class);
         intent.putExtra("toChain", mRecipientChain.getChainName());
-        intent.putExtra("recipientId", "" + mRecipientAccount.id);
+        intent.putExtra("recipientId", mRecipientAccount.id);
         intent.putParcelableArrayListExtra("amount", mToSendCoins);
         intent.putExtra("sendFee", mSendFee);
         intent.putExtra("claimFee", mClaimFee);

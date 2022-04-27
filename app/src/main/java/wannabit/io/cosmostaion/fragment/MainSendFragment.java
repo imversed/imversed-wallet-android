@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.fulldive.wallet.presentation.main.MainActivity;
@@ -54,6 +55,7 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
 
     private Account mAccount;
     private BaseChain mBaseChain;
+    private SettingsInteractor settingsInteractor;
 
     public static MainSendFragment newInstance(Bundle bundle) {
         MainSendFragment fragment = new MainSendFragment();
@@ -64,6 +66,7 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        settingsInteractor = getAppInjector().getInstance(SettingsInteractor.class);
         setHasOptionsMenu(true);
     }
 
@@ -153,7 +156,7 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
             itemKeyStatus.setColorFilter(ContextCompat.getColor(getMainActivity(), R.color.colorGray0), android.graphics.PorterDuff.Mode.SRC_IN);
         }
         mWalletAddress.setText(mAccount.address);
-        mTotalValue.setText(WDp.dpAllAssetValueUserCurrency(mBaseChain, getBaseDao()));
+        mTotalValue.setText(WDp.dpAllAssetValueUserCurrency(mBaseChain, settingsInteractor.getCurrency(), getBaseDao()));
         mMainWalletAdapter.notifyDataSetChanged();
     }
 

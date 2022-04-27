@@ -8,7 +8,6 @@ public class BaseConstant {
 
     public final static String DB_NAME = "FDWallet";
     public final static int DB_VERSION = 1;
-    public final static String DB_TABLE_ACCOUNT = "accnt";
     public final static String DB_TABLE_BALANCE = "balan";
     public final static String DB_TABLE_BONDING = "bondi";
     public final static String DB_TABLE_UNBONDING = "unbond";
@@ -16,7 +15,6 @@ public class BaseConstant {
     public final static String PRE_USER_ID = "PRE_USER_ID";
     public final static String PRE_VALIDATOR_SORTING = "PRE_VALIDATOR_SORTING";
     public final static String PRE_MY_VALIDATOR_SORTING = "PRE_MY_VALIDATOR_SORTING";
-    public final static String PRE_CURRENCY = "PRE_CURRENCY";
     public final static String PRE_USING_APP_LOCK = "PRE_USING_APP_LOCK";
     public final static String PRE_USING_FINGERPRINT = "PRE_USING_FINGERPRINT";
     public final static String PRE_APP_LOCK_TIME = "PRE_APP_LOCK_TIME";

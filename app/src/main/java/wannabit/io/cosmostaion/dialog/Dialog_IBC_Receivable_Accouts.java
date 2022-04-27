@@ -20,6 +20,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.models.BaseChain;
 
 import java.math.BigDecimal;
@@ -34,6 +35,7 @@ import wannabit.io.cosmostaion.utils.WDp;
 public class Dialog_IBC_Receivable_Accouts extends DialogFragment {
 
     private List<Account> mAccounts = new ArrayList<>();
+    private AccountsInteractor accountsInteractor;
 
     public static Dialog_IBC_Receivable_Accouts newInstance(Bundle bundle) {
         Dialog_IBC_Receivable_Accouts frag = new Dialog_IBC_Receivable_Accouts();
@@ -49,9 +51,10 @@ public class Dialog_IBC_Receivable_Accouts extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        accountsInteractor = getSActivity().getAppInjector().getInstance(AccountsInteractor.class);
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_htlc_receivable_accouts, null);
         RecyclerView recyclerView = view.findViewById(R.id.recycler);
-        mAccounts = getSActivity().getBaseDao().getAccountsByChain(BaseChain.getChain(getArguments().getString("chainName")));
+        mAccounts = accountsInteractor.getChainAccounts(BaseChain.getChain(getArguments().getString("chainName")));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         recyclerView.setHasFixedSize(true);
         AccountListAdapter accountListAdapter = new AccountListAdapter();
@@ -84,7 +87,8 @@ public class Dialog_IBC_Receivable_Accouts extends DialogFragment {
                 holder.accountKeyState.setColorFilter(WDp.getChainColor(context, baseChain), android.graphics.PorterDuff.Mode.SRC_IN);
             }
             WDp.DpMainDenom(baseChain, holder.accountDenom);
-            holder.accountAvailable.setText(WDp.getDpAmount2(new BigDecimal(account.lastTotal), dpDecimal, 6));
+
+            holder.accountAvailable.setText(WDp.getDpAmount2(new BigDecimal(accountsInteractor.getLastTotal(account.id)), dpDecimal, 6));
             holder.rootLayer.setOnClickListener(v -> {
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra("position", position);

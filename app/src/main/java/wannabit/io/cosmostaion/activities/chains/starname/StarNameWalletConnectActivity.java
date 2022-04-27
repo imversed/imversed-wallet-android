@@ -141,7 +141,7 @@ public class StarNameWalletConnectActivity extends BaseActivity implements View.
         mWcLayer.setVisibility(View.VISIBLE);
         mLoadingLayer.setVisibility(View.GONE);
 
-        ArrayList<Account> allAccounts = getBaseDao().getAccounts();
+        List<Account> allAccounts = accountsInteractor.getAccounts().blockingGet();
         ExportStarName toExport = getExportResource(allAccounts);
         String jsonData = new Gson().toJson(toExport);
 //        WLog.w("allAccounts "+ allAccounts.size());
@@ -243,12 +243,12 @@ public class StarNameWalletConnectActivity extends BaseActivity implements View.
         }
     }
 
-    private static ExportStarName getExportResource(ArrayList<Account> accounts) {
+    private static ExportStarName getExportResource(List<Account> accounts) {
         ExportStarName result = new ExportStarName();
         result.type = "starname";
         for (Account account : accounts) {
             BaseChain chain = BaseChain.getChain(account.baseChain);
-            if (chain != null && chain.getTicker() != null) {
+            if (chain != null && !chain.getTicker().isEmpty()) {
                 ExportStarName.ExportResource resource = new ExportStarName.ExportResource();
                 resource.ticker = chain.getTicker();
                 resource.address = account.address;

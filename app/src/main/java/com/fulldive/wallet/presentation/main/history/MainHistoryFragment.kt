@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.fulldive.wallet.interactors.settings.SettingsInteractor
 import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment
 import com.fulldive.wallet.presentation.base.BaseMvpFragment
@@ -39,6 +40,8 @@ class MainHistoryFragment : BaseMvpFragment<FragmentMainHistoryBinding>(),
     private val mainActivity: MainActivity?
         get() = getBaseActivity() as? MainActivity
 
+    private lateinit var settingsInteractor: SettingsInteractor
+
     private val presenter by moxyPresenter {
         getInjector().getInstance<MainHistoryPresenter>()
     }
@@ -47,6 +50,7 @@ class MainHistoryFragment : BaseMvpFragment<FragmentMainHistoryBinding>(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        settingsInteractor = getInjector().getInstance()
         setHasOptionsMenu(true)
     }
 
@@ -90,7 +94,11 @@ class MainHistoryFragment : BaseMvpFragment<FragmentMainHistoryBinding>(),
             imgAccount.setColorFilter(chainColor, PorterDuff.Mode.SRC_IN)
 
             walletAddress.text = account.address
-            totalValue.text = WDp.dpAllAssetValueUserCurrency(chain, mainActivity!!.baseDao)
+            totalValue.text = WDp.dpAllAssetValueUserCurrency(
+                chain,
+                settingsInteractor.getCurrency(),
+                mainActivity!!.baseDao
+            )
 
         }
     }

@@ -71,7 +71,13 @@ public class SimpleSendTask extends CommonTask {
                 result.errorCode = ERROR_CODE_BROADCAST;
                 return result;
             }
-            context.getBaseDao().updateAccount(WUtil.getAccountFromOkLcd(mAccount.id, accountResponse.body()));
+            final Account account = WUtil.getAccountFromOkLcd(mAccount.id, accountResponse.body());
+            accountsInteractor.updateAccount(
+                    mAccount.id,
+                    account.address,
+                    account.sequenceNumber,
+                    account.accountNumber
+            );
 
             ECKey ecKey;
             if (mAccount.fromMnemonic) {

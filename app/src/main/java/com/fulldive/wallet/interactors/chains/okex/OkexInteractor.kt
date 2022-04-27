@@ -1,6 +1,7 @@
 package com.fulldive.wallet.interactors.chains.okex
 
 import com.fulldive.wallet.di.modules.DefaultInteractorsModule
+import com.fulldive.wallet.interactors.accounts.AccountsInteractor
 import com.fulldive.wallet.interactors.chains.StationInteractor
 import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.rx.AppSchedulers
@@ -16,7 +17,8 @@ import javax.inject.Inject
 @ProvidedBy(DefaultInteractorsModule::class)
 class OkexInteractor @Inject constructor(
     private val okexRepository: OkexRepository,
-    private val stationInteractor: StationInteractor
+    private val stationInteractor: StationInteractor,
+    private val accountsInteractor: AccountsInteractor
 ) {
     fun update(account: Account, chain: BaseChain): Completable {
         return Completable
@@ -71,17 +73,18 @@ class OkexInteractor @Inject constructor(
     fun updateAccount(account: Account): Completable {
         return okexRepository
             .requestAccount(account.address)
-            .map { accountInfo ->
-                Account().apply {
-                    id = account.id
-                    if (accountInfo.type == BaseConstant.COSMOS_AUTH_TYPE_OKEX_ACCOUNT) {
-                        address = accountInfo.value.eth_address
-                        sequenceNumber = accountInfo.value.sequence.toInt()
+            .flatMapCompletable { accountInfo ->
+                if (accountInfo.type == BaseConstant.COSMOS_AUTH_TYPE_OKEX_ACCOUNT) {
+                    accountsInteractor.updateAccount(
+                        account.id,
+                        address = accountInfo.value.eth_address,
+                        sequenceNumber = accountInfo.value.sequence.toInt(),
                         accountNumber = accountInfo.value.account_number.toInt()
-                    }
+                    )
+                } else {
+                    Completable.complete()
                 }
             }
-            .flatMapCompletable(okexRepository::setAccount)
     }
 
     fun getBalances(address: String): Single<List<Balance>> {

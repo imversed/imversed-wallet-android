@@ -69,6 +69,8 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityOptionsCompat;
 
 import com.addisonelliott.segmentedbutton.SegmentedButtonGroup;
+import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
+import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
 import com.google.gson.Gson;
@@ -163,6 +165,8 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
     private BigDecimal mSelectedGasRate = BigDecimal.ZERO;
     private BigDecimal mEstimateGasAmount = BigDecimal.ZERO;
     private BigDecimal mFee = BigDecimal.ZERO;
+    private AccountsInteractor accountsInteractor;
+    private SettingsInteractor settingsInteractor;
 
     private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(), result -> {
@@ -181,11 +185,14 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        accountsInteractor = getAppInjector().getInstance(AccountsInteractor.class);
+        settingsInteractor = getAppInjector().getInstance(SettingsInteractor.class);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_tx_step_fee_grpc, container, false);
+
         mFeeTotalCard = rootView.findViewById(R.id.card_fee_total);
         mFeeDenom = rootView.findViewById(R.id.fee_denom);
         mFeeAmount = rootView.findViewById(R.id.fee_amount);
@@ -240,7 +247,7 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
             mRateControlCard.setVisibility(View.VISIBLE);
         }
         mFeeAmount.setText(WDp.getDpAmount2(mFee, getSActivity().getBaseChain().getDivideDecimal(), getSActivity().getBaseChain().getDivideDecimal()));
-        mFeeValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getSActivity().getBaseChain().getMainDenom(), mFee, getSActivity().getBaseChain().getDivideDecimal()));
+        mFeeValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), settingsInteractor.getCurrency(), getSActivity().getBaseChain().getMainDenom(), mFee, getSActivity().getBaseChain().getDivideDecimal()));
 
         mGasRate.setText(WDp.getDpGasRate(mSelectedGasRate.toPlainString()));
         mGasAmount.setText(mEstimateGasAmount.toPlainString());
@@ -292,8 +299,8 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
     }
 
     private boolean onCheckValidate() {
+        final String mainDenom = getSActivity().getBaseChain().getMainDenom();
         if (getSActivity().mTxType == CONST_PW_TX_SIMPLE_SEND) {
-            final String mainDenom = getSActivity().getBaseChain().getMainDenom();
             final BigDecimal mainDenomAvailable = getBaseDao().getAvailable(mainDenom);
             if (getSActivity().mDenom.equals(mainDenom)) {
                 BigDecimal toSend = new BigDecimal(getSActivity().mAmounts.get(0).amount);
@@ -310,7 +317,7 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
             }
 
         } else if (getSActivity().mTxType == CONST_PW_TX_SIMPLE_DELEGATE) {
-            BigDecimal delegatable = getBaseDao().getDelegatable(getSActivity().getBaseChain().getMainDenom());
+            BigDecimal delegatable = getBaseDao().getDelegatable(mainDenom);
             BigDecimal todelegate = new BigDecimal(getSActivity().mAmount.amount);
             if ((todelegate.add(mFee)).compareTo(delegatable) > 0) {
                 Toast.makeText(getContext(), getString(R.string.error_not_enough_fee), Toast.LENGTH_SHORT).show();
@@ -318,14 +325,14 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
             }
 
         } else if (getSActivity().mTxType == CONST_PW_TX_SIMPLE_REWARD) {
-            BigDecimal available = getBaseDao().getAvailable(getSActivity().getBaseChain().getMainDenom());
+            BigDecimal available = getBaseDao().getAvailable(mainDenom);
             if (mFee.compareTo(available) > 0) {
                 Toast.makeText(getContext(), getString(R.string.error_not_enough_fee), Toast.LENGTH_SHORT).show();
                 return false;
             }
             BigDecimal rewardSum = BigDecimal.ZERO;
             for (String opAddress : getSActivity().mValAddresses) {
-                rewardSum = rewardSum.add(getSActivity().getBaseDao().getReward(getSActivity().getBaseChain().getMainDenom(), opAddress));
+                rewardSum = rewardSum.add(getSActivity().getBaseDao().getReward(mainDenom, opAddress));
             }
 
             if (mFee.compareTo(rewardSum) > 0) {
@@ -334,7 +341,7 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
             }
 
         } else if (getSActivity().mTxType == CONST_PW_TX_REINVEST) {
-            BigDecimal available = getBaseDao().getAvailable(getSActivity().getBaseChain().getMainDenom());
+            BigDecimal available = getBaseDao().getAvailable(mainDenom);
             if (mFee.compareTo(available) > 0) {
                 Toast.makeText(getContext(), getString(R.string.error_not_enough_fee), Toast.LENGTH_SHORT).show();
                 return false;
@@ -562,7 +569,7 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
 
                 break;
             case CONST_PW_TX_LINK_ACCOUNT:
-                Account toAccount = getBaseDao().getAccount(getSActivity().mDesmosToLinkAccountId.toString());
+                Account toAccount = accountsInteractor.getAccount(getSActivity().mDesmosToLinkAccountId).blockingGet();
                 ECKey ecKey;
                 if (toAccount.fromMnemonic) {
                     String entropy = CryptoHelper.decryptData(getSActivity().getString(R.string.key_mnemonic) + toAccount.uuid, toAccount.resource, toAccount.spec);

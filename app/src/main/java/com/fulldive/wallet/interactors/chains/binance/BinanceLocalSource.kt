@@ -35,12 +35,6 @@ class BinanceLocalSource @Inject constructor(
         }
     }
 
-    fun setAccount(account: Account): Completable {
-        return safeCompletable {
-            baseData.updateAccount(account)
-        }
-    }
-
     fun setAccountBalances(accountId: Long, balances: List<Balance>): Completable {
         return safeCompletable {
             baseData.updateBalances(accountId, balances)

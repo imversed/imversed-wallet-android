@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
+import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.fulldive.wallet.presentation.main.MainActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.gun0912.tedpermission.PermissionListener;
@@ -32,6 +34,7 @@ public class WalletBinanceHolder extends BaseHolder {
 
     public WalletBinanceHolder(@NonNull View itemView) {
         super(itemView);
+
         mTvBnbTotal = itemView.findViewById(R.id.bnb_amount);
         mTvBnbValue = itemView.findViewById(R.id.bnb_value);
         mTvBnbBalance = itemView.findViewById(R.id.bnb_available);
@@ -42,6 +45,7 @@ public class WalletBinanceHolder extends BaseHolder {
     }
 
     public void onBindHolder(@NotNull MainActivity mainActivity) {
+        final SettingsInteractor settingsInteractor = mainActivity.getAppInjector().getInstance(SettingsInteractor.class);
         final BaseData baseData = mainActivity.getBaseDao();
         final String denom = mainActivity.getBaseChain().getMainDenom();
         final BigDecimal availableAmount = baseData.availableAmount(denom);
@@ -53,9 +57,9 @@ public class WalletBinanceHolder extends BaseHolder {
         mTvBnbBalance.setText(WDp.getDpAmount2(availableAmount, 0, 6));
         mTvBnbLocked.setText(WDp.getDpAmount2(lockedAmount, 0, 6));
         mTvBnbFrozen.setText(WDp.getDpAmount2(frozenAmount, 0, 6));
-        mTvBnbValue.setText(WDp.dpUserCurrencyValue(baseData, denom, totalAmount, 0));
+        mTvBnbValue.setText(WDp.dpUserCurrencyValue(baseData, settingsInteractor.getCurrency(), denom, totalAmount, 0));
 
-        mainActivity.getBaseDao().onUpdateLastTotalAccount(mainActivity.getAccount(), totalAmount.toPlainString());
+        mainActivity.getAppInjector().getInstance(AccountsInteractor.class).updateLastTotal(mainActivity.getAccount().id, totalAmount.toPlainString());
 
         mBtnWalletConnect.setOnClickListener(v -> {
             if (!mainActivity.getAccount().hasPrivateKey) {

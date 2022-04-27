@@ -1,6 +1,7 @@
 package com.fulldive.wallet.interactors.chains
 
 import com.fulldive.wallet.di.modules.DefaultInteractorsModule
+import com.fulldive.wallet.extensions.singleCallable
 import com.fulldive.wallet.models.BaseChain
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
@@ -41,5 +42,23 @@ class ChainsInteractor @Inject constructor(
 
     fun setExpandedChains(items: List<String>): Completable {
         return chainsRepository.setExpandedChains(items)
+    }
+
+    fun showChain(chain: String): Completable {
+        return chainsRepository
+            .getHiddenChains()
+            .flatMapCompletable { items ->
+                val index = items.indexOfFirst { it == chain }
+                if (index >= 0) {
+                    singleCallable {
+                        items.toMutableList().apply {
+                            removeAt(index)
+                        }
+                    }
+                        .flatMapCompletable(chainsRepository::setHiddenChains)
+                } else {
+                    Completable.complete()
+                }
+            }
     }
 }

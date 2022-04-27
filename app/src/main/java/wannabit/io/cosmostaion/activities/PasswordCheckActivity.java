@@ -718,7 +718,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
 
                 break;
             case CONST_PW_TX_LINK_ACCOUNT:
-                Account toAccount = getBaseDao().getAccount(mDesmosToLinkAccountId.toString());
+                Account toAccount = accountsInteractor.getAccount(mDesmosToLinkAccountId).blockingGet();
                 ECKey ecKey;
                 if (toAccount.fromMnemonic) {
                     String entropy = CryptoHelper.decryptData(getString(R.string.key_mnemonic) + toAccount.uuid, toAccount.resource, toAccount.spec);
@@ -842,7 +842,6 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
                 .checkPassword(userInput)
                 .andThen(accountsInteractor.getAccount(mIdToCheck))
                 .flatMap(account -> {
-                            WLog.w("fftf, fetchEntropy: " + account.fromMnemonic + ", " + account.uuid + ", " + account.resource + ", " + account.spec);
                             if (account.fromMnemonic) {
                                 return secretInteractor.entropyToMnemonic(account.uuid, account.resource, account.spec);
                             } else {

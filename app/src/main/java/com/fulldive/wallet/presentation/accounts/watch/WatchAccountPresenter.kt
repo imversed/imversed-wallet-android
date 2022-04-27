@@ -91,7 +91,7 @@ class WatchAccountPresenter @Inject constructor(
     private fun createAccount(chain: BaseChain, address: String) {
         viewState.showWaitDialog()
         accountsInteractor
-            .createWatchAccount(
+            .createAccount(
                 chain,
                 address
             )

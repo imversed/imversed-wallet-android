@@ -24,6 +24,7 @@ import com.fulldive.wallet.interactors.chains.StationInteractor;
 import com.fulldive.wallet.interactors.chains.binance.BinanceInteractor;
 import com.fulldive.wallet.interactors.chains.grpc.GrpcInteractor;
 import com.fulldive.wallet.interactors.chains.okex.OkexInteractor;
+import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.accounts.restore.MnemonicRestoreActivity;
 import com.fulldive.wallet.presentation.main.MainActivity;
@@ -70,6 +71,7 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
 
     // tmp
     protected AccountsInteractor accountsInteractor;
+    protected SettingsInteractor settingsInteractor;
     protected BinanceInteractor binanceInteractor;
     protected OkexInteractor okexInteractor;
     protected GrpcInteractor grpcInteractor;
@@ -90,6 +92,7 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         accountsInteractor = getAppInjector().getInstance(AccountsInteractor.class);
+        settingsInteractor = getAppInjector().getInstance(SettingsInteractor.class);
         binanceInteractor = getAppInjector().getInstance(BinanceInteractor.class);
         okexInteractor = getAppInjector().getInstance(OkexInteractor.class);
         grpcInteractor = getAppInjector().getInstance(GrpcInteractor.class);
@@ -123,7 +126,7 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
     }
 
     public Account getAccount() {
-        return accountsInteractor.getCurrentAccount();
+        return accountsInteractor.getCurrentAccount().blockingGet();
     }
 
     public BaseChain getBaseChain() {

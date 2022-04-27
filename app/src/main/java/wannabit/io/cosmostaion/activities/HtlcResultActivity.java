@@ -97,7 +97,7 @@ public class HtlcResultActivity extends BaseActivity implements View.OnClickList
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         mTargetCoins = getIntent().getParcelableArrayListExtra("amount");
         mRecipientChain = BaseChain.getChain(getIntent().getStringExtra("toChain"));
-        mRecipientAccount = getBaseDao().getAccount(getIntent().getStringExtra("recipientId"));
+        mRecipientAccount = accountsInteractor.getAccount(getIntent().getLongExtra("recipientId", -1L)).blockingGet();
         mSendFee = getIntent().getParcelableExtra("sendFee");
         mClaimFee = getIntent().getParcelableExtra("claimFee");
 

@@ -1,9 +1,9 @@
 package com.fulldive.wallet.interactors.chains.binance
 
 import com.fulldive.wallet.di.modules.DefaultInteractorsModule
-import com.fulldive.wallet.extensions.combine
 import com.fulldive.wallet.extensions.concat
 import com.fulldive.wallet.extensions.or
+import com.fulldive.wallet.interactors.accounts.AccountsInteractor
 import com.fulldive.wallet.interactors.chains.StationInteractor
 import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.rx.AppSchedulers
@@ -20,7 +20,8 @@ import javax.inject.Inject
 @ProvidedBy(DefaultInteractorsModule::class)
 class BinanceInteractor @Inject constructor(
     private val binanceRepository: BinanceRepository,
-    private val stationInteractor: StationInteractor
+    private val stationInteractor: StationInteractor,
+    private val accountsInteractor: AccountsInteractor
 ) {
     fun update(account: Account, chain: BaseChain): Completable {
         return Completable
@@ -74,33 +75,31 @@ class BinanceInteractor @Inject constructor(
     fun updateAccount(account: Account): Completable {
         return binanceRepository
             .requestAccount(account.address)
-            .map { accountInfo ->
-                combine(
-                    Account().apply {
-                        id = account.id
-                        address = accountInfo.address
-                        sequenceNumber = accountInfo.sequence.toInt()
-                        accountNumber = accountInfo.account_number.toInt()
-                    },
-                    accountInfo
-                        .balances
-                        ?.map { coin ->
-                            Balance().apply {
-                                accountId = account.id
-                                symbol = coin.symbol
-                                balance = BigDecimal(coin.free)
-                                locked = BigDecimal(coin.locked)
-                                frozen = BigDecimal(coin.frozen)
-                                fetchTime = System.currentTimeMillis()
+            .flatMapCompletable { accountInfo ->
+                accountsInteractor
+                    .updateAccount(
+                        account.id,
+                        accountInfo.address,
+                        accountInfo.sequence.toInt(),
+                        accountInfo.account_number.toInt()
+                    )
+                    .andThen {
+                        val balances = accountInfo
+                            .balances
+                            ?.map { coin ->
+                                Balance().apply {
+                                    accountId = account.id
+                                    symbol = coin.symbol
+                                    balance = BigDecimal(coin.free)
+                                    locked = BigDecimal(coin.locked)
+                                    frozen = BigDecimal(coin.frozen)
+                                    fetchTime = System.currentTimeMillis()
+                                }
                             }
-                        }
-                        .or(emptyList())
-                )
-            }
-            .flatMapCompletable { (account, balances) ->
-                binanceRepository
-                    .setAccount(account)
-                    .andThen(binanceRepository.setAccountBalances(account.id, balances))
+                            .or(emptyList())
+
+                        binanceRepository.setAccountBalances(account.id, balances)
+                    }
             }
             .doOnError { error ->
                 WLog.e(error.message)

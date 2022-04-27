@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.squareup.picasso.Picasso;
 
@@ -127,7 +128,8 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
         mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
         mTotalAmount = getBaseDao().getAvailable(mBridgeDenom);
 
-        mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), assets.origin_symbol));
+        final Currency currency = settingsInteractor.getCurrency();
+        mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, assets.origin_symbol));
         mItemUpDownPrice.setText(WDp.dpValueChange(getBaseDao(), assets.origin_symbol));
         final BigDecimal lastUpDown = WDp.valueChange(getBaseDao(), assets.origin_symbol);
         if (lastUpDown.compareTo(BigDecimal.ZERO) > 0) {
@@ -145,7 +147,7 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
         if (getAccount().hasPrivateKey) {
             mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), getBaseChain()), android.graphics.PorterDuff.Mode.SRC_IN);
         }
-        mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), assets.origin_symbol, mTotalAmount, assets.decimal));
+        mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, assets.origin_symbol, mTotalAmount, assets.decimal));
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

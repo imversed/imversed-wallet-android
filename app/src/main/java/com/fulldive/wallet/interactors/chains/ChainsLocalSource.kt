@@ -19,12 +19,6 @@ class ChainsLocalSource @Inject constructor(
         return BaseChain.chains.toSingle()
     }
 
-    fun getHiddenChains(): Single<List<String>> {
-        return safeSingle {
-            baseData.userHiddenChains
-        }
-    }
-
     fun getSortedChains(): Single<List<String>> {
         return safeSingle {
             baseData.userSortedChains
@@ -40,6 +34,18 @@ class ChainsLocalSource @Inject constructor(
     fun setExpandedChains(items: List<String>): Completable {
         return safeCompletable {
             baseData.expandedChains = items
+        }
+    }
+
+    fun getHiddenChains(): Single<List<String>> {
+        return safeSingle {
+            baseData.userHiddenChains
+        }
+    }
+
+    fun setHiddenChains(items: List<String>): Completable {
+        return safeCompletable {
+            baseData.userHiddenChains = items
         }
     }
 }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
+import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.fulldive.wallet.presentation.main.MainActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -47,10 +48,11 @@ public class WalletPriceHolder extends BaseHolder {
     }
 
     public void onBindHolder(@NotNull MainActivity mainActivity) {
+        final SettingsInteractor settingsInteractor = mainActivity.getAppInjector().getInstance(SettingsInteractor.class);
         final BaseData data = mainActivity.getBaseDao();
         final String denom = mainActivity.getBaseChain().getMainDenom();
 
-        itemPerPrice.setText(WDp.dpPerUserCurrencyValue(data, denom));
+        itemPerPrice.setText(WDp.dpPerUserCurrencyValue(data, settingsInteractor.getCurrency(), denom));
         itemUpDownPrice.setText(WDp.dpValueChange(data, denom));
         final BigDecimal lastUpDown = WDp.valueChange(data, denom);
         if (lastUpDown.compareTo(BigDecimal.ZERO) > 0) {

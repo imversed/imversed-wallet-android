@@ -56,10 +56,15 @@ public class SimpleHtlcRefundTask extends CommonTask {
                     result.errorCode = BaseConstant.ERROR_CODE_BROADCAST;
                     return result;
                 }
-                context.getBaseDao().updateAccount(WUtil.getAccountFromKavaLcd(mAccount.id, response.body()));
+                final Account account = WUtil.getAccountFromKavaLcd(mAccount.id, response.body());
+                accountsInteractor.updateAccount(
+                        mAccount.id,
+                        account.address,
+                        account.sequenceNumber,
+                        account.accountNumber
+                );
                 context.getBaseDao().updateBalances(mAccount.id, WUtil.getBalancesFromKavaLcd(mAccount.id, response.body()));
-                mAccount = context.getBaseDao().getAccount("" + mAccount.id);
-
+                mAccount = accountsInteractor.getAccount(mAccount.id).blockingGet();
             }
 
             ECKey ecKey;

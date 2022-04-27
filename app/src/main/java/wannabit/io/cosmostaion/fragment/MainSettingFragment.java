@@ -16,8 +16,11 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.fulldive.wallet.interactors.settings.SettingsInteractor;
+import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.presentation.chains.choicenet.ChoiceChainDialogFragment;
 import com.fulldive.wallet.presentation.main.MainActivity;
+import com.fulldive.wallet.presentation.main.currency.CurrencyDialogFragment;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.gun0912.tedpermission.PermissionListener;
@@ -32,12 +35,10 @@ import wannabit.io.cosmostaion.activities.AppLockSetActivity;
 import wannabit.io.cosmostaion.activities.chains.starname.StarNameWalletConnectActivity;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
-import wannabit.io.cosmostaion.dialog.Dialog_Currency_Set;
 
 public class MainSettingFragment extends BaseFragment implements View.OnClickListener, IRefreshTabListener {
 
     public final static int SELECT_CURRENCY = 9034;
-    public final static int SELECT_MARKET = 9035;
     public final static int SELECT_STARNAME_WALLET_CONNECT = 9036;
 
     private FrameLayout mBtnAddWallet;
@@ -50,6 +51,7 @@ public class MainSettingFragment extends BaseFragment implements View.OnClickLis
     private FrameLayout mBtnTerm;
     private FrameLayout mBtnGithub;
     private FrameLayout mBtnVersion;
+    private SettingsInteractor settingsInteractor;
 
     private TextView mTvAppLock, mTvCurrency, mTvBasePrice, mTvVersion;
 
@@ -62,6 +64,7 @@ public class MainSettingFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        settingsInteractor = getAppInjector().getInstance(SettingsInteractor.class);
         setHasOptionsMenu(true);
     }
 
@@ -131,7 +134,7 @@ public class MainSettingFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onRefreshTab() {
         if (!isAdded()) return;
-        mTvCurrency.setText(getBaseDao().getCurrencyString());
+        mTvCurrency.setText(settingsInteractor.getCurrency().getTitle());
         mTvBasePrice.setText(getString(R.string.str_coingecko));
         if (getBaseDao().getUsingAppLock()) {
             mTvAppLock.setText(R.string.str_app_applock_enabled);
@@ -154,7 +157,7 @@ public class MainSettingFragment extends BaseFragment implements View.OnClickLis
             startActivity(new Intent(getBaseActivity(), AppLockSetActivity.class));
 
         } else if (v.equals(mBtnCurrency)) {
-            Dialog_Currency_Set currency_dialog = Dialog_Currency_Set.newInstance(null);
+            CurrencyDialogFragment currency_dialog = CurrencyDialogFragment.newInstance("");
             currency_dialog.setTargetFragment(this, SELECT_CURRENCY);
             showDialog(currency_dialog);
 
@@ -187,11 +190,11 @@ public class MainSettingFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SELECT_CURRENCY && resultCode == Activity.RESULT_OK) {
-            getBaseDao().setCurrency(data.getIntExtra("currency", 0));
-            mTvCurrency.setText(getBaseDao().getCurrencyString());
-
-        } else if (requestCode == SELECT_MARKET && resultCode == Activity.RESULT_OK) {
-
+            Currency currency = Currency.Companion.getCurrency(data.getIntExtra("currency", -1));
+            if (currency == null) {
+                currency = Currency.Companion.getDefault();
+            }
+            mTvCurrency.setText(currency.getTitle());
         } else if (requestCode == SELECT_STARNAME_WALLET_CONNECT && resultCode == Activity.RESULT_OK) {
             new TedPermission(getContext()).setPermissionListener(new PermissionListener() {
                 @Override

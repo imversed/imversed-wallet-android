@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
+import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.fulldive.wallet.presentation.main.MainActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -54,6 +56,7 @@ public class WalletOkexHolder extends BaseHolder {
     }
 
     public void onBindHolder(@NotNull MainActivity mainActivity) {
+        final SettingsInteractor settingsInteractor = mainActivity.getAppInjector().getInstance(SettingsInteractor.class);
         final BaseData baseData = mainActivity.getBaseDao();
         final String denom = mainActivity.getBaseChain().getMainDenom();
         final BigDecimal availableAmount = baseData.availableAmount(denom);
@@ -62,44 +65,40 @@ public class WalletOkexHolder extends BaseHolder {
         final BigDecimal withdrawAmount = baseData.okWithdrawAmount();
         final BigDecimal totalAmount = availableAmount.add(lockedAmount).add(depositAmount).add(withdrawAmount);
 
-
         mOkTotalAmount.setText(WDp.getDpAmount2(totalAmount, 0, 6));
         mOkAvailable.setText(WDp.getDpAmount2(availableAmount, 0, 6));
         mOkLocked.setText(WDp.getDpAmount2(lockedAmount, 0, 6));
         mOkDeposit.setText(WDp.getDpAmount2(depositAmount, 0, 6));
         mOkWithdrawing.setText(WDp.getDpAmount2(withdrawAmount, 0, 6));
-        mOkTotalValue.setText(WDp.dpUserCurrencyValue(baseData, denom, totalAmount, 0));
+        mOkTotalValue.setText(WDp.dpUserCurrencyValue(baseData, settingsInteractor.getCurrency(), denom, totalAmount, 0));
 
-        mainActivity.getBaseDao().onUpdateLastTotalAccount(mainActivity.getAccount(), totalAmount.toPlainString());
+        mainActivity.getAppInjector().getInstance(AccountsInteractor.class).updateLastTotal(mainActivity.getAccount().id, totalAmount.toPlainString());
 
-        mBtnOkDeposit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mainActivity.getBaseDao().mTopValidators == null && mainActivity.getBaseDao().mTopValidators.size() == 0)
-                    return;
-                if (!mainActivity.getAccount().hasPrivateKey) {
-                    Dialog_WatchMode add = Dialog_WatchMode.newInstance();
-                    mainActivity.showDialog(add);
-                    return;
-                }
-                int myValidatorCnt = 0;
-                if (mainActivity.getBaseDao().mOkStaking != null && mainActivity.getBaseDao().mOkStaking.validator_address != null) {
-                    myValidatorCnt = mainActivity.getBaseDao().mOkStaking.validator_address.size();
-                }
-                BigDecimal estimateGasAmount = (new BigDecimal(OK_GAS_AMOUNT_STAKE_MUX).multiply(new BigDecimal("" + myValidatorCnt))).add(new BigDecimal(BaseConstant.OK_GAS_AMOUNT_STAKE));
-                BigDecimal feeAmount = estimateGasAmount.multiply(new BigDecimal(OK_GAS_RATE_AVERAGE));
-                if (availableAmount.compareTo(feeAmount) <= 0) {
-                    Toast.makeText(mainActivity, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (availableAmount.compareTo(new BigDecimal("0.01")) < 0) {
-                    Toast.makeText(mainActivity, R.string.error_not_enough_to_deposit, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                Intent intent = new Intent(mainActivity, OKStakingActivity.class);
-                mainActivity.startActivity(intent);
+        mBtnOkDeposit.setOnClickListener(v -> {
+            if (mainActivity.getBaseDao().mTopValidators == null && mainActivity.getBaseDao().mTopValidators.size() == 0)
+                return;
+            if (!mainActivity.getAccount().hasPrivateKey) {
+                Dialog_WatchMode add = Dialog_WatchMode.newInstance();
+                mainActivity.showDialog(add);
+                return;
             }
+            int myValidatorCnt = 0;
+            if (mainActivity.getBaseDao().mOkStaking != null && mainActivity.getBaseDao().mOkStaking.validator_address != null) {
+                myValidatorCnt = mainActivity.getBaseDao().mOkStaking.validator_address.size();
+            }
+            BigDecimal estimateGasAmount = (new BigDecimal(OK_GAS_AMOUNT_STAKE_MUX).multiply(new BigDecimal("" + myValidatorCnt))).add(new BigDecimal(BaseConstant.OK_GAS_AMOUNT_STAKE));
+            BigDecimal feeAmount = estimateGasAmount.multiply(new BigDecimal(OK_GAS_RATE_AVERAGE));
+            if (availableAmount.compareTo(feeAmount) <= 0) {
+                Toast.makeText(mainActivity, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (availableAmount.compareTo(new BigDecimal("0.01")) < 0) {
+                Toast.makeText(mainActivity, R.string.error_not_enough_to_deposit, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            Intent intent = new Intent(mainActivity, OKStakingActivity.class);
+            mainActivity.startActivity(intent);
         });
         mBtnOkWithdraw.setOnClickListener(v -> {
             if (mainActivity.getBaseDao().mTopValidators == null && mainActivity.getBaseDao().mTopValidators.size() == 0)
