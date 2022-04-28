@@ -158,7 +158,7 @@ public class LabsListActivity extends BaseActivity implements TaskListener {
             return;
         }
 
-        BigDecimal available = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+        BigDecimal available = getBalance(getBaseChain().getMainDenom());
         BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_OSMOSIS_SWAP, 0);
         if (available.compareTo(txFee) < 0) {
             Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
@@ -190,8 +190,8 @@ public class LabsListActivity extends BaseActivity implements TaskListener {
         String coin1Denom = tempPool.getPoolAssets(1).getToken().getDenom();
 
         BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(LabsListActivity.this, getBaseChain(), CONST_PW_TX_OSMOSIS_JOIN_POOL, 0);
-        BigDecimal coin0Available = getBaseDao().getAvailable(coin0denom);
-        BigDecimal coin1Available = getBaseDao().getAvailable(coin1Denom);
+        BigDecimal coin0Available = getBalance(coin0denom);
+        BigDecimal coin1Available = getBalance(coin1Denom);
 
         if (coin0denom.equalsIgnoreCase(TOKEN_OSMOSIS)) {
             coin0Available = coin0Available.subtract(feeAmount);
@@ -218,7 +218,7 @@ public class LabsListActivity extends BaseActivity implements TaskListener {
             return;
         }
 
-        BigDecimal mainBalance = getBaseDao().getAvailable(TOKEN_OSMOSIS);
+        BigDecimal mainBalance = getBalance(TOKEN_OSMOSIS);
         BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_OSMOSIS_EXIT_POOL, 0);
 
         if (mainBalance.compareTo(feeAmount) < 0) {
@@ -265,7 +265,7 @@ public class LabsListActivity extends BaseActivity implements TaskListener {
                             }
                         }
 
-                        if (getBaseDao().getAvailable("gamm/pool/" + pool.getId()) != BigDecimal.ZERO) {
+                        if (getBalance("gamm/pool/" + pool.getId()) != BigDecimal.ZERO) {
                             mPoolMyList.add(pool);
                         } else {
                             mPoolOtherList.add(pool);

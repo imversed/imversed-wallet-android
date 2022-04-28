@@ -219,11 +219,7 @@ public class HtlcSendActivity extends BaseActivity {
     }
 
     public BigDecimal getAvailable() {
-        if (getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
-            return getBaseDao().getAvailable(mToSwapDenom);
-        } else {
-            return getAccount().getTokenBalance(mToSwapDenom);
-        }
+        return getBalance(mToSwapDenom);
     }
 
     private void showResultActivity() {

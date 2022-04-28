@@ -91,7 +91,7 @@ public class RewardStep3Fragment extends BaseFragment implements View.OnClickLis
         if (getSActivity().mWithdrawAddress.equals(getSActivity().getAccount().address)) {
             mTvGoalLayer.setVisibility(View.GONE);
             mExpectedLayer.setVisibility(View.VISIBLE);
-            BigDecimal availableAmount = getBaseDao().getAvailable(mainDenom);
+            BigDecimal availableAmount = getSActivity().getBalance(mainDenom);
             BigDecimal expectedAmount = availableAmount.add(rewardSum).subtract(feeAmount);
             mExpectedAmount.setText(WDp.getDpAmount2(expectedAmount, mDpDecimal, mDpDecimal));
             mExpectedPrice.setText(WDp.dpUserCurrencyValue(getBaseDao(), settingsInteractor.getCurrency(), mainDenom, expectedAmount, mDpDecimal));

@@ -106,7 +106,7 @@ public class SendStep4Fragment extends BaseFragment implements View.OnClickListe
                 mTotalSpendAmount.setText(WDp.getDpAmount2(feeAmount.add(toSendAmount), mDivideDecimal, mDisplayDecimal));
                 mTotalPrice.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mainDenom, feeAmount.add(toSendAmount), mDivideDecimal));
 
-                BigDecimal currentAvai = getBaseDao().getAvailable(toSendDenom);
+                BigDecimal currentAvai = getSActivity().getBalance(toSendDenom);
                 mCurrentBalance.setText(WDp.getDpAmount2(currentAvai, mDivideDecimal, mDisplayDecimal));
                 BigDecimal subtract = currentAvai.subtract(toSendAmount).subtract(feeAmount);
                 mRemainingBalance.setText(WDp.getDpAmount2(subtract, mDivideDecimal, mDisplayDecimal));
@@ -122,7 +122,7 @@ public class SendStep4Fragment extends BaseFragment implements View.OnClickListe
                 mTotalPrice.setVisibility(View.GONE);
                 mRemainingPrice.setVisibility(View.GONE);
 
-                BigDecimal currentAvai = getBaseDao().getAvailable(toSendDenom);
+                BigDecimal currentAvai = getSActivity().getBalance(toSendDenom);
                 WDp.showCoinDp(getContext(), getBaseDao(), toSendDenom, toSendAmount.toPlainString(), mDenomSendAmount, mSendAmount, getSActivity().getBaseChain());
                 WDp.showCoinDp(getContext(), getBaseDao(), toSendDenom, currentAvai.toPlainString(), mDenomCurrentAmount, mCurrentBalance, getSActivity().getBaseChain());
                 WDp.showCoinDp(getContext(), getBaseDao(), toSendDenom, currentAvai.subtract(toSendAmount).toPlainString(), mDenomRemainAmount, mRemainingBalance, getSActivity().getBaseChain());

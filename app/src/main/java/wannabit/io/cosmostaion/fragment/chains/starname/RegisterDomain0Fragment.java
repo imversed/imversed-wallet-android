@@ -132,7 +132,7 @@ public class RegisterDomain0Fragment extends BaseFragment implements View.OnClic
                 Toast.makeText(getBaseActivity(), R.string.error_invalid_domain_format, Toast.LENGTH_SHORT).show();
                 return;
             }
-            BigDecimal available = getBaseDao().getAvailable(getSActivity().getBaseChain().getMainDenom());
+            BigDecimal available = getSActivity().getBalance(getSActivity().getBaseChain().getMainDenom());
             BigDecimal starNameFee = getBaseDao().getStarNameRegisterDomainFee(userInput, mTypeSwitch.isChecked() ? "open" : "closed");
             BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getSActivity(), getSActivity().getBaseChain(), CONST_PW_TX_REGISTER_DOMAIN, 0);
             if (available.compareTo(starNameFee.add(txFee)) < 0) {

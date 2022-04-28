@@ -53,8 +53,8 @@ public class HardDetailMyAvailableHolder extends BaseHolder {
             mAssetDepositLayer.setVisibility(View.GONE);
             mDepositValue.setVisibility(View.GONE);
         }
-        BigDecimal targetAvailable = baseData.getAvailable(denom);
-        BigDecimal kavaAvailable = baseData.getAvailable(TOKEN_KAVA);
+        BigDecimal targetAvailable = context.getBalance(denom);
+        BigDecimal kavaAvailable = context.getBalance(TOKEN_KAVA);
 
         // Display each usd value
         BigDecimal targetPrice = BigDecimal.ZERO;

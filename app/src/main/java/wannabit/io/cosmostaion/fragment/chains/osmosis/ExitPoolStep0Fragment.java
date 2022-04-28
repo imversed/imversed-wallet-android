@@ -96,7 +96,7 @@ public class ExitPoolStep0Fragment extends BaseFragment implements View.OnClickL
         mProgress.setVisibility(View.GONE);
 
         String lpDenom = getSActivity().mOsmosisPool.getTotalShares().getDenom();
-        mAvailableMaxAmount = getBaseDao().getAvailable(lpDenom);
+        mAvailableMaxAmount = getSActivity().getBalance(lpDenom);
         setDpDecimals(mCoinDecimal);
 
         WUtil.DpOsmosisTokenImg(getBaseDao(), mLpCoinImg, lpDenom);

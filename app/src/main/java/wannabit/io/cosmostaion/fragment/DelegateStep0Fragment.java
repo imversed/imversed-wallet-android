@@ -20,12 +20,15 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.DelegateActivity;
 import wannabit.io.cosmostaion.base.BaseFragment;
+import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dialog.Dialog_Empty_Warning;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.utils.WDp;
@@ -89,9 +92,13 @@ public class DelegateStep0Fragment extends BaseFragment implements View.OnClickL
             getSActivity().onBackPressed();
         mDpDecimal = getSActivity().getBaseChain().getDivideDecimal();
         setDpDecimals(mDpDecimal);
-        WDp.DpMainDenom(getSActivity().getAccount().baseChain, mDenomTitle);
+        final BaseChain baseChain = getSActivity().getBaseChain();
+        WDp.DpMainDenom(baseChain, mDenomTitle);
+        final Balance balance = getSActivity().getFullBalance(baseChain.getMainDenom());
+
         BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getContext(), getSActivity().getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
-        mMaxAvailable = getSActivity().getBaseDao().getDelegatable(getSActivity().getBaseChain().getMainDenom()).subtract(feeAmount);
+        BigDecimal delegatableAmount = balance.balance; // TODO add(getVesting(denom))
+        mMaxAvailable = delegatableAmount.subtract(feeAmount);
         mAvailableAmount.setText(WDp.getDpAmount2(mMaxAvailable, mDpDecimal, mDpDecimal));
         onAddAmountWatcher();
     }

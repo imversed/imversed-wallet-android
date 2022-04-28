@@ -35,6 +35,7 @@ import wannabit.io.cosmostaion.activities.chains.sif.SifDexListActivity;
 import wannabit.io.cosmostaion.activities.chains.starname.StarNameListActivity;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.dao.Account;
+import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
@@ -76,24 +77,26 @@ public class WalletChainHolder extends BaseHolder {
         final SettingsInteractor settingsInteractor = mainActivity.getAppInjector().getInstance(SettingsInteractor.class);
         final BaseData baseData = mainActivity.getBaseDao();
         final String denom = mainActivity.getBaseChain().getMainDenom();
-        final int decimal = mainActivity.getBaseChain().getDivideDecimal();
+        final int divideDecimal = mainActivity.getBaseChain().getDivideDecimal();
+        final int displayDecimal = 6;
         mTvChainCard.setCardBackgroundColor(WDp.getChainBgColor(mainActivity, mainActivity.getBaseChain()));
         WUtil.getWalletData(mainActivity.getBaseChain(), mTvChainIcon, mTvChainDenom);
+        final Balance balance = mainActivity.getFullBalance(denom);
 
-        final BigDecimal availableAmount = baseData.getAvailable(denom);
-        final BigDecimal vestingAmount = baseData.getVesting(denom);
+        final BigDecimal availableAmount = balance.balance;
+        final BigDecimal vestingAmount = BigDecimal.ZERO; //baseData.getVesting(denom);
         final BigDecimal delegateAmount = baseData.getDelegationSum();
         final BigDecimal unbondingAmount = baseData.getUndelegationSum();
         final BigDecimal rewardAmount = baseData.getRewardSum(denom);
-        final BigDecimal totalAmount = baseData.getAllMainAsset(denom);
+        final BigDecimal totalAmount = balance.balance.add(baseData.getAllMainAsset(denom));   //TODO: add vesting
 
-        mTvChainTotal.setText(WDp.getDpAmount2(totalAmount, decimal, 6));
-        mTvChainAvailable.setText(WDp.getDpAmount2(availableAmount, decimal, 6));
-        mTvChainVesting.setText(WDp.getDpAmount2(vestingAmount, decimal, 6));
-        mTvChainDelegated.setText(WDp.getDpAmount2(delegateAmount, decimal, 6));
-        mTvChainUnBonding.setText(WDp.getDpAmount2(unbondingAmount, decimal, 6));
-        mTvChainRewards.setText(WDp.getDpAmount2(rewardAmount, decimal, 6));
-        mTvChainValue.setText(WDp.dpUserCurrencyValue(baseData, settingsInteractor.getCurrency(), denom, totalAmount, decimal));
+        mTvChainTotal.setText(WDp.getDpAmount2(totalAmount, divideDecimal, displayDecimal));
+        mTvChainAvailable.setText(WDp.getDpAmount2(availableAmount, divideDecimal, displayDecimal));
+        mTvChainVesting.setText(WDp.getDpAmount2(vestingAmount, divideDecimal, displayDecimal));
+        mTvChainDelegated.setText(WDp.getDpAmount2(delegateAmount, divideDecimal, displayDecimal));
+        mTvChainUnBonding.setText(WDp.getDpAmount2(unbondingAmount, divideDecimal, displayDecimal));
+        mTvChainRewards.setText(WDp.getDpAmount2(rewardAmount, divideDecimal, displayDecimal));
+        mTvChainValue.setText(WDp.dpUserCurrencyValue(baseData, settingsInteractor.getCurrency(), denom, totalAmount, divideDecimal));
 
         if (!vestingAmount.equals(BigDecimal.ZERO)) {
             mChainVestingLayer.setVisibility(View.VISIBLE);
@@ -137,7 +140,7 @@ public class WalletChainHolder extends BaseHolder {
             Intent airdrop = new Intent(activity, ProfileDetailActivity.class);
             activity.startActivity(airdrop);
         } else if (account.hasPrivateKey) {
-            BigDecimal available = baseDao.getAvailable(baseChain.getMainDenom());
+            BigDecimal available = activity.getBalance(baseChain.getMainDenom());
             BigDecimal txFee = WUtil.getEstimateGasFeeAmount(activity, baseChain, CONST_PW_TX_PROFILE, 0);
             if (available.compareTo(txFee) <= 0) {
                 Toast.makeText(activity, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();

@@ -144,7 +144,7 @@ public class IBCTokenDetailActivity extends BaseActivity implements View.OnClick
                 }
                 mToolbarSymbol.setText(mIbcToken.display_denom.toUpperCase());
                 mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
-                mTotalValue.setText("" + WDp.dpUserCurrencyValue(getBaseDao(), currency, baseDenom, getBaseDao().getAvailable(mIbcDenom), mIbcDivideDecimal));
+                mTotalValue.setText("" + WDp.dpUserCurrencyValue(getBaseDao(), currency, baseDenom, getBalance(mIbcDenom), mIbcDivideDecimal));
 
                 mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, baseDenom));
                 mItemUpDownPrice.setText(WDp.dpValueChange(getBaseDao(), baseDenom));
@@ -199,7 +199,7 @@ public class IBCTokenDetailActivity extends BaseActivity implements View.OnClick
             final String mainDenom = getBaseChain().getMainDenom();
             final BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_IBC_TRANSFER, 0);
 
-            mMaxAvailable = getBaseDao().getAvailable(mainDenom).subtract(feeAmount);
+            mMaxAvailable = getBalance(mainDenom).subtract(feeAmount);
             if (mMaxAvailable.compareTo(BigDecimal.ZERO) <= 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_budget, Toast.LENGTH_SHORT).show();
                 return;
@@ -216,7 +216,7 @@ public class IBCTokenDetailActivity extends BaseActivity implements View.OnClick
                 return;
             }
             Intent intent = new Intent(getBaseContext(), SendActivity.class);
-            BigDecimal mainAvailable = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+            BigDecimal mainAvailable = getBalance(getBaseChain().getMainDenom());
             BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_SEND, 0);
             if (mainAvailable.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
@@ -267,7 +267,7 @@ public class IBCTokenDetailActivity extends BaseActivity implements View.OnClick
 
         private void onBindIbcInfo(RecyclerView.ViewHolder viewHolder) {
             final IbcStatusHolder holder = (IBCTokenAdapter.IbcStatusHolder) viewHolder;
-            final BigDecimal totalAmount = getBaseDao().getAvailable(mIbcDenom);
+            final BigDecimal totalAmount = getBalance(mIbcDenom);
             if (mIbcToken.auth) {
                 mIbcDivideDecimal = mIbcToken.decimal;
                 mIbcDisplayDecimal = mIbcToken.decimal;

@@ -50,9 +50,9 @@ public class CdpDetailMyAvailableHolder extends BaseHolder {
         final String cDenom = collateralParam.getDenom();
         final String pDenom = collateralParam.getDebtLimit().getDenom();
         final BigDecimal currentPrice = baseData.getKavaOraclePrice(collateralParam.getLiquidationMarketId());
-        final BigDecimal cAvailable = baseData.getAvailable(cDenom);
-        final BigDecimal pAvailable = baseData.getAvailable(pDenom);
-        final BigDecimal kAvailable = baseData.getAvailable(TOKEN_KAVA);
+        final BigDecimal cAvailable = context.getBalance(cDenom);
+        final BigDecimal pAvailable = context.getBalance(pDenom);
+        final BigDecimal kAvailable = context.getBalance(TOKEN_KAVA);
 
 
         mEmptyCollateralDenom.setText(WUtil.getKavaTokenName(baseData, collateralParam.getDenom()));

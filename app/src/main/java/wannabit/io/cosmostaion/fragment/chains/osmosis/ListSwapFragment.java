@@ -124,7 +124,7 @@ public class ListSwapFragment extends BaseFragment implements View.OnClickListen
         WUtil.dpOsmosisTokenName(getSActivity(), getBaseDao(), mOutputCoin, mOutputCoinDenom);
         WUtil.DpOsmosisTokenImg(getBaseDao(), mOutputImg, mOutputCoinDenom);
 
-        mInputAmount.setText(WDp.getDpAmount2(getBaseDao().getAvailable(mInputCoinDenom), inputDecimal, inputDecimal));
+        mInputAmount.setText(WDp.getDpAmount2(getSActivity().getBalance(mInputCoinDenom), inputDecimal, inputDecimal));
         mSwapSlippage.setText(WDp.getPercentDp(new BigDecimal("3")));
         BigDecimal swapFee = new BigDecimal(mSelectedPool.getPoolParams().getSwapFee());
         mSwapFee.setText(WDp.getPercentDp(swapFee.movePointLeft(16)));

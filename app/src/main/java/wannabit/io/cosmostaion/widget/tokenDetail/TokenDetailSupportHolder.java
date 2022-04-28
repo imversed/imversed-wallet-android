@@ -94,8 +94,10 @@ public class TokenDetailSupportHolder extends BaseHolder {
                 mAmountView.setCardBackgroundColor(ContextCompat.getColor(baseActivity, R.color.colorTransBgswp));
             }
 
-            mAvailableAmount = baseActivity.getFullBalance(denom).balance;
-            BigDecimal vestingAmount = baseData.getVesting(denom);
+            mAvailableAmount = baseActivity.getBalance(denom);
+
+//            BigDecimal vestingAmount = baseData.getVesting(denom);
+            BigDecimal vestingAmount = BigDecimal.ZERO; // TODO
             mTvTotal.setText(WDp.getDpAmount2(mAvailableAmount.add(vestingAmount), dpDecimal, dpDecimal));
             mTvAvailable.setText(WDp.getDpAmount2(mAvailableAmount, dpDecimal, dpDecimal));
             if (vestingAmount.compareTo(BigDecimal.ZERO) > 0) {
@@ -104,7 +106,7 @@ public class TokenDetailSupportHolder extends BaseHolder {
             }
         } else {
             dpDecimal = 6;
-            mAvailableAmount = baseData.getAvailable(denom);
+            mAvailableAmount = baseActivity.getBalance(denom);
             mTvTotal.setText(WDp.getDpAmount2(mAvailableAmount, dpDecimal, dpDecimal));
             mTvAvailable.setText(WDp.getDpAmount2(mAvailableAmount, dpDecimal, dpDecimal));
         }
@@ -175,10 +177,10 @@ public class TokenDetailSupportHolder extends BaseHolder {
         mTvLocked.setText(WDp.getDpAmount2(lockedAmount, 0, 18));
     }
 
-    public void onBindBridgeToken(Context c, BaseChain baseChain, BaseData baseData, String denom) {
+    public void onBindBridgeToken(BaseActivity activity, BaseData baseData, String denom) {
         final Assets assets = baseData.getAsset(denom);
         if (assets != null) {
-            mAvailableAmount = baseData.getAvailable(assets.denom);
+            mAvailableAmount = activity.getBalance(assets.denom);
             mTvTotal.setText(WDp.getDpAmount2(mAvailableAmount, assets.decimal, assets.decimal));
             mTvAvailable.setText(WDp.getDpAmount2(mAvailableAmount, assets.decimal, assets.decimal));
         }

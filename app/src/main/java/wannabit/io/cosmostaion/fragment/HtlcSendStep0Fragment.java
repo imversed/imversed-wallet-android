@@ -204,7 +204,7 @@ public class HtlcSendStep0Fragment extends BaseFragment implements View.OnClickL
                 }
 
             }
-            available_amount = getBaseDao().getAvailable(mToSwapDenom);
+            available_amount = getSActivity().getBalance(mToSwapDenom);
             supply_limit = mKavaBep3Param2.getSupportedSwapAssetLimit(mToSwapDenom);
             supply_remain = mKavaSuppies2.getRemainCap(mToSwapDenom, supply_limit);
             onetime_max = mKavaBep3Param2.getSupportedSwapAssetMaxOnce(mToSwapDenom);

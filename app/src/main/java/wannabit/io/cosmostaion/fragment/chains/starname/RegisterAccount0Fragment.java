@@ -96,7 +96,7 @@ public class RegisterAccount0Fragment extends BaseFragment implements View.OnCli
                 Toast.makeText(getBaseActivity(), R.string.error_invalid_account_format, Toast.LENGTH_SHORT).show();
                 return;
             }
-            BigDecimal available = getBaseDao().getAvailable(getSActivity().getBaseChain().getMainDenom());
+            BigDecimal available = getSActivity().getBalance(getSActivity().getBaseChain().getMainDenom());
             BigDecimal starNameFee = getBaseDao().getStarNameRegisterAccountFee("open");
             BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getSActivity(), getSActivity().getBaseChain(), CONST_PW_TX_REGISTER_ACCOUNT, 0);
             if (available.compareTo(starNameFee.add(txFee)) < 0) {

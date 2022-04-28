@@ -163,7 +163,7 @@ public class CreateCdpStep0Fragment extends BaseFragment implements View.OnClick
         mPrincipalDenom = getCParam().getDebtLimit().getDenom();
         mPrincipalMinAmount = new BigDecimal(getCdpParam().getDebtParam().getDebtFloor());
         mCollateralMinAmount = mPrincipalMinAmount.movePointLeft(WUtil.getKavaCoinDecimal(getBaseDao(), mPrincipalDenom) - WUtil.getKavaCoinDecimal(getBaseDao(), mCollateralDenom)).multiply(new BigDecimal("1.05263157895")).multiply(new BigDecimal(getCParam().getLiquidationRatio()).movePointLeft(18)).divide(new BigDecimal(getPrice().getPrice()), 0, RoundingMode.UP);
-        mCollateralMaxAmount = getBaseDao().getAvailable(mCollateralDenom);
+        mCollateralMaxAmount = getSActivity().getBalance(mCollateralDenom);
 
         mCollateralSymbol.setText(WUtil.getKavaTokenName(getBaseDao(), mCollateralDenom));
         mCollateralDenomTx.setText(mCollateralDenom.toUpperCase());

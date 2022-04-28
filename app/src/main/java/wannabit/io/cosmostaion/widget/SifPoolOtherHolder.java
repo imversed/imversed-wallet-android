@@ -62,18 +62,13 @@ public class SifPoolOtherHolder extends BaseHolder {
         itemTotalDepositAmount1.setText(WDp.getDpAmount2(externalAmount, externalDecimal, 6));
 
         //dp available
-        BigDecimal availableRowan = baseData.getAvailable(BaseConstant.TOKEN_SIF);
-        BigDecimal availableExternal = baseData.getAvailable(exteranlDenom);
+        BigDecimal availableRowan = activity.getBalance(BaseConstant.TOKEN_SIF);
+        BigDecimal availableExternal = activity.getBalance(exteranlDenom);
         WUtil.dpSifTokenName(context, baseData, itemMyAvailableSymbol0, BaseConstant.TOKEN_SIF);
         WUtil.dpSifTokenName(context, baseData, itemMyAvailableSymbol1, exteranlDenom);
         itemMyAvailableAmount0.setText(WDp.getDpAmount2(availableRowan, rowanDecimal, 6));
         itemMyAvailableAmount1.setText(WDp.getDpAmount2(availableExternal, externalDecimal, 6));
 
-        itemRoot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                activity.onCheckStartDepositPool(otherPool);
-            }
-        });
+        itemRoot.setOnClickListener(v -> activity.onCheckStartDepositPool(otherPool));
     }
 }

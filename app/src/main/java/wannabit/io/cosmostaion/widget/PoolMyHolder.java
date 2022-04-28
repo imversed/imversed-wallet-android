@@ -78,32 +78,29 @@ public class PoolMyHolder extends BaseHolder {
         WDp.showCoinDp(context, baseData, coin1, itemMyTotalDepositSymbol1, itemMyTotalDepositAmount1, BaseChain.OSMOSIS_MAIN.INSTANCE);
 
         //deposit
-        BigDecimal lpCoin = baseData.getAvailable("gamm/pool/" + myPool.getId());
+        BigDecimal lpCoin = activity.getBalance("gamm/pool/" + myPool.getId());
         BigDecimal lpCoinPrice = WUtil.getOsmoLpTokenPerUsdPrice(baseData, myPool);
         BigDecimal lpCoinValue = new BigDecimal(lpCoin.toPlainString()).multiply(lpCoinPrice).movePointLeft(18).setScale(2, RoundingMode.DOWN);
         itemMypoolDepositValue.setText(WDp.getDpRawDollor(context, lpCoinValue, 2));
 
-        BigDecimal coin0MyShareAmount = WUtil.getMyShareLpAmount(baseData, myPool, coin0.denom);
-        BigDecimal coin1MyShareAmount = WUtil.getMyShareLpAmount(baseData, myPool, coin1.denom);
+        BigDecimal coin0MyShareAmount = WUtil.getMyShareLpAmount(activity, baseData, myPool, coin0.denom);
+        BigDecimal coin1MyShareAmount = WUtil.getMyShareLpAmount(activity, baseData, myPool, coin1.denom);
 
         WDp.showCoinDp(context, baseData, coin0.denom, coin0MyShareAmount.toPlainString(), itemMyDepositSymbol0, itemMyDepositAmount0, BaseChain.OSMOSIS_MAIN.INSTANCE);
         WDp.showCoinDp(context, baseData, coin1.denom, coin1MyShareAmount.toPlainString(), itemMyDepositSymbol1, itemMyDepositAmount1, BaseChain.OSMOSIS_MAIN.INSTANCE);
 
         // available
-        BigDecimal availableCoin0 = baseData.getAvailable(coin0.denom);
+        BigDecimal availableCoin0 = activity.getBalance(coin0.denom);
         Coin Coin0 = new Coin(myPool.getPoolAssets(0).getToken().getDenom(), availableCoin0.toPlainString());
-        BigDecimal availableCoin1 = baseData.getAvailable(coin1.denom);
+        BigDecimal availableCoin1 = activity.getBalance(coin1.denom);
         Coin Coin1 = new Coin(myPool.getPoolAssets(1).getToken().getDenom(), availableCoin1.toPlainString());
 
         WDp.showCoinDp(context, baseData, Coin0, itemMyAvailableSymbol0, itemMyAvailableAmount0, BaseChain.OSMOSIS_MAIN.INSTANCE);
         WDp.showCoinDp(context, baseData, Coin1, itemMyAvailableSymbol1, itemMyAvailableAmount1, BaseChain.OSMOSIS_MAIN.INSTANCE);
 
-        itemRoot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WLog.w("PoolMyHolder onClick ");
-                ((LabsListActivity) activity).onClickMyPool(myPool.getId());
-            }
+        itemRoot.setOnClickListener(v -> {
+            WLog.w("PoolMyHolder onClick ");
+            ((LabsListActivity) activity).onClickMyPool(myPool.getId());
         });
     }
 
@@ -145,8 +142,8 @@ public class PoolMyHolder extends BaseHolder {
         itemMyDepositAmount1.setText(WDp.getDpAmount2(new BigDecimal(my1.getAmount()), coin1Decimal, 6));
 
         // available
-        BigDecimal availableCoin0 = baseData.getAvailable(coin0.getDenom());
-        BigDecimal availableCoin1 = baseData.getAvailable(coin1.getDenom());
+        BigDecimal availableCoin0 = activity.getBalance(coin0.getDenom());
+        BigDecimal availableCoin1 = activity.getBalance(coin1.getDenom());
 
         WUtil.dpKavaTokenName(context, baseData, itemMyAvailableSymbol0, coin0.getDenom());
         WUtil.dpKavaTokenName(context, baseData, itemMyAvailableSymbol1, coin1.getDenom());
@@ -193,9 +190,9 @@ public class PoolMyHolder extends BaseHolder {
         itemMyDepositAmount1.setText(WDp.getDpAmount2(activity.getGdexMyShareAmount(mypool, coin1Denom), coin1Decimal, 6));
 
         // available
-        BigDecimal availableCoin0 = baseData.getAvailable(coin0Denom);
+        BigDecimal availableCoin0 = activity.getBalance(coin0Denom);
         Coin Coin0 = new Coin(coin0Denom, availableCoin0.toPlainString());
-        BigDecimal availableCoin1 = baseData.getAvailable(coin1Denom);
+        BigDecimal availableCoin1 = activity.getBalance(coin1Denom);
         Coin Coin1 = new Coin(coin1Denom, availableCoin1.toPlainString());
 
         WDp.showCoinDp(context, baseData, Coin0, itemMyAvailableSymbol0, itemMyAvailableAmount0, BaseChain.COSMOS_MAIN.INSTANCE);

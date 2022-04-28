@@ -123,11 +123,11 @@ public class SifDexDepositStep0Fragment extends BaseFragment implements View.OnC
     private void onInitView() {
         mProgress.setVisibility(View.GONE);
         BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getSActivity(), getSActivity().getBaseChain(), CONST_PW_TX_SIF_JOIN_POOL, 0);
-        mRowanMaxAmount = getBaseDao().getAvailable(TOKEN_SIF);
+        mRowanMaxAmount = getSActivity().getBalance(TOKEN_SIF);
         mRowanMaxAmount = mRowanMaxAmount.subtract(feeAmount);
 
         String externalDenom = getSActivity().mSifPool.getExternalAsset().getSymbol();
-        mExternalMaxAmount = getBaseDao().getAvailable(externalDenom);
+        mExternalMaxAmount = getSActivity().getBalance(externalDenom);
         mExternalDecimal = WUtil.getSifCoinDecimal(getBaseDao(), externalDenom);
         setDpDecimals(mRowanDecimal, mExternalDecimal);
 

@@ -156,7 +156,7 @@ public class StakingTokenGrpcActivity extends BaseActivity implements View.OnCli
         if (getAccount().hasPrivateKey) {
             mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), getBaseChain()), android.graphics.PorterDuff.Mode.SRC_IN);
         }
-        mTotalAmount = getBaseDao().getAllMainAsset(mMainDenom);
+        mTotalAmount = getBalance(mMainDenom).add(getBaseDao().getAllMainAsset(mMainDenom));    //TODO: add vesting
         mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mMainDenom, mTotalAmount, mDivideDecimal));
         mSwipeRefreshLayout.setRefreshing(false);
     }
@@ -179,7 +179,7 @@ public class StakingTokenGrpcActivity extends BaseActivity implements View.OnCli
             final String mainDenom = getBaseChain().getMainDenom();
             final BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_IBC_TRANSFER, 0);
 
-            mTotalAmount = getBaseDao().getAvailable(mMainDenom);
+            mTotalAmount = getBalance(mMainDenom);
             if (mainDenom.equalsIgnoreCase(mMainDenom)) {
                 mTotalAmount = mTotalAmount.subtract(feeAmount);
             }
@@ -198,7 +198,7 @@ public class StakingTokenGrpcActivity extends BaseActivity implements View.OnCli
                 return;
             }
             Intent intent = new Intent(getBaseContext(), SendActivity.class);
-            BigDecimal mainAvailable = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+            BigDecimal mainAvailable = getBalance(getBaseChain().getMainDenom());
             BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_SEND, 0);
             if (mainAvailable.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();

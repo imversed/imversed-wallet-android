@@ -147,11 +147,11 @@ public class DepositPoolStep0Fragment extends BaseFragment implements View.OnCli
             mCoin1Amount = new BigDecimal(mSwapPool.get(0).getCoins(0).getAmount());
         }
 
-        mAvailable0MaxAmount = getBaseDao().getAvailable(mCoin0Denom);
+        mAvailable0MaxAmount = getSActivity().getBalance(mCoin0Denom);
         if (mCoin0Denom.equalsIgnoreCase(TOKEN_KAVA)) {
             mAvailable0MaxAmount = mAvailable0MaxAmount.subtract(txFeeAmount);
         }
-        mAvailable1MaxAmount = getBaseDao().getAvailable(mCoin1Denom);
+        mAvailable1MaxAmount = getSActivity().getBalance(mCoin1Denom);
         if (mCoin1Denom.equalsIgnoreCase(TOKEN_KAVA)) {
             mAvailable1MaxAmount = mAvailable1MaxAmount.subtract(txFeeAmount);
         }

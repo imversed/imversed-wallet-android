@@ -142,7 +142,7 @@ public class DAppsList5Activity extends BaseActivity implements TaskListener {
             showDialog(add);
             return;
         }
-        BigDecimal available = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+        BigDecimal available = getBalance(getBaseChain().getMainDenom());
         BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_KAVA_SWAP, 0);
         if (available.compareTo(txFee) <= 0) {
             Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
@@ -186,11 +186,11 @@ public class DAppsList5Activity extends BaseActivity implements TaskListener {
         String coin0Denom = myPool.getCoins(0).getDenom();
         String coin1Denom = myPool.getCoins(1).getDenom();
 
-        BigDecimal available0MaxAmount = getBaseDao().getAvailable(coin0Denom);
+        BigDecimal available0MaxAmount = getBalance(coin0Denom);
         if (coin0Denom.equalsIgnoreCase(TOKEN_KAVA)) {
             available0MaxAmount = available0MaxAmount.subtract(feeAmount);
         }
-        BigDecimal available1MaxAmount = getBaseDao().getAvailable(coin1Denom);
+        BigDecimal available1MaxAmount = getBalance(coin1Denom);
         if (coin1Denom.equalsIgnoreCase(TOKEN_KAVA)) {
             available1MaxAmount = available1MaxAmount.subtract(feeAmount);
         }
@@ -211,7 +211,7 @@ public class DAppsList5Activity extends BaseActivity implements TaskListener {
             return;
         }
 
-        BigDecimal mainBalance = getBaseDao().getAvailable(TOKEN_KAVA);
+        BigDecimal mainBalance = getBalance(TOKEN_KAVA);
         BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_KAVA_EXIT_POOL, 0);
 
         if (mainBalance.compareTo(feeAmount) < 0) {

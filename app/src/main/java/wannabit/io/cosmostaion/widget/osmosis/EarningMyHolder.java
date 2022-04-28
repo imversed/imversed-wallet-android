@@ -133,7 +133,7 @@ public class EarningMyHolder extends RecyclerView.ViewHolder {
         itemUnBondedValue.setText(WDp.getDpRawDollor(c, unbondedCoinValue, 2));
 
         //display available
-        BigDecimal availableAmount = baseData.getAvailable("gamm/pool/" + pool.getId());
+        BigDecimal availableAmount = activity.getBalance("gamm/pool/" + pool.getId());
         BigDecimal availableValue = availableAmount.multiply(lpCoinPrice).movePointLeft(18).setScale(2, RoundingMode.DOWN);
         itemAvailableAmount.setText(WDp.getDpAmount2(availableAmount, 18, 6));
         itemAvailableDenom.setText("GAMM-" + pool.getId());

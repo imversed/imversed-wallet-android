@@ -7,8 +7,8 @@ import java.math.BigDecimal;
 public class Balance {
     public Long accountId;
     public String symbol;
-    public BigDecimal balance;
     public Long fetchTime;
+    public BigDecimal balance;
     public BigDecimal frozen;
     public BigDecimal locked;
 
@@ -50,4 +50,35 @@ public class Balance {
     public BigDecimal getDelegatableAmount() {
         return balance.add(locked);
     }
+
+    public boolean isIbc() {
+        return symbol.startsWith("ibc/");
+    }
+
+    public String getIbcHash() {
+        if (!isIbc()) {
+            return null;
+        }
+        return symbol.replaceAll("ibc/", "");
+    }
+
+    public boolean osmosisAmm() {
+        return symbol.startsWith("gamm/pool/");
+    }
+
+    public String osmosisAmmDpDenom() {
+        String[] split = symbol.split("/");
+        return "GAMM-" + split[split.length - 1];
+    }
+
+    public long osmosisAmmPoolId() {
+        String id = symbol.replace("gamm/pool/", "");
+        return Long.parseLong(id);
+    }
+
+    public long injectivePoolId() {
+        String id = symbol.replace("share", "");
+        return Long.parseLong(id);
+    }
+
 }

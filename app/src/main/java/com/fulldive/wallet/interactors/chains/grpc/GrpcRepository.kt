@@ -72,30 +72,6 @@ class GrpcRepository @Inject constructor(
             }
     }
 
-    fun updateBalances(chain: BaseChain, account: Account): Completable {
-        return grpcRemoteSource
-            .requestBalance(chain, account.address)
-            .map { balances ->
-                var items = balances
-                    .mapNotNull { coin ->
-                        safe {
-                            coin
-                                .takeIf {
-                                    it.denom.equals(chain.mainDenom, true) || it.amount.toInt() > 0
-                                }
-                                ?.let { Coin(it.denom, it.amount) }
-                        }
-                    }
-                if (!items.any { it.denom == chain.mainDenom }) {
-                    items = listOf(Coin(chain.mainDenom, "0")) + items
-                }
-                items
-            }
-            .flatMapCompletable { balances ->
-                grpcLocalSource.setBalances(chain, balances)
-            }
-    }
-
     fun requestBalance(chain: BaseChain, address: String): Single<List<CoinOuterClass.Coin>> {
         return grpcRemoteSource.requestBalance(chain, address)
     }

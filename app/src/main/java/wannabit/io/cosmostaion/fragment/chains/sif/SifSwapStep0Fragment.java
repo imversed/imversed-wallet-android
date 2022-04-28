@@ -113,7 +113,7 @@ public class SifSwapStep0Fragment extends BaseFragment implements View.OnClickLi
         mOutputCoinDecimal = WUtil.getSifCoinDecimal(getBaseDao(), getSActivity().mOutputDenom);
         setDpDecimals(mInputCoinDecimal);
 
-        mAvailableMaxAmount = getBaseDao().getAvailable(getSActivity().mInputDenom);
+        mAvailableMaxAmount = getSActivity().getBalance(getSActivity().mInputDenom);
         BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getContext(), getSActivity().getBaseChain(), CONST_PW_TX_SIF_SWAP, 0);
         if (getSActivity().mInputDenom.equals(TOKEN_SIF)) {
             mAvailableMaxAmount = mAvailableMaxAmount.subtract(txFee);

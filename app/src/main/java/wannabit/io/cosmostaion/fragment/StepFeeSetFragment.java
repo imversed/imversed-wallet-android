@@ -90,6 +90,7 @@ import wannabit.io.cosmostaion.base.BaseBroadCastActivity;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dao.Account;
+import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dao.StationNFTData;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.model.type.Fee;
@@ -301,7 +302,7 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
     private boolean onCheckValidate() {
         final String mainDenom = getSActivity().getBaseChain().getMainDenom();
         if (getSActivity().mTxType == CONST_PW_TX_SIMPLE_SEND) {
-            final BigDecimal mainDenomAvailable = getBaseDao().getAvailable(mainDenom);
+            final BigDecimal mainDenomAvailable = getSActivity().getBalance(mainDenom);
             if (getSActivity().mDenom.equals(mainDenom)) {
                 BigDecimal toSend = new BigDecimal(getSActivity().mAmounts.get(0).amount);
                 if ((toSend.add(mFee)).compareTo(mainDenomAvailable) > 0) {
@@ -317,7 +318,8 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
             }
 
         } else if (getSActivity().mTxType == CONST_PW_TX_SIMPLE_DELEGATE) {
-            BigDecimal delegatable = getBaseDao().getDelegatable(mainDenom);
+            final Balance balance = getSActivity().getFullBalance(mainDenom);
+            BigDecimal delegatable = balance.balance; // TODO add(getVesting(denom))
             BigDecimal todelegate = new BigDecimal(getSActivity().mAmount.amount);
             if ((todelegate.add(mFee)).compareTo(delegatable) > 0) {
                 Toast.makeText(getContext(), getString(R.string.error_not_enough_fee), Toast.LENGTH_SHORT).show();
@@ -325,7 +327,7 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
             }
 
         } else if (getSActivity().mTxType == CONST_PW_TX_SIMPLE_REWARD) {
-            BigDecimal available = getBaseDao().getAvailable(mainDenom);
+            BigDecimal available = getSActivity().getBalance(mainDenom);
             if (mFee.compareTo(available) > 0) {
                 Toast.makeText(getContext(), getString(R.string.error_not_enough_fee), Toast.LENGTH_SHORT).show();
                 return false;
@@ -341,7 +343,7 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
             }
 
         } else if (getSActivity().mTxType == CONST_PW_TX_REINVEST) {
-            BigDecimal available = getBaseDao().getAvailable(mainDenom);
+            BigDecimal available = getSActivity().getBalance(mainDenom);
             if (mFee.compareTo(available) > 0) {
                 Toast.makeText(getContext(), getString(R.string.error_not_enough_fee), Toast.LENGTH_SHORT).show();
                 return false;

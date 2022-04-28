@@ -134,11 +134,11 @@ public class JoinPoolStep0Fragment extends BaseFragment implements View.OnClickL
         String coin0Denom = getSActivity().mOsmosisPool.getPoolAssets(0).getToken().getDenom();
         String coin1Denom = getSActivity().mOsmosisPool.getPoolAssets(1).getToken().getDenom();
 
-        mAvailable0MaxAmount = getBaseDao().getAvailable(coin0Denom);
+        mAvailable0MaxAmount = getSActivity().getBalance(coin0Denom);
         if (coin0Denom.equalsIgnoreCase(TOKEN_OSMOSIS)) {
             mAvailable0MaxAmount = mAvailable0MaxAmount.subtract(txFeeAmount);
         }
-        mAvailable1MaxAmount = getBaseDao().getAvailable(coin1Denom);
+        mAvailable1MaxAmount = getSActivity().getBalance(coin1Denom);
         if (coin1Denom.equalsIgnoreCase(TOKEN_OSMOSIS)) {
             mAvailable1MaxAmount = mAvailable1MaxAmount.subtract(txFeeAmount);
         }

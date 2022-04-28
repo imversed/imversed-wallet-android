@@ -181,7 +181,7 @@ public class CdpDetail5Activity extends BaseActivity implements TaskListener, Vi
         final String cDenom = collateralParam.getDenom();
         final String pDenom = collateralParam.getDebtLimit().getDenom();
         final BigDecimal currentPrice = getBaseDao().getKavaOraclePrice(collateralParam.getLiquidationMarketId());
-        final BigDecimal cAvailable = getBaseDao().getAvailable(cDenom);
+        final BigDecimal cAvailable = getBalance(cDenom);
         BigDecimal principalMinAmount = new BigDecimal(mCdpParams.getDebtParam().getDebtFloor());
         BigDecimal collateralMinAmount = principalMinAmount.movePointLeft(WUtil.getKavaCoinDecimal(getBaseDao(), pDenom) - WUtil.getKavaCoinDecimal(getBaseDao(), cDenom)).multiply(new BigDecimal("1.05263157895")).multiply(new BigDecimal(collateralParam.getLiquidationRatio()).movePointLeft(18)).divide(currentPrice, 0, RoundingMode.UP);
         if (collateralMinAmount.compareTo(cAvailable) > 0) {
@@ -204,7 +204,7 @@ public class CdpDetail5Activity extends BaseActivity implements TaskListener, Vi
 
         final Genesis.CollateralParam collateralParam = getBaseDao().getCollateralParamByType(mCollateralType);
         final String cDenom = collateralParam.getDenom();
-        final BigDecimal cAvailable = getBaseDao().getAvailable(cDenom);
+        final BigDecimal cAvailable = getBalance(cDenom);
 
         if (cAvailable.compareTo(BigDecimal.ZERO) <= 0) {
             Toast.makeText(getBaseContext(), R.string.error_not_enought_deposit_asset, Toast.LENGTH_SHORT).show();
@@ -260,7 +260,7 @@ public class CdpDetail5Activity extends BaseActivity implements TaskListener, Vi
 
         final Genesis.CollateralParam collateralParam = getBaseDao().getCollateralParamByType(mCollateralType);
         final String pDenom = collateralParam.getDebtLimit().getDenom();
-        final BigDecimal pAvailable = getBaseDao().getAvailable(pDenom);
+        final BigDecimal pAvailable = getBalance(pDenom);
 
         if (pAvailable.compareTo(BigDecimal.ZERO) <= 0) {
             Toast.makeText(getBaseContext(), R.string.error_not_enought_principal_asset, Toast.LENGTH_SHORT).show();

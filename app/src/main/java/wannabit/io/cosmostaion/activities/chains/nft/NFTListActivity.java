@@ -89,7 +89,7 @@ public class NFTListActivity extends BaseActivity implements TaskListener {
                     return;
                 }
                 Intent intent = new Intent(NFTListActivity.this, NFTCreateActivity.class);
-                BigDecimal mainAvailable = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+                BigDecimal mainAvailable = getBalance(getBaseChain().getMainDenom());
                 BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(NFTListActivity.this, getBaseChain(), CONST_PW_TX_MINT_NFT, 0);
                 if (mainAvailable.compareTo(feeAmount) <= 0) {
                     Toast.makeText(NFTListActivity.this, R.string.error_not_enough_budget, Toast.LENGTH_SHORT).show();

@@ -5,6 +5,7 @@ import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIMPLE_SEND;
 import static wannabit.io.cosmostaion.base.BaseConstant.FEE_BNB_SEND;
 import static wannabit.io.cosmostaion.base.BaseConstant.SUPPORT_BEP3_SWAP;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -36,7 +37,6 @@ import com.joom.lightsaber.Injector;
 import java.math.BigDecimal;
 import java.net.URLEncoder;
 
-import cosmos.auth.v1beta1.Auth;
 import io.reactivex.Completable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -175,19 +175,6 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
         return getFullBalance(denom).balance;
     }
 
-    public Balance getFullBalance(String denom) {
-        Balance result;
-        final Account account = getAccount();
-        try {
-            result = balancesInteractor.getBalance(account.id, denom).blockingGet();
-        } catch (Exception exception) {
-            WLog.e(exception.toString());
-            exception.printStackTrace();
-            result = new Balance(0L, denom, "", System.currentTimeMillis(), "", "");
-        }
-        return result;
-    }
-
     public void startSendMainDenom() {
         final Account account = getAccount();
         if (account == null) return;
@@ -202,7 +189,7 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
         final String mainDenom = chain.getMainDenom();
         BigDecimal mainAvailable = BigDecimal.ZERO;
         if (getBaseChain().isGRPC()) {
-            mainAvailable = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+            mainAvailable = getBalance(getBaseChain().getMainDenom());
         } else {
             try {
                 mainAvailable = getBalance(mainDenom);
@@ -240,7 +227,7 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
                 hasBalance = false;
             }
         } else if (getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
-            BigDecimal mainAvailable = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+            BigDecimal mainAvailable = getBalance(getBaseChain().getMainDenom());
             BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_HTLS_REFUND, 0);
             if (mainAvailable.subtract(feeAmount).compareTo(BigDecimal.ZERO) <= 0) {
                 hasBalance = false;
@@ -299,6 +286,31 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
         compositeDisposable.add(disposable);
     }
 
+    public Balance getFullBalance(String denom) {
+        Balance result;
+        final Account account = getAccount();
+        try {
+            result = balancesInteractor.getBalance(account.id, denom).blockingGet();
+        } catch (Exception exception) {
+            WLog.e(exception.toString());
+            exception.printStackTrace();
+            result = new Balance(0L, denom, "", System.currentTimeMillis(), "", "");
+        }
+        return result;
+    }
+
+    @SuppressLint("CheckResult")
+    public boolean hasBalance(String denom) {
+        boolean result = false;
+        final Account account = getAccount();
+        try {
+            balancesInteractor.getBalance(account.id, denom).blockingGet();
+            result = true;
+        } catch (Exception ignore) {
+        }
+        return result;
+    }
+
     private Completable updateBinanceAccount() {
         return accountsInteractor.getCurrentAccount()
                 .flatMapCompletable(account ->
@@ -320,7 +332,6 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
         return accountsInteractor.getCurrentAccount()
                 .flatMapCompletable(account -> grpcInteractor
                         .update(account, getBaseChain())
-                        .andThen(updateGrpcBalance())
                         .andThen(updateBalance(getBaseChain(), account))
                 );
     }
@@ -329,17 +340,6 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
         return balancesInteractor
                 .requestBalances(chain, account.address, account.id)
                 .ignoreElement();
-    }
-
-
-    private Completable updateGrpcBalance() {
-        return Completable.fromCallable(() -> {
-            // TODO: It will be refactored
-            if (getBaseDao().mGRpcAccount != null && !getBaseDao().mGRpcAccount.getTypeUrl().contains(Auth.BaseAccount.getDescriptor().getFullName())) {
-                WUtil.onParseVestingAccount(getBaseDao(), getBaseChain());
-            }
-            return true;
-        });
     }
 
     public void showDialog(DialogFragment dialogFragment) {

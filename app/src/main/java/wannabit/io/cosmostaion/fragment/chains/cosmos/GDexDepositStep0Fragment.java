@@ -135,8 +135,8 @@ public class GDexDepositStep0Fragment extends BaseFragment implements View.OnCli
         String coin0Denom = getSActivity().mGDexPool.getReserveCoinDenoms(0);
         String coin1Denom = getSActivity().mGDexPool.getReserveCoinDenoms(1);
 
-        mAvailable0MaxAmount = getBaseDao().getAvailable(coin0Denom);
-        mAvailable1MaxAmount = getBaseDao().getAvailable(coin1Denom);
+        mAvailable0MaxAmount = getSActivity().getBalance(coin0Denom);
+        mAvailable1MaxAmount = getSActivity().getBalance(coin1Denom);
         if (coin1Denom.equalsIgnoreCase(COSMOS_MAIN.INSTANCE.getMainDenom())) {
             mAvailable1MaxAmount = mAvailable1MaxAmount.subtract(txFeeAmount);
         }

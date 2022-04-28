@@ -14,7 +14,6 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import tendermint.p2p.Types
 import wannabit.io.cosmostaion.dao.Account
-import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.utils.WDp
 import wannabit.io.cosmostaion.utils.WLog
 import javax.inject.Inject
@@ -34,7 +33,6 @@ class GrpcInteractor @Inject constructor(
             .andThen(
                 Completable.mergeArray(
                     updateAccount(chain, account).subscribeOn(AppSchedulers.io()),
-                    updateBalance(chain, account).subscribeOn(AppSchedulers.io()),
                     updateDelegations(chain, account).subscribeOn(AppSchedulers.io()),
                     updateUndelegations(chain, account).subscribeOn(AppSchedulers.io()),
                     updateRewards(chain, account).subscribeOn(AppSchedulers.io()),
@@ -120,10 +118,6 @@ class GrpcInteractor @Inject constructor(
             }
     }
 
-    fun updateBalance(chain: BaseChain, account: Account): Completable {
-        return grpcRepository.updateBalances(chain, account)
-    }
-
     fun updateDelegations(chain: BaseChain, account: Account): Completable {
         return grpcRepository.updateDelegations(chain, account.address)
     }
@@ -174,7 +168,7 @@ class GrpcInteractor @Inject constructor(
                             validators.mapNotNull { validator ->
                                 validator.takeIf {
                                     delegations.any { it.delegation.validatorAddress == validator.operatorAddress }
-                                            || undelegations.any { it.validatorAddress == validator.operatorAddress }
+                                        || undelegations.any { it.validatorAddress == validator.operatorAddress }
                                 }
                             }
                         }

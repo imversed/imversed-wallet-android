@@ -137,7 +137,7 @@ public class ListKavaSwapFragment extends BaseFragment implements View.OnClickLi
         int InPutDecimal = WUtil.getKavaCoinDecimal(getBaseDao(), mInputCoinDenom);
         int OutPutDecimal = WUtil.getKavaCoinDecimal(getBaseDao(), mOutputCoinDenom);
 
-        BigDecimal availableMaxAmount = getBaseDao().getAvailable(mInputCoinDenom);
+        BigDecimal availableMaxAmount = getSActivity().getBalance(mInputCoinDenom);
         BigDecimal swapFee = new BigDecimal(mSwapParams.getSwapFee()).movePointLeft(18);
         mSwapFee.setText(WDp.getPercentDp(swapFee.movePointLeft(16)));
         mSwapSlippage.setText(WDp.getPercentDp(new BigDecimal("3")));

@@ -66,20 +66,15 @@ public class PoolOtherHolder extends BaseHolder {
         WDp.showCoinDp(context, baseData, coin0, itemTotalDepositSymbol0, itemTotalDepositAmount0, BaseChain.OSMOSIS_MAIN.INSTANCE);
         WDp.showCoinDp(context, baseData, coin1, itemTotalDepositSymbol1, itemTotalDepositAmount1, BaseChain.OSMOSIS_MAIN.INSTANCE);
 
-        BigDecimal availableCoin0 = baseData.getAvailable(coin0.denom);
+        BigDecimal availableCoin0 = activity.getBalance(coin0.denom);
         Coin Coin0 = new Coin(otherPool.getPoolAssets(0).getToken().getDenom(), availableCoin0.toPlainString());
-        BigDecimal availableCoin1 = baseData.getAvailable(coin1.denom);
+        BigDecimal availableCoin1 = activity.getBalance(coin1.denom);
         Coin Coin1 = new Coin(otherPool.getPoolAssets(1).getToken().getDenom(), availableCoin1.toPlainString());
 
         WDp.showCoinDp(context, baseData, Coin0, itemMyAvailableSymbol0, itemMyAvailableAmount0, BaseChain.OSMOSIS_MAIN.INSTANCE);
         WDp.showCoinDp(context, baseData, Coin1, itemMyAvailableSymbol1, itemMyAvailableAmount1, BaseChain.OSMOSIS_MAIN.INSTANCE);
 
-        itemRoot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((LabsListActivity) activity).onCheckStartJoinPool(otherPool.getId());
-            }
-        });
+        itemRoot.setOnClickListener(v -> ((LabsListActivity) activity).onCheckStartJoinPool(otherPool.getId()));
     }
 
     @Override
@@ -105,8 +100,8 @@ public class PoolOtherHolder extends BaseHolder {
         itemTotalDepositAmount1.setText(WDp.getDpAmount2(new BigDecimal(coin1.getAmount()), coin1Decimal, 6));
 
         // available
-        BigDecimal availableCoin0 = baseData.getAvailable(coin0.getDenom());
-        BigDecimal availableCoin1 = baseData.getAvailable(coin1.getDenom());
+        BigDecimal availableCoin0 = activity.getBalance(coin0.getDenom());
+        BigDecimal availableCoin1 = activity.getBalance(coin1.getDenom());
 
         WUtil.dpKavaTokenName(context, baseData, itemMyAvailableSymbol0, coin0.getDenom());
         WUtil.dpKavaTokenName(context, baseData, itemMyAvailableSymbol1, coin1.getDenom());
@@ -141,19 +136,14 @@ public class PoolOtherHolder extends BaseHolder {
         itemTotalDepositAmount0.setText(WDp.getDpAmount2(coin0Amount, coin0Decimal, 6));
         itemTotalDepositAmount1.setText(WDp.getDpAmount2(coin1Amount, coin1Decimal, 6));
 
-        BigDecimal availableCoin0 = baseData.getAvailable(coin0Denom);
+        BigDecimal availableCoin0 = activity.getBalance(coin0Denom);
         Coin Coin0 = new Coin(coin0Denom, availableCoin0.toPlainString());
-        BigDecimal availableCoin1 = baseData.getAvailable(coin1Denom);
+        BigDecimal availableCoin1 = activity.getBalance(coin1Denom);
         Coin Coin1 = new Coin(coin1Denom, availableCoin1.toPlainString());
 
         WDp.showCoinDp(context, baseData, Coin0, itemMyAvailableSymbol0, itemMyAvailableAmount0, BaseChain.COSMOS_MAIN.INSTANCE);
         WDp.showCoinDp(context, baseData, Coin1, itemMyAvailableSymbol1, itemMyAvailableAmount1, BaseChain.COSMOS_MAIN.INSTANCE);
 
-        itemRoot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                (activity).onCheckStartDepositPool(otherPool.getId());
-            }
-        });
+        itemRoot.setOnClickListener(v -> (activity).onCheckStartDepositPool(otherPool.getId()));
     }
 }

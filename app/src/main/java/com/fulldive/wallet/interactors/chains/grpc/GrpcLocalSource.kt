@@ -40,12 +40,6 @@ class GrpcLocalSource @Inject constructor(
         }
     }
 
-    fun setBalances(chain: BaseChain, balances: List<Coin>): Completable {
-        return safeCompletable {
-            baseData.mGrpcBalance = balances
-        }
-    }
-
     fun setValidators(
         chain: BaseChain,
         status: Staking.BondStatus,

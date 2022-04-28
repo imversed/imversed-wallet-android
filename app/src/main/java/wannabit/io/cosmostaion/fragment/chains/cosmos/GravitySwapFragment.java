@@ -121,7 +121,7 @@ public class GravitySwapFragment extends BaseFragment implements View.OnClickLis
     }
 
     private void onUpdateView() {
-        BigDecimal availableMaxAmount = getBaseDao().getAvailable(mInputCoinDenom);
+        BigDecimal availableMaxAmount = getSActivity().getBalance(mInputCoinDenom);
         mInPutDecimal = WUtil.getCosmosCoinDecimal(getBaseDao(), mInputCoinDenom);
         mOutPutDecimal = WUtil.getCosmosCoinDecimal(getBaseDao(), mOutputCoinDenom);
 

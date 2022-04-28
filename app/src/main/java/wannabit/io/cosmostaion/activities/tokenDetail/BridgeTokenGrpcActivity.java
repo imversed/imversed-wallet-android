@@ -34,7 +34,6 @@ import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.dao.Assets;
 import wannabit.io.cosmostaion.dialog.Dialog_IBC_Send_Warning;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
-import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.tokenDetail.TokenDetailSupportHolder;
@@ -88,10 +87,9 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        for (Coin coin : getBaseDao().mGrpcBalance) {
-            if (coin.denom.equalsIgnoreCase(getIntent().getStringExtra("denom"))) {
-                mBridgeDenom = coin.denom;
-            }
+        final String denom = getIntent().getStringExtra("denom");
+        if (hasBalance(denom)) {
+            mBridgeDenom = getFullBalance(denom).symbol;
         }
         mBtnIbcSend.setVisibility(View.VISIBLE);
 
@@ -101,7 +99,7 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
         mRecyclerView.setAdapter(mAdapter);
 
         //prepare for token history
-        mSwipeRefreshLayout.setOnRefreshListener(() -> onUpdateView());
+        mSwipeRefreshLayout.setOnRefreshListener(this::onUpdateView);
 
         onUpdateView();
         mBtnAddressPopup.setOnClickListener(this);
@@ -126,7 +124,7 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
         Picasso.get().load(ASSET_IMG_URL + assets.logo).fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(mToolbarSymbolImg);
         mToolbarSymbol.setText(assets.origin_symbol);
         mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
-        mTotalAmount = getBaseDao().getAvailable(mBridgeDenom);
+        mTotalAmount = getBalance(mBridgeDenom);
 
         final Currency currency = settingsInteractor.getCurrency();
         mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, assets.origin_symbol));
@@ -169,7 +167,7 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
             }
             final String mainDenom = getBaseChain().getMainDenom();
             final BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_IBC_TRANSFER, 0);
-            BigDecimal mainDenomAmount = getBaseDao().getAvailable(mainDenom);
+            BigDecimal mainDenomAmount = getBalance(mainDenom);
             BigDecimal availableAmount = mainDenomAmount.subtract(feeAmount);
             if (availableAmount.compareTo(BigDecimal.ZERO) <= 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_budget, Toast.LENGTH_SHORT).show();
@@ -187,7 +185,7 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
                 return;
             }
             Intent intent = new Intent(getBaseContext(), SendActivity.class);
-            BigDecimal mainAvailable = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+            BigDecimal mainAvailable = getBalance(getBaseChain().getMainDenom());
             BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_SEND, 0);
             if (mainAvailable.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
@@ -219,7 +217,7 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int position) {
             if (getItemViewType(position) == TYPE_ETH) {
                 TokenDetailSupportHolder holder = (TokenDetailSupportHolder) viewHolder;
-                holder.onBindBridgeToken(BridgeTokenGrpcActivity.this, getBaseChain(), getBaseDao(), mBridgeDenom);
+                holder.onBindBridgeToken(BridgeTokenGrpcActivity.this, getBaseDao(), mBridgeDenom);
             }
         }
 

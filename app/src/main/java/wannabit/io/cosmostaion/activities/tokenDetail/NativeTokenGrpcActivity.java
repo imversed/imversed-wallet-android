@@ -152,13 +152,13 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
             if (mNativeGrpcDenom.equalsIgnoreCase(TOKEN_ION)) {
                 mDivideDecimal = 6;
 
-                mTotalAmount = getBaseDao().getAvailable(mNativeGrpcDenom);
+                mTotalAmount = getBalance(mNativeGrpcDenom);
             }
 
         } else if (getBaseChain().equals(BaseChain.EMONEY_MAIN.INSTANCE)) {
             mToolbarSymbol.setText(mNativeGrpcDenom.toUpperCase());
             Picasso.get().load(EMONEY_COIN_IMG_URL + mNativeGrpcDenom + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(mToolbarSymbolImg);
-            mTotalAmount = getBaseDao().getAvailable(mNativeGrpcDenom);
+            mTotalAmount = getBalance(mNativeGrpcDenom);
 
         } else if (getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             if (mNativeGrpcDenom.equalsIgnoreCase(TOKEN_HARD)) {
@@ -173,7 +173,7 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
             }
             mToolbarSymbol.setText(mNativeGrpcDenom.toUpperCase());
             Picasso.get().load(KAVA_COIN_IMG_URL + mNativeGrpcDenom + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(mToolbarSymbolImg);
-            mTotalAmount = getBaseDao().getAvailable(mNativeGrpcDenom);
+            mTotalAmount = getBalance(mNativeGrpcDenom);
             if (WUtil.isBep3Coin(mNativeGrpcDenom)) {
                 mBtnIbcSend.setVisibility(View.GONE);
             }
@@ -220,7 +220,7 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
             final String mainDenom = getBaseChain().getMainDenom();
             final BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_IBC_TRANSFER, 0);
 
-            mTotalAmount = getBaseDao().getAvailable(mNativeGrpcDenom);
+            mTotalAmount = getBalance(mNativeGrpcDenom);
             if (mainDenom.equalsIgnoreCase(mNativeGrpcDenom)) {
                 mTotalAmount = mTotalAmount.subtract(feeAmount);
             }
@@ -239,7 +239,7 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
                 return;
             }
             Intent intent = new Intent(getBaseContext(), SendActivity.class);
-            BigDecimal mainAvailable = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+            BigDecimal mainAvailable = getBalance(getBaseChain().getMainDenom());
             BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_SEND, 0);
             if (mainAvailable.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();

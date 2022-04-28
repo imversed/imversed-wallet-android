@@ -1,6 +1,5 @@
 package wannabit.io.cosmostaion.widget.tokenDetail;
 
-import android.content.Context;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -15,6 +14,7 @@ import java.math.BigDecimal;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseData;
+import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.widget.BaseHolder;
 
@@ -46,18 +46,20 @@ public class TokenStakingNewHolder extends BaseHolder {
     public void onBindTokenHolder(BaseActivity baseActivity, BaseChain chain, BaseData baseData, String denom) {
         final int stakingDivideDecimal = chain.getDivideDecimal();
         final int stakingDisplayDecimal = chain.getDisplayDecimal();
-        final BigDecimal totalToken = baseData.getAllMainAsset(denom);
+        final Balance balance = baseActivity.getFullBalance(denom);
+        final BigDecimal totalToken = balance.balance.add(baseData.getAllMainAsset(denom));  //TODO: add vesting
         mTotalAmount.setText(WDp.getDpAmount2(totalToken, stakingDivideDecimal, stakingDisplayDecimal));
-        mAvailableAmount.setText(WDp.getDpAmount2(baseData.getAvailable(denom), stakingDivideDecimal, stakingDisplayDecimal));
+        mAvailableAmount.setText(WDp.getDpAmount2(balance.balance, stakingDivideDecimal, stakingDisplayDecimal));
         mDelegatedAmount.setText(WDp.getDpAmount2(baseData.getDelegationSum(), stakingDivideDecimal, stakingDisplayDecimal));
         mUnbondingAmount.setText(WDp.getDpAmount2(baseData.getUndelegationSum(), stakingDivideDecimal, stakingDisplayDecimal));
         mRewardAmount.setText(WDp.getDpAmount2(baseData.getRewardSum(denom), stakingDivideDecimal, stakingDisplayDecimal));
 
-        final BigDecimal vestingAmount = baseData.getVesting(denom);
-        if (vestingAmount.compareTo(BigDecimal.ZERO) > 0) {
-            mVestingLayer.setVisibility(View.VISIBLE);
-            mVestingAmount.setText(WDp.getDpAmount2(vestingAmount, stakingDivideDecimal, stakingDisplayDecimal));
-        }
+// TODO: Vesting
+//        final BigDecimal vestingAmount = baseData.getVesting(denom);
+//        if (vestingAmount.compareTo(BigDecimal.ZERO) > 0) {
+//            mVestingLayer.setVisibility(View.VISIBLE);
+//            mVestingAmount.setText(WDp.getDpAmount2(vestingAmount, stakingDivideDecimal, stakingDisplayDecimal));
+//        }
         mCardRoot.setCardBackgroundColor(WDp.getChainBgColor(baseActivity, chain));
     }
 }

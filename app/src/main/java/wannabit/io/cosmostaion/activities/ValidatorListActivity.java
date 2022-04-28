@@ -141,7 +141,8 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
         }
         if (getBaseChain().isGRPC()) {
             String cosmostation = "";
-            BigDecimal delegatableAmount = getBaseDao().getDelegatable(getBaseChain().getMainDenom());
+            final Balance balance = getFullBalance(getBaseChain().getMainDenom());
+            BigDecimal delegatableAmount = balance.balance; // TODO add(getVesting(denom))
             BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
             if (delegatableAmount.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_to_delegate, Toast.LENGTH_SHORT).show();
@@ -211,9 +212,10 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
                 Toast.makeText(getBaseContext(), R.string.str_multi_reward_max_16, Toast.LENGTH_SHORT).show();
             }
 
-            BigDecimal available = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+            final String mainDenom = getBaseChain().getMainDenom();
+            final Balance balance = getFullBalance(mainDenom);
             BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_REWARD, toClaimRewards.size());
-            if (available.compareTo(feeAmount) < 0) {
+            if (balance.balance.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return;
             }

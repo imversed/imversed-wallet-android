@@ -133,7 +133,7 @@ public class RepayCdpStep0Fragment extends BaseFragment implements View.OnClickL
         setDpDecimals(WUtil.getKavaCoinDecimal(getBaseDao(), pDenom));
         mCurrentPrice = getSActivity().getKavaOraclePrice();
 
-        pAvailableAmount = getBaseDao().getAvailable(pDenom);
+        pAvailableAmount = getSActivity().getBalance(pDenom);
         pAllAmount = WUtil.getEstimatedTotalDebt(getContext(), getOwenCdp(), getCParam());
 
         BigDecimal debtFloor = new BigDecimal(getCdpParam().getDebtParam().getDebtFloor());

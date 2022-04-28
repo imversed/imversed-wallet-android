@@ -126,7 +126,7 @@ public class EarningDetailActivity extends BaseActivity implements View.OnClickL
         mPoolAprsTv7.setText(WDp.getPercentDp(apr7));
         mPoolAprsTv14.setText(WDp.getPercentDp(apr14));
 
-        BigDecimal availableAmount = getBaseDao().getAvailable("gamm/pool/" + mPool.getId());
+        BigDecimal availableAmount = getBalance("gamm/pool/" + mPool.getId());
         BigDecimal availableValue = availableAmount.multiply(lpCoinPrice).movePointLeft(18).setScale(2, RoundingMode.DOWN);
         mAvailableAmountTv.setText(WDp.getDpAmount2(availableAmount, 18, 18));
         mAvailableDenomTv.setText("GAMM-" + mPool.getId());
@@ -202,7 +202,7 @@ public class EarningDetailActivity extends BaseActivity implements View.OnClickL
             return;
         }
 
-        BigDecimal availableAmount = getBaseDao().getAvailable("gamm/pool/" + mPool.getId());
+        BigDecimal availableAmount = getBalance("gamm/pool/" + mPool.getId());
         if (availableAmount.compareTo(BigDecimal.ZERO) <= 0) {
             Toast.makeText(EarningDetailActivity.this, R.string.error_not_enough_to_balance, Toast.LENGTH_SHORT).show();
             return;

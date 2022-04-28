@@ -109,25 +109,27 @@ public class HtlcSendStep2Fragment extends BaseFragment implements View.OnClickL
     }
 
     private void onUpdateInitInfo() {
+        BigDecimal available = getSActivity().getAvailable();
+
         if (getSActivity().getBaseChain().equals(BaseChain.BNB_MAIN.INSTANCE)) {
             mDecimal = 8;
             setDpDecimals(mDecimal);
             if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_BNB) || mToSwapDenom.equals(TOKEN_HTLC_BINANCE_TEST_BNB)) {
                 mDenomTitle.setText(getString(R.string.str_bnb_c));
                 mDenomTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorBnb));
-                mMaxAvailable = getSActivity().getAvailable().subtract(new BigDecimal(FEE_BNB_SEND));
+                mMaxAvailable = available.subtract(new BigDecimal(FEE_BNB_SEND));
             } else if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_BTCB) || mToSwapDenom.equals(TOKEN_HTLC_BINANCE_TEST_BTC)) {
                 mDenomTitle.setText(getString(R.string.str_btc_c));
                 mDenomTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
-                mMaxAvailable = getSActivity().getAvailable();
+                mMaxAvailable = available;
             } else if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_XRPB)) {
                 mDenomTitle.setText("XRP");
                 mDenomTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
-                mMaxAvailable = getSActivity().getAvailable();
+                mMaxAvailable = available;
             } else if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_BUSD)) {
                 mDenomTitle.setText("BUSD");
                 mDenomTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
-                mMaxAvailable = getSActivity().getAvailable();
+                mMaxAvailable = available;
             }
             // check relayer capacity
             BigDecimal remainCap = getSActivity().mRemainCap.movePointLeft(mDecimal);
@@ -159,7 +161,7 @@ public class HtlcSendStep2Fragment extends BaseFragment implements View.OnClickL
                 mDenomTitle.setText("BUSD");
                 mDenomTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
             }
-            mMaxAvailable = getSActivity().getAvailable();
+            mMaxAvailable = available;
             // check relayer capacity
             BigDecimal maxOnce = getSActivity().mMaxOnce;
             if (mMaxAvailable.compareTo(maxOnce) > 0) {

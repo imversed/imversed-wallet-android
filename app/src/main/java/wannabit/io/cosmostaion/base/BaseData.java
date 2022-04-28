@@ -427,8 +427,6 @@ public class BaseData {
     public List<Staking.Validator> mGRpcAllValidators = new ArrayList<>();
     public List<Staking.Validator> mGRpcMyValidators = new ArrayList<>();
 
-    public List<Coin> mGrpcBalance = new ArrayList<>();
-    public List<Coin> mGrpcVesting = new ArrayList<>();
     public List<Staking.DelegationResponse> mGrpcDelegations = new ArrayList<>();
     public List<Staking.UnbondingDelegation> mGrpcUndelegations = new ArrayList<>();
     public List<Distribution.DelegationDelegatorReward> mGrpcRewards = new ArrayList<>();
@@ -455,27 +453,6 @@ public class BaseData {
             return mGRpcNodeInfo.getNetwork();
         }
         return "";
-    }
-
-
-    public BigDecimal getAvailable(String denom) {
-        BigDecimal result = BigDecimal.ZERO;
-        for (Coin coin : mGrpcBalance) {
-            if (coin.denom.equalsIgnoreCase(denom)) {
-                result = new BigDecimal(coin.amount);
-            }
-        }
-        return result;
-    }
-
-    public BigDecimal getVesting(String denom) {
-        BigDecimal result = BigDecimal.ZERO;
-        for (Coin coin : mGrpcVesting) {
-            if (coin.denom.equalsIgnoreCase(denom)) {
-                result = new BigDecimal(coin.amount);
-            }
-        }
-        return result;
     }
 
     public ArrayList<Vesting.Period> onParseRemainVestingsByDenom(String denom) {
@@ -527,10 +504,6 @@ public class BaseData {
             }
         }
         return result;
-    }
-
-    public BigDecimal getDelegatable(String denom) {
-        return getAvailable(denom).add(getVesting(denom));
     }
 
     public BigDecimal getDelegationSum() {
@@ -616,7 +589,7 @@ public class BaseData {
     }
 
     public BigDecimal getAllMainAsset(String denom) {
-        return getAvailable(denom).add(getVesting(denom)).add(getDelegationSum()).add(getUndelegationSum()).add(getRewardSum(denom));
+        return getDelegationSum().add(getUndelegationSum()).add(getRewardSum(denom));
     }
 
     public Staking.Validator getValidatorInfo(String valOpAddress) {
@@ -1023,8 +996,6 @@ public class BaseData {
         mGRpcAllValidators = new ArrayList<>();
         mGRpcMyValidators = new ArrayList<>();
 
-        mGrpcBalance = new ArrayList<>();
-        mGrpcVesting = new ArrayList<>();
         mGrpcDelegations = new ArrayList<>();
         mGrpcUndelegations = new ArrayList<>();
         mGrpcRewards = new ArrayList<>();

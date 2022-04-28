@@ -250,9 +250,11 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
             return;
         }
         final BaseData baseData = getBaseDao();
-        if (getBaseChain().equals(KAVA_MAIN.INSTANCE)) {
-            BigDecimal available = baseData.getAvailable(getBaseChain().getMainDenom());
-            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_CLAIM_INCENTIVE, 0);
+        final BaseChain baseChain = getBaseChain();
+        final String mainDenom = baseChain.getMainDenom();
+        final BigDecimal available = getBalance(mainDenom);
+        if (baseChain.equals(KAVA_MAIN.INSTANCE)) {
+            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, baseChain, CONST_PW_TX_CLAIM_INCENTIVE, 0);
             if (available.compareTo(txFee) <= 0) {
                 Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return;
@@ -266,9 +268,8 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
             Intent intent = new Intent(MainActivity.this, ClaimIncentiveActivity.class);
             startActivity(intent);
 
-        } else if (getBaseChain().equals(SIF_MAIN.INSTANCE)) {
-            BigDecimal available = baseData.getAvailable(getBaseChain().getMainDenom());
-            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_SIF_CLAIM_INCENTIVE, 0);
+        } else if (baseChain.equals(SIF_MAIN.INSTANCE)) {
+            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, baseChain, CONST_PW_TX_SIF_CLAIM_INCENTIVE, 0);
             if (available.compareTo(txFee) <= 0) {
                 Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return;

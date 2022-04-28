@@ -126,7 +126,7 @@ public class KavaSwapStep0Fragment extends BaseFragment implements View.OnClickL
         mOutputCoinDecimal = WUtil.getKavaCoinDecimal(getBaseDao(), getSActivity().mOutputDenom);
         setDpDecimals(mInputCoinDecimal);
 
-        mAvailableMaxAmount = getBaseDao().getAvailable(getSActivity().mInputDenom);
+        mAvailableMaxAmount = getSActivity().getBalance(getSActivity().mInputDenom);
         BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getContext(), getSActivity().getBaseChain(), CONST_PW_TX_KAVA_SWAP, 0);
         if (getSActivity().mInputDenom.equals(TOKEN_KAVA)) {
             mAvailableMaxAmount = mAvailableMaxAmount.subtract(txFee);

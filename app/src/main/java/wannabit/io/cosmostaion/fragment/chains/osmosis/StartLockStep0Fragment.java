@@ -84,7 +84,7 @@ public class StartLockStep0Fragment extends BaseFragment implements View.OnClick
 
     private void onInitView() {
         mLpDenom = "gamm/pool/" + getSActivity().mOsmosisPool.getId();
-        mAvailableMaxAmount = getBaseDao().getAvailable(mLpDenom);
+        mAvailableMaxAmount = getSActivity().getBalance(mLpDenom);
         setDpDecimals(mCoinDecimal);
 
         WDp.showCoinDp(getSActivity(), getBaseDao(), mLpDenom, mAvailableMaxAmount.toString(), mLpCoinDenom, mLpCoinAmount, BaseChain.OSMOSIS_MAIN.INSTANCE);

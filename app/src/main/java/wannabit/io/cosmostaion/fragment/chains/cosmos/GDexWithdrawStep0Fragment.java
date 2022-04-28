@@ -99,7 +99,7 @@ public class GDexWithdrawStep0Fragment extends BaseFragment implements View.OnCl
         mProgress.setVisibility(View.GONE);
 
         String lpDenom = getSActivity().mGDexPool.getPoolCoinDenom();
-        mAvailableMaxAmount = getBaseDao().getAvailable(lpDenom);
+        mAvailableMaxAmount = getSActivity().getBalance(lpDenom);
         setDpDecimals(mCoinDecimal);
 
         WUtil.DpCosmosTokenImg(getBaseDao(), mLpCoinImg, lpDenom);

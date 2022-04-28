@@ -28,6 +28,34 @@ class BalancesInteractor @Inject constructor(
 
     fun getBalances(accountId: Long): Single<List<Balance>> {
         return balancesRepository.getBalances(accountId)
+//    TODO: add filter for zero balances. and add zero balance for main denom if it doesn't exists. vesting
+//    .map { balances ->
+//        var items = balances
+//            .mapNotNull { coin ->
+//                safe {
+//                    coin
+//                        .takeIf {
+//                            it.denom.equals(chain.mainDenom, true) || it.amount.toInt() > 0
+//                        }
+//                        ?.let { Coin(it.denom, it.amount) }
+//                }
+//            }
+//        if (!items.any { it.denom == chain.mainDenom }) {
+//            items = listOf(Coin(chain.mainDenom, "0")) + items
+//        }
+//        items
+//    }
+//            .flatMapCompletable(Function<List<Balance?>, CompletableSource> { balances: List<Balance?>? ->
+//                Completable.fromCallable {
+//                    if (getBaseDao().mGRpcAccount != null && !getBaseDao().mGRpcAccount.getTypeUrl()
+//                            .contains(Auth.BaseAccount.getDescriptor().fullName)
+//                    ) {
+//                        WUtil.onParseVestingAccount(getBaseDao(), getBaseChain(), balances)
+//                    }
+//                    true
+//                }
+//            })
+
     }
 
     fun deleteBalances(accountId: Long): Completable {
@@ -76,7 +104,7 @@ class BalancesInteractor @Inject constructor(
             }
             else -> {
                 grpcInteractor.requestBalances(chain, address).map { coins ->
-                    coins.map { coin ->
+                    coins.mapNotNull { coin ->
                         WalletBalance.create(
                             accountId = accountId,
                             symbol = coin.denom,

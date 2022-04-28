@@ -132,14 +132,14 @@ public class SifDexListActivity extends BaseActivity implements TaskListener {
             return;
         }
 
-        BigDecimal available = getBaseDao().getAvailable(getBaseChain().getMainDenom());
+        BigDecimal available = getBalance(getBaseChain().getMainDenom());
         BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_SIF_SWAP, 0);
         if (available.compareTo(txFee) < 0) {
             Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
             return;
         }
 
-        BigDecimal inputBalance = getBaseDao().getAvailable(inCoinDenom);
+        BigDecimal inputBalance = getBalance(inCoinDenom);
         if (BigDecimal.ZERO.compareTo(inputBalance) >= 0) {
             Toast.makeText(this, R.string.error_not_enough_balance_to_vote, Toast.LENGTH_SHORT).show();
             return;
@@ -171,9 +171,9 @@ public class SifDexListActivity extends BaseActivity implements TaskListener {
 
         BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(SifDexListActivity.this, getBaseChain(), CONST_PW_TX_SIF_JOIN_POOL, 0);
         String externalDenom = pool.getExternalAsset().getSymbol();
-        BigDecimal rowanAvailable = getBaseDao().getAvailable(TOKEN_SIF);
+        BigDecimal rowanAvailable = getBalance(TOKEN_SIF);
         rowanAvailable = rowanAvailable.subtract(feeAmount);
-        BigDecimal externalAvailable = getBaseDao().getAvailable(externalDenom);
+        BigDecimal externalAvailable = getBalance(externalDenom);
 
         if (rowanAvailable.compareTo(BigDecimal.ZERO) <= 0 || externalAvailable.compareTo(BigDecimal.ZERO) <= 0) {
             Toast.makeText(SifDexListActivity.this, R.string.error_not_enough_to_deposit_pool, Toast.LENGTH_SHORT).show();
@@ -193,7 +193,7 @@ public class SifDexListActivity extends BaseActivity implements TaskListener {
         }
 
         BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(SifDexListActivity.this, getBaseChain(), CONST_PW_TX_SIF_EXIT_POOL, 0);
-        BigDecimal rowanAvailable = getBaseDao().getAvailable(TOKEN_SIF);
+        BigDecimal rowanAvailable = getBalance(TOKEN_SIF);
         rowanAvailable = rowanAvailable.subtract(feeAmount);
 
         if (rowanAvailable.compareTo(BigDecimal.ZERO) <= 0) {

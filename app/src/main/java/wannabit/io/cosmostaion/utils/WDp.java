@@ -1180,8 +1180,9 @@ public class WDp {
         return new BigDecimal(baseData.mKavaTokenPrice.get(feedSymbol).getPrice()).movePointLeft(18);
     }
 
-    public static BigDecimal convertTokenToKava(BaseData baseData, String denom) {
-        BigDecimal tokenAmount = baseData.getAvailable(denom).add(baseData.getVesting(denom));
+    public static BigDecimal convertTokenToKava(BaseData baseData, Balance balance) {
+        String denom = balance.symbol;
+        BigDecimal tokenAmount = balance.balance; // baseData.getAvailable(denom).add(baseData.getVesting(denom));
         BigDecimal totalTokenValue = kavaTokenDollorValue(baseData, denom, tokenAmount);
         return totalTokenValue.movePointRight(6).divide(perUsdValue(baseData, BaseChain.KAVA_MAIN.INSTANCE.getMainDenom()), 6, RoundingMode.DOWN);
     }
@@ -1323,49 +1324,49 @@ public class WDp {
     public static BigDecimal allAssetToUserCurrency(BaseChain baseChain, Currency currency, BaseData baseData, List<Balance> balances) {
         BigDecimal totalValue = BigDecimal.ZERO;
         if (baseChain.isGRPC()) {
-            for (Coin coin : baseData.mGrpcBalance) {
-                if (coin.denom.equals(baseChain.getMainDenom())) {
-                    BigDecimal amount = baseData.getAllMainAsset(coin.denom);
-                    BigDecimal assetValue = userCurrencyValue(baseData, currency, coin.denom, amount, baseChain.getDivideDecimal());
+            for (Balance balance : balances) {
+                if (balance.symbol.equals(baseChain.getMainDenom())) {
+                    BigDecimal amount = balance.balance.add(baseData.getAllMainAsset(balance.symbol));   //TODO: add vesting
+                    BigDecimal assetValue = userCurrencyValue(baseData, currency, balance.symbol, amount, baseChain.getDivideDecimal());
                     totalValue = totalValue.add(assetValue);
-                } else if (baseChain.equals(BaseChain.COSMOS_MAIN.INSTANCE) && coin.denom.startsWith("pool")) {
-                    BigDecimal amount = baseData.getAvailable(coin.denom);
-                    BigDecimal assetValue = userCurrencyValue(baseData, currency, coin.denom, amount, 6);
+                } else if (baseChain.equals(BaseChain.COSMOS_MAIN.INSTANCE) && balance.symbol.startsWith("pool")) {
+                    BigDecimal amount = balance.balance;
+                    BigDecimal assetValue = userCurrencyValue(baseData, currency, balance.symbol, amount, 6);
                     totalValue = totalValue.add(assetValue);
-                } else if (baseChain.equals(BaseChain.OSMOSIS_MAIN.INSTANCE) && coin.denom.equals(TOKEN_ION)) {
-                    BigDecimal amount = baseData.getAvailable(coin.denom);
-                    BigDecimal assetValue = userCurrencyValue(baseData, currency, coin.denom, amount, 6);
+                } else if (baseChain.equals(BaseChain.OSMOSIS_MAIN.INSTANCE) && balance.symbol.equals(TOKEN_ION)) {
+                    BigDecimal amount = balance.balance;
+                    BigDecimal assetValue = userCurrencyValue(baseData, currency, balance.symbol, amount, 6);
                     totalValue = totalValue.add(assetValue);
-                } else if (baseChain.equals(BaseChain.OSMOSIS_MAIN.INSTANCE) && coin.denom.contains("gamm/pool")) {
-                    BigDecimal amount = baseData.getAvailable(coin.denom);
-                    BigDecimal assetValue = userCurrencyValue(baseData, currency, coin.denom, amount, 18);
+                } else if (baseChain.equals(BaseChain.OSMOSIS_MAIN.INSTANCE) && balance.symbol.contains("gamm/pool")) {
+                    BigDecimal amount = balance.balance;
+                    BigDecimal assetValue = userCurrencyValue(baseData, currency, balance.symbol, amount, 18);
                     totalValue = totalValue.add(assetValue);
-                } else if (baseChain.equals(BaseChain.SIF_MAIN.INSTANCE) && coin.denom.startsWith("c")) {
-                    BigDecimal amount = baseData.getAvailable(coin.denom);
-                    int decimal = WUtil.getSifCoinDecimal(baseData, coin.denom);
-                    BigDecimal assetValue = userCurrencyValue(baseData, currency, coin.denom.substring(1), amount, decimal);
+                } else if (baseChain.equals(BaseChain.SIF_MAIN.INSTANCE) && balance.symbol.startsWith("c")) {
+                    BigDecimal amount = balance.balance;
+                    int decimal = WUtil.getSifCoinDecimal(baseData, balance.symbol);
+                    BigDecimal assetValue = userCurrencyValue(baseData, currency, balance.symbol.substring(1), amount, decimal);
                     totalValue = totalValue.add(assetValue);
-                } else if (baseChain.equals(BaseChain.EMONEY_MAIN.INSTANCE) || coin.denom.startsWith("e")) {
-                    BigDecimal available = baseData.getAvailable(coin.denom);
-                    totalValue = totalValue.add(userCurrencyValue(baseData, currency, coin.denom, available, 6));
-                } else if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE) && !coin.isIbc()) {
-                    BigDecimal amount = baseData.getAvailable(coin.denom);
-                    amount = amount.add(baseData.getVesting(coin.denom));
-                    String kavaDenom = WDp.getKavaBaseDenom(coin.denom);
-                    int kavaDecimal = WUtil.getKavaCoinDecimal(baseData, coin.denom);
+                } else if (baseChain.equals(BaseChain.EMONEY_MAIN.INSTANCE) || balance.symbol.startsWith("e")) {
+                    BigDecimal available = balance.balance;
+                    totalValue = totalValue.add(userCurrencyValue(baseData, currency, balance.symbol, available, 6));
+                } else if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE) && !balance.isIbc()) {
+                    BigDecimal amount = balance.balance;
+//                    amount = amount.add(baseData.getVesting(balance.symbol)); // TODO Vesting
+                    String kavaDenom = WDp.getKavaBaseDenom(balance.symbol);
+                    int kavaDecimal = WUtil.getKavaCoinDecimal(baseData, balance.symbol);
                     BigDecimal assetValue = userCurrencyValue(baseData, currency, kavaDenom, amount, kavaDecimal);
                     totalValue = totalValue.add(assetValue);
-                } else if (baseChain.equals(BaseChain.GRABRIDGE_MAIN.INSTANCE) && coin.denom.startsWith("gravity")) {
-                    Assets assets = baseData.getAsset(coin.denom);
-                    BigDecimal available = baseData.getAvailable(assets.denom);
+                } else if (baseChain.equals(BaseChain.GRABRIDGE_MAIN.INSTANCE) && balance.symbol.startsWith("gravity")) {
+                    Assets assets = baseData.getAsset(balance.symbol);
+                    BigDecimal available = balance.balance;
                     totalValue = totalValue.add(userCurrencyValue(baseData, currency, assets.origin_symbol, available, assets.decimal));
-                } else if (baseChain.equals(BaseChain.INJ_MAIN.INSTANCE) && coin.denom.startsWith("peggy")) {
-                    Assets assets = baseData.getAsset(coin.denom);
-                    BigDecimal available = baseData.getAvailable(assets.denom);
+                } else if (baseChain.equals(BaseChain.INJ_MAIN.INSTANCE) && balance.symbol.startsWith("peggy")) {
+                    Assets assets = baseData.getAsset(balance.symbol);
+                    BigDecimal available = balance.balance;
                     totalValue = totalValue.add(userCurrencyValue(baseData, currency, assets.origin_symbol, available, assets.decimal));
-                } else if (coin.isIbc()) {
-                    BigDecimal amount = baseData.getAvailable(coin.denom);
-                    IbcToken ibcToken = baseData.getIbcToken(coin.denom);
+                } else if (balance.isIbc()) {
+                    BigDecimal amount = balance.balance;
+                    IbcToken ibcToken = baseData.getIbcToken(balance.symbol);
                     if (ibcToken != null && ibcToken.auth) {
                         BigDecimal assetValue = userCurrencyValue(baseData, currency, ibcToken.base_denom, amount, ibcToken.decimal);
                         totalValue = totalValue.add(assetValue);
