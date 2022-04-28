@@ -18,6 +18,7 @@ import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.kava.BorrowCdpActivity;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 
@@ -73,13 +74,14 @@ public class DrawDebtCdpStep3Fragment extends BaseFragment implements View.OnCli
         final String cDenom = getCParam().getDenom();
         final String pDenom = getCParam().getDebtLimit().getDenom();
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
+        final PriceProvider priceProvider = getSActivity()::getPrice;
 
         WDp.showCoinDp(getContext(), getBaseDao(), pDenom, getSActivity().mPrincipal.amount, mLoanDenom, mLoanAmount, getSActivity().getBaseChain());
         BigDecimal moreLoanValue = new BigDecimal(getSActivity().mPrincipal.amount).movePointLeft(WUtil.getKavaCoinDecimal(getBaseDao(), pDenom));
         mLoanValue.setText(WDp.getDpRawDollor(getContext(), moreLoanValue, 2));
 
         WDp.showCoinDp(getContext(), getBaseDao(), TOKEN_KAVA, feeAmount.toPlainString(), mFeesDenom, mFeesAmount, getSActivity().getBaseChain());
-        BigDecimal kavaValue = WDp.usdValue(getBaseDao(), TOKEN_KAVA, feeAmount, 6);
+        BigDecimal kavaValue = WDp.usdValue(getBaseDao(), TOKEN_KAVA, feeAmount, 6, priceProvider);
         mFeeValue.setText(WDp.getDpRawDollor(getContext(), kavaValue, 2));
 
         WDp.DpRiskRate(getContext(), getSActivity().mBeforeRiskRate, mBeforeRiskTv, null);

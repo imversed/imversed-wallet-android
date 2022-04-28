@@ -24,7 +24,9 @@ import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.osmosis.LabsListActivity;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
+import wannabit.io.cosmostaion.dao.Price;
 import wannabit.io.cosmostaion.dialog.Dialog_Swap_Coin_List;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WLog;
 import wannabit.io.cosmostaion.utils.WUtil;
@@ -159,8 +161,9 @@ public class ListSwapFragment extends BaseFragment implements View.OnClickListen
         WUtil.dpOsmosisTokenName(getSActivity(), getBaseDao(), mSwapInputCoinExSymbol, mInputCoinDenom);
         WUtil.dpOsmosisTokenName(getSActivity(), getBaseDao(), mSwapOutputCoinExSymbol, mOutputCoinDenom);
 
-        BigDecimal priceInput = WDp.perUsdValue(getBaseDao(), getBaseDao().getBaseDenom(mInputCoinDenom));
-        BigDecimal priceOutput = WDp.perUsdValue(getBaseDao(), getBaseDao().getBaseDenom(mOutputCoinDenom));
+        final PriceProvider priceProvider = getBaseActivity()::getPrice;
+        BigDecimal priceInput = WDp.perUsdValue(getBaseDao(), getBaseDao().getBaseDenom(mInputCoinDenom), priceProvider);
+        BigDecimal priceOutput = WDp.perUsdValue(getBaseDao(), getBaseDao().getBaseDenom(mOutputCoinDenom), priceProvider);
         BigDecimal priceRate = BigDecimal.ZERO;
         if (priceInput.compareTo(BigDecimal.ZERO) == 0 || priceOutput.compareTo(BigDecimal.ZERO) == 0) {
             mSwapOutputCoinExRate.setText("??????");

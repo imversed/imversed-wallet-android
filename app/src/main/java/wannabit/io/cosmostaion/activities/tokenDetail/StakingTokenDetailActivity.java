@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fulldive.wallet.models.Currency;
+import com.fulldive.wallet.models.WalletBalance;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.squareup.picasso.Picasso;
 
@@ -31,8 +32,9 @@ import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.SendActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseData;
-import wannabit.io.cosmostaion.dao.Balance;
+import wannabit.io.cosmostaion.dao.Price;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.BaseHolder;
@@ -136,9 +138,11 @@ public class StakingTokenDetailActivity extends BaseActivity implements View.OnC
         mToolbarSymbolImg.setImageResource(getBaseChain().getCoinIcon());
         WDp.DpMainDenom(getBaseChain(), mToolbarSymbol);
 
-        mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(baseData, currency, mMainDenom));
-        mItemUpDownPrice.setText(WDp.dpValueChange(baseData, mMainDenom));
-        final BigDecimal lastUpDown = WDp.valueChange(baseData, mMainDenom);
+        final PriceProvider priceProvider = this::getPrice;
+        mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(baseData, currency, mMainDenom, priceProvider));
+        final Price price = getPrice(mMainDenom);
+        mItemUpDownPrice.setText(WDp.dpValueChange(price));
+        final BigDecimal lastUpDown = WDp.valueChange(price);
         if (lastUpDown.compareTo(BigDecimal.ZERO) > 0) {
             mItemUpDownImg.setVisibility(View.VISIBLE);
             mItemUpDownImg.setImageResource(R.drawable.ic_price_up);
@@ -155,9 +159,9 @@ public class StakingTokenDetailActivity extends BaseActivity implements View.OnC
         if (getAccount().hasPrivateKey) {
             mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), getBaseChain()), android.graphics.PorterDuff.Mode.SRC_IN);
         }
-        final Balance balance = getFullBalance(mMainDenom);
-        mTotalAmount = balance.getDelegatableAmount().add(baseData.getAllMainAssetOld(balance.symbol));
-        mTotalValue.setText(WDp.dpUserCurrencyValue(baseData, currency, mMainDenom, mTotalAmount, mDivideDecimal));
+        final WalletBalance balance = getFullBalance(mMainDenom);
+        mTotalAmount = balance.getDelegatableAmount().add(baseData.getAllMainAssetOld(balance.getDenom()));
+        mTotalValue.setText(WDp.dpUserCurrencyValue(baseData, currency, mMainDenom, mTotalAmount, mDivideDecimal, priceProvider));
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

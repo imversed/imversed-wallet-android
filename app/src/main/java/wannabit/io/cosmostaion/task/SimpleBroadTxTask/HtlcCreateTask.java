@@ -53,7 +53,6 @@ import wannabit.io.cosmostaion.cosmos.Signer;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.crypto.Sha256;
 import wannabit.io.cosmostaion.dao.Account;
-import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.model.type.Fee;
 import wannabit.io.cosmostaion.network.ApiClient;

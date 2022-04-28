@@ -15,6 +15,7 @@ import kava.cdp.v1beta1.Genesis;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.kava.CdpDetail5Activity;
 import wannabit.io.cosmostaion.base.BaseData;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 
@@ -66,7 +67,9 @@ public class CdpDetailMyAvailableHolder extends BaseHolder {
         mEmptyPrincipalValue.setText(WDp.getDpRawDollor(context, principalValue, 2));
 
         mEmptyKavaAmount.setText(WDp.getDpAmount2(kAvailable, WUtil.getKavaCoinDecimal(baseData, TOKEN_KAVA), WUtil.getKavaCoinDecimal(baseData, TOKEN_KAVA)));
-        BigDecimal kavaValue = WDp.usdValue(baseData, TOKEN_KAVA, kAvailable, 6);
+
+        final PriceProvider priceProvider = context::getPrice;
+        BigDecimal kavaValue = WDp.usdValue(baseData, TOKEN_KAVA, kAvailable, 6, priceProvider);
         mEmptyKavaValue.setText(WDp.getDpRawDollor(context, kavaValue, 2));
 
         WUtil.DpKavaTokenImg(baseData, mEmptyCollateralImg, cDenom);

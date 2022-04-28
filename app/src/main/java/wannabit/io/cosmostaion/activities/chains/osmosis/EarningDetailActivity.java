@@ -39,6 +39,7 @@ import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.utils.OsmosisGaugeWrapper;
 import wannabit.io.cosmostaion.utils.OsmosisPeriodLockWrapper;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WLog;
 import wannabit.io.cosmostaion.utils.WUtil;
@@ -105,14 +106,15 @@ public class EarningDetailActivity extends BaseActivity implements View.OnClickL
         } catch (Exception e) {
             WLog.w("Passing bundle Error");
         }
+        final PriceProvider priceProvider = this::getPrice;
 
         //display top card data
         Coin coin0 = new Coin(mPool.getPoolAssets(0).getToken().getDenom(), mPool.getPoolAssets(0).getToken().getAmount());
         Coin coin1 = new Coin(mPool.getPoolAssets(1).getToken().getDenom(), mPool.getPoolAssets(1).getToken().getAmount());
-        BigDecimal lpCoinPrice = WUtil.getOsmoLpTokenPerUsdPrice(getBaseDao(), mPool);
-        BigDecimal apr1 = WUtil.getPoolArp(getBaseDao(), mPool, mGauges, 0);
-        BigDecimal apr7 = WUtil.getPoolArp(getBaseDao(), mPool, mGauges, 1);
-        BigDecimal apr14 = WUtil.getPoolArp(getBaseDao(), mPool, mGauges, 2);
+        BigDecimal lpCoinPrice = WUtil.getOsmoLpTokenPerUsdPrice(getBaseDao(), mPool, priceProvider);
+        BigDecimal apr1 = WUtil.getPoolArp(getBaseDao(), mPool, mGauges, 0, priceProvider);
+        BigDecimal apr7 = WUtil.getPoolArp(getBaseDao(), mPool, mGauges, 1, priceProvider);
+        BigDecimal apr14 = WUtil.getPoolArp(getBaseDao(), mPool, mGauges, 2, priceProvider);
 
         if (mLockUps.size() > 0) {
             mPoolIdTv.setText("#" + mPool.getId() + " MY EARNING");

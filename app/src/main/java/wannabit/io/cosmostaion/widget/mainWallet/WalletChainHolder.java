@@ -15,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.WalletBalance;
 import com.fulldive.wallet.presentation.main.MainActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -35,8 +36,8 @@ import wannabit.io.cosmostaion.activities.chains.sif.SifDexListActivity;
 import wannabit.io.cosmostaion.activities.chains.starname.StarNameListActivity;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.dao.Account;
-import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.BaseHolder;
@@ -81,14 +82,15 @@ public class WalletChainHolder extends BaseHolder {
         final int displayDecimal = 6;
         mTvChainCard.setCardBackgroundColor(WDp.getChainBgColor(mainActivity, mainActivity.getBaseChain()));
         WUtil.getWalletData(mainActivity.getBaseChain(), mTvChainIcon, mTvChainDenom);
-        final Balance balance = mainActivity.getFullBalance(denom);
+        final WalletBalance balance = mainActivity.getFullBalance(denom);
 
-        final BigDecimal availableAmount = balance.balance;
+        final BigDecimal availableAmount = balance.getBalanceAmount();
         final BigDecimal vestingAmount = BigDecimal.ZERO; //baseData.getVesting(denom);
         final BigDecimal delegateAmount = baseData.getDelegationSum();
         final BigDecimal unbondingAmount = baseData.getUndelegationSum();
         final BigDecimal rewardAmount = baseData.getRewardSum(denom);
-        final BigDecimal totalAmount = balance.balance.add(baseData.getAllMainAsset(denom));   //TODO: add vesting
+        final BigDecimal totalAmount = balance.getBalanceAmount().add(baseData.getAllMainAsset(denom));   //TODO: add vesting
+        final PriceProvider priceProvider = mainActivity::getPrice;
 
         mTvChainTotal.setText(WDp.getDpAmount2(totalAmount, divideDecimal, displayDecimal));
         mTvChainAvailable.setText(WDp.getDpAmount2(availableAmount, divideDecimal, displayDecimal));
@@ -96,7 +98,7 @@ public class WalletChainHolder extends BaseHolder {
         mTvChainDelegated.setText(WDp.getDpAmount2(delegateAmount, divideDecimal, displayDecimal));
         mTvChainUnBonding.setText(WDp.getDpAmount2(unbondingAmount, divideDecimal, displayDecimal));
         mTvChainRewards.setText(WDp.getDpAmount2(rewardAmount, divideDecimal, displayDecimal));
-        mTvChainValue.setText(WDp.dpUserCurrencyValue(baseData, settingsInteractor.getCurrency(), denom, totalAmount, divideDecimal));
+        mTvChainValue.setText(WDp.dpUserCurrencyValue(baseData, settingsInteractor.getCurrency(), denom, totalAmount, divideDecimal, priceProvider));
 
         if (!vestingAmount.equals(BigDecimal.ZERO)) {
             mChainVestingLayer.setVisibility(View.VISIBLE);

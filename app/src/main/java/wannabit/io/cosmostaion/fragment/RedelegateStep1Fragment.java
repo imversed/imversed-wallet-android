@@ -42,7 +42,7 @@ public class RedelegateStep1Fragment extends BaseFragment implements View.OnClic
     private RecyclerView mRecyclerView;
     private ToValidatorAdapter mToValidatorAdapter;
 
-    private ArrayList<Staking.Validator> mGRpcTopValidators = new ArrayList<>();
+    private ArrayList<Staking.Validator> topValidators = new ArrayList<>();
     private Staking.Validator mCheckedGRpcValidator = null;
 
     public static RedelegateStep1Fragment newInstance(Bundle bundle) {
@@ -54,7 +54,7 @@ public class RedelegateStep1Fragment extends BaseFragment implements View.OnClic
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mGRpcTopValidators = getSActivity().mGRpcTopValidators;
+        topValidators = getSActivity().topValidators;
     }
 
     @Override
@@ -122,7 +122,7 @@ public class RedelegateStep1Fragment extends BaseFragment implements View.OnClic
 
         @Override
         public void onBindViewHolder(@NonNull final ToValidatorHolder holder, final int position) {
-            final Staking.Validator mGrpcValidator = mGRpcTopValidators.get(position);
+            final Staking.Validator mGrpcValidator = topValidators.get(position);
             holder.itemTvVotingPower.setText(WDp.getDpAmount2(new BigDecimal(mGrpcValidator.getTokens()), getSActivity().getBaseChain().getDivideDecimal(), 6));
             holder.itemTvYieldRate.setText(WDp.getDpEstAprCommission(getBaseDao(), getSActivity().getBaseChain(), new BigDecimal(mGrpcValidator.getCommission().getCommissionRates().getRate()).movePointLeft(18)));
             try {
@@ -158,7 +158,7 @@ public class RedelegateStep1Fragment extends BaseFragment implements View.OnClic
 
         @Override
         public int getItemCount() {
-            return mGRpcTopValidators.size();
+            return topValidators.size();
         }
 
         public class ToValidatorHolder extends RecyclerView.ViewHolder {

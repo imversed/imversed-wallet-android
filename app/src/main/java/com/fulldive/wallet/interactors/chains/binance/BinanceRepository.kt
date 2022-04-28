@@ -4,8 +4,6 @@ import com.fulldive.wallet.di.modules.DefaultRepositoryModule
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
-import wannabit.io.cosmostaion.dao.Account
-import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.dao.BnbTicker
 import wannabit.io.cosmostaion.dao.BnbToken
 import wannabit.io.cosmostaion.network.res.ResBnbAccountInfo

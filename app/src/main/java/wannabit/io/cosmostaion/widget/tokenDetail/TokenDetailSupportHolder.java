@@ -17,6 +17,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.WalletBalance;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 
@@ -27,7 +28,6 @@ import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.dao.Assets;
-import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dao.BnbToken;
 import wannabit.io.cosmostaion.dao.Cw20Assets;
 import wannabit.io.cosmostaion.dao.OkToken;
@@ -118,16 +118,16 @@ public class TokenDetailSupportHolder extends BaseHolder {
         } else {
             dpDecimal = 18;
         }
-        final Balance balance = baseActivity.getFullBalance(denom);
-        mAvailableAmount = balance.balance;
+        final WalletBalance balance = baseActivity.getFullBalance(denom);
+        mAvailableAmount = balance.getBalanceAmount();
         mTvTotal.setText(WDp.getDpAmount2(mAvailableAmount, dpDecimal, dpDecimal));
         mTvAvailable.setText(WDp.getDpAmount2(mAvailableAmount, dpDecimal, dpDecimal));
     }
 
     public void onBindKavaToken(BaseActivity baseActivity, BaseData baseData, String denom) {
         dpDecimal = WUtil.getKavaCoinDecimal(baseData, denom);
-        final Balance balance = baseActivity.getFullBalance(denom);
-        mAvailableAmount = balance.balance;
+        final WalletBalance balance = baseActivity.getFullBalance(denom);
+        mAvailableAmount = balance.getBalanceAmount();
         if (denom.equalsIgnoreCase(TOKEN_HARD)) {
             mAmountView.setCardBackgroundColor(ContextCompat.getColor(baseActivity, R.color.colorTransBghard));
         } else if (denom.equalsIgnoreCase(TOKEN_USDX)) {
@@ -136,7 +136,7 @@ public class TokenDetailSupportHolder extends BaseHolder {
             mAmountView.setCardBackgroundColor(ContextCompat.getColor(baseActivity, R.color.colorTransBgswp));
         }
 
-        BigDecimal vestingAmount = balance.locked;
+        BigDecimal vestingAmount = balance.getLockedAmount();
         mTvTotal.setText(WDp.getDpAmount2(mAvailableAmount.add(vestingAmount), dpDecimal, dpDecimal));
         mTvAvailable.setText(WDp.getDpAmount2(mAvailableAmount, dpDecimal, dpDecimal));
         if (vestingAmount.compareTo(BigDecimal.ZERO) > 0) {
@@ -152,10 +152,10 @@ public class TokenDetailSupportHolder extends BaseHolder {
             mLockedLayout.setVisibility(View.VISIBLE);
             mFrozenLayout.setVisibility(View.VISIBLE);
         }
-        final Balance balance = baseActivity.getFullBalance(denom);
-        mAvailableAmount = balance.balance;
-        final BigDecimal lockedAmount = balance.locked;
-        final BigDecimal frozenAmount = balance.frozen;
+        final WalletBalance balance = baseActivity.getFullBalance(denom);
+        mAvailableAmount = balance.getBalanceAmount();
+        final BigDecimal lockedAmount = balance.getLockedAmount();
+        final BigDecimal frozenAmount = balance.getFrozenAmount();
         mTvTotal.setText(WDp.getDpAmount2(mAvailableAmount, 0, 8));
         mTvAvailable.setText(WDp.getDpAmount2(mAvailableAmount, 0, 8));
         mTvLocked.setText(WDp.getDpAmount2(lockedAmount, 0, 8));
@@ -167,9 +167,9 @@ public class TokenDetailSupportHolder extends BaseHolder {
         if (okToken != null) {
             mLockedLayout.setVisibility(View.VISIBLE);
         }
-        final Balance balance = baseActivity.getFullBalance(denom);
-        mAvailableAmount = balance.balance;
-        final BigDecimal lockedAmount = balance.locked;
+        final WalletBalance balance = baseActivity.getFullBalance(denom);
+        mAvailableAmount = balance.getBalanceAmount();
+        final BigDecimal lockedAmount = balance.getLockedAmount();
         final BigDecimal totalAmount = mAvailableAmount.add(lockedAmount);
 
         mTvTotal.setText(WDp.getDpAmount2(totalAmount, 0, 18));

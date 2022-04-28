@@ -30,8 +30,10 @@ import java.math.BigDecimal;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.SendActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
+import wannabit.io.cosmostaion.dao.Price;
 import wannabit.io.cosmostaion.dialog.Dialog_IBC_Send_Warning;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.BaseHolder;
@@ -133,13 +135,15 @@ public class StakingTokenGrpcActivity extends BaseActivity implements View.OnCli
 
     private void onUpdateView() {
         final Currency currency = settingsInteractor.getCurrency();
+        final PriceProvider priceProvider = this::getPrice;
         Picasso.get().cancelRequest(mToolbarSymbolImg);
         mToolbarSymbolImg.setImageResource(getBaseChain().getCoinIcon());
         WDp.DpMainDenom(getBaseChain(), mToolbarSymbol);
 
-        mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, mMainDenom));
-        mItemUpDownPrice.setText(WDp.dpValueChange(getBaseDao(), mMainDenom));
-        final BigDecimal lastUpDown = WDp.valueChange(getBaseDao(), mMainDenom);
+        mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, mMainDenom, priceProvider));
+        final Price price = getPrice(mMainDenom);
+        mItemUpDownPrice.setText(WDp.dpValueChange(price));
+        final BigDecimal lastUpDown = WDp.valueChange(price);
         if (lastUpDown.compareTo(BigDecimal.ZERO) > 0) {
             mItemUpDownImg.setVisibility(View.VISIBLE);
             mItemUpDownImg.setImageResource(R.drawable.ic_price_up);
@@ -157,7 +161,7 @@ public class StakingTokenGrpcActivity extends BaseActivity implements View.OnCli
             mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), getBaseChain()), android.graphics.PorterDuff.Mode.SRC_IN);
         }
         mTotalAmount = getBalance(mMainDenom).add(getBaseDao().getAllMainAsset(mMainDenom));    //TODO: add vesting
-        mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mMainDenom, mTotalAmount, mDivideDecimal));
+        mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mMainDenom, mTotalAmount, mDivideDecimal, priceProvider));
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

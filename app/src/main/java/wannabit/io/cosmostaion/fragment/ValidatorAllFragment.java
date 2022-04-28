@@ -69,6 +69,7 @@ public class ValidatorAllFragment extends BaseFragment implements View.OnClickLi
         mValidatorSize = rootView.findViewById(R.id.validator_cnt);
         mSortType = rootView.findViewById(R.id.token_sort_type);
         mBtnSort = rootView.findViewById(R.id.btn_validator_sort);
+
         mSwipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(rootView.getContext(), R.color.colorPrimary));
         mSwipeRefreshLayout.setOnRefreshListener(() -> {
             getMainActivity().onFetchAllData();
@@ -166,12 +167,7 @@ public class ValidatorAllFragment extends BaseFragment implements View.OnClickLi
                     holder.itemTvCommission.setText("--");
                 }
 
-                holder.itemRoot.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        getMainActivity().onStartValidatorDetailV1(validator.getOperatorAddress());
-                    }
-                });
+                holder.itemRoot.setOnClickListener(v -> getMainActivity().onStartValidatorDetailV1(validator.getOperatorAddress()));
 
             } else {
                 final Validator validator = getBaseDao().mTopValidators.get(position);
@@ -179,12 +175,7 @@ public class ValidatorAllFragment extends BaseFragment implements View.OnClickLi
                 holder.itemTvCommission.setText(WDp.getDpEstAprCommission(getBaseDao(), getMainActivity().getBaseChain(), validator.getCommission()));
                 holder.itemTvMoniker.setText(validator.description.moniker);
                 holder.itemFree.setVisibility(View.GONE);
-                holder.itemRoot.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        getMainActivity().onStartValidatorDetail(validator);
-                    }
-                });
+                holder.itemRoot.setOnClickListener(v -> getMainActivity().onStartValidatorDetail(validator));
                 try {
                     Picasso.get().load(WDp.getMonikerImgUrl(getMainActivity().getBaseChain(), validator.operator_address)).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
                 } catch (Exception e) {

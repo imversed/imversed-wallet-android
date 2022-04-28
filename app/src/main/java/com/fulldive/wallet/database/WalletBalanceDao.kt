@@ -8,8 +8,8 @@ import io.reactivex.Single
 @Dao
 interface WalletBalanceDao : BaseDao<WalletBalance> {
 
-    @Query("SELECT * FROM WalletBalance WHERE accountId = :accountId and symbol = :symbol")
-    fun getBalance(accountId: Long, symbol: String): Single<WalletBalance>
+    @Query("SELECT * FROM WalletBalance WHERE accountId = :accountId and denom = :denom")
+    fun getBalance(accountId: Long, denom: String): Single<WalletBalance>
 
     @Query("SELECT * FROM WalletBalance WHERE accountId = :accountId")
     fun getBalances(accountId: Long): Single<List<WalletBalance>>

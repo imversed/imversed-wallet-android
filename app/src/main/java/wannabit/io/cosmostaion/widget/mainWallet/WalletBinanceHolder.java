@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.interactors.settings.SettingsInteractor;
+import com.fulldive.wallet.models.WalletBalance;
 import com.fulldive.wallet.presentation.main.MainActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.gun0912.tedpermission.PermissionListener;
@@ -24,8 +25,8 @@ import java.util.ArrayList;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseData;
-import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.widget.BaseHolder;
 
@@ -47,19 +48,21 @@ public class WalletBinanceHolder extends BaseHolder {
 
     public void onBindHolder(@NotNull MainActivity mainActivity) {
         final SettingsInteractor settingsInteractor = mainActivity.getAppInjector().getInstance(SettingsInteractor.class);
+        final PriceProvider priceProvider = mainActivity::getPrice;
+
         final BaseData baseData = mainActivity.getBaseDao();
         final String denom = mainActivity.getBaseChain().getMainDenom();
-        final Balance balance = mainActivity.getFullBalance(denom);
-        final BigDecimal availableAmount = balance.balance;
-        final BigDecimal lockedAmount = balance.locked;
-        final BigDecimal frozenAmount = balance.frozen;
+        final WalletBalance balance = mainActivity.getFullBalance(denom);
+        final BigDecimal availableAmount = balance.getBalanceAmount();
+        final BigDecimal lockedAmount = balance.getLockedAmount();
+        final BigDecimal frozenAmount = balance.getFrozenAmount();
         final BigDecimal totalAmount = availableAmount.add(lockedAmount).add(frozenAmount);
 
         mTvBnbTotal.setText(WDp.getDpAmount2(totalAmount, 0, 6));
         mTvBnbBalance.setText(WDp.getDpAmount2(availableAmount, 0, 6));
         mTvBnbLocked.setText(WDp.getDpAmount2(lockedAmount, 0, 6));
         mTvBnbFrozen.setText(WDp.getDpAmount2(frozenAmount, 0, 6));
-        mTvBnbValue.setText(WDp.dpUserCurrencyValue(baseData, settingsInteractor.getCurrency(), denom, totalAmount, 0));
+        mTvBnbValue.setText(WDp.dpUserCurrencyValue(baseData, settingsInteractor.getCurrency(), denom, totalAmount, 0, priceProvider));
 
         mainActivity.getAppInjector().getInstance(AccountsInteractor.class).updateLastTotal(mainActivity.getAccount().id, totalAmount.toPlainString());
 

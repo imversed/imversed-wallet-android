@@ -21,6 +21,7 @@ import wannabit.io.cosmostaion.activities.chains.osmosis.EarningDetailActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.model.type.Coin;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 
@@ -49,8 +50,9 @@ public class EarningUnbondedHolder extends RecyclerView.ViewHolder {
 
     public void onBindView(Context c, BaseActivity activity, BaseData baseData,
                            BalancerPool.Pool pool, Lock.PeriodLock lockup, List<GaugeOuterClass.Gauge> gauges) {
+        final PriceProvider priceProvider = activity::getPrice;
         BigDecimal totalShare = new BigDecimal(pool.getTotalShares().getAmount());
-        BigDecimal lpCoinPrice = WUtil.getOsmoLpTokenPerUsdPrice(baseData, pool);
+        BigDecimal lpCoinPrice = WUtil.getOsmoLpTokenPerUsdPrice(baseData, pool, priceProvider);
         Coin myLpCoin = new Coin(lockup.getCoins(0).getDenom(), lockup.getCoins(0).getAmount());
         BigDecimal myShare = new BigDecimal(myLpCoin.amount);
         BigDecimal myShareRate = myShare.divide(totalShare, 24, RoundingMode.DOWN);

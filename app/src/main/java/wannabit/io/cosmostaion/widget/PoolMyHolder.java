@@ -24,6 +24,7 @@ import wannabit.io.cosmostaion.activities.chains.osmosis.LabsListActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.model.type.Coin;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WLog;
 import wannabit.io.cosmostaion.utils.WUtil;
@@ -67,10 +68,11 @@ public class PoolMyHolder extends BaseHolder {
         Coin coin1 = new Coin(myPool.getPoolAssets(1).getToken().getDenom(), myPool.getPoolAssets(1).getToken().getAmount());
 
         itemMyPoolType.setText("#" + myPool.getId() + " " + WUtil.dpOsmosisTokenName(baseData, coin0.denom) + "/" + WUtil.dpOsmosisTokenName(baseData, coin1.denom));
+        final PriceProvider priceProvider = activity::getPrice;
 
         // Total deposit
-        BigDecimal coin0Value = WDp.usdValue(baseData, baseData.getBaseDenom(coin0.denom), new BigDecimal(coin0.amount), WUtil.getOsmosisCoinDecimal(baseData, coin0.denom));
-        BigDecimal coin1Value = WDp.usdValue(baseData, baseData.getBaseDenom(coin1.denom), new BigDecimal(coin1.amount), WUtil.getOsmosisCoinDecimal(baseData, coin1.denom));
+        BigDecimal coin0Value = WDp.usdValue(baseData, baseData.getBaseDenom(coin0.denom), new BigDecimal(coin0.amount), WUtil.getOsmosisCoinDecimal(baseData, coin0.denom), priceProvider);
+        BigDecimal coin1Value = WDp.usdValue(baseData, baseData.getBaseDenom(coin1.denom), new BigDecimal(coin1.amount), WUtil.getOsmosisCoinDecimal(baseData, coin1.denom), priceProvider);
         BigDecimal PoolValue = coin0Value.add(coin1Value);
         itemMyTotalDepositValue.setText(WDp.getDpRawDollor(context, PoolValue, 2));
 
@@ -79,7 +81,7 @@ public class PoolMyHolder extends BaseHolder {
 
         //deposit
         BigDecimal lpCoin = activity.getBalance("gamm/pool/" + myPool.getId());
-        BigDecimal lpCoinPrice = WUtil.getOsmoLpTokenPerUsdPrice(baseData, myPool);
+        BigDecimal lpCoinPrice = WUtil.getOsmoLpTokenPerUsdPrice(baseData, myPool, priceProvider);
         BigDecimal lpCoinValue = new BigDecimal(lpCoin.toPlainString()).multiply(lpCoinPrice).movePointLeft(18).setScale(2, RoundingMode.DOWN);
         itemMypoolDepositValue.setText(WDp.getDpRawDollor(context, lpCoinValue, 2));
 

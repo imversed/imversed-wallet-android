@@ -90,15 +90,21 @@ class HistoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public void setBnbHistory(List<BnbHistory> items) {
         bnbHistories = items;
+        okHistory = new ArrayList<>();
+        apiNewTxCustomHistory = new ArrayList<>();
         notifyDataSetChanged();
     }
 
     public void setOkHistory(List<ResOkHistoryHit> items) {
         okHistory = items;
+        bnbHistories = new ArrayList<>();
+        apiNewTxCustomHistory = new ArrayList<>();
         notifyDataSetChanged();
     }
 
     public void setItems(List<ResApiNewTxListCustom> items) {
+        okHistory = new ArrayList<>();
+        bnbHistories = new ArrayList<>();
         apiNewTxCustomHistory = items;
         notifyDataSetChanged();
     }

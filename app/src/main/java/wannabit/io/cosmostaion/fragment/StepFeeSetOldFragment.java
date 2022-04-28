@@ -30,6 +30,7 @@ import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.model.type.Fee;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 
@@ -136,7 +137,8 @@ public class StepFeeSetOldFragment extends BaseFragment implements View.OnClickL
         final BaseChain baseChain = getSActivity().getBaseChain();
 
         mFeeAmount.setText(WDp.getDpAmount2(mFee, baseChain.getDivideDecimal(), baseChain.getDisplayDecimal()));
-        mFeeValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), settingsInteractor.getCurrency(), baseChain.getMainDenom(), mFee, baseChain.getDivideDecimal()));
+        final PriceProvider priceProvider = getBaseActivity()::getPrice;
+        mFeeValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), settingsInteractor.getCurrency(), baseChain.getMainDenom(), mFee, baseChain.getDivideDecimal(), priceProvider));
 
         mGasRate.setText(WDp.getDpGasRate(mSelectedGasRate.toPlainString()));
         mGasAmount.setText(mEstimateGasAmount.toPlainString());

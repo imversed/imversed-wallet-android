@@ -29,6 +29,8 @@ import java.math.BigDecimal;
 import tendermint.liquidity.v1beta1.Liquidity;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
+import wannabit.io.cosmostaion.dao.Price;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.tokenDetail.TokenDetailSupportHolder;
@@ -118,6 +120,7 @@ public class POOLTokenDetailActivity extends BaseActivity implements View.OnClic
 
     private void onUpdateView() {
         final Currency currency = settingsInteractor.getCurrency();
+        final PriceProvider priceProvider = this::getPrice;
         if (getBaseChain().equals(OSMOSIS_MAIN.INSTANCE)) {
             WUtil.DpOsmosisTokenImg(getBaseDao(), mToolbarSymbolImg, mPoolDenom);
             String[] split = mPoolDenom.split("/");
@@ -127,7 +130,7 @@ public class POOLTokenDetailActivity extends BaseActivity implements View.OnClic
             mDivideDecimal = 18;
             mDisplayDecimal = 18;
             mTotalAmount = getBalance(mPoolDenom);
-            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mPoolDenom, mTotalAmount, mDivideDecimal));
+            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mPoolDenom, mTotalAmount, mDivideDecimal, priceProvider));
 
             mBtnIbcSend.setVisibility(View.VISIBLE);
 
@@ -142,7 +145,7 @@ public class POOLTokenDetailActivity extends BaseActivity implements View.OnClic
             mDivideDecimal = 6;
             mDisplayDecimal = 6;
             mTotalAmount = getBalance(mPoolDenom);
-            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mPoolDenom, mTotalAmount, mDivideDecimal));
+            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mPoolDenom, mTotalAmount, mDivideDecimal, priceProvider));
 
             mBtnIbcSend.setVisibility(View.VISIBLE);
 
@@ -154,14 +157,15 @@ public class POOLTokenDetailActivity extends BaseActivity implements View.OnClic
             mDivideDecimal = 18;
             mDisplayDecimal = 18;
             mTotalAmount = getBalance(mPoolDenom);
-            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mPoolDenom, mTotalAmount, mDivideDecimal));
+            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mPoolDenom, mTotalAmount, mDivideDecimal, priceProvider));
 
             mBtnIbcSend.setVisibility(View.VISIBLE);
         }
 
-        mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, mPoolDenom));
-        mItemUpDownPrice.setText(WDp.dpValueChange(getBaseDao(), mPoolDenom));
-        final BigDecimal lastUpDown = WDp.valueChange(getBaseDao(), mPoolDenom);
+        mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, mPoolDenom, priceProvider));
+        final Price price = getPrice(mPoolDenom);
+        mItemUpDownPrice.setText(WDp.dpValueChange(price));
+        final BigDecimal lastUpDown = WDp.valueChange(price);
         if (lastUpDown.compareTo(BigDecimal.ZERO) > 0) {
             mItemUpDownImg.setVisibility(View.VISIBLE);
             mItemUpDownImg.setImageResource(R.drawable.ic_price_up);

@@ -8,13 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.WalletBalance;
 
 import java.math.BigDecimal;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseData;
-import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.widget.BaseHolder;
 
@@ -46,10 +46,10 @@ public class TokenStakingNewHolder extends BaseHolder {
     public void onBindTokenHolder(BaseActivity baseActivity, BaseChain chain, BaseData baseData, String denom) {
         final int stakingDivideDecimal = chain.getDivideDecimal();
         final int stakingDisplayDecimal = chain.getDisplayDecimal();
-        final Balance balance = baseActivity.getFullBalance(denom);
-        final BigDecimal totalToken = balance.balance.add(baseData.getAllMainAsset(denom));  //TODO: add vesting
+        final WalletBalance balance = baseActivity.getFullBalance(denom);
+        final BigDecimal totalToken = balance.getBalanceAmount().add(baseData.getAllMainAsset(denom));  //TODO: add vesting
         mTotalAmount.setText(WDp.getDpAmount2(totalToken, stakingDivideDecimal, stakingDisplayDecimal));
-        mAvailableAmount.setText(WDp.getDpAmount2(balance.balance, stakingDivideDecimal, stakingDisplayDecimal));
+        mAvailableAmount.setText(WDp.getDpAmount2(balance.getBalanceAmount(), stakingDivideDecimal, stakingDisplayDecimal));
         mDelegatedAmount.setText(WDp.getDpAmount2(baseData.getDelegationSum(), stakingDivideDecimal, stakingDisplayDecimal));
         mUnbondingAmount.setText(WDp.getDpAmount2(baseData.getUndelegationSum(), stakingDivideDecimal, stakingDisplayDecimal));
         mRewardAmount.setText(WDp.getDpAmount2(baseData.getRewardSum(denom), stakingDivideDecimal, stakingDisplayDecimal));

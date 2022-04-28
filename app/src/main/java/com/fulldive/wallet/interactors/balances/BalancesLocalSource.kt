@@ -7,7 +7,6 @@ import com.fulldive.wallet.models.WalletBalance
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
-import wannabit.io.cosmostaion.dao.Balance
 import javax.inject.Inject
 import javax.inject.Singleton
 

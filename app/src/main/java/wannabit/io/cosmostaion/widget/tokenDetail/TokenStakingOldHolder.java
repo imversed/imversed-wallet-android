@@ -8,13 +8,13 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.WalletBalance;
 
 import java.math.BigDecimal;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseData;
-import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.widget.BaseHolder;
 
@@ -69,7 +69,7 @@ public class TokenStakingOldHolder extends BaseHolder {
         final int stakingDivideDecimal = chain.getDivideDecimal();
         final int stakingDisplayDecimal = chain.getDisplayDecimal();
 
-        final Balance balance = baseActivity.getFullBalance(denom);
+        final WalletBalance balance = baseActivity.getFullBalance(denom);
 
         if (chain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
             mVestingLayer.setVisibility(View.GONE);
@@ -82,9 +82,9 @@ public class TokenStakingOldHolder extends BaseHolder {
             mOkUnbondingLayer.setVisibility(View.GONE);
 
             final BigDecimal totalAmount = balance.getTotalAmount();
-            final BigDecimal availableAmount = balance.balance;
-            final BigDecimal lockedAmount = balance.locked;
-            final BigDecimal frozenAmount = balance.frozen;
+            final BigDecimal availableAmount = balance.getBalanceAmount();
+            final BigDecimal lockedAmount = balance.getLockedAmount();
+            final BigDecimal frozenAmount = balance.getFrozenAmount();
 
             mTotalAmount.setText(WDp.getDpAmount2(totalAmount, stakingDivideDecimal, stakingDisplayDecimal));
             mAvailableAmount.setText(WDp.getDpAmount2(availableAmount, stakingDivideDecimal, stakingDisplayDecimal));
@@ -102,8 +102,8 @@ public class TokenStakingOldHolder extends BaseHolder {
             mOkUnbondingLayer.setVisibility(View.VISIBLE);
 
             final BigDecimal totalAmount = balance.getDelegatableAmount().add(baseData.getAllExToken(denom));
-            final BigDecimal availableAmount = balance.balance;
-            final BigDecimal lockedAmount = balance.locked;
+            final BigDecimal availableAmount = balance.getBalanceAmount();
+            final BigDecimal lockedAmount = balance.getLockedAmount();
             final BigDecimal depositAmount = baseData.okDepositAmount();
             final BigDecimal withdrawAmount = baseData.okWithdrawAmount();
             mTotalAmount.setText(WDp.getDpAmount2(totalAmount, stakingDivideDecimal, stakingDisplayDecimal));
@@ -123,7 +123,7 @@ public class TokenStakingOldHolder extends BaseHolder {
             mOkUnbondingLayer.setVisibility(View.GONE);
 
             final BigDecimal totalAmount = balance.getDelegatableAmount().add(baseData.getAllMainAssetOld(denom));
-            final BigDecimal availableAmount = balance.balance;
+            final BigDecimal availableAmount = balance.getBalanceAmount();
             final BigDecimal delegateAmount = baseData.delegatedSumAmount();
             final BigDecimal unbondingAmount = baseData.unbondingSumAmount();
             final BigDecimal rewardAmount = baseData.rewardAmount(denom);

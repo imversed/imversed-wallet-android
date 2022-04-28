@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 
 import java.math.BigDecimal;
@@ -15,6 +16,8 @@ import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.sif.SifDexListActivity;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.base.BaseData;
+import wannabit.io.cosmostaion.dao.Price;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 
@@ -50,7 +53,9 @@ public class SifPoolOtherHolder extends BaseHolder {
         int externalDecimal = WUtil.getSifCoinDecimal(baseData, otherPool.getExternalAsset().getSymbol());
         BigDecimal externalAmount = new BigDecimal(otherPool.getExternalAssetBalance());
         String exteranlDenom = otherPool.getExternalAsset().getSymbol();
-        BigDecimal poolValue = WUtil.getSifPoolValue(baseData, otherPool);
+
+        final PriceProvider priceProvider = activity::getPrice;
+        BigDecimal poolValue = WUtil.getSifPoolValue(baseData, otherPool, priceProvider);
 
         WUtil.DpSifTokenImg(baseData, itemExternalImg, exteranlDenom);
         itemPoolType.setText("ROWAN : " + WUtil.dpSifTokenName(baseData, exteranlDenom).toUpperCase());

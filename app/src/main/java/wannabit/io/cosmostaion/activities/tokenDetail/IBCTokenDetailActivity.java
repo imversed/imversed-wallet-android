@@ -32,8 +32,10 @@ import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.SendActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.dao.IbcToken;
+import wannabit.io.cosmostaion.dao.Price;
 import wannabit.io.cosmostaion.dialog.Dialog_IBC_Send_Warning;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 
@@ -130,6 +132,7 @@ public class IBCTokenDetailActivity extends BaseActivity implements View.OnClick
     private void onUpdateView() {
         final String baseDenom = getBaseDao().getBaseDenom(mIbcDenom);
         final Currency currency = settingsInteractor.getCurrency();
+        final PriceProvider priceProvider = this::getPrice;
         if (mIbcToken == null) {
             mToolbarSymbolImg.setImageResource(R.drawable.token_default_ibc);
             mToolbarSymbol.setText(R.string.str_unknown);
@@ -144,11 +147,13 @@ public class IBCTokenDetailActivity extends BaseActivity implements View.OnClick
                 }
                 mToolbarSymbol.setText(mIbcToken.display_denom.toUpperCase());
                 mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
-                mTotalValue.setText("" + WDp.dpUserCurrencyValue(getBaseDao(), currency, baseDenom, getBalance(mIbcDenom), mIbcDivideDecimal));
+                mTotalValue.setText("" + WDp.dpUserCurrencyValue(getBaseDao(), currency, baseDenom, getBalance(mIbcDenom), mIbcDivideDecimal, priceProvider));
 
-                mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, baseDenom));
-                mItemUpDownPrice.setText(WDp.dpValueChange(getBaseDao(), baseDenom));
-                final BigDecimal lastUpDown = WDp.valueChange(getBaseDao(), baseDenom);
+                mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, baseDenom, priceProvider));
+
+                final Price price = getPrice(baseDenom);
+                mItemUpDownPrice.setText(WDp.dpValueChange(price));
+                final BigDecimal lastUpDown = WDp.valueChange(price);
                 if (lastUpDown.compareTo(BigDecimal.ZERO) > 0) {
                     mItemUpDownImg.setVisibility(View.VISIBLE);
                     mItemUpDownImg.setImageResource(R.drawable.ic_price_up);
@@ -163,7 +168,7 @@ public class IBCTokenDetailActivity extends BaseActivity implements View.OnClick
                 mToolbarSymbolImg.setImageResource(R.drawable.token_default_ibc);
                 mToolbarSymbol.setText(R.string.str_unknown);
                 mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
-                mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, baseDenom, BigDecimal.ZERO, mIbcDivideDecimal));
+                mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, baseDenom, BigDecimal.ZERO, mIbcDivideDecimal, priceProvider));
 
                 mItemPerPrice.setText("");
                 mItemUpDownPrice.setText("");

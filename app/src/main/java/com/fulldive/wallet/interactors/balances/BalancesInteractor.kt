@@ -7,11 +7,9 @@ import com.fulldive.wallet.interactors.chains.grpc.GrpcInteractor
 import com.fulldive.wallet.interactors.chains.okex.OkexInteractor
 import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.models.WalletBalance
-import com.fulldive.wallet.models.toBalance
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
-import wannabit.io.cosmostaion.dao.Balance
 import javax.inject.Inject
 
 @ProvidedBy(DefaultInteractorsModule::class)
@@ -22,11 +20,11 @@ class BalancesInteractor @Inject constructor(
     private val grpcInteractor: GrpcInteractor
 ) {
 
-    fun getBalance(accountId: Long, denom: String): Single<Balance> {
-        return balancesRepository.getBalance(accountId, denom).map { it.toBalance() }
+    fun getBalance(accountId: Long, denom: String): Single<WalletBalance> {
+        return balancesRepository.getBalance(accountId, denom)
     }
 
-    fun getBalances(accountId: Long): Single<List<Balance>> {
+    fun getBalances(accountId: Long): Single<List<WalletBalance>> {
         return balancesRepository.getBalances(accountId)
 //    TODO: add filter for zero balances. and add zero balance for main denom if it doesn't exists. vesting
 //    .map { balances ->

@@ -47,7 +47,7 @@ public class RedelegateActivity extends BaseBroadCastActivity implements TaskLis
     private RedelegatePageAdapter mPageAdapter;
 
     private int mTaskCount;
-    public ArrayList<Staking.Validator> mGRpcTopValidators = new ArrayList<>();
+    public ArrayList<Staking.Validator> topValidators = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -183,10 +183,10 @@ public class RedelegateActivity extends BaseBroadCastActivity implements TaskLis
             if (temp != null) {
                 for (Staking.Validator val : temp) {
                     if (!val.getOperatorAddress().equals(mValAddress)) {
-                        mGRpcTopValidators.add(val);
+                        topValidators.add(val);
                     }
                 }
-                mGRpcTopValidators = new ArrayList<>(WUtil.onSortByValidatorPowerV1(mGRpcTopValidators));
+                topValidators = new ArrayList<>(WUtil.onSortByValidatorPowerV1(topValidators));
 
             } else {
                 Toast.makeText(getBaseContext(), R.string.error_network_error, Toast.LENGTH_SHORT).show();

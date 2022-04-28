@@ -28,6 +28,7 @@ import com.fulldive.wallet.interactors.chains.grpc.GrpcInteractor;
 import com.fulldive.wallet.interactors.chains.okex.OkexInteractor;
 import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.WalletBalance;
 import com.fulldive.wallet.presentation.accounts.restore.MnemonicRestoreActivity;
 import com.fulldive.wallet.presentation.main.MainActivity;
 import com.fulldive.wallet.presentation.system.WaitDialogFragment;
@@ -47,7 +48,7 @@ import wannabit.io.cosmostaion.activities.PasswordCheckActivity;
 import wannabit.io.cosmostaion.activities.SendActivity;
 import wannabit.io.cosmostaion.activities.chains.ibc.IBCSendActivity;
 import wannabit.io.cosmostaion.dao.Account;
-import wannabit.io.cosmostaion.dao.Balance;
+import wannabit.io.cosmostaion.dao.Price;
 import wannabit.io.cosmostaion.dialog.Dialog_Buy_Select_Fiat;
 import wannabit.io.cosmostaion.dialog.Dialog_Buy_Without_Key;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
@@ -172,7 +173,7 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
     }
 
     public BigDecimal getBalance(String denom) {
-        return getFullBalance(denom).balance;
+        return getFullBalance(denom).getBalanceAmount();
     }
 
     public void startSendMainDenom() {
@@ -286,15 +287,24 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
         compositeDisposable.add(disposable);
     }
 
-    public Balance getFullBalance(String denom) {
-        Balance result;
+    public Price getPrice(String denom) {
+        Price price = null;
+        try {
+            price = stationInteractor.getPrice(baseChain, denom).blockingGet();
+        } catch (Exception ignore) {
+        }
+        return price;
+    }
+
+    public WalletBalance getFullBalance(String denom) {
+        WalletBalance result;
         final Account account = getAccount();
         try {
             result = balancesInteractor.getBalance(account.id, denom).blockingGet();
         } catch (Exception exception) {
             WLog.e(exception.toString());
             exception.printStackTrace();
-            result = new Balance(0L, denom, "", System.currentTimeMillis(), "", "");
+            result = WalletBalance.Companion.create(0L, 0L, denom, "", "", "", System.currentTimeMillis());
         }
         return result;
     }

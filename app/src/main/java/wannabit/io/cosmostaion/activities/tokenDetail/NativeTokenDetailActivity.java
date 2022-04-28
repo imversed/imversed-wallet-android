@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fulldive.wallet.models.Currency;
+import com.fulldive.wallet.models.WalletBalance;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.squareup.picasso.Picasso;
 
@@ -35,10 +36,11 @@ import java.math.BigDecimal;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.SendActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dao.BnbToken;
 import wannabit.io.cosmostaion.dao.OkToken;
+import wannabit.io.cosmostaion.dao.Price;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.tokenDetail.TokenDetailSupportHolder;
@@ -137,6 +139,7 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
     private void onUpdateView() {
         mBtnAddressPopup.setCardBackgroundColor(WDp.getChainBgColor(NativeTokenDetailActivity.this, getBaseChain()));
         final Currency currency = settingsInteractor.getCurrency();
+        final PriceProvider priceProvider = this::getPrice;
 
         if (getBaseChain().equals(OKEX_MAIN.INSTANCE)) {
             final OkToken okToken = getBaseDao().okToken(mDenom);
@@ -144,13 +147,15 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
             mToolbarSymbol.setText(okToken.original_symbol.toUpperCase());
             mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
 
-            BigDecimal convertedOktAmount = WDp.convertTokenToOkt(this, getBaseDao(), mDenom);
-            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, TOKEN_OK, convertedOktAmount, 0));
+            BigDecimal convertedOktAmount = WDp.convertTokenToOkt(this, getBaseDao(), mDenom, priceProvider);
+            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, TOKEN_OK, convertedOktAmount, 0, priceProvider));
 
             if (okToken.original_symbol.equalsIgnoreCase("okb")) {
-                mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, "okb"));
-                mItemUpDownPrice.setText(WDp.dpValueChange(getBaseDao(), "okb"));
-                final BigDecimal lastUpDown = WDp.valueChange(getBaseDao(), "okb");
+                mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, "okb", priceProvider));
+
+                final Price price = getPrice("okb");
+                mItemUpDownPrice.setText(WDp.dpValueChange(price));
+                final BigDecimal lastUpDown = WDp.valueChange(price);
                 if (lastUpDown.compareTo(BigDecimal.ZERO) > 0) {
                     mItemUpDownImg.setVisibility(View.VISIBLE);
                     mItemUpDownImg.setImageResource(R.drawable.ic_price_up);
@@ -167,7 +172,7 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
             }
 
         } else if (getBaseChain().equals(BNB_MAIN.INSTANCE)) {
-            final Balance balance = getFullBalance(mDenom);
+            final WalletBalance balance = getFullBalance(mDenom);
             final BigDecimal amount = balance.getTotalAmount();
             final BnbToken bnbToken = getBaseDao().getBnbToken(mDenom);
             Picasso.get().load(BINANCE_TOKEN_IMG_URL + bnbToken.original_symbol + ".png").placeholder(R.drawable.token_ic).error(R.drawable.token_ic).fit().into(mToolbarSymbolImg);
@@ -175,9 +180,9 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
             mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
 
             BigDecimal convertedBnbAmount = WUtil.getBnbConvertAmount(getBaseDao(), mDenom, amount);
-            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, BNB_MAIN.INSTANCE.getMainDenom(), convertedBnbAmount, 0));
+            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, BNB_MAIN.INSTANCE.getMainDenom(), convertedBnbAmount, 0, priceProvider));
 
-            mItemPerPrice.setText(WUtil.dpBnbTokenUserCurrencyPrice(getBaseDao(), currency, mDenom));
+            mItemPerPrice.setText(WUtil.dpBnbTokenUserCurrencyPrice(getBaseDao(), currency, mDenom, priceProvider));
             mItemUpDownPrice.setText("");
             mItemUpDownImg.setVisibility(View.INVISIBLE);
         }

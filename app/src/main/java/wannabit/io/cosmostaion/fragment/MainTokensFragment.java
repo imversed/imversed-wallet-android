@@ -60,6 +60,7 @@ import com.fulldive.wallet.interactors.balances.BalancesInteractor;
 import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.Currency;
+import com.fulldive.wallet.models.WalletBalance;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.fulldive.wallet.presentation.main.MainActivity;
 import com.squareup.picasso.Picasso;
@@ -83,11 +84,11 @@ import wannabit.io.cosmostaion.base.IBusyFetchListener;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.dao.Account;
 import wannabit.io.cosmostaion.dao.Assets;
-import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dao.BnbToken;
 import wannabit.io.cosmostaion.dao.Cw20Assets;
 import wannabit.io.cosmostaion.dao.IbcToken;
 import wannabit.io.cosmostaion.dao.OkToken;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 
@@ -122,23 +123,25 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
 
     private RecyclerViewHeader mRecyclerViewHeader;
 
-    private final ArrayList<Balance> mIbcAuthedGrpc = new ArrayList<>();
-    private final ArrayList<Balance> mOsmosisPoolGrpc = new ArrayList<>();
-    private final ArrayList<Balance> mEtherGrpc = new ArrayList<>();
-    private final ArrayList<Balance> mIbcUnknownGrpc = new ArrayList<>();
-    private final ArrayList<Balance> mGravityDexGrpc = new ArrayList<>();
-    private final ArrayList<Balance> mInjectivePoolGrpc = new ArrayList<>();
-    private final ArrayList<Balance> mKavaBep2Grpc = new ArrayList<>();
+    private final ArrayList<WalletBalance> mIbcAuthedGrpc = new ArrayList<>();
+    private final ArrayList<WalletBalance> mOsmosisPoolGrpc = new ArrayList<>();
+    private final ArrayList<WalletBalance> mEtherGrpc = new ArrayList<>();
+    private final ArrayList<WalletBalance> mIbcUnknownGrpc = new ArrayList<>();
+    private final ArrayList<WalletBalance> mGravityDexGrpc = new ArrayList<>();
+    private final ArrayList<WalletBalance> mInjectivePoolGrpc = new ArrayList<>();
+    private final ArrayList<WalletBalance> mKavaBep2Grpc = new ArrayList<>();
     private ArrayList<Cw20Assets> mCW20Grpc = new ArrayList<>();
 
-    private final ArrayList<Balance> mNative = new ArrayList<>();
-    private final ArrayList<Balance> mEtc = new ArrayList<>();
-    private final ArrayList<Balance> mUnknown = new ArrayList<>();
+    private final ArrayList<WalletBalance> mNative = new ArrayList<>();
+    private final ArrayList<WalletBalance> mEtc = new ArrayList<>();
+    private final ArrayList<WalletBalance> mUnknown = new ArrayList<>();
 
     private Account mAccount;
     private BaseChain mBaseChain;
     private SettingsInteractor settingsInteractor;
     private BalancesInteractor balancesInteractor;
+
+    private PriceProvider priceProvider;
 
     public static MainTokensFragment newInstance(Bundle bundle) {
         MainTokensFragment fragment = new MainTokensFragment();
@@ -151,6 +154,8 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
         super.onCreate(savedInstanceState);
         settingsInteractor = getAppInjector().getInstance(SettingsInteractor.class);
         balancesInteractor = getAppInjector().getInstance(BalancesInteractor.class);
+        priceProvider = getMainActivity()::getPrice;
+
         setHasOptionsMenu(true);
     }
 
@@ -187,6 +192,12 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
         return rootView;
     }
 
+    @Override
+    public void onDestroy() {
+        priceProvider = null;
+        super.onDestroy();
+    }
+
     private void onUpdateInfo() {
         if (getMainActivity() == null || getMainActivity().getAccount() == null) return;
         mAccount = getMainActivity().getAccount();
@@ -199,7 +210,7 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
             itemKeyStatus.setColorFilter(ContextCompat.getColor(getMainActivity(), R.color.colorGray0), android.graphics.PorterDuff.Mode.SRC_IN);
         }
         mWalletAddress.setText(mAccount.address);
-        mTotalValue.setText(WDp.dpAllAssetValueUserCurrency(mBaseChain, getCurrency(), getBaseDao(), getBalances()));
+        mTotalValue.setText(WDp.dpAllAssetValueUserCurrency(mBaseChain, getCurrency(), getBaseDao(), getBalances(), priceProvider));
     }
 
     private SectionCallback getSectionGrpcCall() {
@@ -334,10 +345,10 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
         mEtc.clear();
 
         final BaseChain chain = getMainActivity().getBaseChain();
-        List<Balance> balances = getBalances();
+        List<WalletBalance> balances = getBalances();
 
-        for (Balance balance : balances) {
-            if (balance.symbol.equalsIgnoreCase(mainDenom)) {
+        for (WalletBalance balance : balances) {
+            if (balance.getDenom().equalsIgnoreCase(mainDenom)) {
                 mNative.add(balance);
             } else if (chain.equals(BNB_MAIN.INSTANCE)) {
                 mEtc.add(balance);
@@ -352,24 +363,24 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
                 }
             } else if (chain.equals(OSMOSIS_MAIN.INSTANCE) && balance.osmosisAmm()) {
                 mOsmosisPoolGrpc.add(balance);
-            } else if (chain.equals(OSMOSIS_MAIN.INSTANCE) && balance.symbol.equalsIgnoreCase(TOKEN_ION) ||
-                    chain.equals(EMONEY_MAIN.INSTANCE) && balance.symbol.startsWith("e")) {
+            } else if (chain.equals(OSMOSIS_MAIN.INSTANCE) && balance.getDenom().equalsIgnoreCase(TOKEN_ION) ||
+                    chain.equals(EMONEY_MAIN.INSTANCE) && balance.getDenom().startsWith("e")) {
                 mNative.add(balance);
-            } else if (chain.equals(SIF_MAIN.INSTANCE) && balance.symbol.startsWith("c") ||
-                    chain.equals(GRABRIDGE_MAIN.INSTANCE) && balance.symbol.startsWith("gravity") ||
-                    chain.equals(INJ_MAIN.INSTANCE) && balance.symbol.startsWith("peggy")) {
+            } else if (chain.equals(SIF_MAIN.INSTANCE) && balance.getDenom().startsWith("c") ||
+                    chain.equals(GRABRIDGE_MAIN.INSTANCE) && balance.getDenom().startsWith("gravity") ||
+                    chain.equals(INJ_MAIN.INSTANCE) && balance.getDenom().startsWith("peggy")) {
                 mEtherGrpc.add(balance);
-            } else if (chain.equals(COSMOS_MAIN.INSTANCE) && balance.symbol.startsWith("pool")) {
+            } else if (chain.equals(COSMOS_MAIN.INSTANCE) && balance.getDenom().startsWith("pool")) {
                 mGravityDexGrpc.add(balance);
-            } else if (chain.equals(INJ_MAIN.INSTANCE) && balance.symbol.startsWith("share")) {
+            } else if (chain.equals(INJ_MAIN.INSTANCE) && balance.getDenom().startsWith("share")) {
                 mInjectivePoolGrpc.add(balance);
             } else if (chain.equals(KAVA_MAIN.INSTANCE)) {
-                if (balance.symbol.equals(TOKEN_HARD) || balance.symbol.equalsIgnoreCase(TOKEN_USDX) || balance.symbol.equalsIgnoreCase(TOKEN_SWP)) {
+                if (balance.getDenom().equals(TOKEN_HARD) || balance.getDenom().equalsIgnoreCase(TOKEN_USDX) || balance.getDenom().equalsIgnoreCase(TOKEN_SWP)) {
                     mNative.add(balance);
-                } else if (balance.symbol.equalsIgnoreCase(TOKEN_HTLC_KAVA_BNB) || balance.symbol.equalsIgnoreCase(TOKEN_HTLC_KAVA_BTCB) ||
-                        balance.symbol.equalsIgnoreCase(TOKEN_HTLC_KAVA_XRPB) || balance.symbol.equalsIgnoreCase(TOKEN_HTLC_KAVA_BUSD)) {
+                } else if (balance.getDenom().equalsIgnoreCase(TOKEN_HTLC_KAVA_BNB) || balance.getDenom().equalsIgnoreCase(TOKEN_HTLC_KAVA_BTCB) ||
+                        balance.getDenom().equalsIgnoreCase(TOKEN_HTLC_KAVA_XRPB) || balance.getDenom().equalsIgnoreCase(TOKEN_HTLC_KAVA_BUSD)) {
                     mKavaBep2Grpc.add(balance);
-                } else if (balance.symbol.equalsIgnoreCase("btch") || balance.symbol.equalsIgnoreCase("hbtc")) {
+                } else if (balance.getDenom().equalsIgnoreCase("btch") || balance.getDenom().equalsIgnoreCase("hbtc")) {
                     mEtc.add(balance);
                 }
             } else {
@@ -400,13 +411,13 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
         }
     }
 
-    private List<Balance> getBalances() {
+    private List<WalletBalance> getBalances() {
         return balancesInteractor.getBalances(mAccount.id).blockingGet();
     }
 
     private class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
 
-        public List<Balance> balances = new ArrayList<>();
+        public List<WalletBalance> balances = new ArrayList<>();
 
         @NonNull
         @Override
@@ -695,8 +706,8 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
 
     //with Native gRPC
     private void onNativeGrpcItem(TokensAdapter.AssetHolder holder, final int position) {
-        final Balance balance = mNative.get(position);
-        final BaseChain chain = BaseChain.Companion.getChainByDenom(balance.symbol);
+        final WalletBalance balance = mNative.get(position);
+        final BaseChain chain = BaseChain.Companion.getChainByDenom(balance.getDenom());
 
         Picasso.get().cancelRequest(holder.itemImg);
 
@@ -704,77 +715,77 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
             holder.itemSymbol.setText(getString(chain.getSymbolTitle()));
             holder.itemSymbol.setTextColor(ContextCompat.getColor(requireContext(), chain.getChainColor()));
             holder.itemFullName.setText(chain.getFullNameCoin());
-            if (balance.symbol.equals(SECRET_MAIN.INSTANCE.getMainDenom())) {
-                holder.itemInnerSymbol.setText("(" + balance.symbol + ")");
+            if (balance.getDenom().equals(SECRET_MAIN.INSTANCE.getMainDenom())) {
+                holder.itemInnerSymbol.setText("(" + balance.getDenom() + ")");
             } else {
                 holder.itemInnerSymbol.setText("");
             }
             holder.itemImg.setImageDrawable(ContextCompat.getDrawable(requireContext(), chain.getCoinIcon()));
-        } else if (balance.symbol.equals(TOKEN_ION)) {
+        } else if (balance.getDenom().equals(TOKEN_ION)) {
             holder.itemSymbol.setText(getString(R.string.str_uion_c));
             holder.itemSymbol.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorIon));
             holder.itemInnerSymbol.setText("");
             holder.itemFullName.setText("Ion Coin");
             holder.itemImg.setImageDrawable(getResources().getDrawable(R.drawable.token_ion));
-        } else if (balance.symbol.equals(TOKEN_HARD)) {
-            Picasso.get().load(KAVA_COIN_IMG_URL + balance.symbol + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
+        } else if (balance.getDenom().equals(TOKEN_HARD)) {
+            Picasso.get().load(KAVA_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
             holder.itemSymbol.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorHard));
-            holder.itemSymbol.setText(balance.symbol.toUpperCase());
+            holder.itemSymbol.setText(balance.getDenom().toUpperCase());
             holder.itemInnerSymbol.setText("");
             holder.itemFullName.setText("HardPool Gov. Coin");
-        } else if (balance.symbol.equals(TOKEN_USDX)) {
-            Picasso.get().load(KAVA_COIN_IMG_URL + balance.symbol + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
+        } else if (balance.getDenom().equals(TOKEN_USDX)) {
+            Picasso.get().load(KAVA_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
             holder.itemSymbol.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorUsdx));
-            holder.itemSymbol.setText(balance.symbol.toUpperCase());
+            holder.itemSymbol.setText(balance.getDenom().toUpperCase());
             holder.itemInnerSymbol.setText("");
             holder.itemFullName.setText("USD Stable Asset");
-        } else if (balance.symbol.equals(TOKEN_SWP)) {
-            Picasso.get().load(KAVA_COIN_IMG_URL + balance.symbol + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
+        } else if (balance.getDenom().equals(TOKEN_SWP)) {
+            Picasso.get().load(KAVA_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
             holder.itemSymbol.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorSwp));
-            holder.itemSymbol.setText(balance.symbol.toUpperCase());
+            holder.itemSymbol.setText(balance.getDenom().toUpperCase());
             holder.itemInnerSymbol.setText("");
             holder.itemFullName.setText("Kava Swap Coin");
-        } else if (balance.symbol.startsWith("e")) {
-            holder.itemSymbol.setText(balance.symbol.toUpperCase());
+        } else if (balance.getDenom().startsWith("e")) {
+            holder.itemSymbol.setText(balance.getDenom().toUpperCase());
             holder.itemSymbol.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
             holder.itemInnerSymbol.setText("");
-            holder.itemFullName.setText(balance.symbol.substring(1).toUpperCase() + " on E-Money Network");
-            Picasso.get().load(EMONEY_COIN_IMG_URL + balance.symbol + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
+            holder.itemFullName.setText(balance.getDenom().substring(1).toUpperCase() + " on E-Money Network");
+            Picasso.get().load(EMONEY_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
         }
 
-        BigDecimal amount = balance.balance.add(getBaseDao().getAllMainAsset(balance.symbol));  //TODO: add vesting
+        BigDecimal amount = balance.getBalanceAmount().add(getBaseDao().getAllMainAsset(balance.getDenom()));  //TODO: add vesting
         int divideDecimal = 6;
         int displayDecimal = 6;
         int divider = 6;
 
-        if (balance.symbol.equals(TOKEN_ION) || balance.symbol.startsWith("e")) {
-            amount = getMainActivity().getBalance(balance.symbol);
-        } else if (balance.symbol.equals(FETCHAI_MAIN.INSTANCE.getMainDenom()) || balance.symbol.equals(INJ_MAIN.INSTANCE.getMainDenom()) || balance.symbol.equals(SIF_MAIN.INSTANCE.getMainDenom())) {
+        if (balance.getDenom().equals(TOKEN_ION) || balance.getDenom().startsWith("e")) {
+            amount = getMainActivity().getBalance(balance.getDenom());
+        } else if (balance.getDenom().equals(FETCHAI_MAIN.INSTANCE.getMainDenom()) || balance.getDenom().equals(INJ_MAIN.INSTANCE.getMainDenom()) || balance.getDenom().equals(SIF_MAIN.INSTANCE.getMainDenom())) {
             divideDecimal = 18;
             divider = 18;
-        } else if (balance.symbol.equals(EVMOS_MAIN.INSTANCE.getMainDenom()) || balance.symbol.equals(CUDOS_MAIN.INSTANCE.getMainDenom())) {
+        } else if (balance.getDenom().equals(EVMOS_MAIN.INSTANCE.getMainDenom()) || balance.getDenom().equals(CUDOS_MAIN.INSTANCE.getMainDenom())) {
             divideDecimal = 18;
-        } else if (balance.symbol.equals(PROVENANCE_MAIN.INSTANCE.getMainDenom())) {
+        } else if (balance.getDenom().equals(PROVENANCE_MAIN.INSTANCE.getMainDenom())) {
             divideDecimal = 9;
-        } else if (balance.symbol.equals(CRYPTO_MAIN.INSTANCE.getMainDenom())) {
+        } else if (balance.getDenom().equals(CRYPTO_MAIN.INSTANCE.getMainDenom())) {
             divideDecimal = 8;
             divider = 8;
-        } else if (balance.symbol.equals(TOKEN_HARD) || balance.symbol.equals(TOKEN_USDX) || balance.symbol.equals(TOKEN_SWP)) {
-            amount = balance.balance; // .add(getBaseDao().getVesting(balance.symbol));
-            divideDecimal = WUtil.getKavaCoinDecimal(getBaseDao(), balance.symbol);
+        } else if (balance.getDenom().equals(TOKEN_HARD) || balance.getDenom().equals(TOKEN_USDX) || balance.getDenom().equals(TOKEN_SWP)) {
+            amount = balance.getBalanceAmount(); // .add(getBaseDao().getVesting(balance.getSymbol()));
+            divideDecimal = WUtil.getKavaCoinDecimal(getBaseDao(), balance.getDenom());
         }
 
         holder.itemBalance.setText(WDp.getDpAmount2(amount, divideDecimal, displayDecimal));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.symbol, amount, divider));
+        holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.getDenom(), amount, divider, priceProvider));
 
         holder.itemRoot.setOnClickListener(v -> {
-            if (mNative.get(position).symbol.equalsIgnoreCase(getMainActivity().getBaseChain().getMainDenom())) {
+            if (mNative.get(position).getDenom().equalsIgnoreCase(getMainActivity().getBaseChain().getMainDenom())) {
                 Intent intent = new Intent(getMainActivity(), StakingTokenGrpcActivity.class);
-                intent.putExtra("denom", balance.symbol);
+                intent.putExtra("denom", balance.getDenom());
                 startActivity(intent);
             } else {
                 Intent intent = new Intent(getMainActivity(), NativeTokenGrpcActivity.class);
-                intent.putExtra("denom", balance.symbol);
+                intent.putExtra("denom", balance.getDenom());
                 startActivity(intent);
             }
         });
@@ -782,8 +793,8 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
 
     //with Authed IBC gRPC
     private void onBindIbcAuthToken(TokensAdapter.AssetHolder holder, int position) {
-        final Balance balance = mIbcAuthedGrpc.get(position);
-        final IbcToken ibcToken = getBaseDao().getIbcToken(balance.symbol);
+        final WalletBalance balance = mIbcAuthedGrpc.get(position);
+        final IbcToken ibcToken = getBaseDao().getIbcToken(balance.getDenom());
         holder.itemSymbol.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
         holder.itemFullName.setEllipsize(TextUtils.TruncateAt.MIDDLE);
         holder.itemInnerSymbol.setText("");
@@ -791,13 +802,13 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
             holder.itemSymbol.setText(R.string.str_unknown);
             holder.itemFullName.setText("");
             holder.itemImg.setImageDrawable(getResources().getDrawable(R.drawable.token_default_ibc));
-            holder.itemBalance.setText(WDp.getDpAmount2(balance.balance, 6, 6));
-            holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.symbol, BigDecimal.ZERO, 6));
+            holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
+            holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.getDenom(), BigDecimal.ZERO, 6, priceProvider));
         } else {
             holder.itemSymbol.setText(ibcToken.display_denom.toUpperCase());
             holder.itemFullName.setText(ibcToken.channel_id);
-            holder.itemBalance.setText(WDp.getDpAmount2(balance.balance, ibcToken.decimal, 6));
-            holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), getBaseDao().getBaseDenom(balance.symbol), balance.balance, ibcToken.decimal));
+            holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), ibcToken.decimal, 6));
+            holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), getBaseDao().getBaseDenom(balance.getDenom()), balance.getBalanceAmount(), ibcToken.decimal, priceProvider));
             try {
                 Picasso.get().load(ibcToken.moniker).fit().placeholder(R.drawable.token_default_ibc).error(R.drawable.token_default_ibc).into(holder.itemImg);
             } catch (Exception e) {
@@ -806,52 +817,52 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
 
         holder.itemRoot.setOnClickListener(v -> {
             Intent intent = new Intent(getMainActivity(), IBCTokenDetailActivity.class);
-            intent.putExtra("denom", balance.symbol);
+            intent.putExtra("denom", balance.getDenom());
             startActivity(intent);
         });
     }
 
     //with Unknown IBC gRPC
     private void onBindIbcUnknownToken(TokensAdapter.AssetHolder holder, int position) {
-        final Balance balance = mIbcUnknownGrpc.get(position);
-        final IbcToken ibcToken = getBaseDao().getIbcToken(balance.symbol);
+        final WalletBalance balance = mIbcUnknownGrpc.get(position);
+        final IbcToken ibcToken = getBaseDao().getIbcToken(balance.getDenom());
         holder.itemInnerSymbol.setText("");
         holder.itemSymbol.setText(R.string.str_unknown);
         if (ibcToken == null) {
             holder.itemFullName.setText("");
             holder.itemImg.setImageResource(R.drawable.token_default_ibc);
-            holder.itemBalance.setText(WDp.getDpAmount2(balance.balance, 6, 6));
-            holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.symbol, BigDecimal.ZERO, 6));
+            holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
+            holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.getDenom(), BigDecimal.ZERO, 6, priceProvider));
         } else {
             holder.itemFullName.setText(ibcToken.channel_id);
             holder.itemImg.setImageResource(R.drawable.token_default_ibc);
-            holder.itemBalance.setText(WDp.getDpAmount2(balance.balance, 6, 6));
-            holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.symbol, balance.balance, 6));
+            holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
+            holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.getDenom(), balance.getBalanceAmount(), 6, priceProvider));
         }
 
         holder.itemRoot.setOnClickListener(v -> {
             Intent intent = new Intent(getMainActivity(), IBCTokenDetailActivity.class);
-            intent.putExtra("denom", balance.symbol);
+            intent.putExtra("denom", balance.getDenom());
             startActivity(intent);
         });
     }
 
     //with Osmosis Pool gRPC
     private void onBindOsmoPoolToken(TokensAdapter.AssetHolder holder, int position) {
-        final Balance balance = mOsmosisPoolGrpc.get(position);
+        final WalletBalance balance = mOsmosisPoolGrpc.get(position);
         holder.itemSymbol.setText(balance.osmosisAmmDpDenom());
         holder.itemSymbol.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
         holder.itemInnerSymbol.setText("");
-        holder.itemFullName.setText(balance.symbol);
+        holder.itemFullName.setText(balance.getDenom());
         holder.itemImg.setImageDrawable(getResources().getDrawable(R.drawable.token_pool));
-        holder.itemBalance.setText(WDp.getDpAmount2(balance.balance, 18, 6));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.symbol, balance.balance, 18));
+        holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 18, 6));
+        holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.getDenom(), balance.getBalanceAmount(), 18, priceProvider));
 
         holder.itemRoot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getMainActivity(), POOLTokenDetailActivity.class);
-                intent.putExtra("denom", balance.symbol);
+                intent.putExtra("denom", balance.getDenom());
                 startActivity(intent);
             }
         });
@@ -859,12 +870,12 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
 
     //with Cosmos Gravity Dex gRPC
     private void onBindGravityDexToken(TokensAdapter.AssetHolder holder, int position) {
-        final Balance balance = mGravityDexGrpc.get(position);
+        final WalletBalance balance = mGravityDexGrpc.get(position);
         Picasso.get().load(COSMOS_COIN_IMG_URL + "gravitydex.png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
-        holder.itemBalance.setText(WDp.getDpAmount2(balance.balance, 6, 6));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.symbol, balance.balance, 6));
+        holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
+        holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.getDenom(), balance.getBalanceAmount(), 6, priceProvider));
         holder.itemInnerSymbol.setText("");
-        Liquidity.Pool poolInfo = getBaseDao().getGravityPoolByDenom(balance.symbol);
+        Liquidity.Pool poolInfo = getBaseDao().getGravityPoolByDenom(balance.getDenom());
         if (poolInfo != null) {
             holder.itemSymbol.setText("GDEX-" + poolInfo.getId());
             holder.itemSymbol.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
@@ -875,7 +886,7 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getMainActivity(), POOLTokenDetailActivity.class);
-                intent.putExtra("denom", balance.symbol);
+                intent.putExtra("denom", balance.getDenom());
                 startActivity(intent);
             }
         });
@@ -883,26 +894,26 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
 
     //with Injective Pool gRPC
     private void onBindInjectivePoolToken(TokensAdapter.AssetHolder holder, int position) {
-        final Balance balance = mInjectivePoolGrpc.get(position);
-        holder.itemSymbol.setText("SHARE" + balance.symbol.substring(5));
+        final WalletBalance balance = mInjectivePoolGrpc.get(position);
+        holder.itemSymbol.setText("SHARE" + balance.getDenom().substring(5));
         holder.itemSymbol.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
         holder.itemInnerSymbol.setText("");
         holder.itemFullName.setText("Pool Asset");
         holder.itemImg.setImageDrawable(getResources().getDrawable(R.drawable.token_ic));
-        holder.itemBalance.setText(WDp.getDpAmount2(balance.balance, 18, 6));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.symbol, BigDecimal.ZERO, 6));
+        holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 18, 6));
+        holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.getDenom(), BigDecimal.ZERO, 6, priceProvider));
 
         holder.itemRoot.setOnClickListener(v -> {
             Intent intent = new Intent(getMainActivity(), POOLTokenDetailActivity.class);
-            intent.putExtra("denom", balance.symbol);
+            intent.putExtra("denom", balance.getDenom());
             startActivity(intent);
         });
     }
 
     //with Erc gRPC
     private void onBindErcToken(TokensAdapter.AssetHolder holder, int position) {
-        final Balance balance = mEtherGrpc.get(position);
-        final Assets assets = getBaseDao().getAsset(balance.symbol);
+        final WalletBalance balance = mEtherGrpc.get(position);
+        final Assets assets = getBaseDao().getAsset(balance.getDenom());
         if (assets != null) {
             holder.itemSymbol.setText(assets.origin_symbol);
             holder.itemSymbol.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
@@ -912,7 +923,7 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
 
             BigDecimal totalAmount = getMainActivity().getBalance(assets.denom);
             holder.itemBalance.setText(WDp.getDpAmount2(totalAmount, assets.decimal, 6));
-            holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), assets.origin_symbol, totalAmount, assets.decimal));
+            holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), assets.origin_symbol, totalAmount, assets.decimal, priceProvider));
 
             holder.itemRoot.setOnClickListener(v -> {
                 Intent intent = new Intent(getMainActivity(), BridgeTokenGrpcActivity.class);
@@ -924,39 +935,39 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
 
     //bind kava bep2 tokens with gRPC
     private void onBindKavaBep2Token(TokensAdapter.AssetHolder holder, int position) {
-        final Balance balance = mKavaBep2Grpc.get(position);
-        Picasso.get().load(KAVA_COIN_IMG_URL + balance.symbol + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
-        holder.itemSymbol.setText(balance.symbol.toUpperCase());
+        final WalletBalance balance = mKavaBep2Grpc.get(position);
+        Picasso.get().load(KAVA_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
+        holder.itemSymbol.setText(balance.getDenom().toUpperCase());
         holder.itemSymbol.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
         holder.itemInnerSymbol.setText("");
-        holder.itemFullName.setText(balance.symbol.toUpperCase() + " on Kava Chain");
+        holder.itemFullName.setText(balance.getDenom().toUpperCase() + " on Kava Chain");
 
-        BigDecimal totalAmount = getMainActivity().getBalance(balance.symbol);
-        String baseDenom = WDp.getKavaBaseDenom(balance.symbol);
-        int bep2decimal = WUtil.getKavaCoinDecimal(getBaseDao(), balance.symbol);
+        BigDecimal totalAmount = getMainActivity().getBalance(balance.getDenom());
+        String baseDenom = WDp.getKavaBaseDenom(balance.getDenom());
+        int bep2decimal = WUtil.getKavaCoinDecimal(getBaseDao(), balance.getDenom());
         holder.itemBalance.setText(WDp.getDpAmount2(totalAmount, bep2decimal, 6));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), baseDenom, totalAmount, bep2decimal));
+        holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), baseDenom, totalAmount, bep2decimal, priceProvider));
 
         holder.itemRoot.setOnClickListener(v -> {
             Intent intent = new Intent(getMainActivity(), NativeTokenGrpcActivity.class);
-            intent.putExtra("denom", balance.symbol);
+            intent.putExtra("denom", balance.getDenom());
             startActivity(intent);
         });
     }
 
     //bind kava etc tokens with gRPC
     private void onBindEtcGrpcToken(TokensAdapter.AssetHolder holder, int position) {
-        final Balance balance = mEtc.get(position);
+        final WalletBalance balance = mEtc.get(position);
         Picasso.get().load(KAVA_COIN_IMG_URL + "hbtc.png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
         holder.itemSymbol.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
-        holder.itemSymbol.setText(balance.symbol.toUpperCase());
-        holder.itemInnerSymbol.setText("(" + balance.symbol + ")");
-        holder.itemFullName.setText(balance.symbol.toUpperCase() + " on Kava Chain");
+        holder.itemSymbol.setText(balance.getDenom().toUpperCase());
+        holder.itemInnerSymbol.setText("(" + balance.getDenom() + ")");
+        holder.itemFullName.setText(balance.getDenom().toUpperCase() + " on Kava Chain");
 
-        BigDecimal tokenTotalAmount = balance.balance; //getBalance(balance.symbol).add(getBaseDao().getVesting(balance.symbol));
-        BigDecimal convertedKavaAmount = WDp.convertTokenToKava(getBaseDao(), balance);
-        holder.itemBalance.setText(WDp.getDpAmount2(tokenTotalAmount, WUtil.getKavaCoinDecimal(getBaseDao(), balance.symbol), 6));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), KAVA_MAIN.INSTANCE.getMainDenom(), convertedKavaAmount, 6));
+        BigDecimal tokenTotalAmount = balance.getBalanceAmount(); //getBalance(balance.getSymbol()).add(getBaseDao().getVesting(balance.getSymbol()));
+        BigDecimal convertedKavaAmount = WDp.convertTokenToKava(getBaseDao(), balance, priceProvider);
+        holder.itemBalance.setText(WDp.getDpAmount2(tokenTotalAmount, WUtil.getKavaCoinDecimal(getBaseDao(), balance.getDenom()), 6));
+        holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), KAVA_MAIN.INSTANCE.getMainDenom(), convertedKavaAmount, 6, priceProvider));
     }
 
     //bind cw20 tokens with gRPC
@@ -970,7 +981,7 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
 
         int decimal = cw20Asset.decimal;
         holder.itemBalance.setText(WDp.getDpAmount2(cw20Asset.getAmount(), decimal, 6));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), cw20Asset.denom, cw20Asset.getAmount(), decimal));
+        holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), cw20Asset.denom, cw20Asset.getAmount(), decimal, priceProvider));
 
         holder.itemRoot.setOnClickListener(v -> {
             Intent intent = new Intent(getMainActivity(), ContractTokenGrpcActivity.class);
@@ -981,22 +992,22 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
 
     //with Unknown Token gRPC
     private void onBindUnKnownToken(TokensAdapter.AssetHolder holder, int position) {
-        final Balance balance = mUnknown.get(position);
+        final WalletBalance balance = mUnknown.get(position);
         holder.itemSymbol.setText(R.string.str_unknown);
         holder.itemSymbol.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
         holder.itemInnerSymbol.setText("");
         holder.itemFullName.setText("");
         holder.itemImg.setImageDrawable(getResources().getDrawable(R.drawable.token_ic));
-        holder.itemBalance.setText(WDp.getDpAmount2(balance.balance, 6, 6));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.symbol, BigDecimal.ZERO, 6));
+        holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
+        holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.getDenom(), BigDecimal.ZERO, 6, priceProvider));
     }
 
 
     //with native tokens
     private void onBindNativeItem(TokensAdapter.AssetHolder holder, int position) {
-        final Balance balance = mNative.get(position);
+        final WalletBalance balance = mNative.get(position);
         if (getMainActivity().getBaseChain().equals(BNB_MAIN.INSTANCE)) {
-            final String denom = balance.symbol;
+            final String denom = balance.getDenom();
 
             final BigDecimal amount = balance.getTotalAmount();
             final BnbToken bnbToken = getBaseDao().getBnbToken(denom);
@@ -1007,7 +1018,7 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
                 holder.itemImg.setImageDrawable(ContextCompat.getDrawable(requireContext(), BNB_MAIN.INSTANCE.getCoinIcon()));
                 holder.itemSymbol.setTextColor(WDp.getChainColor(getContext(), BNB_MAIN.INSTANCE));
                 holder.itemBalance.setText(WDp.getDpAmount2(amount, 0, 6));
-                holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), BNB_MAIN.INSTANCE.getMainDenom(), amount, 0));
+                holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), BNB_MAIN.INSTANCE.getMainDenom(), amount, 0, priceProvider));
             }
             holder.itemRoot.setOnClickListener(v -> {
                 Intent intent = new Intent(getMainActivity(), StakingTokenDetailActivity.class);
@@ -1015,17 +1026,17 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
             });
 
         } else if (getMainActivity().getBaseChain().equals(OKEX_MAIN.INSTANCE)) {
-            final OkToken okToken = getBaseDao().okToken(balance.symbol);
+            final OkToken okToken = getBaseDao().okToken(balance.getDenom());
             holder.itemSymbol.setText(okToken.original_symbol.toUpperCase());
             holder.itemInnerSymbol.setText("(" + okToken.symbol + ")");
             holder.itemFullName.setText(OKEX_MAIN.INSTANCE.getFullNameCoin());
-            if (balance.symbol.equals(OKEX_MAIN.INSTANCE.getMainDenom())) {
+            if (balance.getDenom().equals(OKEX_MAIN.INSTANCE.getMainDenom())) {
                 holder.itemSymbol.setTextColor(WDp.getChainColor(getContext(), getMainActivity().getBaseChain()));
                 holder.itemImg.setImageDrawable(ContextCompat.getDrawable(requireContext(), OKEX_MAIN.INSTANCE.getCoinIcon()));
 
-                BigDecimal totalAmount = balance.getDelegatableAmount().add(getBaseDao().getAllExToken(balance.symbol));
+                BigDecimal totalAmount = balance.getDelegatableAmount().add(getBaseDao().getAllExToken(balance.getDenom()));
                 holder.itemBalance.setText(WDp.getDpAmount2(totalAmount, 0, 6));
-                holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.symbol, totalAmount, 0));
+                holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.getDenom(), totalAmount, 0, priceProvider));
             }
             holder.itemRoot.setOnClickListener(v -> {
                 Intent intent = new Intent(getMainActivity(), StakingTokenDetailActivity.class);
@@ -1036,8 +1047,8 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
 
     //with Etc tokens (binance, okex)
     private void onBindEtcToken(TokensAdapter.AssetHolder holder, int position) {
-        final Balance balance = mEtc.get(position);
-        final String denom = balance.symbol;
+        final WalletBalance balance = mEtc.get(position);
+        final String denom = balance.getDenom();
         BaseChain baseChain = getMainActivity().getBaseChain();
         if (OKEX_MAIN.INSTANCE.equals(baseChain)) {
             final OkToken okToken = getBaseDao().okToken(denom);
@@ -1050,9 +1061,9 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
             }
 
             BigDecimal totalAmount = balance.getDelegatableAmount().add(getBaseDao().getAllExToken(denom));
-            BigDecimal convertAmount = WDp.convertTokenToOkt(getBaseActivity().getFullBalance(denom), getBaseDao(), denom);
+            BigDecimal convertAmount = WDp.convertTokenToOkt(getBaseActivity().getFullBalance(denom), getBaseDao(), denom, priceProvider);
             holder.itemBalance.setText(WDp.getDpAmount2(totalAmount, 0, 6));
-            holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), OKEX_MAIN.INSTANCE.getMainDenom(), convertAmount, 0));
+            holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), OKEX_MAIN.INSTANCE.getMainDenom(), convertAmount, 0, priceProvider));
             holder.itemRoot.setOnClickListener(v -> {
                 Intent intent = new Intent(getMainActivity(), NativeTokenDetailActivity.class);
                 intent.putExtra("denom", denom);
@@ -1070,7 +1081,7 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
             holder.itemBalance.setText(WDp.getDpAmount2(amount, 0, 6));
 
             final BigDecimal convertAmount = WUtil.getBnbConvertAmount(getBaseDao(), denom, amount);
-            holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), BNB_MAIN.INSTANCE.getMainDenom(), convertAmount, 0));
+            holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), BNB_MAIN.INSTANCE.getMainDenom(), convertAmount, 0, priceProvider));
             holder.itemRoot.setOnClickListener(v -> {
                 Intent intent = new Intent(getMainActivity(), NativeTokenDetailActivity.class);
                 intent.putExtra("denom", denom);
@@ -1081,14 +1092,14 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
 
     //with Unknown coin oec, bnb
     private void onBindUnKnownCoin(TokensAdapter.AssetHolder holder, int position) {
-        final Balance balance = mUnknown.get(position);
+        final WalletBalance balance = mUnknown.get(position);
         holder.itemSymbol.setText(R.string.str_unknown);
         holder.itemSymbol.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
         holder.itemInnerSymbol.setText("");
         holder.itemFullName.setText("");
         holder.itemImg.setImageDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.token_ic));
-        holder.itemBalance.setText(WDp.getDpAmount2(balance.balance, 6, 6));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.symbol, BigDecimal.ZERO, 6));
+        holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
+        holder.itemValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), getCurrency(), balance.getDenom(), BigDecimal.ZERO, 6, priceProvider));
     }
 
     private void showAddressDialog() {

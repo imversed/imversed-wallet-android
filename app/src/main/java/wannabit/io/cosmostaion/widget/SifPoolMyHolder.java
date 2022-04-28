@@ -16,6 +16,7 @@ import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.sif.SifDexListActivity;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.base.BaseData;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 
@@ -59,7 +60,8 @@ public class SifPoolMyHolder extends BaseHolder {
         int externalDecimal = WUtil.getSifCoinDecimal(baseData, myPool.getExternalAsset().getSymbol());
         BigDecimal externalAmount = new BigDecimal(myPool.getExternalAssetBalance());
         String exteranlDenom = myPool.getExternalAsset().getSymbol();
-        BigDecimal poolValue = WUtil.getSifPoolValue(baseData, myPool);
+        final PriceProvider priceProvider = activity::getPrice;
+        BigDecimal poolValue = WUtil.getSifPoolValue(baseData, myPool, priceProvider);
 
 
         WUtil.DpSifTokenImg(baseData, itemExternalImg, exteranlDenom);
@@ -73,7 +75,7 @@ public class SifPoolMyHolder extends BaseHolder {
 
         //dp my lp info
         if (myPool != null && myProvider != null) {
-            BigDecimal myShareValue = WUtil.getSifMyShareValue(baseData, myPool, myProvider);
+            BigDecimal myShareValue = WUtil.getSifMyShareValue(baseData, myPool, myProvider, priceProvider);
             itemMypoolDepositValue.setText(WDp.getDpRawDollor(context, myShareValue, 2));
             WUtil.dpSifTokenName(context, baseData, itemMyDepositSymbol0, BaseConstant.TOKEN_SIF);
             WUtil.dpSifTokenName(context, baseData, itemMyDepositSymbol1, exteranlDenom);

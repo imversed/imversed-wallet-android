@@ -23,6 +23,7 @@ import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.utils.OsmosisGaugeWrapper;
 import wannabit.io.cosmostaion.utils.OsmosisPeriodLockWrapper;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 
@@ -47,11 +48,12 @@ public class EarningOtherHolder extends RecyclerView.ViewHolder {
 
     public void onBindView(Context c, BaseActivity activity, BaseData baseData,
                            BalancerPool.Pool pool, List<Lock.PeriodLock> lockups, List<GaugeOuterClass.Gauge> gauges) {
+        final PriceProvider priceProvider = activity::getPrice;
 
         Coin coin0 = new Coin(pool.getPoolAssets(0).getToken().getDenom(), pool.getPoolAssets(0).getToken().getAmount());
         Coin coin1 = new Coin(pool.getPoolAssets(1).getToken().getDenom(), pool.getPoolAssets(1).getToken().getAmount());
-        BigDecimal lpCoinPrice = WUtil.getOsmoLpTokenPerUsdPrice(baseData, pool);
-        BigDecimal apr = WUtil.getPoolArp(baseData, pool, gauges, 2);
+        BigDecimal lpCoinPrice = WUtil.getOsmoLpTokenPerUsdPrice(baseData, pool, priceProvider);
+        BigDecimal apr = WUtil.getPoolArp(baseData, pool, gauges, 2, priceProvider);
 
         itemPoolId.setText("#" + pool.getId() + " EARNING");
         itemPoolCoinPair.setText(WUtil.dpOsmosisTokenName(baseData, coin0.denom) + " / " + WUtil.dpOsmosisTokenName(baseData, coin1.denom));

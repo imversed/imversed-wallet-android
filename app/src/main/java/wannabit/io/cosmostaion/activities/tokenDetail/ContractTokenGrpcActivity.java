@@ -30,7 +30,9 @@ import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.contract.SendContractActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.dao.Cw20Assets;
+import wannabit.io.cosmostaion.dao.Price;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.tokenDetail.TokenDetailSupportHolder;
@@ -120,15 +122,18 @@ public class ContractTokenGrpcActivity extends BaseActivity implements View.OnCl
     private void onUpdateView() {
         mBtnAddressPopup.setCardBackgroundColor(WDp.getChainBgColor(ContractTokenGrpcActivity.this, getBaseChain()));
         final Currency currency = settingsInteractor.getCurrency();
+        final PriceProvider priceProvider = this::getPrice;
         if (mCw20Asset != null) {
             Picasso.get().load(mCw20Asset.logo).fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(mToolbarSymbolImg);
             mToolbarSymbol.setText(mCw20Asset.denom.toUpperCase());
             mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
             mTotalAmount = mCw20Asset.getAmount();
 
-            mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, mCw20Asset.denom));
-            mItemUpDownPrice.setText(WDp.dpValueChange(getBaseDao(), mCw20Asset.denom));
-            final BigDecimal lastUpDown = WDp.valueChange(getBaseDao(), mCw20Asset.denom);
+            mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, mCw20Asset.denom, priceProvider));
+
+            final Price price = getPrice(mCw20Asset.denom);
+            mItemUpDownPrice.setText(WDp.dpValueChange(price));
+            final BigDecimal lastUpDown = WDp.valueChange(price);
             if (lastUpDown.compareTo(BigDecimal.ZERO) > 0) {
                 mItemUpDownImg.setVisibility(View.VISIBLE);
                 mItemUpDownImg.setImageResource(R.drawable.ic_price_up);
@@ -144,7 +149,7 @@ public class ContractTokenGrpcActivity extends BaseActivity implements View.OnCl
             if (getAccount().hasPrivateKey) {
                 mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), getBaseChain()), android.graphics.PorterDuff.Mode.SRC_IN);
             }
-            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mCw20Asset.denom, mTotalAmount, mCw20Asset.decimal));
+            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mCw20Asset.denom, mTotalAmount, mCw20Asset.decimal, priceProvider));
             mSwipeRefreshLayout.setRefreshing(false);
         }
     }

@@ -38,8 +38,10 @@ import java.math.BigDecimal;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.SendActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
+import wannabit.io.cosmostaion.dao.Price;
 import wannabit.io.cosmostaion.dialog.Dialog_IBC_Send_Warning;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.tokenDetail.TokenDetailSupportHolder;
@@ -143,6 +145,7 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
 
     private void onUpdateView() {
         final Currency currency = settingsInteractor.getCurrency();
+        final PriceProvider priceProvider = this::getPrice;
         mBtnAddressPopup.setCardBackgroundColor(WDp.getChainBgColor(NativeTokenGrpcActivity.this, getBaseChain()));
         mBtnIbcSend.setVisibility(View.VISIBLE);
         if (getBaseChain().equals(BaseChain.OSMOSIS_MAIN.INSTANCE)) {
@@ -179,9 +182,10 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
             }
         }
 
-        mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, mNativeGrpcDenom));
-        mItemUpDownPrice.setText(WDp.dpValueChange(getBaseDao(), mNativeGrpcDenom));
-        final BigDecimal lastUpDown = WDp.valueChange(getBaseDao(), mNativeGrpcDenom);
+        mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, mNativeGrpcDenom, priceProvider));
+        final Price price = getPrice(mNativeGrpcDenom);
+        mItemUpDownPrice.setText(WDp.dpValueChange(price));
+        final BigDecimal lastUpDown = WDp.valueChange(price);
         if (lastUpDown.compareTo(BigDecimal.ZERO) > 0) {
             mItemUpDownImg.setVisibility(View.VISIBLE);
             mItemUpDownImg.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_up));
@@ -193,7 +197,7 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
         }
 
         mAddress.setText(getAccount().address);
-        mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mNativeGrpcDenom, mTotalAmount, mDivideDecimal));
+        mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mNativeGrpcDenom, mTotalAmount, mDivideDecimal, priceProvider));
         mKeyState.setColorFilter(ContextCompat.getColor(getBaseContext(), R.color.colorGray0), android.graphics.PorterDuff.Mode.SRC_IN);
         if (getAccount().hasPrivateKey) {
             mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), getBaseChain()), android.graphics.PorterDuff.Mode.SRC_IN);

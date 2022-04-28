@@ -18,7 +18,6 @@ import wannabit.io.cosmostaion.base.BaseApplication;
 import wannabit.io.cosmostaion.cosmos.MsgGenerator;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dao.Account;
-import wannabit.io.cosmostaion.dao.Password;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.model.type.Fee;
 import wannabit.io.cosmostaion.model.type.Msg;

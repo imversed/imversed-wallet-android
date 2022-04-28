@@ -21,6 +21,7 @@ import wannabit.io.cosmostaion.activities.chains.osmosis.EarningDetailActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.model.type.Coin;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 
@@ -52,8 +53,9 @@ public class EarningBondedHolder extends RecyclerView.ViewHolder {
 
     public void onBindView(Context c, BaseActivity activity, BaseData baseData,
                            BalancerPool.Pool pool, Lock.PeriodLock lockup, List<GaugeOuterClass.Gauge> gauges) {
+        final PriceProvider priceProvider = activity::getPrice;
         BigDecimal totalShare = new BigDecimal(pool.getTotalShares().getAmount());
-        BigDecimal lpCoinPrice = WUtil.getOsmoLpTokenPerUsdPrice(baseData, pool);
+        BigDecimal lpCoinPrice = WUtil.getOsmoLpTokenPerUsdPrice(baseData, pool, priceProvider);
         Coin myLpCoin = new Coin(lockup.getCoins(0).getDenom(), lockup.getCoins(0).getAmount());
         BigDecimal myShare = new BigDecimal(myLpCoin.amount);
         BigDecimal myShareRate = myShare.divide(totalShare, 24, RoundingMode.DOWN);
@@ -65,9 +67,9 @@ public class EarningBondedHolder extends RecyclerView.ViewHolder {
         BigDecimal incentive7Day = WUtil.getNextIncentiveAmount(gauges, 1);
         BigDecimal incentive14Day = WUtil.getNextIncentiveAmount(gauges, 2);
 
-        BigDecimal apr1 = WUtil.getPoolArp(baseData, pool, gauges, 0);
-        BigDecimal apr7 = WUtil.getPoolArp(baseData, pool, gauges, 1);
-        BigDecimal apr14 = WUtil.getPoolArp(baseData, pool, gauges, 2);
+        BigDecimal apr1 = WUtil.getPoolArp(baseData, pool, gauges, 0, priceProvider);
+        BigDecimal apr7 = WUtil.getPoolArp(baseData, pool, gauges, 1, priceProvider);
+        BigDecimal apr14 = WUtil.getPoolArp(baseData, pool, gauges, 2, priceProvider);
 
 
         itemLockId.setText("# " + lockup.getID());

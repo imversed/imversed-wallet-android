@@ -105,14 +105,6 @@
                 android:paddingTop="@dimen/space_4"
                 android:visibility="gone" />
 
-            <TextView
-                android:id="@+id/text_notyet"
-                style="@style/font_ss_14_white"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_marginTop="@dimen/space_6"
-                android:text="Coming Soon!!" />
         </RelativeLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

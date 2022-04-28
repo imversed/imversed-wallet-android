@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat;
 
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.WalletBalance;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -29,7 +30,6 @@ import wannabit.io.cosmostaion.activities.HtlcSendActivity;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.dao.Account;
-import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dialog.Dialog_Htlc_Receivable_Accounts;
 import wannabit.io.cosmostaion.dialog.Dialog_Htlc_Receivable_Empty;
 import wannabit.io.cosmostaion.utils.WDp;
@@ -176,12 +176,12 @@ public class HtlcSendStep1Fragment extends BaseFragment implements View.OnClickL
         return result;
     }
 
-    public BigDecimal getTokenAmount(List<Balance> balances, String symbol) {
+    public BigDecimal getTokenAmount(List<WalletBalance> balances, String symbol) {
         BigDecimal result = BigDecimal.ZERO;
         if (balances != null) {
-            for (Balance balance : balances) {
-                if (balance.symbol.equalsIgnoreCase(symbol)) {
-                    result = balance.balance;
+            for (WalletBalance balance : balances) {
+                if (balance.getDenom().equalsIgnoreCase(symbol)) {
+                    result = balance.getBalanceAmount();
                 }
             }
         }

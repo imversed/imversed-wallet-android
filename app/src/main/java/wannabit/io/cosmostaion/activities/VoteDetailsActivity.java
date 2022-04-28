@@ -27,13 +27,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.fulldive.wallet.models.WalletBalance;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import cosmos.gov.v1beta1.Gov;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
-import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.network.res.ResMyProposal;
@@ -123,7 +124,7 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
                 return;
             }
             final String mainDenom = getBaseChain().getMainDenom();
-            final Balance balance = getFullBalance(mainDenom);
+            final WalletBalance balance = getFullBalance(mainDenom);
             BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_VOTE, 0);
 
             if (!mApiProposal.proposal_status.contains("VOTING")) {
@@ -135,7 +136,7 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
                 Toast.makeText(getBaseContext(), getString(R.string.error_no_bonding_no_vote), Toast.LENGTH_SHORT).show();
                 return;
             }
-            if (balance.balance.compareTo(feeAmount) < 0) {
+            if (balance.getBalanceAmount().compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_budget, Toast.LENGTH_SHORT).show();
                 return;
             }

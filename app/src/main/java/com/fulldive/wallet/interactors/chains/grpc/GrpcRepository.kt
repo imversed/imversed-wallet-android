@@ -1,7 +1,6 @@
 package com.fulldive.wallet.interactors.chains.grpc
 
 import com.fulldive.wallet.di.modules.DefaultRepositoryModule
-import com.fulldive.wallet.extensions.safe
 import com.fulldive.wallet.models.BaseChain
 import com.joom.lightsaber.ProvidedBy
 import cosmos.base.v1beta1.CoinOuterClass
@@ -11,7 +10,6 @@ import io.reactivex.Single
 import tendermint.p2p.Types
 import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.dao.Cw20Assets
-import wannabit.io.cosmostaion.model.type.Coin
 import javax.inject.Inject
 
 @ProvidedBy(DefaultRepositoryModule::class)

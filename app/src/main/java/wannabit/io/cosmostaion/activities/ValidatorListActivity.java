@@ -5,6 +5,7 @@ import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIMPLE_REWAR
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.fulldive.wallet.models.WalletBalance;
 import com.google.android.material.tabs.TabLayout;
 
 import java.math.BigDecimal;
@@ -30,7 +32,6 @@ import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IBusyFetchListener;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
-import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.fragment.ValidatorAllFragment;
 import wannabit.io.cosmostaion.fragment.ValidatorMyFragment;
@@ -105,12 +106,6 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-//        if(mAccount == null) finish();
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -122,12 +117,14 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
     }
 
     public void onStartValidatorDetail(Validator validator) {
+        Log.d("fftf", "onStartValidatorDetail: " + validator.toString());
         Intent intent = new Intent(ValidatorListActivity.this, ValidatorActivity.class);
         intent.putExtra("validator", validator);
         startActivity(intent);
     }
 
     public void onStartValidatorDetailV1(String opAddress) {
+        Log.d("fftf", "onStartValidatorDetailV1: " + opAddress);
         Intent intent = new Intent(ValidatorListActivity.this, ValidatorActivity.class);
         intent.putExtra("valOpAddress", opAddress);
         startActivity(intent);
@@ -141,8 +138,8 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
         }
         if (getBaseChain().isGRPC()) {
             String cosmostation = "";
-            final Balance balance = getFullBalance(getBaseChain().getMainDenom());
-            BigDecimal delegatableAmount = balance.balance; // TODO add(getVesting(denom))
+            final WalletBalance balance = getFullBalance(getBaseChain().getMainDenom());
+            BigDecimal delegatableAmount = balance.getBalanceAmount(); // TODO add(getVesting(denom))
             BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
             if (delegatableAmount.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_to_delegate, Toast.LENGTH_SHORT).show();
@@ -160,7 +157,7 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
             }
         } else {
             Validator toValidator = null;
-            final Balance balance = getFullBalance(getBaseChain().getMainDenom());
+            final WalletBalance balance = getFullBalance(getBaseChain().getMainDenom());
             BigDecimal delegatableAmount = balance.getDelegatableAmount();
             BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
             if (delegatableAmount.compareTo(feeAmount) < 0) {
@@ -213,9 +210,9 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
             }
 
             final String mainDenom = getBaseChain().getMainDenom();
-            final Balance balance = getFullBalance(mainDenom);
+            final WalletBalance balance = getFullBalance(mainDenom);
             BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_REWARD, toClaimRewards.size());
-            if (balance.balance.compareTo(feeAmount) < 0) {
+            if (balance.getBalanceAmount().compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return;
             }

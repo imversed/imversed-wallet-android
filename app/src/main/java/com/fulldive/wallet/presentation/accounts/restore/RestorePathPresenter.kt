@@ -141,7 +141,7 @@ class RestorePathPresenter @Inject constructor(
                                 .map { balances ->
                                     balances
                                         .find { balance ->
-                                            balance.symbol == chain.mainDenom
+                                            balance.denom == chain.mainDenom
                                         }
                                         ?.let { balance ->
                                             val amount = safe(

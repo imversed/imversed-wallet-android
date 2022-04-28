@@ -134,12 +134,7 @@ public class ValidatorOtherFragment extends BaseFragment implements IRefreshTabL
                 } else {
                     holder.itemRoot.setCardBackgroundColor(ContextCompat.getColor(requireContext(), R.color.colorTransBg));
                 }
-                holder.itemRoot.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        getMainActivity().onStartValidatorDetailV1(validator.getOperatorAddress());
-                    }
-                });
+                holder.itemRoot.setOnClickListener(v -> getMainActivity().onStartValidatorDetailV1(validator.getOperatorAddress()));
 
                 if (getMainActivity().getBaseChain().equals(ALTHEA_TEST.INSTANCE)) {
                     holder.itemTvCommission.setText("--");
@@ -151,12 +146,7 @@ public class ValidatorOtherFragment extends BaseFragment implements IRefreshTabL
                 holder.itemTvCommission.setText(WDp.getDpEstAprCommission(getBaseDao(), getMainActivity().getBaseChain(), BigDecimal.ONE));
                 holder.itemTvMoniker.setText(validator.description.moniker);
                 holder.itemFree.setVisibility(View.GONE);
-                holder.itemRoot.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        getMainActivity().onStartValidatorDetail(validator);
-                    }
-                });
+                holder.itemRoot.setOnClickListener(v -> getMainActivity().onStartValidatorDetail(validator));
                 try {
                     Picasso.get().load(WDp.getMonikerImgUrl(getMainActivity().getBaseChain(), validator.operator_address)).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
                 } catch (Exception e) {

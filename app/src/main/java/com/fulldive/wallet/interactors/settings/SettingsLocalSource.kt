@@ -3,12 +3,9 @@ package com.fulldive.wallet.interactors.settings
 import android.content.Context
 import com.fulldive.wallet.di.modules.DefaultLocalStorageModule
 import com.fulldive.wallet.extensions.or
-import com.fulldive.wallet.extensions.safeCompletable
 import com.fulldive.wallet.models.Currency
 import com.joom.lightsaber.ProvidedBy
-import io.reactivex.Completable
 import wannabit.io.cosmostaion.appextensions.getPrivateSharedPreferences
-import wannabit.io.cosmostaion.crypto.CryptoHelper
 import javax.inject.Inject
 import javax.inject.Singleton
 

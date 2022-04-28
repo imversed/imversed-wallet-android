@@ -72,6 +72,7 @@ import com.addisonelliott.segmentedbutton.SegmentedButtonGroup;
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.WalletBalance;
 import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
 import com.google.gson.Gson;
 
@@ -90,7 +91,6 @@ import wannabit.io.cosmostaion.base.BaseBroadCastActivity;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dao.Account;
-import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dao.StationNFTData;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.model.type.Fee;
@@ -142,6 +142,7 @@ import wannabit.io.cosmostaion.task.gRpcTask.simulate.SimulSifWithdrawGrpcTask;
 import wannabit.io.cosmostaion.task.gRpcTask.simulate.SimulTransferNFTGrpcTask;
 import wannabit.io.cosmostaion.task.gRpcTask.simulate.SimulUndelegateGrpcTask;
 import wannabit.io.cosmostaion.task.gRpcTask.simulate.SimulVoteGrpcTask;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WKey;
 import wannabit.io.cosmostaion.utils.WUtil;
@@ -241,6 +242,7 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
 
     private void onUpdateView() {
         onCalculateFees();
+        final PriceProvider priceProvider = getSActivity()::getPrice;
 
         if (getSActivity().getBaseChain().equals(BaseChain.SIF_MAIN.INSTANCE)) {
             mRateControlCard.setVisibility(View.GONE);
@@ -248,7 +250,7 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
             mRateControlCard.setVisibility(View.VISIBLE);
         }
         mFeeAmount.setText(WDp.getDpAmount2(mFee, getSActivity().getBaseChain().getDivideDecimal(), getSActivity().getBaseChain().getDivideDecimal()));
-        mFeeValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), settingsInteractor.getCurrency(), getSActivity().getBaseChain().getMainDenom(), mFee, getSActivity().getBaseChain().getDivideDecimal()));
+        mFeeValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), settingsInteractor.getCurrency(), getSActivity().getBaseChain().getMainDenom(), mFee, getSActivity().getBaseChain().getDivideDecimal(), priceProvider));
 
         mGasRate.setText(WDp.getDpGasRate(mSelectedGasRate.toPlainString()));
         mGasAmount.setText(mEstimateGasAmount.toPlainString());
@@ -318,8 +320,8 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
             }
 
         } else if (getSActivity().mTxType == CONST_PW_TX_SIMPLE_DELEGATE) {
-            final Balance balance = getSActivity().getFullBalance(mainDenom);
-            BigDecimal delegatable = balance.balance; // TODO add(getVesting(denom))
+            final WalletBalance balance = getSActivity().getFullBalance(mainDenom);
+            BigDecimal delegatable = balance.getBalanceAmount(); // TODO add(getVesting(denom))
             BigDecimal todelegate = new BigDecimal(getSActivity().mAmount.amount);
             if ((todelegate.add(mFee)).compareTo(delegatable) > 0) {
                 Toast.makeText(getContext(), getString(R.string.error_not_enough_fee), Toast.LENGTH_SHORT).show();

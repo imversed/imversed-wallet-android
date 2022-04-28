@@ -35,19 +35,11 @@ public class Dialog_WalletConnect extends DialogFragment {
         Button btn_negative = view.findViewById(R.id.negativeButton);
         Button btn_positive = view.findViewById(R.id.positiveButton);
 
-        btn_negative.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        btn_negative.setOnClickListener(v -> dismiss());
 
-        btn_positive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) getActivity()).onStartBinanceWalletConnect(getArguments().getString("wcUrl"));
-                dismiss();
-            }
+        btn_positive.setOnClickListener(v -> {
+            ((MainActivity) getActivity()).onStartBinanceWalletConnect(getArguments().getString("wcUrl"));
+            dismiss();
         });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

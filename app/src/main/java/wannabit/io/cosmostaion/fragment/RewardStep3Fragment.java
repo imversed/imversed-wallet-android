@@ -21,6 +21,7 @@ import wannabit.io.cosmostaion.activities.ClaimRewardActivity;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.dialog.Dialog_Reward_Small;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 
 public class RewardStep3Fragment extends BaseFragment implements View.OnClickListener, IRefreshTabListener {
@@ -80,6 +81,7 @@ public class RewardStep3Fragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onRefreshTab() {
         mDpDecimal = getSActivity().getBaseChain().getDivideDecimal();
+        final PriceProvider priceProvider = getSActivity()::getPrice;
         final String mainDenom = getSActivity().getBaseChain().getMainDenom();
         BigDecimal rewardSum = BigDecimal.ZERO;
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
@@ -94,7 +96,7 @@ public class RewardStep3Fragment extends BaseFragment implements View.OnClickLis
             BigDecimal availableAmount = getSActivity().getBalance(mainDenom);
             BigDecimal expectedAmount = availableAmount.add(rewardSum).subtract(feeAmount);
             mExpectedAmount.setText(WDp.getDpAmount2(expectedAmount, mDpDecimal, mDpDecimal));
-            mExpectedPrice.setText(WDp.dpUserCurrencyValue(getBaseDao(), settingsInteractor.getCurrency(), mainDenom, expectedAmount, mDpDecimal));
+            mExpectedPrice.setText(WDp.dpUserCurrencyValue(getBaseDao(), settingsInteractor.getCurrency(), mainDenom, expectedAmount, mDpDecimal, priceProvider));
 
         } else {
             mTvGoalLayer.setVisibility(View.VISIBLE);

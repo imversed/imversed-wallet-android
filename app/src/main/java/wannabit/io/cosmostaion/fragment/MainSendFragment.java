@@ -25,6 +25,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.fulldive.wallet.interactors.balances.BalancesInteractor;
 import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.WalletBalance;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.fulldive.wallet.presentation.main.MainActivity;
 
@@ -35,7 +36,7 @@ import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IBusyFetchListener;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 import wannabit.io.cosmostaion.dao.Account;
-import wannabit.io.cosmostaion.dao.Balance;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.widget.BaseHolder;
 import wannabit.io.cosmostaion.widget.mainWallet.WalletBinanceHolder;
@@ -162,11 +163,12 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
             itemKeyStatus.setColorFilter(ContextCompat.getColor(getMainActivity(), R.color.colorGray0), android.graphics.PorterDuff.Mode.SRC_IN);
         }
         mWalletAddress.setText(mAccount.address);
-        mTotalValue.setText(WDp.dpAllAssetValueUserCurrency(mBaseChain, settingsInteractor.getCurrency(), getBaseDao(), getBalances()));
+        final PriceProvider priceProvider = getMainActivity()::getPrice;
+        mTotalValue.setText(WDp.dpAllAssetValueUserCurrency(mBaseChain, settingsInteractor.getCurrency(), getBaseDao(), getBalances(), priceProvider));
         mMainWalletAdapter.notifyDataSetChanged();
     }
 
-    private List<Balance> getBalances() {
+    private List<WalletBalance> getBalances() {
         return balancesInteractor.getBalances(mAccount.id).blockingGet();
     }
 

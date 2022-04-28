@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.WalletBalance;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -31,7 +32,6 @@ import java.util.List;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.dao.Account;
-import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.utils.WDp;
 
 public class Dialog_Htlc_Receivable_Accounts extends DialogFragment {
@@ -152,12 +152,12 @@ public class Dialog_Htlc_Receivable_Accounts extends DialogFragment {
         return result;
     }
 
-    public BigDecimal getTokenAmount(List<Balance> balances, String symbol) {
+    public BigDecimal getTokenAmount(List<WalletBalance> balances, String symbol) {
         BigDecimal result = BigDecimal.ZERO;
         if (balances != null) {
-            for (Balance balance : balances) {
-                if (balance.symbol.equalsIgnoreCase(symbol)) {
-                    result = balance.balance;
+            for (WalletBalance balance : balances) {
+                if (balance.getDenom().equalsIgnoreCase(symbol)) {
+                    result = balance.getBalanceAmount();
                 }
             }
         }

@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
 import com.fulldive.wallet.interactors.settings.SettingsInteractor;
+import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.main.MainActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +24,8 @@ import java.math.BigDecimal;
 
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseData;
+import wannabit.io.cosmostaion.dao.Price;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.BaseHolder;
@@ -50,11 +53,14 @@ public class WalletPriceHolder extends BaseHolder {
     public void onBindHolder(@NotNull MainActivity mainActivity) {
         final SettingsInteractor settingsInteractor = mainActivity.getAppInjector().getInstance(SettingsInteractor.class);
         final BaseData data = mainActivity.getBaseDao();
-        final String denom = mainActivity.getBaseChain().getMainDenom();
+        final BaseChain baseChain = mainActivity.getBaseChain();
+        final String denom = baseChain.getMainDenom();
 
-        itemPerPrice.setText(WDp.dpPerUserCurrencyValue(data, settingsInteractor.getCurrency(), denom));
-        itemUpDownPrice.setText(WDp.dpValueChange(data, denom));
-        final BigDecimal lastUpDown = WDp.valueChange(data, denom);
+        final PriceProvider priceProvider = mainActivity::getPrice;
+        itemPerPrice.setText(WDp.dpPerUserCurrencyValue(data, settingsInteractor.getCurrency(), denom, priceProvider));
+        final Price price = mainActivity.getPrice(denom);
+        itemUpDownPrice.setText(WDp.dpValueChange(price));
+        final BigDecimal lastUpDown = WDp.valueChange(price);
         if (lastUpDown.compareTo(BigDecimal.ZERO) > 0) {
             itemUpDownImg.setVisibility(View.VISIBLE);
             itemUpDownImg.setImageResource(R.drawable.ic_price_up);

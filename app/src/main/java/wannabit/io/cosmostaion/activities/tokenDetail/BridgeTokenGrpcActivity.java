@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.squareup.picasso.Picasso;
@@ -31,9 +32,12 @@ import java.math.BigDecimal;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.SendActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
+import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.dao.Assets;
+import wannabit.io.cosmostaion.dao.Price;
 import wannabit.io.cosmostaion.dialog.Dialog_IBC_Send_Warning;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.tokenDetail.TokenDetailSupportHolder;
@@ -89,7 +93,7 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
 
         final String denom = getIntent().getStringExtra("denom");
         if (hasBalance(denom)) {
-            mBridgeDenom = getFullBalance(denom).symbol;
+            mBridgeDenom = getFullBalance(denom).getDenom();
         }
         mBtnIbcSend.setVisibility(View.VISIBLE);
 
@@ -119,7 +123,10 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
     }
 
     private void onUpdateView() {
-        mBtnAddressPopup.setCardBackgroundColor(WDp.getChainBgColor(BridgeTokenGrpcActivity.this, getBaseChain()));
+        final BaseChain baseChain = getBaseChain();
+        final BaseData baseData = getBaseDao();
+        final PriceProvider priceProvider = this::getPrice;
+        mBtnAddressPopup.setCardBackgroundColor(WDp.getChainBgColor(BridgeTokenGrpcActivity.this, baseChain));
         final Assets assets = getBaseDao().getAsset(mBridgeDenom);
         Picasso.get().load(ASSET_IMG_URL + assets.logo).fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(mToolbarSymbolImg);
         mToolbarSymbol.setText(assets.origin_symbol);
@@ -127,15 +134,17 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
         mTotalAmount = getBalance(mBridgeDenom);
 
         final Currency currency = settingsInteractor.getCurrency();
-        mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, assets.origin_symbol));
-        mItemUpDownPrice.setText(WDp.dpValueChange(getBaseDao(), assets.origin_symbol));
-        final BigDecimal lastUpDown = WDp.valueChange(getBaseDao(), assets.origin_symbol);
+        mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(baseData, currency, assets.origin_symbol, priceProvider));
+
+        final Price price = getPrice(assets.origin_symbol);
+        mItemUpDownPrice.setText(WDp.dpValueChange(price));
+        final BigDecimal lastUpDown = WDp.valueChange(price);
         if (lastUpDown.compareTo(BigDecimal.ZERO) > 0) {
             mItemUpDownImg.setVisibility(View.VISIBLE);
-            mItemUpDownImg.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_up));
+            mItemUpDownImg.setImageResource(R.drawable.ic_price_up);
         } else if (lastUpDown.compareTo(BigDecimal.ZERO) < 0) {
             mItemUpDownImg.setVisibility(View.VISIBLE);
-            mItemUpDownImg.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_down));
+            mItemUpDownImg.setImageResource(R.drawable.ic_price_down);
         } else {
             mItemUpDownImg.setVisibility(View.INVISIBLE);
         }
@@ -143,9 +152,9 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
         mAddress.setText(getAccount().address);
         mKeyState.setColorFilter(ContextCompat.getColor(getBaseContext(), R.color.colorGray0), android.graphics.PorterDuff.Mode.SRC_IN);
         if (getAccount().hasPrivateKey) {
-            mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), getBaseChain()), android.graphics.PorterDuff.Mode.SRC_IN);
+            mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), baseChain), android.graphics.PorterDuff.Mode.SRC_IN);
         }
-        mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, assets.origin_symbol, mTotalAmount, assets.decimal));
+        mTotalValue.setText(WDp.dpUserCurrencyValue(baseData, currency, assets.origin_symbol, mTotalAmount, assets.decimal, priceProvider));
         mSwipeRefreshLayout.setRefreshing(false);
     }
 

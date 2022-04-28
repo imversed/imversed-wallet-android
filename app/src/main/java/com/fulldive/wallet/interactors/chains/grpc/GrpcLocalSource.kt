@@ -16,11 +16,9 @@ import tendermint.liquidity.v1beta1.Liquidity
 import tendermint.p2p.Types
 import wannabit.io.cosmostaion.base.BaseData
 import wannabit.io.cosmostaion.dao.Assets
-import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.dao.Cw20Assets
 import wannabit.io.cosmostaion.model.kava.IncentiveParam
 import wannabit.io.cosmostaion.model.kava.IncentiveReward
-import wannabit.io.cosmostaion.model.type.Coin
 import javax.inject.Inject
 
 @ProvidedBy(DefaultLocalStorageModule::class)

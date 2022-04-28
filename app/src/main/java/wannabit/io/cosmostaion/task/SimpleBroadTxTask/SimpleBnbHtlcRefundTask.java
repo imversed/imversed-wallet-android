@@ -24,8 +24,6 @@ import wannabit.io.cosmostaion.base.BaseApplication;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.crypto.CryptoHelper;
 import wannabit.io.cosmostaion.dao.Account;
-import wannabit.io.cosmostaion.dao.Balance;
-import wannabit.io.cosmostaion.dao.Password;
 import wannabit.io.cosmostaion.network.ApiClient;
 import wannabit.io.cosmostaion.network.res.ResBnbAccountInfo;
 import wannabit.io.cosmostaion.task.CommonTask;

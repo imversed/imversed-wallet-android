@@ -142,12 +142,7 @@ public class ValidatorMyFragment extends BaseFragment implements View.OnClickLis
                 RewardPromotionHolder holder = (RewardPromotionHolder) viewHolder;
                 holder.itemRoot.setCardBackgroundColor(WDp.getChainBgColor(getMainActivity(), getMainActivity().getBaseChain()));
 
-                holder.itemRoot.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        getMainActivity().onStartDelegate();
-                    }
-                });
+                holder.itemRoot.setOnClickListener(v -> getMainActivity().onStartDelegate());
 
             } else if (getItemViewType(position) == TYPE_HEADER_WITHDRAW_ALL) {
                 final RewardWithdrawHolder holder = (RewardWithdrawHolder) viewHolder;
@@ -352,7 +347,6 @@ public class ValidatorMyFragment extends BaseFragment implements View.OnClickLis
                 mSortType.setText(getString(R.string.str_sorting_by_my_delegated));
             }
         }
-
     }
 
     public void onShowMyValidatorSort() {
@@ -369,5 +363,4 @@ public class ValidatorMyFragment extends BaseFragment implements View.OnClickLis
             onRefreshTab();
         }
     }
-
 }

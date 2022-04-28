@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.models.Currency
+import com.fulldive.wallet.models.WalletBalance
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment
 import com.fulldive.wallet.presentation.base.BaseMvpFragment
 import com.fulldive.wallet.presentation.main.MainActivity
@@ -17,29 +18,20 @@ import moxy.ktx.moxyPresenter
 import wannabit.io.cosmostaion.R
 import wannabit.io.cosmostaion.base.IRefreshTabListener
 import wannabit.io.cosmostaion.dao.Account
-import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.databinding.FragmentMainHistoryBinding
 import wannabit.io.cosmostaion.model.type.BnbHistory
 import wannabit.io.cosmostaion.network.res.ResApiNewTxListCustom
 import wannabit.io.cosmostaion.network.res.ResOkHistoryHit
+import wannabit.io.cosmostaion.utils.PriceProvider
 import wannabit.io.cosmostaion.utils.WDp
 
 class MainHistoryFragment : BaseMvpFragment<FragmentMainHistoryBinding>(),
     MainHistoryMoxyView,
     IRefreshTabListener {
-    private var balances: List<Balance> = emptyList()
+    private var balances: List<WalletBalance> = emptyList()
     private var currency: Currency = Currency.getDefault()
 
     private var historyAdapter: HistoryAdapter? = null
-    private val account: Account?
-        get() {
-            return mainActivity?.account
-        }
-    private val chain: BaseChain?
-        get() {
-            return account
-                ?.let { account -> BaseChain.getChain(account.baseChain) }
-        }
 
     private val mainActivity: MainActivity?
         get() = getBaseActivity() as? MainActivity
@@ -61,14 +53,16 @@ class MainHistoryFragment : BaseMvpFragment<FragmentMainHistoryBinding>(),
 
         historyAdapter = HistoryAdapter(mainActivity)
         binding {
-            cardView.setOnClickListener { showAddressDialog() }
+            cardView.setOnClickListener {
+                presenter.onAddressClicked()
+            }
             layerRefresher.setColorSchemeColors(
                 ContextCompat.getColor(
                     layerRefresher.context,
                     R.color.colorPrimary
                 )
             )
-            layerRefresher.setOnRefreshListener { onFetchHistory() }
+            layerRefresher.setOnRefreshListener { presenter.onRefresh() }
             recycler.layoutManager = LinearLayoutManager(
                 recycler.context,
                 LinearLayoutManager.VERTICAL,
@@ -79,12 +73,9 @@ class MainHistoryFragment : BaseMvpFragment<FragmentMainHistoryBinding>(),
             recycler.addItemDecoration(HistoryViewHeader(mainActivity))
 
         }
-        onUpdateView()
     }
 
-    private fun onUpdateView() {
-        val account = account ?: return
-        val chain = chain ?: return
+    override fun showAccount(account: Account, chain: BaseChain) {
         binding {
             cardView.setCardBackgroundColor(WDp.getChainBgColor(cardView.context, chain))
             val chainColor = if (account.hasPrivateKey) {
@@ -96,24 +87,25 @@ class MainHistoryFragment : BaseMvpFragment<FragmentMainHistoryBinding>(),
             imgAccount.setColorFilter(chainColor, PorterDuff.Mode.SRC_IN)
 
             walletAddress.text = account.address
+            val priceProvider = PriceProvider { denom -> mainActivity?.getPrice(denom) }
+
             totalValue.text = WDp.dpAllAssetValueUserCurrency(
                 chain,
                 currency,
                 mainActivity!!.baseDao,
-                balances
+                balances,
+                priceProvider
             )
-
         }
     }
 
-    override fun setBalances(balances: List<Balance>) {
+    override fun setBalances(balances: List<WalletBalance>) {
         this.balances = balances
     }
 
     override fun onRefreshTab() {
         if (!isAdded) return
-        onUpdateView()
-        onFetchHistory()
+        presenter.onRefresh()
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
@@ -181,22 +173,13 @@ class MainHistoryFragment : BaseMvpFragment<FragmentMainHistoryBinding>(),
         this.currency = currency
     }
 
-    private fun showAddressDialog() {
-        val account = account ?: return
+    override fun showAddressDialog(account: Account) {
         AccountShowDialogFragment
             .newInstance(
                 account.getAccountTitle(requireContext()),
                 account.address
             )
             .let(::showDialog)
-    }
-
-    private fun onFetchHistory() {
-        val account = account ?: return
-        val chain = chain ?: return
-        binding?.textNotyet?.visibility = View.GONE
-
-        presenter.onFetchHistory(account, chain)
     }
 
     companion object {

@@ -5,6 +5,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.WalletBalance;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -33,7 +34,7 @@ public class Account {
 
     public Integer customPath;
 
-    public List<Balance> balances;
+    public List<WalletBalance> balances;
 
     public static Account getNewInstance() {
         Account result = new Account();
@@ -126,9 +127,9 @@ public class Account {
         if (balances == null || balances.size() == 0) {
             return result;
         }
-        for (Balance balance : balances) {
-            if (balance.symbol.equalsIgnoreCase(symbol)) {
-                result = balance.balance;
+        for (WalletBalance balance : balances) {
+            if (balance.getDenom().equalsIgnoreCase(symbol)) {
+                result = balance.getBalanceAmount();
                 break;
             }
         }

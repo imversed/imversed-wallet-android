@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.interactors.settings.SettingsInteractor;
+import com.fulldive.wallet.models.WalletBalance;
 import com.fulldive.wallet.presentation.main.MainActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -25,8 +26,8 @@ import wannabit.io.cosmostaion.activities.chains.ok.OKUnbondingActivity;
 import wannabit.io.cosmostaion.activities.chains.ok.OKValidatorListActivity;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.base.BaseData;
-import wannabit.io.cosmostaion.dao.Balance;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.widget.BaseHolder;
 
@@ -60,10 +61,11 @@ public class WalletOkexHolder extends BaseHolder {
         final SettingsInteractor settingsInteractor = mainActivity.getAppInjector().getInstance(SettingsInteractor.class);
         final BaseData baseData = mainActivity.getBaseDao();
         final String denom = mainActivity.getBaseChain().getMainDenom();
+        final PriceProvider priceProvider = mainActivity::getPrice;
 
-        final Balance balance = mainActivity.getFullBalance(denom);
-        final BigDecimal availableAmount = balance.balance;
-        final BigDecimal lockedAmount = balance.locked;
+        final WalletBalance balance = mainActivity.getFullBalance(denom);
+        final BigDecimal availableAmount = balance.getBalanceAmount();
+        final BigDecimal lockedAmount = balance.getLockedAmount();
         final BigDecimal depositAmount = baseData.okDepositAmount();
         final BigDecimal withdrawAmount = baseData.okWithdrawAmount();
         final BigDecimal totalAmount = availableAmount.add(lockedAmount).add(depositAmount).add(withdrawAmount);
@@ -73,7 +75,7 @@ public class WalletOkexHolder extends BaseHolder {
         mOkLocked.setText(WDp.getDpAmount2(lockedAmount, 0, 6));
         mOkDeposit.setText(WDp.getDpAmount2(depositAmount, 0, 6));
         mOkWithdrawing.setText(WDp.getDpAmount2(withdrawAmount, 0, 6));
-        mOkTotalValue.setText(WDp.dpUserCurrencyValue(baseData, settingsInteractor.getCurrency(), denom, totalAmount, 0));
+        mOkTotalValue.setText(WDp.dpUserCurrencyValue(baseData, settingsInteractor.getCurrency(), denom, totalAmount, 0, priceProvider));
 
         mainActivity.getAppInjector().getInstance(AccountsInteractor.class).updateLastTotal(mainActivity.getAccount().id, totalAmount.toPlainString());
 
@@ -131,19 +133,13 @@ public class WalletOkexHolder extends BaseHolder {
             Intent intent = new Intent(mainActivity, OKUnbondingActivity.class);
             mainActivity.startActivity(intent);
         });
-        mBtnOkVoteForVali.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mainActivity, OKValidatorListActivity.class);
-                mainActivity.startActivity(intent);
-            }
+        mBtnOkVoteForVali.setOnClickListener(v -> {
+            Intent intent = new Intent(mainActivity, OKValidatorListActivity.class);
+            mainActivity.startActivity(intent);
         });
-        mBtnOkVote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        mBtnOkVote.setOnClickListener(v -> {
 //                mainActivity.startActivity(new Intent(mainActivity, VoteListActivity.class));
-                Toast.makeText(mainActivity, R.string.error_prepare, Toast.LENGTH_SHORT).show();
-            }
+            Toast.makeText(mainActivity, R.string.error_prepare, Toast.LENGTH_SHORT).show();
         });
     }
 }

@@ -74,7 +74,7 @@ public class BaseData {
     private SharedPreferences mSharedPreferences;
     public String mCopySalt;
     public EncResult mCopyEncResult;
-    private Gson gson = new Gson();
+    private final Gson gson = new Gson();
 
     public BaseData(Context context) {
         this.context = context.getApplicationContext();
@@ -87,21 +87,11 @@ public class BaseData {
         return mSharedPreferences;
     }
 
-    public List<Price> mPrices = new ArrayList<>();
     public ChainParam.Params mChainParam;
     public List<IbcPath> mIbcPaths = new ArrayList<>();
     public List<IbcToken> mIbcTokens = new ArrayList<>();
     public List<Assets> mAssets = new ArrayList<>();
     public List<Cw20Assets> mCw20Assets = new ArrayList<>();
-
-    public Price getPrice(String denom) {
-        for (Price price : mPrices) {
-            if (price.denom.equals(denom.toLowerCase())) {
-                return price;
-            }
-        }
-        return null;
-    }
 
     public IbcToken getIbcToken(String denom) {
         String ibcHash = denom.replace("ibc/", "");
@@ -222,6 +212,12 @@ public class BaseData {
     public List<Validator> mTopValidators = new ArrayList<>();
     public List<Validator> mOtherValidators = new ArrayList<>();
     public List<Validator> mMyValidators = new ArrayList<>();
+
+    public List<Staking.Validator> mGRpcAllValidators = new ArrayList<>();
+    public List<Staking.Validator> mGRpcTopValidators = new ArrayList<>();
+    public List<Staking.Validator> mGRpcOtherValidators = new ArrayList<>();
+    public List<Staking.Validator> mGRpcMyValidators = new ArrayList<>();
+
 
     public List<Validator> getMyValidators() {
         if (mMyValidators.isEmpty()) {
@@ -422,10 +418,6 @@ public class BaseData {
     //gRPC
     public tendermint.p2p.Types.NodeInfo mGRpcNodeInfo;
     public Any mGRpcAccount;
-    public List<Staking.Validator> mGRpcTopValidators = new ArrayList<>();
-    public List<Staking.Validator> mGRpcOtherValidators = new ArrayList<>();
-    public List<Staking.Validator> mGRpcAllValidators = new ArrayList<>();
-    public List<Staking.Validator> mGRpcMyValidators = new ArrayList<>();
 
     public List<Staking.DelegationResponse> mGrpcDelegations = new ArrayList<>();
     public List<Staking.UnbondingDelegation> mGrpcUndelegations = new ArrayList<>();

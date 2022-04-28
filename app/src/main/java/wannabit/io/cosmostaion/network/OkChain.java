@@ -1,6 +1,6 @@
 package wannabit.io.cosmostaion.network;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.Single;
 import retrofit2.Call;
@@ -40,7 +40,7 @@ public interface OkChain {
     Call<ResOkTickersList> getDexTickers();
 
     @GET("staking/validators?status=all")
-    Call<ArrayList<Validator>> getAllValidatorDetailList();
+    Call<List<Validator>> getAllValidatorDetailList();
 
     @GET("txs/{hash}")
     Call<ResTxInfo> getSearchTx(@Path("hash") String hash);

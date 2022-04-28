@@ -21,12 +21,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.fulldive.wallet.models.WalletBalance;
 import com.google.android.material.tabs.TabLayout;
 
 import java.math.BigDecimal;
@@ -40,7 +42,7 @@ import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
-import wannabit.io.cosmostaion.dao.Balance;
+import wannabit.io.cosmostaion.dao.Price;
 import wannabit.io.cosmostaion.dialog.Dialog_Pool_Gravity_Dex;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.fragment.chains.cosmos.GravityPoolListFragment;
@@ -53,6 +55,7 @@ import wannabit.io.cosmostaion.task.gRpcTask.GravityDexManagerGrpcTask;
 import wannabit.io.cosmostaion.task.gRpcTask.GravityDexParamGrpcTask;
 import wannabit.io.cosmostaion.task.gRpcTask.GravityDexPoolGrpcTask;
 import wannabit.io.cosmostaion.task.gRpcTask.TotalSupplyGrpcTask;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WLog;
 import wannabit.io.cosmostaion.utils.WUtil;
@@ -69,6 +72,8 @@ public class GravityListActivity extends BaseActivity implements TaskListener {
     public ArrayList<String> mAllDenoms = new ArrayList<>();
     public ArrayList<Liquidity.Pool> mPoolMyList = new ArrayList<>();
     public ArrayList<Liquidity.Pool> mPoolOtherList = new ArrayList<>();
+
+    final PriceProvider priceProvider = GravityListActivity.this::getPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,9 +150,9 @@ public class GravityListActivity extends BaseActivity implements TaskListener {
         }
 
         final String mainDenom = getBaseChain().getMainDenom();
-        final Balance balance = getFullBalance(mainDenom);
+        final WalletBalance balance = getFullBalance(mainDenom);
         BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_GDEX_SWAP, 0);
-        if (balance.balance.compareTo(txFee) < 0) {
+        if (balance.getBalanceAmount().compareTo(txFee) < 0) {
             Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -326,10 +331,10 @@ public class GravityListActivity extends BaseActivity implements TaskListener {
         BigDecimal coin0Price = BigDecimal.ZERO;
         BigDecimal coin1Price = BigDecimal.ZERO;
         if (coin0BaseDenom != null) {
-            coin0Price = WDp.perUsdValue(getBaseDao(), coin0BaseDenom);
+            coin0Price = WDp.perUsdValue(getBaseDao(), coin0BaseDenom, priceProvider);
         }
         if (coin1BaseDenom != null) {
-            coin1Price = WDp.perUsdValue(getBaseDao(), coin1BaseDenom);
+            coin1Price = WDp.perUsdValue(getBaseDao(), coin1BaseDenom, priceProvider);
         }
         BigDecimal coin0Value = coin0Amount.multiply(coin0Price).movePointLeft(coin0Decimal).setScale(2, RoundingMode.DOWN);
         BigDecimal coin1Value = coin1Amount.multiply(coin1Price).movePointLeft(coin1Decimal).setScale(2, RoundingMode.DOWN);

@@ -19,6 +19,7 @@ import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.kava.WithdrawCdpActivity;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
+import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
 
@@ -73,13 +74,14 @@ public class WithdrawCdpStep3Fragment extends BaseFragment implements View.OnCli
     public void onRefreshTab() {
         final String cDenom = getCParam().getDenom();
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
+        final PriceProvider priceProvider = getSActivity()::getPrice;
 
         WDp.showCoinDp(getContext(), getBaseDao(), cDenom, getSActivity().mCollateral.amount, mWithdrawDenom, mWithdrawAmount, getSActivity().getBaseChain());
         BigDecimal collateralValue = new BigDecimal(getSActivity().mCollateral.amount).movePointLeft(WUtil.getKavaCoinDecimal(getBaseDao(), cDenom)).multiply(getSActivity().getKavaOraclePrice()).setScale(2, RoundingMode.DOWN);
         mWithdrawValue.setText(WDp.getDpRawDollor(getContext(), collateralValue, 2));
 
         WDp.showCoinDp(getContext(), getBaseDao(), TOKEN_KAVA, feeAmount.toPlainString(), mFeesDenom, mFeesAmount, getSActivity().getBaseChain());
-        BigDecimal kavaValue = WDp.usdValue(getBaseDao(), TOKEN_KAVA, feeAmount, 6);
+        BigDecimal kavaValue = WDp.usdValue(getBaseDao(), TOKEN_KAVA, feeAmount, 6, priceProvider);
         mFeeValue.setText(WDp.getDpRawDollor(getContext(), kavaValue, 2));
 
         WDp.DpRiskRate(getContext(), getSActivity().mBeforeRiskRate, mBeforeRiskTv, null);

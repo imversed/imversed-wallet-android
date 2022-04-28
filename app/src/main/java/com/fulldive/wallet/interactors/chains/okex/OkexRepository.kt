@@ -1,16 +1,13 @@
 package com.fulldive.wallet.interactors.chains.okex
 
 import com.fulldive.wallet.di.modules.DefaultRepositoryModule
-import com.fulldive.wallet.extensions.or
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
 import wannabit.io.cosmostaion.dao.Account
-import wannabit.io.cosmostaion.dao.Balance
 import wannabit.io.cosmostaion.network.res.ResNodeInfo
 import wannabit.io.cosmostaion.network.res.ResOkAccountInfo
 import wannabit.io.cosmostaion.network.res.ResOkAccountToken
-import java.math.BigDecimal
 import javax.inject.Inject
 
 @ProvidedBy(DefaultRepositoryModule::class)
