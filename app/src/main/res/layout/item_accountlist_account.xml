@@ -10,7 +10,7 @@
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:background="@drawable/box_account_unselected"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginBottom="@dimen/space_8">
 
         <RelativeLayout
@@ -21,20 +21,20 @@
                 android:id="@+id/accountArrowSort"
                 android:layout_width="@dimen/space_44"
                 android:layout_height="match_parent"
-                android:paddingLeft="@dimen/space_6"
-                android:paddingRight="@dimen/space_6"
+                android:paddingStart="@dimen/space_6"
+                android:paddingEnd="@dimen/space_6"
                 android:src="@drawable/arrow_next_gr"
                 android:scaleType="center"
                 android:layout_centerVertical="true"
-                android:layout_alignParentRight="true" />
+                android:layout_alignParentEnd="true" />
 
             <LinearLayout
                 android:id="@+id/accountContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/accountArrowSort"
-                android:layout_marginLeft="@dimen/space_8"
-                android:layout_marginRight="@dimen/space_8"
+                android:layout_toStartOf="@+id/accountArrowSort"
+                android:layout_marginStart="@dimen/space_8"
+                android:layout_marginEnd="@dimen/space_8"
                 android:orientation="vertical"
                 android:layout_centerVertical="true"
                 android:gravity="center_vertical">
@@ -55,9 +55,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxWidth="@dimen/space_120"
-                        android:layout_marginLeft="@dimen/space_4"
-                        android:layout_toRightOf="@+id/accountKeyState"
-                        android:layout_toLeftOf="@+id/accountAddress"
+                        android:layout_marginStart="@dimen/space_4"
+                        android:layout_toEndOf="@+id/accountKeyState"
+                        android:layout_toStartOf="@+id/accountAddress"
                         android:layout_centerVertical="true"
                         style="@style/font_ss_14_white"
                         android:text="Wallet Name" />
@@ -67,7 +67,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxWidth="@dimen/space_120"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         style="@style/font_ss_12_gray1"
                         android:ellipsize="middle"
@@ -87,7 +87,7 @@
                         android:id="@+id/accountAvailable"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/space_2"
+                        android:layout_marginStart="@dimen/space_2"
                         style="@style/font_ss_14_gray1"
                         android:text="-" />
 
@@ -95,7 +95,7 @@
                         android:id="@+id/accountDenom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/space_2"
+                        android:layout_marginStart="@dimen/space_2"
                         android:text="@string/str_atom_c"
                         style="@style/font_ss_11_atom" />
                 </LinearLayout>

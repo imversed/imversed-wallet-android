@@ -8,8 +8,8 @@
         android:id="@+id/root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
         app:cardElevation="1.5dp"
@@ -19,8 +19,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_16"
-            android:layout_marginRight="@dimen/space_16"
+            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginEnd="@dimen/space_16"
             android:layout_marginTop="@dimen/space_12"
             android:layout_marginBottom="@dimen/space_12"
             android:orientation="vertical">
@@ -66,7 +66,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/space_12"
+                        android:layout_marginStart="@dimen/space_12"
                         android:gravity="center_vertical"
                         android:orientation="vertical">
 
@@ -78,8 +78,8 @@
                                 android:id="@+id/validator_moniker"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_toLeftOf="@+id/band_oracle_off"
-                                android:layout_marginRight="@dimen/space_8"
+                                android:layout_toStartOf="@+id/band_oracle_off"
+                                android:layout_marginEnd="@dimen/space_8"
                                 android:singleLine="true"
                                 android:ellipsize="end"
                                 style="@style/font_ss_14_white"
@@ -90,7 +90,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_centerVertical="true"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
                                 android:src="@drawable/band_oracleoff_l"
                                 android:visibility="invisible" />
                         </RelativeLayout>
@@ -123,7 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_6"
-                    android:layout_marginLeft="@dimen/space_4"
+                    android:layout_marginStart="@dimen/space_4"
                     android:maxLines="2"
                     android:ellipsize="end"
                     style="@style/font_ss_12_gray1"
@@ -157,7 +157,7 @@
                         android:id="@+id/validator_total_bonded"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:gravity="right"
                         android:text="-"
                         style="@style/font_ssl_14_white" />
@@ -178,7 +178,7 @@
                         android:id="@+id/validator_self_bond_rate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:gravity="right"
                         android:text="-"
                         style="@style/font_ssl_14_white" />
@@ -199,7 +199,7 @@
                         android:id="@+id/validator_yield"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:gravity="right"
                         android:text="-"
                         style="@style/font_ssl_14_photon" />
@@ -220,7 +220,7 @@
                         android:id="@+id/validator_commission"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:gravity="right"
                         android:text="-"
                         style="@style/font_ssl_14_white" />

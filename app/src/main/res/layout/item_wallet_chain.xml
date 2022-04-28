@@ -9,8 +9,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         app:cardBackgroundColor="@color/colorTransBgCosmos"
         app:cardCornerRadius="@dimen/space_6"
         app:cardElevation="0dp"
@@ -38,14 +38,14 @@
                     style="@style/font_ss_14_atom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_8"
-                    android:layout_toRightOf="@+id/chain_icon"
+                    android:layout_marginStart="@dimen/space_8"
+                    android:layout_toEndOf="@+id/chain_icon"
                     android:text="ATOM" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:orientation="vertical">
 
@@ -89,7 +89,7 @@
                     style="@style/font_ssl_12_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-" />
             </RelativeLayout>
@@ -113,7 +113,7 @@
                     style="@style/font_ssl_12_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-" />
             </RelativeLayout>
@@ -134,7 +134,7 @@
                     style="@style/font_ssl_12_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-" />
             </RelativeLayout>
@@ -155,7 +155,7 @@
                     style="@style/font_ssl_12_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-" />
             </RelativeLayout>
@@ -176,7 +176,7 @@
                     style="@style/font_ssl_12_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-" />
             </RelativeLayout>
@@ -191,7 +191,7 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/space_40"
                     android:layout_marginTop="16dp"
-                    android:layout_marginRight="@dimen/space_5"
+                    android:layout_marginEnd="@dimen/space_5"
                     android:layout_weight="1"
                     android:background="@drawable/btn_trans_with_border"
                     android:clickable="true"
@@ -212,7 +212,7 @@
                     android:id="@+id/btn_vote"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/space_40"
-                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_marginStart="@dimen/space_5"
                     android:layout_marginTop="16dp"
                     android:layout_weight="1"
                     android:background="@drawable/btn_trans_with_border"

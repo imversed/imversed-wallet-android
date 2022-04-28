@@ -8,8 +8,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginTop="@dimen/space_2"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
@@ -53,8 +53,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/hard_markets"
-                    android:layout_marginLeft="@dimen/space_16"
+                    android:layout_toEndOf="@+id/hard_markets"
+                    android:layout_marginStart="@dimen/space_16"
                     android:layout_centerVertical="true"
                     android:orientation="vertical">
 
@@ -72,7 +72,7 @@
                             android:id="@+id/supply_apy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             style="@style/font_ssl_14_white"
                             android:gravity="right"
                             android:text="-" />
@@ -92,7 +92,7 @@
                             android:id="@+id/borrow_apy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             style="@style/font_ssl_14_white"
                             android:gravity="right"
                             android:text="-" />
@@ -113,7 +113,7 @@
                             android:id="@+id/supply_incentive_apy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             style="@style/font_ssl_14_white"
                             android:gravity="right"
                             android:text="-" />
@@ -134,7 +134,7 @@
                             android:id="@+id/borrow_incentive_apy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             style="@style/font_ssl_14_white"
                             android:gravity="right"
                             android:text="-" />
@@ -167,13 +167,13 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/deposited_title">
+                    android:layout_toEndOf="@+id/deposited_title">
 
                     <TextView
                         android:id="@+id/deposited_denom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="UNKNOWN"
                         android:singleLine="true"
                         android:ellipsize="end"
@@ -184,8 +184,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/deposited_denom"
-                        android:layout_toLeftOf="@+id/deposited_denom"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_toStartOf="@+id/deposited_denom"
+                        android:layout_marginEnd="@dimen/space_2"
                         android:text="-"
                         style="@style/font_ssl_12_white" />
                 </RelativeLayout>
@@ -215,13 +215,13 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/borrow_title">
+                    android:layout_toEndOf="@+id/borrow_title">
 
                     <TextView
                         android:id="@+id/borrow_denom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:singleLine="true"
                         android:ellipsize="end"
                         android:text="UNKNOWN"
@@ -232,8 +232,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/borrow_denom"
-                        android:layout_toLeftOf="@+id/borrow_denom"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_toStartOf="@+id/borrow_denom"
+                        android:layout_marginEnd="@dimen/space_2"
                         android:text="-"
                         style="@style/font_ssl_12_white" />
                 </RelativeLayout>

@@ -8,8 +8,8 @@
         android:id="@+id/card_cdp_my"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginBottom="2dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
@@ -22,8 +22,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_18"
-            android:layout_marginRight="@dimen/space_18"
+            android:layout_marginStart="@dimen/space_18"
+            android:layout_marginEnd="@dimen/space_18"
             android:layout_marginTop="@dimen/space_16"
             android:layout_marginBottom="@dimen/space_16"
             android:orientation="vertical">
@@ -56,10 +56,10 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/harvest_markets"
+                    android:layout_toEndOf="@+id/harvest_markets"
                     android:layout_alignTop="@+id/harvest_markets"
                     android:layout_alignBottom="@+id/harvest_markets"
-                    android:layout_marginLeft="@dimen/space_16"
+                    android:layout_marginStart="@dimen/space_16"
                     android:layout_marginBottom="-2dp"
                     android:orientation="vertical"
                     android:gravity="bottom">
@@ -89,7 +89,7 @@
                     android:id="@+id/start_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_white"
                     android:gravity="right"
                     android:text="-" />
@@ -111,7 +111,7 @@
                     android:id="@+id/end_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_white"
                     android:gravity="right"
                     android:text="-" />
@@ -132,7 +132,7 @@
                     android:id="@+id/event_period"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ss_12_white"
                     android:gravity="right"
                     android:text="-" />
@@ -155,13 +155,13 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/deposited_title">
+                    android:layout_toEndOf="@+id/deposited_title">
 
                     <TextView
                         android:id="@+id/deposited_denom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="Coin"
                         style="@style/font_ss_12_white" />
 
@@ -170,8 +170,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/deposited_denom"
-                        android:layout_toLeftOf="@+id/deposited_denom"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_toStartOf="@+id/deposited_denom"
+                        android:layout_marginEnd="@dimen/space_2"
                         android:text="-"
                         style="@style/font_ssl_12_white" />
                 </RelativeLayout>
@@ -194,13 +194,13 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/harvest_reward_title">
+                    android:layout_toEndOf="@+id/harvest_reward_title">
 
                     <TextView
                         android:id="@+id/harvest_reward_denom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="HARD"
                         style="@style/font_ss_12_hard" />
 
@@ -209,8 +209,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/harvest_reward_denom"
-                        android:layout_toLeftOf="@+id/harvest_reward_denom"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_toStartOf="@+id/harvest_reward_denom"
+                        android:layout_marginEnd="@dimen/space_2"
                         android:text="-"
                         style="@style/font_ssl_12_white" />
                 </RelativeLayout>

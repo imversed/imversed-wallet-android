@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/space_12"
-    android:layout_marginRight="@dimen/space_12"
+    android:layout_marginStart="@dimen/space_12"
+    android:layout_marginEnd="@dimen/space_12"
     android:orientation="horizontal">
 
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginRight="@dimen/space_2"
+        android:layout_marginEnd="@dimen/space_2"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
         app:cardElevation="0dp"
@@ -35,7 +35,7 @@
                 android:id="@+id/mint_inflation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:gravity="right"
                 style="@style/font_ssl_14_white"
                 android:text="-" />
@@ -47,7 +47,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:layout_marginLeft="@dimen/space_2"
+        android:layout_marginStart="@dimen/space_2"
         app:cardPreventCornerOverlap="true"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
@@ -78,7 +78,7 @@
                 <ImageView
                     android:layout_width="@dimen/space_14"
                     android:layout_height="@dimen/space_14"
-                    android:layout_marginLeft="@dimen/space_4"
+                    android:layout_marginStart="@dimen/space_4"
                     android:src="@drawable/question_ic" />
             </LinearLayout>
 
@@ -86,7 +86,7 @@
                 android:id="@+id/mint_apr"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:gravity="right"
                 style="@style/font_ssl_14_white"
                 android:text="-" />

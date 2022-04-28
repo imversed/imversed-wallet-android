@@ -7,8 +7,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
         app:cardElevation="1.5dp"
@@ -37,7 +37,7 @@
                     android:id="@+id/tx_ibc_send_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_4"
+                    android:layout_marginStart="@dimen/space_4"
                     android:text="@string/tx_ibc_send"
                     style="@style/font_ss_15_white" />
             </LinearLayout>
@@ -115,7 +115,7 @@
                     android:id="@+id/tx_ibc_send_single_coin_layer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tx_ibc_send_title"
+                    android:layout_toEndOf="@+id/tx_ibc_send_title"
                     android:visibility="gone">
 
                     <TextView
@@ -123,7 +123,7 @@
                         style="@style/font_ss_12_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="ATOM" />
 
                     <TextView
@@ -132,8 +132,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/tx_ibc_transfer_amount_symbol"
-                        android:layout_marginRight="@dimen/space_2"
-                        android:layout_toLeftOf="@+id/tx_ibc_transfer_amount_symbol"
+                        android:layout_marginEnd="@dimen/space_2"
+                        android:layout_toStartOf="@+id/tx_ibc_transfer_amount_symbol"
                         android:text="-" />
                 </RelativeLayout>
 

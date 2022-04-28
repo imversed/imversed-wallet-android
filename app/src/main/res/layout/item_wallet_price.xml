@@ -8,8 +8,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginTop="2dp"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
@@ -38,7 +38,7 @@
                     android:id="@+id/per_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     style="@style/font_ssl_14_white"
                     android:text="-" />
@@ -47,7 +47,7 @@
                     android:id="@+id/per_change"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/per_price"
                     android:layout_marginTop="@dimen/space_2"
                     android:orientation="horizontal"
@@ -58,7 +58,7 @@
                         android:layout_width="@dimen/space_12"
                         android:layout_height="@dimen/space_12"
                         android:layout_marginTop="@dimen/space_2"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_marginEnd="@dimen/space_2"
                         android:src="@drawable/ic_price_down"
                         android:visibility="gone" />
 
@@ -66,7 +66,7 @@
                         android:id="@+id/dash_price_updown_tx"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:gravity="right"
                         style="@style/font_ssl_12_white"
                         android:text="-" />

@@ -8,8 +8,8 @@
         android:id="@+id/walletCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_6"
-        android:layout_marginRight="@dimen/space_6"
+        android:layout_marginStart="@dimen/space_6"
+        android:layout_marginEnd="@dimen/space_6"
         app:cardPreventCornerOverlap="true"
         app:cardBackgroundColor="@color/zxing_transparent"
         app:cardUseCompatPadding="true">
@@ -24,8 +24,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_8"
-                android:layout_marginRight="@dimen/space_8"
+                android:layout_marginStart="@dimen/space_8"
+                android:layout_marginEnd="@dimen/space_8"
                 android:orientation="vertical"
                 android:layout_centerVertical="true"
                 android:gravity="center_vertical">
@@ -46,9 +46,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxWidth="@dimen/space_120"
-                        android:layout_marginLeft="@dimen/space_4"
-                        android:layout_toRightOf="@+id/walletKeyState"
-                        android:layout_toLeftOf="@+id/walletAddress"
+                        android:layout_marginStart="@dimen/space_4"
+                        android:layout_toEndOf="@+id/walletKeyState"
+                        android:layout_toStartOf="@+id/walletAddress"
                         android:layout_centerVertical="true"
                         style="@style/font_ss_14_white"
                         android:text="Wallet Name" />
@@ -58,7 +58,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxWidth="@dimen/space_120"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         style="@style/font_ss_14_white"
                         android:ellipsize="middle"
@@ -78,7 +78,7 @@
                         android:id="@+id/walletAvailable"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/space_2"
+                        android:layout_marginStart="@dimen/space_2"
                         style="@style/font_ss_14_white"
                         android:text="-" />
 
@@ -86,7 +86,7 @@
                         android:id="@+id/walletDenom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/space_2"
+                        android:layout_marginStart="@dimen/space_2"
                         android:text="@string/str_atom_c"
                         style="@style/font_ss_11_atom" />
                 </LinearLayout>

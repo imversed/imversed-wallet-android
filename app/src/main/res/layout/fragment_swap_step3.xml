@@ -41,7 +41,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:orientation="horizontal"
                         android:gravity="center">
@@ -57,7 +57,7 @@
                             android:id="@+id/swap_fee_amount_symbol"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_2"
+                            android:layout_marginStart="@dimen/space_2"
                             android:text="@string/str_atom_c"
                             android:gravity="end"
                             style="@style/font_ss_12_atom" />
@@ -78,7 +78,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:orientation="horizontal"
                         android:gravity="center">
 
@@ -86,7 +86,7 @@
                             android:id="@+id/swap_fee"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:text="-"
                             style="@style/font_ssl_12_white" />
 
@@ -94,7 +94,7 @@
                             android:id="@+id/swap_fee_symbol"
                             android:layout_width="@dimen/space_50"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_2"
+                            android:layout_marginStart="@dimen/space_2"
                             android:text="@string/str_atom_c"
                             style="@style/font_ss_12_atom"
                             android:gravity="end"
@@ -129,7 +129,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:orientation="horizontal"
                         android:gravity="center">
@@ -145,7 +145,7 @@
                             android:id="@+id/swap_in_amount_symbol"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_2"
+                            android:layout_marginStart="@dimen/space_2"
                             android:text="@string/str_atom_c"
                             android:gravity="end"
                             style="@style/font_ss_12_atom" />
@@ -166,7 +166,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:orientation="horizontal"
                         android:gravity="center">
@@ -182,7 +182,7 @@
                             android:id="@+id/swap_out_amount_symbol"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_2"
+                            android:layout_marginStart="@dimen/space_2"
                             android:gravity="end"
                             android:text="@string/str_atom_c"
                             style="@style/font_ss_12_atom" />
@@ -204,7 +204,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:orientation="horizontal"
                         android:gravity="center">
@@ -213,7 +213,7 @@
                             android:id="@+id/swap_slippage"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_2"
+                            android:layout_marginStart="@dimen/space_2"
                             style="@style/font_ss_12_white" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -246,8 +246,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/space_16"
-        android:layout_marginRight="@dimen/space_16"
+        android:layout_marginStart="@dimen/space_16"
+        android:layout_marginEnd="@dimen/space_16"
         android:layout_marginBottom="@dimen/space_24">
 
         <Button
@@ -256,7 +256,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginRight="@dimen/space_4"
+            android:layout_marginEnd="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_white"
             android:textAllCaps="false"
@@ -268,7 +268,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginStart="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_photon"
             android:textColor="@color/color_btn_photon"

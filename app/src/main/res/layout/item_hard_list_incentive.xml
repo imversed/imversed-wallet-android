@@ -8,8 +8,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginTop="@dimen/space_2"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
@@ -46,7 +46,7 @@
                     android:id="@+id/kava_incentive_symbol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:text="KAVA"
                     style="@style/font_ss_12_kava" />
 
@@ -55,8 +55,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/kava_incentive_symbol"
-                    android:layout_toLeftOf="@+id/kava_incentive_symbol"
-                    android:layout_marginRight="@dimen/space_2"
+                    android:layout_toStartOf="@+id/kava_incentive_symbol"
+                    android:layout_marginEnd="@dimen/space_2"
                     android:text="-"
                     style="@style/font_ss_12_white" />
             </RelativeLayout>
@@ -70,7 +70,7 @@
                     android:id="@+id/hard_incentive_symbol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:text="HARD"
                     style="@style/font_ss_12_hard" />
 
@@ -79,8 +79,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/hard_incentive_symbol"
-                    android:layout_toLeftOf="@+id/hard_incentive_symbol"
-                    android:layout_marginRight="@dimen/space_2"
+                    android:layout_toStartOf="@+id/hard_incentive_symbol"
+                    android:layout_marginEnd="@dimen/space_2"
                     android:text="-"
                     style="@style/font_ss_12_white" />
             </RelativeLayout>

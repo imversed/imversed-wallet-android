@@ -53,7 +53,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:layout_marginTop="@dimen/space_12"
-                        android:layout_marginRight="@dimen/space_12">
+                        android:layout_marginEnd="@dimen/space_12">
 
                         <ImageView
                             android:id="@+id/delete_btn"
@@ -80,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_6"
-                    android:layout_marginLeft="@dimen/space_16"
+                    android:layout_marginStart="@dimen/space_16"
                     style="@style/font_ss_14_gray1"
                     android:text="Profile Image" />
 
@@ -102,7 +102,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_6"
-                    android:layout_marginLeft="@dimen/space_16"
+                    android:layout_marginStart="@dimen/space_16"
                     style="@style/font_ss_14_gray1"
                     android:text="Dtag" />
 
@@ -113,14 +113,14 @@
                     android:background="@drawable/edittext_round_box"
                     style="@style/font_ss_14_white"
                     android:layout_marginTop="@dimen/space_6"
-                    android:layout_marginLeft="@dimen/space_16"
-                    android:layout_marginRight="@dimen/space_16" />
+                    android:layout_marginStart="@dimen/space_16"
+                    android:layout_marginEnd="@dimen/space_16" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_24"
-                    android:layout_marginLeft="@dimen/space_16"
+                    android:layout_marginStart="@dimen/space_16"
                     style="@style/font_ss_14_gray1"
                     android:text="Nickname" />
 
@@ -131,14 +131,14 @@
                     android:background="@drawable/edittext_round_box"
                     style="@style/font_ss_14_white"
                     android:layout_marginTop="@dimen/space_6"
-                    android:layout_marginLeft="@dimen/space_16"
-                    android:layout_marginRight="@dimen/space_16" />
+                    android:layout_marginStart="@dimen/space_16"
+                    android:layout_marginEnd="@dimen/space_16" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_24"
-                    android:layout_marginLeft="@dimen/space_16"
+                    android:layout_marginStart="@dimen/space_16"
                     style="@style/font_ss_14_gray1"
                     android:text="Bio" />
 
@@ -149,8 +149,8 @@
                     android:background="@drawable/edittext_round_box"
                     style="@style/font_ss_14_white"
                     android:layout_marginTop="@dimen/space_6"
-                    android:layout_marginLeft="@dimen/space_16"
-                    android:layout_marginRight="@dimen/space_16"
+                    android:layout_marginStart="@dimen/space_16"
+                    android:layout_marginEnd="@dimen/space_16"
                     android:gravity="top" />
             </LinearLayout>
         </RelativeLayout>
@@ -163,8 +163,8 @@
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="@dimen/space_24"
-        android:layout_marginLeft="@dimen/space_16"
-        android:layout_marginRight="@dimen/space_16"
+        android:layout_marginStart="@dimen/space_16"
+        android:layout_marginEnd="@dimen/space_16"
         android:layout_marginBottom="@dimen/space_24">
 
         <Button
@@ -173,7 +173,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginRight="@dimen/space_4"
+            android:layout_marginEnd="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_white"
             android:textAllCaps="false"
@@ -185,7 +185,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginStart="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_photon"
             android:textColor="@color/color_btn_photon"

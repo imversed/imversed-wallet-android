@@ -7,8 +7,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
         app:cardElevation="1.5dp"
@@ -37,7 +37,7 @@
                     android:id="@+id/tx_msg_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_4"
+                    android:layout_marginStart="@dimen/space_4"
                     android:text="@string/tx_cosmwasm_instantiate_title"
                     style="@style/font_ss_17_white" />
             </LinearLayout>
@@ -169,7 +169,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:orientation="horizontal"
                     android:gravity="center">
@@ -185,7 +185,7 @@
                         android:id="@+id/contract_denom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/space_2"
+                        android:layout_marginStart="@dimen/space_2"
                         android:text=""
                         style="@style/font_ss_12_white" />
                 </LinearLayout>

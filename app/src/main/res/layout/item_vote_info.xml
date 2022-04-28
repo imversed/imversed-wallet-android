@@ -7,8 +7,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
         app:cardElevation="1.5dp"
@@ -29,7 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/space_16"
+                    android:layout_marginStart="@dimen/space_16"
                     android:background="@drawable/box_round_vote"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -45,7 +45,7 @@
                         style="@style/font_ss_14_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/space_8"
+                        android:layout_marginStart="@dimen/space_8"
                         android:text="DepositPeriod" />
                 </LinearLayout>
 
@@ -53,8 +53,8 @@
                     android:id="@+id/vote_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/space_8"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/space_8"
                     android:layout_centerVertical="true"
                     android:padding="@dimen/space_8"
                     android:src="@drawable/icon_explorer" />
@@ -65,17 +65,17 @@
                 style="@style/font_ss_14_white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_16"
+                android:layout_marginStart="@dimen/space_16"
                 android:layout_marginTop="@dimen/space_16"
-                android:layout_marginRight="@dimen/space_16" />
+                android:layout_marginEnd="@dimen/space_16" />
 
             <RelativeLayout
                 android:id="@+id/vote_proposer_layer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_12"
-                android:layout_marginLeft="@dimen/space_16"
-                android:layout_marginRight="@dimen/space_16">
+                android:layout_marginStart="@dimen/space_16"
+                android:layout_marginEnd="@dimen/space_16">
 
                 <TextView
                     android:id="@+id/vote_proposer_title"
@@ -88,9 +88,9 @@
                     android:id="@+id/vote_proposer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/vote_proposer_title"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_toEndOf="@+id/vote_proposer_title"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/space_8"
                     android:gravity="right"
                     android:text="-"
                     android:singleLine="true"
@@ -102,8 +102,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8"
-                android:layout_marginLeft="@dimen/space_16"
-                android:layout_marginRight="@dimen/space_16">
+                android:layout_marginStart="@dimen/space_16"
+                android:layout_marginEnd="@dimen/space_16">
 
                 <TextView
                     android:id="@+id/vote_type_title"
@@ -116,9 +116,9 @@
                     android:id="@+id/vote_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/vote_type_title"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_toEndOf="@+id/vote_type_title"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/space_8"
                     android:singleLine="true"
                     android:ellipsize="end"
                     android:gravity="right"
@@ -130,8 +130,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8"
-                android:layout_marginLeft="@dimen/space_16"
-                android:layout_marginRight="@dimen/space_16">
+                android:layout_marginStart="@dimen/space_16"
+                android:layout_marginEnd="@dimen/space_16">
 
                 <TextView
                     android:id="@+id/vote_startTime_title"
@@ -144,9 +144,9 @@
                     android:id="@+id/vote_startTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/vote_startTime_title"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_toEndOf="@+id/vote_startTime_title"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/space_8"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ss_12_white" />
@@ -156,8 +156,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8"
-                android:layout_marginLeft="@dimen/space_16"
-                android:layout_marginRight="@dimen/space_16">
+                android:layout_marginStart="@dimen/space_16"
+                android:layout_marginEnd="@dimen/space_16">
 
                 <TextView
                     android:id="@+id/vote_endTime_title"
@@ -170,9 +170,9 @@
                     android:id="@+id/vote_endTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/vote_endTime_title"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_toEndOf="@+id/vote_endTime_title"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginStart="@dimen/space_8"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ss_12_white" />
@@ -184,8 +184,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8"
-                android:layout_marginLeft="@dimen/space_16"
-                android:layout_marginRight="@dimen/space_16"
+                android:layout_marginStart="@dimen/space_16"
+                android:layout_marginEnd="@dimen/space_16"
                 android:visibility="gone">
 
                 <TextView
@@ -198,13 +198,13 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/request_amount_title">
+                    android:layout_toEndOf="@+id/request_amount_title">
 
                     <TextView
                         android:id="@+id/request_amount_denom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="ATOM"
                         style="@style/font_ss_12_atom" />
 
@@ -213,8 +213,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/request_amount_denom"
-                        android:layout_toLeftOf="@+id/request_amount_denom"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_toStartOf="@+id/request_amount_denom"
+                        android:layout_marginEnd="@dimen/space_2"
                         android:text="-"
                         style="@style/font_ss_12_white" />
                 </RelativeLayout>
@@ -223,15 +223,15 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginLeft="@dimen/space_16"
+                android:layout_marginStart="@dimen/space_16"
                 android:layout_marginTop="@dimen/space_16"
-                android:layout_marginRight="@dimen/space_16"
+                android:layout_marginEnd="@dimen/space_16"
                 android:background="@color/colorGray3" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_16"
+                android:layout_marginStart="@dimen/space_16"
                 android:layout_marginTop="@dimen/space_16"
                 android:text="@string/str_voting_description"
                 style="@style/font_ss_12_gray1" />
@@ -241,8 +241,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_4"
-                android:layout_marginLeft="@dimen/space_16"
-                android:layout_marginRight="@dimen/space_16"
+                android:layout_marginStart="@dimen/space_16"
+                android:layout_marginEnd="@dimen/space_16"
                 android:lineSpacingExtra="1sp"
                 android:maxLines="3"
                 android:autoLink="web"

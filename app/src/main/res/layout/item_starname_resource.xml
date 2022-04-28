@@ -8,8 +8,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginBottom="2dp"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
@@ -21,8 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/space_8"
-            android:paddingRight="@dimen/space_8"
+            android:paddingStart="@dimen/space_8"
+            android:paddingEnd="@dimen/space_8"
             android:paddingTop="@dimen/space_6"
             android:paddingBottom="@dimen/space_6">
 
@@ -37,7 +37,7 @@
                     android:id="@+id/chainImageView"
                     android:layout_width="@dimen/space_20"
                     android:layout_height="@dimen/space_20"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_marginStart="@dimen/space_8"
                     android:layout_centerVertical="true"
                     android:src="@drawable/default_chain_img" />
 
@@ -45,7 +45,7 @@
                     android:id="@+id/chainNameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_marginStart="@dimen/space_8"
                     style="@style/font_ss_14_white"
                     android:text="Chain Name" />
             </LinearLayout>
@@ -54,8 +54,8 @@
                 android:id="@+id/chain_address"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_30"
-                android:paddingLeft="@dimen/space_8"
-                android:paddingRight="@dimen/space_8"
+                android:paddingStart="@dimen/space_8"
+                android:paddingEnd="@dimen/space_8"
                 android:layout_marginTop="@dimen/space_6"
                 style="@style/font_ss_14_gray1"
                 android:singleLine="true"

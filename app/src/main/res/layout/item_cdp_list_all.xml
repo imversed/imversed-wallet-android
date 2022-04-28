@@ -8,8 +8,8 @@
         android:id="@+id/card_cdp_all"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginBottom="2dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
@@ -22,8 +22,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_18"
-            android:layout_marginRight="@dimen/space_18"
+            android:layout_marginStart="@dimen/space_18"
+            android:layout_marginEnd="@dimen/space_18"
             android:layout_marginTop="@dimen/space_16"
             android:layout_marginBottom="@dimen/space_16"
             android:orientation="vertical">
@@ -37,14 +37,14 @@
                     android:layout_width="@dimen/space_64"
                     android:layout_height="@dimen/space_64"
                     android:layout_centerInParent="true"
-                    android:layout_alignParentLeft="true" />
+                    android:layout_alignParentStart="true" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_marginStart="@dimen/space_8"
                     android:orientation="vertical"
-                    android:layout_toRightOf="@+id/cdp_market_img"
+                    android:layout_toEndOf="@+id/cdp_market_img"
                     android:layout_centerInParent="true">
 
                     <TextView
@@ -86,7 +86,7 @@
                     android:id="@+id/cdp_collateral_rate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_white"
                     android:gravity="right"
                     android:text="-" />
@@ -107,7 +107,7 @@
                     android:id="@+id/cdp_stability_fee"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_white"
                     android:gravity="right"
                     android:text="-" />
@@ -128,7 +128,7 @@
                     android:id="@+id/cdp_str_liquidation_penalty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_white"
                     android:gravity="right"
                     android:text="-" />

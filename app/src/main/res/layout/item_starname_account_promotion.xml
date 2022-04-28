@@ -8,8 +8,8 @@
         android:id="@+id/card_validator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginBottom="2dp"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
@@ -42,8 +42,8 @@
                 android:gravity="center"
                 android:layout_marginTop="@dimen/space_8"
                 android:layout_marginBottom="@dimen/space_16"
-                android:layout_marginLeft="@dimen/space_16"
-                android:layout_marginRight="@dimen/space_16"
+                android:layout_marginStart="@dimen/space_16"
+                android:layout_marginEnd="@dimen/space_16"
                 style="@style/font_ss_11_gray1"
                 android:text="@string/str_starname_account_promotion_msg" />
         </LinearLayout>

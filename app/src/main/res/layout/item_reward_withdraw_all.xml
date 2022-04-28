@@ -28,7 +28,7 @@
                 android:id="@+id/tx_demon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_2"
+                android:layout_marginStart="@dimen/space_2"
                 style="@style/font_ss_11_atom"
                 android:text="-" />
         </LinearLayout>
@@ -46,8 +46,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_64"
         android:minHeight="@dimen/space_64"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginBottom="2dp"
         android:layout_marginTop="2dp"
         android:background="@drawable/btn_trans_with_border" />

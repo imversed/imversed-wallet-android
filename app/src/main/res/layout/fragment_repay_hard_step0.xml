@@ -16,8 +16,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_12"
-                android:layout_marginRight="@dimen/space_12"
+                android:layout_marginStart="@dimen/space_12"
+                android:layout_marginEnd="@dimen/space_12"
                 android:layout_marginTop="@dimen/space_16">
 
                 <LinearLayout
@@ -47,13 +47,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/space_50"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/space_6"
-                    android:layout_toRightOf="@+id/repay_symbol_layer"
+                    android:layout_marginStart="@dimen/space_6"
+                    android:layout_toEndOf="@+id/repay_symbol_layer"
                     android:textCursorDrawable="@drawable/white_cursor"
                     android:maxLength="46"
                     android:textColorHint="@color/colorGray4"
                     android:background="@drawable/edittext_box"
-                    android:paddingRight="@dimen/space_60"
+                    android:paddingEnd="@dimen/space_60"
                     style="@style/font_ss_12_white"
                     android:inputType="numberDecimal"
                     android:imeOptions="actionDone"
@@ -64,7 +64,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/space_8"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:src="@drawable/close_btn" />
             </RelativeLayout>
@@ -72,19 +72,19 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/space_12"
-                android:layout_marginLeft="@dimen/space_12">
+                android:layout_marginEnd="@dimen/space_12"
+                android:layout_marginStart="@dimen/space_12">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/space_2"
+                        android:layout_marginStart="@dimen/space_2"
                         style="@style/font_ss_12_gray1"
                         android:text="@string/str_max_depositable_amount" />
 
@@ -92,7 +92,7 @@
                         android:id="@+id/repay_max_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/space_2"
+                        android:layout_marginStart="@dimen/space_2"
                         style="@style/font_ss_12_gray1"
                         android:text="-" />
 
@@ -100,7 +100,7 @@
                         android:id="@+id/repay_denom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/space_2"
+                        android:layout_marginStart="@dimen/space_2"
                         android:text="COIN"
                         style="@style/font_ss_12_white" />
                 </LinearLayout>
@@ -110,8 +110,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_12"
-                android:layout_marginRight="@dimen/space_12"
+                android:layout_marginStart="@dimen/space_12"
+                android:layout_marginEnd="@dimen/space_12"
                 android:layout_marginTop="@dimen/space_8"
                 android:orientation="horizontal">
 
@@ -130,7 +130,7 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/space_36"
                     android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_marginStart="@dimen/space_8"
                     android:background="@drawable/btn_trans_with_border"
                     style="@style/font_ss_12_white"
                     android:textAllCaps="false"
@@ -141,7 +141,7 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/space_36"
                     android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_marginStart="@dimen/space_8"
                     android:background="@drawable/btn_trans_with_border"
                     style="@style/font_ss_12_white"
                     android:textAllCaps="false"
@@ -152,7 +152,7 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/space_36"
                     android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_marginStart="@dimen/space_8"
                     android:background="@drawable/btn_trans_with_border"
                     style="@style/font_ss_12_white"
                     android:textAllCaps="false"
@@ -163,7 +163,7 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/space_36"
                     android:layout_weight="1"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_marginStart="@dimen/space_8"
                     android:background="@drawable/btn_trans_with_border"
                     style="@style/font_ss_12_white"
                     android:textAllCaps="false"
@@ -179,8 +179,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/space_16"
-        android:layout_marginRight="@dimen/space_16"
+        android:layout_marginStart="@dimen/space_16"
+        android:layout_marginEnd="@dimen/space_16"
         android:layout_marginBottom="@dimen/space_24">
 
         <Button
@@ -189,7 +189,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginRight="@dimen/space_4"
+            android:layout_marginEnd="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_white"
             android:textAllCaps="false"
@@ -201,7 +201,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="2"
             android:minHeight="@dimen/space_45"
-            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginStart="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_photon"
             android:textColor="@color/color_btn_photon"

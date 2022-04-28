@@ -8,8 +8,8 @@
         android:id="@+id/card_status_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
         app:cardElevation="1.5dp"
@@ -37,7 +37,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_toRightOf="@+id/tx_total_result_title"
+                    android:layout_toEndOf="@+id/tx_total_result_title"
                     android:gravity="center_vertical|right">
 
                     <TextView
@@ -65,7 +65,7 @@
                     android:id="@+id/tx_request_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:text=""
                     style="@style/font_ss_12_white" />
             </RelativeLayout>
@@ -85,7 +85,7 @@
                     android:id="@+id/tx_request_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:text=""
                     style="@style/font_ss_12_white" />
             </RelativeLayout>
@@ -112,7 +112,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/hdac_icon"
+                        android:layout_toEndOf="@+id/hdac_icon"
                         android:gravity="end"
                         android:orientation="horizontal">
 
@@ -121,7 +121,7 @@
                             android:layout_width="@dimen/space_14"
                             android:layout_height="@dimen/space_14"
                             android:layout_gravity="center_vertical"
-                            android:layout_toLeftOf="@+id/rizon_swap_status"
+                            android:layout_toStartOf="@+id/rizon_swap_status"
                             android:src="@drawable/icon_pending"
                             android:visibility="gone"
                             app:tint="@color/colorHdac" />
@@ -131,8 +131,8 @@
                             style="@style/font_ss_12_hdac"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_8"
-                            android:layout_toRightOf="@+id/hdac_icon"
+                            android:layout_marginStart="@dimen/space_8"
+                            android:layout_toEndOf="@+id/hdac_icon"
                             android:gravity="end"
                             android:text="Success" />
                     </LinearLayout>
@@ -154,18 +154,18 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/burn_from_address_title"
-                        android:layout_marginLeft="@dimen/space_16">
+                        android:layout_toEndOf="@+id/burn_from_address_title"
+                        android:layout_marginStart="@dimen/space_16">
 
                         <TextView
                             android:id="@+id/burn_from_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:gravity="end"
                             android:ellipsize="middle"
                             android:singleLine="true"
-                            android:layout_marginRight="@dimen/space_2"
+                            android:layout_marginEnd="@dimen/space_2"
                             android:text=""
                             style="@style/font_ss_12_white" />
                     </RelativeLayout>
@@ -187,13 +187,13 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/burn_tx_hash_title">
+                        android:layout_toEndOf="@+id/burn_tx_hash_title">
 
                         <TextView
                             android:id="@+id/burn_tx_hash"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_16"
+                            android:layout_marginStart="@dimen/space_16"
                             android:gravity="end"
                             android:singleLine="true"
                             android:ellipsize="middle"
@@ -219,13 +219,13 @@
                         android:id="@+id/burn_amount_layer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/burn_amount_title">
+                        android:layout_toEndOf="@+id/burn_amount_title">
 
                         <TextView
                             android:id="@+id/burn_amount_symbol"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:text="HDAC"
                             style="@style/font_ss_12_hdac" />
 
@@ -234,8 +234,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBaseline="@+id/burn_amount_symbol"
-                            android:layout_toLeftOf="@+id/burn_amount_symbol"
-                            android:layout_marginRight="@dimen/space_2"
+                            android:layout_toStartOf="@+id/burn_amount_symbol"
+                            android:layout_marginEnd="@dimen/space_2"
                             android:text=""
                             style="@style/font_ss_12_white" />
                     </RelativeLayout>
@@ -273,7 +273,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_toRightOf="@+id/rizon_icon"
+                        android:layout_toEndOf="@+id/rizon_icon"
                         android:gravity="end">
 
                         <ImageView
@@ -282,14 +282,14 @@
                             android:layout_height="@dimen/space_14"
                             android:src="@drawable/icon_pending"
                             android:layout_gravity="center_vertical"
-                            android:layout_toLeftOf="@+id/rizon_swap_status"
+                            android:layout_toStartOf="@+id/rizon_swap_status"
                             android:visibility="invisible" />
 
                         <TextView
                             android:id="@id/rizon_swap_status"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_8"
+                            android:layout_marginStart="@dimen/space_8"
                             android:text=""
                             android:gravity="end"
                             style="@style/font_ss_12_rizon" />
@@ -312,18 +312,18 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/rizon_to_address_title"
-                        android:layout_marginLeft="@dimen/space_16">
+                        android:layout_toEndOf="@+id/rizon_to_address_title"
+                        android:layout_marginStart="@dimen/space_16">
 
                         <TextView
                             android:id="@+id/rizon_to_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:gravity="end"
                             android:ellipsize="middle"
                             android:singleLine="true"
-                            android:layout_marginRight="@dimen/space_2"
+                            android:layout_marginEnd="@dimen/space_2"
                             android:text=""
                             style="@style/font_ss_12_white" />
                     </RelativeLayout>
@@ -345,7 +345,7 @@
                     <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/rizon_tx_hash_title">
+                        android:layout_toEndOf="@+id/rizon_tx_hash_title">
 
                         <TextView
                             android:id="@+id/rizon_tx_hash"
@@ -355,7 +355,7 @@
                             android:singleLine="true"
                             android:ellipsize="middle"
                             android:text="--"
-                            android:layout_marginLeft="@dimen/space_16"
+                            android:layout_marginStart="@dimen/space_16"
                             style="@style/font_ss_12_white" />
                     </RelativeLayout>
                 </RelativeLayout>
@@ -377,13 +377,13 @@
                         android:id="@+id/rizon_mint_amount_layer"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toRightOf="@+id/rizon_mint_amount_title">
+                        android:layout_toEndOf="@+id/rizon_mint_amount_title">
 
                         <TextView
                             android:id="@+id/rizon_mint_symbol"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:text="ATOLO"
                             style="@style/font_ss_12_rizon" />
 
@@ -392,8 +392,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBaseline="@+id/rizon_mint_symbol"
-                            android:layout_toLeftOf="@+id/rizon_mint_symbol"
-                            android:layout_marginRight="@dimen/space_2"
+                            android:layout_toStartOf="@+id/rizon_mint_symbol"
+                            android:layout_marginEnd="@dimen/space_2"
                             android:text="--"
                             style="@style/font_ss_10_white" />
                     </RelativeLayout>

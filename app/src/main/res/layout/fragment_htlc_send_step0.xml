@@ -12,8 +12,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_16"
-            android:layout_marginRight="@dimen/space_16"
+            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginEnd="@dimen/space_16"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
@@ -43,7 +43,7 @@
                         android:id="@+id/img_from_chain"
                         android:layout_width="@dimen/space_32"
                         android:layout_height="@dimen/space_32"
-                        android:layout_marginLeft="@dimen/space_4"
+                        android:layout_marginStart="@dimen/space_4"
                         android:layout_centerVertical="true"
                         android:src="@drawable/cosmos_wh_main" />
 
@@ -52,8 +52,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/img_from_chain"
-                        android:layout_marginLeft="@dimen/space_4"
+                        android:layout_toEndOf="@+id/img_from_chain"
+                        android:layout_marginStart="@dimen/space_4"
                         style="@style/font_ss_14_white"
                         android:text="Cosmos" />
                 </RelativeLayout>
@@ -63,8 +63,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_12"
-                android:layout_marginLeft="@dimen/space_8"
-                android:layout_marginRight="@dimen/space_8"
+                android:layout_marginStart="@dimen/space_8"
+                android:layout_marginEnd="@dimen/space_8"
                 android:layout_centerVertical="true"
                 android:src="@drawable/interchain_arrow" />
 
@@ -96,7 +96,7 @@
                         android:id="@+id/img_to_chain"
                         android:layout_width="@dimen/space_32"
                         android:layout_height="@dimen/space_32"
-                        android:layout_marginLeft="@dimen/space_4"
+                        android:layout_marginStart="@dimen/space_4"
                         android:layout_centerVertical="true"
                         android:src="@drawable/iris_wh" />
 
@@ -105,16 +105,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/img_to_chain"
-                        android:layout_marginLeft="@dimen/space_4"
+                        android:layout_toEndOf="@+id/img_to_chain"
+                        android:layout_marginStart="@dimen/space_4"
                         style="@style/font_ss_14_white"
                         android:text="Iris" />
 
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/space_16"
-                        android:layout_alignParentRight="true"
+                        android:layout_marginEnd="@dimen/space_16"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/arrow_down_gr" />
                 </RelativeLayout>
@@ -126,7 +126,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_16"
-            android:layout_marginLeft="@dimen/space_16"
+            android:layout_marginStart="@dimen/space_16"
             style="@style/font_ss_14_gray1"
             android:text="@string/str_to_swap_coin" />
 
@@ -135,8 +135,8 @@
             android:layout_width="match_parent"
             android:layout_marginTop="@dimen/space_4"
             android:layout_height="@dimen/space_50"
-            android:layout_marginLeft="@dimen/space_16"
-            android:layout_marginRight="@dimen/space_16">
+            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginEnd="@dimen/space_16">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -147,7 +147,7 @@
                 android:id="@+id/img_to_send_coin"
                 android:layout_width="@dimen/space_20"
                 android:layout_height="@dimen/space_20"
-                android:layout_marginLeft="@dimen/space_10"
+                android:layout_marginStart="@dimen/space_10"
                 android:layout_centerVertical="true"
                 android:src="@drawable/token_ic" />
 
@@ -156,8 +156,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/img_to_send_coin"
-                android:layout_marginLeft="@dimen/space_6"
+                android:layout_toEndOf="@+id/img_to_send_coin"
+                android:layout_marginStart="@dimen/space_6"
                 style="@style/font_ss_14_white"
                 android:text="Coin" />
 
@@ -166,8 +166,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@+id/txt_to_send_coin"
-                android:layout_toRightOf="@+id/txt_to_send_coin"
-                android:layout_marginLeft="@dimen/space_4"
+                android:layout_toEndOf="@+id/txt_to_send_coin"
+                android:layout_marginStart="@dimen/space_4"
                 style="@style/font_ss_12_gray1"
                 android:text="()" />
 
@@ -177,10 +177,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="right"
                 android:layout_centerVertical="true"
-                android:layout_toRightOf="@+id/txt_to_send_denom"
-                android:layout_toLeftOf="@+id/img_send_arrow"
-                android:layout_marginLeft="@dimen/space_6"
-                android:layout_marginRight="@dimen/space_6"
+                android:layout_toEndOf="@+id/txt_to_send_denom"
+                android:layout_toStartOf="@+id/img_send_arrow"
+                android:layout_marginStart="@dimen/space_6"
+                android:layout_marginEnd="@dimen/space_6"
                 style="@style/font_ssl_14_white"
                 android:text="-" />
 
@@ -188,8 +188,8 @@
                 android:id="@+id/img_send_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/space_16"
-                android:layout_alignParentRight="true"
+                android:layout_marginEnd="@dimen/space_16"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:src="@drawable/arrow_down_gr" />
         </RelativeLayout>
@@ -199,7 +199,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_18"
-            android:layout_marginLeft="@dimen/space_16"
+            android:layout_marginStart="@dimen/space_16"
             style="@style/font_ss_14_gray1"
             android:text="@string/str_relayer_status" />
 
@@ -208,8 +208,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/box_gray"
             android:layout_marginTop="@dimen/space_4"
-            android:layout_marginLeft="@dimen/space_16"
-            android:layout_marginRight="@dimen/space_16"
+            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginEnd="@dimen/space_16"
             android:paddingTop="@dimen/space_12"
             android:paddingBottom="@dimen/space_12"
             android:orientation="vertical">
@@ -217,7 +217,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_4">
+                android:layout_marginStart="@dimen/space_4">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -229,7 +229,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:orientation="horizontal"
                     android:gravity="center">
@@ -245,7 +245,7 @@
                         android:id="@+id/once_max_denom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/space_2"
+                        android:layout_marginStart="@dimen/space_2"
                         android:text="Coin"
                         style="@style/font_ss_12_white" />
                 </LinearLayout>
@@ -256,7 +256,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/space_8"
-                android:layout_marginLeft="@dimen/space_4"
+                android:layout_marginStart="@dimen/space_4"
                 android:orientation="vertical"
                 android:visibility="gone">
 
@@ -274,7 +274,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:orientation="horizontal"
                         android:gravity="center">
@@ -290,7 +290,7 @@
                             android:id="@+id/system_max_denom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_2"
+                            android:layout_marginStart="@dimen/space_2"
                             android:text="Coin"
                             style="@style/font_ss_12_white" />
                     </LinearLayout>
@@ -311,7 +311,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:orientation="horizontal"
                         android:gravity="center">
@@ -327,7 +327,7 @@
                             android:id="@+id/remain_cap_denom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_2"
+                            android:layout_marginStart="@dimen/space_2"
                             android:text="Coin"
                             style="@style/font_ss_12_white" />
                     </LinearLayout>
@@ -345,8 +345,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/space_16"
-        android:layout_marginRight="@dimen/space_16"
+        android:layout_marginStart="@dimen/space_16"
+        android:layout_marginEnd="@dimen/space_16"
         android:layout_marginBottom="@dimen/space_24">
 
         <Button
@@ -355,7 +355,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginRight="@dimen/space_4"
+            android:layout_marginEnd="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_white"
             android:textAllCaps="false"
@@ -367,7 +367,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginStart="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_photon"
             android:textColor="@color/color_btn_photon"

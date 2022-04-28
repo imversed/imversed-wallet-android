@@ -35,8 +35,8 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="170dp"
-                    android:layout_marginLeft="@dimen/space_18"
-                    android:layout_marginRight="@dimen/space_18"
+                    android:layout_marginStart="@dimen/space_18"
+                    android:layout_marginEnd="@dimen/space_18"
                     android:layout_marginTop="@dimen/space_12"
                     android:src="@drawable/riskscore_img"
                     android:scaleType="fitXY" />
@@ -45,8 +45,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_12"
-                    android:layout_marginLeft="@dimen/space_18"
-                    android:layout_marginRight="@dimen/space_18"
+                    android:layout_marginStart="@dimen/space_18"
+                    android:layout_marginEnd="@dimen/space_18"
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
 
@@ -79,8 +79,8 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/space_16"
-                        android:layout_marginRight="@dimen/space_16"
+                        android:layout_marginStart="@dimen/space_16"
+                        android:layout_marginEnd="@dimen/space_16"
                         android:src="@drawable/ic_risk_arrow_black" />
 
                     <LinearLayout
@@ -114,16 +114,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_marginTop="@dimen/space_12"
-                    android:layout_marginLeft="@dimen/space_18"
-                    android:layout_marginRight="@dimen/space_18"
+                    android:layout_marginStart="@dimen/space_18"
+                    android:layout_marginEnd="@dimen/space_18"
                     android:background="@color/colorGray10" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_12"
-                    android:layout_marginLeft="@dimen/space_18"
-                    android:layout_marginRight="@dimen/space_18">
+                    android:layout_marginStart="@dimen/space_18"
+                    android:layout_marginEnd="@dimen/space_18">
 
                     <TextView
                         android:id="@+id/current_price_title"
@@ -138,7 +138,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         style="@style/font_ssl_14_black"
                         android:gravity="right"
                         android:text="-" />
@@ -148,8 +148,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_12"
-                    android:layout_marginLeft="@dimen/space_18"
-                    android:layout_marginRight="@dimen/space_18">
+                    android:layout_marginStart="@dimen/space_18"
+                    android:layout_marginEnd="@dimen/space_18">
 
                     <TextView
                         android:id="@+id/before_liquidation_price_title"
@@ -164,7 +164,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         style="@style/font_ssl_14_black"
                         android:gravity="right"
                         android:text="-" />
@@ -174,8 +174,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_12"
-                    android:layout_marginLeft="@dimen/space_18"
-                    android:layout_marginRight="@dimen/space_18">
+                    android:layout_marginStart="@dimen/space_18"
+                    android:layout_marginEnd="@dimen/space_18">
 
                     <TextView
                         android:id="@+id/after_liquidation_price_title"
@@ -190,7 +190,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         style="@style/font_ssl_14_black"
                         android:gravity="right"
                         android:text="-" />
@@ -200,8 +200,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="1px"
                     android:layout_marginTop="@dimen/space_12"
-                    android:layout_marginLeft="@dimen/space_18"
-                    android:layout_marginRight="@dimen/space_18"
+                    android:layout_marginStart="@dimen/space_18"
+                    android:layout_marginEnd="@dimen/space_18"
                     android:background="@color/colorGray10" />
 
 
@@ -210,8 +210,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_12"
-                    android:layout_marginLeft="@dimen/space_18"
-                    android:layout_marginRight="@dimen/space_18"
+                    android:layout_marginStart="@dimen/space_18"
+                    android:layout_marginEnd="@dimen/space_18"
                     style="@style/font_ss_14_gray1"
                     android:text="@string/str_help_risk" />
 

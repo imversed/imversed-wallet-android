@@ -8,8 +8,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginBottom="2dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
@@ -28,17 +28,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/arrow_next_gr"
-                android:layout_marginRight="@dimen/space_8"
-                android:layout_marginLeft="@dimen/space_4"
+                android:layout_marginEnd="@dimen/space_8"
+                android:layout_marginStart="@dimen/space_4"
                 android:layout_centerVertical="true"
-                android:layout_alignParentRight="true" />
+                android:layout_alignParentEnd="true" />
 
             <LinearLayout
                 android:id="@+id/layer_starname_domain"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/space_16"
-                android:layout_toLeftOf="@+id/arrow_starname_domain"
+                android:layout_marginStart="@dimen/space_16"
+                android:layout_toStartOf="@+id/arrow_starname_domain"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -62,7 +62,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         style="@style/font_ss_12_white"
                         android:text="-" />
                 </RelativeLayout>
@@ -83,7 +83,7 @@
                         android:id="@+id/connected_addressed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         style="@style/font_ss_11_white"
                         android:text="0" />
                 </RelativeLayout>
@@ -104,7 +104,7 @@
                         android:id="@+id/expire_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         style="@style/font_ss_11_white"
                         android:text="-" />

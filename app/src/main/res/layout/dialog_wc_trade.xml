@@ -24,8 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8"
-            android:layout_marginLeft="@dimen/space_40"
-            android:layout_marginRight="@dimen/space_40"
+            android:layout_marginStart="@dimen/space_40"
+            android:layout_marginEnd="@dimen/space_40"
             style="@style/font_ss_12_gray1"
             android:gravity="center"
             android:text="@string/str_wc_trade_msg" />
@@ -34,8 +34,8 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginTop="@dimen/space_16"
-            android:layout_marginLeft="@dimen/space_20"
-            android:layout_marginRight="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
             android:background="@color/colorGray10" />
 
 
@@ -43,8 +43,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_12"
-            android:layout_marginLeft="@dimen/space_20"
-            android:layout_marginRight="@dimen/space_20">
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -56,7 +56,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:orientation="horizontal"
                 android:gravity="center">
@@ -65,7 +65,7 @@
                     android:id="@+id/wc_trade_side"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_2"
+                    android:layout_marginStart="@dimen/space_2"
                     android:text="BUY"
                     style="@style/font_ss_14_buy" />
             </LinearLayout>
@@ -75,8 +75,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8"
-            android:layout_marginLeft="@dimen/space_20"
-            android:layout_marginRight="@dimen/space_20">
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -88,7 +88,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:orientation="horizontal"
                 android:gravity="center">
@@ -97,7 +97,7 @@
                     android:id="@+id/wc_trade_symbol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_2"
+                    android:layout_marginStart="@dimen/space_2"
                     android:text="BNB"
                     style="@style/font_ss_14_black" />
             </LinearLayout>
@@ -107,8 +107,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8"
-            android:layout_marginLeft="@dimen/space_20"
-            android:layout_marginRight="@dimen/space_20">
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -120,7 +120,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:orientation="horizontal"
                 android:gravity="center">
@@ -136,7 +136,7 @@
                     android:id="@+id/wc_trade_price_denom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_2"
+                    android:layout_marginStart="@dimen/space_2"
                     android:text="BNB/ETHER"
                     style="@style/font_ss_14_black" />
             </LinearLayout>
@@ -147,8 +147,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_60"
             android:layout_marginTop="@dimen/space_16"
-            android:layout_marginLeft="@dimen/space_20"
-            android:layout_marginRight="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
             android:background="@drawable/box_round_gray"
             android:orientation="vertical">
 
@@ -162,8 +162,8 @@
                 android:id="@+id/from_coin_symbol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/from_coin_icon"
-                android:layout_marginLeft="@dimen/space_6"
+                android:layout_toEndOf="@+id/from_coin_icon"
+                android:layout_marginStart="@dimen/space_6"
                 android:text="Token"
                 style="@style/font_ss_14_black" />
 
@@ -171,7 +171,7 @@
                 android:id="@+id/from_coin_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:gravity="right"
                 android:text="12321321312"
@@ -188,8 +188,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_60"
             android:layout_marginTop="@dimen/space_8"
-            android:layout_marginLeft="@dimen/space_20"
-            android:layout_marginRight="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
             android:background="@drawable/box_round_gray"
             android:orientation="vertical">
 
@@ -203,8 +203,8 @@
                 android:id="@+id/to_coin_symbol"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/to_coin_icon"
-                android:layout_marginLeft="@dimen/space_6"
+                android:layout_toEndOf="@+id/to_coin_icon"
+                android:layout_marginStart="@dimen/space_6"
                 android:text="Token"
                 style="@style/font_ss_14_black" />
 
@@ -212,7 +212,7 @@
                 android:id="@+id/to_coin_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:gravity="right"
                 android:text="12321321312"

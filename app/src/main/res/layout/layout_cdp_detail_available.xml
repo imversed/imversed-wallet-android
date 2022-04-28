@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_4"
+                android:layout_marginStart="@dimen/space_4"
                 style="@style/font_ss_17_white"
                 android:text="@string/str_my_available_assets" />
         </LinearLayout>
@@ -57,8 +57,8 @@
                 android:id="@+id/collateral_denom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/collateral_icon"
-                android:layout_marginLeft="@dimen/space_8"
+                android:layout_toEndOf="@+id/collateral_icon"
+                android:layout_marginStart="@dimen/space_8"
                 android:text="COIN"
                 style="@style/font_ss_14_white" />
 
@@ -66,7 +66,7 @@
                 android:id="@+id/collateral_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:gravity="right"
                 android:text="-"
                 style="@style/font_ssl_14_white" />
@@ -79,14 +79,14 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:orientation="horizontal"
                 android:layout_marginTop="-2dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_2"
+                    android:layout_marginStart="@dimen/space_2"
                     style="@style/font_ss_12_gray1"
                     android:text="@string/str_approximate_value"
                     android:visibility="gone" />
@@ -95,7 +95,7 @@
                     android:id="@+id/collateral_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_2"
+                    android:layout_marginStart="@dimen/space_2"
                     style="@style/font_ss_12_gray1"
                     android:text="-" />
             </LinearLayout>
@@ -116,8 +116,8 @@
                 android:id="@+id/principal_denom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/principal_icon"
-                android:layout_marginLeft="@dimen/space_8"
+                android:layout_toEndOf="@+id/principal_icon"
+                android:layout_marginStart="@dimen/space_8"
                 android:text="USDX"
                 style="@style/font_ss_14_white" />
 
@@ -125,7 +125,7 @@
                 android:id="@+id/principal_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:gravity="right"
                 android:text="-"
                 style="@style/font_ssl_14_white" />
@@ -138,14 +138,14 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:orientation="horizontal"
                 android:layout_marginTop="-2dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_2"
+                    android:layout_marginStart="@dimen/space_2"
                     style="@style/font_ss_12_gray1"
                     android:text="@string/str_approximate_value"
                     android:visibility="gone" />
@@ -154,7 +154,7 @@
                     android:id="@+id/principal_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_2"
+                    android:layout_marginStart="@dimen/space_2"
                     style="@style/font_ss_12_gray1"
                     android:text="-" />
             </LinearLayout>
@@ -175,8 +175,8 @@
                 android:id="@+id/kava_denom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/kava_icon"
-                android:layout_marginLeft="@dimen/space_8"
+                android:layout_toEndOf="@+id/kava_icon"
+                android:layout_marginStart="@dimen/space_8"
                 android:text="KAVA"
                 style="@style/font_ss_14_kava" />
 
@@ -184,7 +184,7 @@
                 android:id="@+id/kava_amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:gravity="right"
                 android:text="-"
                 style="@style/font_ssl_14_white" />
@@ -197,14 +197,14 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:orientation="horizontal"
                 android:layout_marginTop="-2dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_2"
+                    android:layout_marginStart="@dimen/space_2"
                     style="@style/font_ss_12_gray1"
                     android:text="@string/str_approximate_value"
                     android:visibility="gone" />
@@ -213,7 +213,7 @@
                     android:id="@+id/kava_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_2"
+                    android:layout_marginStart="@dimen/space_2"
                     style="@style/font_ss_12_gray1"
                     android:text="-" />
             </LinearLayout>

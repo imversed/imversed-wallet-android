@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/space_12"
-    android:layout_marginRight="@dimen/space_12"
+    android:layout_marginStart="@dimen/space_12"
+    android:layout_marginEnd="@dimen/space_12"
     android:layout_marginTop="@dimen/space_6"
     android:layout_marginBottom="@dimen/space_4"
     android:orientation="horizontal"
@@ -13,7 +13,7 @@
         android:id="@+id/img_account"
         android:layout_width="@dimen/space_20"
         android:layout_height="@dimen/space_20"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:src="@drawable/key_off"
         android:visibility="gone" />
@@ -21,7 +21,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_4"
+        android:layout_marginStart="@dimen/space_4"
         android:layout_centerVertical="true"
         style="@style/font_ss_11_gray1"
         android:text="@string/str_only_address" />

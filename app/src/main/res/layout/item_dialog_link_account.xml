@@ -5,9 +5,9 @@
     android:layout_height="wrap_content"
     android:background="@color/colorWhite"
     android:clickable="true"
-    android:paddingLeft="@dimen/space_8"
+    android:paddingStart="@dimen/space_8"
     android:paddingTop="@dimen/space_4"
-    android:paddingRight="@dimen/space_8"
+    android:paddingEnd="@dimen/space_8"
     android:paddingBottom="@dimen/space_4">
 
     <LinearLayout
@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/space_4"
+                android:layout_marginStart="@dimen/space_4"
                 android:maxWidth="@dimen/space_120"
                 android:singleLine="true"
                 android:text="Wallet Name" />
@@ -39,10 +39,10 @@
                 style="@style/font_ss_12_gray1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/space_20"
-                android:layout_toRightOf="@+id/accountName"
+                android:layout_marginStart="@dimen/space_20"
+                android:layout_toEndOf="@+id/accountName"
                 android:ellipsize="middle"
                 android:gravity="right"
                 android:singleLine="true"
@@ -59,7 +59,7 @@
                 style="@style/font_ss_14_desmos"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_2"
+                android:layout_marginStart="@dimen/space_2"
                 android:text="Claimable Airdrop" />
 
             <LinearLayout
@@ -74,7 +74,7 @@
                     style="@style/font_ss_14_gray1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_2"
+                    android:layout_marginStart="@dimen/space_2"
                     android:text="" />
 
                 <TextView
@@ -82,7 +82,7 @@
                     style="@style/font_ss_14_desmos"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_2"
+                    android:layout_marginStart="@dimen/space_2"
                     android:text="@string/str_desmos_c" />
             </LinearLayout>
         </LinearLayout>

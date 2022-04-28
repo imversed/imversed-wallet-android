@@ -34,7 +34,7 @@
                 style="@style/font_ssm_17_white"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginEnd="@dimen/space_16"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:gravity="center"
@@ -66,14 +66,14 @@
                     android:id="@+id/chainImageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_16"
+                    android:layout_marginStart="@dimen/space_16"
                     android:src="@drawable/mnemonics_ic" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_8"
-                    android:layout_marginRight="@dimen/space_16">
+                    android:layout_marginStart="@dimen/space_8"
+                    android:layout_marginEnd="@dimen/space_16">
 
                     <TextView
                         android:id="@+id/words_title"
@@ -88,7 +88,7 @@
                         style="@style/font_ss_14_atom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:singleLine="true"
                         android:text="12 words" />
 
@@ -107,15 +107,15 @@
                 android:id="@+id/mnemonicsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_16"
+                android:layout_marginStart="@dimen/space_16"
                 android:layout_marginTop="@dimen/space_8"
-                android:layout_marginRight="@dimen/space_16" />
+                android:layout_marginEnd="@dimen/space_16" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_40"
-                android:layout_marginLeft="@dimen/space_16"
+                android:layout_marginStart="@dimen/space_16"
                 android:layout_marginTop="@dimen/space_16"
                 android:clipToPadding="false"
                 android:overScrollMode="never" />

@@ -8,8 +8,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginTop="@dimen/space_2"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
@@ -37,7 +37,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_4"
+                    android:layout_marginStart="@dimen/space_4"
                     style="@style/font_ss_17_white"
                     android:text="@string/str_my_harvest_information" />
             </LinearLayout>
@@ -65,8 +65,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/deposit_icon"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_toEndOf="@+id/deposit_icon"
+                    android:layout_marginStart="@dimen/space_8"
                     android:text="COIN"
                     style="@style/font_ss_14_white" />
             </RelativeLayout>
@@ -86,14 +86,14 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@+id/deposited_title">
+                    android:layout_alignParentEnd="true"
+                    android:layout_toEndOf="@+id/deposited_title">
 
                     <TextView
                         android:id="@+id/deposited_symbol"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="Coin"
                         style="@style/font_ss_12_white"
                         android:visibility="gone" />
@@ -102,9 +102,9 @@
                         android:id="@+id/deposited_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignBaseline="@+id/deposited_symbol"
-                        android:layout_toLeftOf="@+id/deposited_symbol"
+                        android:layout_toStartOf="@+id/deposited_symbol"
                         android:text="-"
                         style="@style/font_ss_12_white" />
                 </RelativeLayout>
@@ -133,14 +133,14 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@+id/borrowed_title">
+                    android:layout_alignParentEnd="true"
+                    android:layout_toEndOf="@+id/borrowed_title">
 
                     <TextView
                         android:id="@+id/borrowed_symbol"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="Coin"
                         style="@style/font_ss_12_white"
                         android:visibility="gone" />
@@ -149,9 +149,9 @@
                         android:id="@+id/borrowed_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignBaseline="@+id/borrowed_symbol"
-                        android:layout_toLeftOf="@+id/borrowed_symbol"
+                        android:layout_toStartOf="@+id/borrowed_symbol"
                         android:text="-"
                         style="@style/font_ss_12_white" />
                 </RelativeLayout>
@@ -181,14 +181,14 @@
                 <RelativeLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@+id/borrowable_title">
+                    android:layout_alignParentEnd="true"
+                    android:layout_toEndOf="@+id/borrowable_title">
 
                     <TextView
                         android:id="@+id/borrowable_symbol"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="Coin"
                         style="@style/font_ss_12_white"
                         android:visibility="gone" />
@@ -197,9 +197,9 @@
                         android:id="@+id/borrowable_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_alignBaseline="@+id/borrowable_symbol"
-                        android:layout_toLeftOf="@+id/borrowable_symbol"
+                        android:layout_toStartOf="@+id/borrowable_symbol"
                         android:text="-"
                         style="@style/font_ss_12_white" />
                 </RelativeLayout>
@@ -225,7 +225,7 @@
                     android:layout_weight="1"
                     android:layout_height="@dimen/space_40"
                     android:minHeight="@dimen/space_40"
-                    android:layout_marginRight="@dimen/space_5"
+                    android:layout_marginEnd="@dimen/space_5"
                     android:background="@drawable/btn_trans_with_border"
                     android:clickable="true">
 
@@ -247,7 +247,7 @@
                     android:layout_weight="1"
                     android:layout_height="@dimen/space_40"
                     android:minHeight="@dimen/space_40"
-                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_marginStart="@dimen/space_5"
                     android:background="@drawable/btn_trans_with_border"
                     android:clickable="true">
 
@@ -276,7 +276,7 @@
                     android:layout_weight="1"
                     android:layout_height="@dimen/space_40"
                     android:minHeight="@dimen/space_40"
-                    android:layout_marginRight="@dimen/space_5"
+                    android:layout_marginEnd="@dimen/space_5"
                     android:background="@drawable/btn_trans_with_border"
                     android:clickable="true">
 
@@ -297,7 +297,7 @@
                     android:layout_weight="1"
                     android:layout_height="@dimen/space_40"
                     android:minHeight="@dimen/space_40"
-                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_marginStart="@dimen/space_5"
                     android:background="@drawable/btn_trans_with_border"
                     android:clickable="true">
 

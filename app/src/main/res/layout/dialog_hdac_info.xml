@@ -69,7 +69,7 @@
                     android:id="@+id/hdac_amount_symbol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_6"
+                    android:layout_marginStart="@dimen/space_6"
                     style="@style/font_ss_12_hdac"
                     android:text="HDAC" />
             </LinearLayout>

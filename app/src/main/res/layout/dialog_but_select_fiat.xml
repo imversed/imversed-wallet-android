@@ -15,8 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_24"
-            android:layout_marginLeft="@dimen/space_16"
-            android:layout_marginRight="@dimen/space_16"
+            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginEnd="@dimen/space_16"
             style="@style/font_ss_17_gray8"
             android:gravity="center"
             android:text="@string/str_buy_select_fiat_title" />
@@ -25,8 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_12"
-            android:layout_marginLeft="@dimen/space_16"
-            android:layout_marginRight="@dimen/space_16"
+            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginEnd="@dimen/space_16"
             style="@style/font_ss_12_gray1"
             android:gravity="center"
             android:text="@string/str_buy_select_fiat_msg" />
@@ -54,14 +54,14 @@
                 <TextView
                     android:layout_width="@dimen/space_16"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_6"
+                    android:layout_marginStart="@dimen/space_6"
                     android:text="$"
                     style="@style/font_ss_17_atom" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_12"
+                    android:layout_marginStart="@dimen/space_12"
                     android:text="USD"
                     style="@style/font_ss_15_gray8" />
             </LinearLayout>
@@ -88,14 +88,14 @@
                 <TextView
                     android:layout_width="@dimen/space_16"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_6"
+                    android:layout_marginStart="@dimen/space_6"
                     android:text="€"
                     style="@style/font_ss_17_atom" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_12"
+                    android:layout_marginStart="@dimen/space_12"
                     android:text="EUR"
                     style="@style/font_ss_15_gray8" />
             </LinearLayout>
@@ -122,14 +122,14 @@
                 <TextView
                     android:layout_width="@dimen/space_16"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_6"
+                    android:layout_marginStart="@dimen/space_6"
                     android:text="£"
                     style="@style/font_ss_17_atom" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_12"
+                    android:layout_marginStart="@dimen/space_12"
                     android:text="GBP"
                     style="@style/font_ss_15_gray8" />
             </LinearLayout>

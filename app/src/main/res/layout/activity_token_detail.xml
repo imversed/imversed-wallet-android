@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_bar_height"
         android:background="@color/colorBlack"
-        android:paddingRight="@dimen/space_24"
+        android:paddingEnd="@dimen/space_24"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <RelativeLayout
@@ -33,8 +33,8 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/toolbar_symbol_img"
-                android:layout_marginLeft="@dimen/space_4"
+                android:layout_toEndOf="@+id/toolbar_symbol_img"
+                android:layout_marginStart="@dimen/space_4"
                 android:layout_centerVertical="true">
 
                 <TextView
@@ -43,14 +43,14 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     style="@style/font_ssm_17_osmosis"
-                    android:layout_marginLeft="@dimen/space_6"
+                    android:layout_marginStart="@dimen/space_6"
                     android:text="OSMO" />
 
                 <TextView
                     android:id="@+id/per_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     style="@style/font_ssl_14_white"
                     android:text="-" />
@@ -59,7 +59,7 @@
                     android:id="@+id/per_change"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/per_price"
                     android:layout_marginTop="@dimen/space_2"
                     android:orientation="horizontal"
@@ -70,7 +70,7 @@
                         android:layout_width="@dimen/space_12"
                         android:layout_height="@dimen/space_12"
                         android:layout_marginTop="@dimen/space_2"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_marginEnd="@dimen/space_2"
                         android:src="@drawable/ic_price_down"
                         android:visibility="gone" />
 
@@ -78,7 +78,7 @@
                         android:id="@+id/dash_price_updown_tx"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:gravity="right"
                         style="@style/font_ss_10_white"
                         android:text="-" />
@@ -91,8 +91,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginBottom="2dp"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
@@ -105,10 +105,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/space_16"
+            android:paddingStart="@dimen/space_16"
             android:paddingTop="@dimen/space_12"
             android:paddingBottom="@dimen/space_12"
-            android:paddingRight="@dimen/space_4">
+            android:paddingEnd="@dimen/space_4">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -125,8 +125,8 @@
                     android:id="@+id/account_Address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/img_account"
-                    android:layout_marginLeft="@dimen/space_6"
+                    android:layout_toEndOf="@+id/img_account"
+                    android:layout_marginStart="@dimen/space_6"
                     android:layout_centerVertical="true"
                     style="@style/font_ss_12_white"
                     android:singleLine="true"
@@ -137,7 +137,7 @@
                 android:id="@+id/total_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingRight="@dimen/space_12"
+                android:paddingEnd="@dimen/space_12"
                 android:layout_marginTop="@dimen/space_2"
                 style="@style/font_ss_21_white"
                 android:singleLine="true"
@@ -170,8 +170,8 @@
         android:id="@+id/control_later"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginTop="@dimen/space_16"
         android:layout_marginBottom="@dimen/space_24"
         android:layout_alignParentBottom="true"
@@ -183,8 +183,8 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginRight="@dimen/space_4"
-            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginEnd="@dimen/space_4"
+            android:layout_marginStart="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             android:clickable="true"
             android:visibility="gone">
@@ -206,8 +206,8 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginRight="@dimen/space_4"
-            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginEnd="@dimen/space_4"
+            android:layout_marginStart="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             android:clickable="true"
             android:visibility="gone">
@@ -229,8 +229,8 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginRight="@dimen/space_4"
-            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginEnd="@dimen/space_4"
+            android:layout_marginStart="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             android:clickable="true">
 

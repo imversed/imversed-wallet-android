@@ -7,8 +7,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
         app:cardElevation="1.5dp"
@@ -37,7 +37,7 @@
                     android:id="@+id/tx_send_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_4"
+                    android:layout_marginStart="@dimen/space_4"
                     android:text="@string/tx_transfer"
                     style="@style/font_ss_15_white" />
             </LinearLayout>
@@ -74,7 +74,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tx_send_from0_address"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="ATOM"
                         style="@style/font_ss_12_atom" />
 
@@ -83,8 +83,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/tx_send_from0_symbol"
-                        android:layout_toLeftOf="@+id/tx_send_from0_symbol"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_toStartOf="@+id/tx_send_from0_symbol"
+                        android:layout_marginEnd="@dimen/space_2"
                         android:text="-"
                         style="@style/font_ss_12_white" />
                 </RelativeLayout>
@@ -110,7 +110,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tx_send_from1_address"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="ATOM"
                         style="@style/font_ss_12_atom" />
 
@@ -119,8 +119,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/tx_send_from1_symbol"
-                        android:layout_toLeftOf="@+id/tx_send_from1_symbol"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_toStartOf="@+id/tx_send_from1_symbol"
+                        android:layout_marginEnd="@dimen/space_2"
                         android:text="-"
                         style="@style/font_ss_12_white" />
                 </RelativeLayout>
@@ -146,7 +146,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tx_send_from2_address"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="ATOM"
                         style="@style/font_ss_12_atom" />
 
@@ -155,8 +155,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/tx_send_from2_symbol"
-                        android:layout_toLeftOf="@+id/tx_send_from2_symbol"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_toStartOf="@+id/tx_send_from2_symbol"
+                        android:layout_marginEnd="@dimen/space_2"
                         android:text="-"
                         style="@style/font_ss_12_white" />
                 </RelativeLayout>
@@ -182,7 +182,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tx_send_from3_address"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="ATOM"
                         style="@style/font_ss_12_atom" />
 
@@ -191,8 +191,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/tx_send_from3_symbol"
-                        android:layout_toLeftOf="@+id/tx_send_from3_symbol"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_toStartOf="@+id/tx_send_from3_symbol"
+                        android:layout_marginEnd="@dimen/space_2"
                         android:text="-"
                         style="@style/font_ss_12_white" />
                 </RelativeLayout>
@@ -230,7 +230,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tx_send_to0_address"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="ATOM"
                         style="@style/font_ss_12_atom" />
 
@@ -239,8 +239,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/tx_send_to0_symbol"
-                        android:layout_toLeftOf="@+id/tx_send_to0_symbol"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_toStartOf="@+id/tx_send_to0_symbol"
+                        android:layout_marginEnd="@dimen/space_2"
                         android:text="-"
                         style="@style/font_ss_12_white" />
                 </RelativeLayout>
@@ -266,7 +266,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tx_send_to1_address"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="ATOM"
                         style="@style/font_ss_12_atom" />
 
@@ -275,8 +275,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/tx_send_to1_symbol"
-                        android:layout_toLeftOf="@+id/tx_send_to1_symbol"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_toStartOf="@+id/tx_send_to1_symbol"
+                        android:layout_marginEnd="@dimen/space_2"
                         android:text="-"
                         style="@style/font_ss_12_white" />
                 </RelativeLayout>
@@ -302,7 +302,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tx_send_to2_address"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="ATOM"
                         style="@style/font_ss_12_atom" />
 
@@ -311,8 +311,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/tx_send_to2_symbol"
-                        android:layout_toLeftOf="@+id/tx_send_to2_symbol"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_toStartOf="@+id/tx_send_to2_symbol"
+                        android:layout_marginEnd="@dimen/space_2"
                         android:text="-"
                         style="@style/font_ss_12_white" />
                 </RelativeLayout>
@@ -338,7 +338,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/tx_send_to3_address"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="ATOM"
                         style="@style/font_ss_12_atom" />
 
@@ -347,8 +347,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/tx_send_to3_symbol"
-                        android:layout_toLeftOf="@+id/tx_send_to3_symbol"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_toStartOf="@+id/tx_send_to3_symbol"
+                        android:layout_marginEnd="@dimen/space_2"
                         android:text="-"
                         style="@style/font_ss_12_white" />
                 </RelativeLayout>

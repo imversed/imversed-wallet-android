@@ -30,7 +30,7 @@
                 android:id="@+id/undelegate_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:gravity="right"
                 style="@style/font_ssl_14_white"
                 android:text="-" />
@@ -62,7 +62,7 @@
                 android:id="@+id/undelegate_detail_amount0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:gravity="right"
                 android:text="-"
                 style="@style/font_ssl_12_white" />
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/undelegate_detail_amount0"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:gravity="right"
                 android:text="-"
                 style="@style/font_ss_11_gray1" />
@@ -99,7 +99,7 @@
                 android:id="@+id/undelegate_detail_amount1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:gravity="right"
                 android:text="-"
                 style="@style/font_ssl_12_white" />
@@ -109,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/undelegate_detail_amount1"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:gravity="right"
                 android:text="-"
                 style="@style/font_ss_11_gray1" />
@@ -136,7 +136,7 @@
                 android:id="@+id/undelegate_detail_amount2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:gravity="right"
                 android:text="-"
                 style="@style/font_ssl_12_white" />
@@ -146,7 +146,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/undelegate_detail_amount2"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:gravity="right"
                 android:text="-"
                 style="@style/font_ss_11_gray1" />
@@ -173,7 +173,7 @@
                 android:id="@+id/undelegate_detail_amount3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:gravity="right"
                 android:text="-"
                 style="@style/font_ssl_12_white" />
@@ -183,7 +183,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/undelegate_detail_amount3"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:gravity="right"
                 android:text="-"
                 style="@style/font_ss_11_gray1" />
@@ -210,7 +210,7 @@
                 android:id="@+id/undelegate_detail_amount4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:gravity="right"
                 android:text="-"
                 style="@style/font_ssl_12_white" />
@@ -220,7 +220,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/undelegate_detail_amount4"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:gravity="right"
                 android:text="-"
                 style="@style/font_ss_11_gray1" />

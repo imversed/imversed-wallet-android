@@ -7,8 +7,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
         app:cardElevation="1.5dp"
@@ -37,7 +37,7 @@
                     android:id="@+id/tx_commission_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_4"
+                    android:layout_marginStart="@dimen/space_4"
                     android:text="@string/tx_get_commission"
                     style="@style/font_ss_17_white" />
             </LinearLayout>
@@ -91,7 +91,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_toRightOf="@+id/tx_commission_amount_title">
+                    android:layout_toEndOf="@+id/tx_commission_amount_title">
 
                     <RelativeLayout
                         android:id="@+id/commission_layout0"
@@ -104,7 +104,7 @@
                             style="@style/font_ss_12_atom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true" />
+                            android:layout_alignParentEnd="true" />
 
                         <TextView
                             android:id="@+id/tx_commission_amount0"
@@ -112,8 +112,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBaseline="@+id/tx_commission_symbol0"
-                            android:layout_marginRight="@dimen/space_2"
-                            android:layout_toLeftOf="@+id/tx_commission_symbol0" />
+                            android:layout_marginEnd="@dimen/space_2"
+                            android:layout_toStartOf="@+id/tx_commission_symbol0" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -126,7 +126,7 @@
                             android:id="@+id/tx_commission_symbol1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             style="@style/font_ss_12_atom" />
 
                         <TextView
@@ -135,8 +135,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBaseline="@+id/tx_commission_symbol1"
-                            android:layout_marginRight="@dimen/space_2"
-                            android:layout_toLeftOf="@+id/tx_commission_symbol1" />
+                            android:layout_marginEnd="@dimen/space_2"
+                            android:layout_toStartOf="@+id/tx_commission_symbol1" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -149,7 +149,7 @@
                             android:id="@+id/tx_commission_symbol2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             style="@style/font_ss_12_atom" />
 
                         <TextView
@@ -158,8 +158,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBaseline="@+id/tx_commission_symbol2"
-                            android:layout_marginRight="@dimen/space_2"
-                            android:layout_toLeftOf="@+id/tx_commission_symbol2" />
+                            android:layout_marginEnd="@dimen/space_2"
+                            android:layout_toStartOf="@+id/tx_commission_symbol2" />
                     </RelativeLayout>
 
                     <RelativeLayout
@@ -172,7 +172,7 @@
                             android:id="@+id/tx_commission_symbol3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             style="@style/font_ss_12_atom" />
 
                         <TextView
@@ -181,8 +181,8 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignBaseline="@+id/tx_commission_symbol3"
-                            android:layout_marginRight="@dimen/space_2"
-                            android:layout_toLeftOf="@+id/tx_commission_symbol3" />
+                            android:layout_marginEnd="@dimen/space_2"
+                            android:layout_toStartOf="@+id/tx_commission_symbol3" />
                     </RelativeLayout>
                 </LinearLayout>
             </RelativeLayout>

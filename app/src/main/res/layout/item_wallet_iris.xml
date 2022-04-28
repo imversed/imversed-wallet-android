@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_2"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
         app:cardElevation="0dp"
@@ -37,15 +37,15 @@
                     android:id="@+id/iris_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/iris_icon"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_toEndOf="@+id/iris_icon"
+                    android:layout_marginStart="@dimen/space_8"
                     android:text="IRIS"
                     style="@style/font_ss_14_iris" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:orientation="vertical"
                     android:gravity="right">
 
@@ -88,7 +88,7 @@
                     android:id="@+id/iris_available"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -109,7 +109,7 @@
                     android:id="@+id/iris_delegate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -130,7 +130,7 @@
                     android:id="@+id/iris_unbonding"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -151,7 +151,7 @@
                     android:id="@+id/iris_reward"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -169,7 +169,7 @@
                     android:layout_height="@dimen/space_40"
                     android:minHeight="@dimen/space_40"
                     android:layout_marginTop="16dp"
-                    android:layout_marginRight="@dimen/space_5"
+                    android:layout_marginEnd="@dimen/space_5"
                     android:background="@drawable/btn_trans_with_border"
                     android:clickable="true">
 
@@ -191,7 +191,7 @@
                     android:layout_height="@dimen/space_40"
                     android:minHeight="@dimen/space_40"
                     android:layout_marginTop="16dp"
-                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_marginStart="@dimen/space_5"
                     android:background="@drawable/btn_trans_with_border"
                     android:clickable="true">
 

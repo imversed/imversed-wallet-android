@@ -8,8 +8,8 @@
         android:id="@+id/card_proposal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginBottom="2dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
@@ -27,8 +27,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/space_8"
-                android:layout_toLeftOf="@+id/arrow_propose"
+                android:layout_marginEnd="@dimen/space_8"
+                android:layout_toStartOf="@+id/arrow_propose"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -46,7 +46,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:gravity="center_vertical">
 
@@ -60,7 +60,7 @@
                             android:id="@+id/proposal_status"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_4"
+                            android:layout_marginStart="@dimen/space_4"
                             style="@style/font_ss_11_white" />
                     </LinearLayout>
                 </RelativeLayout>
@@ -92,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:src="@drawable/arrow_next_gr" />
 
 

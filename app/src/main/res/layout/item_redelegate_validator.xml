@@ -8,8 +8,8 @@
         android:id="@+id/card_validator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginBottom="2dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
@@ -28,7 +28,7 @@
                 android:id="@+id/views_validator"
                 android:layout_width="@dimen/space_72"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/space_2"
+                android:layout_marginStart="@dimen/space_2"
                 android:orientation="vertical"
                 android:gravity="center">
 
@@ -56,8 +56,8 @@
                         android:id="@+id/avatar_validator_free"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginRight="@dimen/space_4"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/space_4"
                         android:layout_marginTop="@dimen/space_4"
                         android:src="@drawable/free_ic"
                         android:visibility="gone" />
@@ -68,7 +68,7 @@
                 android:id="@+id/line_validator"
                 android:layout_width="0.5dp"
                 android:layout_height="match_parent"
-                android:layout_toRightOf="@+id/views_validator"
+                android:layout_toEndOf="@+id/views_validator"
                 android:background="@color/colorGray3"
                 android:layout_marginTop="@dimen/space_10"
                 android:layout_marginBottom="@dimen/space_10" />
@@ -78,17 +78,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_check_off"
-                android:layout_marginRight="@dimen/space_12"
+                android:layout_marginEnd="@dimen/space_12"
                 android:layout_centerVertical="true"
-                android:layout_alignParentRight="true" />
+                android:layout_alignParentEnd="true" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toRightOf="@+id/line_validator"
-                android:layout_toLeftOf="@+id/checked_validator"
-                android:layout_marginLeft="@dimen/space_12"
-                android:layout_marginRight="@dimen/space_12"
+                android:layout_toEndOf="@+id/line_validator"
+                android:layout_toStartOf="@+id/checked_validator"
+                android:layout_marginStart="@dimen/space_12"
+                android:layout_marginEnd="@dimen/space_12"
                 android:orientation="vertical"
                 android:gravity="center_vertical">
 
@@ -122,7 +122,7 @@
                         android:id="@+id/delegate_power_validator"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         style="@style/font_ss_11_gray1"
                         android:text="-" />
                 </RelativeLayout>
@@ -142,7 +142,7 @@
                         android:id="@+id/delegate_yield_commission"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         style="@style/font_ss_11_gray1"
                         android:text="-" />
                 </RelativeLayout>
@@ -155,8 +155,8 @@
         android:id="@+id/check_border"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_72"
-        android:layout_marginLeft="@dimen/space_16"
-        android:layout_marginRight="@dimen/space_16"
+        android:layout_marginStart="@dimen/space_16"
+        android:layout_marginEnd="@dimen/space_16"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/btn_trans_with_border" />

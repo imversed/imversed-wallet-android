@@ -7,8 +7,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
         app:cardElevation="1.5dp"
@@ -37,7 +37,7 @@
                     android:id="@+id/tx_swap_coin_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_4"
+                    android:layout_marginStart="@dimen/space_4"
                     android:text="@string/tx_osmosis_coin_swap"
                     style="@style/font_ss_15_white" />
             </LinearLayout>
@@ -97,7 +97,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tx_swap_token_in_title"
+                    android:layout_toEndOf="@+id/tx_swap_token_in_title"
                     android:gravity="right">
 
                     <LinearLayout
@@ -108,7 +108,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:gravity="center"
                             android:orientation="horizontal">
@@ -125,7 +125,7 @@
                                 style="@style/font_ss_12_white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/space_2"
+                                android:layout_marginStart="@dimen/space_2"
                                 android:text="-" />
                         </LinearLayout>
                     </LinearLayout>
@@ -147,7 +147,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tx_swap_token_out_title"
+                    android:layout_toEndOf="@+id/tx_swap_token_out_title"
                     android:gravity="right">
 
                     <LinearLayout
@@ -158,7 +158,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:gravity="center"
                             android:orientation="horizontal">
@@ -175,7 +175,7 @@
                                 style="@style/font_ss_12_white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/space_2"
+                                android:layout_marginStart="@dimen/space_2"
                                 android:text="-" />
                         </LinearLayout>
                     </LinearLayout>

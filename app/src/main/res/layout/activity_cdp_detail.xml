@@ -31,8 +31,8 @@
         android:layout_height="@dimen/space_45"
         android:minHeight="@dimen/space_45"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/space_16"
-        android:layout_marginRight="@dimen/space_16"
+        android:layout_marginStart="@dimen/space_16"
+        android:layout_marginEnd="@dimen/space_16"
         android:layout_marginTop="@dimen/space_16"
         android:layout_marginBottom="@dimen/space_24"
         android:background="@drawable/btn_trans_with_border"
@@ -66,8 +66,8 @@
                     android:id="@+id/card_cdp_info"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_12"
-                    android:layout_marginRight="@dimen/space_12"
+                    android:layout_marginStart="@dimen/space_12"
+                    android:layout_marginEnd="@dimen/space_12"
                     layout="@layout/layout_cdp_detail_info"
                     android:visibility="gone" />
 
@@ -75,8 +75,8 @@
                     android:id="@+id/card_cdp_my"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_12"
-                    android:layout_marginRight="@dimen/space_12"
+                    android:layout_marginStart="@dimen/space_12"
+                    android:layout_marginEnd="@dimen/space_12"
                     layout="@layout/layout_cdp_detail_my"
                     android:visibility="gone" />
 
@@ -84,8 +84,8 @@
                     android:id="@+id/card_cdp_my_empty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_12"
-                    android:layout_marginRight="@dimen/space_12"
+                    android:layout_marginStart="@dimen/space_12"
+                    android:layout_marginEnd="@dimen/space_12"
                     layout="@layout/layout_cdp_detail_available"
                     android:visibility="gone" />
 

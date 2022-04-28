@@ -8,8 +8,8 @@
         android:id="@+id/card_history"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginBottom="2dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
@@ -24,8 +24,8 @@
             android:layout_height="@dimen/space_74"
             android:paddingTop="@dimen/space_12"
             android:paddingBottom="@dimen/space_12"
-            android:paddingLeft="@dimen/space_12"
-            android:paddingRight="@dimen/space_8">
+            android:paddingStart="@dimen/space_12"
+            android:paddingEnd="@dimen/space_8">
 
             <RelativeLayout
                 android:id="@+id/history_header"
@@ -54,7 +54,7 @@
                 android:id="@+id/history_line"
                 android:layout_width="1px"
                 android:layout_height="match_parent"
-                android:layout_toRightOf="@+id/history_header"
+                android:layout_toEndOf="@+id/history_header"
                 android:background="@color/colorGray3" />
 
             <ImageView
@@ -63,15 +63,15 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/arrow_next_gr"
                 android:layout_centerVertical="true"
-                android:layout_alignParentRight="true" />
+                android:layout_alignParentEnd="true" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toRightOf="@+id/history_line"
-                android:layout_toLeftOf="@+id/arrow_history"
-                android:paddingLeft="@dimen/space_12"
-                android:paddingRight="@dimen/space_8"
+                android:layout_toEndOf="@+id/history_line"
+                android:layout_toStartOf="@+id/arrow_history"
+                android:paddingStart="@dimen/space_12"
+                android:paddingEnd="@dimen/space_8"
                 android:orientation="vertical"
                 android:gravity="center_vertical|right">
 
@@ -118,8 +118,8 @@
     <!--android:id="@+id/card_history"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="wrap_content"-->
-    <!--android:layout_marginLeft="@dimen/space_12"-->
-    <!--android:layout_marginRight="@dimen/space_12"-->
+    <!--android:layout_marginStart="@dimen/space_12"-->
+    <!--android:layout_marginEnd="@dimen/space_12"-->
     <!--android:layout_marginBottom="2dp"-->
     <!--android:foreground="?android:attr/selectableItemBackground"-->
     <!--android:clickable="true"-->
@@ -133,8 +133,8 @@
     <!--android:layout_height="@dimen/space_74"-->
     <!--android:paddingTop="@dimen/space_12"-->
     <!--android:paddingBottom="@dimen/space_12"-->
-    <!--android:paddingLeft="@dimen/space_12"-->
-    <!--android:paddingRight="@dimen/space_8">-->
+    <!--android:paddingStart="@dimen/space_12"-->
+    <!--android:paddingEnd="@dimen/space_8">-->
 
     <!--<RelativeLayout-->
     <!--android:id="@+id/history_header"-->
@@ -170,7 +170,7 @@
     <!--android:id="@+id/history_line"-->
     <!--android:layout_width="1px"-->
     <!--android:layout_height="match_parent"-->
-    <!--android:layout_toRightOf="@+id/history_header"-->
+    <!--android:layout_toEndOf="@+id/history_header"-->
     <!--android:background="@color/colorGray3"/>-->
 
     <!--<ImageView-->
@@ -179,15 +179,15 @@
     <!--android:layout_height="wrap_content"-->
     <!--android:src="@drawable/arrow_next_gr"-->
     <!--android:layout_centerVertical="true"-->
-    <!--android:layout_alignParentRight="true"/>-->
+    <!--android:layout_alignParentEnd="true"/>-->
 
     <!--<RelativeLayout-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent"-->
-    <!--android:layout_toRightOf="@+id/history_line"-->
-    <!--android:layout_toLeftOf="@+id/arrow_history"-->
-    <!--android:paddingLeft="@dimen/space_12"-->
-    <!--android:paddingRight="@dimen/space_8">-->
+    <!--android:layout_toEndOf="@+id/history_line"-->
+    <!--android:layout_toStartOf="@+id/arrow_history"-->
+    <!--android:paddingStart="@dimen/space_12"-->
+    <!--android:paddingEnd="@dimen/space_8">-->
     <!--<RelativeLayout-->
     <!--android:id="@+id/history_left_layer"-->
     <!--android:layout_width="wrap_content"-->
@@ -220,7 +220,7 @@
     <!--<LinearLayout-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent"-->
-    <!--android:layout_toRightOf="@+id/history_left_layer"-->
+    <!--android:layout_toEndOf="@+id/history_left_layer"-->
     <!--android:gravity="center_vertical|right"-->
     <!--android:orientation="vertical">-->
     <!--<RelativeLayout-->
@@ -230,15 +230,15 @@
     <!--android:id="@+id/history_denom"-->
     <!--android:layout_width="wrap_content"-->
     <!--android:layout_height="wrap_content"-->
-    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_alignParentEnd="true"-->
     <!--android:text="@string/str_atom_c"-->
     <!--style="@style/font_ss_14_atom"/>-->
     <!--<TextView-->
     <!--android:id="@+id/history_amount"-->
     <!--android:layout_width="wrap_content"-->
     <!--android:layout_height="wrap_content"-->
-    <!--android:layout_toLeftOf="@+id/history_denom"-->
-    <!--android:layout_marginRight="@dimen/space_2"-->
+    <!--android:layout_toStartOf="@+id/history_denom"-->
+    <!--android:layout_marginEnd="@dimen/space_2"-->
     <!--android:layout_alignBaseline="@+id/history_denom"-->
     <!--android:text="-"-->
     <!--style="@style/font_ssl_11_white"/>-->

@@ -46,7 +46,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:orientation="horizontal"
                             android:gravity="center">
@@ -62,7 +62,7 @@
                                 android:id="@+id/collateral_amount_denom"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/space_2"
+                                android:layout_marginStart="@dimen/space_2"
                                 android:text="COIN"
                                 style="@style/font_ss_14_white" />
                         </LinearLayout>
@@ -77,7 +77,7 @@
                             android:id="@+id/collateral_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:gravity="right"
                             style="@style/font_ss_12_gray1"
                             android:text="-" />
@@ -100,7 +100,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:layout_centerVertical="true"
                             android:orientation="horizontal"
                             android:gravity="center">
@@ -116,7 +116,7 @@
                                 android:id="@+id/principal_amount_denom"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/space_2"
+                                android:layout_marginStart="@dimen/space_2"
                                 android:text="COIN"
                                 style="@style/font_ss_14_white" />
                         </LinearLayout>
@@ -131,7 +131,7 @@
                             android:id="@+id/principal_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:gravity="right"
                             style="@style/font_ss_12_gray1"
                             android:text="-" />
@@ -152,7 +152,7 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:orientation="horizontal"
                             android:gravity="center">
 
@@ -160,7 +160,7 @@
                                 android:id="@+id/fees_amount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
                                 android:text="-"
                                 style="@style/font_ssl_14_white" />
 
@@ -168,7 +168,7 @@
                                 android:id="@+id/fees_denom"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/space_2"
+                                android:layout_marginStart="@dimen/space_2"
                                 android:text="KAVA"
                                 style="@style/font_ss_14_kava" />
                         </LinearLayout>
@@ -183,7 +183,7 @@
                             android:id="@+id/fee_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:gravity="right"
                             style="@style/font_ss_12_gray1"
                             android:text="-" />
@@ -212,8 +212,8 @@
                             android:id="@+id/risk_rate_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toRightOf="@+id/risk_rate_title"
-                            android:layout_marginLeft="@dimen/space_4"
+                            android:layout_toEndOf="@+id/risk_rate_title"
+                            android:layout_marginStart="@dimen/space_4"
                             android:layout_alignBaseline="@+id/risk_rate"
                             style="@style/font_ss_12_gray1"
                             android:text="" />
@@ -222,7 +222,7 @@
                             android:id="@+id/risk_rate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             style="@style/font_ss_26_white"
                             android:text="-" />
                     </RelativeLayout>
@@ -245,7 +245,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             style="@style/font_ssl_14_white"
                             android:gravity="right"
                             android:text="-" />
@@ -270,7 +270,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             style="@style/font_ssl_14_white"
                             android:gravity="right"
                             android:text="-" />
@@ -306,8 +306,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/space_16"
-        android:layout_marginRight="@dimen/space_16"
+        android:layout_marginStart="@dimen/space_16"
+        android:layout_marginEnd="@dimen/space_16"
         android:layout_marginBottom="@dimen/space_24">
 
         <Button
@@ -316,7 +316,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginRight="@dimen/space_4"
+            android:layout_marginEnd="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_white"
             android:textAllCaps="false"
@@ -328,7 +328,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginStart="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_photon"
             android:textAllCaps="false"

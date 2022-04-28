@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="@dimen/space_68"
-    android:layout_marginRight="@dimen/space_12">
+    android:layout_marginEnd="@dimen/space_12">
 
     <ImageView
         android:layout_width="wrap_content"

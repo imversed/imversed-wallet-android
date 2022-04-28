@@ -8,8 +8,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginTop="@dimen/space_2"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
@@ -36,14 +36,14 @@
                         android:layout_width="@dimen/space_64"
                         android:layout_height="@dimen/space_64"
                         android:layout_centerInParent="true"
-                        android:layout_alignParentLeft="true" />
+                        android:layout_alignParentStart="true" />
 
                     <LinearLayout
                         android:id="@+id/safe_rate_layer"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:gravity="right"
                         android:layout_centerInParent="true">
 
@@ -63,10 +63,10 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/space_8"
+                        android:layout_marginStart="@dimen/space_8"
                         android:orientation="vertical"
-                        android:layout_toRightOf="@+id/market_img"
-                        android:layout_toLeftOf="@+id/safe_rate_layer"
+                        android:layout_toEndOf="@+id/market_img"
+                        android:layout_toStartOf="@+id/safe_rate_layer"
                         android:layout_centerInParent="true">
 
                         <TextView
@@ -106,7 +106,7 @@
                     android:layout_centerVertical="true"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingRight="@dimen/space_4">
+                    android:paddingEnd="@dimen/space_4">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -117,7 +117,7 @@
                     <ImageView
                         android:layout_width="@dimen/space_14"
                         android:layout_height="@dimen/space_14"
-                        android:layout_marginLeft="@dimen/space_4"
+                        android:layout_marginStart="@dimen/space_4"
                         android:src="@drawable/question_ic" />
                 </LinearLayout>
 
@@ -126,7 +126,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_white"
                     android:gravity="right"
                     android:text="-" />
@@ -144,7 +144,7 @@
                     android:layout_centerVertical="true"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingRight="@dimen/space_4">
+                    android:paddingEnd="@dimen/space_4">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -155,7 +155,7 @@
                     <ImageView
                         android:layout_width="@dimen/space_14"
                         android:layout_height="@dimen/space_14"
-                        android:layout_marginLeft="@dimen/space_4"
+                        android:layout_marginStart="@dimen/space_4"
                         android:src="@drawable/question_ic" />
                 </LinearLayout>
 
@@ -164,7 +164,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_white"
                     android:gravity="right"
                     android:text="-" />
@@ -182,7 +182,7 @@
                     android:layout_centerVertical="true"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingRight="@dimen/space_4">
+                    android:paddingEnd="@dimen/space_4">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -193,7 +193,7 @@
                     <ImageView
                         android:layout_width="@dimen/space_14"
                         android:layout_height="@dimen/space_14"
-                        android:layout_marginLeft="@dimen/space_4"
+                        android:layout_marginStart="@dimen/space_4"
                         android:src="@drawable/question_ic" />
                 </LinearLayout>
 
@@ -202,7 +202,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_white"
                     android:gravity="right"
                     android:text="-" />
@@ -233,7 +233,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_white"
                     android:gravity="right"
                     android:text="-" />
@@ -260,7 +260,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_kava"
                     android:gravity="right"
                     android:text="-" />
@@ -283,7 +283,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_white"
                     android:gravity="right"
                     android:text="-" />
@@ -306,7 +306,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_white"
                     android:gravity="right"
                     android:text="-" />

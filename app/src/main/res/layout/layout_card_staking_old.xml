@@ -8,8 +8,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginTop="@dimen/space_2"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
@@ -36,7 +36,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:orientation="vertical"
                     android:gravity="right">
 
@@ -65,7 +65,7 @@
                     android:id="@+id/available_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -87,7 +87,7 @@
                     android:id="@+id/vesting_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -109,7 +109,7 @@
                     android:id="@+id/delegated_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -131,7 +131,7 @@
                     android:id="@+id/unbonding_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -153,7 +153,7 @@
                     android:id="@+id/reward_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -175,7 +175,7 @@
                     android:id="@+id/locked_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -197,7 +197,7 @@
                     android:id="@+id/frozen_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -219,7 +219,7 @@
                     android:id="@+id/ok_staking_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -241,7 +241,7 @@
                     android:id="@+id/ok_unbonding_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />

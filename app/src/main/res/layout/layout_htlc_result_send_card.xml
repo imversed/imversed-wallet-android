@@ -32,7 +32,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_4"
+                android:layout_marginStart="@dimen/space_4"
                 android:text="Create Interchain Send"
                 style="@style/font_ss_14_white" />
         </LinearLayout>
@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_toRightOf="@+id/tx_status_title"
+                android:layout_toEndOf="@+id/tx_status_title"
                 android:gravity="center_vertical|right">
 
                 <ImageView
@@ -61,7 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_1"
-                    android:layout_marginRight="@dimen/space_4"
+                    android:layout_marginEnd="@dimen/space_4"
                     android:src="@drawable/success_ic" />
 
                 <TextView
@@ -99,7 +99,7 @@
                 android:id="@+id/send_block_height"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:text="-"
                 style="@style/font_ss_12_white" />
         </RelativeLayout>
@@ -169,7 +169,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:orientation="horizontal"
                 android:gravity="center">
@@ -185,7 +185,7 @@
                     android:id="@+id/send_amount_denom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_2"
+                    android:layout_marginStart="@dimen/space_2"
                     android:text="@string/str_atom_c"
                     style="@style/font_ss_12_white" />
             </LinearLayout>
@@ -205,7 +205,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:orientation="horizontal"
                 android:gravity="center">
 
@@ -213,7 +213,7 @@
                     android:id="@+id/send_fee"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
 
@@ -221,7 +221,7 @@
                     android:id="@+id/send_fee_denom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_2"
+                    android:layout_marginStart="@dimen/space_2"
                     android:text="@string/str_atom_c"
                     style="@style/font_ss_12_white" />
             </LinearLayout>

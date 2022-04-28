@@ -7,8 +7,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
         app:cardElevation="1.5dp"
@@ -37,7 +37,7 @@
                     android:id="@+id/tx_msg_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_4"
+                    android:layout_marginStart="@dimen/space_4"
                     android:text="@string/tx_kava_swap_incentive2"
                     style="@style/font_ss_17_white" />
             </LinearLayout>
@@ -105,7 +105,7 @@
                     android:id="@+id/kava_symbol"
                     android:layout_width="@dimen/space_40"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="KAVA"
                     style="@style/font_ss_12_white" />
@@ -115,8 +115,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/kava_symbol"
-                    android:layout_toLeftOf="@+id/kava_symbol"
-                    android:layout_marginRight="@dimen/space_2"
+                    android:layout_toStartOf="@+id/kava_symbol"
+                    android:layout_marginEnd="@dimen/space_2"
                     android:text="-"
                     style="@style/font_ss_12_white" />
             </RelativeLayout>
@@ -132,7 +132,7 @@
                     android:id="@+id/swp_symbol"
                     android:layout_width="@dimen/space_40"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="SWP"
                     style="@style/font_ss_12_white" />
@@ -142,8 +142,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/swp_symbol"
-                    android:layout_toLeftOf="@+id/swp_symbol"
-                    android:layout_marginRight="@dimen/space_2"
+                    android:layout_toStartOf="@+id/swp_symbol"
+                    android:layout_marginEnd="@dimen/space_2"
                     android:text="-"
                     style="@style/font_ss_12_white" />
             </RelativeLayout>
@@ -159,7 +159,7 @@
                     android:id="@+id/hard_symbol"
                     android:layout_width="@dimen/space_40"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="HARD"
                     style="@style/font_ss_12_white" />
@@ -169,8 +169,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/hard_symbol"
-                    android:layout_toLeftOf="@+id/hard_symbol"
-                    android:layout_marginRight="@dimen/space_2"
+                    android:layout_toStartOf="@+id/hard_symbol"
+                    android:layout_marginEnd="@dimen/space_2"
                     android:text="-"
                     style="@style/font_ss_12_white" />
             </RelativeLayout>
@@ -186,7 +186,7 @@
                     android:id="@+id/usdx_symbol"
                     android:layout_width="@dimen/space_40"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="USDX"
                     style="@style/font_ss_12_white" />
@@ -196,8 +196,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/usdx_symbol"
-                    android:layout_toLeftOf="@+id/usdx_symbol"
-                    android:layout_marginRight="@dimen/space_2"
+                    android:layout_toStartOf="@+id/usdx_symbol"
+                    android:layout_marginEnd="@dimen/space_2"
                     android:text="-"
                     style="@style/font_ss_12_white" />
             </RelativeLayout>

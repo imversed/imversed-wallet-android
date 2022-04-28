@@ -19,8 +19,8 @@
                 android:id="@+id/validator_cnt_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/space_16"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/space_16"
                 android:text="@string/str_validator"
                 style="@style/font_ss_12_gray1" />
 
@@ -28,8 +28,8 @@
                 android:id="@+id/selected_cnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/validator_cnt_title"
-                android:layout_marginRight="@dimen/space_4"
+                android:layout_toStartOf="@+id/validator_cnt_title"
+                android:layout_marginEnd="@dimen/space_4"
                 android:text="0"
                 style="@style/font_ss_12_white" />
         </RelativeLayout>
@@ -50,8 +50,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/space_16"
-        android:layout_marginRight="@dimen/space_16"
+        android:layout_marginStart="@dimen/space_16"
+        android:layout_marginEnd="@dimen/space_16"
         android:layout_marginBottom="@dimen/space_24">
 
         <Button
@@ -60,7 +60,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginRight="@dimen/space_4"
+            android:layout_marginEnd="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_white"
             android:textAllCaps="false"
@@ -72,7 +72,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginStart="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_photon"
             android:textColor="@color/color_btn_photon"

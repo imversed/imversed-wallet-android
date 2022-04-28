@@ -8,8 +8,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginTop="@dimen/space_2"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
@@ -36,15 +36,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/ok_icon"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_toEndOf="@+id/ok_icon"
+                    android:layout_marginStart="@dimen/space_8"
                     android:text="OKT"
                     style="@style/font_ss_14_ok" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:orientation="vertical"
                     android:gravity="right">
 
@@ -87,7 +87,7 @@
                     android:id="@+id/ok_available"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -108,7 +108,7 @@
                     android:id="@+id/ok_locked"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -129,7 +129,7 @@
                     android:id="@+id/ok_deposit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -150,7 +150,7 @@
                     android:id="@+id/ok_withdrawing"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -168,7 +168,7 @@
                     android:layout_height="@dimen/space_40"
                     android:minHeight="@dimen/space_40"
                     android:layout_marginTop="16dp"
-                    android:layout_marginRight="@dimen/space_5"
+                    android:layout_marginEnd="@dimen/space_5"
                     android:background="@drawable/btn_trans_with_border"
                     android:clickable="true">
 
@@ -190,7 +190,7 @@
                     android:layout_height="@dimen/space_40"
                     android:minHeight="@dimen/space_40"
                     android:layout_marginTop="16dp"
-                    android:layout_marginLeft="@dimen/space_5"
+                    android:layout_marginStart="@dimen/space_5"
                     android:background="@drawable/btn_trans_with_border"
                     android:clickable="true">
 

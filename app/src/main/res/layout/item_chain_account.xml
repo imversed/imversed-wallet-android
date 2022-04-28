@@ -49,9 +49,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/space_4"
-                    android:layout_toLeftOf="@+id/addressTextView"
-                    android:layout_toRightOf="@+id/keyImageView"
+                    android:layout_marginStart="@dimen/space_4"
+                    android:layout_toStartOf="@+id/addressTextView"
+                    android:layout_toEndOf="@+id/keyImageView"
                     android:maxWidth="@dimen/space_120"
                     tools:text="Wallet Name" />
 
@@ -60,7 +60,7 @@
                     style="@style/font_ss_14_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:ellipsize="middle"
                     android:gravity="right"
@@ -81,7 +81,7 @@
                     style="@style/font_ss_14_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_2"
+                    android:layout_marginStart="@dimen/space_2"
                     android:text="-" />
 
                 <TextView
@@ -89,7 +89,7 @@
                     style="@style/font_ss_11_atom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_2"
+                    android:layout_marginStart="@dimen/space_2"
                     android:text="@string/str_atom_c" />
             </LinearLayout>
         </LinearLayout>

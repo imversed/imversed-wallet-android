@@ -9,8 +9,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
         app:cardElevation="1.5dp"
@@ -21,10 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="@dimen/space_16"
+            android:paddingStart="@dimen/space_16"
             android:paddingTop="@dimen/space_12"
             android:paddingBottom="@dimen/space_12"
-            android:paddingRight="@dimen/space_4">
+            android:paddingEnd="@dimen/space_4">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -41,8 +41,8 @@
                     android:id="@+id/wallet_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/img_account"
-                    android:layout_marginLeft="@dimen/space_6"
+                    android:layout_toEndOf="@+id/img_account"
+                    android:layout_marginStart="@dimen/space_6"
                     android:layout_centerVertical="true"
                     style="@style/font_ss_12_white"
                     android:singleLine="true"
@@ -53,7 +53,7 @@
                 android:id="@+id/total_value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingRight="@dimen/space_12"
+                android:paddingEnd="@dimen/space_12"
                 android:layout_marginTop="@dimen/space_2"
                 style="@style/font_ss_21_white"
                 android:singleLine="true"

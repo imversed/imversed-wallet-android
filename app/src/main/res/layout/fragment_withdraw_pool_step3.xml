@@ -41,7 +41,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:orientation="horizontal"
                         android:gravity="center">
@@ -57,7 +57,7 @@
                             android:id="@+id/exit_fee_amount_symbol"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_2"
+                            android:layout_marginStart="@dimen/space_2"
                             android:text="@string/str_atom_c"
                             style="@style/font_ss_12_atom" />
                     </LinearLayout>
@@ -85,13 +85,13 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tx_kava_myshare_title">
+                    android:layout_toEndOf="@+id/tx_kava_myshare_title">
 
                     <TextView
                         android:id="@+id/tx_kava_my_share"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text=""
                         style="@style/font_ss_12_white" />
                 </RelativeLayout>
@@ -137,7 +137,7 @@
                                 style="@style/font_ss_12_white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/space_2"
+                                android:layout_marginStart="@dimen/space_2"
                                 android:text="-" />
                         </LinearLayout>
 
@@ -159,7 +159,7 @@
                                 style="@style/font_ss_12_white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/space_2"
+                                android:layout_marginStart="@dimen/space_2"
                                 android:text="-" />
                         </LinearLayout>
                     </LinearLayout>
@@ -191,8 +191,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/space_16"
-        android:layout_marginRight="@dimen/space_16"
+        android:layout_marginStart="@dimen/space_16"
+        android:layout_marginEnd="@dimen/space_16"
         android:layout_marginBottom="@dimen/space_24">
 
         <Button
@@ -201,7 +201,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginRight="@dimen/space_4"
+            android:layout_marginEnd="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_white"
             android:textAllCaps="false"
@@ -213,7 +213,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginStart="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_photon"
             android:textColor="@color/color_btn_photon"

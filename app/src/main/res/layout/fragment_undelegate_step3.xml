@@ -40,7 +40,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:orientation="horizontal"
                         android:gravity="center">
@@ -56,7 +56,7 @@
                             android:id="@+id/undelegate_amount_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_2"
+                            android:layout_marginStart="@dimen/space_2"
                             android:text="@string/str_atom_c"
                             style="@style/font_ss_12_atom" />
                     </LinearLayout>
@@ -76,7 +76,7 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:orientation="horizontal"
                         android:gravity="center">
 
@@ -84,7 +84,7 @@
                             android:id="@+id/undelegate_fees"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             android:text="-"
                             style="@style/font_ssl_12_white" />
 
@@ -92,7 +92,7 @@
                             android:id="@+id/undelegate_fees_type"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_2"
+                            android:layout_marginStart="@dimen/space_2"
                             android:text="@string/str_atom_c"
                             style="@style/font_ss_12_atom" />
                     </LinearLayout>
@@ -176,8 +176,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/bottom_control"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/space_40"
-        android:paddingRight="@dimen/space_40"
+        android:paddingStart="@dimen/space_40"
+        android:paddingEnd="@dimen/space_40"
         android:layout_marginBottom="@dimen/space_32"
         android:gravity="center_horizontal">
 
@@ -203,8 +203,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/space_16"
-        android:layout_marginRight="@dimen/space_16"
+        android:layout_marginStart="@dimen/space_16"
+        android:layout_marginEnd="@dimen/space_16"
         android:layout_marginBottom="@dimen/space_24">
 
         <Button
@@ -213,7 +213,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginRight="@dimen/space_4"
+            android:layout_marginEnd="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_white"
             android:textAllCaps="false"
@@ -225,7 +225,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginStart="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_photon"
             android:textColor="@color/color_btn_photon"

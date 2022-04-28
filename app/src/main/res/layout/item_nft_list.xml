@@ -8,8 +8,8 @@
         android:id="@+id/card_nft"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
         app:cardElevation="1.5dp"
@@ -48,9 +48,9 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/nft_img_layer"
-                    android:layout_marginLeft="@dimen/space_8"
-                    android:layout_marginRight="@dimen/space_8">
+                    android:layout_toEndOf="@+id/nft_img_layer"
+                    android:layout_marginStart="@dimen/space_8"
+                    android:layout_marginEnd="@dimen/space_8">
 
                     <TextView
                         android:id="@+id/nft_title"

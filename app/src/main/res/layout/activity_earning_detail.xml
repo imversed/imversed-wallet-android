@@ -36,8 +36,8 @@
             android:id="@+id/earning_root"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_12"
-            android:layout_marginRight="@dimen/space_12"
+            android:layout_marginStart="@dimen/space_12"
+            android:layout_marginEnd="@dimen/space_12"
             android:layout_marginBottom="2dp"
             app:cardPreventCornerOverlap="true"
             app:cardCornerRadius="@dimen/space_6"
@@ -48,8 +48,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_18"
-                android:layout_marginRight="@dimen/space_18"
+                android:layout_marginStart="@dimen/space_18"
+                android:layout_marginEnd="@dimen/space_18"
                 android:layout_marginTop="@dimen/space_16"
                 android:layout_marginBottom="@dimen/space_16"
                 android:orientation="vertical">
@@ -70,8 +70,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@+id/pool_id"
-                        android:layout_marginLeft="@dimen/space_8"
+                        android:layout_toEndOf="@+id/pool_id"
+                        android:layout_marginStart="@dimen/space_8"
                         android:text="ATMO / OSMO"
                         style="@style/font_ss_12_gray1" />
                 </RelativeLayout>
@@ -92,7 +92,7 @@
                         style="@style/font_ss_12_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="140%" />
 
                     <TextView
@@ -100,8 +100,8 @@
                         style="@style/font_ss_12_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/aprs14"
-                        android:layout_marginRight="@dimen/space_4"
+                        android:layout_toStartOf="@+id/aprs14"
+                        android:layout_marginEnd="@dimen/space_4"
                         android:text="700%" />
 
                     <TextView
@@ -109,8 +109,8 @@
                         style="@style/font_ss_12_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/aprs7"
-                        android:layout_marginRight="@dimen/space_4"
+                        android:layout_toStartOf="@+id/aprs7"
+                        android:layout_marginEnd="@dimen/space_4"
                         android:text="100%" />
                 </RelativeLayout>
 
@@ -136,15 +136,15 @@
                         style="@style/font_ss_12_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="-" />
 
                     <TextView
                         android:id="@+id/available_amount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@+id/available_denom"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_toStartOf="@+id/available_denom"
+                        android:layout_marginEnd="@dimen/space_2"
                         style="@style/font_ss_12_white"
                         android:gravity="right"
                         android:text="-" />
@@ -153,7 +153,7 @@
                         android:id="@+id/available_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_below="@+id/available_amount"
                         style="@style/font_ss_11_gray1"
                         android:gravity="right"
@@ -178,8 +178,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/space_16"
-        android:layout_marginRight="@dimen/space_16"
+        android:layout_marginStart="@dimen/space_16"
+        android:layout_marginEnd="@dimen/space_16"
         android:layout_marginBottom="@dimen/space_24">
 
         <Button
@@ -188,7 +188,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginStart="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_photon"
             android:textColor="@color/color_btn_photon"

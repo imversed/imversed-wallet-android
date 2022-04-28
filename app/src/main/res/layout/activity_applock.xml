@@ -49,8 +49,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_16"
-                    android:layout_marginLeft="@dimen/space_16"
-                    android:layout_marginRight="@dimen/space_16"
+                    android:layout_marginStart="@dimen/space_16"
+                    android:layout_marginEnd="@dimen/space_16"
                     style="@style/font_ss_14_gray1"
                     android:text="@string/str_app_unlock_msg2" />
 
@@ -60,8 +60,8 @@
                     android:layout_marginTop="@dimen/space_36"
                     android:orientation="horizontal"
                     android:gravity="center_horizontal|center_vertical"
-                    android:layout_marginLeft="@dimen/space_12"
-                    android:layout_marginRight="@dimen/space_12">
+                    android:layout_marginStart="@dimen/space_12"
+                    android:layout_marginEnd="@dimen/space_12">
 
                     <ImageView
                         android:id="@+id/circleImage0"

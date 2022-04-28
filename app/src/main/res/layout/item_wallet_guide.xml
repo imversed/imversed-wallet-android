@@ -8,8 +8,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginBottom="2dp"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
@@ -28,8 +28,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:paddingLeft="@dimen/space_16"
-                android:paddingRight="@dimen/space_16"
+                android:paddingStart="@dimen/space_16"
+                android:paddingEnd="@dimen/space_16"
                 android:paddingTop="@dimen/space_16"
                 android:paddingBottom="@dimen/space_16">
 
@@ -37,7 +37,7 @@
                     android:id="@+id/img_guide"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_12"
+                    android:layout_marginStart="@dimen/space_12"
                     android:src="@drawable/guide_img" />
 
                 <LinearLayout
@@ -45,8 +45,8 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:gravity="center_vertical"
-                    android:layout_marginLeft="@dimen/space_16"
-                    android:layout_toRightOf="@+id/img_guide">
+                    android:layout_marginStart="@dimen/space_16"
+                    android:layout_toEndOf="@+id/img_guide">
 
                     <TextView
                         android:id="@+id/title_guide"
@@ -73,8 +73,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_marginLeft="@dimen/space_16"
-                    android:layout_marginRight="@dimen/space_16"
+                    android:layout_marginStart="@dimen/space_16"
+                    android:layout_marginEnd="@dimen/space_16"
                     android:background="@color/colorGray3" />
 
                 <LinearLayout
@@ -83,8 +83,8 @@
                     android:orientation="horizontal"
                     android:layout_marginTop="@dimen/space_4"
                     android:layout_marginBottom="@dimen/space_4"
-                    android:layout_marginLeft="@dimen/space_16"
-                    android:layout_marginRight="@dimen/space_16">
+                    android:layout_marginStart="@dimen/space_16"
+                    android:layout_marginEnd="@dimen/space_16">
 
                     <Button
                         android:id="@+id/btn_guide1"

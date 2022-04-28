@@ -8,8 +8,8 @@
         android:id="@+id/chain_card"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_50"
-        android:layout_marginLeft="@dimen/space_8"
-        android:layout_marginRight="@dimen/space_8"
+        android:layout_marginStart="@dimen/space_8"
+        android:layout_marginEnd="@dimen/space_8"
         android:layout_marginTop="@dimen/space_8"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
@@ -23,8 +23,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_8"
-                android:layout_marginRight="@dimen/space_8"
+                android:layout_marginStart="@dimen/space_8"
+                android:layout_marginEnd="@dimen/space_8"
                 android:orientation="vertical"
                 android:layout_centerVertical="true"
                 android:gravity="center_vertical">
@@ -47,8 +47,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginLeft="@dimen/space_4"
-                        android:layout_toRightOf="@+id/chain_add_img"
+                        android:layout_marginStart="@dimen/space_4"
+                        android:layout_toEndOf="@+id/chain_add_img"
                         android:src="@drawable/cosmos_wh_main" />
 
                     <TextView
@@ -56,8 +56,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxWidth="@dimen/space_120"
-                        android:layout_marginLeft="@dimen/space_4"
-                        android:layout_toRightOf="@+id/chainImageView"
+                        android:layout_marginStart="@dimen/space_4"
+                        android:layout_toEndOf="@+id/chainImageView"
                         android:layout_centerVertical="true"
                         style="@style/font_ss_14_white"
                         android:text="Wallet Name" />

@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginLeft="@dimen/space_24"
-        android:layout_marginRight="@dimen/space_24"
+        android:layout_marginStart="@dimen/space_24"
+        android:layout_marginEnd="@dimen/space_24"
         android:gravity="center">
 
         <Button
@@ -28,7 +28,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -38,7 +38,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -48,7 +48,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -58,7 +58,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -68,7 +68,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -78,7 +78,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -88,8 +88,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginLeft="@dimen/space_24"
-        android:layout_marginRight="@dimen/space_24"
+        android:layout_marginStart="@dimen/space_24"
+        android:layout_marginEnd="@dimen/space_24"
         android:gravity="center">
 
         <Button
@@ -106,7 +106,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -116,7 +116,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -126,7 +126,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -136,7 +136,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -146,7 +146,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -156,7 +156,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -166,8 +166,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginLeft="@dimen/space_24"
-        android:layout_marginRight="@dimen/space_24"
+        android:layout_marginStart="@dimen/space_24"
+        android:layout_marginEnd="@dimen/space_24"
         android:gravity="center">
 
         <Button
@@ -184,7 +184,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -194,7 +194,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -204,7 +204,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -214,7 +214,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -224,7 +224,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -234,7 +234,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -245,8 +245,8 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center"
-        android:layout_marginLeft="@dimen/space_40"
-        android:layout_marginRight="@dimen/space_40">
+        android:layout_marginStart="@dimen/space_40"
+        android:layout_marginEnd="@dimen/space_40">
 
         <Button
             android:id="@+id/alphabetButton21"
@@ -262,7 +262,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -272,7 +272,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -282,7 +282,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -292,7 +292,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             style="@style/font_ssm_keyboard_white"
             android:text="A" />
@@ -302,7 +302,7 @@
             android:layout_width="0px"
             android:layout_height="match_parent"
             android:layout_weight="1.2"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:background="?android:attr/selectableItemBackgroundBorderless"
             android:src="@drawable/password_delete" />
     </LinearLayout>

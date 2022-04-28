@@ -8,8 +8,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginTop="@dimen/space_2"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
@@ -37,7 +37,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_4"
+                    android:layout_marginStart="@dimen/space_4"
                     style="@style/font_ss_14_white"
                     android:text="@string/str_my_harvest_information" />
             </LinearLayout>
@@ -58,9 +58,9 @@
                     android:id="@+id/total_deposit_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignBaseline="@+id/total_deposit_title"
-                    android:layout_toLeftOf="@+id/total_deposit_title"
+                    android:layout_toStartOf="@+id/total_deposit_title"
                     android:text="-"
                     style="@style/font_ss_12_white" />
             </RelativeLayout>
@@ -81,9 +81,9 @@
                     android:id="@+id/total_borrow_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignBaseline="@+id/total_borrow_title"
-                    android:layout_toLeftOf="@+id/total_borrow_title"
+                    android:layout_toStartOf="@+id/total_borrow_title"
                     android:text="-"
                     style="@style/font_ss_12_white" />
             </RelativeLayout>
@@ -110,9 +110,9 @@
                     android:id="@+id/ltv_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignBaseline="@+id/ltv_title"
-                    android:layout_toLeftOf="@+id/ltv_title"
+                    android:layout_toStartOf="@+id/ltv_title"
                     android:text="-"
                     style="@style/font_ss_12_white" />
             </RelativeLayout>
@@ -133,9 +133,9 @@
                     android:id="@+id/borrowable_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_alignBaseline="@+id/borrowable_title"
-                    android:layout_toLeftOf="@+id/borrowable_title"
+                    android:layout_toStartOf="@+id/borrowable_title"
                     android:text="-"
                     style="@style/font_ss_12_white" />
             </RelativeLayout>

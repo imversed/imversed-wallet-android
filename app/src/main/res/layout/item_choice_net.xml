@@ -13,7 +13,7 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_8"
+        android:layout_marginStart="@dimen/space_8"
         tools:src="@drawable/cosmos_wh_main" />
 
     <TextView
@@ -21,6 +21,6 @@
         style="@style/font_ss_14_gray8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_8"
+        android:layout_marginStart="@dimen/space_8"
         tools:text="@string/str_cosmos_hub" />
 </LinearLayout>

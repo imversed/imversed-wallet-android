@@ -7,8 +7,8 @@
         android:id="@+id/layer_sort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/space_18"
-        android:paddingRight="@dimen/space_16"
+        android:paddingStart="@dimen/space_18"
+        android:paddingEnd="@dimen/space_16"
         android:layout_marginTop="@dimen/space_16"
         android:layout_marginBottom="@dimen/space_12">
 
@@ -29,7 +29,7 @@
                 android:id="@+id/validator_cnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_4"
+                android:layout_marginStart="@dimen/space_4"
                 android:text="0"
                 style="@style/font_ss_12_white" />
         </LinearLayout>
@@ -39,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:orientation="horizontal"
             android:gravity="center"
             android:visibility="invisible">
@@ -54,7 +54,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_2"
+                android:layout_marginStart="@dimen/space_2"
                 android:src="@drawable/sort_btn" />
         </LinearLayout>
     </RelativeLayout>

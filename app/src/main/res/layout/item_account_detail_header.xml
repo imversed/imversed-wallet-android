@@ -8,8 +8,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginBottom="2dp"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
@@ -49,10 +49,10 @@
                         android:id="@+id/web_detail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/space_8"
+                        android:paddingStart="@dimen/space_8"
                         android:paddingTop="@dimen/space_4"
                         android:paddingBottom="@dimen/space_4"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/icon_explorer" />
                 </RelativeLayout>
@@ -73,9 +73,9 @@
                         android:id="@+id/connected_addressed"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/space_6"
+                        android:layout_marginEnd="@dimen/space_6"
                         style="@style/font_ss_12_white"
                         android:text="-" />
                 </RelativeLayout>
@@ -96,9 +96,9 @@
                         android:id="@+id/expire_date"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginRight="@dimen/space_6"
+                        android:layout_marginEnd="@dimen/space_6"
                         style="@style/font_ss_12_white"
                         android:text="-" />
                 </RelativeLayout>

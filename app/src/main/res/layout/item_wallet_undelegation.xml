@@ -8,8 +8,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginTop="@dimen/space_2"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
@@ -37,7 +37,7 @@
                     android:id="@+id/undelegate_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     style="@style/font_ssl_14_white"
                     android:text="-" />
@@ -69,7 +69,7 @@
                     android:id="@+id/undelegate_detail_amount0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -105,7 +105,7 @@
                     android:id="@+id/undelegate_detail_amount1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -141,7 +141,7 @@
                     android:id="@+id/undelegate_detail_amount2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -177,7 +177,7 @@
                     android:id="@+id/undelegate_detail_amount3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />
@@ -213,7 +213,7 @@
                     android:id="@+id/undelegate_detail_amount4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_white" />

@@ -24,8 +24,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_12"
-            android:layout_marginLeft="@dimen/space_12"
-            android:layout_marginRight="@dimen/space_12"
+            android:layout_marginStart="@dimen/space_12"
+            android:layout_marginEnd="@dimen/space_12"
             android:text="@string/str_kava_newpath_msg"
             style="@style/font_ss_11_gray1" />
 
@@ -46,7 +46,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_8"
+                android:layout_marginStart="@dimen/space_8"
                 android:text="@string/str_kava_old_path"
                 style="@style/font_ss_14_gray8" />
         </LinearLayout>
@@ -67,7 +67,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_8"
+                android:layout_marginStart="@dimen/space_8"
                 android:text="@string/str_kava_new_path"
                 style="@style/font_ss_14_gray8" />
         </LinearLayout>

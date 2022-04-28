@@ -23,8 +23,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_50"
-            android:layout_marginLeft="@dimen/space_16"
-            android:layout_marginRight="@dimen/space_16"
+            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginEnd="@dimen/space_16"
             android:layout_marginTop="@dimen/space_16"
             android:orientation="horizontal"
             android:layout_centerVertical="true"
@@ -41,7 +41,7 @@
                 android:id="@+id/chainName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_6"
+                android:layout_marginStart="@dimen/space_6"
                 style="@style/font_ssm_14_gray8"
                 android:singleLine="true" />
         </LinearLayout>
@@ -51,16 +51,16 @@
             android:id="@+id/user_inputs"
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_50"
-            android:layout_marginLeft="@dimen/space_16"
-            android:layout_marginRight="@dimen/space_16"
+            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginEnd="@dimen/space_16"
             android:layout_marginTop="@dimen/space_8"
             android:hint="Insert Address"
             android:textCursorDrawable="@drawable/white_cursor"
             android:maxLength="80"
             android:textColorHint="@color/colorGray4"
             android:background="@drawable/box_et_white"
-            android:paddingLeft="@dimen/space_8"
-            android:paddingRight="@dimen/space_8"
+            android:paddingStart="@dimen/space_8"
+            android:paddingEnd="@dimen/space_8"
             android:inputType="textNoSuggestions"
             style="@style/font_ssm_12_black"
             android:imeOptions="actionDone" />
@@ -69,8 +69,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8"
-            android:layout_marginLeft="@dimen/space_16"
-            android:layout_marginRight="@dimen/space_16"
+            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginEnd="@dimen/space_16"
             android:orientation="horizontal">
 
             <LinearLayout
@@ -97,7 +97,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_4"
+                    android:layout_marginStart="@dimen/space_4"
                     style="@style/font_ss_9_black"
                     android:text="Wallet" />
             </LinearLayout>
@@ -107,7 +107,7 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/space_36"
                 android:layout_weight="1"
-                android:layout_marginLeft="@dimen/space_8"
+                android:layout_marginStart="@dimen/space_8"
                 android:clickable="true"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -122,7 +122,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_4"
+                    android:layout_marginStart="@dimen/space_4"
                     style="@style/font_ss_9_black"
                     android:text="Scan" />
             </LinearLayout>
@@ -132,7 +132,7 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/space_36"
                 android:layout_weight="1"
-                android:layout_marginLeft="@dimen/space_8"
+                android:layout_marginStart="@dimen/space_8"
                 android:clickable="true"
                 android:gravity="center"
                 android:orientation="horizontal"
@@ -147,7 +147,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_4"
+                    android:layout_marginStart="@dimen/space_4"
                     style="@style/font_ss_9_black"
                     android:text="@string/str_paste" />
             </LinearLayout>
@@ -162,8 +162,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/space_16"
-        android:layout_marginRight="@dimen/space_16"
+        android:layout_marginStart="@dimen/space_16"
+        android:layout_marginEnd="@dimen/space_16"
         android:layout_marginBottom="@dimen/space_24">
 
         <Button
@@ -172,7 +172,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginRight="@dimen/space_4"
+            android:layout_marginEnd="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_black"
             android:textAllCaps="false"
@@ -184,7 +184,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginStart="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_iov"
             android:textColor="@color/colorIov"

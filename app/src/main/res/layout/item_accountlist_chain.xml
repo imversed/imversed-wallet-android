@@ -9,7 +9,7 @@
         android:layout_height="@dimen/space_68"
         android:clickable="true"
         android:foreground="?android:attr/selectableItemBackground"
-        android:layout_marginLeft="@dimen/space_16"
+        android:layout_marginStart="@dimen/space_16"
         android:layout_marginBottom="@dimen/space_8">
 
         <LinearLayout

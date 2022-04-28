@@ -24,8 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8"
-            android:layout_marginLeft="@dimen/space_40"
-            android:layout_marginRight="@dimen/space_40"
+            android:layout_marginStart="@dimen/space_40"
+            android:layout_marginEnd="@dimen/space_40"
             style="@style/font_ss_12_gray1"
             android:gravity="center"
             android:text="@string/str_wc_transfer_msg" />
@@ -34,16 +34,16 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginTop="@dimen/space_16"
-            android:layout_marginLeft="@dimen/space_20"
-            android:layout_marginRight="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
             android:background="@color/colorGray10" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_60"
             android:layout_marginTop="@dimen/space_16"
-            android:layout_marginLeft="@dimen/space_20"
-            android:layout_marginRight="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
             android:background="@drawable/box_round_gray"
             android:orientation="vertical">
 
@@ -68,8 +68,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_60"
             android:layout_marginTop="@dimen/space_16"
-            android:layout_marginLeft="@dimen/space_20"
-            android:layout_marginRight="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
             android:background="@drawable/box_round_gray"
             android:orientation="vertical">
 
@@ -96,8 +96,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_toRightOf="@+id/wc_send_coin_icon"
-                    android:layout_marginLeft="@dimen/space_6"
+                    android:layout_toEndOf="@+id/wc_send_coin_icon"
+                    android:layout_marginStart="@dimen/space_6"
                     android:text="-"
                     style="@style/font_ss_14_black" />
 
@@ -105,7 +105,7 @@
                     android:id="@+id/wc_send_amount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:gravity="right"
                     android:text="-"
                     style="@style/font_ssl_12_black" />
@@ -116,8 +116,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_60"
             android:layout_marginTop="@dimen/space_16"
-            android:layout_marginLeft="@dimen/space_20"
-            android:layout_marginRight="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
             android:background="@drawable/box_round_gray"
             android:orientation="vertical">
 

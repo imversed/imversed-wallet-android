@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_4"
+                android:layout_marginStart="@dimen/space_4"
                 style="@style/font_ss_17_white"
                 android:text="@string/str_my_cdp_information" />
         </LinearLayout>
@@ -61,8 +61,8 @@
                     android:id="@+id/collateral_denom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/collateral_icon"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_toEndOf="@+id/collateral_icon"
+                    android:layout_marginStart="@dimen/space_8"
                     android:text="COIN"
                     style="@style/font_ss_14_white" />
             </RelativeLayout>
@@ -79,7 +79,7 @@
                     android:layout_centerVertical="true"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingRight="@dimen/space_4">
+                    android:paddingEnd="@dimen/space_4">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
                     <ImageView
                         android:layout_width="@dimen/space_14"
                         android:layout_height="@dimen/space_14"
-                        android:layout_marginLeft="@dimen/space_4"
+                        android:layout_marginStart="@dimen/space_4"
                         android:src="@drawable/question_ic" />
                 </LinearLayout>
 
@@ -98,7 +98,7 @@
                     android:id="@+id/self_deposited_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_white"
                     android:gravity="right"
                     android:text="-" />
@@ -125,7 +125,7 @@
                     android:layout_centerVertical="true"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingRight="@dimen/space_4">
+                    android:paddingEnd="@dimen/space_4">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -136,7 +136,7 @@
                     <ImageView
                         android:layout_width="@dimen/space_14"
                         android:layout_height="@dimen/space_14"
-                        android:layout_marginLeft="@dimen/space_4"
+                        android:layout_marginStart="@dimen/space_4"
                         android:src="@drawable/question_ic" />
                 </LinearLayout>
 
@@ -144,7 +144,7 @@
                     android:id="@+id/total_deposited_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_white"
                     android:gravity="right"
                     android:text="-" />
@@ -171,7 +171,7 @@
                     android:layout_centerVertical="true"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingRight="@dimen/space_4">
+                    android:paddingEnd="@dimen/space_4">
 
                     <TextView
                         android:id="@+id/expected_withdrawable_amount_title"
@@ -183,7 +183,7 @@
                     <ImageView
                         android:layout_width="@dimen/space_14"
                         android:layout_height="@dimen/space_14"
-                        android:layout_marginLeft="@dimen/space_4"
+                        android:layout_marginStart="@dimen/space_4"
                         android:src="@drawable/question_ic" />
                 </LinearLayout>
 
@@ -191,7 +191,7 @@
                     android:id="@+id/expected_withdrawable_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_white"
                     android:gravity="right"
                     android:text="-" />
@@ -220,7 +220,7 @@
                 android:layout_weight="1"
                 android:layout_height="@dimen/space_40"
                 android:minHeight="@dimen/space_40"
-                android:layout_marginRight="@dimen/space_5"
+                android:layout_marginEnd="@dimen/space_5"
                 android:background="@drawable/btn_trans_with_border"
                 android:clickable="true">
 
@@ -242,7 +242,7 @@
                 android:layout_weight="1"
                 android:layout_height="@dimen/space_40"
                 android:minHeight="@dimen/space_40"
-                android:layout_marginLeft="@dimen/space_5"
+                android:layout_marginStart="@dimen/space_5"
                 android:background="@drawable/btn_trans_with_border"
                 android:clickable="true">
 
@@ -279,8 +279,8 @@
                     android:id="@+id/principal_denom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/principal_icon"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_toEndOf="@+id/principal_icon"
+                    android:layout_marginStart="@dimen/space_8"
                     android:text="USDX"
                     style="@style/font_ss_14_white" />
             </RelativeLayout>
@@ -297,7 +297,7 @@
                     android:layout_centerVertical="true"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingRight="@dimen/space_4">
+                    android:paddingEnd="@dimen/space_4">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -308,7 +308,7 @@
                     <ImageView
                         android:layout_width="@dimen/space_14"
                         android:layout_height="@dimen/space_14"
-                        android:layout_marginLeft="@dimen/space_4"
+                        android:layout_marginStart="@dimen/space_4"
                         android:src="@drawable/question_ic" />
                 </LinearLayout>
 
@@ -316,7 +316,7 @@
                     android:id="@+id/loaned_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_white"
                     android:gravity="right"
                     android:text="-" />
@@ -343,7 +343,7 @@
                     android:layout_centerVertical="true"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingRight="@dimen/space_4">
+                    android:paddingEnd="@dimen/space_4">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -354,7 +354,7 @@
                     <ImageView
                         android:layout_width="@dimen/space_14"
                         android:layout_height="@dimen/space_14"
-                        android:layout_marginLeft="@dimen/space_4"
+                        android:layout_marginStart="@dimen/space_4"
                         android:src="@drawable/question_ic" />
                 </LinearLayout>
 
@@ -362,7 +362,7 @@
                     android:id="@+id/cdp_fee_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_white"
                     android:gravity="right"
                     android:text="-" />
@@ -389,7 +389,7 @@
                     android:layout_centerVertical="true"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingRight="@dimen/space_4">
+                    android:paddingEnd="@dimen/space_4">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -400,7 +400,7 @@
                     <ImageView
                         android:layout_width="@dimen/space_14"
                         android:layout_height="@dimen/space_14"
-                        android:layout_marginLeft="@dimen/space_4"
+                        android:layout_marginStart="@dimen/space_4"
                         android:src="@drawable/question_ic" />
                 </LinearLayout>
 
@@ -408,7 +408,7 @@
                     android:id="@+id/expected_loanable_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_white"
                     android:gravity="right"
                     android:text="-" />
@@ -437,7 +437,7 @@
                 android:layout_weight="1"
                 android:layout_height="@dimen/space_40"
                 android:minHeight="@dimen/space_40"
-                android:layout_marginRight="@dimen/space_5"
+                android:layout_marginEnd="@dimen/space_5"
                 android:background="@drawable/btn_trans_with_border"
                 android:clickable="true">
 
@@ -458,7 +458,7 @@
                 android:layout_weight="1"
                 android:layout_height="@dimen/space_40"
                 android:minHeight="@dimen/space_40"
-                android:layout_marginLeft="@dimen/space_5"
+                android:layout_marginStart="@dimen/space_5"
                 android:background="@drawable/btn_trans_with_border"
                 android:clickable="true">
 
@@ -494,8 +494,8 @@
                     android:id="@+id/kava_denom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/kava_icon"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_toEndOf="@+id/kava_icon"
+                    android:layout_marginStart="@dimen/space_8"
                     android:text="KAVA"
                     style="@style/font_ss_14_kava" />
             </RelativeLayout>
@@ -515,7 +515,7 @@
                     android:id="@+id/incentive_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ssl_14_white"
                     android:gravity="right"
                     android:text="-" />

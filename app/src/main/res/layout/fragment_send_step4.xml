@@ -51,7 +51,7 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:gravity="center"
                                 android:orientation="horizontal">
@@ -68,7 +68,7 @@
                                     style="@style/font_ss_12_white"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/space_2"
+                                    android:layout_marginStart="@dimen/space_2"
                                     android:text="@string/str_atom_c" />
                             </LinearLayout>
                         </RelativeLayout>
@@ -87,7 +87,7 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
@@ -96,7 +96,7 @@
                                     style="@style/font_ssl_12_white"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentEnd="true"
                                     android:text="-" />
 
                                 <TextView
@@ -104,7 +104,7 @@
                                     style="@style/font_ss_12_white"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/space_2"
+                                    android:layout_marginStart="@dimen/space_2"
                                     android:text="@string/str_atom_c" />
                             </LinearLayout>
                         </RelativeLayout>
@@ -124,7 +124,7 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
                                 android:gravity="center"
                                 android:orientation="horizontal">
 
@@ -133,7 +133,7 @@
                                     style="@style/font_ssl_12_white"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentRight="true"
+                                    android:layout_alignParentEnd="true"
                                     android:text="-" />
 
                                 <TextView
@@ -141,7 +141,7 @@
                                     style="@style/font_ss_12_white"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/space_2"
+                                    android:layout_marginStart="@dimen/space_2"
                                     android:text="@string/str_atom_c" />
                             </LinearLayout>
                         </RelativeLayout>
@@ -155,7 +155,7 @@
                                 style="@style/font_ss_10_gray1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
                                 android:gravity="right"
                                 android:text="-" />
                         </RelativeLayout>
@@ -180,7 +180,7 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:gravity="center"
                                 android:orientation="horizontal">
@@ -197,7 +197,7 @@
                                     style="@style/font_ss_12_white"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/space_2"
+                                    android:layout_marginStart="@dimen/space_2"
                                     android:text="@string/str_atom_c" />
                             </LinearLayout>
                         </RelativeLayout>
@@ -216,7 +216,7 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
                                 android:layout_centerVertical="true"
                                 android:gravity="center"
                                 android:orientation="horizontal">
@@ -233,7 +233,7 @@
                                     style="@style/font_ss_12_white"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/space_2"
+                                    android:layout_marginStart="@dimen/space_2"
                                     android:text="@string/str_atom_c" />
                             </LinearLayout>
                         </RelativeLayout>
@@ -247,7 +247,7 @@
                                 style="@style/font_ss_10_gray1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_alignParentRight="true"
+                                android:layout_alignParentEnd="true"
                                 android:gravity="right"
                                 android:text="-" />
                         </RelativeLayout>
@@ -311,8 +311,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/space_16"
-        android:layout_marginRight="@dimen/space_16"
+        android:layout_marginStart="@dimen/space_16"
+        android:layout_marginEnd="@dimen/space_16"
         android:layout_marginBottom="@dimen/space_24"
         android:orientation="horizontal">
 
@@ -321,7 +321,7 @@
             style="@style/font_ss_14_white"
             android:layout_width="0dp"
             android:layout_height="@dimen/space_45"
-            android:layout_marginRight="@dimen/space_4"
+            android:layout_marginEnd="@dimen/space_4"
             android:layout_weight="1"
             android:background="@drawable/btn_trans_with_border"
             android:minHeight="@dimen/space_45"
@@ -333,7 +333,7 @@
             style="@style/font_ss_14_photon"
             android:layout_width="0dp"
             android:layout_height="@dimen/space_45"
-            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginStart="@dimen/space_4"
             android:layout_weight="1"
             android:background="@drawable/btn_trans_with_border"
             android:minHeight="@dimen/space_45"

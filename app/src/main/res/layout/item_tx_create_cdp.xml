@@ -7,8 +7,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
         app:cardElevation="1.5dp"
@@ -37,7 +37,7 @@
                     android:id="@+id/tx_msg_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_4"
+                    android:layout_marginStart="@dimen/space_4"
                     android:text="@string/tx_kava_create_cdp2"
                     style="@style/font_ss_17_white" />
             </LinearLayout>
@@ -80,13 +80,13 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tx_collateral_title">
+                    android:layout_toEndOf="@+id/tx_collateral_title">
 
                     <TextView
                         android:id="@+id/tx_collateral_symbol"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="ATOM"
                         style="@style/font_ss_12_white" />
 
@@ -95,8 +95,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/tx_collateral_symbol"
-                        android:layout_toLeftOf="@+id/tx_collateral_symbol"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_toStartOf="@+id/tx_collateral_symbol"
+                        android:layout_marginEnd="@dimen/space_2"
                         android:text="-"
                         style="@style/font_ssl_12_white" />
                 </RelativeLayout>
@@ -118,13 +118,13 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tx_principal_title">
+                    android:layout_toEndOf="@+id/tx_principal_title">
 
                     <TextView
                         android:id="@+id/tx_principal_symbol"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="ATOM"
                         style="@style/font_ss_12_white" />
 
@@ -133,8 +133,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/tx_principal_symbol"
-                        android:layout_toLeftOf="@+id/tx_principal_symbol"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_toStartOf="@+id/tx_principal_symbol"
+                        android:layout_marginEnd="@dimen/space_2"
                         android:text="-"
                         style="@style/font_ssl_12_white" />
                 </RelativeLayout>

@@ -8,8 +8,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginTop="@dimen/space_2"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
@@ -20,8 +20,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_18"
-            android:layout_marginRight="@dimen/space_18"
+            android:layout_marginStart="@dimen/space_18"
+            android:layout_marginEnd="@dimen/space_18"
             android:layout_marginTop="@dimen/space_16"
             android:layout_marginBottom="@dimen/space_16"
             android:orientation="vertical">
@@ -56,8 +56,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/hard_markets"
-                    android:layout_marginLeft="@dimen/space_16"
+                    android:layout_toEndOf="@+id/hard_markets"
+                    android:layout_marginStart="@dimen/space_16"
                     android:layout_centerVertical="true"
                     android:orientation="vertical">
 
@@ -75,7 +75,7 @@
                             android:id="@+id/supply_apy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             style="@style/font_ssl_14_white"
                             android:gravity="right"
                             android:text="-" />
@@ -95,7 +95,7 @@
                             android:id="@+id/borrow_apy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             style="@style/font_ssl_14_white"
                             android:gravity="right"
                             android:text="-" />
@@ -116,7 +116,7 @@
                             android:id="@+id/supply_incentive_apy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             style="@style/font_ssl_14_white"
                             android:gravity="right"
                             android:text="-" />
@@ -137,7 +137,7 @@
                             android:id="@+id/borrow_incentive_apy"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
+                            android:layout_alignParentEnd="true"
                             style="@style/font_ssl_14_white"
                             android:gravity="right"
                             android:text="-" />
@@ -168,13 +168,13 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/total_deposited_title">
+                    android:layout_toEndOf="@+id/total_deposited_title">
 
                     <TextView
                         android:id="@+id/total_deposited_symbol"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text=""
                         style="@style/font_ss_12_white" />
 
@@ -183,8 +183,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/total_deposited_symbol"
-                        android:layout_toLeftOf="@+id/total_deposited_symbol"
-                        android:layout_marginRight="@dimen/space_4"
+                        android:layout_toStartOf="@+id/total_deposited_symbol"
+                        android:layout_marginEnd="@dimen/space_4"
                         android:text=""
                         style="@style/font_ss_12_white" />
                 </RelativeLayout>
@@ -213,13 +213,13 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/total_borrow_title">
+                    android:layout_toEndOf="@+id/total_borrow_title">
 
                     <TextView
                         android:id="@+id/total_borrow_symbol"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text=""
                         style="@style/font_ss_12_white" />
 
@@ -228,8 +228,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/total_borrow_symbol"
-                        android:layout_toLeftOf="@+id/total_borrow_symbol"
-                        android:layout_marginRight="@dimen/space_4"
+                        android:layout_toStartOf="@+id/total_borrow_symbol"
+                        android:layout_marginEnd="@dimen/space_4"
                         android:text=""
                         style="@style/font_ss_12_white" />
                 </RelativeLayout>
@@ -258,13 +258,13 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/remain_borrowable_title">
+                    android:layout_toEndOf="@+id/remain_borrowable_title">
 
                     <TextView
                         android:id="@+id/remain_borrowable_symbol"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text=""
                         style="@style/font_ss_12_white" />
 
@@ -273,8 +273,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/remain_borrowable_symbol"
-                        android:layout_toLeftOf="@+id/remain_borrowable_symbol"
-                        android:layout_marginRight="@dimen/space_4"
+                        android:layout_toStartOf="@+id/remain_borrowable_symbol"
+                        android:layout_marginEnd="@dimen/space_4"
                         android:text=""
                         style="@style/font_ss_12_white" />
                 </RelativeLayout>

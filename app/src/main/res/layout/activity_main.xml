@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_bar_height"
             android:background="@color/colorBlack"
-            android:paddingRight="@dimen/space_18"
+            android:paddingEnd="@dimen/space_18"
             app:popupTheme="@style/AppTheme.PopupOverlay">
 
             <RelativeLayout
@@ -38,8 +38,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/space_4"
-                    android:layout_toRightOf="@+id/toolbarChainImageView">
+                    android:layout_marginStart="@dimen/space_4"
+                    android:layout_toEndOf="@+id/toolbarChainImageView">
 
                     <TextView
                         android:id="@+id/toolbarTitleTextView"
@@ -55,8 +55,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/toolbarTitleTextView"
-                        android:layout_marginLeft="@dimen/space_6"
-                        android:layout_toRightOf="@+id/toolbarTitleTextView"
+                        android:layout_marginStart="@dimen/space_6"
+                        android:layout_toEndOf="@+id/toolbarTitleTextView"
                         android:text="(testnet gaia-12k)" />
                 </RelativeLayout>
             </RelativeLayout>
@@ -74,9 +74,9 @@
             android:id="@+id/floatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="@dimen/space_16"
+            android:layout_marginEnd="@dimen/space_16"
             android:layout_marginBottom="@dimen/space_72"
             app:backgroundTint="#9C6CFF"
             app:srcCompat="@drawable/send_btn" />

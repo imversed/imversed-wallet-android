@@ -24,8 +24,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8"
-            android:layout_marginLeft="@dimen/space_40"
-            android:layout_marginRight="@dimen/space_40"
+            android:layout_marginStart="@dimen/space_40"
+            android:layout_marginEnd="@dimen/space_40"
             style="@style/font_ss_12_gray1"
             android:gravity="center"
             android:text="@string/str_wc_cancel_msg" />
@@ -34,16 +34,16 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginTop="@dimen/space_16"
-            android:layout_marginLeft="@dimen/space_20"
-            android:layout_marginRight="@dimen/space_20"
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20"
             android:background="@color/colorGray10" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8"
-            android:layout_marginLeft="@dimen/space_20"
-            android:layout_marginRight="@dimen/space_20">
+            android:layout_marginStart="@dimen/space_20"
+            android:layout_marginEnd="@dimen/space_20">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:orientation="horizontal"
                 android:gravity="center">
@@ -64,7 +64,7 @@
                     android:id="@+id/wc_cancel_symbol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_2"
+                    android:layout_marginStart="@dimen/space_2"
                     android:text="BNB"
                     style="@style/font_ss_14_black" />
             </LinearLayout>

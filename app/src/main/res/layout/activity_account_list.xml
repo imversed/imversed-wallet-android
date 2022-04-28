@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/space_4">
+            android:layout_marginStart="@dimen/space_4">
 
             <TextView
                 android:id="@+id/toolbarTitleTextView"
@@ -35,8 +35,8 @@
                 style="@style/font_ssm_17_white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="@dimen/space_16"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/space_16"
                 android:clickable="true"
                 android:focusable="true"
                 android:text="@string/str_edit" />

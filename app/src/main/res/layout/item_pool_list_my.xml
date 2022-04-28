@@ -8,8 +8,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginBottom="2dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
@@ -22,8 +22,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_18"
-            android:layout_marginRight="@dimen/space_18"
+            android:layout_marginStart="@dimen/space_18"
+            android:layout_marginEnd="@dimen/space_18"
             android:layout_marginTop="@dimen/space_16"
             android:layout_marginBottom="@dimen/space_16"
             android:orientation="vertical">
@@ -37,15 +37,15 @@
                     android:layout_width="@dimen/space_64"
                     android:layout_height="@dimen/space_64"
                     android:layout_centerInParent="true"
-                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:src="@drawable/icon_mypool" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_marginStart="@dimen/space_8"
                     android:orientation="vertical"
-                    android:layout_toRightOf="@+id/mypool_market_img"
+                    android:layout_toEndOf="@+id/mypool_market_img"
                     android:layout_centerInParent="true">
 
                     <TextView
@@ -75,7 +75,7 @@
                     android:id="@+id/mypool_total_liquidity_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ss_15_white"
                     android:textStyle="bold"
                     android:gravity="right"
@@ -116,7 +116,7 @@
                             style="@style/font_ss_12_white"
                             android:layout_width="@dimen/space_40"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_2"
+                            android:layout_marginStart="@dimen/space_2"
                             android:gravity="end"
                             android:singleLine="true"
                             android:ellipsize="end"
@@ -141,7 +141,7 @@
                             style="@style/font_ss_12_white"
                             android:layout_width="@dimen/space_40"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_2"
+                            android:layout_marginStart="@dimen/space_2"
                             android:gravity="end"
                             android:singleLine="true"
                             android:ellipsize="end"
@@ -171,7 +171,7 @@
                     android:id="@+id/mypool_deposit_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     style="@style/font_ss_15_white"
                     android:textStyle="bold"
                     android:gravity="right"
@@ -212,7 +212,7 @@
                             style="@style/font_ss_12_white"
                             android:layout_width="@dimen/space_40"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_2"
+                            android:layout_marginStart="@dimen/space_2"
                             android:gravity="end"
                             android:singleLine="true"
                             android:ellipsize="end"
@@ -237,7 +237,7 @@
                             style="@style/font_ss_12_white"
                             android:layout_width="@dimen/space_40"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/space_2"
+                            android:layout_marginStart="@dimen/space_2"
                             android:gravity="end"
                             android:singleLine="true"
                             android:ellipsize="end"
@@ -261,7 +261,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/mypool_available_liquidity_amount">
+                    android:layout_toEndOf="@+id/mypool_available_liquidity_amount">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -292,7 +292,7 @@
                                     android:layout_height="wrap_content"
                                     android:singleLine="true"
                                     android:ellipsize="end"
-                                    android:layout_marginLeft="@dimen/space_2"
+                                    android:layout_marginStart="@dimen/space_2"
                                     android:gravity="end"
                                     android:text="-" />
                             </LinearLayout>
@@ -315,7 +315,7 @@
                                     style="@style/font_ss_12_white"
                                     android:layout_width="@dimen/space_40"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/space_2"
+                                    android:layout_marginStart="@dimen/space_2"
                                     android:gravity="end"
                                     android:singleLine="true"
                                     android:ellipsize="end"

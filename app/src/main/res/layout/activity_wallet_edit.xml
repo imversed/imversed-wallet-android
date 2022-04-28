@@ -20,7 +20,7 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginStart="@dimen/space_4"
             android:layout_centerVertical="true">
 
             <TextView
@@ -34,10 +34,10 @@
                 android:id="@+id/btn_done"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
                 android:clickable="true"
                 android:focusable="true"
-                android:layout_marginRight="@dimen/space_16"
+                android:layout_marginEnd="@dimen/space_16"
                 style="@style/font_ssm_17_white"
                 android:text="@string/str_done" />
         </RelativeLayout>

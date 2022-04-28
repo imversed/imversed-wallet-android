@@ -7,8 +7,8 @@
         android:id="@+id/layer_sort"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/space_18"
-        android:paddingRight="@dimen/space_16"
+        android:paddingStart="@dimen/space_18"
+        android:paddingEnd="@dimen/space_16"
         android:layout_marginTop="@dimen/space_16"
         android:layout_marginBottom="@dimen/space_8">
 
@@ -29,7 +29,7 @@
                 android:id="@+id/account_cnt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/space_4"
+                android:layout_marginStart="@dimen/space_4"
                 android:text="0"
                 style="@style/font_ss_12_white" />
         </LinearLayout>
@@ -41,8 +41,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="@dimen/space_16"
-        android:layout_marginRight="@dimen/space_16"
+        android:layout_marginStart="@dimen/space_16"
+        android:layout_marginEnd="@dimen/space_16"
         android:layout_marginBottom="@dimen/space_24">
 
         <Button
@@ -51,7 +51,7 @@
             android:layout_height="@dimen/space_45"
             android:layout_weight="1"
             android:minHeight="@dimen/space_45"
-            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginStart="@dimen/space_4"
             android:background="@drawable/btn_trans_with_border"
             style="@style/font_ss_14_photon"
             android:textColor="@color/color_btn_photon"

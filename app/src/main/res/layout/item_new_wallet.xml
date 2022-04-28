@@ -9,8 +9,8 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginBottom="2dp"
         android:clickable="true"
         android:focusable="true"
@@ -44,7 +44,7 @@
                     style="@style/font_ss_11_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:singleLine="true"
                     tools:text="@string/str_ready" />
             </RelativeLayout>
@@ -76,7 +76,7 @@
                     style="@style/font_ssl_9_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:gravity="right"
                     tools:text="0" />

@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/space_12"
-    android:layout_marginRight="@dimen/space_12"
+    android:layout_marginStart="@dimen/space_12"
+    android:layout_marginEnd="@dimen/space_12"
     android:layout_marginTop="@dimen/space_6"
     android:layout_marginBottom="@dimen/space_4">
 
@@ -11,7 +11,7 @@
         android:id="@+id/myval_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_4"
+        android:layout_marginStart="@dimen/space_4"
         android:layout_centerVertical="true"
         style="@style/font_ss_11_atom"
         android:text="My Validator" />

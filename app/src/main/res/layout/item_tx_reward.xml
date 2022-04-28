@@ -7,8 +7,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
         app:cardElevation="1.5dp"
@@ -37,7 +37,7 @@
                     android:id="@+id/tx_reward_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_4"
+                    android:layout_marginStart="@dimen/space_4"
                     android:text="@string/tx_get_reward"
                     style="@style/font_ss_15_white" />
             </LinearLayout>
@@ -112,13 +112,13 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/tx_reward_amount_title">
+                    android:layout_toEndOf="@+id/tx_reward_amount_title">
 
                     <TextView
                         android:id="@+id/tx_reward_amount_symbol"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
                         android:text="ATOM"
                         style="@style/font_ss_12_atom" />
 
@@ -127,8 +127,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/tx_reward_amount_symbol"
-                        android:layout_toLeftOf="@+id/tx_reward_amount_symbol"
-                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_toStartOf="@+id/tx_reward_amount_symbol"
+                        android:layout_marginEnd="@dimen/space_2"
                         android:text="-"
                         style="@style/font_ss_12_white" />
                 </RelativeLayout>

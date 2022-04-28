@@ -8,8 +8,8 @@
         android:id="@+id/earning_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginBottom="2dp"
         android:foreground="?android:attr/selectableItemBackground"
         android:clickable="true"
@@ -22,8 +22,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_18"
-            android:layout_marginRight="@dimen/space_18"
+            android:layout_marginStart="@dimen/space_18"
+            android:layout_marginEnd="@dimen/space_18"
             android:layout_marginTop="@dimen/space_16"
             android:layout_marginBottom="@dimen/space_16"
             android:orientation="vertical">
@@ -37,7 +37,7 @@
                     android:layout_width="@dimen/space_64"
                     android:layout_height="@dimen/space_64"
                     android:layout_centerInParent="true"
-                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
                     android:src="@drawable/icon_myfarming" />
 
                 <TextView
@@ -46,15 +46,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:text="123.87%" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/space_8"
+                    android:layout_marginStart="@dimen/space_8"
                     android:orientation="vertical"
-                    android:layout_toRightOf="@+id/myfarming_img"
+                    android:layout_toEndOf="@+id/myfarming_img"
                     android:layout_centerInParent="true">
 
                     <TextView
@@ -91,15 +91,15 @@
                     style="@style/font_ss_12_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:text="-" />
 
                 <TextView
                     android:id="@+id/bonded_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/bonded_denom"
-                    android:layout_marginRight="@dimen/space_2"
+                    android:layout_toStartOf="@+id/bonded_denom"
+                    android:layout_marginEnd="@dimen/space_2"
                     style="@style/font_ssl_12_white"
                     android:gravity="right"
                     android:text="-" />
@@ -108,7 +108,7 @@
                     android:id="@+id/bonded_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/bonded_amount"
                     style="@style/font_ss_11_gray1"
                     android:gravity="right"
@@ -131,15 +131,15 @@
                     style="@style/font_ss_12_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:text="-" />
 
                 <TextView
                     android:id="@+id/unbonding_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/unbonding_denom"
-                    android:layout_marginRight="@dimen/space_2"
+                    android:layout_toStartOf="@+id/unbonding_denom"
+                    android:layout_marginEnd="@dimen/space_2"
                     style="@style/font_ssl_12_white"
                     android:gravity="right"
                     android:text="-" />
@@ -148,7 +148,7 @@
                     android:id="@+id/unbonding_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/unbonding_amount"
                     style="@style/font_ss_11_gray1"
                     android:gravity="right"
@@ -171,15 +171,15 @@
                     style="@style/font_ss_12_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:text="-" />
 
                 <TextView
                     android:id="@+id/unbonded_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/unbonded_denom"
-                    android:layout_marginRight="@dimen/space_2"
+                    android:layout_toStartOf="@+id/unbonded_denom"
+                    android:layout_marginEnd="@dimen/space_2"
                     style="@style/font_ssl_12_white"
                     android:gravity="right"
                     android:text="-" />
@@ -188,7 +188,7 @@
                     android:id="@+id/unbonded_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/unbonded_amount"
                     style="@style/font_ss_11_gray1"
                     android:gravity="right"
@@ -211,15 +211,15 @@
                     style="@style/font_ss_12_osmo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:text="OSMO" />
 
                 <TextView
                     android:id="@+id/next_reward_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/next_reward_denom"
-                    android:layout_marginRight="@dimen/space_2"
+                    android:layout_toStartOf="@+id/next_reward_denom"
+                    android:layout_marginEnd="@dimen/space_2"
                     style="@style/font_ssl_12_white"
                     android:gravity="right"
                     android:text="-" />
@@ -248,15 +248,15 @@
                     style="@style/font_ss_12_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:text="-" />
 
                 <TextView
                     android:id="@+id/available_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toLeftOf="@+id/available_denom"
-                    android:layout_marginRight="@dimen/space_2"
+                    android:layout_toStartOf="@+id/available_denom"
+                    android:layout_marginEnd="@dimen/space_2"
                     style="@style/font_ssl_12_white"
                     android:gravity="right"
                     android:text="-" />
@@ -265,7 +265,7 @@
                     android:id="@+id/available_value"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@+id/available_amount"
                     style="@style/font_ss_11_gray1"
                     android:gravity="right"

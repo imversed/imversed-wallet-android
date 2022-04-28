@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorWhite"
-    android:paddingLeft="@dimen/space_8"
-    android:paddingRight="@dimen/space_8"
+    android:paddingStart="@dimen/space_8"
+    android:paddingEnd="@dimen/space_8"
     android:paddingTop="@dimen/space_4"
     android:paddingBottom="@dimen/space_4"
     android:clickable="true">
@@ -22,7 +22,7 @@
             android:id="@+id/coinImg"
             android:layout_width="@dimen/space_20"
             android:layout_height="@dimen/space_20"
-            android:layout_marginLeft="@dimen/space_8"
+            android:layout_marginStart="@dimen/space_8"
             android:layout_marginTop="@dimen/space_8"
             android:layout_marginBottom="@dimen/space_8"
             android:src="@drawable/bnb_token_img" />
@@ -31,7 +31,7 @@
             android:id="@+id/coinName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_4"
+            android:layout_marginStart="@dimen/space_4"
             style="@style/font_ss_14_gray8"
             android:singleLine="true" />
     </LinearLayout>

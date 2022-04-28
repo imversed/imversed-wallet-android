@@ -8,8 +8,8 @@
         android:id="@+id/nft_card_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/space_12"
-        android:layout_marginRight="@dimen/space_12"
+        android:layout_marginStart="@dimen/space_12"
+        android:layout_marginEnd="@dimen/space_12"
         android:layout_marginTop="@dimen/space_2"
         app:cardPreventCornerOverlap="true"
         app:cardCornerRadius="@dimen/space_6"
@@ -20,8 +20,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_18"
-            android:layout_marginRight="@dimen/space_18"
+            android:layout_marginStart="@dimen/space_18"
+            android:layout_marginEnd="@dimen/space_18"
             android:layout_marginTop="@dimen/space_16"
             android:layout_marginBottom="@dimen/space_16"
             android:orientation="vertical">
@@ -80,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Denom_id"
-                    android:layout_marginRight="@dimen/space_30"
+                    android:layout_marginEnd="@dimen/space_30"
                     style="@style/font_ss_12_gray1" />
 
                 <TextView
@@ -105,7 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Token_id"
-                    android:layout_marginRight="@dimen/space_30"
+                    android:layout_marginEnd="@dimen/space_30"
                     style="@style/font_ss_12_gray1" />
 
                 <TextView
@@ -130,7 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="issuer"
-                    android:layout_marginRight="@dimen/space_30"
+                    android:layout_marginEnd="@dimen/space_30"
                     style="@style/font_ss_12_gray1" />
 
                 <TextView

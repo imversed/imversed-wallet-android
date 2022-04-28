@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/space_12"
+            android:layout_marginStart="@dimen/space_12"
             android:text="Unlock all?"
             style="@style/font_ss_17_black" />
 
@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/space_8"
-            android:layout_marginLeft="@dimen/space_12"
+            android:layout_marginStart="@dimen/space_12"
             style="@style/font_ss_14_black" />
 
         <Button
@@ -31,8 +31,8 @@
             android:layout_height="@dimen/space_45"
             android:layout_marginTop="@dimen/space_16"
             android:minHeight="@dimen/space_45"
-            android:layout_marginLeft="@dimen/space_12"
-            android:layout_marginRight="@dimen/space_12"
+            android:layout_marginStart="@dimen/space_12"
+            android:layout_marginEnd="@dimen/space_12"
             android:background="@drawable/btn_bottom_select_dialog"
             style="@style/font_ss_14_white"
             android:text="Unlock All"
@@ -45,8 +45,8 @@
             android:layout_height="@dimen/space_45"
             android:layout_marginTop="@dimen/space_12"
             android:minHeight="@dimen/space_45"
-            android:layout_marginLeft="@dimen/space_12"
-            android:layout_marginRight="@dimen/space_12"
+            android:layout_marginStart="@dimen/space_12"
+            android:layout_marginEnd="@dimen/space_12"
             android:background="@drawable/btn_bottom_select_dialog"
             style="@style/font_ss_14_white"
             android:text="Unlock This One"
