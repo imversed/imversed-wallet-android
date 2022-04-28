@@ -14,6 +14,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -136,6 +138,25 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
         if (savedInstanceState == null && page == 0) {
             PopupManager.INSTANCE.onAppStarted(this);
         }
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_accounts:
+                onClickSwitchWallet();
+                break;
+            case R.id.menu_explorer:
+                onExplorerView();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void createTab(TabLayout tabLayer, int index, @DrawableRes int iconResId, @StringRes int titleResId) {

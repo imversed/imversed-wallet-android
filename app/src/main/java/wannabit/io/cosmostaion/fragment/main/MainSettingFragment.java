@@ -1,4 +1,4 @@
-package wannabit.io.cosmostaion.fragment;
+package wannabit.io.cosmostaion.fragment.main;
 
 import android.Manifest;
 import android.app.Activity;
@@ -69,26 +69,6 @@ public class MainSettingFragment extends BaseFragment implements View.OnClickLis
     }
 
     @Override
-    public void onPrepareOptionsMenu(Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        getMainActivity().getMenuInflater().inflate(R.menu.main_menu, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_accounts:
-                getMainActivity().onClickSwitchWallet();
-                break;
-            case R.id.menu_explorer:
-                getMainActivity().onExplorerView();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main_setting, container, false);
         mBtnAddWallet = rootView.findViewById(R.id.add_wallet);
@@ -148,13 +128,13 @@ public class MainSettingFragment extends BaseFragment implements View.OnClickLis
         if (v.equals(mBtnAddWallet)) {
             showDialog(ChoiceChainDialogFragment.Companion.newInstance(true, "", new ArrayList<>()));
         } else if (v.equals(mBtnWallet)) {
-            startActivity(new Intent(getBaseActivity(), AccountListActivity.class));
+            startActivity(new Intent(requireActivity(), AccountListActivity.class));
 
         } else if (v.equals(mBtnAlaram)) {
-            Toast.makeText(getBaseActivity(), R.string.str_preparing, Toast.LENGTH_SHORT).show();
+            Toast.makeText(requireActivity(), R.string.str_preparing, Toast.LENGTH_SHORT).show();
 
         } else if (v.equals(mBtnAppLock)) {
-            startActivity(new Intent(getBaseActivity(), AppLockSetActivity.class));
+            startActivity(new Intent(requireActivity(), AppLockSetActivity.class));
 
         } else if (v.equals(mBtnCurrency)) {
             CurrencyDialogFragment currency_dialog = CurrencyDialogFragment.newInstance("");
@@ -178,7 +158,7 @@ public class MainSettingFragment extends BaseFragment implements View.OnClickLis
 
         } else if (v.equals(mBtnVersion)) {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse("market://details?id=" + getMainActivity().getPackageName()));
+            intent.setData(Uri.parse("market://details?id=" + requireContext().getPackageName()));
             startActivity(intent);
         }
     }
@@ -196,7 +176,7 @@ public class MainSettingFragment extends BaseFragment implements View.OnClickLis
             }
             mTvCurrency.setText(currency.getTitle());
         } else if (requestCode == SELECT_STARNAME_WALLET_CONNECT && resultCode == Activity.RESULT_OK) {
-            new TedPermission(getContext()).setPermissionListener(new PermissionListener() {
+            new TedPermission(requireContext()).setPermissionListener(new PermissionListener() {
                 @Override
                 public void onPermissionGranted() {
                     IntentIntegrator integrator = IntentIntegrator.forSupportFragment(MainSettingFragment.this);
@@ -206,7 +186,7 @@ public class MainSettingFragment extends BaseFragment implements View.OnClickLis
 
                 @Override
                 public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                    Toast.makeText(getContext(), R.string.error_permission, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), R.string.error_permission, Toast.LENGTH_SHORT).show();
                 }
             })
                     .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -216,7 +196,7 @@ public class MainSettingFragment extends BaseFragment implements View.OnClickLis
         } else {
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (result != null && result.getContents() != null && result.getContents().trim().contains("bridge.walletconnect.org")) {
-                Intent wcIntent = new Intent(getMainActivity(), StarNameWalletConnectActivity.class);
+                Intent wcIntent = new Intent(requireActivity(), StarNameWalletConnectActivity.class);
                 wcIntent.putExtra("wcUrl", result.getContents().trim());
                 startActivity(wcIntent);
 

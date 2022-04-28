@@ -1,4 +1,4 @@
-package wannabit.io.cosmostaion.fragment;
+package wannabit.io.cosmostaion.fragment.main;
 
 import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
 import static com.fulldive.wallet.models.BaseChain.DESMOS_MAIN;
@@ -117,25 +117,6 @@ public class MainSendFragment extends BaseFragment implements IBusyFetchListener
 
         onUpdateView();
         return rootView;
-    }
-
-    @Override
-    public void onPrepareOptionsMenu(@NonNull Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-        getMainActivity().getMenuInflater().inflate(R.menu.main_menu, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_accounts:
-                getMainActivity().onClickSwitchWallet();
-                break;
-            case R.id.menu_explorer:
-                getMainActivity().onExplorerView();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

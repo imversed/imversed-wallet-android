@@ -108,19 +108,6 @@ class MainHistoryFragment : BaseMvpFragment<FragmentMainHistoryBinding>(),
         presenter.onRefresh()
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
-        activity?.menuInflater?.inflate(R.menu.main_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.menu_accounts -> mainActivity?.onClickSwitchWallet()
-            R.id.menu_explorer -> mainActivity?.onExplorerView()
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     override fun showBinanceItems(items: List<BnbHistory>) {
         binding {
             if (items.isEmpty()) {
