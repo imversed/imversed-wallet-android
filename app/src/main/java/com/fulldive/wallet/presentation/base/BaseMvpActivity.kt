@@ -71,6 +71,7 @@ abstract class BaseMvpActivity<VB : ViewBinding> : MvpAppCompatActivity(), IEnri
 
     fun hideWaitDialog() {
         waitDialogFragment?.dismissAllowingStateLoss()
+        waitDialogFragment = null
     }
 
     fun showDialog(

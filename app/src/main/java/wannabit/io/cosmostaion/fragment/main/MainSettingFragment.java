@@ -6,11 +6,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,24 +33,15 @@ import wannabit.io.cosmostaion.activities.chains.starname.StarNameWalletConnectA
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
 
-public class MainSettingFragment extends BaseFragment implements View.OnClickListener, IRefreshTabListener {
+public class MainSettingFragment extends BaseFragment implements IRefreshTabListener {
 
     public final static int SELECT_CURRENCY = 9034;
     public final static int SELECT_STARNAME_WALLET_CONNECT = 9036;
 
-    private FrameLayout mBtnAddWallet;
-    private FrameLayout mBtnWallet;
-    private FrameLayout mBtnAlaram;
-    private FrameLayout mBtnAppLock;
-    private FrameLayout mBtnCurrency;
-    private FrameLayout mBtnGuide;
-    private FrameLayout mBtnDiscord;
-    private FrameLayout mBtnTerm;
-    private FrameLayout mBtnGithub;
-    private FrameLayout mBtnVersion;
     private SettingsInteractor settingsInteractor;
 
-    private TextView mTvAppLock, mTvCurrency, mTvBasePrice, mTvVersion;
+    private TextView appLockTextView;
+    private TextView currencyTextView;
 
     public static MainSettingFragment newInstance(Bundle bundle) {
         MainSettingFragment fragment = new MainSettingFragment();
@@ -71,42 +59,53 @@ public class MainSettingFragment extends BaseFragment implements View.OnClickLis
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main_setting, container, false);
-        mBtnAddWallet = rootView.findViewById(R.id.add_wallet);
-        mBtnWallet = rootView.findViewById(R.id.card_wallet);
-        mBtnAlaram = rootView.findViewById(R.id.card_alaram);
-        mBtnAppLock = rootView.findViewById(R.id.card_applock);
-        mBtnCurrency = rootView.findViewById(R.id.card_currency);
-        FrameLayout basePriceView = rootView.findViewById(R.id.card_base_price);
-        mBtnDiscord = rootView.findViewById(R.id.card_discord);
-        mBtnGuide = rootView.findViewById(R.id.card_guide);
-        mBtnTerm = rootView.findViewById(R.id.card_term);
-        mBtnGithub = rootView.findViewById(R.id.card_github);
-        mBtnVersion = rootView.findViewById(R.id.card_version);
-        mTvAppLock = rootView.findViewById(R.id.applock_text);
-        mTvCurrency = rootView.findViewById(R.id.currency_text);
-        mTvBasePrice = rootView.findViewById(R.id.base_price_text);
-        mTvVersion = rootView.findViewById(R.id.version_text);
 
-        mBtnAddWallet.setOnClickListener(this);
-        mBtnWallet.setOnClickListener(this);
-        mBtnAlaram.setOnClickListener(this);
-        mBtnAppLock.setOnClickListener(this);
-        mBtnCurrency.setOnClickListener(this);
-        basePriceView.setOnClickListener(this);
-        mBtnDiscord.setOnClickListener(this);
-        mBtnGuide.setOnClickListener(this);
-        mBtnTerm.setOnClickListener(this);
-        mBtnGithub.setOnClickListener(this);
-        mBtnVersion.setOnClickListener(this);
+        appLockTextView = rootView.findViewById(R.id.appLockTextView);
+        currencyTextView = rootView.findViewById(R.id.currencyTextView);
 
-        mTvVersion.setText(getString(R.string.str_version_short, BuildConfig.VERSION_NAME));
+        rootView.findViewById(R.id.addWalletButton).setOnClickListener(v -> {
+            showDialog(ChoiceChainDialogFragment.Companion.newInstance(true, "", new ArrayList<>()));
+        });
+        rootView.findViewById(R.id.walletButton).setOnClickListener(v -> {
+            startActivity(new Intent(requireActivity(), AccountListActivity.class));
+        });
+        rootView.findViewById(R.id.adblockButton).setOnClickListener(v -> {
+            startActivity(new Intent(requireActivity(), AppLockSetActivity.class));
+        });
+        rootView.findViewById(R.id.currencyButton).setOnClickListener(v -> {
+            CurrencyDialogFragment currency_dialog = CurrencyDialogFragment.newInstance("");
+            currency_dialog.setTargetFragment(this, SELECT_CURRENCY);
+            showDialog(currency_dialog);
+        });
+        rootView.findViewById(R.id.discordButton).setOnClickListener(v -> {
+            Intent telegram = new Intent(Intent.ACTION_VIEW, Uri.parse("https://discord.gg/BW2unf5s8X"));
+            startActivity(telegram);
+        });
+        rootView.findViewById(R.id.guideButton).setOnClickListener(v -> {
+            Intent guideIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.fulldive.com/faq"));
+            startActivity(guideIntent);
+        });
+        rootView.findViewById(R.id.termsButton).setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.fulldive.com/terms-of-use"));
+            startActivity(intent);
+        });
+        rootView.findViewById(R.id.githubButton).setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/imversed/imversed-wallet-android"));
+            startActivity(intent);
+        });
+        rootView.findViewById(R.id.versionButton).setOnClickListener(v -> {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse("market://details?id=" + requireContext().getPackageName()));
+            startActivity(intent);
+        });
+
+        ((TextView) rootView.findViewById(R.id.version_text)).setText(getString(R.string.str_version_short, BuildConfig.VERSION_NAME));
         if (getBaseDao().getUsingAppLock()) {
-            mTvAppLock.setText(R.string.str_app_applock_enabled);
+            appLockTextView.setText(R.string.str_app_applock_enabled);
         } else {
-            mTvAppLock.setText(R.string.str_app_applock_diabeld);
+            appLockTextView.setText(R.string.str_app_applock_diabeld);
         }
 
-        mBtnAlaram.setVisibility(View.GONE);
         return rootView;
     }
 
@@ -114,52 +113,11 @@ public class MainSettingFragment extends BaseFragment implements View.OnClickLis
     @Override
     public void onRefreshTab() {
         if (!isAdded()) return;
-        mTvCurrency.setText(settingsInteractor.getCurrency().getTitle());
-        mTvBasePrice.setText(getString(R.string.str_coingecko));
+        currencyTextView.setText(settingsInteractor.getCurrency().getTitle());
         if (getBaseDao().getUsingAppLock()) {
-            mTvAppLock.setText(R.string.str_app_applock_enabled);
+            appLockTextView.setText(R.string.str_app_applock_enabled);
         } else {
-            mTvAppLock.setText(R.string.str_app_applock_diabeld);
-        }
-    }
-
-    @Override
-    public void onClick(View v) {
-        if (v.equals(mBtnAddWallet)) {
-            showDialog(ChoiceChainDialogFragment.Companion.newInstance(true, "", new ArrayList<>()));
-        } else if (v.equals(mBtnWallet)) {
-            startActivity(new Intent(requireActivity(), AccountListActivity.class));
-
-        } else if (v.equals(mBtnAlaram)) {
-            Toast.makeText(requireActivity(), R.string.str_preparing, Toast.LENGTH_SHORT).show();
-
-        } else if (v.equals(mBtnAppLock)) {
-            startActivity(new Intent(requireActivity(), AppLockSetActivity.class));
-
-        } else if (v.equals(mBtnCurrency)) {
-            CurrencyDialogFragment currency_dialog = CurrencyDialogFragment.newInstance("");
-            currency_dialog.setTargetFragment(this, SELECT_CURRENCY);
-            showDialog(currency_dialog);
-
-        } else if (v.equals(mBtnGuide)) {
-            Intent guideIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.fulldive.com/faq"));
-            startActivity(guideIntent);
-        } else if (v.equals(mBtnDiscord)) {
-            Intent telegram = new Intent(Intent.ACTION_VIEW, Uri.parse("https://discord.gg/BW2unf5s8X"));
-            startActivity(telegram);
-
-        } else if (v.equals(mBtnTerm)) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.fulldive.com/terms-of-use"));
-            startActivity(intent);
-
-        } else if (v.equals(mBtnGithub)) {
-            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/imversed/imversed-wallet-android"));
-            startActivity(intent);
-
-        } else if (v.equals(mBtnVersion)) {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse("market://details?id=" + requireContext().getPackageName()));
-            startActivity(intent);
+            appLockTextView.setText(R.string.str_app_applock_diabeld);
         }
     }
 
@@ -174,7 +132,7 @@ public class MainSettingFragment extends BaseFragment implements View.OnClickLis
             if (currency == null) {
                 currency = Currency.Companion.getDefault();
             }
-            mTvCurrency.setText(currency.getTitle());
+            currencyTextView.setText(currency.getTitle());
         } else if (requestCode == SELECT_STARNAME_WALLET_CONNECT && resultCode == Activity.RESULT_OK) {
             new TedPermission(requireContext()).setPermissionListener(new PermissionListener() {
                 @Override
