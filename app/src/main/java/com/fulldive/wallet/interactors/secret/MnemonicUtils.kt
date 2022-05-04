@@ -36,7 +36,8 @@ object MnemonicUtils {
                 }
             }
             BaseChain.EVMOS_MAIN,
-            BaseChain.INJ_MAIN -> {
+            BaseChain.INJ_MAIN,
+            BaseChain.IMVERSED_MAIN -> {
                 generateAddressFromPrivateKey(chain.chainAddressPrefix, childKey.privateKeyAsHex)
             }
             else -> {
@@ -59,6 +60,7 @@ object MnemonicUtils {
                     else -> throw IllegalStateException("custom path $customPath for OKEX")
                 }
             }
+            BaseChain.IMVERSED_MAIN,
             BaseChain.EVMOS_MAIN,
             BaseChain.INJ_MAIN -> {
                 generateAddressFromPrivateKey(chain.chainAddressPrefix, privateKey)

@@ -69,6 +69,9 @@ class AccountsLocalStorage @Inject constructor(
         }
             .onErrorResumeNext {
                 getAccount(getLastUserId())
+                    .onErrorResumeNext {
+                        getAccounts().map { items -> items.getOrNull(0) }
+                    }
                     .doOnSuccess { account ->
                         currentAccount = account
                     }

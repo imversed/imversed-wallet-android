@@ -77,6 +77,7 @@ sealed class BaseChain constructor(
         chainBackground = R.color.colorTransBgImversed,
         chainTabColor = R.color.color_tab_myvalidator_imversed,
         grpcApiHost = ApiHost.from("qc.imversed.com"),
+        pathConfig = "{\"default\":\"60\"}",
         sortValue = 10
     )
 
