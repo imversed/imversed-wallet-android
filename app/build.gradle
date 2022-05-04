@@ -28,6 +28,7 @@ android {
             splits.density.enable = false
         }
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
