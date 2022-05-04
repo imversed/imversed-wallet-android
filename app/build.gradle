@@ -11,7 +11,7 @@ android {
         applicationId "com.fulldive.extension.fdwallet"
         minSdkVersion 23
         targetSdkVersion 32
-        versionCode 145
+        versionCode 10547
         versionName "1.5.47"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -36,7 +36,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('keys/keys.jks')
+            storeFile file('../keys/keys.jks')
             storePassword System.getenv("FULLDIVE_KEYSTORE_PASSWORD")
             keyAlias System.getenv("FULLDIVE_ALIAS")
             keyPassword System.getenv("FULLDIVE_ALIAS_PASSWORD")
