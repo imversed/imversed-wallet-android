@@ -150,19 +150,25 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
     }
 
     public void showWaitDialog() {
-        if (waitDialogFragment == null) {
-            waitDialogFragment = WaitDialogFragment.Companion.newInstance();
-        }
         Fragment fragment = getSupportFragmentManager().findFragmentByTag("wait");
         if (fragment == null || !fragment.isAdded()) {
+            if (waitDialogFragment == null) {
+                waitDialogFragment = WaitDialogFragment.Companion.newInstance();
+            }
             showDialog(waitDialogFragment, "wait", false);
         }
     }
 
     public void hideWaitDialog() {
         if (waitDialogFragment != null) {
-            waitDialogFragment.dismissAllowingStateLoss();
+            try {
+                waitDialogFragment.dismissAllowingStateLoss();
+            } catch (Exception exception) {
+                WLog.e(exception.getMessage());
+                exception.printStackTrace();
+            }
         }
+        waitDialogFragment = null;
     }
 
     public void startMainActivity(int page) {

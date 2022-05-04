@@ -7,7 +7,7 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.fulldive.wallet.presentation.main.history.MainHistoryFragment
 import wannabit.io.cosmostaion.fragment.main.MainSendFragment
 import wannabit.io.cosmostaion.fragment.main.MainSettingFragment
-import wannabit.io.cosmostaion.fragment.main.MainTokensFragment
+import com.fulldive.wallet.presentation.main.tokens.MainTokensFragment
 
 class MainViewPageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(
     fragmentManager

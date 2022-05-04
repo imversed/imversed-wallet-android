@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -64,6 +65,7 @@ public class SendActivity extends BaseBroadCastActivity {
         }
 
         mPageAdapter = new SendPageAdapter(getSupportFragmentManager());
+        mPageAdapter.baseChain = getBaseChain();
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(mPageAdapter);
 
@@ -80,18 +82,19 @@ public class SendActivity extends BaseBroadCastActivity {
                 } else if (i == 1) {
                     mIvStep.setImageResource(R.drawable.step_2_img);
                     mTvStep.setText(R.string.str_send_step_1);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
                 } else if (i == 2) {
                     mIvStep.setImageResource(R.drawable.step_3_img);
                     mTvStep.setText(R.string.str_send_step_2);
                 } else if (i == 3) {
                     mIvStep.setImageResource(R.drawable.step_4_img);
                     mTvStep.setText(R.string.str_send_step_3);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
                 } else if (i == 4) {
                     mIvStep.setImageResource(R.drawable.step_5_img);
                     mTvStep.setText(R.string.str_send_step_4);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                }
+                Fragment fragment = mPageAdapter.currentFragment;
+                if (fragment instanceof IRefreshTabListener) {
+                    ((IRefreshTabListener) mPageAdapter.currentFragment).onRefreshTab();
                 }
             }
 
@@ -107,7 +110,6 @@ public class SendActivity extends BaseBroadCastActivity {
         super.onResume();
         if (getAccount() == null) finish();
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -157,50 +159,49 @@ public class SendActivity extends BaseBroadCastActivity {
         overridePendingTransition(R.anim.slide_in_bottom, R.anim.fade_out);
     }
 
-
-    private class SendPageAdapter extends FragmentPagerAdapter {
-
-        private final ArrayList<BaseFragment> mFragments = new ArrayList<>();
-        private BaseFragment mCurrentFragment;
+    private static class SendPageAdapter extends FragmentPagerAdapter {
+        private final ArrayList<BaseFragment> fragments = new ArrayList<>();
+        private BaseFragment currentFragment;
+        BaseChain baseChain;
 
         public SendPageAdapter(FragmentManager fm) {
             super(fm);
-            mFragments.clear();
-            mFragments.add(SendStep0Fragment.newInstance(null));
-            mFragments.add(SendStep1Fragment.newInstance(null));
-            mFragments.add(StepMemoFragment.newInstance(null));
-            if (getBaseChain().isGRPC()) {
-                mFragments.add(StepFeeSetFragment.newInstance(null));
+            fragments.clear();
+            fragments.add(SendStep0Fragment.newInstance(null));
+            fragments.add(SendStep1Fragment.newInstance(null));
+            fragments.add(StepMemoFragment.newInstance(null));
+            if (baseChain.isGRPC()) {
+                fragments.add(StepFeeSetFragment.newInstance(null));
             } else {
-                mFragments.add(StepFeeSetOldFragment.newInstance(null));
+                fragments.add(StepFeeSetOldFragment.newInstance(null));
             }
-            mFragments.add(SendStep4Fragment.newInstance(null));
+            fragments.add(SendStep4Fragment.newInstance(null));
         }
 
         @Override
         public BaseFragment getItem(int position) {
-            return mFragments.get(position);
+            return fragments.get(position);
         }
 
         @Override
         public int getCount() {
-            return mFragments.size();
+            return fragments.size();
         }
 
         @Override
         public void setPrimaryItem(ViewGroup container, int position, Object object) {
             if (getCurrentFragment() != object) {
-                mCurrentFragment = ((BaseFragment) object);
+                currentFragment = ((BaseFragment) object);
             }
             super.setPrimaryItem(container, position, object);
         }
 
         public BaseFragment getCurrentFragment() {
-            return mCurrentFragment;
+            return currentFragment;
         }
 
         public ArrayList<BaseFragment> getFragments() {
-            return mFragments;
+            return fragments;
         }
     }
 }

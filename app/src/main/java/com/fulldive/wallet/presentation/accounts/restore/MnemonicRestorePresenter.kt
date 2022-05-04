@@ -99,6 +99,7 @@ class MnemonicRestorePresenter @Inject constructor(
                     .split(" ")
                     .map { it.filter(Char::isLetter) }
                     .filter(String::isNotEmpty)
+                    .map { it.safeSubstring(endIndex = MAX_WORD_LENGTH) }
             }
             .withUiDefaults()
             .compositeSubscribe(
