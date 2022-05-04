@@ -59,13 +59,14 @@ public class SendActivity extends BaseBroadCastActivity {
         mTvStep.setText(R.string.str_send_step_0);
         mTxType = CONST_PW_TX_SIMPLE_SEND;
 
+        final BaseChain baseChain = getBaseChain();
+
         mDenom = getIntent().getStringExtra("sendTokenDenom");
-        if (getBaseChain().equals(BaseChain.BNB_MAIN.INSTANCE)) {
+        if (baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
             mBnbToken = getBaseDao().getBnbToken(mDenom);
         }
 
-        mPageAdapter = new SendPageAdapter(getSupportFragmentManager());
-        mPageAdapter.baseChain = getBaseChain();
+        mPageAdapter = new SendPageAdapter(getSupportFragmentManager(), baseChain);
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.setAdapter(mPageAdapter);
 
@@ -162,9 +163,8 @@ public class SendActivity extends BaseBroadCastActivity {
     private static class SendPageAdapter extends FragmentPagerAdapter {
         private final ArrayList<BaseFragment> fragments = new ArrayList<>();
         private BaseFragment currentFragment;
-        BaseChain baseChain;
 
-        public SendPageAdapter(FragmentManager fm) {
+        public SendPageAdapter(FragmentManager fm, BaseChain baseChain) {
             super(fm);
             fragments.clear();
             fragments.add(SendStep0Fragment.newInstance(null));
