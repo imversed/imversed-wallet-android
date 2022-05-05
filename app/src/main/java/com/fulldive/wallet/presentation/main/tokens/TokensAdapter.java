@@ -48,7 +48,7 @@ import wannabit.io.cosmostaion.utils.WUtil;
 class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
     public List<WalletBalance> balances = new ArrayList<>();
     public List<WalletBalance> ibcAuthedItems = new ArrayList<>();
-    public List<WalletBalance> osmosisPoolItems = new ArrayList<>();
+    public List<WalletBalance> poolItems = new ArrayList<>();
     public List<WalletBalance> etherItems = new ArrayList<>();
     public List<WalletBalance> ibcUnknownItems = new ArrayList<>();
     public List<WalletBalance> GravityDexItems = new ArrayList<>();
@@ -83,9 +83,9 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_OSMOSIS_POOL_GRPC) {
                 onBindOsmoPoolToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size());
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_IBC_UNKNOWN_GRPC) {
-                onBindIbcUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - osmosisPoolItems.size());
+                onBindIbcUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - poolItems.size());
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_UNKNOWN) {
-                onBindUnKnownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - osmosisPoolItems.size() - ibcUnknownItems.size());
+                onBindUnKnownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - poolItems.size() - ibcUnknownItems.size());
             }
 
         } else if (baseChain.equals(BaseChain.SIF_MAIN.INSTANCE) || baseChain.equals(BaseChain.GRABRIDGE_MAIN.INSTANCE)) {
@@ -209,11 +209,11 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
                 return MainTokensFragment.SECTION_NATIVE;
             } else if (position < nativeItems.size() + ibcAuthedItems.size()) {
                 return MainTokensFragment.SECTION_IBC_AUTHED_GRPC;
-            } else if (position < nativeItems.size() + ibcAuthedItems.size() + osmosisPoolItems.size()) {
+            } else if (position < nativeItems.size() + ibcAuthedItems.size() + poolItems.size()) {
                 return MainTokensFragment.SECTION_OSMOSIS_POOL_GRPC;
-            } else if (position < nativeItems.size() + ibcAuthedItems.size() + osmosisPoolItems.size() + ibcUnknownItems.size()) {
+            } else if (position < nativeItems.size() + ibcAuthedItems.size() + poolItems.size() + ibcUnknownItems.size()) {
                 return MainTokensFragment.SECTION_IBC_UNKNOWN_GRPC;
-            } else if (position < nativeItems.size() + ibcAuthedItems.size() + osmosisPoolItems.size() + ibcUnknownItems.size() + unknownItems.size()) {
+            } else if (position < nativeItems.size() + ibcAuthedItems.size() + poolItems.size() + ibcUnknownItems.size() + unknownItems.size()) {
                 return MainTokensFragment.SECTION_UNKNOWN;
             }
 
@@ -384,13 +384,13 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
 
         if (balance.getDenom().equals(TOKEN_ION) || balance.getDenom().startsWith("e")) {
             amount = onBalanceProvider.getFullBalance(balance.getDenom()).getBalanceAmount();
-        } else if (balance.getDenom().equals(BaseChain.FETCHAI_MAIN.INSTANCE.getMainDenom()) || balance.getDenom().equals(BaseChain.INJ_MAIN.INSTANCE.getMainDenom()) || balance.getDenom().equals(BaseChain.SIF_MAIN.INSTANCE.getMainDenom())) {
+        } else if (balance.getDenom().equals(BaseChain.FETCHAI_MAIN.INSTANCE.getMainDenom()) || balance.getDenom().equals(BaseChain.INJ_MAIN.INSTANCE.getMainDenom()) || balance.getDenom().equals(BaseChain.SIF_MAIN.INSTANCE.getMainDenom()) ||
+                balance.getDenom().equals(BaseChain.EVMOS_MAIN.INSTANCE.getMainDenom()) || balance.getDenom().equals(BaseChain.CUDOS_MAIN.INSTANCE.getMainDenom())) {
             divideDecimal = 18;
             divider = 18;
-        } else if (balance.getDenom().equals(BaseChain.EVMOS_MAIN.INSTANCE.getMainDenom()) || balance.getDenom().equals(BaseChain.CUDOS_MAIN.INSTANCE.getMainDenom())) {
-            divideDecimal = 18;
         } else if (balance.getDenom().equals(BaseChain.PROVENANCE_MAIN.INSTANCE.getMainDenom())) {
             divideDecimal = 9;
+            divider = 9;
         } else if (balance.getDenom().equals(BaseChain.CRYPTO_MAIN.INSTANCE.getMainDenom())) {
             divideDecimal = 8;
             divider = 8;
@@ -466,7 +466,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
 
     //with Osmosis Pool gRPC
     private void onBindOsmoPoolToken(AssetHolder holder, int position) {
-        final WalletBalance balance = osmosisPoolItems.get(position);
+        final WalletBalance balance = poolItems.get(position);
         final Context context = holder.itemView.getContext();
         holder.itemSymbol.setText(balance.osmosisAmmDpDenom());
         holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));

@@ -1,6 +1,5 @@
 package com.fulldive.wallet.interactors.secret
 
-import com.fulldive.wallet.extensions.getPath
 import com.fulldive.wallet.extensions.safe
 import com.fulldive.wallet.models.BaseChain
 import org.bitcoinj.core.Bech32
@@ -120,7 +119,7 @@ object MnemonicUtils {
         val masterKey = HDKeyDerivation.createMasterPrivateKey(
             getHDSeed(hexStringToByteArray(entropy))
         )
-        val parentPath = chain.getPath(customPath)
+        val parentPath = chain.pathProvider.getPathList(customPath)
         result = if (chain != BaseChain.FETCHAI_MAIN || customPath != 2) {
             DeterministicHierarchy(masterKey)
                 .deriveChild(

@@ -11,7 +11,6 @@ dependencies {
     //bitcoin
     api 'org.bitcoinj:bitcoinj-core:0.15.2'
     //for ed25519
-    api files('libs/bip32-ed25519-java-1.0.0-SNAPSHOT.jar')
     api 'net.i2p.crypto:eddsa:0.3.0'
     //Grpc and protobuf
     api 'io.grpc:grpc-okhttp:1.33.1'

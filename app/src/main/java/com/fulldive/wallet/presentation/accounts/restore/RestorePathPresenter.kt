@@ -1,7 +1,10 @@
 package com.fulldive.wallet.presentation.accounts.restore
 
 import com.fulldive.wallet.di.modules.DefaultPresentersModule
-import com.fulldive.wallet.extensions.*
+import com.fulldive.wallet.extensions.or
+import com.fulldive.wallet.extensions.safe
+import com.fulldive.wallet.extensions.safeSingle
+import com.fulldive.wallet.extensions.withDefaults
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
 import com.fulldive.wallet.interactors.balances.BalancesInteractor
 import com.fulldive.wallet.interactors.secret.MnemonicUtils
@@ -86,7 +89,7 @@ class RestorePathPresenter @Inject constructor(
                     WalletItem(
                         MnemonicUtils.createAddress(chain, entropy, index, customPath),
                         index,
-                        chain.getPathString(index, customPath),
+                        chain.pathProvider.getPathString(index, customPath),
                         chain.symbolTitle,
                         chain.chainColor,
                         chain.chainBackground,

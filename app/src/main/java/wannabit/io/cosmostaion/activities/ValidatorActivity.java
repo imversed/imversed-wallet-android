@@ -447,34 +447,25 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
             } else {
                 holder.historySuccess.setVisibility(View.VISIBLE);
             }
-            holder.historyRoot.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent txDetail = null;
-                    if (history.data.txhash != null) {
-                        if (getBaseChain().isGRPC()) {
-                            if (!TextUtils.isEmpty(history.header.chain_id) && !getBaseDao().getChainIdGrpc().equals(history.header.chain_id)) {
-                                String url = WUtil.getTxExplorer(getBaseChain(), history.data.txhash);
-                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                                startActivity(intent);
+            holder.historyRoot.setOnClickListener(v -> {
+                if (history.data.txhash != null) {
+                    if (getBaseChain().isGRPC()) {
+                        String url = WUtil.getTxExplorer(baseChain, history.data.txhash);
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        startActivity(intent);
+                    } else {
+                        if (!TextUtils.isEmpty(history.header.chain_id) && !getBaseDao().getChainId().equals(history.header.chain_id)) {
+                            String url = WUtil.getTxExplorer(getBaseChain(), history.data.txhash);
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                            startActivity(intent);
 
-                            } else {
-                                txDetail = new Intent(getBaseContext(), TxDetailgRPCActivity.class);
-                            }
                         } else {
-                            if (!TextUtils.isEmpty(history.header.chain_id) && !getBaseDao().getChainId().equals(history.header.chain_id)) {
-                                String url = WUtil.getTxExplorer(getBaseChain(), history.data.txhash);
-                                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                                startActivity(intent);
-
-                            } else {
-                                txDetail = new Intent(getBaseContext(), TxDetailActivity.class);
-                            }
+                            Intent txDetail = new Intent(getBaseContext(), TxDetailActivity.class);
+                            txDetail.putExtra("txHash", history.data.txhash);
+                            txDetail.putExtra("isGen", false);
+                            txDetail.putExtra("isSuccess", true);
+                            startActivity(txDetail);
                         }
-                        txDetail.putExtra("txHash", history.data.txhash);
-                        txDetail.putExtra("isGen", false);
-                        txDetail.putExtra("isSuccess", true);
-                        startActivity(txDetail);
                     }
                 }
             });
