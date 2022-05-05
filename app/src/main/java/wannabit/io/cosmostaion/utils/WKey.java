@@ -4,7 +4,6 @@ import static com.fulldive.wallet.models.BaseChain.getChain;
 
 import android.util.Base64;
 
-import com.fulldive.wallet.extensions.ChainExtensionsKt;
 import com.fulldive.wallet.interactors.secret.MnemonicUtils;
 import com.fulldive.wallet.interactors.secret.WalletUtils;
 import com.fulldive.wallet.interactors.secret.utils.Bech32Utils;
@@ -50,7 +49,7 @@ public class WKey {
         DeterministicKey result;
         BaseChain chain = getChain(account.baseChain);
         DeterministicKey masterKey = HDKeyDerivation.createMasterPrivateKey(getHDSeed(MnemonicUtils.INSTANCE.hexStringToByteArray(entropy)));
-        final List<ChildNumber> parentPath = ChainExtensionsKt.getPath(chain, account.customPath);
+        final List<ChildNumber> parentPath = chain.getPathProvider().getPathList(account.customPath);
         if (!chain.equals(BaseChain.FETCHAI_MAIN.INSTANCE) || account.customPath != 2) {
             result = new DeterministicHierarchy(masterKey).deriveChild(parentPath, true, true, new ChildNumber(account.path));
         } else {

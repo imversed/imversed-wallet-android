@@ -439,7 +439,7 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
         if (!balances.isEmpty()) {
             adapter.balances = balances;
             adapter.ibcAuthedItems = ibcAuthedItems;
-            adapter.osmosisPoolItems = osmosisPoolItems;
+            adapter.poolItems = osmosisPoolItems;
             adapter.etherItems = etherItems;
             adapter.ibcUnknownItems = ibcUnknownItems;
             adapter.GravityDexItems = GravityDexItems;

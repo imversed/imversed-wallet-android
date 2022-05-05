@@ -127,7 +127,7 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
             final WalletBalance balance = getFullBalance(mainDenom);
             BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_VOTE, 0);
 
-            if (!mApiProposal.proposal_status.contains("VOTING")) {
+            if (mApiProposal != null && !mApiProposal.proposal_status.isEmpty() && !mApiProposal.proposal_status.contains("VOTING")) {
                 Toast.makeText(getBaseContext(), getString(R.string.error_not_voting_period), Toast.LENGTH_SHORT).show();
                 return;
             }

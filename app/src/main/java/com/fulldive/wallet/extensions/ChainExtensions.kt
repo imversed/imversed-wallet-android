@@ -26,26 +26,6 @@ private fun fetchPath(json: String, customPath: Int): Triple<Int, Boolean, Boole
     return Triple(number, lastHardenedZero, lastZero)
 }
 
-fun BaseChain.getPath(customPath: Int): List<ChildNumber> {
-    val (childNumber, lastHardenedZero, lastZero) = fetchPath(
-        pathConfig,
-        customPath
-    )
-
-    return mutableListOf(
-        ChildNumber(44, true),
-        ChildNumber(childNumber, true)
-    )
-        .apply {
-            if (lastHardenedZero) {
-                add(ChildNumber.ZERO_HARDENED)
-            }
-            if (lastZero) {
-                add(ChildNumber.ZERO)
-            }
-        }
-}
-
 
 fun BaseChain.getPathString(path: Int, customPath: Int): String {
     val items = mutableListOf("m", "44'")

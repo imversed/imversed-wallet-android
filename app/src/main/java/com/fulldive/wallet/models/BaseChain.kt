@@ -3,6 +3,7 @@ package com.fulldive.wallet.models
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import com.fulldive.wallet.components.path.*
 import com.fulldive.wallet.extensions.unsafeLazy
 import com.fulldive.wallet.interactors.secret.WalletUtils
 import com.fulldive.wallet.models.local.ApiHost
@@ -33,7 +34,7 @@ sealed class BaseChain constructor(
     val historyApiUrl: String = "",
     val grpcApiHost: ApiHost = ApiHost.EMPTY,
     val blockTime: BigDecimal = BigDecimal.ZERO,
-    val pathConfig: String = "{\"default\":\"118\"}",
+    val pathProvider: IPathProvider = PathProvider.DEFAULT,
     val isSupported: Boolean = true,
     val isTestNet: Boolean = false,
     val isGRPC: Boolean = true,
@@ -77,7 +78,7 @@ sealed class BaseChain constructor(
         chainBackground = R.color.colorTransBgImversed,
         chainTabColor = R.color.color_tab_myvalidator_imversed,
         grpcApiHost = ApiHost.from("qc.imversed.com"),
-        pathConfig = "{\"default\":\"60\"}",
+        pathProvider = PathProvider(60),
         sortValue = 10
     )
 
@@ -121,7 +122,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("6.0124"),
         historyApiUrl = "https://api-iov.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-iov-app.cosmostation.io"),
-        pathConfig = "{\"default\":\"234\"}"
+        pathProvider = PathProvider(234)
     )
 
     object BNB_MAIN : BaseChain(
@@ -143,7 +144,7 @@ sealed class BaseChain constructor(
         chainBackground = R.color.colorTransBgBinance,
         chainTabColor = R.color.color_tab_myvalidator,
         blockTime = BigDecimal("0.4124"),
-        pathConfig = "{\"default\":\"714\"}",
+        pathProvider = PathProvider(714),
         isGRPC = false
     )
 
@@ -166,7 +167,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("6.7262"),
         historyApiUrl = "https://api-kava.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-kava-app.cosmostation.io"),
-        pathConfig = "{\"default\":\"459\", \"0\":\"118\"}"
+        pathProvider = MultiPathProvider(459, mapOf(0 to 118))
     )
 
     object BAND_MAIN : BaseChain(
@@ -188,7 +189,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("3.0236"),
         historyApiUrl = "https://api-band.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-band-app.cosmostation.io"),
-        pathConfig = "{\"default\":\"494\"}"
+        pathProvider = PathProvider(494)
     )
 
     object CERTIK_MAIN : BaseChain(
@@ -232,7 +233,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("6.0408"),
         historyApiUrl = "https://api-secret.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-secret.cosmostation.io"),
-        pathConfig = "{\"default\":\"529\",\"0\":\"118\"}"
+        pathProvider = MultiPathProvider(529, mapOf(0 to 118))
     )
 
     object AKASH_MAIN : BaseChain(
@@ -264,7 +265,7 @@ sealed class BaseChain constructor(
         chainTitle = R.string.str_ok_net,
         chainAlterTitle = R.string.str_okex_main,
         mainDenom = "okt",
-        fullNameCoin = "OEC Staking Coin",
+        fullNameCoin = "OKC Staking Coin",
         divideDecimal = 0,
         displayDecimal = 18,
         ticker = "okb",
@@ -275,7 +276,12 @@ sealed class BaseChain constructor(
         chainBackground = R.color.colorTransBgOkex,
         chainTabColor = R.color.color_tab_myvalidator_ok,
         blockTime = BigDecimal("4.0286"),
-        pathConfig = "{\"default\":\"60\",\"0\":\"996\",\"1\":\"996\"}",
+        pathProvider = HintedMultiPathProvider(
+            60,
+            mapOf(0 to 996, 1 to 996),
+            "Ethereum Type",
+            mapOf(0 to "Tendermint Type", 1 to "Ethermint Type")
+        ),
         isGRPC = false
     )
 
@@ -299,7 +305,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("5.7982"),
         historyApiUrl = "https://api-persistence.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-persistence-app.cosmostation.io"),
-        pathConfig = "{\"default\":\"750\"}"
+        pathProvider = PathProvider(750)
     )
 
     object SENTINEL_MAIN : BaseChain(
@@ -343,7 +349,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("6.0678"),
         historyApiUrl = "https://api-fetchai.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-fetchai-app.cosmostation.io"),
-        pathConfig = "{\"default\":\"60:0\",\"0\":\"118\",\"1\":\"60\",\"2\":\"60:h0\"}"
+        pathProvider = FetchaiPathProvider
     )
 
     object CRYPTO_MAIN : BaseChain(
@@ -367,7 +373,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("6.1939"),
         historyApiUrl = "https://api-cryptocom.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-cryptocom-app.cosmostation.io"),
-        pathConfig = "{\"default\":\"394\"}"
+        pathProvider = PathProvider(394)
     )
 
     object SIF_MAIN : BaseChain(
@@ -452,7 +458,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("5.7849"),
         historyApiUrl = "https://api-medibloc.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-medibloc-app.cosmostation.io"),
-        pathConfig = "{\"default\":\"371\"}"
+        pathProvider = PathProvider(371)
     )
 
     object EMONEY_MAIN : BaseChain(
@@ -653,7 +659,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("2.4865"),
         historyApiUrl = "https://api-inj.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-inj-app.cosmostation.io"),
-        pathConfig = "{\"default\":\"60\"}"
+        pathProvider = PathProvider(60)
     )
 
     object BITSONG_MAIN : BaseChain(
@@ -673,7 +679,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("5.9040"),
         historyApiUrl = "https://api-bitsong.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-bitsong-app.cosmostation.io"),
-        pathConfig = "{\"default\":\"639\"}"
+        pathProvider = PathProvider(639)
     )
 
     object DESMOS_MAIN : BaseChain(
@@ -693,7 +699,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("6.1605"),
         historyApiUrl = "https://api-desmos.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-desmos-app.cosmostation.io"),
-        pathConfig = "{\"default\":\"852\"}"
+        pathProvider = PathProvider(852)
     )
 
     object LUM_MAIN : BaseChain(
@@ -713,7 +719,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("5.7210"),
         historyApiUrl = "https://api-lum.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-lum-app.cosmostation.io"),
-        pathConfig = "{\"default\":\"880\",\"0\":\"118\"}"
+        pathProvider = MultiPathProvider(880, mapOf(0 to 118))
     )
 
     object CHIHUAHUA_MAIN : BaseChain(
@@ -816,7 +822,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("5.824"),
         historyApiUrl = "https://api-evmos.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-evmos-app.cosmostation.io"),
-        pathConfig = "{\"default\":\"60\"}"
+        pathProvider = PathProvider(60)
     )
 
     object CUDOS_MAIN : BaseChain(
@@ -860,7 +866,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("6.3061"),
         historyApiUrl = "https://api-provenance.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-provenance-app.cosmostation.io"),
-        pathConfig = "{\"default\":\"505\"}"
+        pathProvider = PathProvider(505)
     )
 
     object CERBERUS_MAIN : BaseChain(
@@ -952,7 +958,7 @@ sealed class BaseChain constructor(
         chainTitle = R.string.str_ok_test_net,
         chainAlterTitle = R.string.str_okex_test,
         mainDenom = "okt",
-        fullNameCoin = "OEC Staking Coin",
+        fullNameCoin = "OKC Staking Coin",
         chainColor = R.color.colorOK,
         coinIcon = R.drawable.token_okx,
         mnemonicBackground = R.drawable.box_round_okex,

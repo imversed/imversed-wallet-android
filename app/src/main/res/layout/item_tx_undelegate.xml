@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/space_12"
-        android:layout_marginEnd="@dimen/space_12"
-        app:cardPreventCornerOverlap="true"
+        android:layout_marginLeft="@dimen/space_12"
+        android:layout_marginRight="@dimen/space_12"
+        app:cardBackgroundColor="@color/colorTransBg"
         app:cardCornerRadius="@dimen/space_6"
         app:cardElevation="1.5dp"
-        app:cardBackgroundColor="@color/colorTransBg"
+        app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
@@ -24,8 +25,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/tx_undelegate_icon"
@@ -35,142 +36,220 @@
 
                 <TextView
                     android:id="@+id/tx_undelegate_text"
+                    style="@style/font_ss_15_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/space_4"
-                    android:text="@string/tx_undelegate"
-                    style="@style/font_ss_15_white" />
+                    android:layout_marginLeft="@dimen/space_4"
+                    android:text="@string/tx_undelegate" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="@dimen/space_16">
+                android:layout_marginTop="@dimen/space_16"
+                android:orientation="vertical">
 
                 <TextView
+                    style="@style/font_ss_12_gray1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/str_undelegator"
-                    style="@style/font_ss_12_gray1" />
+                    android:text="@string/str_undelegator" />
 
                 <TextView
                     android:id="@+id/tx_undelegate_undelegator"
+                    style="@style/font_ss_12_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_4"
-                    android:singleLine="true"
                     android:ellipsize="middle"
-                    android:text="-"
-                    style="@style/font_ss_12_white" />
+                    android:singleLine="true"
+                    android:text="-" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="@dimen/space_16">
+                android:layout_marginTop="@dimen/space_16"
+                android:orientation="vertical">
 
                 <TextView
+                    style="@style/font_ss_12_gray1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/str_validator"
-                    style="@style/font_ss_12_gray1" />
+                    android:text="@string/str_validator" />
 
                 <TextView
                     android:id="@+id/tx_undelegate_validator"
+                    style="@style/font_ss_12_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_4"
-                    android:singleLine="true"
                     android:ellipsize="middle"
-                    android:text="-"
-                    style="@style/font_ss_12_white" />
+                    android:singleLine="true"
+                    android:text="-" />
 
                 <TextView
                     android:id="@+id/tx_undelegate_moniker"
+                    style="@style/font_ss_11_white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:singleLine="true"
                     android:ellipsize="end"
-                    android:text="-"
-                    style="@style/font_ss_11_white" />
+                    android:singleLine="true"
+                    android:text="-" />
             </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="@dimen/space_16">
+                android:layout_marginTop="@dimen/space_16"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/tx_undelegate_amount_title"
+                    style="@style/font_ss_12_gray1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/str_amount"
-                    style="@style/font_ss_12_gray1" />
+                    android:text="@string/str_amount" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/tx_undelegate_amount_title">
+                    android:layout_toRightOf="@+id/tx_undelegate_amount_title">
 
                     <TextView
                         android:id="@+id/tx_undelegate_amount_symbol"
+                        style="@style/font_ss_12_atom"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:text="ATOM"
-                        style="@style/font_ss_12_atom" />
+                        android:layout_alignParentRight="true"
+                        tools:text="@string/str_atom_c" />
 
                     <TextView
                         android:id="@+id/tx_undelegate_amount"
+                        style="@style/font_ss_12_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@+id/tx_undelegate_amount_symbol"
-                        android:layout_toStartOf="@+id/tx_undelegate_amount_symbol"
-                        android:layout_marginEnd="@dimen/space_2"
-                        android:text="-"
-                        style="@style/font_ss_12_white" />
+                        android:layout_marginRight="@dimen/space_2"
+                        android:layout_toLeftOf="@+id/tx_undelegate_amount_symbol"
+                        android:text="-" />
                 </RelativeLayout>
             </RelativeLayout>
 
             <RelativeLayout
-                android:id="@+id/tx_undelegate_auto_reward"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_16">
+                android:layout_marginTop="@dimen/space_16"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tx_auto_claimed_amount_title"
+                    android:id="@+id/tx_commission_amount_title"
+                    style="@style/font_ss_12_gray1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/str_auto_claimed_reward"
-                    style="@style/font_ss_12_gray1" />
+                    android:text="@string/str_auto_claimed_reward" />
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/tx_auto_claimed_amount_title">
+                    android:layout_toRightOf="@+id/tx_commission_amount_title"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tx_auto_claimed_symbol"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:id="@+id/commission_layout0"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:text="ATOM"
-                        style="@style/font_ss_12_atom" />
+                        android:visibility="visible">
 
-                    <TextView
-                        android:id="@+id/tx_auto_claimed"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/tx_commission_symbol0"
+                            style="@style/font_ss_12_atom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true" />
+
+                        <TextView
+                            android:id="@+id/tx_commission_amount0"
+                            style="@style/font_ss_12_white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/tx_commission_symbol0"
+                            android:layout_marginRight="@dimen/space_2"
+                            android:layout_toLeftOf="@+id/tx_commission_symbol0" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/commission_layout1"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@+id/tx_auto_claimed_symbol"
-                        android:layout_toStartOf="@+id/tx_auto_claimed_symbol"
-                        android:layout_marginEnd="@dimen/space_2"
-                        android:text="-"
-                        style="@style/font_ss_12_white" />
-                </RelativeLayout>
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/tx_commission_symbol1"
+                            style="@style/font_ss_12_atom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true" />
+
+                        <TextView
+                            android:id="@+id/tx_commission_amount1"
+                            style="@style/font_ss_12_white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/tx_commission_symbol1"
+                            android:layout_marginRight="@dimen/space_2"
+                            android:layout_toLeftOf="@+id/tx_commission_symbol1" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/commission_layout2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/tx_commission_symbol2"
+                            style="@style/font_ss_12_atom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true" />
+
+                        <TextView
+                            android:id="@+id/tx_commission_amount2"
+                            style="@style/font_ss_12_white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/tx_commission_symbol2"
+                            android:layout_marginRight="@dimen/space_2"
+                            android:layout_toLeftOf="@+id/tx_commission_symbol2" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/commission_layout3"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <TextView
+                            android:id="@+id/tx_commission_symbol3"
+                            style="@style/font_ss_12_atom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true" />
+
+                        <TextView
+                            android:id="@+id/tx_commission_amount3"
+                            style="@style/font_ss_12_white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBaseline="@+id/tx_commission_symbol3"
+                            android:layout_marginRight="@dimen/space_2"
+                            android:layout_toLeftOf="@+id/tx_commission_symbol3" />
+                    </RelativeLayout>
+                </LinearLayout>
             </RelativeLayout>
 
         </LinearLayout>

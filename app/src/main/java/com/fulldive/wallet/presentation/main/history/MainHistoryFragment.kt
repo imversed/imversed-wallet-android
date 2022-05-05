@@ -2,8 +2,6 @@ package com.fulldive.wallet.presentation.main.history
 
 import android.graphics.PorterDuff
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
