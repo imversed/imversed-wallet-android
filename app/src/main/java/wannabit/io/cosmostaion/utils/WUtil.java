@@ -728,7 +728,7 @@ public class WUtil {
         } else if (denom.startsWith("ibc/")) {
             return getIbcDecimal(baseData, denom);
         }
-        return 1;
+        return 6;
     }
 
     public static int getSifCoinDecimal(BaseData baseData, String denom) {
@@ -2133,6 +2133,24 @@ public class WUtil {
 
         } else if (mainActivity.getBaseChain().equals(CUDOS_MAIN.INSTANCE)) {
             mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/cudos")));
+
+        } else if (mainActivity.getBaseChain().equals(GRABRIDGE_MAIN.INSTANCE)) {
+            mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/graviton")));
+
+//        } else if (mainActivity.getBaseChain().equals(ASSETMANTLE_MAIN.INSTANCE)) {
+//            mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/assetmantle")));
+
+        } else if (mainActivity.getBaseChain().equals(CERBERUS_MAIN.INSTANCE)) {
+            mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/cerberus")));
+
+        } else if (mainActivity.getBaseChain().equals(EVMOS_MAIN.INSTANCE)) {
+            mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/evmos")));
+
+        } else if (mainActivity.getBaseChain().equals(KONSTELL_MAIN.INSTANCE)) {
+            mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/konstellation")));
+
+        } else if (mainActivity.getBaseChain().equals(PROVENANCE_MAIN.INSTANCE)) {
+            mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.coingecko.com/en/coins/provenance-blockchain")));
         }
         return null;
     }
@@ -2399,11 +2417,7 @@ public class WUtil {
 
     public static Intent getGuide1Intent(BaseChain chain) {
         if (chain.equals(COSMOS_MAIN.INSTANCE)) {
-            if (Locale.getDefault().getLanguage().equalsIgnoreCase("ko")) {
-                return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.cosmostation.io/files/cosmostation_guide_app_ko.pdf"));
-            } else {
-                return new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.cosmostation.io/files/cosmostation_guide_app_en.pdf"));
-            }
+            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://cosmos.network/"));
 
         } else if (chain.equals(IMVERSED_MAIN.INSTANCE)) {
             return new Intent(Intent.ACTION_VIEW, Uri.parse("https://imversed.com"));
@@ -2901,6 +2915,8 @@ public class WUtil {
             } else if (txType == CONST_PW_TX_SIMPLE_REWARD) {
                 ArrayList<String> rewardGasFees = new ArrayList<String>(Arrays.asList(c.getResources().getStringArray(R.array.gas_multi_reward_kava)));
                 return new BigDecimal(rewardGasFees.get(valCnt - 1));
+            } else if (txType == CONST_PW_TX_SIMPLE_CHANGE_REWARD_ADDRESS) {
+                return new BigDecimal(KAVA_GAS_AMOUNT_REWARD_ADDRESS_CHANGE);
             } else if (txType == CONST_PW_TX_VOTE) {
                 return new BigDecimal(KAVA_GAS_AMOUNT_VOTE);
             } else if (txType == CONST_PW_TX_CLAIM_INCENTIVE || txType == CONST_PW_TX_CLAIM_HARVEST_REWARD) {

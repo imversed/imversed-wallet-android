@@ -753,7 +753,7 @@ public class WDp {
     }
 
     public static void showChainDp(Context c, BaseChain baseChain, CardView cardName, CardView cardBody, CardView cardRewardAddress) {
-        if (baseChain.equals(BaseChain.OKEX_MAIN.INSTANCE) || baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE) || baseChain.equals(BaseChain.BNB_MAIN.INSTANCE) || baseChain.equals(BaseChain.FETCHAI_MAIN.INSTANCE)) {
+        if (baseChain.equals(BaseChain.OKEX_MAIN.INSTANCE) || baseChain.equals(BaseChain.BNB_MAIN.INSTANCE) || baseChain.equals(BaseChain.FETCHAI_MAIN.INSTANCE)) {
             cardRewardAddress.setVisibility(View.GONE);
         } else {
             cardRewardAddress.setVisibility(View.VISIBLE);
@@ -876,7 +876,7 @@ public class WDp {
             } else if (baseChain.equals(BaseChain.IRIS_MAIN.INSTANCE)) {
                 return "iris";
             } else if (baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
-                return "bnb";
+                return "binance";
             } else if (baseChain.equals(BaseChain.OKEX_MAIN.INSTANCE)) {
                 return "okex";
             } else if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
@@ -1152,29 +1152,27 @@ public class WDp {
 
     }
 
-    public static String getKavaPriceFeedSymbol(String denom) {
-        if (denom.equalsIgnoreCase(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom())) {
-            return "kava:usd";
-        } else if (denom.equalsIgnoreCase(TOKEN_HARD)) {
-            return "hard:usd";
-        } else if (denom.equalsIgnoreCase(TOKEN_USDX)) {
-            return "usdx:usd";
-        } else if (denom.equalsIgnoreCase(TOKEN_SWP)) {
-            return "swp:usd";
-        } else if (denom.equalsIgnoreCase(TOKEN_HTLC_KAVA_BNB)) {
-            return "bnb:usd";
-        } else if (denom.equalsIgnoreCase(TOKEN_HTLC_KAVA_XRPB)) {
-            return "xrp:usd";
-        } else if (denom.equalsIgnoreCase(TOKEN_HTLC_KAVA_BUSD)) {
-            return "busd:usd";
-        } else if (denom.contains("btc")) {
-            return "btc:usd";
+    public static String getKavaPriceFeedSymbol(BaseData baseData, String denom) {
+        String result = "";
+        if (denom != null) {
+            if (denom.startsWith("ibc/")) {
+                IbcToken ibcToken = baseData.getIbcToken(denom);
+                result = ibcToken.display_denom + ":usd";
+            } else if (denom.equalsIgnoreCase(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom())) {
+                result = "kava";
+            } else if (denom.contains("btc")) {
+                result = "btc";
+            } else {
+                result = denom;
+            }
+
+            result = result + ":usd";
         }
-        return "";
+        return result;
     }
 
     public static BigDecimal getKavaPriceFeed(BaseData baseData, String denom) {
-        String feedSymbol = getKavaPriceFeedSymbol(denom);
+        String feedSymbol = getKavaPriceFeedSymbol(baseData, denom);
         if (baseData.mKavaTokenPrice.get(feedSymbol) == null) {
             return BigDecimal.ZERO;
         }
@@ -2119,8 +2117,8 @@ public class WDp {
         return result;
     }
 
-    public static BigDecimal onParseAutoReward(ServiceOuterClass.GetTxResponse response, String Addr, int position) {
-        BigDecimal result = BigDecimal.ZERO;
+    public static ArrayList<Coin> onParseAutoReward(ServiceOuterClass.GetTxResponse response, String Addr, int position) {
+        ArrayList<Coin> result = new ArrayList<>();
         if (response.getTxResponse().getLogsCount() > 0 && response.getTxResponse().getLogs(position) != null) {
             for (Abci.StringEvent event : response.getTxResponse().getLogs(position).getEventsList()) {
                 if (event.getType().equals("transfer")) {
@@ -2128,9 +2126,16 @@ public class WDp {
                         if (event.getAttributes(i).getKey().equals("recipient") && event.getAttributes(i).getValue().equals(Addr)) {
                             for (int j = i; j < event.getAttributesList().size(); j++) {
                                 if (event.getAttributes(j).getKey().equals("amount") && event.getAttributes(j).getValue() != null) {
-                                    String temp = event.getAttributes(j).getValue().replaceAll("[^0-9]", "");
-                                    result = result.add(new BigDecimal(temp));
-                                    break;
+                                    String rawValue = event.getAttributes(j).getValue();
+                                    for (String rawCoin : rawValue.split(",")) {
+                                        Pattern p = Pattern.compile("([0-9])+");
+                                        Matcher m = p.matcher(rawCoin);
+                                        if (m.find()) {
+                                            String amount = m.group();
+                                            String denom = rawCoin.substring(m.end());
+                                            result.add(new Coin(denom, amount));
+                                        }
+                                    }
                                 }
                             }
                         }

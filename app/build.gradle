@@ -7,12 +7,26 @@ android {
     compileSdkVersion 32
     buildToolsVersion "30.0.3"
 
+    signingConfigs {
+        release {
+            storeFile file('../keys/keys.jks')
+            storePassword System.getenv("FULLDIVE_KEYSTORE_PASSWORD")
+            keyAlias System.getenv("FULLDIVE_ALIAS")
+            keyPassword System.getenv("FULLDIVE_ALIAS_PASSWORD")
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    output.outputFileName = "FDWallet-v${android.defaultConfig.versionName}-${variant.buildType.name}.apk"
+                }
+            }
+        }
+    }
+
     defaultConfig {
         applicationId "com.fulldive.extension.fdwallet"
         minSdkVersion 23
         targetSdkVersion 32
-        versionCode 145
-        versionName "1.5.46"
+        versionCode 10548
+        versionName "1.5.48"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -28,25 +42,13 @@ android {
             splits.density.enable = false
         }
         release {
+            signingConfig signingConfigs.release
             minifyEnabled false
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
-    signingConfigs {
-        release {
-            storeFile file('../keys/keys.jks')
-            storePassword System.getenv("FULLDIVE_KEYSTORE_PASSWORD")
-            keyAlias System.getenv("FULLDIVE_ALIAS")
-            keyPassword System.getenv("FULLDIVE_ALIAS_PASSWORD")
-            applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    output.outputFileName = "FDWallet-v${android.defaultConfig.versionName}-${variant.buildType.name}.apk"
-                }
-            }
-        }
-    }
     packagingOptions {
         jniLibs {
             excludes += ['lib/x86_64/freebsd/libscrypt.so', 'lib/x86_64/linux/libscrypt.so']

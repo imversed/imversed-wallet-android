@@ -2,7 +2,6 @@ package com.fulldive.wallet.presentation.main.history;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -14,7 +13,6 @@ import com.fulldive.wallet.presentation.main.MainActivity;
 import org.jetbrains.annotations.NotNull;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.TxDetailgRPCActivity;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.network.res.ResApiNewTxListCustom;
@@ -61,17 +59,9 @@ public class HistoryNewHolder extends BaseHolder {
             historySuccess.setVisibility(View.VISIBLE);
         }
         historyRoot.setOnClickListener(v -> {
-            if (!TextUtils.isEmpty(history.header.chain_id) && !mainActivity.getBaseDao().getChainIdGrpc().equals(history.header.chain_id)) {
-                String url = WUtil.getTxExplorer(mainActivity.getBaseChain(), history.data.txhash);
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                mainActivity.startActivity(intent);
-            } else {
-                Intent txDetail = new Intent(mainActivity, TxDetailgRPCActivity.class);
-                txDetail.putExtra("txHash", history.data.txhash);
-                txDetail.putExtra("isGen", false);
-                txDetail.putExtra("isSuccess", true);
-                mainActivity.startActivity(txDetail);
-            }
+            String url = WUtil.getTxExplorer(mainActivity.getBaseChain(), history.data.txhash);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            mainActivity.startActivity(intent);
         });
     }
 }

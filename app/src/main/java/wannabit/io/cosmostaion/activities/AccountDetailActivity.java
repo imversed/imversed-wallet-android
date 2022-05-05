@@ -27,7 +27,6 @@ import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityOptionsCompat;
 import androidx.core.content.ContextCompat;
 
-import com.fulldive.wallet.extensions.ChainExtensionsKt;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.fulldive.wallet.presentation.accounts.DeleteConfirmDialogFragment;
@@ -224,7 +223,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
 
         if (account.hasPrivateKey && account.fromMnemonic) {
             mAccountState.setText(getString(R.string.str_with_mnemonic));
-            mAccountPath.setText(ChainExtensionsKt.getPathString(baseChain, account.path, account.customPath));
+            mAccountPath.setText(baseChain.getPathProvider().getPathString(account.path, account.customPath));
             mPathLayer.setVisibility(View.VISIBLE);
             mImportMsg.setVisibility(View.GONE);
             mBtnCheck.setVisibility(View.VISIBLE);
