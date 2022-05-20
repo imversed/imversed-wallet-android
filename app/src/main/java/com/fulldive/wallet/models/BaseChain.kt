@@ -71,7 +71,7 @@ sealed class BaseChain constructor(
         chainAlterTitle = R.string.str_imversed_canary,
         mainDenom = "aimv",
         divideDecimal = 18,
-        displayDecimal = 6,
+        displayDecimal = 18,
         fullNameCoin = "Imversed Staking Coin",
         chainColor = R.color.colorImversed,
         coinIcon = R.drawable.imversed_token_img,

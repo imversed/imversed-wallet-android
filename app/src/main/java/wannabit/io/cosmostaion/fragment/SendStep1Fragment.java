@@ -114,25 +114,15 @@ public class SendStep1Fragment extends BaseFragment implements View.OnClickListe
                 mDpDecimal = getSActivity().getBaseChain().getDisplayDecimal();
             }
 
-            setDisplayDecimals(mDpDecimal);
-            if (toSendDenom.equals(mainDenom)) {
-                mMaxAvailable = getSActivity().getBalance(toSendDenom).subtract(feeAmount);
-            } else {
-                mMaxAvailable = getSActivity().getBalance(toSendDenom);
-            }
-        } else {
-            if (getSActivity().getBaseChain().equals(BNB_MAIN.INSTANCE)) {
-                mDpDecimal = getSActivity().getBaseChain().getDisplayDecimal();
-            } else if (getSActivity().getBaseChain().equals(OKEX_MAIN.INSTANCE)) {
-                mDpDecimal = getSActivity().getBaseChain().getDisplayDecimal();
-            }
+        } else if (getSActivity().getBaseChain().equals(BNB_MAIN.INSTANCE) || getSActivity().getBaseChain().equals(OKEX_MAIN.INSTANCE)) {
+            mDpDecimal = getSActivity().getBaseChain().getDisplayDecimal();
+        }
 
-            setDisplayDecimals(mDpDecimal);
-            if (toSendDenom.equals(mainDenom)) {
-                mMaxAvailable = getSActivity().getBalance(toSendDenom).subtract(feeAmount);
-            } else {
-                mMaxAvailable = getSActivity().getBalance(toSendDenom);
-            }
+        setDisplayDecimals(mDpDecimal);
+        if (toSendDenom.equals(mainDenom)) {
+            mMaxAvailable = getSActivity().getBalance(toSendDenom).subtract(feeAmount);
+        } else {
+            mMaxAvailable = getSActivity().getBalance(toSendDenom);
         }
 
         WDp.showCoinDp(getContext(), getBaseDao(), toSendDenom, mMaxAvailable.toPlainString(), mDenomTitle, mAvailableAmount, getSActivity().getBaseChain());

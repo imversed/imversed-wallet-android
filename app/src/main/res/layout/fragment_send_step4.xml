@@ -61,7 +61,7 @@
                                     style="@style/font_ssl_12_white"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="-" />
+                                    tools:text="-" />
 
                                 <TextView
                                     android:id="@+id/send_amount_title"
@@ -97,7 +97,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"
-                                    android:text="-" />
+                                    tools:text="-" />
 
                                 <TextView
                                     android:id="@+id/send_fees_type"
@@ -134,7 +134,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"
-                                    android:text="-" />
+                                    tools:text="-" />
 
                                 <TextView
                                     android:id="@+id/spend_total_type"
@@ -157,7 +157,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:gravity="right"
-                                android:text="-" />
+                                tools:text="-" />
                         </RelativeLayout>
 
                         <View
@@ -190,7 +190,7 @@
                                     style="@style/font_ssl_12_white"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="-" />
+                                    tools:text="-" />
 
                                 <TextView
                                     android:id="@+id/current_available_title"
@@ -226,7 +226,7 @@
                                     style="@style/font_ssl_12_white"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="-" />
+                                    tools:text="-" />
 
                                 <TextView
                                     android:id="@+id/remaining_available_title"
@@ -249,7 +249,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
                                 android:gravity="right"
-                                android:text="-" />
+                                tools:text="-" />
                         </RelativeLayout>
 
                         <View
