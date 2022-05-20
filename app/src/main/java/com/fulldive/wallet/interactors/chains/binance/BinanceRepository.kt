@@ -1,6 +1,8 @@
 package com.fulldive.wallet.interactors.chains.binance
 
+import android.text.SpannableString
 import com.fulldive.wallet.di.modules.DefaultRepositoryModule
+import com.fulldive.wallet.models.Currency
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -9,6 +11,8 @@ import wannabit.io.cosmostaion.dao.BnbToken
 import wannabit.io.cosmostaion.network.res.ResBnbAccountInfo
 import wannabit.io.cosmostaion.network.res.ResBnbFee
 import wannabit.io.cosmostaion.network.res.ResNodeInfo
+import wannabit.io.cosmostaion.utils.PriceProvider
+import java.math.BigDecimal
 import javax.inject.Inject
 
 @ProvidedBy(DefaultRepositoryModule::class)
@@ -65,4 +69,7 @@ class BinanceRepository @Inject constructor(
         return binanceLocalSource.setNodeInfo(nodeInfo)
     }
 
+    fun getBnbAmount(currency: Currency, denom: String, amount: BigDecimal, priceProvider: PriceProvider): SpannableString {
+        return binanceLocalSource.getBnbAmount(currency, denom, amount, priceProvider)
+    }
 }

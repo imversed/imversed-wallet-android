@@ -51,6 +51,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.SpannableString;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -1926,8 +1927,11 @@ public class WUtil {
 
     public static BigDecimal getBnbConvertAmount(BaseData baseData, String denom, BigDecimal amount) {
         BigDecimal result = BigDecimal.ZERO;
+        Log.d("fftf", "getBnbConvertAmount: " + denom + " " + amount);
         for (BnbTicker ticker : baseData.mBnbTickers) {
+            Log.d("fftf", "getBnbConvertAmount ticker.symbol: " + ticker.symbol + " getBnbTicSymbol(denom): " + getBnbTicSymbol(denom));
             if (ticker.symbol.equals(getBnbTicSymbol(denom))) {
+                Log.d("fftf", "getBnbConvertAmount isBnbBaseMarketToken(denom): " + isBnbBaseMarketToken(denom));
                 if (isBnbBaseMarketToken(denom)) {
                     return amount.divide(new BigDecimal(ticker.lastPrice), 8, RoundingMode.DOWN);
                 } else {

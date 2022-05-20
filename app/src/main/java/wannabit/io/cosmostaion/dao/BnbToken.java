@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import wannabit.io.cosmostaion.base.BaseConstant;
+
 public class BnbToken implements Parcelable {
 
     public static int BNB_TOKEN_TYPE_BEP2 = 1;
@@ -70,6 +72,10 @@ public class BnbToken implements Parcelable {
         dest.writeString(total_supply);
         dest.writeByte((byte) (mintable ? 1 : 0));
         dest.writeInt(type);
+    }
+
+    public String getIconUrl() {
+        return BaseConstant.BINANCE_TOKEN_IMG_URL + original_symbol + ".png";
     }
 
     public static final Creator<BnbToken> CREATOR = new Creator<BnbToken>() {

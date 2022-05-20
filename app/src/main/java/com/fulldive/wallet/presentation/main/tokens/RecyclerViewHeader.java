@@ -55,7 +55,7 @@ public class RecyclerViewHeader extends RecyclerView.ItemDecoration {
             }
 
             int section = parent.getAdapter().getItemViewType(position);
-            int title = sectionCallback.getSectionHeader(baseChain, section);
+            int title = sectionCallback.getSectionHeader(section);
             countTextView.setText(String.valueOf(sectionCallback.getSectionCount(section)));
             headerTitleTextView.setText(title);
             if (previousHeader != title || sectionCallback.isSection(baseChain, position)) {

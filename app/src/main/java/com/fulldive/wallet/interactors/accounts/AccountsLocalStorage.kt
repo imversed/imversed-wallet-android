@@ -15,7 +15,9 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
+import io.reactivex.subjects.BehaviorSubject
 import wannabit.io.cosmostaion.appextensions.getPrivateSharedPreferences
 import wannabit.io.cosmostaion.base.BaseData
 import wannabit.io.cosmostaion.dao.Account
@@ -38,6 +40,13 @@ class AccountsLocalStorage @Inject constructor(
         context.getPrivateSharedPreferences(KEY_ACCOUNTS_PREFERENCES)
 
     private var currentAccount: Account? = null
+        set(value) {
+            field = value
+            if (value != null) {
+                accountSubject.onNext(value)
+            }
+        }
+    private var accountSubject = BehaviorSubject.create<Account>()
 
     fun getAccount(accountId: Long): Single<Account> {
         return accountsDao.getAccount(accountId).map(WalletAccount::toAccount)
@@ -76,6 +85,10 @@ class AccountsLocalStorage @Inject constructor(
                         currentAccount = account
                     }
             }
+    }
+
+    fun observeCurrentAccount(): Observable<Account> {
+        return accountSubject
     }
 
     fun getSortedChains(): Single<List<BaseChain>> {

@@ -1,6 +1,9 @@
 package com.fulldive.wallet.interactors.chains.okex
 
+import android.text.SpannableString
 import com.fulldive.wallet.di.modules.DefaultRepositoryModule
+import com.fulldive.wallet.models.Currency
+import com.fulldive.wallet.models.WalletBalance
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -8,6 +11,7 @@ import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.network.res.ResNodeInfo
 import wannabit.io.cosmostaion.network.res.ResOkAccountInfo
 import wannabit.io.cosmostaion.network.res.ResOkAccountToken
+import wannabit.io.cosmostaion.utils.PriceProvider
 import javax.inject.Inject
 
 @ProvidedBy(DefaultRepositoryModule::class)
@@ -60,5 +64,13 @@ class OkexRepository @Inject constructor(
 
     fun setNodeInfo(nodeInfo: ResNodeInfo): Completable {
         return okexLocalSource.setNodeInfo(nodeInfo)
+    }
+
+    fun getOkAmount(
+        currency: Currency,
+        balance: WalletBalance,
+        priceProvider: PriceProvider
+    ): SpannableString {
+        return okexLocalSource.getOkAmount(currency, balance, priceProvider)
     }
 }

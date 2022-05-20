@@ -75,7 +75,7 @@ data class WalletBalance(
     fun getIbcHash(): String? {
         return if (!isIbc()) {
             null
-        } else denom.replace("ibc/".toRegex(), "")
+        } else denom.replace("ibc/", "")
     }
 
     fun osmosisAmm(): Boolean {

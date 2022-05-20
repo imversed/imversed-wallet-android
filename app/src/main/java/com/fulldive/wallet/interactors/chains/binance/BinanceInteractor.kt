@@ -1,10 +1,14 @@
 package com.fulldive.wallet.interactors.chains.binance
 
+import android.text.SpannableString
+import android.util.Log
 import com.fulldive.wallet.di.modules.DefaultInteractorsModule
 import com.fulldive.wallet.extensions.concat
+import com.fulldive.wallet.extensions.safe
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
 import com.fulldive.wallet.interactors.chains.StationInteractor
 import com.fulldive.wallet.models.BaseChain
+import com.fulldive.wallet.models.Currency
 import com.fulldive.wallet.rx.AppSchedulers
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
@@ -12,7 +16,9 @@ import io.reactivex.Single
 import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.model.NodeInfo
 import wannabit.io.cosmostaion.network.res.ResBnbAccountInfo
+import wannabit.io.cosmostaion.utils.PriceProvider
 import wannabit.io.cosmostaion.utils.WLog
+import java.math.BigDecimal
 import javax.inject.Inject
 
 @ProvidedBy(DefaultInteractorsModule::class)
@@ -103,6 +109,21 @@ class BinanceInteractor @Inject constructor(
             }
     }
 
+    fun getBnbAmount(currency: Currency, denom: String, amount: BigDecimal): SpannableString {
+        val priceProvider = PriceProvider { priceDenom: String ->
+            Log.d("fftf", "priceProvider: $priceDenom")
+            safe {
+                stationInteractor.getPrice(BaseChain.BNB_MAIN, priceDenom).blockingGet().also {
+                    Log.d("fftf", "priceProvider result: ${it.denom}")
+                    it.prices.forEach {
+                        Log.d("fftf", "priceProvider price: ${it.currency} =  ${it.current_price}")
+                    }
+
+                }
+            }
+        }
+        return binanceRepository.getBnbAmount(currency, denom, amount, priceProvider)
+    }
 
     companion object {
         private const val DEFAULT_LIMIT = 3000

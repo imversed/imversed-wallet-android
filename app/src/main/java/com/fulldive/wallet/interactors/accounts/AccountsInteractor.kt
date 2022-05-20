@@ -12,6 +12,7 @@ import com.fulldive.wallet.models.local.AccountSecrets
 import com.fulldive.wallet.rx.AppSchedulers
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 import wannabit.io.cosmostaion.dao.Account
 import java.util.*
@@ -38,6 +39,10 @@ class AccountsInteractor @Inject constructor(
 
     fun getCurrentAccount(): Single<Account> {
         return accountsRepository.getCurrentAccount()
+    }
+
+    fun observeCurrentAccount(): Observable<Account> {
+        return accountsRepository.observeCurrentAccount()
     }
 
     fun getAccounts(): Single<List<Account>> {

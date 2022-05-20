@@ -1,9 +1,12 @@
 package com.fulldive.wallet.interactors.chains.okex
 
+import android.text.SpannableString
 import com.fulldive.wallet.di.modules.DefaultInteractorsModule
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
 import com.fulldive.wallet.interactors.chains.StationInteractor
 import com.fulldive.wallet.models.BaseChain
+import com.fulldive.wallet.models.Currency
+import com.fulldive.wallet.models.WalletBalance
 import com.fulldive.wallet.rx.AppSchedulers
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
@@ -12,6 +15,7 @@ import wannabit.io.cosmostaion.base.BaseConstant
 import wannabit.io.cosmostaion.dao.Account
 import wannabit.io.cosmostaion.model.NodeInfo
 import wannabit.io.cosmostaion.network.res.ResOkAccountToken
+import wannabit.io.cosmostaion.utils.PriceProvider
 import javax.inject.Inject
 
 @ProvidedBy(DefaultInteractorsModule::class)
@@ -94,5 +98,16 @@ class OkexInteractor @Inject constructor(
                     .setNodeInfo(nodeInfo)
                     .toSingleDefault(nodeInfo.node_info)
             }
+    }
+
+    fun getOkAmount(
+        currency: Currency,
+        balance: WalletBalance
+    ): SpannableString {
+        val priceProvider = PriceProvider { priceDenom: String ->
+            stationInteractor.getPrice(BaseChain.OKEX_MAIN, priceDenom).blockingGet()
+        }
+
+        return okexRepository.getOkAmount(currency, balance, priceProvider)
     }
 }

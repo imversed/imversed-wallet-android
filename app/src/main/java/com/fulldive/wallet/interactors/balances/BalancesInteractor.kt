@@ -1,15 +1,23 @@
 package com.fulldive.wallet.interactors.balances
 
+import android.text.SpannableString
 import com.fulldive.wallet.di.modules.DefaultInteractorsModule
 import com.fulldive.wallet.extensions.or
+import com.fulldive.wallet.interactors.chains.StationInteractor
 import com.fulldive.wallet.interactors.chains.binance.BinanceInteractor
 import com.fulldive.wallet.interactors.chains.grpc.GrpcInteractor
 import com.fulldive.wallet.interactors.chains.okex.OkexInteractor
 import com.fulldive.wallet.models.BaseChain
+import com.fulldive.wallet.models.Currency
 import com.fulldive.wallet.models.WalletBalance
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
+import wannabit.io.cosmostaion.dao.BnbToken
+import wannabit.io.cosmostaion.dao.OkToken
+import wannabit.io.cosmostaion.utils.PriceProvider
+import java.math.BigDecimal
 import javax.inject.Inject
 
 @ProvidedBy(DefaultInteractorsModule::class)
@@ -17,11 +25,16 @@ class BalancesInteractor @Inject constructor(
     private val balancesRepository: BalancesRepository,
     private val binanceInteractor: BinanceInteractor,
     private val okexInteractor: OkexInteractor,
-    private val grpcInteractor: GrpcInteractor
+    private val grpcInteractor: GrpcInteractor,
+    private val stationInteractor: StationInteractor
 ) {
 
     fun getBalance(accountId: Long, denom: String): Single<WalletBalance> {
         return balancesRepository.getBalance(accountId, denom)
+    }
+
+    fun observeBalances(accountId: Long): Observable<List<WalletBalance>> {
+        return balancesRepository.observeBalances(accountId)
     }
 
     fun getBalances(accountId: Long): Single<List<WalletBalance>> {
@@ -124,5 +137,62 @@ class BalancesInteractor @Inject constructor(
 
     fun updateBalances(accountId: Long, balances: List<WalletBalance>): Completable {
         return balancesRepository.updateBalances(accountId, balances)
+    }
+
+    fun getAllExToken(denom: String): BigDecimal? {
+        return balancesRepository.getAllExToken(denom)
+    }
+
+    fun getBnbToken(denom: String): BnbToken? {
+        return balancesRepository.getBnbToken(denom)
+    }
+
+    fun getOkToken(denom: String): OkToken? {
+        return balancesRepository.getOkToken(denom)
+    }
+
+    fun getIbcTokenDecimal(denom: String): Int {
+        return balancesRepository
+            .getIbcToken(denom.replace("ibc/", ""))
+            ?.takeIf { it.auth }?.decimal.or(6)
+    }
+
+    fun getAllMainAsset(denom: String): BigDecimal? {
+        return balancesRepository.getAllMainAsset(denom)
+    }
+
+    fun getKavaCoinDecimal(denom: String): Int {
+        return when (denom.lowercase()) {
+            "xrpb",
+            "xrbp",
+            "btc",
+            "bnb",
+            "btcb",
+            "hbtc",
+            "busd"
+            -> 8
+            else -> {
+                if (denom.lowercase().startsWith("ibc/")) {
+                    getIbcTokenDecimal(denom)
+                } else 6
+            }
+        }
+    }
+
+    fun getTokenAmount(
+        chain: BaseChain,
+        currency: Currency,
+        balance: WalletBalance
+    ): SpannableString {
+        val priceProvider = PriceProvider { priceDenom: String ->
+            stationInteractor.getPrice(chain, priceDenom).blockingGet()
+        }
+
+        return balancesRepository.getTokenAmount(
+            currency,
+            balance,
+            priceProvider,
+            chain.displayDecimal
+        )
     }
 }

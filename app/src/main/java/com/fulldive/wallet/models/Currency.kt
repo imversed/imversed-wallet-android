@@ -1,11 +1,18 @@
 package com.fulldive.wallet.models
 
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.RelativeSizeSpan
 import com.fulldive.wallet.extensions.unsafeLazy
+import wannabit.io.cosmostaion.utils.WDp
+import java.math.BigDecimal
+import java.text.DecimalFormat
 
 sealed class Currency(
     val id: Int,
     val title: String,
-    val symbol: String
+    val symbol: String,
+    val divider: Int = 3
 ) {
     object USD : Currency(0, "USD", "$")
     object EUR : Currency(1, "EUR", "€")
@@ -24,6 +31,22 @@ sealed class Currency(
     object AUD : Currency(14, "AUD", "AU$")
     object CAD : Currency(15, "CAD", "$")
     object MYR : Currency(16, "MYR", "RM")
+
+    private val decimalFormat: DecimalFormat by unsafeLazy {
+        WDp.getDecimalFormat(divider)
+    }
+
+    fun format(value: BigDecimal, fractionalPartSize: Float = 0.8f): SpannableString {
+        return SpannableString("$symbol ${decimalFormat.format(value)}")
+            .apply {
+                setSpan(
+                    RelativeSizeSpan(fractionalPartSize),
+                    length - divider,
+                    length,
+                    Spanned.SPAN_INCLUSIVE_INCLUSIVE
+                )
+            }
+    }
 
     companion object {
         val currencies by unsafeLazy {

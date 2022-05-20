@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -11,10 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/space_12"
         android:layout_marginEnd="@dimen/space_12"
-        app:cardPreventCornerOverlap="true"
+        app:cardBackgroundColor="@color/colorTransBg"
         app:cardCornerRadius="@dimen/space_6"
         app:cardElevation="1.5dp"
-        app:cardBackgroundColor="@color/colorTransBg"
+        app:cardPreventCornerOverlap="true"
         app:cardUseCompatPadding="true">
 
         <LinearLayout
@@ -23,47 +24,47 @@
             android:orientation="vertical"
             android:paddingStart="@dimen/space_16"
             android:paddingTop="@dimen/space_12"
-            android:paddingBottom="@dimen/space_12"
-            android:paddingEnd="@dimen/space_4">
+            android:paddingEnd="@dimen/space_4"
+            android:paddingBottom="@dimen/space_12">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:id="@+id/img_account"
+                    android:id="@+id/keyStatusImageView"
                     android:layout_width="@dimen/space_24"
                     android:layout_height="@dimen/space_24"
                     android:layout_centerVertical="true"
                     android:src="@drawable/key_off" />
 
                 <TextView
-                    android:id="@+id/wallet_address"
+                    android:id="@+id/addressTextView"
+                    style="@style/font_ss_12_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/img_account"
-                    android:layout_marginStart="@dimen/space_6"
                     android:layout_centerVertical="true"
-                    style="@style/font_ss_12_white"
+                    android:layout_marginStart="@dimen/space_6"
+                    android:layout_toEndOf="@+id/keyStatusImageView"
                     android:singleLine="true"
                     android:text="" />
             </RelativeLayout>
 
             <TextView
-                android:id="@+id/total_value"
+                android:id="@+id/totalValueTextView"
+                style="@style/font_ss_21_white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingEnd="@dimen/space_12"
                 android:layout_marginTop="@dimen/space_2"
-                style="@style/font_ss_21_white"
+                android:gravity="center_horizontal"
+                android:paddingEnd="@dimen/space_12"
                 android:singleLine="true"
-                android:text="0.000"
-                android:gravity="center_horizontal" />
+                tools:text="0.000" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/layer_refresher"
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -72,31 +73,31 @@
             android:layout_height="match_parent">
 
             <LinearLayout
-                android:id="@+id/empty_token"
+                android:id="@+id/emptyLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/history_none_img"
-                    android:scaleType="fitXY" />
+                    android:scaleType="fitXY"
+                    android:src="@drawable/history_none_img" />
 
                 <TextView
+                    style="@style/font_ss_14_white"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/space_6"
                     android:layout_centerInParent="true"
-                    style="@style/font_ss_14_white"
+                    android:layout_marginTop="@dimen/space_6"
                     android:text="@string/str_no_coin" />
             </LinearLayout>
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler"
+                android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:clipToPadding="false"

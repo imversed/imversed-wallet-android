@@ -1308,7 +1308,7 @@ public class WDp {
     public static SpannableString dpPerUserCurrencyValue(BaseData baseData, Currency currency, String denom, PriceProvider priceProvider) {
         BigDecimal totalValue = perUserCurrencyValue(baseData, currency, denom, priceProvider);
         final String formatted = currency.getSymbol() + " " + getDecimalFormat(3).format(totalValue);
-        return dpCurrencyValue(formatted, 3);
+        return getDpString(formatted, 3);
     }
 
     public static BigDecimal userCurrencyValue(BaseData baseData, Currency currency, String denom, BigDecimal amount, int divider, PriceProvider priceProvider) {
@@ -1318,7 +1318,7 @@ public class WDp {
     public static SpannableString dpUserCurrencyValue(BaseData baseData, Currency currency, String denom, BigDecimal amount, int divider, PriceProvider priceProvider) {
         BigDecimal totalValue = userCurrencyValue(baseData, currency, denom, amount, divider, priceProvider);
         final String formatted = currency.getSymbol() + " " + getDecimalFormat(3).format(totalValue);
-        return dpCurrencyValue(formatted, 3);
+        return getDpString(formatted, 3);
     }
 
     public static BigDecimal allAssetToUserCurrency(BaseChain baseChain, Currency currency, BaseData baseData, List<WalletBalance> balances, PriceProvider priceProvider) {
@@ -1329,13 +1329,10 @@ public class WDp {
                     BigDecimal amount = balance.getBalanceAmount().add(baseData.getAllMainAsset(balance.getDenom()));   //TODO: add vesting
                     BigDecimal assetValue = userCurrencyValue(baseData, currency, balance.getDenom(), amount, baseChain.getDivideDecimal(), priceProvider);
                     totalValue = totalValue.add(assetValue);
-                } else if (baseChain.equals(BaseChain.COSMOS_MAIN.INSTANCE) && balance.getDenom().startsWith("pool")) {
+                } else if (baseChain.equals(BaseChain.COSMOS_MAIN.INSTANCE) && balance.getDenom().startsWith("pool")
+                        || baseChain.equals(BaseChain.OSMOSIS_MAIN.INSTANCE) && balance.getDenom().equals(TOKEN_ION)) {
                     BigDecimal amount = balance.getBalanceAmount();
-                    BigDecimal assetValue = userCurrencyValue(baseData, currency, balance.getDenom(), amount, 6, priceProvider);
-                    totalValue = totalValue.add(assetValue);
-                } else if (baseChain.equals(BaseChain.OSMOSIS_MAIN.INSTANCE) && balance.getDenom().equals(TOKEN_ION)) {
-                    BigDecimal amount = balance.getBalanceAmount();
-                    BigDecimal assetValue = userCurrencyValue(baseData, currency, balance.getDenom(), amount, 6, priceProvider);
+                    BigDecimal assetValue = userCurrencyValue(baseData, currency, balance.getDenom(), amount, baseChain.getDivideDecimal(), priceProvider);
                     totalValue = totalValue.add(assetValue);
                 } else if (baseChain.equals(BaseChain.OSMOSIS_MAIN.INSTANCE) && balance.getDenom().contains("gamm/pool")) {
                     BigDecimal amount = balance.getBalanceAmount();
@@ -1348,7 +1345,7 @@ public class WDp {
                     totalValue = totalValue.add(assetValue);
                 } else if (baseChain.equals(BaseChain.EMONEY_MAIN.INSTANCE) || balance.getDenom().startsWith("e")) {
                     BigDecimal available = balance.getBalanceAmount();
-                    totalValue = totalValue.add(userCurrencyValue(baseData, currency, balance.getDenom(), available, 6, priceProvider));
+                    totalValue = totalValue.add(userCurrencyValue(baseData, currency, balance.getDenom(), available, baseChain.getDivideDecimal(), priceProvider));
                 } else if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE) && !balance.isIbc()) {
                     BigDecimal amount = balance.getBalanceAmount();
 //                    amount = amount.add(baseData.getVesting(balance.getSymbol())); // TODO Vesting
@@ -1419,15 +1416,10 @@ public class WDp {
         return totalValue;
     }
 
-
     public static SpannableString dpAllAssetValueUserCurrency(BaseChain baseChain, Currency currency, BaseData baseData, List<WalletBalance> balances, PriceProvider priceProvider) {
         BigDecimal totalValue = allAssetToUserCurrency(baseChain, currency, baseData, balances, priceProvider);
         final String formatted = currency.getSymbol() + " " + getDecimalFormat(3).format(totalValue);
-        return dpCurrencyValue(formatted, 3);
-    }
-
-    public static SpannableString dpCurrencyValue(String input, int dpPoint) {
-        return getDpString(input, dpPoint);
+        return getDpString(formatted, 3);
     }
 
     public static SpannableString getSelfBondRate(String total, String self) {

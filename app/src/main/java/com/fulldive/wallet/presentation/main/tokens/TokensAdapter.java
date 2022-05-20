@@ -51,7 +51,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
     public List<WalletBalance> poolItems = new ArrayList<>();
     public List<WalletBalance> etherItems = new ArrayList<>();
     public List<WalletBalance> ibcUnknownItems = new ArrayList<>();
-    public List<WalletBalance> GravityDexItems = new ArrayList<>();
+    public List<WalletBalance> gravityDexItems = new ArrayList<>();
     public List<WalletBalance> injectivePoolItems = new ArrayList<>();
     public List<WalletBalance> kavaBep2Items = new ArrayList<>();
     public List<WalletBalance> nativeItems = new ArrayList<>();
@@ -84,7 +84,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
                 onBindOsmoPoolToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size());
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_IBC_UNKNOWN_GRPC) {
                 onBindIbcUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - poolItems.size());
-            } else if (getItemViewType(position) == MainTokensFragment.SECTION_UNKNOWN) {
+            } else {
                 onBindUnKnownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - poolItems.size() - ibcUnknownItems.size());
             }
 
@@ -97,7 +97,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
                 onBindErcToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size());
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_IBC_UNKNOWN_GRPC) {
                 onBindIbcUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - etherItems.size());
-            } else if (getItemViewType(position) == MainTokensFragment.SECTION_UNKNOWN) {
+            } else {
                 onBindUnKnownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - etherItems.size() - ibcUnknownItems.size());
             }
 
@@ -109,9 +109,9 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_GRAVICTY_DEX_GRPC) {
                 onBindGravityDexToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size());
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_IBC_UNKNOWN_GRPC) {
-                onBindIbcUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - GravityDexItems.size());
-            } else if (getItemViewType(position) == MainTokensFragment.SECTION_UNKNOWN) {
-                onBindUnKnownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - GravityDexItems.size() - ibcUnknownItems.size());
+                onBindIbcUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - gravityDexItems.size());
+            } else {
+                onBindUnKnownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - gravityDexItems.size() - ibcUnknownItems.size());
             }
 
         } else if (baseChain.equals(BaseChain.INJ_MAIN.INSTANCE)) {
@@ -125,7 +125,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
                 onBindInjectivePoolToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - etherItems.size());
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_IBC_UNKNOWN_GRPC) {
                 onBindIbcUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - etherItems.size() - injectivePoolItems.size());
-            } else if (getItemViewType(position) == MainTokensFragment.SECTION_UNKNOWN) {
+            } else {
                 onBindUnKnownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - etherItems.size() - injectivePoolItems.size() - ibcUnknownItems.size());
             }
 
@@ -140,7 +140,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
                 onBindEtcGrpcToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - kavaBep2Items.size());
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_IBC_UNKNOWN_GRPC) {
                 onBindIbcUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - kavaBep2Items.size() - etcItems.size());
-            } else if (getItemViewType(position) == MainTokensFragment.SECTION_UNKNOWN) {
+            } else {
                 onBindUnKnownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - kavaBep2Items.size() - etcItems.size() - ibcUnknownItems.size());
             }
 
@@ -153,7 +153,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
                 onBindCw20GrpcToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size());
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_IBC_UNKNOWN_GRPC) {
                 onBindIbcUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - CW20Items.size());
-            } else if (getItemViewType(position) == MainTokensFragment.SECTION_UNKNOWN) {
+            } else {
                 onBindUnKnownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - CW20Items.size() - ibcUnknownItems.size());
             }
 
@@ -164,16 +164,16 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
                 onBindIbcAuthToken(viewHolder, position - nativeItems.size());
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_IBC_UNKNOWN_GRPC) {
                 onBindIbcUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size());
-            } else if (getItemViewType(position) == MainTokensFragment.SECTION_UNKNOWN) {
+            } else {
                 onBindUnKnownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - ibcUnknownItems.size());
             }
 
         } else if (baseChain.equals(BaseChain.OKEX_MAIN.INSTANCE)) {
             if (getItemViewType(position) == MainTokensFragment.SECTION_NATIVE) {
                 onBindNativeItem(viewHolder, position);
-            } else if (getItemViewType(position) == MainTokensFragment.SECTION_ETC) {
+            } else if (getItemViewType(position) == MainTokensFragment.SECTION_OKEX_ETC) {
                 onBindEtcToken(viewHolder, position - nativeItems.size());
-            } else if (getItemViewType(position) == MainTokensFragment.SECTION_UNKNOWN) {
+            } else {
                 onBindUnknownCoin(viewHolder, position - nativeItems.size() - etcItems.size());
             }
         } else if (baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
@@ -181,15 +181,13 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
                 onBindNativeItem(viewHolder, position);
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_ETC) {
                 onBindEtcToken(viewHolder, position - nativeItems.size());
-            } else if (getItemViewType(position) == MainTokensFragment.SECTION_UNKNOWN) {
+            } else {
                 onBindUnknownCoin(viewHolder, position - nativeItems.size() - etcItems.size());
             }
+        } else if (getItemViewType(position) == MainTokensFragment.SECTION_NATIVE) {
+            onBindNativeItem(viewHolder, position);
         } else {
-            if (getItemViewType(position) == MainTokensFragment.SECTION_NATIVE) {
-                onBindNativeItem(viewHolder, position);
-            } else if (getItemViewType(position) == MainTokensFragment.SECTION_UNKNOWN) {
-                onBindUnknownCoin(viewHolder, position - nativeItems.size());
-            }
+            onBindUnknownCoin(viewHolder, position - nativeItems.size());
         }
     }
 
@@ -235,11 +233,11 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
                 return MainTokensFragment.SECTION_NATIVE;
             } else if (position < nativeItems.size() + ibcAuthedItems.size()) {
                 return MainTokensFragment.SECTION_IBC_AUTHED_GRPC;
-            } else if (position < nativeItems.size() + ibcAuthedItems.size() + GravityDexItems.size()) {
+            } else if (position < nativeItems.size() + ibcAuthedItems.size() + gravityDexItems.size()) {
                 return MainTokensFragment.SECTION_GRAVICTY_DEX_GRPC;
-            } else if (position < nativeItems.size() + ibcAuthedItems.size() + GravityDexItems.size() + ibcUnknownItems.size()) {
+            } else if (position < nativeItems.size() + ibcAuthedItems.size() + gravityDexItems.size() + ibcUnknownItems.size()) {
                 return MainTokensFragment.SECTION_IBC_UNKNOWN_GRPC;
-            } else if (position < nativeItems.size() + ibcAuthedItems.size() + GravityDexItems.size() + ibcUnknownItems.size() + unknownItems.size()) {
+            } else if (position < nativeItems.size() + ibcAuthedItems.size() + gravityDexItems.size() + ibcUnknownItems.size() + unknownItems.size()) {
                 return MainTokensFragment.SECTION_UNKNOWN;
             }
 
@@ -301,13 +299,13 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
                 if (position < nativeItems.size()) {
                     return MainTokensFragment.SECTION_NATIVE;
                 } else if (position < nativeItems.size() + etcItems.size()) {
-                    return MainTokensFragment.SECTION_ETC;
+                    return MainTokensFragment.SECTION_OKEX_ETC;
                 } else if (position < nativeItems.size() + etcItems.size() + unknownItems.size()) {
                     return MainTokensFragment.SECTION_UNKNOWN;
                 }
             } else {
                 if (position < etcItems.size()) {
-                    return MainTokensFragment.SECTION_ETC;
+                    return MainTokensFragment.SECTION_OKEX_ETC;
                 } else if (position < etcItems.size() + unknownItems.size()) {
                     return MainTokensFragment.SECTION_UNKNOWN;
                 }
@@ -327,82 +325,124 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
         return 0;
     }
 
+    //with native tokens
+    private void onBindNativeItem(AssetHolder holder, int position) {
+        final WalletBalance balance = nativeItems.get(position);
+        final Context context = holder.itemView.getContext();
+
+        if (baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
+            final String denom = balance.getDenom();
+
+            final BigDecimal amount = balance.getTotalAmount();
+            final BnbToken bnbToken = baseData.getBnbToken(denom);
+            if (bnbToken != null) {
+                holder.titleTextView.setText(bnbToken.original_symbol.toUpperCase());
+                holder.hintTextView.setText("(" + bnbToken.symbol + ")");
+                holder.descriptionTextView.setText(baseChain.getFullNameCoin());
+                holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, baseChain.getCoinIcon()));
+                holder.titleTextView.setTextColor(WDp.getChainColor(context, baseChain));
+                holder.balanceTextView.setText(WDp.getDpAmount2(amount, baseChain.getDivideDecimal(), baseChain.getDisplayDecimal()));
+                holder.valueTextView.setText(WDp.dpUserCurrencyValue(baseData, currency, baseChain.getMainDenom(), amount, 0, priceProvider));
+            }
+            holder.cardView.setOnClickListener(v -> {
+                itemsClickListeners.onNativeStackingTokenClicked();
+            });
+
+        } else if (baseChain.equals(BaseChain.OKEX_MAIN.INSTANCE)) {
+            final OkToken okToken = baseData.okToken(balance.getDenom());
+            holder.titleTextView.setText(okToken.original_symbol.toUpperCase());
+            holder.hintTextView.setText("(" + okToken.symbol + ")");
+            holder.descriptionTextView.setText(BaseChain.OKEX_MAIN.INSTANCE.getFullNameCoin());
+            if (balance.getDenom().equals(BaseChain.OKEX_MAIN.INSTANCE.getMainDenom())) {
+                holder.titleTextView.setTextColor(WDp.getChainColor(context, baseChain));
+                holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, baseChain.getCoinIcon()));
+
+                BigDecimal totalAmount = balance.getDelegatableAmount().add(baseData.getAllExToken(balance.getDenom()));
+                holder.balanceTextView.setText(WDp.getDpAmount2(totalAmount, 0, 6));
+                holder.valueTextView.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), totalAmount, 0, priceProvider));
+            }
+            holder.cardView.setOnClickListener(v -> {
+                itemsClickListeners.onNativeStackingTokenClicked();
+            });
+        }
+    }
+
+
     //with Native gRPC
     private void onNativeGrpcItem(AssetHolder holder, final int position) {
         final WalletBalance balance = nativeItems.get(position);
         final BaseChain chain = BaseChain.Companion.getChainByDenom(balance.getDenom());
 
-        Picasso.get().cancelRequest(holder.itemImg);
+        Picasso.get().cancelRequest(holder.imageView);
         final Context context = holder.itemView.getContext();
 
         if (chain != null) {
-            holder.itemSymbol.setText(chain.getSymbolTitle());
-            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, chain.getChainColor()));
-            holder.itemFullName.setText(chain.getFullNameCoin());
+            holder.titleTextView.setText(chain.getSymbolTitle());
+            holder.titleTextView.setTextColor(ContextCompat.getColor(context, chain.getChainColor()));
+            holder.descriptionTextView.setText(chain.getFullNameCoin());
             if (balance.getDenom().equals(BaseChain.SECRET_MAIN.INSTANCE.getMainDenom())) {
-                holder.itemInnerSymbol.setText("(" + balance.getDenom() + ")");
+                holder.hintTextView.setText("(" + balance.getDenom() + ")");
             } else {
-                holder.itemInnerSymbol.setText("");
+                holder.hintTextView.setText("");
             }
-            holder.itemImg.setImageDrawable(ContextCompat.getDrawable(context, chain.getCoinIcon()));
+            holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, chain.getCoinIcon()));
         } else if (balance.getDenom().equals(TOKEN_ION)) {
-            holder.itemSymbol.setText(R.string.str_uion_c);
-            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorIon));
-            holder.itemInnerSymbol.setText("");
-            holder.itemFullName.setText("Ion Coin");
-            holder.itemImg.setImageResource(R.drawable.token_ion);
+            holder.titleTextView.setText(R.string.str_uion_c);
+            holder.titleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorIon));
+            holder.hintTextView.setText("");
+            holder.descriptionTextView.setText("Ion Coin");
+            holder.imageView.setImageResource(R.drawable.token_ion);
         } else if (balance.getDenom().equals(TOKEN_HARD)) {
-            Picasso.get().load(KAVA_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
-            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorHard));
-            holder.itemSymbol.setText(balance.getDenom().toUpperCase());
-            holder.itemInnerSymbol.setText("");
-            holder.itemFullName.setText("HardPool Gov. Coin");
+            Picasso.get().load(KAVA_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.imageView);
+            holder.titleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorHard));
+            holder.titleTextView.setText(balance.getDenom().toUpperCase());
+            holder.hintTextView.setText("");
+            holder.descriptionTextView.setText("HardPool Gov. Coin");
         } else if (balance.getDenom().equals(TOKEN_USDX)) {
-            Picasso.get().load(KAVA_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
-            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorUsdx));
-            holder.itemSymbol.setText(balance.getDenom().toUpperCase());
-            holder.itemInnerSymbol.setText("");
-            holder.itemFullName.setText("USD Stable Asset");
+            Picasso.get().load(KAVA_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.imageView);
+            holder.titleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorUsdx));
+            holder.titleTextView.setText(balance.getDenom().toUpperCase());
+            holder.hintTextView.setText("");
+            holder.descriptionTextView.setText("USD Stable Asset");
         } else if (balance.getDenom().equals(TOKEN_SWP)) {
-            Picasso.get().load(KAVA_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
-            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorSwp));
-            holder.itemSymbol.setText(balance.getDenom().toUpperCase());
-            holder.itemInnerSymbol.setText("");
-            holder.itemFullName.setText("Kava Swap Coin");
+            Picasso.get().load(KAVA_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.imageView);
+            holder.titleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorSwp));
+            holder.titleTextView.setText(balance.getDenom().toUpperCase());
+            holder.hintTextView.setText("");
+            holder.descriptionTextView.setText("Kava Swap Coin");
         } else if (balance.getDenom().startsWith("e")) {
-            holder.itemSymbol.setText(balance.getDenom().toUpperCase());
-            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-            holder.itemInnerSymbol.setText("");
-            holder.itemFullName.setText(balance.getDenom().substring(1).toUpperCase() + " on E-Money Network");
-            Picasso.get().load(EMONEY_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
+            holder.titleTextView.setText(balance.getDenom().toUpperCase());
+            holder.titleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+            holder.hintTextView.setText("");
+            holder.descriptionTextView.setText(balance.getDenom().substring(1).toUpperCase() + " on E-Money Network");
+            Picasso.get().load(EMONEY_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.imageView);
         }
 
         BigDecimal amount = balance.getBalanceAmount().add(baseData.getAllMainAsset(balance.getDenom()));  //TODO: add vesting
         int divideDecimal = 6;
         int displayDecimal = 6;
-        int divider = 6;
 
         if (balance.getDenom().equals(TOKEN_ION) || balance.getDenom().startsWith("e")) {
             amount = onBalanceProvider.getFullBalance(balance.getDenom()).getBalanceAmount();
         } else if (balance.getDenom().equals(BaseChain.FETCHAI_MAIN.INSTANCE.getMainDenom()) || balance.getDenom().equals(BaseChain.INJ_MAIN.INSTANCE.getMainDenom()) || balance.getDenom().equals(BaseChain.SIF_MAIN.INSTANCE.getMainDenom()) ||
                 balance.getDenom().equals(BaseChain.EVMOS_MAIN.INSTANCE.getMainDenom()) || balance.getDenom().equals(BaseChain.CUDOS_MAIN.INSTANCE.getMainDenom())) {
             divideDecimal = 18;
-            divider = 18;
+            displayDecimal = 18;
         } else if (balance.getDenom().equals(BaseChain.PROVENANCE_MAIN.INSTANCE.getMainDenom())) {
             divideDecimal = 9;
-            divider = 9;
+            displayDecimal = 9;
         } else if (balance.getDenom().equals(BaseChain.CRYPTO_MAIN.INSTANCE.getMainDenom())) {
             divideDecimal = 8;
-            divider = 8;
+            displayDecimal = 8;
         } else if (balance.getDenom().equals(TOKEN_HARD) || balance.getDenom().equals(TOKEN_USDX) || balance.getDenom().equals(TOKEN_SWP)) {
             amount = balance.getBalanceAmount(); // .add(baseData.getVesting(balance.getSymbol()));
             divideDecimal = WUtil.getKavaCoinDecimal(baseData, balance.getDenom());
         }
 
-        holder.itemBalance.setText(WDp.getDpAmount2(amount, divideDecimal, displayDecimal));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), amount, divider, priceProvider));
+        holder.balanceTextView.setText(WDp.getDpAmount2(amount, divideDecimal, displayDecimal));
+        holder.valueTextView.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), amount, displayDecimal, priceProvider));
 
-        holder.itemRoot.setOnClickListener(v -> {
+        holder.cardView.setOnClickListener(v -> {
             if (nativeItems.get(position).getDenom().equalsIgnoreCase(baseChain.getMainDenom())) {
                 itemsClickListeners.onStackingTokenClicked(balance.getDenom());
             } else {
@@ -416,27 +456,27 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
         final WalletBalance balance = ibcAuthedItems.get(position);
         final IbcToken ibcToken = baseData.getIbcToken(balance.getDenom());
         final Context context = holder.itemView.getContext();
-        holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-        holder.itemFullName.setEllipsize(TextUtils.TruncateAt.MIDDLE);
-        holder.itemInnerSymbol.setText("");
+        holder.titleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+        holder.descriptionTextView.setEllipsize(TextUtils.TruncateAt.MIDDLE);
+        holder.hintTextView.setText("");
         if (ibcToken == null) {
-            holder.itemSymbol.setText(R.string.str_unknown);
-            holder.itemFullName.setText("");
-            holder.itemImg.setImageResource(R.drawable.token_default_ibc);
-            holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
-            holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), BigDecimal.ZERO, 6, priceProvider));
+            holder.titleTextView.setText(R.string.str_unknown);
+            holder.descriptionTextView.setText("");
+            holder.imageView.setImageResource(R.drawable.token_default_ibc);
+            holder.balanceTextView.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
+            holder.valueTextView.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), BigDecimal.ZERO, 6, priceProvider));
         } else {
-            holder.itemSymbol.setText(ibcToken.display_denom.toUpperCase());
-            holder.itemFullName.setText(ibcToken.channel_id);
-            holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), ibcToken.decimal, 6));
-            holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, baseData.getBaseDenom(balance.getDenom()), balance.getBalanceAmount(), ibcToken.decimal, priceProvider));
+            holder.titleTextView.setText(ibcToken.display_denom.toUpperCase());
+            holder.descriptionTextView.setText(ibcToken.channel_id);
+            holder.balanceTextView.setText(WDp.getDpAmount2(balance.getBalanceAmount(), ibcToken.decimal, 6));
+            holder.valueTextView.setText(WDp.dpUserCurrencyValue(baseData, currency, baseData.getBaseDenom(balance.getDenom()), balance.getBalanceAmount(), ibcToken.decimal, priceProvider));
             try {
-                Picasso.get().load(ibcToken.moniker).fit().placeholder(R.drawable.token_default_ibc).error(R.drawable.token_default_ibc).into(holder.itemImg);
+                Picasso.get().load(ibcToken.moniker).fit().placeholder(R.drawable.token_default_ibc).error(R.drawable.token_default_ibc).into(holder.imageView);
             } catch (Exception e) {
             }
         }
 
-        holder.itemRoot.setOnClickListener(v -> {
+        holder.cardView.setOnClickListener(v -> {
             itemsClickListeners.onIbcTokenClicked(balance.getDenom());
         });
     }
@@ -445,21 +485,21 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
     private void onBindIbcUnknownToken(AssetHolder holder, int position) {
         final WalletBalance balance = ibcUnknownItems.get(position);
         final IbcToken ibcToken = baseData.getIbcToken(balance.getDenom());
-        holder.itemInnerSymbol.setText("");
-        holder.itemSymbol.setText(R.string.str_unknown);
+        holder.hintTextView.setText("");
+        holder.titleTextView.setText(R.string.str_unknown);
         if (ibcToken == null) {
-            holder.itemFullName.setText("");
-            holder.itemImg.setImageResource(R.drawable.token_default_ibc);
-            holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
-            holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), BigDecimal.ZERO, 6, priceProvider));
+            holder.descriptionTextView.setText("");
+            holder.imageView.setImageResource(R.drawable.token_default_ibc);
+            holder.balanceTextView.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
+            holder.valueTextView.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), BigDecimal.ZERO, 6, priceProvider));
         } else {
-            holder.itemFullName.setText(ibcToken.channel_id);
-            holder.itemImg.setImageResource(R.drawable.token_default_ibc);
-            holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
-            holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), balance.getBalanceAmount(), 6, priceProvider));
+            holder.descriptionTextView.setText(ibcToken.channel_id);
+            holder.imageView.setImageResource(R.drawable.token_default_ibc);
+            holder.balanceTextView.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
+            holder.valueTextView.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), balance.getBalanceAmount(), 6, priceProvider));
         }
 
-        holder.itemRoot.setOnClickListener(v -> {
+        holder.cardView.setOnClickListener(v -> {
             itemsClickListeners.onIbcTokenClicked(balance.getDenom());
         });
     }
@@ -468,36 +508,36 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
     private void onBindOsmoPoolToken(AssetHolder holder, int position) {
         final WalletBalance balance = poolItems.get(position);
         final Context context = holder.itemView.getContext();
-        holder.itemSymbol.setText(balance.osmosisAmmDpDenom());
-        holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-        holder.itemInnerSymbol.setText("");
-        holder.itemFullName.setText(balance.getDenom());
-        holder.itemImg.setImageResource(R.drawable.token_pool);
-        holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 18, 6));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), balance.getBalanceAmount(), 18, priceProvider));
+        holder.titleTextView.setText(balance.osmosisAmmDpDenom());
+        holder.titleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+        holder.hintTextView.setText("");
+        holder.descriptionTextView.setText(balance.getDenom());
+        holder.imageView.setImageResource(R.drawable.token_pool);
+        holder.balanceTextView.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 18, 6));
+        holder.valueTextView.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), balance.getBalanceAmount(), 18, priceProvider));
 
-        holder.itemRoot.setOnClickListener(v -> {
+        holder.cardView.setOnClickListener(v -> {
             itemsClickListeners.onOsmoPoolTokenClicked(balance.getDenom());
         });
     }
 
     //with Cosmos Gravity Dex gRPC
     private void onBindGravityDexToken(AssetHolder holder, int position) {
-        final WalletBalance balance = GravityDexItems.get(position);
+        final WalletBalance balance = gravityDexItems.get(position);
         final Context context = holder.itemView.getContext();
 
-        Picasso.get().load(COSMOS_COIN_IMG_URL + "gravitydex.png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
-        holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), balance.getBalanceAmount(), 6, priceProvider));
-        holder.itemInnerSymbol.setText("");
+        Picasso.get().load(COSMOS_COIN_IMG_URL + "gravitydex.png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.imageView);
+        holder.balanceTextView.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
+        holder.valueTextView.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), balance.getBalanceAmount(), 6, priceProvider));
+        holder.hintTextView.setText("");
         Liquidity.Pool poolInfo = baseData.getGravityPoolByDenom(balance.getDenom());
         if (poolInfo != null) {
-            holder.itemSymbol.setText("GDEX-" + poolInfo.getId());
-            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-            holder.itemFullName.setText("pool/" + poolInfo.getId());
+            holder.titleTextView.setText("GDEX-" + poolInfo.getId());
+            holder.titleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+            holder.descriptionTextView.setText("pool/" + poolInfo.getId());
         }
 
-        holder.itemRoot.setOnClickListener(v -> itemsClickListeners.onOsmoPoolTokenClicked(balance.getDenom()));
+        holder.cardView.setOnClickListener(v -> itemsClickListeners.onOsmoPoolTokenClicked(balance.getDenom()));
     }
 
     //with Injective Pool gRPC
@@ -505,15 +545,15 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
         final WalletBalance balance = injectivePoolItems.get(position);
         final Context context = holder.itemView.getContext();
 
-        holder.itemSymbol.setText("SHARE" + balance.getDenom().substring(5));
-        holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-        holder.itemInnerSymbol.setText("");
-        holder.itemFullName.setText("Pool Asset");
-        holder.itemImg.setImageResource(R.drawable.token_ic);
-        holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 18, 6));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), BigDecimal.ZERO, 6, priceProvider));
+        holder.titleTextView.setText("SHARE" + balance.getDenom().substring(5));
+        holder.titleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+        holder.hintTextView.setText("");
+        holder.descriptionTextView.setText("Pool Asset");
+        holder.imageView.setImageResource(R.drawable.token_ic);
+        holder.balanceTextView.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 18, 6));
+        holder.valueTextView.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), BigDecimal.ZERO, 6, priceProvider));
 
-        holder.itemRoot.setOnClickListener(v -> {
+        holder.cardView.setOnClickListener(v -> {
             itemsClickListeners.onOsmoPoolTokenClicked(balance.getDenom());
         });
     }
@@ -525,17 +565,17 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
         final Context context = holder.itemView.getContext();
 
         if (assets != null) {
-            holder.itemSymbol.setText(assets.origin_symbol);
-            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-            holder.itemInnerSymbol.setText("");
-            holder.itemFullName.setText(assets.display_symbol);
-            Picasso.get().load(ASSET_IMG_URL + assets.logo).fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
+            holder.titleTextView.setText(assets.origin_symbol);
+            holder.titleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+            holder.hintTextView.setText("");
+            holder.descriptionTextView.setText(assets.display_symbol);
+            Picasso.get().load(ASSET_IMG_URL + assets.logo).fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.imageView);
 
             BigDecimal totalAmount = onBalanceProvider.getFullBalance(assets.denom).getBalanceAmount();
-            holder.itemBalance.setText(WDp.getDpAmount2(totalAmount, assets.decimal, 6));
-            holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, assets.origin_symbol, totalAmount, assets.decimal, priceProvider));
+            holder.balanceTextView.setText(WDp.getDpAmount2(totalAmount, assets.decimal, 6));
+            holder.valueTextView.setText(WDp.dpUserCurrencyValue(baseData, currency, assets.origin_symbol, totalAmount, assets.decimal, priceProvider));
 
-            holder.itemRoot.setOnClickListener(v -> {
+            holder.cardView.setOnClickListener(v -> {
                 itemsClickListeners.onErcTokenClicked(balance.getDenom());
             });
         }
@@ -546,19 +586,19 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
         final WalletBalance balance = kavaBep2Items.get(position);
         final Context context = holder.itemView.getContext();
 
-        Picasso.get().load(KAVA_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
-        holder.itemSymbol.setText(balance.getDenom().toUpperCase());
-        holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-        holder.itemInnerSymbol.setText("");
-        holder.itemFullName.setText(balance.getDenom().toUpperCase() + " on Kava Chain");
+        Picasso.get().load(KAVA_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.imageView);
+        holder.titleTextView.setText(balance.getDenom().toUpperCase());
+        holder.titleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+        holder.hintTextView.setText("");
+        holder.descriptionTextView.setText(balance.getDenom().toUpperCase() + " on Kava Chain");
 
         BigDecimal totalAmount = onBalanceProvider.getFullBalance(balance.getDenom()).getBalanceAmount();
         String baseDenom = WDp.getKavaBaseDenom(balance.getDenom());
         int bep2decimal = WUtil.getKavaCoinDecimal(baseData, balance.getDenom());
-        holder.itemBalance.setText(WDp.getDpAmount2(totalAmount, bep2decimal, 6));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, baseDenom, totalAmount, bep2decimal, priceProvider));
+        holder.balanceTextView.setText(WDp.getDpAmount2(totalAmount, bep2decimal, 6));
+        holder.valueTextView.setText(WDp.dpUserCurrencyValue(baseData, currency, baseDenom, totalAmount, bep2decimal, priceProvider));
 
-        holder.itemRoot.setOnClickListener(v -> {
+        holder.cardView.setOnClickListener(v -> {
             itemsClickListeners.onNativeTokenClicked(balance.getDenom());
         });
     }
@@ -568,16 +608,16 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
         final WalletBalance balance = etcItems.get(position);
         final Context context = holder.itemView.getContext();
 
-        Picasso.get().load(KAVA_COIN_IMG_URL + "hbtc.png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
-        holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-        holder.itemSymbol.setText(balance.getDenom().toUpperCase());
-        holder.itemInnerSymbol.setText("(" + balance.getDenom() + ")");
-        holder.itemFullName.setText(balance.getDenom().toUpperCase() + " on Kava Chain");
+        Picasso.get().load(KAVA_COIN_IMG_URL + "hbtc.png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.imageView);
+        holder.titleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+        holder.titleTextView.setText(balance.getDenom().toUpperCase());
+        holder.hintTextView.setText("(" + balance.getDenom() + ")");
+        holder.descriptionTextView.setText(balance.getDenom().toUpperCase() + " on Kava Chain");
 
         BigDecimal tokenTotalAmount = balance.getBalanceAmount(); //getBalance(balance.getSymbol()).add(baseData.getVesting(balance.getSymbol()));
         BigDecimal convertedKavaAmount = WDp.convertTokenToKava(baseData, balance, priceProvider);
-        holder.itemBalance.setText(WDp.getDpAmount2(tokenTotalAmount, WUtil.getKavaCoinDecimal(baseData, balance.getDenom()), 6));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, BaseChain.KAVA_MAIN.INSTANCE.getMainDenom(), convertedKavaAmount, 6, priceProvider));
+        holder.balanceTextView.setText(WDp.getDpAmount2(tokenTotalAmount, WUtil.getKavaCoinDecimal(baseData, balance.getDenom()), 6));
+        holder.valueTextView.setText(WDp.dpUserCurrencyValue(baseData, currency, BaseChain.KAVA_MAIN.INSTANCE.getMainDenom(), convertedKavaAmount, 6, priceProvider));
     }
 
     //bind cw20 tokens with gRPC
@@ -585,17 +625,17 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
         final Cw20Assets cw20Asset = CW20Items.get(position);
         final Context context = holder.itemView.getContext();
 
-        Picasso.get().load(cw20Asset.logo).fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
-        holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-        holder.itemSymbol.setText(cw20Asset.denom.toUpperCase());
-        holder.itemInnerSymbol.setText("");
-        holder.itemFullName.setText(cw20Asset.contract_address);
+        Picasso.get().load(cw20Asset.logo).fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.imageView);
+        holder.titleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+        holder.titleTextView.setText(cw20Asset.denom.toUpperCase());
+        holder.hintTextView.setText("");
+        holder.descriptionTextView.setText(cw20Asset.contract_address);
 
         int decimal = cw20Asset.decimal;
-        holder.itemBalance.setText(WDp.getDpAmount2(cw20Asset.getAmount(), decimal, 6));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, cw20Asset.denom, cw20Asset.getAmount(), decimal, priceProvider));
+        holder.balanceTextView.setText(WDp.getDpAmount2(cw20Asset.getAmount(), decimal, 6));
+        holder.valueTextView.setText(WDp.dpUserCurrencyValue(baseData, currency, cw20Asset.denom, cw20Asset.getAmount(), decimal, priceProvider));
 
-        holder.itemRoot.setOnClickListener(v -> {
+        holder.cardView.setOnClickListener(v -> {
             itemsClickListeners.onCW20TokenClicked(cw20Asset);
         });
     }
@@ -605,57 +645,15 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
         final WalletBalance balance = unknownItems.get(position);
         final Context context = holder.itemView.getContext();
 
-        holder.itemSymbol.setText(R.string.str_unknown);
-        holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-        holder.itemInnerSymbol.setText("");
-        holder.itemFullName.setText("");
-        holder.itemImg.setImageResource(R.drawable.token_ic);
-        holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), BigDecimal.ZERO, 6, priceProvider));
+        holder.titleTextView.setText(R.string.str_unknown);
+        holder.titleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+        holder.hintTextView.setText("");
+        holder.descriptionTextView.setText("");
+        holder.imageView.setImageResource(R.drawable.token_ic);
+        holder.balanceTextView.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
+        holder.valueTextView.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), BigDecimal.ZERO, 6, priceProvider));
     }
 
-
-    //with native tokens
-    private void onBindNativeItem(AssetHolder holder, int position) {
-        final WalletBalance balance = nativeItems.get(position);
-        final Context context = holder.itemView.getContext();
-
-        if (baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
-            final String denom = balance.getDenom();
-
-            final BigDecimal amount = balance.getTotalAmount();
-            final BnbToken bnbToken = baseData.getBnbToken(denom);
-            if (bnbToken != null) {
-                holder.itemSymbol.setText(bnbToken.original_symbol.toUpperCase());
-                holder.itemInnerSymbol.setText("(" + bnbToken.symbol + ")");
-                holder.itemFullName.setText(BaseChain.BNB_MAIN.INSTANCE.getFullNameCoin());
-                holder.itemImg.setImageDrawable(ContextCompat.getDrawable(context, BaseChain.BNB_MAIN.INSTANCE.getCoinIcon()));
-                holder.itemSymbol.setTextColor(WDp.getChainColor(context, BaseChain.BNB_MAIN.INSTANCE));
-                holder.itemBalance.setText(WDp.getDpAmount2(amount, 0, 6));
-                holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, BaseChain.BNB_MAIN.INSTANCE.getMainDenom(), amount, 0, priceProvider));
-            }
-            holder.itemRoot.setOnClickListener(v -> {
-                itemsClickListeners.onNativeStackingTokenClicked();
-            });
-
-        } else if (baseChain.equals(BaseChain.OKEX_MAIN.INSTANCE)) {
-            final OkToken okToken = baseData.okToken(balance.getDenom());
-            holder.itemSymbol.setText(okToken.original_symbol.toUpperCase());
-            holder.itemInnerSymbol.setText("(" + okToken.symbol + ")");
-            holder.itemFullName.setText(BaseChain.OKEX_MAIN.INSTANCE.getFullNameCoin());
-            if (balance.getDenom().equals(BaseChain.OKEX_MAIN.INSTANCE.getMainDenom())) {
-                holder.itemSymbol.setTextColor(WDp.getChainColor(context, baseChain));
-                holder.itemImg.setImageDrawable(ContextCompat.getDrawable(context, BaseChain.OKEX_MAIN.INSTANCE.getCoinIcon()));
-
-                BigDecimal totalAmount = balance.getDelegatableAmount().add(baseData.getAllExToken(balance.getDenom()));
-                holder.itemBalance.setText(WDp.getDpAmount2(totalAmount, 0, 6));
-                holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), totalAmount, 0, priceProvider));
-            }
-            holder.itemRoot.setOnClickListener(v -> {
-                itemsClickListeners.onNativeStackingTokenClicked();
-            });
-        }
-    }
 
     //with Etc tokens (binance, okex)
     private void onBindEtcToken(AssetHolder holder, int position) {
@@ -666,34 +664,34 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
         if (BaseChain.OKEX_MAIN.INSTANCE.equals(baseChain)) {
             final OkToken okToken = baseData.okToken(denom);
             if (okToken != null) {
-                holder.itemSymbol.setText(okToken.original_symbol.toUpperCase());
-                holder.itemInnerSymbol.setText("(" + okToken.symbol + ")");
-                holder.itemFullName.setText(okToken.description);
-                holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-                Picasso.get().load(OKEX_COIN_IMG_URL + okToken.original_symbol + ".png").placeholder(R.drawable.token_ic).error(R.drawable.token_ic).fit().into(holder.itemImg);
+                holder.titleTextView.setText(okToken.original_symbol.toUpperCase());
+                holder.hintTextView.setText("(" + okToken.symbol + ")");
+                holder.descriptionTextView.setText(okToken.description);
+                holder.titleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+                Picasso.get().load(OKEX_COIN_IMG_URL + okToken.original_symbol + ".png").placeholder(R.drawable.token_ic).error(R.drawable.token_ic).fit().into(holder.imageView);
             }
 
             BigDecimal totalAmount = balance.getDelegatableAmount().add(baseData.getAllExToken(denom));
             BigDecimal convertAmount = WDp.convertTokenToOkt(onBalanceProvider.getFullBalance(denom), baseData, denom, priceProvider);
-            holder.itemBalance.setText(WDp.getDpAmount2(totalAmount, 0, 6));
-            holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, BaseChain.OKEX_MAIN.INSTANCE.getMainDenom(), convertAmount, 0, priceProvider));
-            holder.itemRoot.setOnClickListener(v -> {
+            holder.balanceTextView.setText(WDp.getDpAmount2(totalAmount, 0, 6));
+            holder.valueTextView.setText(WDp.dpUserCurrencyValue(baseData, currency, BaseChain.OKEX_MAIN.INSTANCE.getMainDenom(), convertAmount, 0, priceProvider));
+            holder.cardView.setOnClickListener(v -> {
                 itemsClickListeners.onEtcTokenClicked(denom);
             });
         } else if (BaseChain.BNB_MAIN.INSTANCE.equals(baseChain)) {
             final BigDecimal amount = balance.getTotalAmount();
             final BnbToken bnbToken = baseData.getBnbToken(denom);
 
-            holder.itemSymbol.setText(bnbToken.original_symbol.toUpperCase());
-            holder.itemInnerSymbol.setText("(" + bnbToken.symbol + ")");
-            holder.itemFullName.setText(bnbToken.name);
-            Picasso.get().load(BINANCE_TOKEN_IMG_URL + bnbToken.original_symbol + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
-            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-            holder.itemBalance.setText(WDp.getDpAmount2(amount, 0, 6));
+            holder.titleTextView.setText(bnbToken.original_symbol.toUpperCase());
+            holder.hintTextView.setText("(" + bnbToken.symbol + ")");
+            holder.descriptionTextView.setText(bnbToken.name);
+            Picasso.get().load(BINANCE_TOKEN_IMG_URL + bnbToken.original_symbol + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.imageView);
+            holder.titleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+            holder.balanceTextView.setText(WDp.getDpAmount2(amount, 0, 6));
 
             final BigDecimal convertAmount = WUtil.getBnbConvertAmount(baseData, denom, amount);
-            holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, BaseChain.BNB_MAIN.INSTANCE.getMainDenom(), convertAmount, 0, priceProvider));
-            holder.itemRoot.setOnClickListener(v -> {
+            holder.valueTextView.setText(WDp.dpUserCurrencyValue(baseData, currency, BaseChain.BNB_MAIN.INSTANCE.getMainDenom(), convertAmount, 0, priceProvider));
+            holder.cardView.setOnClickListener(v -> {
                 itemsClickListeners.onEtcTokenClicked(denom);
             });
         }
@@ -704,13 +702,13 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
         final WalletBalance balance = unknownItems.get(position);
         final Context context = holder.itemView.getContext();
 
-        holder.itemSymbol.setText(R.string.str_unknown);
-        holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-        holder.itemInnerSymbol.setText("");
-        holder.itemFullName.setText("");
-        holder.itemImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.token_ic));
-        holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), BigDecimal.ZERO, 6, priceProvider));
+        holder.titleTextView.setText(R.string.str_unknown);
+        holder.titleTextView.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
+        holder.hintTextView.setText("");
+        holder.descriptionTextView.setText("");
+        holder.imageView.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.token_ic));
+        holder.balanceTextView.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
+        holder.valueTextView.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), BigDecimal.ZERO, 6, priceProvider));
     }
 
     interface OnItemsClickListeners {
@@ -736,23 +734,23 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
     }
 
     public static class AssetHolder extends RecyclerView.ViewHolder {
-        private final CardView itemRoot;
-        private final ImageView itemImg;
-        private final TextView itemSymbol;
-        private final TextView itemInnerSymbol;
-        private final TextView itemFullName;
-        private final TextView itemBalance;
-        private final TextView itemValue;
+        private final CardView cardView;
+        private final ImageView imageView;
+        private final TextView titleTextView;
+        private final TextView hintTextView;
+        private final TextView descriptionTextView;
+        private final TextView balanceTextView;
+        private final TextView valueTextView;
 
         public AssetHolder(View v) {
             super(v);
-            itemRoot = itemView.findViewById(R.id.token_card);
-            itemImg = itemView.findViewById(R.id.token_img);
-            itemSymbol = itemView.findViewById(R.id.token_symbol);
-            itemInnerSymbol = itemView.findViewById(R.id.token_inner_symbol);
-            itemFullName = itemView.findViewById(R.id.token_fullname);
-            itemBalance = itemView.findViewById(R.id.token_balance);
-            itemValue = itemView.findViewById(R.id.token_value);
+            cardView = itemView.findViewById(R.id.cardView);
+            imageView = itemView.findViewById(R.id.imageView);
+            titleTextView = itemView.findViewById(R.id.titleTextView);
+            hintTextView = itemView.findViewById(R.id.hintTextView);
+            descriptionTextView = itemView.findViewById(R.id.descriptionTextView);
+            balanceTextView = itemView.findViewById(R.id.balanceTextView);
+            valueTextView = itemView.findViewById(R.id.valueTextView);
         }
     }
 }

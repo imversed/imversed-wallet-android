@@ -34,7 +34,6 @@ class MainHistoryFragment : BaseMvpFragment<FragmentMainHistoryBinding>(),
     private val mainActivity: MainActivity?
         get() = getBaseActivity() as? MainActivity
 
-
     private val presenter by moxyPresenter {
         getInjector().getInstance<MainHistoryPresenter>()
     }

@@ -2,6 +2,8 @@ package wannabit.io.cosmostaion.dao;
 
 import com.google.gson.annotations.SerializedName;
 
+import wannabit.io.cosmostaion.base.BaseConstant;
+
 public class OkToken {
     @SerializedName("description")
     public String description;
@@ -27,4 +29,7 @@ public class OkToken {
     @SerializedName("mintable")
     public Boolean mintable;
 
+    public String getIconUrl() {
+        return BaseConstant.OKEX_COIN_IMG_URL + original_symbol + ".png";
+    }
 }

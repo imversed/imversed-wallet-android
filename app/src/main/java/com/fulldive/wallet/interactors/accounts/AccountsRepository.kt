@@ -5,6 +5,7 @@ import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.models.WalletAccount
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 import wannabit.io.cosmostaion.dao.Account
 import javax.inject.Inject
@@ -32,6 +33,10 @@ class AccountsRepository @Inject constructor(
 
     fun getCurrentAccount(): Single<Account> {
         return accountsLocalStorage.getCurrentAccount()
+    }
+
+    fun observeCurrentAccount(): Observable<Account> {
+        return accountsLocalStorage.observeCurrentAccount()
     }
 
     fun getAccountsByAddress(address: String): Single<List<Account>> {

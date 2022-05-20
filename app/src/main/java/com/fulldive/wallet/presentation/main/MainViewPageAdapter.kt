@@ -14,7 +14,7 @@ class MainViewPageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapt
 ) {
     val fragments: List<Fragment> = listOf(
         MainSendFragment.newInstance(null),
-        MainTokensFragment.newInstance(null),
+        MainTokensFragment.newInstance(),
         MainHistoryFragment.newInstance(),
         MainSettingFragment.newInstance(null)
     )
