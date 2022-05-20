@@ -5,6 +5,7 @@ import com.fulldive.wallet.extensions.completeCallable
 import com.fulldive.wallet.extensions.letOr
 import com.fulldive.wallet.extensions.singleCallable
 import com.fulldive.wallet.extensions.withDefaults
+import com.fulldive.wallet.interactors.ClipboardInteractor
 import com.fulldive.wallet.interactors.ScreensInteractor
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
 import com.fulldive.wallet.interactors.accounts.DuplicateAccountException
@@ -23,7 +24,8 @@ import javax.inject.Inject
 class CreateAccountPresenter @Inject constructor(
     private val accountsInteractor: AccountsInteractor,
     private val secretInteractor: SecretInteractor,
-    private val screensInteractor: ScreensInteractor
+    private val screensInteractor: ScreensInteractor,
+    private val clipboardInteractor: ClipboardInteractor
 ) : BaseMoxyPresenter<CreateAccountMoxyView>() {
     var chain: BaseChain? = null
     private var accountSecrets: AccountSecrets? = null
@@ -49,6 +51,22 @@ class CreateAccountPresenter @Inject constructor(
                     }
                 }
             )
+    }
+
+    fun onCopyButtonClicked() {
+        accountSecrets?.mnemonic?.let { mnemonic ->
+            if (mnemonic.isNotEmpty()) {
+                clipboardInteractor
+                    .copyToClipboard(mnemonic.joinToString(" "))
+                    .subscribeOn(AppSchedulers.ui())
+                    .observeOn(AppSchedulers.ui())
+                    .compositeSubscribe(
+                        onSuccess = {
+                            viewState.showMessage(R.string.str_copied)
+                        }
+                    )
+            }
+        }
     }
 
     fun onCreateAccountClicked() {

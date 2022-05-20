@@ -87,11 +87,29 @@
         android:text="@string/str_create_warn0"
         android:visibility="invisible"
         app:drawableTopCompat="@drawable/warning_ic"
-        app:layout_constraintBottom_toTopOf="@id/nextButton"
+        app:layout_constraintBottom_toTopOf="@id/copyButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/mnemonicsLayout"
         app:layout_constraintVertical_bias="1"
+        tools:visibility="visible" />
+
+    <Button
+        android:id="@+id/copyButton"
+        style="@style/font_ss_14_white"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/space_45"
+        android:layout_marginStart="@dimen/space_16"
+        android:layout_marginEnd="@dimen/space_16"
+        android:layout_marginBottom="@dimen/space_16"
+        android:background="@drawable/btn_trans_with_border"
+        android:minHeight="@dimen/space_45"
+        android:text="@string/str_copy"
+        android:textAllCaps="false"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@id/nextButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:visibility="visible" />
 
     <Button
