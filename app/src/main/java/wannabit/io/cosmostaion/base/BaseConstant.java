@@ -462,9 +462,9 @@ public class BaseConstant {
     public final static String COSMOS_GAS_RATE_LOW = "0.0025";
     public final static String COSMOS_GAS_RATE_AVERAGE = "0.025";
 
-    public final static String IMVERSED_GAS_RATE_TINY = "0.00025";
-    public final static String IMVERSED_GAS_RATE_LOW = "0.0025";
-    public final static String IMVERSED_GAS_RATE_AVERAGE = "0.025";
+    public final static String IMVERSED_GAS_RATE_TINY = "25";
+    public final static String IMVERSED_GAS_RATE_LOW = "250";
+    public final static String IMVERSED_GAS_RATE_AVERAGE = "2500";
 
     public final static String IRIS_GAS_RATE_TINY = "0.002";
     public final static String IRIS_GAS_RATE_LOW = "0.02";
