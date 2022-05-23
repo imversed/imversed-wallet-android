@@ -8,10 +8,6 @@ public class BaseConstant {
 
     public final static String PRE_VALIDATOR_SORTING = "PRE_VALIDATOR_SORTING";
     public final static String PRE_MY_VALIDATOR_SORTING = "PRE_MY_VALIDATOR_SORTING";
-    public final static String PRE_USING_APP_LOCK = "PRE_USING_APP_LOCK";
-    public final static String PRE_USING_FINGERPRINT = "PRE_USING_FINGERPRINT";
-    public final static String PRE_APP_LOCK_TIME = "PRE_APP_LOCK_TIME";
-    public final static String PRE_APP_LOCK_LEAVE_TIME = "PRE_APP_LOCK_LEAVE_TIME";
     public final static String PRE_USER_HIDEN_CHAINS = "PRE_USER_HIDEN_CHAINS";
     public final static String PRE_USER_SORTED_CHAINS = "PRE_USER_SORTED_CHAINS";
     public final static String PRE_USER_EXPANDED_CHAINS = "PRE_USER_EXPANDED_CHAINS";
@@ -37,11 +33,7 @@ public class BaseConstant {
     public final static int TASK_FETCH_MINTSCAN_PROPOSAL = 2804;
     public final static int TASK_FETCH_MINTSCAN_PROPOSAL_LIST = 2806;
 
-    public final static int TASK_HDAC_NODE_INFO = 2900;
-    public final static int TASK_HDAC_UTXO = 2901;
-    public final static int TASK_HDAC_TX_DETAIL = 2902;
     public final static int TASK_HDAC_BROAD_BURN = 2903;
-    public final static int TASK_RIZON_SWAP_STATUS = 2904;
 
 
     //gRPC
@@ -93,7 +85,6 @@ public class BaseConstant {
     public final static int TASK_GRPC_FETCH_KAVA_SWAP_POOLS_INFO = 4282;
     public final static int TASK_GRPC_FETCH_KAVA_CDP_PARAMS = 4283;
     public final static int TASK_GRPC_FETCH_KAVA_MY_CDPS = 4284;
-    public final static int TASK_GRPC_FETCH_KAVA_CDP_BY_DEPOSITOR = 4285;
     public final static int TASK_GRPC_FETCH_KAVA_HARD_PARAMS = 4286;
     public final static int TASK_GRPC_FETCH_KAVA_HARD_MY_DEPOSIT = 4287;
     public final static int TASK_GRPC_FETCH_KAVA_HARD_MY_BORROW = 4288;
@@ -357,13 +348,11 @@ public class BaseConstant {
     public final static String TOKEN_HTLC_KAVA_TEST_BNB = "bnb";
     public final static String TOKEN_HTLC_KAVA_TEST_BTC = "btcb";
 
-    public final static long CONSTANT_S = 1000L;
-    public final static long CONSTANT_10S = CONSTANT_S * 10;
-    public final static long CONSTANT_30S = CONSTANT_S * 30;
-    public final static long CONSTANT_M = CONSTANT_S * 60;
-    public final static long CONSTANT_H = CONSTANT_M * 60;
-    public final static long CONSTANT_D = CONSTANT_H * 24;
-
+    public final static long CONSTANT_10S = 10000L;
+    public final static long CONSTANT_30S = 30000L;
+    public final static long CONSTANT_M = 60000L;
+    public final static long CONSTANT_H = 3600000L;
+    public final static long CONSTANT_D = 86400000L;
 
     public final static int MEMO_ATOM = 255;
     public final static int MEMO_BNB = 100;
@@ -384,7 +373,7 @@ public class BaseConstant {
     public final static String KAVA_GAS_AMOUNT_JOIN_POOL = "800000";
     public final static String KAVA_GAS_AMOUNT_EXIT_POOL = "800000";
     public final static String KAVA_GAS_AMOUNT_IBC_SEND = "500000";
-    public final static String KAVA_GAS_AMOUNT_REWARD_ADDRESS_CHANGE    = "100000";
+    public final static String KAVA_GAS_AMOUNT_REWARD_ADDRESS_CHANGE = "100000";
 
     public final static String BAND_GAS_AMOUNT_SEND = "100000";
     public final static String BAND_GAS_AMOUNT_STAKE = "200000";
@@ -665,58 +654,8 @@ public class BaseConstant {
     public final static String EMONEY_COIN_IMG_URL = "https://raw.githubusercontent.com/cosmostation/cosmostation_token_resource/master/coin_image/emoney/";
     public final static String ASSET_IMG_URL = "https://raw.githubusercontent.com/cosmostation/cosmostation_token_resource/master/assets/images/ethereum/";
 
-    public final static String EXPLORER_COSMOS_MAIN = "https://www.mintscan.io/cosmos/";
-    public final static String EXPLORER_IMVERSED_MAIN = "https://tex-c.imversed.com/";
-    public final static String EXPLORER_IRIS_MAIN = "https://www.mintscan.io/iris/";
-    public final static String EXPLORER_KAVA_MAIN = "https://www.mintscan.io/kava/";
-    public final static String EXPLORER_IOV_MAIN = "https://www.mintscan.io/starname/";
-    public final static String EXPLORER_BINANCE_MAIN = "https://binance.mintscan.io/";
-    public final static String EXPLORER_BAND_MAIN = "https://www.mintscan.io/band/";
-    public final static String EXPLORER_SECRET_MAIN = "https://www.mintscan.io/secret/";
-    public final static String EXPLORER_AKASH_MAIN = "https://www.mintscan.io/akash/";
-    public final static String EXPLORER_OKEX_MAIN = "https://www.oklink.com/okexchain/";
-    public final static String EXPLORER_PERSIS_MAIN = "https://www.mintscan.io/persistence/";
-    public final static String EXPLORER_SENTINEL_MAIN = "https://www.mintscan.io/sentinel/";
-    public final static String EXPLORER_FETCHAI_MAIN = "https://www.mintscan.io/fetchai/";
-    public final static String EXPLORER_CRYPTOORG_MAIN = "https://www.mintscan.io/crypto-org/";
-    public final static String EXPLORER_SIF_MAIN = "https://www.mintscan.io/sifchain/";
-    public final static String EXPLORER_KI_MAIN = "https://www.mintscan.io/ki-chain/";
-    public final static String EXPLORER_OSMOSIS_MAIN = "https://www.mintscan.io/osmosis/";
-    public final static String EXPLORER_MEDI_MAIN = "https://www.mintscan.io/medibloc/";
-    public final static String EXPLORER_CERTIK_MAIN = "https://www.mintscan.io/certik/";
-    public final static String EXPLORER_EMONEY_MAIN = "https://www.mintscan.io/emoney/";
-    public final static String EXPLORER_RIZON_MAIN = "https://www.mintscan.io/rizon/";
-    public final static String EXPLORER_JUNO_MAIN = "https://www.mintscan.io/juno/";
-    public final static String EXPLORER_REGEN_MAIN = "https://www.mintscan.io/regen/";
-    public final static String EXPLORER_BITCANNA_MAIN = "https://www.mintscan.io/bitcanna/";
-    public final static String EXPLORER_ALTHEA_MAIN = "https://www.mintscan.io/althea/";
-    public final static String EXPLORER_STARGAZE_MAIN = "https://www.mintscan.io/stargaze/";
-    public final static String EXPLORER_GRABRIDGE_MAIN = "https://www.mintscan.io/gravity-bridge/";
-    public final static String EXPLORER_COMDEX_MAIN = "https://www.mintscan.io/comdex/";
-    public final static String EXPLORER_INJ_MAIN = "https://www.mintscan.io/injective/";
-    public final static String EXPLORER_BITSONG_MAIN = "https://www.mintscan.io/bitsong/";
-    public final static String EXPLORER_DESMOS_MAIN = "https://www.mintscan.io/desmos/";
-    public final static String EXPLORER_LUM_MAIN = "https://www.mintscan.io/lum/";
-    public final static String EXPLORER_CHIHUAHUA_MAIN = "https://www.mintscan.io/chihuahua/";
-    public final static String EXPLORER_AXELAR_MAIN = "https://www.mintscan.io/axelar/";
-    public final static String EXPLORER_KONSTELL_MAIN = "https://www.mintscan.io/konstellation/";
-    public final static String EXPLORER_UMEE_MAIN = "https://www.mintscan.io/umee/";
-    public final static String EXPLORER_EVMOS_MAIN = "https://www.mintscan.io/evmos/";
-    public final static String EXPLORER_CUDOS_MAIN = "https://www.mintscan.io/cudos/";
-    public final static String EXPLORER_PROVENANCE_MAIN = "https://www.mintscan.io/provenance/";
-    public final static String EXPLORER_CERBERUS_MAIN = "https://www.mintscan.io/cerberus/";
-    public final static String EXPLORER_OMNIFLIX_MAIN = "https://www.mintscan.io/omniflix/";
-    public final static String EXPLORER_HDAC_MAIN = "https://explorer.as.hdactech.com/hdac-explorer/";
     public final static String EXPLORER_OEC_TX = "https://www.oklink.com/oec/";
-
     public final static String NFT_INFURA = "https://ipfs.infura.io/ipfs/";
-
-
-    public final static String EXPLORER_COSMOS_TEST = "https://testnet.mintscan.io/cosmos/";
-    public final static String EXPLORER_IRIS_TEST = "https://testnet.mintscan.io/iris/";
-    public final static String EXPLORER_RIZON_TEST = "https://testnet.mintscan.io/rizon/";
-    public final static String EXPLORER_HDAC_TEST = "http://test.explorer.hdactech.com/hdac-explorer/";
-
 
     public final static String AKASH_UNKNOWN_RELAYER = "https://raw.githubusercontent.com/cosmostation/cosmostation_token_resource/master/relayer/akash/relay-akash-unknown.png";
     public final static String BAND_UNKNOWN_RELAYER = "https://raw.githubusercontent.com/cosmostation/cosmostation_token_resource/master/relayer/band/relay-band-unknown.png";

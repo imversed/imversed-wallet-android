@@ -39,7 +39,6 @@ import kava.pricefeed.v1beta1.QueryOuterClass;
 import kava.swap.v1beta1.Swap;
 import osmosis.gamm.poolmodels.balancer.BalancerPool;
 import tendermint.liquidity.v1beta1.Liquidity;
-import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.crypto.EncResult;
 import wannabit.io.cosmostaion.dao.Assets;
 import wannabit.io.cosmostaion.dao.BnbTicker;
@@ -49,7 +48,6 @@ import wannabit.io.cosmostaion.dao.Cw20Assets;
 import wannabit.io.cosmostaion.dao.IbcPath;
 import wannabit.io.cosmostaion.dao.IbcToken;
 import wannabit.io.cosmostaion.dao.OkToken;
-import wannabit.io.cosmostaion.dao.Price;
 import wannabit.io.cosmostaion.model.BondingInfo;
 import wannabit.io.cosmostaion.model.GDexManager;
 import wannabit.io.cosmostaion.model.NodeInfo;
@@ -209,7 +207,7 @@ public class BaseData {
     public ArrayList<IbcPath.Path> getIbcRollbackChannel(String denom, ArrayList<IbcPath.Path> paths) {
         ArrayList<IbcPath.Path> result = new ArrayList<>();
         IbcToken ibcToken = getIbcToken(denom);
-        for (IbcPath.Path path: paths) {
+        for (IbcPath.Path path : paths) {
             if (path.auth != null && path.auth && path.channel_id.equalsIgnoreCase(ibcToken.channel_id)) {
                 result.add(path);
             }
@@ -754,51 +752,6 @@ public class BaseData {
 
     public int getMyValSorting() {
         return getSharedPreferences().getInt(BaseConstant.PRE_MY_VALIDATOR_SORTING, 1);
-    }
-
-    public boolean getUsingAppLock() {
-        return getSharedPreferences().getBoolean(BaseConstant.PRE_USING_APP_LOCK, false);
-    }
-
-    public void setUsingAppLock(boolean using) {
-        getSharedPreferences().edit().putBoolean(BaseConstant.PRE_USING_APP_LOCK, using).commit();
-    }
-
-    public boolean getUsingFingerPrint() {
-        return getSharedPreferences().getBoolean(BaseConstant.PRE_USING_FINGERPRINT, false);
-    }
-
-    public void setUsingFingerPrint(boolean using) {
-        getSharedPreferences().edit().putBoolean(BaseConstant.PRE_USING_FINGERPRINT, using).commit();
-    }
-
-    public int getAppLockTriggerTime() {
-        return getSharedPreferences().getInt(BaseConstant.PRE_APP_LOCK_TIME, 0);
-    }
-
-    public void setAppLockTriggerTime(int trigger) {
-        getSharedPreferences().edit().putInt(BaseConstant.PRE_APP_LOCK_TIME, trigger).commit();
-    }
-
-    public long getAppLockLeaveTime() {
-        return getSharedPreferences().getLong(BaseConstant.PRE_APP_LOCK_LEAVE_TIME, 0);
-    }
-
-    public void setAppLockLeaveTime() {
-        getSharedPreferences().edit().putLong(BaseConstant.PRE_APP_LOCK_LEAVE_TIME, System.currentTimeMillis()).commit();
-    }
-
-    public int getAppLockLeaveTimeString() {
-        switch (getAppLockTriggerTime()) {
-            case 1:
-                return R.string.str_applock_time_10sec;
-            case 2:
-                return R.string.str_applock_time_30sec;
-            case 3:
-                return R.string.str_applock_time_60sec;
-            default:
-                return R.string.str_applock_time_immediately;
-        }
     }
 
     public void setUserHiddenChains(List<String> chains) {

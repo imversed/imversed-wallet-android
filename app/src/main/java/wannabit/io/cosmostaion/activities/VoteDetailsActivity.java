@@ -371,7 +371,7 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
         }
 
         private void onExplorerLink() {
-            String url = WUtil.getExplorer(getBaseChain()) + "proposals/" + mProposalId;
+            String url = getBaseChain().getExplorerUrl() + "proposals/" + mProposalId;
             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
             startActivity(intent);
         }
