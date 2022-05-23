@@ -4,6 +4,7 @@ import android.text.SpannableString
 import android.util.Log
 import com.fulldive.wallet.di.modules.DefaultPresentersModule
 import com.fulldive.wallet.extensions.or
+import com.fulldive.wallet.extensions.safe
 import com.fulldive.wallet.extensions.withDefaults
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
 import com.fulldive.wallet.interactors.balances.BalancesInteractor
@@ -21,7 +22,9 @@ import io.reactivex.Completable
 import io.reactivex.disposables.Disposable
 import wannabit.io.cosmostaion.R
 import wannabit.io.cosmostaion.base.BaseConstant
+import wannabit.io.cosmostaion.base.BaseData
 import wannabit.io.cosmostaion.dao.Account
+import wannabit.io.cosmostaion.utils.PriceProvider
 import wannabit.io.cosmostaion.utils.WDp
 import java.math.BigDecimal
 import java.util.*
@@ -36,6 +39,7 @@ class MainTokensPresenter @Inject constructor(
     private val okexInteractor: OkexInteractor,
     private val grpcInteractor: GrpcInteractor,
     private val stationInteractor: StationInteractor,
+    private val baseData: BaseData
 ) : BaseMoxyPresenter<MainTokensMoxyView>() {
 
     private var account: Account? = null
@@ -171,7 +175,25 @@ class MainTokensPresenter @Inject constructor(
 
         when (baseChain) {
             BaseChain.BNB_MAIN -> {
+
+                val priceProvider = PriceProvider { priceDenom: String ->
+                    safe {
+                        stationInteractor.getPrice(baseChain, priceDenom).blockingGet()
+                    }
+                }
                 Log.d("fftf", "aaa")
+
+                val valueee = WDp.dpUserCurrencyValue(
+                    baseData,
+                    currency,
+                    baseChain.mainDenom,
+                    balance.getTotalAmount(),
+                    0,
+                    priceProvider
+                )
+                Log.d("fftf", "valueee: $valueee")
+
+
                 val bnbToken = balancesInteractor.getBnbToken(balanceDenom)
                 if (bnbToken != null) {
                     Log.d("fftf", "bbb")
