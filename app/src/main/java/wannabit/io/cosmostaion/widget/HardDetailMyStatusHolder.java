@@ -71,20 +71,20 @@ public class HardDetailMyStatusHolder extends BaseHolder {
         WUtil.dpKavaTokenName(context, baseData, mDepositCoinTitle, hardMoneyMarket.getDenom());
 
         //Display My Supply
-        final BigDecimal totalSuppliedValue = WUtil.getHardSuppliedValueByDenom(context, baseData, denom, myDeposit);
-        final BigDecimal totalSuppliedAmount = WUtil.getHardSuppliedAmountByDenom(context, baseData, denom, myDeposit);
+        final BigDecimal totalSuppliedValue = WUtil.getHardSuppliedValueByDenom(baseData, denom, myDeposit);
+        final BigDecimal totalSuppliedAmount = WUtil.getHardSuppliedAmountByDenom(denom, myDeposit);
         WDp.showCoinDp(context, baseData, hardMoneyMarket.getDenom(), totalSuppliedAmount.toPlainString(), mDepositDenomTv, mDepositAmountTv, chain);
         mDepositValueTv.setText(WDp.getDpRawDollor(context, totalSuppliedValue, 2));
 
         //Display My Borrowed
-        final BigDecimal totalBorrowedValue = WUtil.getHardBorrowedValueByDenom(context, baseData, denom, myBorrow);
-        final BigDecimal totalBorrowedAmount = WUtil.getHardBorrowedAmountByDenom(context, baseData, denom, myBorrow);
+        final BigDecimal totalBorrowedValue = WUtil.getHardBorrowedValueByDenom(baseData, denom, myBorrow);
+        final BigDecimal totalBorrowedAmount = WUtil.getHardBorrowedAmountByDenom(denom, myBorrow);
         WDp.showCoinDp(context, baseData, hardMoneyMarket.getDenom(), totalBorrowedAmount.toPlainString(), mBorrowedDenomTv, mBorrowedAmountTv, chain);
         mBorrowedValueTv.setText(WDp.getDpRawDollor(context, totalBorrowedValue, 2));
 
         //Display My Borrowable
-        final BigDecimal finalBorrowableValue = WUtil.getHardBorrowableValueByDenom(context, baseData, denom, myDeposit, myBorrow, moduleCoins, reserveCoin);
-        final BigDecimal finalBorrowableAmount = WUtil.getHardBorrowableAmountByDenom(context, baseData, denom, myDeposit, myBorrow, moduleCoins, reserveCoin);
+        final BigDecimal finalBorrowableValue = WUtil.getHardBorrowableValueByDenom(baseData, denom, myDeposit, myBorrow, moduleCoins, reserveCoin);
+        final BigDecimal finalBorrowableAmount = WUtil.getHardBorrowableAmountByDenom(baseData, denom, myDeposit, myBorrow, moduleCoins, reserveCoin);
         WDp.showCoinDp(context, baseData, hardMoneyMarket.getDenom(), finalBorrowableAmount.toPlainString(), mBorrowableDenomTv, mBorrowableAmountTv, chain);
         mBorrowableValueTv.setText(WDp.getDpRawDollor(context, finalBorrowableValue, 2));
 

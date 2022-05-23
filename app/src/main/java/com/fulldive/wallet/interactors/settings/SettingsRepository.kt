@@ -22,4 +22,40 @@ class SettingsRepository @Inject constructor(
     fun getCurrency(): Currency {
         return settingsLocalSource.getCurrency()
     }
+
+    fun getAppLockEnabled(): Boolean {
+        return settingsLocalSource.getAppLockEnabled()
+    }
+
+    fun observeAppLockEnabled(): Observable<Boolean> {
+        return settingsLocalSource.observeAppLockEnabled()
+    }
+
+    fun setAppLockEnabled(enabled: Boolean) {
+        settingsLocalSource.setAppLockEnabled(enabled)
+    }
+
+    fun getFingerprintEnabled(): Boolean {
+        return settingsLocalSource.getFingerprintEnabled()
+    }
+
+    fun setFingerprintEnabled(enabled: Boolean) {
+        settingsLocalSource.setFingerprintEnabled(enabled)
+    }
+
+    fun getAppLockInterval(): Int {
+        return settingsLocalSource.getAppLockInterval()
+    }
+
+    fun setAppLockInterval(interval: Int) {
+        settingsLocalSource.setAppLockInterval(interval)
+    }
+
+    fun getLastActivityTime(): Long {
+        return settingsLocalSource.getLastActivityTime()
+    }
+
+    fun setLastActivityTime(value: Long) {
+        settingsLocalSource.setLastActivityTime(value)
+    }
 }

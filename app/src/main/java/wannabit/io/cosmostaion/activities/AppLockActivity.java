@@ -145,7 +145,7 @@ public class AppLockActivity extends BaseActivity implements ITimelessActivity, 
     private void onCheckFingerPrint() {
         FingerprintManagerCompat fingerprintManagerCompat = FingerprintManagerCompat.from(this);
         cancellationSignal = new CancellationSignal();
-        if (fingerprintManagerCompat.isHardwareDetected() && fingerprintManagerCompat.hasEnrolledFingerprints() && getBaseDao().getUsingFingerPrint()) {
+        if (fingerprintManagerCompat.isHardwareDetected() && fingerprintManagerCompat.hasEnrolledFingerprints() && settingsInteractor.getFingerprintEnabled()) {
             fingerImage.setVisibility(View.VISIBLE);
             unlockMsg.setText(R.string.str_app_unlock_msg2);
 

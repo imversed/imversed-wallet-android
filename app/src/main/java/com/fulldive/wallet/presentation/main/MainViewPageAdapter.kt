@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.fulldive.wallet.presentation.main.history.MainHistoryFragment
 import wannabit.io.cosmostaion.fragment.main.MainSendFragment
-import wannabit.io.cosmostaion.fragment.main.MainSettingFragment
+import com.fulldive.wallet.presentation.main.settings.MainSettingsFragment
 import com.fulldive.wallet.presentation.main.tokens.MainTokensFragment
 
 class MainViewPageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(
@@ -16,7 +16,7 @@ class MainViewPageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapt
         MainSendFragment.newInstance(null),
         MainTokensFragment.newInstance(),
         MainHistoryFragment.newInstance(),
-        MainSettingFragment.newInstance(null)
+        MainSettingsFragment.newInstance()
     )
 
     var currentFragment: Fragment? = null

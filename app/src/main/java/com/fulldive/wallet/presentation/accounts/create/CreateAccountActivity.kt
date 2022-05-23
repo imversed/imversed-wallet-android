@@ -8,6 +8,7 @@ import android.view.WindowManager
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.isVisible
 import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.base.BaseMvpActivity
 import com.fulldive.wallet.presentation.main.MainActivity
@@ -79,6 +80,10 @@ class CreateAccountActivity : BaseMvpActivity<ActivityCreateBinding>(), CreateAc
     override fun showMnemonic(mnemonicWords: List<String>) {
         binding {
             warningTextView.setText(R.string.str_create_warn1)
+            copyButton.isVisible = true
+            copyButton.setOnClickListener {
+                presenter.onCopyButtonClicked()
+            }
             nextButton.setText(R.string.str_create_wallet)
             nextButton.setOnClickListener {
                 presenter.onCreateAccountClicked()

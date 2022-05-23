@@ -207,7 +207,7 @@ public class WDp {
                 denomTv.setText(coin.denom.toUpperCase());
             }
 
-        } else if (chain.equals(BaseChain.IMVERSED_MAIN.INSTANCE)) {
+        } else if (chain.equals(BaseChain.IMVERSED_MAIN.INSTANCE) || chain.equals(BaseChain.IMVERSED_TEST.INSTANCE)) {
             if (coin.denom.equals(chain.getMainDenom())) {
                 DpMainDenom(chain.getChainName(), denomTv);
             } else {
@@ -873,6 +873,8 @@ public class WDp {
                 return "cosmos";
             } else if (baseChain.equals(BaseChain.IMVERSED_MAIN.INSTANCE)) {
                 return "imversed-canary";
+            } else if (baseChain.equals(BaseChain.IMVERSED_TEST.INSTANCE)) {
+                return "imversed-testnet-1";
             } else if (baseChain.equals(BaseChain.IRIS_MAIN.INSTANCE)) {
                 return "iris";
             } else if (baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
@@ -990,7 +992,7 @@ public class WDp {
                 return EMONEY_UNKNOWN_RELAYER;
             } else if (chain.equals(BaseChain.FETCHAI_MAIN.INSTANCE)) {
                 return FETCHAI_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.IMVERSED_MAIN.INSTANCE)) {
+            } else if (chain.equals(BaseChain.IMVERSED_MAIN.INSTANCE) || chain.equals(BaseChain.IMVERSED_TEST.INSTANCE)) {
                 return IMVERSED_UNKNOWN_RELAYER;
             } else if (chain.equals(BaseChain.IRIS_MAIN.INSTANCE)) {
                 return IRIS_UNKNOWN_RELAYER;
@@ -1956,7 +1958,7 @@ public class WDp {
     public static String getMonikerImgUrl(BaseChain basechain, String opAddress) {
         if (basechain.equals(BaseChain.COSMOS_MAIN.INSTANCE) || basechain.equals(BaseChain.COSMOS_TEST.INSTANCE)) {
             return COSMOS_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.IMVERSED_MAIN.INSTANCE)) {
+        } else if (basechain.equals(BaseChain.IMVERSED_MAIN.INSTANCE) || basechain.equals(BaseChain.IMVERSED_TEST.INSTANCE)) {
             return IMVERSED_VAL_URL + opAddress + ".png";
         } else if (basechain.equals(BaseChain.IRIS_MAIN.INSTANCE) || basechain.equals(BaseChain.IRIS_TEST.INSTANCE)) {
             return IRIS_VAL_URL + opAddress + ".png";
