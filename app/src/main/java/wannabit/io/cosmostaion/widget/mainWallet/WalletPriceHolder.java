@@ -5,6 +5,8 @@ import static com.fulldive.wallet.models.BaseChain.COSMOS_MAIN;
 import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.SUPPORT_MOONPAY;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -27,7 +29,6 @@ import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.dao.Price;
 import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
-import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.BaseHolder;
 
 public class WalletPriceHolder extends BaseHolder {
@@ -92,6 +93,12 @@ public class WalletPriceHolder extends BaseHolder {
             itemBuyLayer.setVisibility(View.GONE);
         }
 
-        itemRoot.setOnClickListener(v -> WUtil.getCoingekoIntent(mainActivity));
+        itemRoot.setOnClickListener(v -> {
+            final BaseChain chain = mainActivity.getBaseChain();
+            final String url = chain.getCoingeckoUrl();
+            if (!url.isEmpty()) {
+                mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+            }
+        });
     }
 }

@@ -1,5 +1,7 @@
 package wannabit.io.cosmostaion.widget.mainWallet;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -8,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 
+import com.fulldive.wallet.models.Guide;
 import com.fulldive.wallet.presentation.main.MainActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -35,9 +38,19 @@ public class WalletGuideHolder extends BaseHolder {
     }
 
     public void onBindHolder(@NotNull MainActivity mainActivity) {
-        WUtil.getGuide(mainActivity, itemGuideImg, itemGuideTitle, itemGuideMsg, itemBtnGuide1, itemBtnGuide2);
+        final Guide guide = mainActivity.getBaseChain().getGuide();
+        if (guide != null) {
+            itemRoot.setVisibility(View.VISIBLE);
+            itemGuideImg.setImageResource(guide.getGuideIcon());
+            itemGuideTitle.setText(guide.getGuideTitle());
+            itemGuideMsg.setText(guide.getGuideMessage());
+            itemBtnGuide1.setText(guide.getButtonText1());
+            itemBtnGuide2.setText(guide.getButtonText2());
 
-        itemBtnGuide1.setOnClickListener(v -> mainActivity.startActivity(WUtil.getGuide1Intent(mainActivity.getBaseChain())));
-        itemBtnGuide2.setOnClickListener(v -> mainActivity.startActivity(WUtil.getGuide2Intent(mainActivity.getBaseChain())));
+            itemBtnGuide1.setOnClickListener(v -> mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(guide.getButtonLink1()))));
+            itemBtnGuide2.setOnClickListener(v -> mainActivity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(guide.getButtonLink2()))));
+        } else {
+            itemRoot.setVisibility(View.GONE);
+        }
     }
 }

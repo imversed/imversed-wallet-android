@@ -197,7 +197,7 @@ public class HardDetailActivity extends BaseActivity implements TaskListener {
 
     public void onHardWithdraw() {
         if (!onCommonCheck()) return;
-        if (WUtil.getHardSuppliedValueByDenom(this, getBaseDao(), mHardMoneyMarketDenom, mMyDeposit).compareTo(BigDecimal.ZERO) <= 0) {
+        if (WUtil.getHardSuppliedValueByDenom(getBaseDao(), mHardMoneyMarketDenom, mMyDeposit).compareTo(BigDecimal.ZERO) <= 0) {
             Toast.makeText(getBaseContext(), R.string.error_no_deposited_asset, Toast.LENGTH_SHORT).show();
             return;
         }
@@ -210,7 +210,7 @@ public class HardDetailActivity extends BaseActivity implements TaskListener {
 
     public void onHardBorrow() {
         if (!onCommonCheck()) return;
-        BigDecimal borrowAble = WUtil.getHardBorrowableAmountByDenom(this, getBaseDao(), mHardMoneyMarketDenom, mMyDeposit, mMyBorrow, mModuleCoins, mReserveCoins);
+        BigDecimal borrowAble = WUtil.getHardBorrowableAmountByDenom(getBaseDao(), mHardMoneyMarketDenom, mMyDeposit, mMyBorrow, mModuleCoins, mReserveCoins);
         if (borrowAble.compareTo(BigDecimal.ZERO) <= 0) {
             Toast.makeText(getBaseContext(), R.string.error_no_borrowable_asset, Toast.LENGTH_SHORT).show();
             return;
@@ -228,7 +228,7 @@ public class HardDetailActivity extends BaseActivity implements TaskListener {
             Toast.makeText(getBaseContext(), R.string.error_not_enough_to_balance, Toast.LENGTH_SHORT).show();
             return;
         }
-        if (WUtil.getHardBorrowedValueByDenom(this, getBaseDao(), mHardMoneyMarketDenom, mMyBorrow).compareTo(BigDecimal.ZERO) <= 0) {
+        if (WUtil.getHardBorrowedValueByDenom(getBaseDao(), mHardMoneyMarketDenom, mMyBorrow).compareTo(BigDecimal.ZERO) <= 0) {
             Toast.makeText(getBaseContext(), R.string.error_noting_repay_asset, Toast.LENGTH_SHORT).show();
             return;
         }

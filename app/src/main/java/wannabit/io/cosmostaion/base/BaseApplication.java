@@ -11,6 +11,7 @@ import com.fulldive.wallet.di.IInjectorHolder;
 import com.fulldive.wallet.di.components.ApplicationComponent;
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.interactors.secret.SecretInteractor;
+import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.joom.lightsaber.Injector;
 import com.joom.lightsaber.Lightsaber;
 import com.squareup.picasso.Picasso;
@@ -25,6 +26,7 @@ public class BaseApplication extends Application implements IInjectorHolder {
     private AppStatus mAppStatus;
     private SecretInteractor secretInteractor;
     private AccountsInteractor accountsInteractor;
+    private SettingsInteractor settingsInteractor;
 
     @Override
     public void onCreate() {
@@ -33,6 +35,7 @@ public class BaseApplication extends Application implements IInjectorHolder {
 
         secretInteractor = appInjector.getInstance(SecretInteractor.class);
         accountsInteractor = appInjector.getInstance(AccountsInteractor.class);
+        settingsInteractor = appInjector.getInstance(SettingsInteractor.class);
 
         registerActivityLifecycleCallbacks(new LifecycleCallbacks());
         registerActivityLifecycleCallbacks(new EnrichableLifecycleCallbacks(this));
@@ -56,23 +59,13 @@ public class BaseApplication extends Application implements IInjectorHolder {
     }
 
     public boolean needShowLockScreen() {
-        final BaseData baseData = getBaseDao();
         if (!isReturnedForeground() ||
                 !secretInteractor.hasPassword().blockingGet() ||    // TODO: it will be refactored
-                !baseData.getUsingAppLock() ||
+                !settingsInteractor.getAppLockEnabled() ||
                 (accountsInteractor.getAccounts().blockingGet().size() <= 0)) return false;
 
-        switch (baseData.getAppLockTriggerTime()) {
-            case 0:
-                return true;
-            case 1:
-                return (baseData.getAppLockLeaveTime() + BaseConstant.CONSTANT_10S) < System.currentTimeMillis();
-            case 2:
-                return (baseData.getAppLockLeaveTime() + BaseConstant.CONSTANT_30S) < System.currentTimeMillis();
-            case 3:
-                return (baseData.getAppLockLeaveTime() + BaseConstant.CONSTANT_M) < System.currentTimeMillis();
-        }
-        return true;
+        final long interval = getAppLockInterval();
+        return interval == 0L || (settingsInteractor.getLastActivityTime() + interval) < System.currentTimeMillis();
     }
 
     @NonNull
@@ -110,7 +103,7 @@ public class BaseApplication extends Application implements IInjectorHolder {
                 getBaseDao().mCopyEncResult = null;
             }
             if (!(activity instanceof ITimelessActivity)) {
-                getBaseDao().setAppLockLeaveTime();
+                settingsInteractor.updateLastActivityTime();
             }
         }
 
@@ -133,6 +126,19 @@ public class BaseApplication extends Application implements IInjectorHolder {
 
         @Override
         public void onActivityDestroyed(Activity activity) {
+        }
+    }
+
+    public long getAppLockInterval() {
+        switch (settingsInteractor.getAppLockInterval()) {
+            case 1:
+                return BaseConstant.CONSTANT_10S;
+            case 2:
+                return BaseConstant.CONSTANT_30S;
+            case 3:
+                return BaseConstant.CONSTANT_M;
+            default:
+                return 0L;
         }
     }
 }

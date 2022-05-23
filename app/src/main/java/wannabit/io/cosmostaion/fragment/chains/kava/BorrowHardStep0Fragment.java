@@ -83,7 +83,7 @@ public class BorrowHardStep0Fragment extends BaseFragment implements View.OnClic
         setDpDecimals(mDpDecimal);
 
         // display borrowable amount with padding 5%
-        mMaxAvailable = WUtil.getHardBorrowableAmountByDenom(getContext(), getBaseDao(), mHardMoneyMarketDenom,
+        mMaxAvailable = WUtil.getHardBorrowableAmountByDenom(getBaseDao(), mHardMoneyMarketDenom,
                 getBaseDao().mMyHardDeposits, getBaseDao().mMyHardBorrows, getBaseDao().mModuleCoins, getBaseDao().mReserveCoins);
 
         WDp.showCoinDp(getContext(), getBaseDao(), mHardMoneyMarketDenom, mMaxAvailable.toPlainString(), mBorrowDenomTx, mBorrowMaxTx, getSActivity().getBaseChain());

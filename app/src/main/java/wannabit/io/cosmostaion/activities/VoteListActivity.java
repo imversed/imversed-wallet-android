@@ -151,19 +151,16 @@ public class VoteListActivity extends BaseActivity implements TaskListener {
             voteHolder.proposal_title.setText(proposal.title);
             voteHolder.proposal_details.setText(proposal.description);
 
-            voteHolder.card_proposal.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (proposal.proposal_status.contains("PASSED") ||
-                            proposal.proposal_status.contains("REJECTED")) {
-                        String url = WUtil.getExplorer(getBaseChain()) + "proposals/" + proposal.id;
-                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                        startActivity(intent);
-                    } else {
-                        Intent voteIntent = new Intent(VoteListActivity.this, VoteDetailsActivity.class);
-                        voteIntent.putExtra("proposalId", String.valueOf(proposal.id));
-                        startActivity(voteIntent);
-                    }
+            voteHolder.card_proposal.setOnClickListener(v -> {
+                if (proposal.proposal_status.contains("PASSED") ||
+                        proposal.proposal_status.contains("REJECTED")) {
+                    String url = getBaseChain().getExplorerUrl() + "proposals/" + proposal.id;
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                } else {
+                    Intent voteIntent = new Intent(VoteListActivity.this, VoteDetailsActivity.class);
+                    voteIntent.putExtra("proposalId", String.valueOf(proposal.id));
+                    startActivity(voteIntent);
                 }
             });
         }
