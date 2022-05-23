@@ -2838,9 +2838,9 @@ public class WUtil {
     /**
      * Chain Gas Amount
      */
-    public static BigDecimal getEstimateGasAmount(Context c, BaseChain basechain, int txType, int valCnt) {
+    public static BigDecimal getEstimateGasAmount(Context c, BaseChain chain, int txType, int valCnt) {
         BigDecimal result = BigDecimal.ZERO;
-        if (basechain.equals(IOV_MAIN.INSTANCE)) {
+        if (chain.equals(IOV_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_SEND) {
                 return new BigDecimal(IOV_GAS_AMOUNT_SEND);
             } else if (txType == CONST_PW_TX_SIMPLE_DELEGATE) {
@@ -2870,7 +2870,7 @@ public class WUtil {
                 return new BigDecimal(IOV_GAS_AMOUNT_IBC_SEND);
             }
 
-        } else if (basechain.equals(OSMOSIS_MAIN.INSTANCE)) {
+        } else if (chain.equals(OSMOSIS_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_SEND) {
                 return new BigDecimal(OSMOSIS_GAS_AMOUNT_SEND);
             } else if (txType == CONST_PW_TX_SIMPLE_DELEGATE) {
@@ -2901,7 +2901,7 @@ public class WUtil {
             } else if (txType == CONST_PW_TX_IBC_TRANSFER) {
                 return new BigDecimal(OSMOSIS_GAS_AMOUNT_IBC_SEND);
             }
-        } else if (basechain.equals(KAVA_MAIN.INSTANCE)) {
+        } else if (chain.equals(KAVA_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_SEND) {
                 return new BigDecimal(KAVA_GAS_AMOUNT_SEND);
             } else if (txType == CONST_PW_TX_SIMPLE_DELEGATE) {
@@ -2937,7 +2937,7 @@ public class WUtil {
                 return new BigDecimal(KAVA_GAS_AMOUNT_IBC_SEND);
             }
 
-        } else if (basechain.equals(BAND_MAIN.INSTANCE)) {
+        } else if (chain.equals(BAND_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_SEND) {
                 return new BigDecimal(BAND_GAS_AMOUNT_SEND);
             } else if (txType == CONST_PW_TX_SIMPLE_DELEGATE) {
@@ -2959,7 +2959,7 @@ public class WUtil {
                 return new BigDecimal(BAND_GAS_AMOUNT_IBC_SEND);
             }
 
-        } else if (basechain.equals(OKEX_MAIN.INSTANCE)) {
+        } else if (chain.equals(OKEX_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_SEND) {
                 return new BigDecimal(OK_GAS_AMOUNT_SEND);
             } else if (txType == CONST_PW_TX_OK_DEPOSIT || txType == CONST_PW_TX_OK_WITHDRAW) {
@@ -2968,7 +2968,7 @@ public class WUtil {
                 return (new BigDecimal(OK_GAS_AMOUNT_VOTE_MUX).multiply(new BigDecimal("" + valCnt))).add(new BigDecimal(BaseConstant.OK_GAS_AMOUNT_VOTE));
             }
 
-        } else if (basechain.equals(CERTIK_MAIN.INSTANCE)) {
+        } else if (chain.equals(CERTIK_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_SEND) {
                 return new BigDecimal(CERTIK_GAS_AMOUNT_SEND);
             } else if (txType == CONST_PW_TX_SIMPLE_DELEGATE) {
@@ -2990,7 +2990,7 @@ public class WUtil {
                 return new BigDecimal(CERTIK_GAS_AMOUNT_IBC_SEND);
             }
 
-        } else if (basechain.equals(SECRET_MAIN.INSTANCE)) {
+        } else if (chain.equals(SECRET_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_SEND || txType == CONST_PW_TX_IBC_TRANSFER) {
                 return new BigDecimal(SECRET_GAS_AMOUNT_SEND);
             } else if (txType == CONST_PW_TX_SIMPLE_DELEGATE) {
@@ -3010,7 +3010,7 @@ public class WUtil {
                 return new BigDecimal(SECRET_GAS_AMOUNT_VOTE);
             }
 
-        } else if (basechain.equals(CHIHUAHUA_MAIN.INSTANCE)) {
+        } else if (chain.equals(CHIHUAHUA_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_REWARD) {
                 ArrayList<String> rewardGasFees = new ArrayList<String>(Arrays.asList(c.getResources().getStringArray(R.array.gas_multi_reward)));
                 return new BigDecimal(rewardGasFees.get(valCnt - 1));
@@ -3022,7 +3022,7 @@ public class WUtil {
                 return new BigDecimal(V1_GAS_AMOUNT_MID);
             }
 
-        } else if (basechain.equals(SENTINEL_MAIN.INSTANCE) || basechain.equals(FETCHAI_MAIN.INSTANCE) || basechain.equals(KI_MAIN.INSTANCE) || basechain.equals(MEDI_MAIN.INSTANCE) || basechain.equals(SIF_MAIN.INSTANCE)) {
+        } else if (chain.equals(SENTINEL_MAIN.INSTANCE) || chain.equals(FETCHAI_MAIN.INSTANCE) || chain.equals(KI_MAIN.INSTANCE) || chain.equals(MEDI_MAIN.INSTANCE) || chain.equals(SIF_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_SEND || txType == CONST_PW_TX_IBC_TRANSFER) {
                 return new BigDecimal(GAS_AMOUNT_SEND);
             } else if (txType == CONST_PW_TX_SIMPLE_DELEGATE) {
@@ -3046,7 +3046,7 @@ public class WUtil {
                 return new BigDecimal(SIF_GAS_AMOUNT_DEX);
             }
 
-        } else if (basechain.equals(INJ_MAIN.INSTANCE)) {
+        } else if (chain.equals(INJ_MAIN.INSTANCE) || chain.equals(IMVERSED_MAIN.INSTANCE)) {
             if (txType == CONST_PW_TX_SIMPLE_SEND) {
                 return new BigDecimal(V1_GAS_AMOUNT_MID);
             } else if (txType == CONST_PW_TX_SIMPLE_DELEGATE) {
