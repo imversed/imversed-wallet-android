@@ -35,7 +35,7 @@ public class AppLockSetActivity extends BaseActivity implements View.OnClickList
 
     private final ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
         if (result.getResultCode() == Activity.RESULT_OK) {
-            getBaseDao().setUsingAppLock(false);
+            settingsInteractor.setAppLockEnabled(false);
         }
         onUpdateView();
     });
@@ -77,10 +77,10 @@ public class AppLockSetActivity extends BaseActivity implements View.OnClickList
     }
 
     private void onUpdateView() {
-        mSwitchUsingAppLock.setChecked(getBaseDao().getUsingAppLock());
-        mSwitchUsingFingerprint.setChecked(getBaseDao().getUsingFingerPrint());
-        mTvAppLockTime.setText(getBaseDao().getAppLockLeaveTimeString());
-        if (getBaseDao().getUsingAppLock()) {
+        mSwitchUsingAppLock.setChecked(settingsInteractor.getAppLockEnabled());
+        mSwitchUsingFingerprint.setChecked(settingsInteractor.getFingerprintEnabled());
+        mTvAppLockTime.setText(getAppLockIntervalString());
+        if (settingsInteractor.getAppLockEnabled()) {
             mBtnAppLockTime.setVisibility(View.VISIBLE);
             FingerprintManagerCompat fingerprintManager = FingerprintManagerCompat.from(this);
             mBtnUsingFingerprint.setVisibility(
@@ -93,15 +93,15 @@ public class AppLockSetActivity extends BaseActivity implements View.OnClickList
         }
     }
 
-    public void onUpdateLockTime(int time) {
-        getBaseDao().setAppLockTriggerTime(time);
+    public void onUpdateLockTime(int interval) {
+        settingsInteractor.setAppLockInterval(interval);
         onUpdateView();
     }
 
     @Override
     public void onClick(View v) {
         if (v.equals(mBtnUsingAppLock)) {
-            if (getBaseDao().getUsingAppLock()) {
+            if (settingsInteractor.getAppLockEnabled()) {
                 launcher.launch(
                         new Intent(AppLockSetActivity.this, CheckPasswordActivity.class),
                         ActivityOptionsCompat.makeCustomAnimation(this, R.anim.slide_in_bottom, R.anim.fade_out)
@@ -116,7 +116,7 @@ public class AppLockSetActivity extends BaseActivity implements View.OnClickList
                         .subscribe(
                                 hasPassword -> {
                                     if (hasPassword) {
-                                        getBaseDao().setUsingAppLock(true);
+                                        settingsInteractor.setAppLockEnabled(true);
                                         onUpdateView();
                                     } else {
                                         ContextExtensionsKt.toast(getBaseContext(), R.string.error_no_password);
@@ -128,12 +128,25 @@ public class AppLockSetActivity extends BaseActivity implements View.OnClickList
             }
 
         } else if (v.equals(mBtnUsingFingerprint)) {
-            getBaseDao().setUsingFingerPrint(!getBaseDao().getUsingFingerPrint());
-            onUpdateView();
+            settingsInteractor.setFingerprintEnabled(!settingsInteractor.getFingerprintEnabled());
+            mSwitchUsingFingerprint.setChecked(settingsInteractor.getFingerprintEnabled());
 
         } else if (v.equals(mBtnAppLockTime)) {
             Dialog_LockTime timeUpdate = Dialog_LockTime.newInstance();
             showDialog(timeUpdate);
+        }
+    }
+
+    public int getAppLockIntervalString() {
+        switch (settingsInteractor.getAppLockInterval()) {
+            case 1:
+                return R.string.str_applock_time_10sec;
+            case 2:
+                return R.string.str_applock_time_30sec;
+            case 3:
+                return R.string.str_applock_time_60sec;
+            default:
+                return R.string.str_applock_time_immediately;
         }
     }
 }

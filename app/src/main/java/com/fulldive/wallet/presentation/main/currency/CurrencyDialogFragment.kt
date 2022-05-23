@@ -1,8 +1,6 @@
 package com.fulldive.wallet.presentation.main.currency
 
-import android.app.Activity
 import android.app.AlertDialog
-import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +9,6 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.fulldive.wallet.extensions.safe
 import com.fulldive.wallet.extensions.unsafeLazy
 import com.fulldive.wallet.interactors.ScreensInteractor
 import com.fulldive.wallet.interactors.settings.SettingsInteractor
@@ -79,12 +76,6 @@ class CurrencyDialogFragment : BaseMvpDialogFragment<DialogListBinding>() {
 
         settingsInteractor.setCurrency(currency)
 
-        // TODO: remove
-        safe {
-            val resultIntent = Intent()
-            resultIntent.putExtra("currency", currency.id)
-            targetFragment?.onActivityResult(targetRequestCode, Activity.RESULT_OK, resultIntent)
-        }
         dismiss()
     }
 

@@ -418,7 +418,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
         userInput = "";
 
         for (ImageView imageView : circleImageView) {
-            imageView.setBackgroundResource(R.drawable.ic_pass_gr);
+            imageView.setImageResource(R.drawable.ic_pass_gr);
         }
         mViewPager.setCurrentItem(0, true);
     }
@@ -807,7 +807,7 @@ public class PasswordCheckActivity extends BaseActivity implements ITimelessActi
 
         final int inputLength = userInput.length();
         for (int i = 0; i < circleImageView.length; i++) {
-            circleImageView[i].setBackgroundResource(
+            circleImageView[i].setImageResource(
                     i < inputLength ? R.drawable.ic_pass_pu : R.drawable.ic_pass_gr
             );
         }

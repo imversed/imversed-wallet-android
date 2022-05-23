@@ -36,6 +36,7 @@ object MnemonicUtils {
             }
             BaseChain.EVMOS_MAIN,
             BaseChain.INJ_MAIN,
+            BaseChain.IMVERSED_TEST,
             BaseChain.IMVERSED_MAIN -> {
                 generateAddressFromPrivateKey(chain.chainAddressPrefix, childKey.privateKeyAsHex)
             }
@@ -60,6 +61,7 @@ object MnemonicUtils {
                 }
             }
             BaseChain.IMVERSED_MAIN,
+            BaseChain.IMVERSED_TEST,
             BaseChain.EVMOS_MAIN,
             BaseChain.INJ_MAIN -> {
                 generateAddressFromPrivateKey(chain.chainAddressPrefix, privateKey)

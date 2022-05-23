@@ -125,7 +125,10 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
             @Override
             public void onPageSelected(int position) {
                 if (adapter != null && adapter.getCurrentFragment() != null) {
-                    ((IRefreshTabListener) adapter.getCurrentFragment()).onRefreshTab();
+                    final Fragment fragment = adapter.getCurrentFragment();
+                    if (fragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) fragment).onRefreshTab();
+                    }
                 }
                 if (position != 0) floatingActionButton.hide();
                 else if (!floatingActionButton.isShown()) floatingActionButton.show();
@@ -219,9 +222,9 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
     public void onExplorerView() {
         String url = "";
         if (getBaseChain().equals(OKEX_MAIN.INSTANCE)) {
-            url = WUtil.getExplorer(getBaseChain()) + "address/" + getAccount().address;
+            url = getBaseChain().getExplorerUrl() + "address/" + getAccount().address;
         } else {
-            url = WUtil.getExplorer(getBaseChain()) + "account/" + getAccount().address;
+            url = getBaseChain().getExplorerUrl() + "account/" + getAccount().address;
         }
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
         startActivity(intent);
