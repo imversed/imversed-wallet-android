@@ -35,7 +35,7 @@ public class TxWithdrawHardHolder extends TxHolder {
         try {
             Tx.MsgWithdraw msg = Tx.MsgWithdraw.parseFrom(response.getTx().getBody().getMessages(position).getValue());
             itemDepositor.setText(msg.getDepositor());
-            WDp.showCoinDp(c, baseData, msg.getAmount(0).getDenom(), msg.getAmount(0).getAmount(), itemWithdrawAmountDenom, itemWithdrawAmount, BaseChain.KAVA_MAIN.INSTANCE);
+            WDp.showCoinDp(baseData, msg.getAmount(0).getDenom(), msg.getAmount(0).getAmount(), itemWithdrawAmountDenom, itemWithdrawAmount, BaseChain.KAVA_MAIN.INSTANCE);
 
         } catch (Exception e) {
         }

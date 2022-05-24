@@ -100,12 +100,12 @@ public class HardPoolHolder extends BaseHolder {
             }
         }
         if (myDepositCoin != null) {
-            WDp.showCoinDp(context, baseData, myDepositCoin, depositDenomTv, depositAmountTv, chain);
+            WDp.showCoinDp(baseData, myDepositCoin, depositDenomTv, depositAmountTv, chain);
             int decimal = WUtil.getKavaCoinDecimal(baseData, myDepositCoin.denom);
             myDepositValue = (new BigDecimal(myDepositCoin.amount)).movePointLeft(decimal).multiply(baseData.getKavaOraclePrice(WUtil.getSpotMarketId(hardParams, myDepositCoin.denom)));
 
         } else {
-            WDp.showCoinDp(context, baseData, hardMoneyMarket.getDenom(), "0", depositDenomTv, depositAmountTv, chain);
+            WDp.showCoinDp(baseData, hardMoneyMarket.getDenom(), "0", depositDenomTv, depositAmountTv, chain);
         }
         depositValueTv.setText(WDp.getDpRawDollor(context, myDepositValue, 2));
 
@@ -120,12 +120,12 @@ public class HardPoolHolder extends BaseHolder {
             }
         }
         if (myBorrowCoin != null) {
-            WDp.showCoinDp(context, baseData, myBorrowCoin, borrowDenomTv, borrowAmountTv, chain);
+            WDp.showCoinDp(baseData, myBorrowCoin, borrowDenomTv, borrowAmountTv, chain);
             int decimal = WUtil.getKavaCoinDecimal(baseData, myBorrowCoin.denom);
             myBorrowValue = (new BigDecimal(myBorrowCoin.amount)).movePointLeft(decimal).multiply(baseData.getKavaOraclePrice(WUtil.getSpotMarketId(hardParams, myBorrowCoin.denom)));
 
         } else {
-            WDp.showCoinDp(context, baseData, hardMoneyMarket.getDenom(), "0", borrowDenomTv, borrowAmountTv, chain);
+            WDp.showCoinDp(baseData, hardMoneyMarket.getDenom(), "0", borrowDenomTv, borrowAmountTv, chain);
         }
         borrowValueTv.setText(WDp.getDpRawDollor(context, myBorrowValue, 2));
 

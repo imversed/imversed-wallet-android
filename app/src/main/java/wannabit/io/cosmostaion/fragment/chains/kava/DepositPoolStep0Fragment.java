@@ -162,8 +162,8 @@ public class DepositPoolStep0Fragment extends BaseFragment implements View.OnCli
         WUtil.dpKavaTokenName(getSActivity(), getBaseDao(), mJoinPoolInput1Symbol, mCoin1Denom);
         WUtil.DpKavaTokenImg(getBaseDao(), mJoinPoolInput0Img, mCoin0Denom);
         WUtil.DpKavaTokenImg(getBaseDao(), mJoinPoolInput1Img, mCoin1Denom);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), WUtil.dpKavaTokenName(getSActivity(), getBaseDao(), mJoinPoolInput0Denom, mCoin0Denom), mAvailable0MaxAmount.toString(), mJoinPoolInput0Denom, mJoinPoolInput0Amount, BaseChain.KAVA_MAIN.INSTANCE);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), WUtil.dpKavaTokenName(getSActivity(), getBaseDao(), mJoinPoolInput1Denom, mCoin1Denom), mAvailable1MaxAmount.toString(), mJoinPoolInput1Denom, mJoinPoolInput1Amount, BaseChain.KAVA_MAIN.INSTANCE);
+        WDp.showCoinDp(getBaseDao(), WUtil.dpKavaTokenName(getSActivity(), getBaseDao(), mJoinPoolInput0Denom, mCoin0Denom), mAvailable0MaxAmount.toString(), mJoinPoolInput0Denom, mJoinPoolInput0Amount, BaseChain.KAVA_MAIN.INSTANCE);
+        WDp.showCoinDp(getBaseDao(), WUtil.dpKavaTokenName(getSActivity(), getBaseDao(), mJoinPoolInput1Denom, mCoin1Denom), mAvailable1MaxAmount.toString(), mJoinPoolInput1Denom, mJoinPoolInput1Amount, BaseChain.KAVA_MAIN.INSTANCE);
 
         mDepositRate = mCoin1Amount.divide(mCoin0Amount, 18, RoundingMode.DOWN);
 

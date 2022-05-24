@@ -83,10 +83,10 @@ public class SifSwapStep3Fragment extends BaseFragment implements View.OnClickLi
         BigDecimal divider = input.add(lpInputAmount);
         BigDecimal denominator = divider.multiply(divider);
         BigDecimal lpFee = numerator.divide(denominator, 0, RoundingMode.DOWN);
-        WDp.showCoinDp(getContext(), getBaseDao(), getSActivity().mOutputDenom, lpFee.toPlainString(), mSwapFeeSymbol, mSwapFee, getSActivity().getBaseChain());
+        WDp.showCoinDp(getBaseDao(), getSActivity().mOutputDenom, lpFee.toPlainString(), mSwapFeeSymbol, mSwapFee, getSActivity().getBaseChain());
 
-        WDp.showCoinDp(getContext(), getBaseDao(), getSActivity().mSifSwapInCoin, mSwapInAmountSymbol, mSwapInAmount, getSActivity().getBaseChain());
-        WDp.showCoinDp(getContext(), getBaseDao(), getSActivity().mSifSwapOutCoin, mSwapOutAmountSymbol, mSwapOutAmount, getSActivity().getBaseChain());
+        WDp.showCoinDp(getBaseDao(), getSActivity().mSifSwapInCoin, mSwapInAmountSymbol, mSwapInAmount, getSActivity().getBaseChain());
+        WDp.showCoinDp(getBaseDao(), getSActivity().mSifSwapOutCoin, mSwapOutAmountSymbol, mSwapOutAmount, getSActivity().getBaseChain());
 
         mMemo.setText(getSActivity().mTxMemo);
     }

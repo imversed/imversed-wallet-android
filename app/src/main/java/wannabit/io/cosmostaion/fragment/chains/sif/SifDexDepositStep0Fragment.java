@@ -136,8 +136,8 @@ public class SifDexDepositStep0Fragment extends BaseFragment implements View.OnC
         WUtil.DpSifTokenImg(getBaseDao(), mJoinPoolInput1Img, externalDenom);
         WUtil.dpSifTokenName(getSActivity(), getBaseDao(), mJoinPoolInput1Symbol, externalDenom);
 
-        WDp.showCoinDp(getSActivity(), getBaseDao(), TOKEN_SIF, mRowanMaxAmount.toString(), mJoinPoolInput0Denom, mJoinPoolInput0Amount, BaseChain.SIF_MAIN.INSTANCE);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), externalDenom, mExternalMaxAmount.toString(), mJoinPoolInput1Denom, mJoinPoolInput1Amount, BaseChain.SIF_MAIN.INSTANCE);
+        WDp.showCoinDp(getBaseDao(), TOKEN_SIF, mRowanMaxAmount.toString(), mJoinPoolInput0Denom, mJoinPoolInput0Amount, BaseChain.SIF_MAIN.INSTANCE);
+        WDp.showCoinDp(getBaseDao(), externalDenom, mExternalMaxAmount.toString(), mJoinPoolInput1Denom, mJoinPoolInput1Amount, BaseChain.SIF_MAIN.INSTANCE);
 
         BigDecimal lpNativeAmount = WUtil.getPoolLpAmount(getSActivity().mSifPool, TOKEN_SIF);
         BigDecimal lpExternalAmount = WUtil.getPoolLpAmount(getSActivity().mSifPool, externalDenom);

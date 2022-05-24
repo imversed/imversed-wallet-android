@@ -55,8 +55,8 @@ public class RepayHardStep3Fragment extends BaseFragment implements View.OnClick
     @Override
     public void onRefreshTab() {
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
-        WDp.showCoinDp(getContext(), getBaseDao(), getSActivity().mHardPoolCoins.get(0), mRepayDenom, mRepayAmount, getSActivity().getBaseChain());
-        WDp.showCoinDp(getContext(), getBaseDao(), TOKEN_KAVA, feeAmount.toPlainString(), mFeesDenom, mFeesAmount, getSActivity().getBaseChain());
+        WDp.showCoinDp(getBaseDao(), getSActivity().mHardPoolCoins.get(0), mRepayDenom, mRepayAmount, getSActivity().getBaseChain());
+        WDp.showCoinDp(getBaseDao(), TOKEN_KAVA, feeAmount.toPlainString(), mFeesDenom, mFeesAmount, getSActivity().getBaseChain());
         mMemo.setText(getSActivity().mTxMemo);
 
     }

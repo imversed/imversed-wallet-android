@@ -58,19 +58,19 @@ public class TxSwapIncentiveHolder extends TxHolder {
             ArrayList<Coin> incentiveCoins = WDp.onParseKavaIncentiveGrpc(response, position);
             if (incentiveCoins.size() > 0) {
                 incen0Layer.setVisibility(View.VISIBLE);
-                WDp.showCoinDp(c, baseData, incentiveCoins.get(0), itemKavaDenom, itemKavaAmount, baseChain);
+                WDp.showCoinDp(baseData, incentiveCoins.get(0), itemKavaDenom, itemKavaAmount, baseChain);
             }
             if (incentiveCoins.size() > 1) {
                 incen1Layer.setVisibility(View.VISIBLE);
-                WDp.showCoinDp(c, baseData, incentiveCoins.get(1), itemSwpDenom, itemSwpAmount, baseChain);
+                WDp.showCoinDp(baseData, incentiveCoins.get(1), itemSwpDenom, itemSwpAmount, baseChain);
             }
             if (incentiveCoins.size() > 2) {
                 incen2Layer.setVisibility(View.VISIBLE);
-                WDp.showCoinDp(c, baseData, incentiveCoins.get(2), itemHardDenom, itemHardAmount, baseChain);
+                WDp.showCoinDp(baseData, incentiveCoins.get(2), itemHardDenom, itemHardAmount, baseChain);
             }
             if (incentiveCoins.size() > 3) {
                 incen3Layer.setVisibility(View.VISIBLE);
-                WDp.showCoinDp(c, baseData, incentiveCoins.get(3), itemUsdxDenom, itemUsdxAmount, baseChain);
+                WDp.showCoinDp(baseData, incentiveCoins.get(3), itemUsdxDenom, itemUsdxAmount, baseChain);
             }
 
         } catch (Exception e) {

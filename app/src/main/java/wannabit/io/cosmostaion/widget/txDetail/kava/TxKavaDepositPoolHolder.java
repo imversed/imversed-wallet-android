@@ -70,8 +70,8 @@ public class TxKavaDepositPoolHolder extends TxHolder {
                 }
             }
             if (inCoin0 != null && inCoin1 != null) {
-                WDp.showCoinDp(c, baseData, inCoin0, itemDepositTokenInSymbol0, itemDepositTokenInAmount0, baseChain);
-                WDp.showCoinDp(c, baseData, inCoin1, itemDepositTokenInSymbol1, itemDepositTokenInAmount1, baseChain);
+                WDp.showCoinDp(baseData, inCoin0, itemDepositTokenInSymbol0, itemDepositTokenInAmount0, baseChain);
+                WDp.showCoinDp(baseData, inCoin1, itemDepositTokenInSymbol1, itemDepositTokenInAmount1, baseChain);
             } else {
                 itemDepositTokenInAmount0.setText("");
                 itemDepositTokenInSymbol0.setText("");

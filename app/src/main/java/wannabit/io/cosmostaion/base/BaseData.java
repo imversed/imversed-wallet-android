@@ -125,7 +125,7 @@ public class BaseData {
         ArrayList<Cw20Assets> result = new ArrayList<>();
         if (mCw20Assets.size() > 0) {
             for (Cw20Assets assets : mCw20Assets) {
-                if (assets.chain.equalsIgnoreCase(WDp.getChainNameByBaseChain(baseChain)) && assets.getAmount() != null && assets.getAmount().compareTo(BigDecimal.ZERO) > 0) {
+                if (assets.chain.equalsIgnoreCase(baseChain.getMintScanChainName()) && assets.getAmount() != null && assets.getAmount().compareTo(BigDecimal.ZERO) > 0) {
                     result.add(assets);
                 }
             }

@@ -130,13 +130,15 @@ public class IBCSendStep1Fragment extends BaseFragment implements View.OnClickLi
 
     @Override
     public void onRefreshTab() {
-        mTochain = WDp.getChainTypeByChainId(getSActivity().mIbcSelectedRelayer.chain_id);
-        mToAccountList = accountsInteractor.getChainAccounts(mTochain);
-        WDp.getChainHint(mTochain, mDesitination);
-        mDesitination.setTextColor(WDp.getChainColor(getSActivity(), mTochain));
-        String userInput = mAddressInput.getText().toString().trim();
-        if (!WDp.isValidChainAddress(mTochain, userInput, false)) {
-            mAddressInput.setText("");
+        mTochain = BaseChain.getChainByIbcChainId(getSActivity().mIbcSelectedRelayer.chain_id);
+        if (mTochain != null) {  // TODO: Check it. I think it's bad case when toChain is null. We need check this somewhere before.
+            mToAccountList = accountsInteractor.getChainAccounts(mTochain);
+            WDp.getChainHint(mTochain, mDesitination);
+            mDesitination.setTextColor(WDp.getChainColor(getSActivity(), mTochain));
+            String userInput = mAddressInput.getText().toString().trim();
+            if (!WDp.isValidChainAddress(mTochain, userInput, false)) {
+                mAddressInput.setText("");
+            }
         }
     }
 

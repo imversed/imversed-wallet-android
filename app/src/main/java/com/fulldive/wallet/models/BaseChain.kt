@@ -15,6 +15,8 @@ sealed class BaseChain constructor(
     val chainName: String,
     val aliases: Array<String> = emptyArray(),
     val chainAddressPrefix: String,
+    val mintScanChainName: String,
+    val ibcChainId: String = "",
     @DrawableRes val chainIcon: Int,
     @StringRes val chainTitle: Int,
     @StringRes val chainAlterTitle: Int,
@@ -36,6 +38,7 @@ sealed class BaseChain constructor(
     val explorerUrl: String,
     val coingeckoUrl: String,
     val guide: Guide? = null,
+    val relayerImageProvider: RelayerImageProvider = RelayerImageProvider("$mintScanChainName/relay-$mintScanChainName-unknown"),
     val blockTime: BigDecimal = BigDecimal.ZERO,
     val pathProvider: IPathProvider = PathProvider.DEFAULT,
     val isSupported: Boolean = true,
@@ -48,6 +51,8 @@ sealed class BaseChain constructor(
         chainName = "cosmoshub-mainnet",
         aliases = arrayOf("cosmoshub-1", "cosmoshub-2", "cosmoshub-3", "cosmoshub-4"),
         chainAddressPrefix = "cosmos",
+        mintScanChainName = "cosmos",
+        ibcChainId = "cosmoshub-",
         chainIcon = R.drawable.cosmos_wh_main,
         chainTitle = R.string.str_cosmos_hub,
         chainAlterTitle = R.string.str_cosmos,
@@ -111,6 +116,8 @@ sealed class BaseChain constructor(
         chainName = "irishub-mainnet",
         aliases = arrayOf("irishub", "irishub-1"),
         chainAddressPrefix = "iaa",
+        mintScanChainName = "iris",
+        ibcChainId = "irishub-",
         chainIcon = R.drawable.iris_wh,
         chainTitle = R.string.str_iris_net,
         chainAlterTitle = R.string.str_iris,
@@ -141,6 +148,8 @@ sealed class BaseChain constructor(
         chainName = "iov-mainnet",
         aliases = arrayOf("iov-mainnet-2"),
         chainAddressPrefix = "star",
+        mintScanChainName = "starname",
+        ibcChainId = "iov-",
         chainIcon = R.drawable.chain_starname,
         chainTitle = R.string.str_iov_net,
         chainAlterTitle = R.string.str_iov,
@@ -172,6 +181,7 @@ sealed class BaseChain constructor(
         chainName = "binance-mainnet",
         aliases = arrayOf("Binance-Chain-Tigris"),
         chainAddressPrefix = "bnb",
+        mintScanChainName = "binance",
         chainIcon = R.drawable.binance_ch_img,
         chainTitle = R.string.str_binance_net,
         chainAlterTitle = R.string.str_binance,
@@ -206,6 +216,8 @@ sealed class BaseChain constructor(
         chainName = "kava-mainnet",
         aliases = arrayOf("kava-1", "kava-2", "kava-3", "kava-4", "kava-5", "kava-6"),
         chainAddressPrefix = "kava",
+        mintScanChainName = "kava",
+        ibcChainId = "kava-",
         chainIcon = R.drawable.kava_img,
         chainTitle = R.string.str_kava_net,
         chainAlterTitle = R.string.str_kava,
@@ -237,6 +249,8 @@ sealed class BaseChain constructor(
         chainName = "band-mainnet",
         aliases = arrayOf("band-wenchang-mainnet", "band-guanyu-mainnet"),
         chainAddressPrefix = "band",
+        mintScanChainName = "band",
+        ibcChainId = "laozi-mainnet",
         chainIcon = R.drawable.band_chain_img,
         chainTitle = R.string.str_band_chain,
         chainAlterTitle = R.string.str_band,
@@ -268,6 +282,8 @@ sealed class BaseChain constructor(
         chainName = "shentu-mainnet",
         aliases = arrayOf("shentu-1", "shentu-2"),
         chainAddressPrefix = "certik",
+        mintScanChainName = "certik",
+        ibcChainId = "shentu-",
         chainIcon = R.drawable.certik_chain_img,
         chainTitle = R.string.str_certik_chain,
         chainAlterTitle = R.string.str_certik_main,
@@ -298,6 +314,8 @@ sealed class BaseChain constructor(
         chainName = "secret-mainnet",
         aliases = arrayOf("secret-2"),
         chainAddressPrefix = "secret",
+        mintScanChainName = "secret",
+        ibcChainId = "secret-",
         chainIcon = R.drawable.chainsecret,
         chainTitle = R.string.str_secret_chain,
         chainAlterTitle = R.string.str_secret_main,
@@ -330,6 +348,8 @@ sealed class BaseChain constructor(
         chainName = "akashnet-mainnet",
         aliases = arrayOf("akashnet-1", "akashnet-2"),
         chainAddressPrefix = "akash",
+        mintScanChainName = "akash",
+        ibcChainId = "akashnet-",
         chainIcon = R.drawable.akash_chain_img,
         chainTitle = R.string.str_akash_chain,
         chainAlterTitle = R.string.str_akash_main,
@@ -360,6 +380,7 @@ sealed class BaseChain constructor(
         chainName = "okexchain-mainnet",
         aliases = arrayOf("okexchain-66"),
         chainAddressPrefix = "0x",
+        mintScanChainName = "okex",
         chainIcon = R.drawable.chain_okx,
         chainTitle = R.string.str_ok_net,
         chainAlterTitle = R.string.str_okex_main,
@@ -398,6 +419,8 @@ sealed class BaseChain constructor(
     object PERSIS_MAIN : BaseChain(
         chainName = "persistence-mainnet",
         chainAddressPrefix = "persistence",
+        mintScanChainName = "persistence",
+        ibcChainId = "core-",
         chainIcon = R.drawable.chainpersistence,
         chainTitle = R.string.str_persis_net,
         chainAlterTitle = R.string.str_persis_main,
@@ -430,6 +453,8 @@ sealed class BaseChain constructor(
     object SENTINEL_MAIN : BaseChain(
         chainName = "sentinel-mainnet",
         chainAddressPrefix = "sent",
+        mintScanChainName = "sentinel",
+        ibcChainId = "sentinelhub-",
         chainIcon = R.drawable.chainsentinel,
         chainTitle = R.string.str_sentinel_net,
         chainAlterTitle = R.string.str_sentinel_main,
@@ -460,6 +485,8 @@ sealed class BaseChain constructor(
     object FETCHAI_MAIN : BaseChain(
         chainName = "fetchai-mainnet",
         chainAddressPrefix = "fetch",
+        mintScanChainName = "fetchai",
+        ibcChainId = "fetchhub--",
         chainIcon = R.drawable.chainfetchai,
         chainTitle = R.string.str_fetch_net,
         chainAlterTitle = R.string.str_fetch_main,
@@ -492,6 +519,8 @@ sealed class BaseChain constructor(
     object CRYPTO_MAIN : BaseChain(
         chainName = "crytoorg-mainnet",
         chainAddressPrefix = "cro",
+        mintScanChainName = "cryptoorg",
+        ibcChainId = "crypto-org-",
         chainIcon = R.drawable.chaincrypto,
         chainTitle = R.string.str_crypto_net,
         chainAlterTitle = R.string.str_crypto_main,
@@ -525,6 +554,8 @@ sealed class BaseChain constructor(
     object SIF_MAIN : BaseChain(
         chainName = "sif-mainnet",
         chainAddressPrefix = "sif",
+        mintScanChainName = "sifchain",
+        ibcChainId = "sifchain-",
         chainIcon = R.drawable.chainsifchain,
         chainTitle = R.string.str_sif_net,
         chainAlterTitle = R.string.str_sif_main,
@@ -556,6 +587,8 @@ sealed class BaseChain constructor(
     object KI_MAIN : BaseChain(
         chainName = "ki-mainnet",
         chainAddressPrefix = "ki",
+        mintScanChainName = "kichain",
+        ibcChainId = "kichain-",
         chainIcon = R.drawable.chain_kifoundation,
         chainTitle = R.string.str_ki_net,
         chainAlterTitle = R.string.str_ki_main,
@@ -585,6 +618,8 @@ sealed class BaseChain constructor(
     object OSMOSIS_MAIN : BaseChain(
         chainName = "osmosis-mainnet",
         chainAddressPrefix = "osmo",
+        mintScanChainName = "osmosis",
+        ibcChainId = "osmosis-",
         chainIcon = R.drawable.chain_osmosis,
         chainTitle = R.string.str_osmosis_net,
         chainAlterTitle = R.string.str_osmosis_main,
@@ -614,6 +649,8 @@ sealed class BaseChain constructor(
     object MEDI_MAIN : BaseChain(
         chainName = "medibloc-mainnet",
         chainAddressPrefix = "panacea",
+        mintScanChainName = "medibloc",
+        ibcChainId = "panacea-",
         chainIcon = R.drawable.chainmedibloc,
         chainTitle = R.string.str_medi_net,
         chainAlterTitle = R.string.str_medi_main,
@@ -646,6 +683,8 @@ sealed class BaseChain constructor(
     object EMONEY_MAIN : BaseChain(
         chainName = "emoney-mainnet",
         chainAddressPrefix = "emoney",
+        mintScanChainName = "emoney",
+        ibcChainId = "emoney-",
         chainIcon = R.drawable.chain_emoney,
         chainTitle = R.string.str_emoney_net,
         chainAlterTitle = R.string.str_emoney_main,
@@ -675,6 +714,8 @@ sealed class BaseChain constructor(
     object RIZON_MAIN : BaseChain(
         chainName = "rizon-mainnet",
         chainAddressPrefix = "rizon",
+        mintScanChainName = "rizon",
+        ibcChainId = "titan-",
         chainIcon = R.drawable.chain_rizon,
         chainTitle = R.string.str_rizon_net,
         chainAlterTitle = R.string.str_rizon_main,
@@ -704,6 +745,8 @@ sealed class BaseChain constructor(
     object JUNO_MAIN : BaseChain(
         chainName = "juno-mainnet",
         chainAddressPrefix = "juno",
+        mintScanChainName = "juno",
+        ibcChainId = "juno-",
         chainIcon = R.drawable.chain_juno,
         chainTitle = R.string.str_juno_net,
         chainAlterTitle = R.string.str_juno_main,
@@ -733,6 +776,8 @@ sealed class BaseChain constructor(
     object REGEN_MAIN : BaseChain(
         chainName = "regen-mainnet",
         chainAddressPrefix = "regen",
+        mintScanChainName = "regen",
+        ibcChainId = "regen-",
         chainIcon = R.drawable.chain_regen,
         chainTitle = R.string.str_regen_net,
         chainAlterTitle = R.string.str_regen_main,
@@ -762,6 +807,8 @@ sealed class BaseChain constructor(
     object BITCANNA_MAIN : BaseChain(
         chainName = "bitcanna-mainnet",
         chainAddressPrefix = "bcna",
+        mintScanChainName = "bitcanna",
+        ibcChainId = "bitcanna-",
         chainIcon = R.drawable.chain_bitcanna,
         chainTitle = R.string.str_bitcanna_net,
         chainAlterTitle = R.string.str_bitcanna_main,
@@ -791,6 +838,7 @@ sealed class BaseChain constructor(
     object ALTHEA_MAIN : BaseChain(
         chainName = "althea-mainnet",
         chainAddressPrefix = "althea",
+        mintScanChainName = "althea",
         chainIcon = R.drawable.chain_althea,
         chainTitle = R.string.str_althea_net,
         chainAlterTitle = R.string.str_althea_main,
@@ -818,6 +866,8 @@ sealed class BaseChain constructor(
     object STARGAZE_MAIN : BaseChain(
         chainName = "stargaze-mainnet",
         chainAddressPrefix = "stars",
+        mintScanChainName = "stargaze",
+        ibcChainId = "stargaze-",
         chainIcon = R.drawable.chain_stargaze,
         chainTitle = R.string.str_stargaze_net,
         chainAlterTitle = R.string.str_stargaze_main,
@@ -847,6 +897,8 @@ sealed class BaseChain constructor(
     object GRABRIDGE_MAIN : BaseChain(
         chainName = "GravityBridge-mainnet",
         chainAddressPrefix = "gravity",
+        mintScanChainName = "gravity-bridge",
+        ibcChainId = "gravity-bridge-",
         chainIcon = R.drawable.chain_gravitybridge,
         chainTitle = R.string.str_grabridge_net,
         chainAlterTitle = R.string.str_grabridge_main,
@@ -875,6 +927,8 @@ sealed class BaseChain constructor(
     object COMDEX_MAIN : BaseChain(
         chainName = "comdex-mainnet",
         chainAddressPrefix = "comdex",
+        mintScanChainName = "comdex",
+        ibcChainId = "comdex-",
         chainIcon = R.drawable.chain_comdex,
         chainTitle = R.string.str_comdex_net,
         chainAlterTitle = R.string.str_comdex_main,
@@ -905,6 +959,8 @@ sealed class BaseChain constructor(
     object INJ_MAIN : BaseChain(
         chainName = "injective-mainnet",
         chainAddressPrefix = "inj",
+        mintScanChainName = "injective",
+        ibcChainId = "injective-",
         chainIcon = R.drawable.chain_injective,
         chainTitle = R.string.str_inj_net,
         chainAlterTitle = R.string.str_inj_main,
@@ -937,6 +993,8 @@ sealed class BaseChain constructor(
     object BITSONG_MAIN : BaseChain(
         chainName = "bitsong-mainnet",
         chainAddressPrefix = "bitsong",
+        mintScanChainName = "bitsong",
+        ibcChainId = "bitsong-",
         chainIcon = R.drawable.chain_bitsong,
         chainTitle = R.string.str_bitsong_net,
         chainAlterTitle = R.string.str_bitsong_main,
@@ -966,6 +1024,8 @@ sealed class BaseChain constructor(
     object DESMOS_MAIN : BaseChain(
         chainName = "desmos-mainnet",
         chainAddressPrefix = "desmos",
+        mintScanChainName = "desmos",
+        ibcChainId = "desmos-",
         chainIcon = R.drawable.chain_desmos,
         chainTitle = R.string.str_desmos_net,
         chainAlterTitle = R.string.str_desmos_main,
@@ -995,6 +1055,8 @@ sealed class BaseChain constructor(
     object LUM_MAIN : BaseChain(
         chainName = "lum-mainnet",
         chainAddressPrefix = "lum",
+        mintScanChainName = "lum",
+        ibcChainId = "lum-network-",
         chainIcon = R.drawable.chain_lumnetwork,
         chainTitle = R.string.str_lum_net,
         chainAlterTitle = R.string.str_lum_main,
@@ -1024,6 +1086,8 @@ sealed class BaseChain constructor(
     object CHIHUAHUA_MAIN : BaseChain(
         chainName = "chihuahua-mainnet",
         chainAddressPrefix = "chihuahua",
+        mintScanChainName = "chihuahua",
+        ibcChainId = "chihuahua-",
         chainIcon = R.drawable.chain_chihuahua,
         chainTitle = R.string.str_chihuahua_net,
         chainAlterTitle = R.string.str_chihuahua_main,
@@ -1052,6 +1116,8 @@ sealed class BaseChain constructor(
     object AXELAR_MAIN : BaseChain(
         chainName = "axelar-mainnet",
         chainAddressPrefix = "axelar",
+        mintScanChainName = "axelar",
+        ibcChainId = "axelar-",
         chainIcon = R.drawable.chain_axelar,
         chainTitle = R.string.str_axelar_net,
         chainAlterTitle = R.string.str_axelar_main,
@@ -1081,6 +1147,8 @@ sealed class BaseChain constructor(
     object KONSTELL_MAIN : BaseChain(
         chainName = "konstellation-mainnet",
         chainAddressPrefix = "darc",
+        mintScanChainName = "konstellation",
+        ibcChainId = "darchub",
         chainIcon = R.drawable.chain_konstellation,
         chainTitle = R.string.str_konstellation_net,
         chainAlterTitle = R.string.str_konstellation_main,
@@ -1111,6 +1179,8 @@ sealed class BaseChain constructor(
     object UMEE_MAIN : BaseChain(
         chainName = "umee-mainnet",
         chainAddressPrefix = "umee",
+        mintScanChainName = "umee",
+        ibcChainId = "umee-",
         chainIcon = R.drawable.chain_umee,
         chainTitle = R.string.str_umee_net,
         chainAlterTitle = R.string.str_umee_main,
@@ -1139,6 +1209,8 @@ sealed class BaseChain constructor(
     object EVMOS_MAIN : BaseChain(
         chainName = "evmos-mainnet",
         chainAddressPrefix = "evmos",
+        mintScanChainName = "evmos",
+        ibcChainId = "evmos",
         chainIcon = R.drawable.chain_evmos,
         chainTitle = R.string.str_evmos_net,
         chainAlterTitle = R.string.str_evmos_main,
@@ -1172,6 +1244,8 @@ sealed class BaseChain constructor(
     object CUDOS_MAIN : BaseChain(
         chainName = "cudos-mainnet",
         chainAddressPrefix = "cudos",
+        mintScanChainName = "cudos",
+        ibcChainId = "cudos-",
         chainIcon = R.drawable.chain_cudos,
         chainTitle = R.string.str_cudos_net,
         chainAlterTitle = R.string.str_cudos_main,
@@ -1203,6 +1277,8 @@ sealed class BaseChain constructor(
     object PROVENANCE_MAIN : BaseChain(
         chainName = "provenance-mainnet",
         chainAddressPrefix = "pb",
+        mintScanChainName = "provenance",
+        ibcChainId = "pio-mainnet-",
         chainIcon = R.drawable.chain_provenance,
         chainTitle = R.string.str_provenance_net,
         chainAlterTitle = R.string.str_provenance_main,
@@ -1234,6 +1310,8 @@ sealed class BaseChain constructor(
     object CERBERUS_MAIN : BaseChain(
         chainName = "cerberus-mainnet",
         chainAddressPrefix = "cerberus",
+        mintScanChainName = "cerberus",
+        ibcChainId = "cerberus-",
         chainIcon = R.drawable.chain_cerberus,
         chainTitle = R.string.str_cerberus_net,
         chainAlterTitle = R.string.str_cerberus_main,
@@ -1262,6 +1340,8 @@ sealed class BaseChain constructor(
     object OMNIFLIX_MAIN : BaseChain(
         chainName = "omniflix-mainnet",
         chainAddressPrefix = "omniflix",
+        mintScanChainName = "omniflix",
+        ibcChainId = "omniflixhub-",
         chainIcon = R.drawable.chain_omniflix,
         chainTitle = R.string.str_omniflix_net,
         chainAlterTitle = R.string.str_omniflix_main,
@@ -1291,6 +1371,7 @@ sealed class BaseChain constructor(
         chainName = "cosmos-testnet,",
         aliases = arrayOf("stargate-final"),
         chainAddressPrefix = "cosmos",
+        mintScanChainName = "cosmos-testnet",
         chainIcon = R.drawable.chain_test_cosmos,
         chainTitle = R.string.str_cosmos_test_net,
         chainAlterTitle = R.string.str_cosmos_test,
@@ -1354,6 +1435,7 @@ sealed class BaseChain constructor(
         chainName = "iris-testnet",
         aliases = arrayOf("bifrost-2"),
         chainAddressPrefix = "iaa",
+        mintScanChainName = "",
         chainIcon = R.drawable.chain_test_iris,
         chainTitle = R.string.str_iris_test_net,
         chainAlterTitle = R.string.str_iris_test,
@@ -1384,6 +1466,7 @@ sealed class BaseChain constructor(
     object OK_TEST : BaseChain(
         chainName = "okexchain-testnet",
         chainAddressPrefix = "0x",
+        mintScanChainName = "",
         chainIcon = R.drawable.chain_okx,
         chainTitle = R.string.str_ok_test_net,
         chainAlterTitle = R.string.str_okex_test,
@@ -1404,6 +1487,7 @@ sealed class BaseChain constructor(
     object RIZON_TEST : BaseChain(
         chainName = "rizon-testnet2",
         chainAddressPrefix = "rizon",
+        mintScanChainName = "",
         chainIcon = R.drawable.chain_rizon,
         chainTitle = R.string.str_rizon_test_net,
         chainAlterTitle = R.string.str_rizon_test,
@@ -1425,6 +1509,7 @@ sealed class BaseChain constructor(
     object ALTHEA_TEST : BaseChain(
         chainName = "althea-testnet",
         chainAddressPrefix = "althea",
+        mintScanChainName = "",
         chainIcon = R.drawable.chain_althea,
         chainTitle = R.string.str_althea_test_net,
         chainAlterTitle = R.string.str_althea_test,
@@ -1468,6 +1553,13 @@ sealed class BaseChain constructor(
         fun getChainByDenom(denom: String): BaseChain? {
             return chains.find { chain ->
                 chain.mainDenom == denom
+            }
+        }
+
+        @JvmStatic
+        fun getChainByIbcChainId(chainId: String): BaseChain? {
+            return chains.find { chain ->
+                chain.ibcChainId.isNotEmpty() && chainId.contains(chain.ibcChainId)
             }
         }
 

@@ -78,11 +78,11 @@ public class DepositCdpStep3Fragment extends BaseFragment implements View.OnClic
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
         final PriceProvider priceProvider = getSActivity()::getPrice;
 
-        WDp.showCoinDp(getContext(), getBaseDao(), cDenom, getSActivity().mCollateral.amount, mDepositDenom, mDepositAmount, getSActivity().getBaseChain());
+        WDp.showCoinDp(getBaseDao(), cDenom, getSActivity().mCollateral.amount, mDepositDenom, mDepositAmount, getSActivity().getBaseChain());
         BigDecimal collateralValue = new BigDecimal(getSActivity().mCollateral.amount).movePointLeft(WUtil.getKavaCoinDecimal(getBaseDao(), cDenom)).multiply(getSActivity().getKavaOraclePrice()).setScale(2, RoundingMode.DOWN);
         mDepositValue.setText(WDp.getDpRawDollor(getContext(), collateralValue, 2));
 
-        WDp.showCoinDp(getContext(), getBaseDao(), TOKEN_KAVA, feeAmount.toPlainString(), mFeesDenom, mFeesAmount, getSActivity().getBaseChain());
+        WDp.showCoinDp(getBaseDao(), TOKEN_KAVA, feeAmount.toPlainString(), mFeesDenom, mFeesAmount, getSActivity().getBaseChain());
         BigDecimal kavaValue = WDp.usdValue(getBaseDao(), TOKEN_KAVA, feeAmount, 6, priceProvider);
         mFeeValue.setText(WDp.getDpRawDollor(getContext(), kavaValue, 2));
 
@@ -95,7 +95,7 @@ public class DepositCdpStep3Fragment extends BaseFragment implements View.OnClic
         mAfterLiquidationPriceTitle.setText(String.format(getString(R.string.str_after_liquidation_title2), cDenom.toUpperCase()));
         mAfterLiquidationPrice.setText(WDp.getDpRawDollor(getContext(), getSActivity().mAfterLiquidationPrice.toPlainString(), 4));
 
-        WDp.showCoinDp(getContext(), getBaseDao(), cDenom, getSActivity().mTotalDepositAmount.toPlainString(), mTotalDepositDenom, mTotalDepositAmount, getSActivity().getBaseChain());
+        WDp.showCoinDp(getBaseDao(), cDenom, getSActivity().mTotalDepositAmount.toPlainString(), mTotalDepositDenom, mTotalDepositAmount, getSActivity().getBaseChain());
         BigDecimal totalCollateralValue = getSActivity().mTotalDepositAmount.movePointLeft(WUtil.getKavaCoinDecimal(getBaseDao(), cDenom)).multiply(getSActivity().getKavaOraclePrice()).setScale(2, RoundingMode.DOWN);
         mTotalDepositValue.setText(WDp.getDpRawDollor(getContext(), totalCollateralValue, 2));
 

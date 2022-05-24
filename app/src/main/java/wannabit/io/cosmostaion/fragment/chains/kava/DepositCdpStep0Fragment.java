@@ -119,7 +119,7 @@ public class DepositCdpStep0Fragment extends BaseFragment implements View.OnClic
         mCurrentPrice = getSActivity().getKavaOraclePrice();
 
         mCanDepositMaxMaxAmount = getSActivity().getBalance(mCollateralDenom);
-        WDp.showCoinDp(getContext(), getBaseDao(), mCollateralDenom, mCanDepositMaxMaxAmount.toPlainString(), mCollateralDenomTx, mCollateralMaxTx, getSActivity().getBaseChain());
+        WDp.showCoinDp(getBaseDao(), mCollateralDenom, mCanDepositMaxMaxAmount.toPlainString(), mCollateralDenomTx, mCollateralMaxTx, getSActivity().getBaseChain());
 
         mCurrentTotalDebetAmount = new BigDecimal(getOwenCdp().getPrincipal().getAmount()).add(new BigDecimal(getOwenCdp().getAccumulatedFees().getAmount()));
         BigDecimal hiddenFeeValue = WDp.getCdpGrpcHiddenFee(getContext(), mCurrentTotalDebetAmount, getCParam(), getOwenCdp());

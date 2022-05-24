@@ -69,8 +69,8 @@ public class WithdrawPoolStep3Fragment extends BaseFragment implements View.OnCl
         mExitMyShare.setText(WDp.getDpAmount2(getSActivity().mKavaShareAmount, 6, 6));
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
 
-        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mKavaMinTokenA, mExitOutput0AmountSymbol, mExitOutput0Amount, BaseChain.KAVA_MAIN.INSTANCE);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mKavaMinTokenB, mExitOutput1AmountSymbol, mExitOutput1Amount, BaseChain.KAVA_MAIN.INSTANCE);
+        WDp.showCoinDp(getBaseDao(), getSActivity().mKavaMinTokenA, mExitOutput0AmountSymbol, mExitOutput0Amount, BaseChain.KAVA_MAIN.INSTANCE);
+        WDp.showCoinDp(getBaseDao(), getSActivity().mKavaMinTokenB, mExitOutput1AmountSymbol, mExitOutput1Amount, BaseChain.KAVA_MAIN.INSTANCE);
 
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
         mMemo.setText(getSActivity().mTxMemo);

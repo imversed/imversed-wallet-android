@@ -67,7 +67,7 @@ public class TxTokenSwapHolder extends TxHolder {
                     }
                 }
                 if (inCoin != null) {
-                    WDp.showCoinDp(c, baseData, inCoin, itemSwapTokenInAmountSymbol, itemSwapTokenInAmount, baseChain);
+                    WDp.showCoinDp(baseData, inCoin, itemSwapTokenInAmountSymbol, itemSwapTokenInAmount, baseChain);
                 } else {
                     itemSwapTokenInAmount.setText("");
                     itemSwapTokenInAmountSymbol.setText("");
@@ -91,7 +91,7 @@ public class TxTokenSwapHolder extends TxHolder {
                     }
                 }
                 if (outCoin != null) {
-                    WDp.showCoinDp(c, baseData, outCoin, itemSwapTokenOutAmountSymbol, itemSwapTokenOutAmount, baseChain);
+                    WDp.showCoinDp(baseData, outCoin, itemSwapTokenOutAmountSymbol, itemSwapTokenOutAmount, baseChain);
                 } else {
                     itemSwapTokenOutAmount.setText("");
                     itemSwapTokenOutAmountSymbol.setText("");
@@ -127,7 +127,7 @@ public class TxTokenSwapHolder extends TxHolder {
                     }
                 }
                 if (inCoin != null) {
-                    WDp.showCoinDp(c, baseData, inCoin, itemSwapTokenInAmountSymbol, itemSwapTokenInAmount, baseChain);
+                    WDp.showCoinDp(baseData, inCoin, itemSwapTokenInAmountSymbol, itemSwapTokenInAmount, baseChain);
                 } else {
                     itemSwapTokenInAmount.setText("");
                     itemSwapTokenInAmountSymbol.setText("");
@@ -151,7 +151,7 @@ public class TxTokenSwapHolder extends TxHolder {
                     }
                 }
                 if (outCoin != null) {
-                    WDp.showCoinDp(c, baseData, outCoin, itemSwapTokenOutAmountSymbol, itemSwapTokenOutAmount, baseChain);
+                    WDp.showCoinDp(baseData, outCoin, itemSwapTokenOutAmountSymbol, itemSwapTokenOutAmount, baseChain);
                 } else {
                     itemSwapTokenOutAmount.setText("");
                     itemSwapTokenOutAmountSymbol.setText("");

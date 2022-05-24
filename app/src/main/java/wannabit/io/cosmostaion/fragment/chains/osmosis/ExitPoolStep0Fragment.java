@@ -101,7 +101,7 @@ public class ExitPoolStep0Fragment extends BaseFragment implements View.OnClickL
 
         WUtil.DpOsmosisTokenImg(getBaseDao(), mLpCoinImg, lpDenom);
         WUtil.dpOsmosisTokenName(getSActivity(), getBaseDao(), mLpCoinSymbol, lpDenom);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), lpDenom, mAvailableMaxAmount.toString(), mLpCoinDenom, mLpCoinAmount, BaseChain.OSMOSIS_MAIN.INSTANCE);
+        WDp.showCoinDp(getBaseDao(), lpDenom, mAvailableMaxAmount.toString(), mLpCoinDenom, mLpCoinAmount, BaseChain.OSMOSIS_MAIN.INSTANCE);
         onAddAmountWatcher();
     }
 
