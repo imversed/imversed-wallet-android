@@ -40,7 +40,7 @@ public class TxAddLiquidityHolder extends TxHolder {
             sifnode.clp.v1.Tx.MsgAddLiquidity msg = sifnode.clp.v1.Tx.MsgAddLiquidity.parseFrom(response.getTx().getBody().getMessages(position).getValue());
             itemALSigner.setText(msg.getSigner());
 
-            Coin nativeCoin = new Coin(BaseConstant.TOKEN_SIF, msg.getNativeAssetAmount());
+            Coin nativeCoin = new Coin(BaseChain.SIF_MAIN.INSTANCE.getMainDenom(), msg.getNativeAssetAmount());
             Coin externalCoin = new Coin(msg.getExternalAsset().getSymbol(), msg.getExternalAssetAmount());
 
             WDp.showCoinDp(baseData, nativeCoin, itemALNativeAssetSymbol, itemALNativeAssetAmount, baseChain);

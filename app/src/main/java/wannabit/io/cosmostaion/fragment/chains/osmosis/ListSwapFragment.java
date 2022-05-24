@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -112,7 +114,7 @@ public class ListSwapFragment extends BaseFragment implements View.OnClickListen
         if (mSelectedPool == null || mInputCoinDenom.isEmpty() || mOutputCoinDenom.isEmpty()) {
             if (mPoolList != null && mPoolList.size() > 0) {
                 mSelectedPool = mPoolList.get(0);
-                mInputCoinDenom = "uosmo";
+                mInputCoinDenom = BaseChain.OSMOSIS_MAIN.INSTANCE.getMainDenom();
                 mOutputCoinDenom = "ibc/27394FB092D2ECCD56123C74F36E4C1F926001CEADA9CA97EA622B25F41E5EB2";
             }
         }

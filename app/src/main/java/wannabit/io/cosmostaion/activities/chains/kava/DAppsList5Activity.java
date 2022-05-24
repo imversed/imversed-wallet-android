@@ -8,7 +8,6 @@ import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_KAVA_HAR
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_KAVA_SWAP_DEPOSITS;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_KAVA_SWAP_PARAMS;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_KAVA_SWAP_POOLS;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_KAVA;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -28,6 +27,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.google.android.material.tabs.TabLayout;
 
 import java.math.BigDecimal;
@@ -186,12 +186,13 @@ public class DAppsList5Activity extends BaseActivity implements TaskListener {
         String coin0Denom = myPool.getCoins(0).getDenom();
         String coin1Denom = myPool.getCoins(1).getDenom();
 
+        final String kavaDenom = BaseChain.KAVA_MAIN.INSTANCE.getMainDenom();
         BigDecimal available0MaxAmount = getBalance(coin0Denom);
-        if (coin0Denom.equalsIgnoreCase(TOKEN_KAVA)) {
+        if (coin0Denom.equalsIgnoreCase(kavaDenom)) {
             available0MaxAmount = available0MaxAmount.subtract(feeAmount);
         }
         BigDecimal available1MaxAmount = getBalance(coin1Denom);
-        if (coin1Denom.equalsIgnoreCase(TOKEN_KAVA)) {
+        if (coin1Denom.equalsIgnoreCase(kavaDenom)) {
             available1MaxAmount = available1MaxAmount.subtract(feeAmount);
         }
 
@@ -211,7 +212,8 @@ public class DAppsList5Activity extends BaseActivity implements TaskListener {
             return;
         }
 
-        BigDecimal mainBalance = getBalance(TOKEN_KAVA);
+        final String kavaDenom = BaseChain.KAVA_MAIN.INSTANCE.getMainDenom();
+        BigDecimal mainBalance = getBalance(kavaDenom);
         BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_KAVA_EXIT_POOL, 0);
 
         if (mainBalance.compareTo(feeAmount) < 0) {

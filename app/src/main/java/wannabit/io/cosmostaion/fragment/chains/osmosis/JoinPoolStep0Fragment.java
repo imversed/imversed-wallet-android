@@ -2,7 +2,6 @@ package wannabit.io.cosmostaion.fragment.chains.osmosis;
 
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_OSMOSIS_JOIN_POOL;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_OSMOSIS_POOL_INFO;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_OSMOSIS;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -135,11 +134,11 @@ public class JoinPoolStep0Fragment extends BaseFragment implements View.OnClickL
         String coin1Denom = getSActivity().mOsmosisPool.getPoolAssets(1).getToken().getDenom();
 
         mAvailable0MaxAmount = getSActivity().getBalance(coin0Denom);
-        if (coin0Denom.equalsIgnoreCase(TOKEN_OSMOSIS)) {
+        if (coin0Denom.equalsIgnoreCase(BaseChain.OSMOSIS_MAIN.INSTANCE.getMainDenom())) {
             mAvailable0MaxAmount = mAvailable0MaxAmount.subtract(txFeeAmount);
         }
         mAvailable1MaxAmount = getSActivity().getBalance(coin1Denom);
-        if (coin1Denom.equalsIgnoreCase(TOKEN_OSMOSIS)) {
+        if (coin1Denom.equalsIgnoreCase(BaseChain.OSMOSIS_MAIN.INSTANCE.getMainDenom())) {
             mAvailable1MaxAmount = mAvailable1MaxAmount.subtract(txFeeAmount);
         }
 

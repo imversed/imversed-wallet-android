@@ -5,7 +5,7 @@ import androidx.annotation.StringRes
 import wannabit.io.cosmostaion.R
 
 class Guide(
-    @StringRes val strin: Int,
+    @StringRes val guideTitle: Int,
     @StringRes val guideMessage: Int,
     @DrawableRes val guideIcon: Int,
     @StringRes val buttonText1: Int,

@@ -194,7 +194,7 @@ class GrpcInteractor @Inject constructor(
                 cw20Assets.map { assets ->
                     assets
                         .takeIf {
-                            assets.chain.equals(
+                            chain.mintScanChainName.isNotEmpty() && assets.chain.equals(
                                 chain.mintScanChainName,
                                 ignoreCase = true
                             )

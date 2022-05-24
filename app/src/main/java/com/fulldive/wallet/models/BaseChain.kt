@@ -15,7 +15,7 @@ sealed class BaseChain constructor(
     val chainName: String,
     val aliases: Array<String> = emptyArray(),
     val chainAddressPrefix: String,
-    val mintScanChainName: String,
+    val mintScanChainName: String = "",
     val ibcChainId: String = "",
     @DrawableRes val chainIcon: Int,
     @StringRes val chainTitle: Int,
@@ -38,7 +38,8 @@ sealed class BaseChain constructor(
     val explorerUrl: String,
     val coingeckoUrl: String,
     val guide: Guide? = null,
-    val relayerImageProvider: RelayerImageProvider = RelayerImageProvider("$mintScanChainName/relay-$mintScanChainName-unknown"),
+    val relayerImageTag: String = "$mintScanChainName/relay-$mintScanChainName-unknown",
+    val monikerImageTag: String = mintScanChainName,
     val blockTime: BigDecimal = BigDecimal.ZERO,
     val pathProvider: IPathProvider = PathProvider.DEFAULT,
     val isSupported: Boolean = true,
@@ -79,7 +80,8 @@ sealed class BaseChain constructor(
             buttonText2 = R.string.str_faq,
             buttonLink1 = "https://cosmos.network/",
             buttonLink2 = "https://guide.cosmostation.io/app_wallet_en.html"
-        )
+        ),
+        monikerImageTag = "cosmoshub"
     )
 
     object IMVERSED_MAIN : BaseChain(
@@ -141,7 +143,8 @@ sealed class BaseChain constructor(
             guideMessage = R.string.str_front_guide_msg_iris,
             buttonLink1 = "https://www.irisnet.org/",
             buttonLink2 = "https://medium.com/irisnet-blog"
-        )
+        ),
+        monikerImageTag = "irishub"
     )
 
     object IOV_MAIN : BaseChain(
@@ -174,7 +177,8 @@ sealed class BaseChain constructor(
             guideMessage = R.string.str_front_guide_msg_iov,
             buttonLink1 = "https://www.starname.me/",
             buttonLink2 = "https://medium.com/iov-internet-of-values"
-        )
+        ),
+        monikerImageTag = "iov"
     )
 
     object BNB_MAIN : BaseChain(
@@ -250,6 +254,7 @@ sealed class BaseChain constructor(
         aliases = arrayOf("band-wenchang-mainnet", "band-guanyu-mainnet"),
         chainAddressPrefix = "band",
         mintScanChainName = "band",
+        monikerImageTag = "bandprotocol",
         ibcChainId = "laozi-mainnet",
         chainIcon = R.drawable.band_chain_img,
         chainTitle = R.string.str_band_chain,
@@ -548,7 +553,8 @@ sealed class BaseChain constructor(
             guideMessage = R.string.str_front_guide_msg_crypto,
             buttonLink1 = "https://crypto.org/",
             buttonLink2 = "https://crypto.org/community/"
-        )
+        ),
+        monikerImageTag = "cryto"
     )
 
     object SIF_MAIN : BaseChain(
@@ -581,7 +587,8 @@ sealed class BaseChain constructor(
             guideMessage = R.string.str_front_guide_msg_sif,
             buttonLink1 = "https://sifchain.finance/",
             buttonLink2 = "https://medium.com/sifchain-finance"
-        )
+        ),
+        monikerImageTag = "sif"
     )
 
     object KI_MAIN : BaseChain(
@@ -612,7 +619,8 @@ sealed class BaseChain constructor(
             guideMessage = R.string.str_front_guide_msg_ki,
             buttonLink1 = "https://foundation.ki/en",
             buttonLink2 = "https://medium.com/ki-foundation"
-        )
+        ),
+        monikerImageTag = "ki"
     )
 
     object OSMOSIS_MAIN : BaseChain(
@@ -898,6 +906,7 @@ sealed class BaseChain constructor(
         chainName = "GravityBridge-mainnet",
         chainAddressPrefix = "gravity",
         mintScanChainName = "gravity-bridge",
+        relayerImageTag = "gravity-bridge/relay-gravitybridge-unknown",
         ibcChainId = "gravity-bridge-",
         chainIcon = R.drawable.chain_gravitybridge,
         chainTitle = R.string.str_grabridge_net,
@@ -1056,6 +1065,7 @@ sealed class BaseChain constructor(
         chainName = "lum-mainnet",
         chainAddressPrefix = "lum",
         mintScanChainName = "lum",
+        relayerImageTag = "lum-network/relay-lum-unknown",
         ibcChainId = "lum-network-",
         chainIcon = R.drawable.chain_lumnetwork,
         chainTitle = R.string.str_lum_net,
@@ -1080,7 +1090,8 @@ sealed class BaseChain constructor(
             guideMessage = R.string.str_front_guide_msg_lum,
             buttonLink1 = "https://lum.network/",
             buttonLink2 = "https://medium.com/lum-network"
-        )
+        ),
+        monikerImageTag = "lum-network"
     )
 
     object CHIHUAHUA_MAIN : BaseChain(
@@ -1435,7 +1446,6 @@ sealed class BaseChain constructor(
         chainName = "iris-testnet",
         aliases = arrayOf("bifrost-2"),
         chainAddressPrefix = "iaa",
-        mintScanChainName = "",
         chainIcon = R.drawable.chain_test_iris,
         chainTitle = R.string.str_iris_test_net,
         chainAlterTitle = R.string.str_iris_test,
@@ -1466,7 +1476,6 @@ sealed class BaseChain constructor(
     object OK_TEST : BaseChain(
         chainName = "okexchain-testnet",
         chainAddressPrefix = "0x",
-        mintScanChainName = "",
         chainIcon = R.drawable.chain_okx,
         chainTitle = R.string.str_ok_test_net,
         chainAlterTitle = R.string.str_okex_test,
@@ -1487,7 +1496,6 @@ sealed class BaseChain constructor(
     object RIZON_TEST : BaseChain(
         chainName = "rizon-testnet2",
         chainAddressPrefix = "rizon",
-        mintScanChainName = "",
         chainIcon = R.drawable.chain_rizon,
         chainTitle = R.string.str_rizon_test_net,
         chainAlterTitle = R.string.str_rizon_test,
@@ -1509,7 +1517,6 @@ sealed class BaseChain constructor(
     object ALTHEA_TEST : BaseChain(
         chainName = "althea-testnet",
         chainAddressPrefix = "althea",
-        mintScanChainName = "",
         chainIcon = R.drawable.chain_althea,
         chainTitle = R.string.str_althea_test_net,
         chainAlterTitle = R.string.str_althea_test,
@@ -1531,6 +1538,14 @@ sealed class BaseChain constructor(
 
     fun hasChainName(chainName: String): Boolean {
         return this.chainName == chainName || aliases.any { it == chainName }
+    }
+
+    fun getMonikerImageLink(address: String): String {
+        return "https://raw.githubusercontent.com/cosmostation/cosmostation_token_resource/master/moniker/$monikerImageTag/$address.png"
+    }
+
+    fun getRelayerImageLink(): String {
+        return "https://raw.githubusercontent.com/cosmostation/cosmostation_token_resource/master/relayer/$relayerImageTag.png"
     }
 
     companion object {

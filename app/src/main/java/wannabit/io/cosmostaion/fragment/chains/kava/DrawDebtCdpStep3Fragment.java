@@ -1,7 +1,5 @@
 package wannabit.io.cosmostaion.fragment.chains.kava;
 
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_KAVA;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+
+import com.fulldive.wallet.models.BaseChain;
 
 import java.math.BigDecimal;
 
@@ -80,8 +80,8 @@ public class DrawDebtCdpStep3Fragment extends BaseFragment implements View.OnCli
         BigDecimal moreLoanValue = new BigDecimal(getSActivity().mPrincipal.amount).movePointLeft(WUtil.getKavaCoinDecimal(getBaseDao(), pDenom));
         mLoanValue.setText(WDp.getDpRawDollor(getContext(), moreLoanValue, 2));
 
-        WDp.showCoinDp(getBaseDao(), TOKEN_KAVA, feeAmount.toPlainString(), mFeesDenom, mFeesAmount, getSActivity().getBaseChain());
-        BigDecimal kavaValue = WDp.usdValue(getBaseDao(), TOKEN_KAVA, feeAmount, 6, priceProvider);
+        WDp.showCoinDp(getBaseDao(), BaseChain.KAVA_MAIN.INSTANCE.getMainDenom(), feeAmount.toPlainString(), mFeesDenom, mFeesAmount, getSActivity().getBaseChain());
+        BigDecimal kavaValue = WDp.usdValue(getBaseDao(), BaseChain.KAVA_MAIN.INSTANCE.getMainDenom(), feeAmount, 6, priceProvider);
         mFeeValue.setText(WDp.getDpRawDollor(getContext(), kavaValue, 2));
 
         WDp.DpRiskRate(getContext(), getSActivity().mBeforeRiskRate, mBeforeRiskTv, null);

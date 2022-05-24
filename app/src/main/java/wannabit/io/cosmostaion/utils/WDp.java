@@ -1,82 +1,6 @@
 package wannabit.io.cosmostaion.utils;
 
 import static android.text.Spanned.SPAN_INCLUSIVE_INCLUSIVE;
-import static wannabit.io.cosmostaion.base.BaseConstant.AKASH_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.AKASH_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.ALTHEA_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.AXELAR_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.AXELAR_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.BAND_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.BAND_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.BITCANNA_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.BITCANNA_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.BITSONG_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.BITSONG_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.CERBERUS_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.CERBERUS_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.CERTIK_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.CERTIK_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.CHIHUAHUA_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.CHIHUAHUA_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.COMDEX_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.COMDEX_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.COSMOS_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.COSMOS_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.CRYPTO_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.CRYPTO_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.CUDOS_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.CUDOS_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.DESMOS_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.DESMOS_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.EMONEY_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.EMONEY_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.EVMOS_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.EVMOS_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.FETCHAI_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.FETCH_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.GRABRIDGE_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.GRAB_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.IMVERSED_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.IMVERSED_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.INJ_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.INJ_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.IOV_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.IRIS_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.IRIS_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.JUNO_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.JUNO_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.KAVA_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.KAVA_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.KI_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.KI_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.KONSTELL_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.KONSTELL_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.LUM_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.LUM_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.MEDI_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.MEDI_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.OKEX_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.OMNIFLIX_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.OMNIFLIX_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.OSMOSIS_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.OSMOSIS_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.PERSIS_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.PERSIS_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.PROVENANCE_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.PROVENANCE_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.REGEN_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.REGEN_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.RIZON_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.RIZON_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.SECRET_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.SECRET_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.SENTINEL_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.SENTINEL_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.SIFCHAIN_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.SIF_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.STARGAZE_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.STARGAZE_VAL_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.STARNAME_UNKNOWN_RELAYER;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_EMONEY_CHF;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_EMONEY_DKK;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_EMONEY_EUR;
@@ -89,8 +13,6 @@ import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HTLC_KAVA_XRPB;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_ION;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_SWP;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_USDX;
-import static wannabit.io.cosmostaion.base.BaseConstant.UMEE_UNKNOWN_RELAYER;
-import static wannabit.io.cosmostaion.base.BaseConstant.UMEE_VAL_URL;
 import static wannabit.io.cosmostaion.network.res.ResBnbSwapInfo.BNB_STATUS_COMPLETED;
 import static wannabit.io.cosmostaion.network.res.ResBnbSwapInfo.BNB_STATUS_OPEN;
 import static wannabit.io.cosmostaion.network.res.ResBnbSwapInfo.BNB_STATUS_REFUNDED;
@@ -181,6 +103,10 @@ public class WDp {
         result = new SpannableString(input);
         result.setSpan(new RelativeSizeSpan(0.8f), 2, result.length(), SPAN_INCLUSIVE_INCLUSIVE);
         return result;
+    }
+
+    public static void showCoinDp(BaseData baseData, String denom, String amount, TextView denomTextView, TextView amountTextView, BaseChain chain) {
+        showCoinDp(baseData, new Coin(denom, amount), denomTextView, amountTextView, chain);
     }
 
     public static void showCoinDp(BaseData baseData, Coin coin, TextView denomTextView, TextView amountTextView, BaseChain chain) {
@@ -319,89 +245,6 @@ public class WDp {
             }
         }
         return result;
-    }
-
-    public static String getDefaultRelayerImg(BaseChain chain) {
-        if (chain != null) {
-            if (chain.equals(BaseChain.AKASH_MAIN.INSTANCE)) {
-                return AKASH_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.BAND_MAIN.INSTANCE)) {
-                return BAND_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.CERTIK_MAIN.INSTANCE)) {
-                return CERTIK_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.COSMOS_MAIN.INSTANCE)) {
-                return COSMOS_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.CRYPTO_MAIN.INSTANCE)) {
-                return CRYPTO_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.EMONEY_MAIN.INSTANCE)) {
-                return EMONEY_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.FETCHAI_MAIN.INSTANCE)) {
-                return FETCHAI_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.IMVERSED_MAIN.INSTANCE) || chain.equals(BaseChain.IMVERSED_TEST.INSTANCE)) {
-                return IMVERSED_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.IRIS_MAIN.INSTANCE)) {
-                return IRIS_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.JUNO_MAIN.INSTANCE)) {
-                return JUNO_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.OSMOSIS_MAIN.INSTANCE)) {
-                return OSMOSIS_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.PERSIS_MAIN.INSTANCE)) {
-                return PERSIS_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.REGEN_MAIN.INSTANCE)) {
-                return REGEN_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.SENTINEL_MAIN.INSTANCE)) {
-                return SENTINEL_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.SIF_MAIN.INSTANCE)) {
-                return SIFCHAIN_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.IOV_MAIN.INSTANCE)) {
-                return STARNAME_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.KI_MAIN.INSTANCE)) {
-                return KI_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.BITCANNA_MAIN.INSTANCE)) {
-                return BITCANNA_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.RIZON_MAIN.INSTANCE)) {
-                return RIZON_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.MEDI_MAIN.INSTANCE)) {
-                return MEDI_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.STARGAZE_MAIN.INSTANCE)) {
-                return STARGAZE_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.COMDEX_MAIN.INSTANCE)) {
-                return COMDEX_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.SECRET_MAIN.INSTANCE)) {
-                return SECRET_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.INJ_MAIN.INSTANCE)) {
-                return INJ_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.BITSONG_MAIN.INSTANCE)) {
-                return BITSONG_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.DESMOS_MAIN.INSTANCE)) {
-                return DESMOS_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.GRABRIDGE_MAIN.INSTANCE)) {
-                return GRAB_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.LUM_MAIN.INSTANCE)) {
-                return LUM_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.CHIHUAHUA_MAIN.INSTANCE)) {
-                return CHIHUAHUA_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
-                return KAVA_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.AXELAR_MAIN.INSTANCE)) {
-                return AXELAR_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.KONSTELL_MAIN.INSTANCE)) {
-                return KONSTELL_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.UMEE_MAIN.INSTANCE)) {
-                return UMEE_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.EVMOS_MAIN.INSTANCE)) {
-                return EVMOS_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.CUDOS_MAIN.INSTANCE)) {
-                return CUDOS_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.PROVENANCE_MAIN.INSTANCE)) {
-                return PROVENANCE_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.CERBERUS_MAIN.INSTANCE)) {
-                return CERBERUS_UNKNOWN_RELAYER;
-            } else if (chain.equals(BaseChain.OMNIFLIX_MAIN.INSTANCE)) {
-                return OMNIFLIX_UNKNOWN_RELAYER;
-            }
-        }
-        return null;
     }
 
     public static SpannableString getDpEstAprCommission(BaseData baseData, BaseChain chain, BigDecimal commission) {
@@ -1306,91 +1149,6 @@ public class WDp {
         }
         return c.getString(R.string.str_bep3_status_open);
 
-    }
-
-    public static String getMonikerImgUrl(BaseChain basechain, String opAddress) {
-        if (basechain.equals(BaseChain.COSMOS_MAIN.INSTANCE) || basechain.equals(BaseChain.COSMOS_TEST.INSTANCE)) {
-            return COSMOS_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.IMVERSED_MAIN.INSTANCE) || basechain.equals(BaseChain.IMVERSED_TEST.INSTANCE)) {
-            return IMVERSED_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.IRIS_MAIN.INSTANCE) || basechain.equals(BaseChain.IRIS_TEST.INSTANCE)) {
-            return IRIS_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.AKASH_MAIN.INSTANCE)) {
-            return AKASH_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.SENTINEL_MAIN.INSTANCE)) {
-            return SENTINEL_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.PERSIS_MAIN.INSTANCE)) {
-            return PERSIS_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.CRYPTO_MAIN.INSTANCE)) {
-            return CRYPTO_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.OSMOSIS_MAIN.INSTANCE)) {
-            return OSMOSIS_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.IOV_MAIN.INSTANCE)) {
-            return IOV_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.SIF_MAIN.INSTANCE)) {
-            return SIF_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.CERTIK_MAIN.INSTANCE)) {
-            return CERTIK_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.MEDI_MAIN.INSTANCE)) {
-            return MEDI_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.EMONEY_MAIN.INSTANCE)) {
-            return EMONEY_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.FETCHAI_MAIN.INSTANCE)) {
-            return FETCH_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.BAND_MAIN.INSTANCE)) {
-            return BAND_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.RIZON_MAIN.INSTANCE)) {
-            return RIZON_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.JUNO_MAIN.INSTANCE)) {
-            return JUNO_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.REGEN_MAIN.INSTANCE)) {
-            return REGEN_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.BITCANNA_MAIN.INSTANCE)) {
-            return BITCANNA_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.ALTHEA_MAIN.INSTANCE) || basechain.equals(BaseChain.ALTHEA_TEST.INSTANCE)) {
-            return ALTHEA_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.STARGAZE_MAIN.INSTANCE)) {
-            return STARGAZE_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.GRABRIDGE_MAIN.INSTANCE)) {
-            return GRABRIDGE_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.COMDEX_MAIN.INSTANCE)) {
-            return COMDEX_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.INJ_MAIN.INSTANCE)) {
-            return INJ_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.BITSONG_MAIN.INSTANCE)) {
-            return BITSONG_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.DESMOS_MAIN.INSTANCE)) {
-            return DESMOS_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.SECRET_MAIN.INSTANCE)) {
-            return SECRET_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.KI_MAIN.INSTANCE)) {
-            return KI_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.LUM_MAIN.INSTANCE)) {
-            return LUM_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.CHIHUAHUA_MAIN.INSTANCE)) {
-            return CHIHUAHUA_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.UMEE_MAIN.INSTANCE)) {
-            return UMEE_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.AXELAR_MAIN.INSTANCE)) {
-            return AXELAR_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
-            return KAVA_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.KONSTELL_MAIN.INSTANCE)) {
-            return KONSTELL_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.EVMOS_MAIN.INSTANCE)) {
-            return EVMOS_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.CUDOS_MAIN.INSTANCE)) {
-            return CUDOS_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.PROVENANCE_MAIN.INSTANCE)) {
-            return PROVENANCE_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.CERBERUS_MAIN.INSTANCE)) {
-            return CERBERUS_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.OMNIFLIX_MAIN.INSTANCE)) {
-            return OMNIFLIX_VAL_URL + opAddress + ".png";
-        } else if (basechain.equals(BaseChain.OKEX_MAIN.INSTANCE)) {
-            return OKEX_VAL_URL + opAddress + ".png";
-        }
-        return "";
     }
 
     public static ArrayList<Coin> getCoins(Object amount) {

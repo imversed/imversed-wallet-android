@@ -2,7 +2,6 @@ package wannabit.io.cosmostaion.fragment.chains.kava;
 
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_KAVA_JOIN_POOL;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_KAVA_SWAP_POOLS_INFO;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_KAVA;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -148,11 +147,11 @@ public class DepositPoolStep0Fragment extends BaseFragment implements View.OnCli
         }
 
         mAvailable0MaxAmount = getSActivity().getBalance(mCoin0Denom);
-        if (mCoin0Denom.equalsIgnoreCase(TOKEN_KAVA)) {
+        if (mCoin0Denom.equalsIgnoreCase(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom())) {
             mAvailable0MaxAmount = mAvailable0MaxAmount.subtract(txFeeAmount);
         }
         mAvailable1MaxAmount = getSActivity().getBalance(mCoin1Denom);
-        if (mCoin1Denom.equalsIgnoreCase(TOKEN_KAVA)) {
+        if (mCoin1Denom.equalsIgnoreCase(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom())) {
             mAvailable1MaxAmount = mAvailable1MaxAmount.subtract(txFeeAmount);
         }
 

@@ -1,7 +1,6 @@
 package wannabit.io.cosmostaion.fragment.chains.kava;
 
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HARD;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_KAVA;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_SWP;
 
 import android.os.Bundle;
@@ -12,6 +11,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+
+import com.fulldive.wallet.models.BaseChain;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -70,19 +71,19 @@ public class ClaimIncentiveStep3Fragment extends BaseFragment implements View.On
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
         mFee.setText(WDp.getDpAmount2(feeAmount, 6, 6));
 
-        BigDecimal kavaIncentiveAmount = getBaseDao().mIncentiveRewards.getRewardSum(TOKEN_KAVA);
+        BigDecimal kavaIncentiveAmount = getBaseDao().mIncentiveRewards.getRewardSum(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom());
         BigDecimal hardIncentiveAmount = getBaseDao().mIncentiveRewards.getRewardSum(TOKEN_HARD);
         BigDecimal swpIncentiveAmount = getBaseDao().mIncentiveRewards.getRewardSum(TOKEN_SWP);
 
         if (getSActivity().mIncentiveMultiplier.equalsIgnoreCase("small")) {
             mLockTime.setText("1 Month");
-            kavaIncentiveAmount = kavaIncentiveAmount.multiply(mIncentiveParam.getFactor(TOKEN_KAVA, 0)).setScale(0, RoundingMode.DOWN);
+            kavaIncentiveAmount = kavaIncentiveAmount.multiply(mIncentiveParam.getFactor(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom(), 0)).setScale(0, RoundingMode.DOWN);
             hardIncentiveAmount = hardIncentiveAmount.multiply(mIncentiveParam.getFactor(TOKEN_HARD, 0)).setScale(0, RoundingMode.DOWN);
             swpIncentiveAmount = swpIncentiveAmount.multiply(mIncentiveParam.getFactor(TOKEN_SWP, 0)).setScale(0, RoundingMode.DOWN);
 
         } else {
             mLockTime.setText("12 Month");
-            kavaIncentiveAmount = kavaIncentiveAmount.multiply(mIncentiveParam.getFactor(TOKEN_KAVA, 1)).setScale(0, RoundingMode.DOWN);
+            kavaIncentiveAmount = kavaIncentiveAmount.multiply(mIncentiveParam.getFactor(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom(), 1)).setScale(0, RoundingMode.DOWN);
             hardIncentiveAmount = hardIncentiveAmount.multiply(mIncentiveParam.getFactor(TOKEN_HARD, 1)).setScale(0, RoundingMode.DOWN);
             swpIncentiveAmount = swpIncentiveAmount.multiply(mIncentiveParam.getFactor(TOKEN_SWP, 1)).setScale(0, RoundingMode.DOWN);
         }

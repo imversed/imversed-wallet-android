@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -167,10 +169,10 @@ public class SifDexSwapFragment extends BaseFragment implements View.OnClickList
 
         } else if (v.equals(mBtnOutputCoinList)) {
             mSwapableDenoms.clear();
-            if (mInputCoinDenom.equals(BaseConstant.TOKEN_SIF)) {
+            if (mInputCoinDenom.equals(BaseChain.SIF_MAIN.INSTANCE.getMainDenom())) {
                 mSwapableDenoms = (ArrayList<String>) mAllDenoms.clone();
             } else {
-                mSwapableDenoms.add(BaseConstant.TOKEN_SIF);
+                mSwapableDenoms.add(BaseChain.SIF_MAIN.INSTANCE.getMainDenom());
             }
             Bundle bundle = new Bundle();
             bundle.putStringArrayList("denoms", mSwapableDenoms);
@@ -193,14 +195,14 @@ public class SifDexSwapFragment extends BaseFragment implements View.OnClickList
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == SELECT_INPUT_CHAIN && resultCode == Activity.RESULT_OK) {
             mInputCoinDenom = mAllDenoms.get(data.getIntExtra("selectedDenom", 0));
-            if (mInputCoinDenom.equals(BaseConstant.TOKEN_SIF)) {
+            if (mInputCoinDenom.equals(BaseChain.SIF_MAIN.INSTANCE.getMainDenom())) {
                 mSelectedPool = mPoolList.get(0);
                 mOutputCoinDenom = mSelectedPool.getExternalAsset().getSymbol();
             } else {
                 for (Types.Pool pool : mPoolList) {
                     if (pool.getExternalAsset().getSymbol().equals(mInputCoinDenom)) {
                         mSelectedPool = pool;
-                        mOutputCoinDenom = BaseConstant.TOKEN_SIF;
+                        mOutputCoinDenom = BaseChain.SIF_MAIN.INSTANCE.getMainDenom();
                     }
                 }
             }
@@ -208,7 +210,7 @@ public class SifDexSwapFragment extends BaseFragment implements View.OnClickList
 
         } else if (requestCode == SELECT_OUTPUT_CHAIN && resultCode == Activity.RESULT_OK) {
             mOutputCoinDenom = mSwapableDenoms.get(data.getIntExtra("selectedDenom", 0));
-            if (mOutputCoinDenom.equals(BaseConstant.TOKEN_SIF)) {
+            if (mOutputCoinDenom.equals(BaseChain.SIF_MAIN.INSTANCE.getMainDenom())) {
                 mSelectedPool = mPoolList.get(0);
                 mInputCoinDenom = mSelectedPool.getExternalAsset().getSymbol();
             } else {

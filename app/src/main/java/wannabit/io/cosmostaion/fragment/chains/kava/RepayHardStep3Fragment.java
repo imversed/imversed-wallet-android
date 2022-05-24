@@ -1,7 +1,5 @@
 package wannabit.io.cosmostaion.fragment.chains.kava;
 
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_KAVA;
-
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +8,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+
+import com.fulldive.wallet.models.BaseChain;
 
 import java.math.BigDecimal;
 
@@ -56,7 +56,7 @@ public class RepayHardStep3Fragment extends BaseFragment implements View.OnClick
     public void onRefreshTab() {
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
         WDp.showCoinDp(getBaseDao(), getSActivity().mHardPoolCoins.get(0), mRepayDenom, mRepayAmount, getSActivity().getBaseChain());
-        WDp.showCoinDp(getBaseDao(), TOKEN_KAVA, feeAmount.toPlainString(), mFeesDenom, mFeesAmount, getSActivity().getBaseChain());
+        WDp.showCoinDp(getBaseDao(), BaseChain.KAVA_MAIN.INSTANCE.getMainDenom(), feeAmount.toPlainString(), mFeesDenom, mFeesAmount, getSActivity().getBaseChain());
         mMemo.setText(getSActivity().mTxMemo);
 
     }

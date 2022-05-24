@@ -105,7 +105,7 @@ public class HardPoolHolder extends BaseHolder {
             myDepositValue = (new BigDecimal(myDepositCoin.amount)).movePointLeft(decimal).multiply(baseData.getKavaOraclePrice(WUtil.getSpotMarketId(hardParams, myDepositCoin.denom)));
 
         } else {
-            WDp.showCoinDp(baseData, hardMoneyMarket.getDenom(), "0", depositDenomTv, depositAmountTv, chain);
+            WDp.showCoinDp(baseData, new Coin(hardMoneyMarket.getDenom(), "0"), depositDenomTv, depositAmountTv, chain);
         }
         depositValueTv.setText(WDp.getDpRawDollor(context, myDepositValue, 2));
 
@@ -125,18 +125,15 @@ public class HardPoolHolder extends BaseHolder {
             myBorrowValue = (new BigDecimal(myBorrowCoin.amount)).movePointLeft(decimal).multiply(baseData.getKavaOraclePrice(WUtil.getSpotMarketId(hardParams, myBorrowCoin.denom)));
 
         } else {
-            WDp.showCoinDp(baseData, hardMoneyMarket.getDenom(), "0", borrowDenomTv, borrowAmountTv, chain);
+            WDp.showCoinDp(baseData, new Coin(hardMoneyMarket.getDenom(), "0"), borrowDenomTv, borrowAmountTv, chain);
         }
         borrowValueTv.setText(WDp.getDpRawDollor(context, myBorrowValue, 2));
 
 
-        itemRoot.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, HardDetailActivity.class);
-                intent.putExtra("hard_money_market_denom", hardMoneyMarket.getDenom());
-                context.startActivity(intent);
-            }
+        itemRoot.setOnClickListener(v -> {
+            Intent intent = new Intent(context, HardDetailActivity.class);
+            intent.putExtra("hard_money_market_denom", hardMoneyMarket.getDenom());
+            context.startActivity(intent);
         });
     }
 }

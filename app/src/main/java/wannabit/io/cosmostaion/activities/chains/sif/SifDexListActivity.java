@@ -5,7 +5,6 @@ import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIF_JOIN_POO
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIF_SWAP;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_SIF_POOL_ASSET_LIST;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_SIF_POOL_LIST;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_SIF;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -25,6 +24,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.google.android.material.tabs.TabLayout;
 
 import java.math.BigDecimal;
@@ -171,7 +171,7 @@ public class SifDexListActivity extends BaseActivity implements TaskListener {
 
         BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(SifDexListActivity.this, getBaseChain(), CONST_PW_TX_SIF_JOIN_POOL, 0);
         String externalDenom = pool.getExternalAsset().getSymbol();
-        BigDecimal rowanAvailable = getBalance(TOKEN_SIF);
+        BigDecimal rowanAvailable = getBalance(BaseChain.SIF_MAIN.INSTANCE.getMainDenom());
         rowanAvailable = rowanAvailable.subtract(feeAmount);
         BigDecimal externalAvailable = getBalance(externalDenom);
 
@@ -193,7 +193,7 @@ public class SifDexListActivity extends BaseActivity implements TaskListener {
         }
 
         BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(SifDexListActivity.this, getBaseChain(), CONST_PW_TX_SIF_EXIT_POOL, 0);
-        BigDecimal rowanAvailable = getBalance(TOKEN_SIF);
+        BigDecimal rowanAvailable = getBalance(BaseChain.SIF_MAIN.INSTANCE.getMainDenom());
         rowanAvailable = rowanAvailable.subtract(feeAmount);
 
         if (rowanAvailable.compareTo(BigDecimal.ZERO) <= 0) {
@@ -257,7 +257,7 @@ public class SifDexListActivity extends BaseActivity implements TaskListener {
 
         }
         if (mTaskCount == 0) {
-            mAllDenoms.add(TOKEN_SIF);
+            mAllDenoms.add(BaseChain.SIF_MAIN.INSTANCE.getMainDenom());
             for (Types.Pool pool : mPoolList) {
                 if (!mAllDenoms.contains(pool.getExternalAsset().getSymbol())) {
                     mAllDenoms.add(pool.getExternalAsset().getSymbol());

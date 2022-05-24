@@ -126,17 +126,14 @@ public class RedelegateStep1Fragment extends BaseFragment implements View.OnClic
             holder.itemTvVotingPower.setText(WDp.getDpAmount2(new BigDecimal(mGrpcValidator.getTokens()), getSActivity().getBaseChain().getDivideDecimal(), 6));
             holder.itemTvYieldRate.setText(WDp.getDpEstAprCommission(getBaseDao(), getSActivity().getBaseChain(), new BigDecimal(mGrpcValidator.getCommission().getCommissionRates().getRate()).movePointLeft(18)));
             try {
-                Picasso.get().load(WDp.getMonikerImgUrl(getSActivity().getBaseChain(), mGrpcValidator.getOperatorAddress())).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
+                Picasso.get().load(getSActivity().getBaseChain().getMonikerImageLink(mGrpcValidator.getOperatorAddress())).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
             } catch (Exception e) {
             }
 
             holder.itemTvMoniker.setText(mGrpcValidator.getDescription().getMoniker());
-            holder.itemRoot.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mCheckedGRpcValidator = mGrpcValidator;
-                    notifyDataSetChanged();
-                }
+            holder.itemRoot.setOnClickListener(v -> {
+                mCheckedGRpcValidator = mGrpcValidator;
+                notifyDataSetChanged();
             });
             if (mGrpcValidator.getJailed()) {
                 holder.itemAvatar.setBorderColor(ContextCompat.getColor(requireContext(), R.color.colorRed));

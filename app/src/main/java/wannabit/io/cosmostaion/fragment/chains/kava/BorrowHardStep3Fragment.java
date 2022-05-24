@@ -1,7 +1,5 @@
 package wannabit.io.cosmostaion.fragment.chains.kava;
 
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_KAVA;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+
+import com.fulldive.wallet.models.BaseChain;
 
 import java.math.BigDecimal;
 
@@ -58,9 +58,10 @@ public class BorrowHardStep3Fragment extends BaseFragment implements View.OnClic
 
     @Override
     public void onRefreshTab() {
+        final String kavaDenom = BaseChain.KAVA_MAIN.INSTANCE.getMainDenom();
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
         WDp.showCoinDp(getBaseDao(), getSActivity().mHardPoolCoins.get(0), mBorrowDenom, mBorrowAmount, getSActivity().getBaseChain());
-        WDp.showCoinDp(getBaseDao(), TOKEN_KAVA, feeAmount.toPlainString(), mFeesDenom, mFeesAmount, getSActivity().getBaseChain());
+        WDp.showCoinDp(getBaseDao(), kavaDenom, feeAmount.toPlainString(), mFeesDenom, mFeesAmount, getSActivity().getBaseChain());
         mMemo.setText(getSActivity().mTxMemo);
 
     }

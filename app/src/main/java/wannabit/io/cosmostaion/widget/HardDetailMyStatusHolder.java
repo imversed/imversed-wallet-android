@@ -73,19 +73,19 @@ public class HardDetailMyStatusHolder extends BaseHolder {
         //Display My Supply
         final BigDecimal totalSuppliedValue = WUtil.getHardSuppliedValueByDenom(baseData, denom, myDeposit);
         final BigDecimal totalSuppliedAmount = WUtil.getHardSuppliedAmountByDenom(denom, myDeposit);
-        WDp.showCoinDp(baseData, hardMoneyMarket.getDenom(), totalSuppliedAmount.toPlainString(), mDepositDenomTv, mDepositAmountTv, chain);
+        WDp.showCoinDp(baseData, new Coin(hardMoneyMarket.getDenom(), totalSuppliedAmount.toPlainString()), mDepositDenomTv, mDepositAmountTv, chain);
         mDepositValueTv.setText(WDp.getDpRawDollor(context, totalSuppliedValue, 2));
 
         //Display My Borrowed
         final BigDecimal totalBorrowedValue = WUtil.getHardBorrowedValueByDenom(baseData, denom, myBorrow);
         final BigDecimal totalBorrowedAmount = WUtil.getHardBorrowedAmountByDenom(denom, myBorrow);
-        WDp.showCoinDp(baseData, hardMoneyMarket.getDenom(), totalBorrowedAmount.toPlainString(), mBorrowedDenomTv, mBorrowedAmountTv, chain);
+        WDp.showCoinDp(baseData, new Coin(hardMoneyMarket.getDenom(), totalBorrowedAmount.toPlainString()), mBorrowedDenomTv, mBorrowedAmountTv, chain);
         mBorrowedValueTv.setText(WDp.getDpRawDollor(context, totalBorrowedValue, 2));
 
         //Display My Borrowable
         final BigDecimal finalBorrowableValue = WUtil.getHardBorrowableValueByDenom(baseData, denom, myDeposit, myBorrow, moduleCoins, reserveCoin);
         final BigDecimal finalBorrowableAmount = WUtil.getHardBorrowableAmountByDenom(baseData, denom, myDeposit, myBorrow, moduleCoins, reserveCoin);
-        WDp.showCoinDp(baseData, hardMoneyMarket.getDenom(), finalBorrowableAmount.toPlainString(), mBorrowableDenomTv, mBorrowableAmountTv, chain);
+        WDp.showCoinDp(baseData, new Coin(hardMoneyMarket.getDenom(), finalBorrowableAmount.toPlainString()), mBorrowableDenomTv, mBorrowableAmountTv, chain);
         mBorrowableValueTv.setText(WDp.getDpRawDollor(context, finalBorrowableValue, 2));
 
         mMyBtnSupply.setOnClickListener(new View.OnClickListener() {

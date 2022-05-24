@@ -1,7 +1,5 @@
 package wannabit.io.cosmostaion.fragment.chains.kava;
 
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_KAVA;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+
+import com.fulldive.wallet.models.BaseChain;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -90,8 +90,8 @@ public class CreateCdpStep3Fragment extends BaseFragment implements View.OnClick
         BigDecimal principalValue = getSActivity().toPrincipalAmount.movePointLeft(WUtil.getKavaCoinDecimal(getBaseDao(), pDenom)).setScale(2, RoundingMode.DOWN);
         mPrincipalValue.setText(WDp.getDpRawDollor(getContext(), principalValue, 2));
 
-        WDp.showCoinDp(getBaseDao(), TOKEN_KAVA, feeAmount.toPlainString(), mFeesDenom, mFeesAmount, getSActivity().getBaseChain());
-        BigDecimal kavaValue = WDp.usdValue(getBaseDao(), TOKEN_KAVA, feeAmount, 6, priceProvider);
+        WDp.showCoinDp(getBaseDao(), BaseChain.KAVA_MAIN.INSTANCE.getMainDenom(), feeAmount.toPlainString(), mFeesDenom, mFeesAmount, getSActivity().getBaseChain());
+        BigDecimal kavaValue = WDp.usdValue(getBaseDao(), BaseChain.KAVA_MAIN.INSTANCE.getMainDenom(), feeAmount, 6, priceProvider);
         mFeeValue.setText(WDp.getDpRawDollor(getContext(), kavaValue, 2));
 
 

@@ -80,7 +80,7 @@ public class SifDexWithdrawStep3Fragment extends BaseFragment implements View.On
 
         mExitInAmount.setText(WDp.getDpAmount2(lpUnitAmount, mDpDecimal, mDpDecimal));
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
-        WDp.showCoinDp(getBaseDao(), BaseConstant.TOKEN_SIF, rowanWithAmount.toPlainString(), mExitOutput0AmountSymbol, mExitOutput0Amount, BaseChain.SIF_MAIN.INSTANCE);
+        WDp.showCoinDp(getBaseDao(), BaseChain.SIF_MAIN.INSTANCE.getMainDenom(), rowanWithAmount.toPlainString(), mExitOutput0AmountSymbol, mExitOutput0Amount, BaseChain.SIF_MAIN.INSTANCE);
         WDp.showCoinDp(getBaseDao(), getSActivity().mSifPool.getExternalAsset().getSymbol(), externalWithDrawAmount.toPlainString(), mExitOutput1AmountSymbol, mExitOutput1Amount, BaseChain.SIF_MAIN.INSTANCE);
         mMemo.setText(getSActivity().mTxMemo);
 

@@ -135,7 +135,7 @@ public class ValidatorAllFragment extends BaseFragment implements View.OnClickLi
                 holder.itemTvVotingPower.setText(WDp.getDpAmount2(new BigDecimal(validator.getTokens()), dpDecimal, 6));
                 holder.itemTvCommission.setText(WDp.getDpEstAprCommission(getBaseDao(), getMainActivity().getBaseChain(), new BigDecimal(validator.getCommission().getCommissionRates().getRate()).movePointLeft(18)));
                 try {
-                    Picasso.get().load(WDp.getMonikerImgUrl(getMainActivity().getBaseChain(), validator.getOperatorAddress())).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
+                    Picasso.get().load(getMainActivity().getBaseChain().getMonikerImageLink(validator.getOperatorAddress())).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
                 } catch (Exception e) {
                 }
 
@@ -177,7 +177,7 @@ public class ValidatorAllFragment extends BaseFragment implements View.OnClickLi
                 holder.itemFree.setVisibility(View.GONE);
                 holder.itemRoot.setOnClickListener(v -> getMainActivity().onStartValidatorDetail(validator));
                 try {
-                    Picasso.get().load(WDp.getMonikerImgUrl(getMainActivity().getBaseChain(), validator.operator_address)).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
+                    Picasso.get().load(getMainActivity().getBaseChain().getMonikerImageLink(validator.operator_address)).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
                 } catch (Exception e) {
                 }
 
