@@ -1,7 +1,6 @@
 package wannabit.io.cosmostaion.widget.mainWallet;
 
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HARD;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_KAVA;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_SWP;
 
 import android.view.View;
@@ -10,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.main.MainActivity;
 
 import org.jetbrains.annotations.NotNull;
@@ -41,9 +41,10 @@ public class WalletKavaIncentiveHolder extends BaseHolder {
         BigDecimal mKavaIncetiveAmount = BigDecimal.ZERO;
         BigDecimal mHardIncetiveAmount = BigDecimal.ZERO;
         BigDecimal mSwpIncetiveAmount = BigDecimal.ZERO;
+        final String kavaDenom = BaseChain.KAVA_MAIN.INSTANCE.getMainDenom();
 
         if (baseData.mIncentiveRewards != null) {
-            mKavaIncetiveAmount = baseData.mIncentiveRewards.getRewardSum(TOKEN_KAVA);
+            mKavaIncetiveAmount = baseData.mIncentiveRewards.getRewardSum(kavaDenom);
             mHardIncetiveAmount = baseData.mIncentiveRewards.getRewardSum(TOKEN_HARD);
             mSwpIncetiveAmount = baseData.mIncentiveRewards.getRewardSum(TOKEN_SWP);
         }

@@ -154,7 +154,7 @@ public class WUtil {
 
                 if (lcd.result.value.coins != null && lcd.result.value.coins.size() > 0) {
                     for (Coin coin : lcd.result.value.coins) {
-                        if (coin.denom.equals(TOKEN_KAVA)) {
+                        if (coin.denom.equals(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom())) {
                             dpBalance = BigDecimal.ZERO;
                             dpVesting = BigDecimal.ZERO;
                             originalVesting = BigDecimal.ZERO;
@@ -164,7 +164,7 @@ public class WUtil {
 
                             if (lcd.result.value.original_vesting != null && lcd.result.value.original_vesting.size() > 0) {
                                 for (Coin vesting : lcd.result.value.original_vesting) {
-                                    if (vesting.denom.equals(TOKEN_KAVA)) {
+                                    if (vesting.denom.equals(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom())) {
                                         originalVesting = originalVesting.add(new BigDecimal(vesting.amount));
                                     }
                                 }
@@ -172,7 +172,7 @@ public class WUtil {
 
                             if (lcd.result.value.delegated_vesting != null && lcd.result.value.delegated_vesting.size() > 0) {
                                 for (Coin vesting : lcd.result.value.delegated_vesting) {
-                                    if (vesting.denom.equals(TOKEN_KAVA)) {
+                                    if (vesting.denom.equals(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom())) {
                                         delegatedVesting = delegatedVesting.add(new BigDecimal(vesting.amount));
                                     }
                                 }
@@ -182,7 +182,7 @@ public class WUtil {
                             WLog.w("kava originalVesting " + originalVesting);
                             WLog.w("kava delegatedVesting " + delegatedVesting);
 
-                            remainVesting = lcd.result.value.getCalcurateVestingAmountSumByDenom(TOKEN_KAVA);
+                            remainVesting = lcd.result.value.getCalcurateVestingAmountSumByDenom(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom());
                             WLog.w("kava remainVesting " + remainVesting);
 
                             dpVesting = remainVesting.subtract(delegatedVesting);
@@ -200,7 +200,7 @@ public class WUtil {
                             WalletBalance temp = new WalletBalance(
                                     0L,
                                     accountId,
-                                    TOKEN_KAVA,
+                                    BaseChain.KAVA_MAIN.INSTANCE.getMainDenom(),
                                     dpBalance.toPlainString(),
                                     delegatedVesting.toPlainString(),
                                     dpVesting.toPlainString(),
@@ -636,7 +636,7 @@ public class WUtil {
      * coin decimal
      */
     public static int getKavaCoinDecimal(Coin coin) {
-        if (coin.denom.equalsIgnoreCase(TOKEN_KAVA)) {
+        if (coin.denom.equalsIgnoreCase(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom())) {
             return 6;
         } else if (coin.denom.equalsIgnoreCase(TOKEN_HARD)) {
             return 6;
@@ -660,7 +660,7 @@ public class WUtil {
     }
 
     public static int getKavaCoinDecimal(BaseData baseData, String denom) {
-        if (denom.equalsIgnoreCase(TOKEN_KAVA)) {
+        if (denom.equalsIgnoreCase(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom())) {
             return 6;
         } else if (denom.equalsIgnoreCase(TOKEN_HARD)) {
             return 6;
@@ -701,7 +701,7 @@ public class WUtil {
     }
 
     public static int getSifCoinDecimal(String denom) {
-        if (denom.equalsIgnoreCase(TOKEN_SIF)) {
+        if (denom.equalsIgnoreCase(BaseChain.SIF_MAIN.INSTANCE.getMainDenom())) {
             return 18;
         } else if (denom.equalsIgnoreCase("cusdt")) {
             return 6;
@@ -919,7 +919,7 @@ public class WUtil {
     }
 
     public static String getKavaTokenName(BaseData baseData, String denom) {
-        if (denom.equalsIgnoreCase(TOKEN_KAVA)) {
+        if (denom.equalsIgnoreCase(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom())) {
             return "KAVA";
         } else if (denom.equalsIgnoreCase(TOKEN_HARD)) {
             return "HARD";
@@ -980,8 +980,8 @@ public class WUtil {
             } else {
                 return denom;
             }
-        } else if (denom.equalsIgnoreCase(TOKEN_KAVA)) {
-            return TOKEN_KAVA;
+        } else if (denom.equalsIgnoreCase(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom())) {
+            return BaseChain.KAVA_MAIN.INSTANCE.getMainDenom();
         } else if (denom.equalsIgnoreCase(TOKEN_HARD)) {
             return TOKEN_HARD;
         } else if (denom.equalsIgnoreCase(TOKEN_USDX)) {
@@ -1001,7 +1001,7 @@ public class WUtil {
     }
 
     public static String dpOsmosisTokenName(BaseData baseData, String denom) {
-        if (denom.equals(TOKEN_OSMOSIS)) {
+        if (denom.equals(BaseChain.OSMOSIS_MAIN.INSTANCE.getMainDenom())) {
             return "OSMO";
 
         } else if (denom.equals(TOKEN_ION)) {
@@ -1033,9 +1033,9 @@ public class WUtil {
 
     public static String dpOsmosisTokenName(Context c, BaseData baseData, TextView textView, String denom) {
         if (denom != null) {
-            if (denom.equals(TOKEN_OSMOSIS)) {
-                textView.setTextColor(ContextCompat.getColor(c, R.color.colorOsmosis));
-                textView.setText("OSMO");
+            if (denom.equals(BaseChain.OSMOSIS_MAIN.INSTANCE.getMainDenom())) {
+                textView.setTextColor(ContextCompat.getColor(c, BaseChain.OSMOSIS_MAIN.INSTANCE.getChainColor()));
+                textView.setText(BaseChain.OSMOSIS_MAIN.INSTANCE.getSymbolTitle());
 
             } else if (denom.equals(TOKEN_ION)) {
                 textView.setTextColor(ContextCompat.getColor(c, R.color.colorIon));
@@ -1069,7 +1069,7 @@ public class WUtil {
     }
 
     public static String dpSifTokenName(BaseData baseData, String denom) {
-        if (denom.equalsIgnoreCase(TOKEN_SIF)) {
+        if (denom.equalsIgnoreCase(BaseChain.SIF_MAIN.INSTANCE.getMainDenom())) {
             return "ROWAN";
 
         } else if (denom.startsWith("ibc/")) {
@@ -1098,7 +1098,7 @@ public class WUtil {
 
     public static String dpSifTokenName(Context c, BaseData baseData, TextView textView, String denom) {
         if (denom != null) {
-            if (denom.equals(TOKEN_SIF)) {
+            if (denom.equals(BaseChain.SIF_MAIN.INSTANCE.getMainDenom())) {
                 textView.setTextColor(ContextCompat.getColor(c, R.color.colorSif));
                 textView.setText("ROWAN");
 
@@ -1369,7 +1369,8 @@ public class WUtil {
     public static BigDecimal getPoolArp(BaseData baseData, BalancerPool.Pool pool, List<GaugeOuterClass.Gauge> gauges, int position, PriceProvider priceProvider) {
         BigDecimal poolValue = getPoolValue(baseData, pool, priceProvider);
         BigDecimal incentiveAmount = getNextIncentiveAmount(gauges, position);
-        BigDecimal incentiveValue = WDp.usdValue(baseData, baseData.getBaseDenom(TOKEN_OSMOSIS), incentiveAmount, WUtil.getOsmosisCoinDecimal(baseData, TOKEN_OSMOSIS), priceProvider);
+        final String denom = BaseChain.OSMOSIS_MAIN.INSTANCE.getMainDenom();
+        BigDecimal incentiveValue = WDp.usdValue(baseData, baseData.getBaseDenom(denom), incentiveAmount, WUtil.getOsmosisCoinDecimal(baseData, denom), priceProvider);
         return incentiveValue.multiply(new BigDecimal("36500")).divide(poolValue, 12, RoundingMode.DOWN);
     }
 
@@ -1390,7 +1391,7 @@ public class WUtil {
 
     public static BigDecimal getPoolLpAmount(sifnode.clp.v1.Types.Pool pool, String denom) {
         if (denom != null) {
-            if (denom.equals(TOKEN_SIF)) {
+            if (denom.equals(BaseChain.SIF_MAIN.INSTANCE.getMainDenom())) {
                 return getNativeAmount(pool);
             } else {
                 return getExternalAmount(pool);
@@ -1400,9 +1401,9 @@ public class WUtil {
     }
 
     public static BigDecimal getSifPoolValue(BaseData baseData, sifnode.clp.v1.Types.Pool pool, PriceProvider priceProvider) {
-        int rowanDecimal = getSifCoinDecimal(baseData, TOKEN_SIF);
+        int rowanDecimal = getSifCoinDecimal(baseData, BaseChain.SIF_MAIN.INSTANCE.getMainDenom());
         BigDecimal rowanAmount = new BigDecimal(pool.getNativeAssetBalance());
-        BigDecimal rowanPrice = WDp.perUsdValue(baseData, TOKEN_SIF, priceProvider);
+        BigDecimal rowanPrice = WDp.perUsdValue(baseData, BaseChain.SIF_MAIN.INSTANCE.getMainDenom(), priceProvider);
 
         int externalDecimal = getSifCoinDecimal(baseData, pool.getExternalAsset().getSymbol());
         BigDecimal externalAmount = new BigDecimal(pool.getExternalAssetBalance());

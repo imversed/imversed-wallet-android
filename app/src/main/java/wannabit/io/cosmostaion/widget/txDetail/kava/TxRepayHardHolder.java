@@ -36,7 +36,7 @@ public class TxRepayHardHolder extends TxHolder {
             Tx.MsgRepay msg = Tx.MsgRepay.parseFrom(response.getTx().getBody().getMessages(position).getValue());
             itemSender.setText(msg.getSender());
             itemOwener.setText(msg.getSender());
-            WDp.showCoinDp(c, baseData, msg.getAmount(0).getDenom(), msg.getAmount(0).getAmount(), itemRepayDenom, itemRepayAmount, BaseChain.KAVA_MAIN.INSTANCE);
+            WDp.showCoinDp(baseData, msg.getAmount(0).getDenom(), msg.getAmount(0).getAmount(), itemRepayDenom, itemRepayAmount, BaseChain.KAVA_MAIN.INSTANCE);
 
         } catch (Exception e) {
         }

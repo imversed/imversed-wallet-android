@@ -6,8 +6,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+
+import com.fulldive.wallet.models.BaseChain;
 
 import java.math.BigDecimal;
 
@@ -16,7 +17,6 @@ import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.sif.SifDexListActivity;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.base.BaseData;
-import wannabit.io.cosmostaion.dao.Price;
 import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WUtil;
@@ -48,7 +48,7 @@ public class SifPoolOtherHolder extends BaseHolder {
 
     @Override
     public void onBindSifOtherEthPool(Context context, SifDexListActivity activity, BaseData baseData, Types.Pool otherPool) {
-        int rowanDecimal = WDp.mainDisplayDecimal(BaseConstant.TOKEN_SIF);
+        int rowanDecimal = WDp.mainDisplayDecimal(BaseChain.SIF_MAIN.INSTANCE.getMainDenom());
         BigDecimal rowanAmount = new BigDecimal(otherPool.getNativeAssetBalance());
         int externalDecimal = WUtil.getSifCoinDecimal(baseData, otherPool.getExternalAsset().getSymbol());
         BigDecimal externalAmount = new BigDecimal(otherPool.getExternalAssetBalance());
@@ -61,15 +61,15 @@ public class SifPoolOtherHolder extends BaseHolder {
         itemPoolType.setText("ROWAN : " + WUtil.dpSifTokenName(baseData, exteranlDenom).toUpperCase());
         itemTotalDepositValue.setText(WDp.getDpRawDollor(context, poolValue, 2));
 
-        WUtil.dpSifTokenName(context, baseData, itemTotalDepositSymbol0, BaseConstant.TOKEN_SIF);
+        WUtil.dpSifTokenName(context, baseData, itemTotalDepositSymbol0, BaseChain.SIF_MAIN.INSTANCE.getMainDenom());
         WUtil.dpSifTokenName(context, baseData, itemTotalDepositSymbol1, exteranlDenom);
         itemTotalDepositAmount0.setText(WDp.getDpAmount2(rowanAmount, rowanDecimal, 6));
         itemTotalDepositAmount1.setText(WDp.getDpAmount2(externalAmount, externalDecimal, 6));
 
         //dp available
-        BigDecimal availableRowan = activity.getBalance(BaseConstant.TOKEN_SIF);
+        BigDecimal availableRowan = activity.getBalance(BaseChain.SIF_MAIN.INSTANCE.getMainDenom());
         BigDecimal availableExternal = activity.getBalance(exteranlDenom);
-        WUtil.dpSifTokenName(context, baseData, itemMyAvailableSymbol0, BaseConstant.TOKEN_SIF);
+        WUtil.dpSifTokenName(context, baseData, itemMyAvailableSymbol0, BaseChain.SIF_MAIN.INSTANCE.getMainDenom());
         WUtil.dpSifTokenName(context, baseData, itemMyAvailableSymbol1, exteranlDenom);
         itemMyAvailableAmount0.setText(WDp.getDpAmount2(availableRowan, rowanDecimal, 6));
         itemMyAvailableAmount1.setText(WDp.getDpAmount2(availableExternal, externalDecimal, 6));

@@ -34,7 +34,7 @@ public class TxBorrowHardHolder extends TxHolder {
         try {
             Tx.MsgBorrow msg = Tx.MsgBorrow.parseFrom(response.getTx().getBody().getMessages(position).getValue());
             itemBorrower.setText(msg.getBorrower());
-            WDp.showCoinDp(c, baseData, msg.getAmount(0).getDenom(), msg.getAmount(0).getAmount(), itemBorrowDenom, itemBorrowAmount, BaseChain.KAVA_MAIN.INSTANCE);
+            WDp.showCoinDp(baseData, msg.getAmount(0).getDenom(), msg.getAmount(0).getAmount(), itemBorrowDenom, itemBorrowAmount, BaseChain.KAVA_MAIN.INSTANCE);
 
         } catch (Exception e) {
         }

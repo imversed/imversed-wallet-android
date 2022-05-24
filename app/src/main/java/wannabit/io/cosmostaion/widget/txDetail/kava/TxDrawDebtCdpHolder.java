@@ -38,7 +38,7 @@ public class TxDrawDebtCdpHolder extends TxHolder {
             Tx.MsgDrawDebt msg = Tx.MsgDrawDebt.parseFrom(response.getTx().getBody().getMessages(position).getValue());
             itemSender.setText(msg.getSender());
             itemCdpDenom.setText(msg.getCollateralType());
-            WDp.showCoinDp(c, baseData, msg.getPrincipal().getDenom(), msg.getPrincipal().getAmount(), itemPrincipalDenom, itemPrincipalAmount, BaseChain.KAVA_MAIN.INSTANCE);
+            WDp.showCoinDp(baseData, msg.getPrincipal().getDenom(), msg.getPrincipal().getAmount(), itemPrincipalDenom, itemPrincipalAmount, BaseChain.KAVA_MAIN.INSTANCE);
 
         } catch (Exception e) {
         }

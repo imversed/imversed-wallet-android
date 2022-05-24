@@ -149,8 +149,8 @@ public class GDexDepositStep0Fragment extends BaseFragment implements View.OnCli
         WUtil.dpCosmosTokenName(getSActivity(), getBaseDao(), mJoinPoolInput0Symbol, coin0Denom);
         WUtil.DpCosmosTokenImg(getBaseDao(), mJoinPoolInput1Img, coin1Denom);
         WUtil.dpCosmosTokenName(getSActivity(), getBaseDao(), mJoinPoolInput1Symbol, coin1Denom);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), WUtil.dpCosmosTokenName(getSActivity(), getBaseDao(), mJoinPoolInput0Denom, coin0Denom), mAvailable0MaxAmount.toString(), mJoinPoolInput0Denom, mJoinPoolInput0Amount, COSMOS_MAIN.INSTANCE);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), WUtil.dpCosmosTokenName(getSActivity(), getBaseDao(), mJoinPoolInput1Denom, coin1Denom), mAvailable1MaxAmount.toString(), mJoinPoolInput1Denom, mJoinPoolInput1Amount, COSMOS_MAIN.INSTANCE);
+        WDp.showCoinDp(getBaseDao(), WUtil.dpCosmosTokenName(getSActivity(), getBaseDao(), mJoinPoolInput0Denom, coin0Denom), mAvailable0MaxAmount.toString(), mJoinPoolInput0Denom, mJoinPoolInput0Amount, COSMOS_MAIN.INSTANCE);
+        WDp.showCoinDp(getBaseDao(), WUtil.dpCosmosTokenName(getSActivity(), getBaseDao(), mJoinPoolInput1Denom, coin1Denom), mAvailable1MaxAmount.toString(), mJoinPoolInput1Denom, mJoinPoolInput1Amount, COSMOS_MAIN.INSTANCE);
 
         BigDecimal lpInputAmount0 = WUtil.getLpAmount(getBaseDao(), getSActivity().mGDexPool.getReserveAccountAddress(), coin0Denom);
         BigDecimal lpInputAmount1 = WUtil.getLpAmount(getBaseDao(), getSActivity().mGDexPool.getReserveAccountAddress(), coin1Denom);

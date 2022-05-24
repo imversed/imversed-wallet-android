@@ -48,7 +48,7 @@ public class TxGravitySwapHolder extends TxHolder {
             itemGravitySwapOrderPrice.setText(WDp.getDpAmount2(new BigDecimal(msg.getOrderPrice()), 18, 18));
 
             Coin coin = new Coin(msg.getOfferCoin().getDenom(), msg.getOfferCoin().getAmount());
-            WDp.showCoinDp(c, baseData, coin, itemGravitySwapOfferSymbol, itemGravitySwapOfferAmount, BaseChain.COSMOS_MAIN.INSTANCE);
+            WDp.showCoinDp(baseData, coin, itemGravitySwapOfferSymbol, itemGravitySwapOfferAmount, BaseChain.COSMOS_MAIN.INSTANCE);
         } catch (Exception e) {
         }
     }

@@ -31,7 +31,6 @@ import wannabit.io.cosmostaion.dao.IbcToken;
 import wannabit.io.cosmostaion.dialog.Dialog_IBC_Receive_Chain;
 import wannabit.io.cosmostaion.dialog.Dialog_IBC_Relayer_Channel;
 import wannabit.io.cosmostaion.dialog.Dialog_IBC_Unknown_Relayer;
-import wannabit.io.cosmostaion.utils.WDp;
 
 public class IBCSendStep0Fragment extends BaseFragment implements View.OnClickListener {
 
@@ -139,9 +138,11 @@ public class IBCSendStep0Fragment extends BaseFragment implements View.OnClickLi
         mFromChainImg.setImageResource(chain.getChainIcon());
         mFromChainTv.setText(chain.getChainAlterTitle());
 
-        BaseChain toChain = WDp.getChainTypeByChainId(mIbcSelectedRelayer.chain_id);
-        mToChainImg.setImageResource(toChain.getChainIcon());
-        mToChainTv.setText(chain.getChainAlterTitle());
+        final BaseChain toChain = BaseChain.getChainByIbcChainId(mIbcSelectedRelayer.chain_id);
+        if (toChain != null) {  // TODO: Check it. I think it's bad case when toChain is null. We need check this somewhere before.
+            mToChainImg.setImageResource(toChain.getChainIcon());
+            mToChainTv.setText(chain.getChainAlterTitle());
+        }
 
         mRelayerTxt.setText(mIbcSelectedPath.channel_id);
         if (mIbcSelectedPath.auth == null) {
@@ -203,17 +204,26 @@ public class IBCSendStep0Fragment extends BaseFragment implements View.OnClickLi
                     if (o2.channel_id.equalsIgnoreCase(ibcToken.channel_id)) return 1;
                 }
                 if (getSActivity().mToIbcDenom.equalsIgnoreCase(getSActivity().getBaseChain().getMainDenom())) {
-                    if (o1.auth != null && o1.port_id.equalsIgnoreCase(o1.counter_party.port_id)) return -1;
-                    if (o2.auth != null && o2.port_id.equalsIgnoreCase(o2.counter_party.port_id)) return 1;
-                    if (o1.auth != null && !o1.port_id.equalsIgnoreCase(o1.counter_party.port_id)) return -1;
-                    if (o2.auth != null && !o2.port_id.equalsIgnoreCase(o2.counter_party.port_id)) return 1;
+                    if (o1.auth != null && o1.port_id.equalsIgnoreCase(o1.counter_party.port_id))
+                        return -1;
+                    if (o2.auth != null && o2.port_id.equalsIgnoreCase(o2.counter_party.port_id))
+                        return 1;
+                    if (o1.auth != null && !o1.port_id.equalsIgnoreCase(o1.counter_party.port_id))
+                        return -1;
+                    if (o2.auth != null && !o2.port_id.equalsIgnoreCase(o2.counter_party.port_id))
+                        return 1;
                 } else {
-                    if (o1.auth != null && !o1.port_id.equalsIgnoreCase(o1.counter_party.port_id)) return -1;
-                    if (o2.auth != null && !o2.port_id.equalsIgnoreCase(o2.counter_party.port_id)) return 1;
-                    if (o1.auth != null && o1.port_id.equalsIgnoreCase(o1.counter_party.port_id)) return -1;
-                    if (o2.auth != null && o2.port_id.equalsIgnoreCase(o2.counter_party.port_id)) return 1;
+                    if (o1.auth != null && !o1.port_id.equalsIgnoreCase(o1.counter_party.port_id))
+                        return -1;
+                    if (o2.auth != null && !o2.port_id.equalsIgnoreCase(o2.counter_party.port_id))
+                        return 1;
+                    if (o1.auth != null && o1.port_id.equalsIgnoreCase(o1.counter_party.port_id))
+                        return -1;
+                    if (o2.auth != null && o2.port_id.equalsIgnoreCase(o2.counter_party.port_id))
+                        return 1;
                 }
-                return 0;            }
+                return 0;
+            }
         });
     }
 

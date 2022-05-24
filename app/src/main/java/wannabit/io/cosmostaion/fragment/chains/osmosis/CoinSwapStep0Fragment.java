@@ -2,7 +2,6 @@ package wannabit.io.cosmostaion.fragment.chains.osmosis;
 
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_OSMOSIS_SWAP;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_OSMOSIS_POOL_INFO;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_OSMOSIS;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import com.fulldive.wallet.models.BaseChain;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -116,7 +117,7 @@ public class CoinSwapStep0Fragment extends BaseFragment implements View.OnClickL
         setDpDecimals(mInputCoinDecimal);
         mAvailableMaxAmount = getSActivity().getBalance(getSActivity().mInputDenom);
         BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getContext(), getSActivity().getBaseChain(), CONST_PW_TX_OSMOSIS_SWAP, 0);
-        if (getSActivity().mInputDenom.equals(TOKEN_OSMOSIS)) {
+        if (getSActivity().mInputDenom.equals(BaseChain.OSMOSIS_MAIN.INSTANCE.getMainDenom())) {
             mAvailableMaxAmount = mAvailableMaxAmount.subtract(txFee);
         }
         mSwapAvailAmount.setText(WDp.getDpAmount2(mAvailableMaxAmount, mInputCoinDecimal, mInputCoinDecimal));

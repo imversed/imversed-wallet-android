@@ -6,7 +6,6 @@ import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.BINANCE_TOKEN_IMG_URL;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIMPLE_SEND;
 import static wannabit.io.cosmostaion.base.BaseConstant.OKEX_COIN_IMG_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_OK;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,6 +25,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.models.WalletBalance;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
@@ -137,18 +137,21 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
     }
 
     private void onUpdateView() {
-        mBtnAddressPopup.setCardBackgroundColor(WDp.getChainBgColor(NativeTokenDetailActivity.this, getBaseChain()));
+        final BaseChain chain = getBaseChain();
+        final String mainDenom = chain.getMainDenom();
         final Currency currency = settingsInteractor.getCurrency();
         final PriceProvider priceProvider = this::getPrice;
 
-        if (getBaseChain().equals(OKEX_MAIN.INSTANCE)) {
+        mBtnAddressPopup.setCardBackgroundColor(WDp.getChainBgColor(NativeTokenDetailActivity.this, chain));
+
+        if (chain.equals(OKEX_MAIN.INSTANCE)) {
             final OkToken okToken = getBaseDao().okToken(mDenom);
             Picasso.get().load(OKEX_COIN_IMG_URL + okToken.original_symbol + ".png").placeholder(R.drawable.token_ic).error(R.drawable.token_ic).fit().into(mToolbarSymbolImg);
             mToolbarSymbol.setText(okToken.original_symbol.toUpperCase());
             mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
 
             BigDecimal convertedOktAmount = WDp.convertTokenToOkt(this, getBaseDao(), mDenom, priceProvider);
-            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, TOKEN_OK, convertedOktAmount, 0, priceProvider));
+            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mainDenom, convertedOktAmount, 0, priceProvider));
 
             if (okToken.original_symbol.equalsIgnoreCase("okb")) {
                 mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, "okb", priceProvider));
@@ -171,7 +174,7 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
                 mItemUpDownImg.setVisibility(View.INVISIBLE);
             }
 
-        } else if (getBaseChain().equals(BNB_MAIN.INSTANCE)) {
+        } else if (chain.equals(BNB_MAIN.INSTANCE)) {
             final WalletBalance balance = getFullBalance(mDenom);
             final BigDecimal amount = balance.getTotalAmount();
             final BnbToken bnbToken = getBaseDao().getBnbToken(mDenom);
@@ -180,7 +183,7 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
             mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
 
             BigDecimal convertedBnbAmount = WUtil.getBnbConvertAmount(getBaseDao(), mDenom, amount);
-            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, BNB_MAIN.INSTANCE.getMainDenom(), convertedBnbAmount, 0, priceProvider));
+            mTotalValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), currency, mainDenom, convertedBnbAmount, 0, priceProvider));
 
             mItemPerPrice.setText(WUtil.dpBnbTokenUserCurrencyPrice(getBaseDao(), currency, mDenom, priceProvider));
             mItemUpDownPrice.setText("");
@@ -190,7 +193,7 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
         mAddress.setText(getAccount().address);
         mKeyState.setColorFilter(ContextCompat.getColor(getBaseContext(), R.color.colorGray0), android.graphics.PorterDuff.Mode.SRC_IN);
         if (getAccount().hasPrivateKey) {
-            mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), getBaseChain()), android.graphics.PorterDuff.Mode.SRC_IN);
+            mKeyState.setColorFilter(WDp.getChainColor(getBaseContext(), chain), android.graphics.PorterDuff.Mode.SRC_IN);
         }
         mSwipeRefreshLayout.setRefreshing(false);
     }

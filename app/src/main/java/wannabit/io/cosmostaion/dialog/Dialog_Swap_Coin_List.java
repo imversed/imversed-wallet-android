@@ -5,9 +5,6 @@ import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.ASSET_IMG_URL;
 import static wannabit.io.cosmostaion.base.BaseConstant.KAVA_COIN_IMG_URL;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_ION;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_KAVA;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_OSMOSIS;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_SIF;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,6 +24,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -103,7 +101,8 @@ public class Dialog_Swap_Coin_List extends DialogFragment {
                 try {
                     Picasso.get().load(KAVA_COIN_IMG_URL + mSwapCoinList.get(position) + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.chainImg);
                     String baseDenom = WDp.getKavaBaseDenom(mSwapCoinList.get(position));
-                    if (baseDenom.equalsIgnoreCase(TOKEN_KAVA)) {
+                    final String kavaDenom = BaseChain.KAVA_MAIN.INSTANCE.getMainDenom();
+                    if (baseDenom.equalsIgnoreCase(kavaDenom)) {
                         holder.chainName.setText(R.string.str_kava_c);
                     } else {
                         holder.chainName.setText(mSwapCoinList.get(position).toUpperCase());
@@ -114,11 +113,11 @@ public class Dialog_Swap_Coin_List extends DialogFragment {
                 holder.chainName.setText(R.string.str_atom_c);
                 Picasso.get().cancelRequest(holder.chainImg);
                 holder.chainImg.setImageResource(R.drawable.atom_ic);
-            } else if (inputCoin.equals(TOKEN_OSMOSIS)) {
+            } else if (inputCoin.equals(BaseChain.OSMOSIS_MAIN.INSTANCE.getMainDenom())) {
                 holder.chainName.setText(R.string.str_osmosis_c);
                 Picasso.get().cancelRequest(holder.chainImg);
                 holder.chainImg.setImageResource(R.drawable.token_osmosis);
-            } else if (inputCoin.equals(TOKEN_SIF)) {
+            } else if (inputCoin.equals(BaseChain.SIF_MAIN.INSTANCE.getMainDenom())) {
                 holder.chainName.setText(R.string.str_sif_c);
                 Picasso.get().cancelRequest(holder.chainImg);
                 holder.chainImg.setImageResource(R.drawable.tokensifchain);

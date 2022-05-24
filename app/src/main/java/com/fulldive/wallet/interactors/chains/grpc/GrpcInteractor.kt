@@ -14,7 +14,6 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import tendermint.p2p.Types
 import wannabit.io.cosmostaion.dao.Account
-import wannabit.io.cosmostaion.utils.WDp
 import wannabit.io.cosmostaion.utils.WLog
 import javax.inject.Inject
 
@@ -168,7 +167,7 @@ class GrpcInteractor @Inject constructor(
                             validators.mapNotNull { validator ->
                                 validator.takeIf {
                                     delegations.any { it.delegation.validatorAddress == validator.operatorAddress }
-                                        || undelegations.any { it.validatorAddress == validator.operatorAddress }
+                                            || undelegations.any { it.validatorAddress == validator.operatorAddress }
                                 }
                             }
                         }
@@ -195,8 +194,8 @@ class GrpcInteractor @Inject constructor(
                 cw20Assets.map { assets ->
                     assets
                         .takeIf {
-                            assets.chain.equals(
-                                WDp.getChainNameByBaseChain(chain),
+                            chain.mintScanChainName.isNotEmpty() && assets.chain.equals(
+                                chain.mintScanChainName,
                                 ignoreCase = true
                             )
                         }

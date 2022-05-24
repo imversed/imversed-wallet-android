@@ -6,7 +6,6 @@ import static com.fulldive.wallet.models.BaseChain.SIF_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_CLAIM_INCENTIVE;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIF_CLAIM_INCENTIVE;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HARD;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_KAVA;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_SWP;
 
 import android.app.Activity;
@@ -284,7 +283,7 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
                 return;
             }
             final IncentiveReward incentiveReward = baseData.mIncentiveRewards;
-            if (incentiveReward.getRewardSum(TOKEN_KAVA).equals(BigDecimal.ZERO) && incentiveReward.getRewardSum(TOKEN_HARD).equals(BigDecimal.ZERO) &&
+            if (incentiveReward.getRewardSum(baseChain.getMainDenom()).equals(BigDecimal.ZERO) && incentiveReward.getRewardSum(TOKEN_HARD).equals(BigDecimal.ZERO) &&
                     incentiveReward.getRewardSum(TOKEN_SWP).equals(BigDecimal.ZERO)) {
                 Toast.makeText(this, R.string.error_no_incentive_to_claim, Toast.LENGTH_SHORT).show();
                 return;

@@ -169,7 +169,7 @@ public class ValidatorMyFragment extends BaseFragment implements View.OnClickLis
                     final BigDecimal undelegationAmount = getBaseDao().getUndelegation(validator.getOperatorAddress());
                     final BigDecimal rewardAmount = getBaseDao().getReward(getMainActivity().getBaseChain().getMainDenom(), validator.getOperatorAddress());
                     try {
-                        Picasso.get().load(WDp.getMonikerImgUrl(getMainActivity().getBaseChain(), validator.getOperatorAddress())).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
+                        Picasso.get().load(getMainActivity().getBaseChain().getMonikerImageLink(validator.getOperatorAddress())).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
                     } catch (Exception e) {
                     }
 
@@ -202,7 +202,7 @@ public class ValidatorMyFragment extends BaseFragment implements View.OnClickLis
                     final BigDecimal undelegationAmount = getBaseDao().unbondingAmountByValidator(validator.operator_address);
                     final BigDecimal rewardAmount = getBaseDao().rewardAmountByValidator(getMainActivity().getBaseChain().getMainDenom(), validator.operator_address);
                     try {
-                        Picasso.get().load(WDp.getMonikerImgUrl(getMainActivity().getBaseChain(), validator.operator_address)).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
+                        Picasso.get().load(getMainActivity().getBaseChain().getMonikerImageLink(validator.operator_address)).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
                     } catch (Exception e) {
                     }
 

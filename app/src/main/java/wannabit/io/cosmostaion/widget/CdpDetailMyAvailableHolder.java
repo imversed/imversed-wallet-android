@@ -1,12 +1,12 @@
 package wannabit.io.cosmostaion.widget;
 
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_KAVA;
-
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+
+import com.fulldive.wallet.models.BaseChain;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -47,13 +47,14 @@ public class CdpDetailMyAvailableHolder extends BaseHolder {
 
     @Override
     public void onBindCdpDetailAvailable(CdpDetail5Activity context, BaseData baseData, String collateralType) {
+        final String kavaDenom = BaseChain.KAVA_MAIN.INSTANCE.getMainDenom();
         final Genesis.CollateralParam collateralParam = baseData.getCollateralParamByType(collateralType);
         final String cDenom = collateralParam.getDenom();
         final String pDenom = collateralParam.getDebtLimit().getDenom();
         final BigDecimal currentPrice = baseData.getKavaOraclePrice(collateralParam.getLiquidationMarketId());
         final BigDecimal cAvailable = context.getBalance(cDenom);
         final BigDecimal pAvailable = context.getBalance(pDenom);
-        final BigDecimal kAvailable = context.getBalance(TOKEN_KAVA);
+        final BigDecimal kAvailable = context.getBalance(kavaDenom);
 
 
         mEmptyCollateralDenom.setText(WUtil.getKavaTokenName(baseData, collateralParam.getDenom()));
@@ -66,10 +67,10 @@ public class CdpDetailMyAvailableHolder extends BaseHolder {
         BigDecimal principalValue = pAvailable.movePointLeft(WUtil.getKavaCoinDecimal(baseData, pDenom)).setScale(2, RoundingMode.DOWN);
         mEmptyPrincipalValue.setText(WDp.getDpRawDollor(context, principalValue, 2));
 
-        mEmptyKavaAmount.setText(WDp.getDpAmount2(kAvailable, WUtil.getKavaCoinDecimal(baseData, TOKEN_KAVA), WUtil.getKavaCoinDecimal(baseData, TOKEN_KAVA)));
+        mEmptyKavaAmount.setText(WDp.getDpAmount2(kAvailable, WUtil.getKavaCoinDecimal(baseData, kavaDenom), WUtil.getKavaCoinDecimal(baseData, kavaDenom)));
 
         final PriceProvider priceProvider = context::getPrice;
-        BigDecimal kavaValue = WDp.usdValue(baseData, TOKEN_KAVA, kAvailable, 6, priceProvider);
+        BigDecimal kavaValue = WDp.usdValue(baseData, kavaDenom, kAvailable, 6, priceProvider);
         mEmptyKavaValue.setText(WDp.getDpRawDollor(context, kavaValue, 2));
 
         WUtil.DpKavaTokenImg(baseData, mEmptyCollateralImg, cDenom);

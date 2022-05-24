@@ -1,8 +1,8 @@
 package wannabit.io.cosmostaion.model.kava;
 
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HARD;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_KAVA;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.google.gson.annotations.SerializedName;
 
 import java.math.BigDecimal;
@@ -82,20 +82,6 @@ public class IncentiveReward {
         return result;
     }
 
-    public BigDecimal getHardPoolKavaRewardAmount() {
-        BigDecimal result = BigDecimal.ZERO;
-        for (HardClaim reward : hard_claims) {
-            if (reward.base_claim.reward != null) {
-                for (Coin coin : reward.base_claim.reward) {
-                    if (coin.denom.equals(TOKEN_KAVA)) {
-                        result = result.add(new BigDecimal(coin.amount));
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
     public BigDecimal getHardPoolRewardAmount(String denom) {
         BigDecimal result = BigDecimal.ZERO;
         if (hard_claims != null) {
@@ -117,7 +103,7 @@ public class IncentiveReward {
         if (usdx_minting_claims != null) {
             for (UsdxMintingClaim reward : usdx_minting_claims) {
                 if (reward.base_claim.reward != null) {
-                    if (reward.base_claim.reward.denom.equals(TOKEN_KAVA)) {
+                    if (reward.base_claim.reward.denom.equals(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom())) {
                         result = result.add(new BigDecimal(reward.base_claim.reward.amount));
                     }
                 }
@@ -204,7 +190,7 @@ public class IncentiveReward {
     }
 
     public BigDecimal getRewardSum(String denom) {
-        if (denom.equals(TOKEN_KAVA)) {
+        if (denom.equals(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom())) {
             return getHardPoolRewardAmount(denom).add(getMintingRewardAmount()).add(getDelegatorKavaRewardAmount(denom)).add(getSwapKavaRewardAmount(denom));
         } else {
             return getHardPoolRewardAmount(denom).add(getDelegatorKavaRewardAmount(denom)).add(getSwapKavaRewardAmount(denom));

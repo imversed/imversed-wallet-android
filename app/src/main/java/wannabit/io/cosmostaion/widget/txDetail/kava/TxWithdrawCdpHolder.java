@@ -38,7 +38,7 @@ public class TxWithdrawCdpHolder extends TxHolder {
             Tx.MsgWithdraw msg = Tx.MsgWithdraw.parseFrom(response.getTx().getBody().getMessages(position).getValue());
             itemOwner.setText(msg.getOwner());
             itemDepositor.setText(msg.getDepositor());
-            WDp.showCoinDp(c, baseData, msg.getCollateral().getDenom(), msg.getCollateral().getAmount(), itemCollateralDenom, itemCollateralAmount, BaseChain.KAVA_MAIN.INSTANCE);
+            WDp.showCoinDp(baseData, msg.getCollateral().getDenom(), msg.getCollateral().getAmount(), itemCollateralDenom, itemCollateralAmount, BaseChain.KAVA_MAIN.INSTANCE);
 
         } catch (Exception e) {
         }

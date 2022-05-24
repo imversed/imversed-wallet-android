@@ -115,7 +115,7 @@ public class ValidatorOtherFragment extends BaseFragment implements IRefreshTabL
             if (getMainActivity().getBaseChain().isGRPC()) {
                 final Staking.Validator validator = getBaseDao().mGRpcOtherValidators.get(position);
                 try {
-                    Picasso.get().load(WDp.getMonikerImgUrl(getMainActivity().getBaseChain(), validator.getOperatorAddress())).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
+                    Picasso.get().load(getMainActivity().getBaseChain().getMonikerImageLink(validator.getOperatorAddress())).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
                 } catch (Exception e) {
                 }
 
@@ -148,7 +148,7 @@ public class ValidatorOtherFragment extends BaseFragment implements IRefreshTabL
                 holder.itemFree.setVisibility(View.GONE);
                 holder.itemRoot.setOnClickListener(v -> getMainActivity().onStartValidatorDetail(validator));
                 try {
-                    Picasso.get().load(WDp.getMonikerImgUrl(getMainActivity().getBaseChain(), validator.operator_address)).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
+                    Picasso.get().load(getMainActivity().getBaseChain().getMonikerImageLink(validator.operator_address)).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
                 } catch (Exception e) {
                 }
 
