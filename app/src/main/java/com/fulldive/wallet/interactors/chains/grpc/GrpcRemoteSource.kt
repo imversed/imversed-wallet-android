@@ -26,7 +26,6 @@ import wannabit.io.cosmostaion.model.kava.IncentiveParam
 import wannabit.io.cosmostaion.model.kava.IncentiveReward
 import wannabit.io.cosmostaion.network.ApiClient
 import wannabit.io.cosmostaion.network.ChannelBuilder
-import wannabit.io.cosmostaion.utils.WDp
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -149,17 +148,24 @@ class GrpcRemoteSource @Inject constructor(
 
     fun requestMintScanAssets(chain: BaseChain): Single<List<Assets>> {
         return safeSingle {
-            ApiClient.getMintscan(context).getAssets(WDp.getChainNameByBaseChain(chain)) // TODO
-                .execute()
-                .body()!!.assets
+            chain
+                .mintScanChainName
+                .takeIf(String::isNotEmpty)
+                ?.let(ApiClient.getMintscan(context)::getAssets)
+                ?.execute()
+                ?.body()
+                ?.assets
         }
     }
 
     fun requestMintScanCw20Assets(): Single<List<Cw20Assets>> {
         return safeSingle {
-            ApiClient.getMintscan(context).cw20Assets
+            ApiClient
+                .getMintscan(context)
+                .cw20Assets
                 .execute()
-                .body()!!.assets
+                .body()
+                ?.assets
         }
     }
 

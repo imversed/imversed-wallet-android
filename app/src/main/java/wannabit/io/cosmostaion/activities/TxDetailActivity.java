@@ -482,7 +482,7 @@ public class TxDetailActivity extends BaseActivity implements View.OnClickListen
                 }
                 ArrayList<Coin> toDpCoin = msg.value.inputs.get(0).coins;
                 holder.itemSingleCoinLayer.setVisibility(View.VISIBLE);
-                WDp.showCoinDp(getBaseContext(), getBaseDao(), toDpCoin.get(0), holder.itemAmountDenom, holder.itemAmount, getBaseChain());
+                WDp.showCoinDp(getBaseDao(), toDpCoin.get(0), holder.itemAmountDenom, holder.itemAmount, getBaseChain());
 
             } else {
                 final Msg msg = mResTxInfo.getMsg(position - 1);
@@ -547,27 +547,27 @@ public class TxDetailActivity extends BaseActivity implements View.OnClickListen
                 //support multi type(denom) coins transfer
                 if (toDpCoin.size() == 1) {
                     holder.itemSingleCoinLayer.setVisibility(View.VISIBLE);
-                    WDp.showCoinDp(getBaseContext(), getBaseDao(), toDpCoin.get(0), holder.itemAmountDenom, holder.itemAmount, getBaseChain());
+                    WDp.showCoinDp(getBaseDao(), toDpCoin.get(0), holder.itemAmountDenom, holder.itemAmount, getBaseChain());
                 } else {
                     holder.itemMultiCoinLayer.setVisibility(View.VISIBLE);
                     if (toDpCoin.size() > 0) {
-                        WDp.showCoinDp(getBaseContext(), getBaseDao(), toDpCoin.get(0), holder.itemAmountDenom0, holder.itemAmount0, getBaseChain());
+                        WDp.showCoinDp(getBaseDao(), toDpCoin.get(0), holder.itemAmountDenom0, holder.itemAmount0, getBaseChain());
                     }
                     if (toDpCoin.size() > 1) {
                         holder.itemAmountLayer1.setVisibility(View.VISIBLE);
-                        WDp.showCoinDp(getBaseContext(), getBaseDao(), toDpCoin.get(1), holder.itemAmountDenom1, holder.itemAmount1, getBaseChain());
+                        WDp.showCoinDp(getBaseDao(), toDpCoin.get(1), holder.itemAmountDenom1, holder.itemAmount1, getBaseChain());
                     }
                     if (toDpCoin.size() > 2) {
                         holder.itemAmountLayer2.setVisibility(View.VISIBLE);
-                        WDp.showCoinDp(getBaseContext(), getBaseDao(), toDpCoin.get(2), holder.itemAmountDenom2, holder.itemAmount2, getBaseChain());
+                        WDp.showCoinDp(getBaseDao(), toDpCoin.get(2), holder.itemAmountDenom2, holder.itemAmount2, getBaseChain());
                     }
                     if (toDpCoin.size() > 3) {
                         holder.itemAmountLayer3.setVisibility(View.VISIBLE);
-                        WDp.showCoinDp(getBaseContext(), getBaseDao(), toDpCoin.get(3), holder.itemAmountDenom3, holder.itemAmount3, getBaseChain());
+                        WDp.showCoinDp(getBaseDao(), toDpCoin.get(3), holder.itemAmountDenom3, holder.itemAmount3, getBaseChain());
                     }
                     if (toDpCoin.size() > 4) {
                         holder.itemAmountLayer4.setVisibility(View.VISIBLE);
-                        WDp.showCoinDp(getBaseContext(), getBaseDao(), toDpCoin.get(4), holder.itemAmountDenom4, holder.itemAmount4, getBaseChain());
+                        WDp.showCoinDp(getBaseDao(), toDpCoin.get(4), holder.itemAmountDenom4, holder.itemAmount4, getBaseChain());
                     }
                 }
             }
@@ -678,7 +678,7 @@ public class TxDetailActivity extends BaseActivity implements View.OnClickListen
                     holder.itemRecipient.setText(msg.value.to);
                 }
                 Coin sendCoin = WDp.getCoins(msg.value.amount).get(0);
-                WDp.showCoinDp(getBaseContext(), getBaseDao(), sendCoin, holder.itemSendDenom, holder.itemSendAmount, getBaseChain());
+                WDp.showCoinDp(getBaseDao(), sendCoin, holder.itemSendDenom, holder.itemSendAmount, getBaseChain());
                 holder.itemRandomHash.setText(msg.value.random_number_hash);
                 holder.itemExpectIncome.setText(msg.value.expected_income);
                 holder.itemStatus.setText(WDp.getBnbHtlcStatus(getBaseContext(), mResBnbSwapInfo, mResBnbNodeInfo));
@@ -714,7 +714,7 @@ public class TxDetailActivity extends BaseActivity implements View.OnClickListen
                 Coin refundCoin = mResTxInfo.simpleRefund();
                 try {
                     if (!TextUtils.isEmpty(refundCoin.denom)) {
-                        WDp.showCoinDp(getBaseContext(), getBaseDao(), refundCoin, holder.itemRefundDenom, holder.itemRefundAmount, getBaseChain());
+                        WDp.showCoinDp(getBaseDao(), refundCoin, holder.itemRefundDenom, holder.itemRefundAmount, getBaseChain());
                     }
                 } catch (Exception e) {
                 }
@@ -748,7 +748,7 @@ public class TxDetailActivity extends BaseActivity implements View.OnClickListen
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                WDp.showCoinDp(getBaseContext(), getBaseDao(), msg.value.quantity, holder.itemAmountDenom, holder.itemAmount, getBaseChain());
+                WDp.showCoinDp(getBaseDao(), msg.value.quantity, holder.itemAmountDenom, holder.itemAmount, getBaseChain());
             }
         }
 

@@ -125,7 +125,7 @@ public class SendStep1Fragment extends BaseFragment implements View.OnClickListe
             mMaxAvailable = getSActivity().getBalance(toSendDenom);
         }
 
-        WDp.showCoinDp(getContext(), getBaseDao(), toSendDenom, mMaxAvailable.toPlainString(), mDenomTitle, mAvailableAmount, getSActivity().getBaseChain());
+        WDp.showCoinDp(getBaseDao(), toSendDenom, mMaxAvailable.toPlainString(), mDenomTitle, mAvailableAmount, getSActivity().getBaseChain());
         onAddAmountWatcher();
     }
 

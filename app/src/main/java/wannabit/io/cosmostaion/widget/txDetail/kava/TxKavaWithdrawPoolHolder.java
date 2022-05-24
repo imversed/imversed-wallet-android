@@ -70,8 +70,8 @@ public class TxKavaWithdrawPoolHolder extends TxHolder {
                 }
             }
             if (inCoin0 != null && inCoin1 != null) {
-                WDp.showCoinDp(c, baseData, inCoin0, itemWithdrawTokenInSymbol0, itemWithdrawTokenInAmount0, baseChain);
-                WDp.showCoinDp(c, baseData, inCoin1, itemWithdrawTokenInSymbol1, itemWithdrawTokenInAmount1, baseChain);
+                WDp.showCoinDp(baseData, inCoin0, itemWithdrawTokenInSymbol0, itemWithdrawTokenInAmount0, baseChain);
+                WDp.showCoinDp(baseData, inCoin1, itemWithdrawTokenInSymbol1, itemWithdrawTokenInAmount1, baseChain);
             } else {
                 itemWithdrawTokenInAmount0.setText("");
                 itemWithdrawTokenInSymbol0.setText("");

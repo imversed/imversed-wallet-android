@@ -17,6 +17,7 @@ import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.chains.ibc.IBCSendActivity;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
+import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.utils.WDp;
 
 public class IBCSendStep4Fragment extends BaseFragment implements View.OnClickListener, IRefreshTabListener {
@@ -69,12 +70,15 @@ public class IBCSendStep4Fragment extends BaseFragment implements View.OnClickLi
         BigDecimal toSendAmount = new BigDecimal(getSActivity().mAmounts.get(0).amount);
 
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
-        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mToIbcDenom, toSendAmount.toPlainString(), mSendAmountSymbol, mSendAmount, getSActivity().getBaseChain());
+        final Coin coin = new Coin(getSActivity().mToIbcDenom, toSendAmount.toPlainString());
+        WDp.showCoinDp(getBaseDao(), coin, mSendAmountSymbol, mSendAmount, getSActivity().getBaseChain());
 
-        BaseChain toChain = WDp.getChainTypeByChainId(getSActivity().mIbcSelectedRelayer.chain_id);
-        WDp.getChainHint(toChain, mRecipientChain);
-        mRecipientChain.setTextColor(WDp.getChainColor(getSActivity(), toChain));
-        mRecipientAddress.setText(getSActivity().mToAddress);
+        BaseChain toChain = BaseChain.getChainByIbcChainId(getSActivity().mIbcSelectedRelayer.chain_id);
+        if (toChain != null) {  // TODO: Check it. I think it's bad case when toChain is null. We need check this somewhere before.
+            WDp.getChainHint(toChain, mRecipientChain);
+            mRecipientChain.setTextColor(WDp.getChainColor(getSActivity(), toChain));
+            mRecipientAddress.setText(getSActivity().mToAddress);
+        }
     }
 
     @Override

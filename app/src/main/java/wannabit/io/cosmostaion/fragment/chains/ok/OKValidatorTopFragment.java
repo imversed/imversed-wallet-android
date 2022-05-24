@@ -115,7 +115,7 @@ public class OKValidatorTopFragment extends BaseFragment implements IRefreshTabL
                 holder.itemTvCommission.setText(WDp.getCommissionRate("0"));
 
                 try {
-                    Picasso.get().load(WDp.getMonikerImgUrl(getSActivity().getBaseChain(), validator.operator_address)).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
+                    Picasso.get().load(getSActivity().getBaseChain().getMonikerImageLink(validator.operator_address)).fit().placeholder(R.drawable.validator_none_img).error(R.drawable.validator_none_img).into(holder.itemAvatar);
                 } catch (Exception e) {
                 }
 

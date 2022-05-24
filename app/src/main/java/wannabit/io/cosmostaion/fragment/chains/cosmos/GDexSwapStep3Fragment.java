@@ -76,8 +76,8 @@ public class GDexSwapStep3Fragment extends BaseFragment implements View.OnClickL
 
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
         mSwapFee.setText(WDp.getPercentDp(new BigDecimal(getBaseDao().mParams.getSwapFeeRate()).movePointLeft(16)));
-        WDp.showCoinDp(getContext(), getBaseDao(), getSActivity().mSwapInCoin, mSwapInAmountSymbol, mSwapInAmount, getSActivity().getBaseChain());
-        WDp.showCoinDp(getContext(), getBaseDao(), getSActivity().mSwapOutCoin, mSwapOutAmountSymbol, mSwapOutAmount, getSActivity().getBaseChain());
+        WDp.showCoinDp(getBaseDao(), getSActivity().mSwapInCoin, mSwapInAmountSymbol, mSwapInAmount, getSActivity().getBaseChain());
+        WDp.showCoinDp(getBaseDao(), getSActivity().mSwapOutCoin, mSwapOutAmountSymbol, mSwapOutAmount, getSActivity().getBaseChain());
 
         mMemo.setText(getSActivity().mTxMemo);
     }

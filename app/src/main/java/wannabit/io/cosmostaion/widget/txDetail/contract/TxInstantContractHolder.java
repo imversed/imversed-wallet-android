@@ -51,7 +51,7 @@ public class TxInstantContractHolder extends TxHolder {
                 itemContractMsg.setText(new GsonBuilder().setPrettyPrinting().create().toJson(new JsonParser().parse(json.getString(json.keys().next()))));
             }
             if (msg.getFundsList().size() > 0) {
-                WDp.showCoinDp(c, baseData, msg.getFunds(0).getDenom(), msg.getFunds(0).getAmount(), itemContractDenom, itemContractAmount, baseChain);
+                WDp.showCoinDp(baseData, msg.getFunds(0).getDenom(), msg.getFunds(0).getAmount(), itemContractDenom, itemContractAmount, baseChain);
             } else {
                 itemContractAmount.setText("");
                 itemContractDenom.setText("");

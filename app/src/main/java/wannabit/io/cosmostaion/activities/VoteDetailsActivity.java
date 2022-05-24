@@ -27,6 +27,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.WalletBalance;
 
 import java.math.BigDecimal;
@@ -56,7 +57,6 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
 
     private VoteDetailsAdapter mVoteDetailsAdapter;
 
-    private String mChain;
     private String mProposalId;
 
     // proposal api
@@ -78,7 +78,6 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
         mVoteBtn.setOnClickListener(this);
 
         mProposalId = getIntent().getStringExtra("proposalId");
-        mChain = WDp.getChainNameByBaseChain(getBaseChain());
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -150,8 +149,9 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
 
     public void onFetch() {
         mTaskCount = 2;
-        new ProposalMyVoteGrpcTask(getBaseApplication(), this, getBaseChain(), mProposalId, getAccount().address).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        new MintScanProposalTask(getBaseApplication(), this, mChain, mProposalId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        final BaseChain chain = getBaseChain();
+        new ProposalMyVoteGrpcTask(getBaseApplication(), this, chain, mProposalId, getAccount().address).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        new MintScanProposalTask(getBaseApplication(), this, chain.getMintScanChainName(), mProposalId).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -243,7 +243,7 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
                     if (mApiProposal.content != null && mApiProposal.content.amount != null && mApiProposal.content.amount.size() != 0) {
                         holder.itemRequestLayer.setVisibility(View.VISIBLE);
                         ArrayList<Coin> requestCoin = mApiProposal.content.amount;
-                        WDp.showCoinDp(getBaseContext(), getBaseDao(), requestCoin.get(0), holder.itemRequestAmountDenom, holder.itemRequestAmount, getBaseChain());
+                        WDp.showCoinDp(getBaseDao(), requestCoin.get(0), holder.itemRequestAmountDenom, holder.itemRequestAmount, getBaseChain());
                     } else {
                         holder.itemRequestLayer.setVisibility(View.GONE);
                     }
@@ -251,7 +251,7 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
                     if (mApiProposal.content != null && mApiProposal.content.recipients != null && mApiProposal.content.recipients.get(0).amount != null) {
                         holder.itemRequestLayer.setVisibility(View.VISIBLE);
                         ArrayList<Coin> requestCoin = mApiProposal.content.recipients.get(0).amount;
-                        WDp.showCoinDp(getBaseContext(), getBaseDao(), requestCoin.get(0), holder.itemRequestAmountDenom, holder.itemRequestAmount, getBaseChain());
+                        WDp.showCoinDp(getBaseDao(), requestCoin.get(0), holder.itemRequestAmountDenom, holder.itemRequestAmount, getBaseChain());
                     } else {
                         holder.itemRequestLayer.setVisibility(View.GONE);
                     }

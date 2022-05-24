@@ -1,7 +1,5 @@
 package wannabit.io.cosmostaion.widget;
 
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_KAVA;
-
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -48,13 +46,14 @@ public class HardDetailMyAvailableHolder extends BaseHolder {
     public void onBindHardDetailAvailable(HardDetailActivity context, BaseData baseData, BaseChain chain, String denom) {
         final Hard.Params hardParam = baseData.mHardParams;
         final Hard.MoneyMarket hardMoneyMarket = WUtil.getHardMoneyMarket(hardParam, denom);
+        final String kavaDenom = BaseChain.KAVA_MAIN.INSTANCE.getMainDenom();
 
-        if (denom.equals(TOKEN_KAVA)) {
+        if (denom.equals(kavaDenom)) {
             mAssetDepositLayer.setVisibility(View.GONE);
             mDepositValue.setVisibility(View.GONE);
         }
         BigDecimal targetAvailable = context.getBalance(denom);
-        BigDecimal kavaAvailable = context.getBalance(TOKEN_KAVA);
+        BigDecimal kavaAvailable = context.getBalance(kavaDenom);
 
         // Display each usd value
         BigDecimal targetPrice = BigDecimal.ZERO;
@@ -64,13 +63,13 @@ public class HardDetailMyAvailableHolder extends BaseHolder {
             targetPrice = BigDecimal.ONE;
         }
         BigDecimal targetValue = targetAvailable.movePointLeft(WUtil.getKavaCoinDecimal(baseData, denom)).multiply(targetPrice);
-        WDp.showCoinDp(context, baseData, denom, targetAvailable.toPlainString(), mAssetDepositDenom, mAssetDepositAmount, chain);
+        WDp.showCoinDp(baseData, denom, targetAvailable.toPlainString(), mAssetDepositDenom, mAssetDepositAmount, chain);
         mDepositValue.setText(WDp.getDpRawDollor(context, targetValue, 2));
         WUtil.DpKavaTokenImg(baseData, mAssetDepositImg, denom);
 
         BigDecimal kavaValue = BigDecimal.ZERO;
         kavaValue = kavaAvailable.movePointLeft(6).multiply(baseData.getKavaOraclePrice("kava:usd:30"));
-        WDp.showCoinDp(context, baseData, TOKEN_KAVA, kavaAvailable.toPlainString(), mAssetKavaDenom, mAssetKavaAmount, chain);
+        WDp.showCoinDp(baseData, kavaDenom, kavaAvailable.toPlainString(), mAssetKavaDenom, mAssetKavaAmount, chain);
         mKavaValue.setText(WDp.getDpRawDollor(context, kavaValue, 2));
 
     }

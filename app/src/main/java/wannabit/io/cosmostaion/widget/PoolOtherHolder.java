@@ -65,16 +65,16 @@ public class PoolOtherHolder extends BaseHolder {
         BigDecimal PoolValue = coin0Value.add(coin1Value);
         itemTotalDepositValue.setText(WDp.getDpRawDollor(context, PoolValue, 2));
 
-        WDp.showCoinDp(context, baseData, coin0, itemTotalDepositSymbol0, itemTotalDepositAmount0, BaseChain.OSMOSIS_MAIN.INSTANCE);
-        WDp.showCoinDp(context, baseData, coin1, itemTotalDepositSymbol1, itemTotalDepositAmount1, BaseChain.OSMOSIS_MAIN.INSTANCE);
+        WDp.showCoinDp(baseData, coin0, itemTotalDepositSymbol0, itemTotalDepositAmount0, BaseChain.OSMOSIS_MAIN.INSTANCE);
+        WDp.showCoinDp(baseData, coin1, itemTotalDepositSymbol1, itemTotalDepositAmount1, BaseChain.OSMOSIS_MAIN.INSTANCE);
 
         BigDecimal availableCoin0 = activity.getBalance(coin0.denom);
         Coin Coin0 = new Coin(otherPool.getPoolAssets(0).getToken().getDenom(), availableCoin0.toPlainString());
         BigDecimal availableCoin1 = activity.getBalance(coin1.denom);
         Coin Coin1 = new Coin(otherPool.getPoolAssets(1).getToken().getDenom(), availableCoin1.toPlainString());
 
-        WDp.showCoinDp(context, baseData, Coin0, itemMyAvailableSymbol0, itemMyAvailableAmount0, BaseChain.OSMOSIS_MAIN.INSTANCE);
-        WDp.showCoinDp(context, baseData, Coin1, itemMyAvailableSymbol1, itemMyAvailableAmount1, BaseChain.OSMOSIS_MAIN.INSTANCE);
+        WDp.showCoinDp(baseData, Coin0, itemMyAvailableSymbol0, itemMyAvailableAmount0, BaseChain.OSMOSIS_MAIN.INSTANCE);
+        WDp.showCoinDp(baseData, Coin1, itemMyAvailableSymbol1, itemMyAvailableAmount1, BaseChain.OSMOSIS_MAIN.INSTANCE);
 
         itemRoot.setOnClickListener(v -> ((LabsListActivity) activity).onCheckStartJoinPool(otherPool.getId()));
     }
@@ -143,8 +143,8 @@ public class PoolOtherHolder extends BaseHolder {
         BigDecimal availableCoin1 = activity.getBalance(coin1Denom);
         Coin Coin1 = new Coin(coin1Denom, availableCoin1.toPlainString());
 
-        WDp.showCoinDp(context, baseData, Coin0, itemMyAvailableSymbol0, itemMyAvailableAmount0, BaseChain.COSMOS_MAIN.INSTANCE);
-        WDp.showCoinDp(context, baseData, Coin1, itemMyAvailableSymbol1, itemMyAvailableAmount1, BaseChain.COSMOS_MAIN.INSTANCE);
+        WDp.showCoinDp(baseData, Coin0, itemMyAvailableSymbol0, itemMyAvailableAmount0, BaseChain.COSMOS_MAIN.INSTANCE);
+        WDp.showCoinDp(baseData, Coin1, itemMyAvailableSymbol1, itemMyAvailableAmount1, BaseChain.COSMOS_MAIN.INSTANCE);
 
         itemRoot.setOnClickListener(v -> (activity).onCheckStartDepositPool(otherPool.getId()));
     }

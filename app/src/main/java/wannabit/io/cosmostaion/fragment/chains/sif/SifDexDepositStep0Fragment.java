@@ -1,7 +1,6 @@
 package wannabit.io.cosmostaion.fragment.chains.sif;
 
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIF_JOIN_POOL;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_SIF;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -123,7 +122,7 @@ public class SifDexDepositStep0Fragment extends BaseFragment implements View.OnC
     private void onInitView() {
         mProgress.setVisibility(View.GONE);
         BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getSActivity(), getSActivity().getBaseChain(), CONST_PW_TX_SIF_JOIN_POOL, 0);
-        mRowanMaxAmount = getSActivity().getBalance(TOKEN_SIF);
+        mRowanMaxAmount = getSActivity().getBalance(BaseChain.SIF_MAIN.INSTANCE.getMainDenom());
         mRowanMaxAmount = mRowanMaxAmount.subtract(feeAmount);
 
         String externalDenom = getSActivity().mSifPool.getExternalAsset().getSymbol();
@@ -131,15 +130,15 @@ public class SifDexDepositStep0Fragment extends BaseFragment implements View.OnC
         mExternalDecimal = WUtil.getSifCoinDecimal(getBaseDao(), externalDenom);
         setDpDecimals(mRowanDecimal, mExternalDecimal);
 
-        WUtil.DpSifTokenImg(getBaseDao(), mJoinPoolInput0Img, TOKEN_SIF);
-        WUtil.dpSifTokenName(getSActivity(), getBaseDao(), mJoinPoolInput0Symbol, TOKEN_SIF);
+        WUtil.DpSifTokenImg(getBaseDao(), mJoinPoolInput0Img, BaseChain.SIF_MAIN.INSTANCE.getMainDenom());
+        WUtil.dpSifTokenName(getSActivity(), getBaseDao(), mJoinPoolInput0Symbol, BaseChain.SIF_MAIN.INSTANCE.getMainDenom());
         WUtil.DpSifTokenImg(getBaseDao(), mJoinPoolInput1Img, externalDenom);
         WUtil.dpSifTokenName(getSActivity(), getBaseDao(), mJoinPoolInput1Symbol, externalDenom);
 
-        WDp.showCoinDp(getSActivity(), getBaseDao(), TOKEN_SIF, mRowanMaxAmount.toString(), mJoinPoolInput0Denom, mJoinPoolInput0Amount, BaseChain.SIF_MAIN.INSTANCE);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), externalDenom, mExternalMaxAmount.toString(), mJoinPoolInput1Denom, mJoinPoolInput1Amount, BaseChain.SIF_MAIN.INSTANCE);
+        WDp.showCoinDp(getBaseDao(), BaseChain.SIF_MAIN.INSTANCE.getMainDenom(), mRowanMaxAmount.toString(), mJoinPoolInput0Denom, mJoinPoolInput0Amount, BaseChain.SIF_MAIN.INSTANCE);
+        WDp.showCoinDp(getBaseDao(), externalDenom, mExternalMaxAmount.toString(), mJoinPoolInput1Denom, mJoinPoolInput1Amount, BaseChain.SIF_MAIN.INSTANCE);
 
-        BigDecimal lpNativeAmount = WUtil.getPoolLpAmount(getSActivity().mSifPool, TOKEN_SIF);
+        BigDecimal lpNativeAmount = WUtil.getPoolLpAmount(getSActivity().mSifPool, BaseChain.SIF_MAIN.INSTANCE.getMainDenom());
         BigDecimal lpExternalAmount = WUtil.getPoolLpAmount(getSActivity().mSifPool, externalDenom);
         mDepositRate = lpExternalAmount.divide(lpNativeAmount, 24, RoundingMode.DOWN);
 
@@ -386,7 +385,7 @@ public class SifDexDepositStep0Fragment extends BaseFragment implements View.OnC
             if (OutputAmountTemp.compareTo(mExternalMaxAmount.movePointLeft(mExternalDecimal).setScale(mExternalDecimal, RoundingMode.CEILING)) > 0)
                 return false;
 
-            getSActivity().mSifDepositCoin0 = new Coin(TOKEN_SIF, InputAmountTemp.movePointRight(mRowanDecimal).toPlainString());
+            getSActivity().mSifDepositCoin0 = new Coin(BaseChain.SIF_MAIN.INSTANCE.getMainDenom(), InputAmountTemp.movePointRight(mRowanDecimal).toPlainString());
             getSActivity().mSifDepositCoin1 = new Coin(getSActivity().mSifPool.getExternalAsset().getSymbol(), OutputAmountTemp.movePointRight(mExternalDecimal).toPlainString());
             return true;
 

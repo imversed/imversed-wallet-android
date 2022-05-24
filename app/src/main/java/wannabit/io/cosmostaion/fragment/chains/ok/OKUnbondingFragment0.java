@@ -2,7 +2,6 @@ package wannabit.io.cosmostaion.fragment.chains.ok;
 
 import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
 import static com.fulldive.wallet.models.BaseChain.OK_TEST;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_OK;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import com.fulldive.wallet.models.BaseChain;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -212,12 +213,12 @@ public class OKUnbondingFragment0 extends BaseFragment implements View.OnClickLi
 
     private boolean isValidateWithdrawAmount() {
         try {
-            if (getSActivity().getBaseChain().equals(OKEX_MAIN.INSTANCE) || getSActivity().getBaseChain().equals(OK_TEST.INSTANCE)) {
+            final BaseChain chain = getSActivity().getBaseChain();
+            if (chain.equals(OKEX_MAIN.INSTANCE) || chain.equals(OK_TEST.INSTANCE)) {
                 BigDecimal depositTemp = new BigDecimal(mAmountInput.getText().toString().trim());
                 if (depositTemp.compareTo(BigDecimal.ZERO) <= 0) return false;
                 if (depositTemp.compareTo(mMaxAvailable) > 0) return false;
-                Coin token = new Coin(TOKEN_OK, depositTemp.setScale(mDpDecimal).toPlainString());
-                getSActivity().mToWithdrawCoin = token;
+                getSActivity().mToWithdrawCoin = new Coin(chain.getMainDenom(), depositTemp.setScale(mDpDecimal).toPlainString());
                 return true;
             }
             return false;

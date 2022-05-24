@@ -100,7 +100,7 @@ public class IBCSendStep2Fragment extends BaseFragment implements View.OnClickLi
         if (mainDenom.equalsIgnoreCase(getSActivity().mToIbcDenom)) {
             mMaxAvailable = mMaxAvailable.subtract(feeAmount);
         }
-        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mToIbcDenom, mMaxAvailable.toPlainString(), mDenomTitle, mAvailableAmount, getSActivity().getBaseChain());
+        WDp.showCoinDp(getBaseDao(), getSActivity().mToIbcDenom, mMaxAvailable.toPlainString(), mDenomTitle, mAvailableAmount, getSActivity().getBaseChain());
 
         mAmountInput.addTextChangedListener(new TextWatcher() {
             @Override

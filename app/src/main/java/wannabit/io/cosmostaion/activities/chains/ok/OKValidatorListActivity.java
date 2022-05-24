@@ -1,7 +1,5 @@
 package wannabit.io.cosmostaion.activities.chains.ok;
 
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_OK;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.google.android.material.tabs.TabLayout;
 
 import java.math.BigDecimal;
@@ -132,7 +131,7 @@ public class OKValidatorListActivity extends BaseActivity implements FetchCallBa
             showDialog(add);
             return;
         }
-        BigDecimal availableAmount = getBalance(TOKEN_OK);
+        BigDecimal availableAmount = getBalance(BaseChain.OKEX_MAIN.INSTANCE.getMainDenom());
 
         if (availableAmount.compareTo(new BigDecimal("0.1")) <= 0) {
             Toast.makeText(getBaseContext(), R.string.error_not_enough_balance_to_vote, Toast.LENGTH_SHORT).show();

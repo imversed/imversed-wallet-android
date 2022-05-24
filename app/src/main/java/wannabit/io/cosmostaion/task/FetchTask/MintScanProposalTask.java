@@ -14,12 +14,12 @@ import wannabit.io.cosmostaion.utils.WLog;
 
 public class MintScanProposalTask extends CommonTask {
 
-    private final String mChain;
+    private final String mintScanChainName;
     private final String mProposalId;
 
-    public MintScanProposalTask(BaseApplication app, TaskListener listener, String chain, String proposalId) {
+    public MintScanProposalTask(BaseApplication app, TaskListener listener, String mintScanChainName, String proposalId) {
         super(app, listener);
-        this.mChain = chain;
+        this.mintScanChainName = mintScanChainName;
         this.mProposalId = proposalId;
         this.result.taskType = TASK_FETCH_MINTSCAN_PROPOSAL;
     }
@@ -27,8 +27,8 @@ public class MintScanProposalTask extends CommonTask {
     @Override
     protected TaskResult doInBackground(String... strings) {
         try {
-            WLog.w("MinScan Path URL " + ApiClient.getMintscan(context).getProposal(mChain, mProposalId).request().url());
-            Response<ResProposal> response = ApiClient.getMintscan(context).getProposal(mChain, mProposalId).execute();
+            WLog.w("MinScan Path URL " + ApiClient.getMintscan(context).getProposal(mintScanChainName, mProposalId).request().url());
+            Response<ResProposal> response = ApiClient.getMintscan(context).getProposal(mintScanChainName, mProposalId).execute();
             if (!response.isSuccessful()) {
                 result.isSuccess = false;
                 result.errorCode = ERROR_CODE_NETWORK;

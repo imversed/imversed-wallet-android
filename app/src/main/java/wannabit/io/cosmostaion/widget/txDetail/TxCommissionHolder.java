@@ -57,19 +57,19 @@ public class TxCommissionHolder extends TxHolder {
             ArrayList<Coin> commissionCoins = WDp.onParseCommission(response, position);
             if (commissionCoins.size() > 0) {
                 commission0Layer.setVisibility(View.VISIBLE);
-                WDp.showCoinDp(c, baseData, commissionCoins.get(0), itemCommissionDenom0, itemCommissionAmount0, baseChain);
+                WDp.showCoinDp(baseData, commissionCoins.get(0), itemCommissionDenom0, itemCommissionAmount0, baseChain);
             }
             if (commissionCoins.size() > 1) {
                 commission1Layer.setVisibility(View.VISIBLE);
-                WDp.showCoinDp(c, baseData, commissionCoins.get(1), itemCommissionDenom1, itemCommissionAmount1, baseChain);
+                WDp.showCoinDp(baseData, commissionCoins.get(1), itemCommissionDenom1, itemCommissionAmount1, baseChain);
             }
             if (commissionCoins.size() > 2) {
                 commission2Layer.setVisibility(View.VISIBLE);
-                WDp.showCoinDp(c, baseData, commissionCoins.get(2), itemCommissionDenom2, itemCommissionAmount2, baseChain);
+                WDp.showCoinDp(baseData, commissionCoins.get(2), itemCommissionDenom2, itemCommissionAmount2, baseChain);
             }
             if (commissionCoins.size() > 3) {
                 commission3Layer.setVisibility(View.VISIBLE);
-                WDp.showCoinDp(c, baseData, commissionCoins.get(3), itemCommissionDenom3, itemCommissionAmount3, baseChain);
+                WDp.showCoinDp(baseData, commissionCoins.get(3), itemCommissionDenom3, itemCommissionAmount3, baseChain);
             }
 
         } catch (Exception e) {

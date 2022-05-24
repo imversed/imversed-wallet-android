@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -115,11 +117,12 @@ public class ListKavaSwapFragment extends BaseFragment implements View.OnClickLi
         mSwapPoolList = getSActivity().mSwapPoolList;
         mAllDenoms = getSActivity().mAllDenoms;
 
+        final String kavaDenom = BaseChain.KAVA_MAIN.INSTANCE.getMainDenom();
         if (mSwapPoolList != null && mSwapParams != null) {
             for (QueryOuterClass.PoolResponse pool : mSwapPoolList) {
-                if (pool.getCoins(0).getDenom().equals("ukava") && pool.getCoins(1).getDenom().equals("usdx")) {
+                if (pool.getCoins(0).getDenom().equals(kavaDenom) && pool.getCoins(1).getDenom().equals("usdx")) {
                     mSelectedPool = pool;
-                    mInputCoinDenom = "ukava";
+                    mInputCoinDenom = kavaDenom;
                     mOutputCoinDenom = "usdx";
                 }
             }

@@ -83,8 +83,8 @@ public class TxJoinPoolHolder extends TxHolder {
                     }
                 }
                 if (inCoin0 != null && inCoin1 != null) {
-                    WDp.showCoinDp(c, baseData, inCoin0, itemJoinPoolTokenInSymbol1, itemJoinPoolTokenInAmount1, baseChain);
-                    WDp.showCoinDp(c, baseData, inCoin1, itemJoinPoolTokenInSymbol2, itemJoinPoolTokenInAmount2, baseChain);
+                    WDp.showCoinDp(baseData, inCoin0, itemJoinPoolTokenInSymbol1, itemJoinPoolTokenInAmount1, baseChain);
+                    WDp.showCoinDp(baseData, inCoin1, itemJoinPoolTokenInSymbol2, itemJoinPoolTokenInAmount2, baseChain);
                 } else {
                     itemJoinPoolTokenInAmount1.setText("");
                     itemJoinPoolTokenInSymbol1.setText("");
@@ -92,7 +92,7 @@ public class TxJoinPoolHolder extends TxHolder {
                     itemJoinPoolTokenInSymbol2.setText("");
                 }
                 if (outCoin != null) {
-                    WDp.showCoinDp(c, baseData, outCoin, itemJoinPoolTokenOutSymbol, itemJoinPoolTokenOutAmount, baseChain);
+                    WDp.showCoinDp(baseData, outCoin, itemJoinPoolTokenOutSymbol, itemJoinPoolTokenOutAmount, baseChain);
                 } else {
                     itemJoinPoolTokenOutAmount.setText("");
                     itemJoinPoolTokenOutSymbol.setText("");
@@ -129,13 +129,13 @@ public class TxJoinPoolHolder extends TxHolder {
                     }
                 }
                 if (inCoin0 != null) {
-                    WDp.showCoinDp(c, baseData, inCoin0, itemJoinPoolTokenInSymbol1, itemJoinPoolTokenInAmount1, baseChain);
+                    WDp.showCoinDp(baseData, inCoin0, itemJoinPoolTokenInSymbol1, itemJoinPoolTokenInAmount1, baseChain);
                 } else {
                     itemJoinPoolTokenInAmount1.setText("");
                     itemJoinPoolTokenInSymbol1.setText("");
                 }
                 if (outCoin != null) {
-                    WDp.showCoinDp(c, baseData, outCoin, itemJoinPoolTokenOutSymbol, itemJoinPoolTokenOutAmount, baseChain);
+                    WDp.showCoinDp(baseData, outCoin, itemJoinPoolTokenOutSymbol, itemJoinPoolTokenOutAmount, baseChain);
                 } else {
                     itemJoinPoolTokenOutAmount.setText("");
                     itemJoinPoolTokenOutSymbol.setText("");

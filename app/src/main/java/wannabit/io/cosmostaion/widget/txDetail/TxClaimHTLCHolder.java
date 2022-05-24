@@ -59,7 +59,7 @@ public class TxClaimHTLCHolder extends TxHolder {
                 }
             }
             if (receiveCoin != null) {
-                WDp.showCoinDp(c, baseData, receiveCoin, itemReceiveDenom, itemReceiveAmount, baseChain);
+                WDp.showCoinDp(baseData, receiveCoin, itemReceiveDenom, itemReceiveAmount, baseChain);
             } else {
                 itemReceiveAmount.setText("");
                 itemReceiveDenom.setText("");

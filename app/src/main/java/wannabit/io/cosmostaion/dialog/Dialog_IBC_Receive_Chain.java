@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.dao.IbcPath;
-import wannabit.io.cosmostaion.utils.WDp;
 
 public class Dialog_IBC_Receive_Chain extends DialogFragment {
 
@@ -71,16 +70,18 @@ public class Dialog_IBC_Receive_Chain extends DialogFragment {
         @Override
         public void onBindViewHolder(@NonNull RelayerListHolder holder, int position) {
             final IbcPath ibcPath = mIbcSendableRelayers.get(position);
-            final BaseChain toChain = WDp.getChainTypeByChainId(ibcPath.chain_id);
-            holder.chainImg.setImageResource(toChain.getChainIcon());
-            holder.chainName.setText(toChain.getChainAlterTitle());
-
+            final BaseChain toChain = BaseChain.getChainByIbcChainId(ibcPath.chain_id);
+            if (toChain != null) {  // TODO: Check it. I think it's bad case when toChain is null. We need check this somewhere before.
+                holder.chainImg.setImageResource(toChain.getChainIcon());
+                holder.chainName.setText(toChain.getChainAlterTitle());
+            }
             holder.rootLayer.setOnClickListener(v -> {
                 Intent resultIntent = new Intent();
                 resultIntent.putExtra("position", position);
                 getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, resultIntent);
                 dismiss();
             });
+
         }
 
         @Override

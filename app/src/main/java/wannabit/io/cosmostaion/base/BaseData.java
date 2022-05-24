@@ -5,7 +5,6 @@ import static wannabit.io.cosmostaion.base.BaseConstant.IOV_MSG_TYPE_RENEW_DOMAI
 import static wannabit.io.cosmostaion.base.BaseConstant.PRE_USER_EXPANDED_CHAINS;
 import static wannabit.io.cosmostaion.base.BaseConstant.PRE_USER_HIDEN_CHAINS;
 import static wannabit.io.cosmostaion.base.BaseConstant.PRE_USER_SORTED_CHAINS;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_OK;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -125,7 +124,7 @@ public class BaseData {
         ArrayList<Cw20Assets> result = new ArrayList<>();
         if (mCw20Assets.size() > 0) {
             for (Cw20Assets assets : mCw20Assets) {
-                if (assets.chain.equalsIgnoreCase(WDp.getChainNameByBaseChain(baseChain)) && assets.getAmount() != null && assets.getAmount().compareTo(BigDecimal.ZERO) > 0) {
+                if (assets.chain.equalsIgnoreCase(baseChain.getMintScanChainName()) && assets.getAmount() != null && assets.getAmount().compareTo(BigDecimal.ZERO) > 0) {
                     result.add(assets);
                 }
             }
@@ -172,7 +171,7 @@ public class BaseData {
         if (getIbcPath(channelId).relayer_img != null) {
             url = getIbcPath(channelId).relayer_img;
         } else {
-            url = WDp.getDefaultRelayerImg(baseChain);
+            url = baseChain.getRelayerImageLink();
         }
         return url;
     }
@@ -418,7 +417,7 @@ public class BaseData {
 
     public BigDecimal getAllExToken(String denom) {
         BigDecimal result = BigDecimal.ZERO;
-        if (denom.equals(TOKEN_OK)) {
+        if (denom.equals(BaseChain.OKEX_MAIN.INSTANCE.getMainDenom())) {
             result = okDepositAmount().add(okWithdrawAmount());
         }
         return result;

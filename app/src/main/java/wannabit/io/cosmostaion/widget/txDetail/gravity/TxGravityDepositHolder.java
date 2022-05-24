@@ -44,8 +44,8 @@ public class TxGravityDepositHolder extends TxHolder {
             Coin coin0 = new Coin(msg.getDepositCoins(0).getDenom(), msg.getDepositCoins(0).getAmount());
             Coin coin1 = new Coin(msg.getDepositCoins(1).getDenom(), msg.getDepositCoins(1).getAmount());
 
-            WDp.showCoinDp(c, baseData, coin0, itemGravityDepositSymbol1, itemGravityDepositAmount1, baseChain);
-            WDp.showCoinDp(c, baseData, coin1, itemGravityDepositSymbol2, itemGravityDepositAmount2, baseChain);
+            WDp.showCoinDp(baseData, coin0, itemGravityDepositSymbol1, itemGravityDepositAmount1, baseChain);
+            WDp.showCoinDp(baseData, coin1, itemGravityDepositSymbol2, itemGravityDepositAmount2, baseChain);
 
         } catch (Exception e) {
         }

@@ -4,7 +4,6 @@ import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
 import static com.fulldive.wallet.models.BaseChain.OK_TEST;
 import static wannabit.io.cosmostaion.base.BaseConstant.OK_GAS_AMOUNT_STAKE_MUX;
 import static wannabit.io.cosmostaion.base.BaseConstant.OK_GAS_RATE_AVERAGE;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_OK;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import com.fulldive.wallet.models.BaseChain;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -146,9 +147,11 @@ public class OKStakingFragmentStep0 extends BaseFragment implements View.OnClick
     @Override
     public void onResume() {
         super.onResume();
+        final BaseChain chain = getSActivity().getBaseChain();
+
         WDp.DpMainDenom(getSActivity().getAccount().baseChain, mAvailableDenom);
-        if (getSActivity().getBaseChain().equals(OKEX_MAIN.INSTANCE) || getSActivity().getBaseChain().equals(OK_TEST.INSTANCE)) {
-            mDpDecimal = 18;
+        if (chain.equals(OKEX_MAIN.INSTANCE) || chain.equals(OK_TEST.INSTANCE)) {
+            mDpDecimal = chain.getDisplayDecimal();
             setDpDecimals(mDpDecimal);
             int myValidatorCnt = 0;
             if (getBaseDao().mOkStaking != null && getBaseDao().mOkStaking.validator_address != null) {
@@ -156,7 +159,7 @@ public class OKStakingFragmentStep0 extends BaseFragment implements View.OnClick
             }
             BigDecimal estimateGasAmount = (new BigDecimal(OK_GAS_AMOUNT_STAKE_MUX).multiply(new BigDecimal("" + myValidatorCnt))).add(new BigDecimal(BaseConstant.OK_GAS_AMOUNT_STAKE));
             BigDecimal feeAmount = estimateGasAmount.multiply(new BigDecimal(OK_GAS_RATE_AVERAGE));
-            mMaxAvailable = getSActivity().getAccount().getTokenBalance(TOKEN_OK).subtract(feeAmount);
+            mMaxAvailable = getSActivity().getAccount().getTokenBalance(chain.getMainDenom()).subtract(feeAmount);
             mAvailableAmount.setText(WDp.getDpAmount2(mMaxAvailable, 0, mDpDecimal));
         }
     }
@@ -224,12 +227,12 @@ public class OKStakingFragmentStep0 extends BaseFragment implements View.OnClick
 
     private boolean isValidateDepositAmount() {
         try {
-            if (getSActivity().getBaseChain().equals(OKEX_MAIN.INSTANCE) || getSActivity().getBaseChain().equals(OK_TEST.INSTANCE)) {
+            final BaseChain chain = getSActivity().getBaseChain();
+            if (chain.equals(OKEX_MAIN.INSTANCE) || chain.equals(OK_TEST.INSTANCE)) {
                 BigDecimal depositTemp = new BigDecimal(mAmountInput.getText().toString().trim());
                 if (depositTemp.compareTo(BigDecimal.ZERO) <= 0) return false;
                 if (depositTemp.compareTo(mMaxAvailable) > 0) return false;
-                Coin token = new Coin(TOKEN_OK, depositTemp.setScale(mDpDecimal).toPlainString());
-                getSActivity().mToDepositCoin = token;
+                getSActivity().mToDepositCoin = new Coin(chain.getMainDenom(), depositTemp.setScale(mDpDecimal).toPlainString());
                 return true;
             }
             return false;

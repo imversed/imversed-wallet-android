@@ -69,8 +69,8 @@ public class DepositPoolStep3Fragment extends BaseFragment implements View.OnCli
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
 
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
-        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mKavaPoolTokenA, mJoinInput0AmountSymbol, mJoinInput0Amount, BaseChain.KAVA_MAIN.INSTANCE);
-        WDp.showCoinDp(getSActivity(), getBaseDao(), getSActivity().mKavaPoolTokenB, mJoinInput1AmountSymbol, mJoinInput1Amount, BaseChain.KAVA_MAIN.INSTANCE);
+        WDp.showCoinDp(getBaseDao(), getSActivity().mKavaPoolTokenA, mJoinInput0AmountSymbol, mJoinInput0Amount, BaseChain.KAVA_MAIN.INSTANCE);
+        WDp.showCoinDp(getBaseDao(), getSActivity().mKavaPoolTokenB, mJoinInput1AmountSymbol, mJoinInput1Amount, BaseChain.KAVA_MAIN.INSTANCE);
         mJoinSlippage.setText(WDp.getPercentDp(new BigDecimal(3)));
         mMemo.setText(getSActivity().mTxMemo);
     }

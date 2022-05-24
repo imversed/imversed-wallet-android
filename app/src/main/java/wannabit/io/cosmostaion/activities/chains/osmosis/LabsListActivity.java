@@ -7,7 +7,6 @@ import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_OSMOSIS_
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_OSMOSIS_INCENTIVIZED;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_OSMOSIS_LOCKUP_STATUS;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_OSMOSIS_POOL_LIST;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_OSMOSIS;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -27,6 +26,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.fulldive.wallet.models.BaseChain;
 import com.google.android.material.tabs.TabLayout;
 
 import java.math.BigDecimal;
@@ -193,10 +193,10 @@ public class LabsListActivity extends BaseActivity implements TaskListener {
         BigDecimal coin0Available = getBalance(coin0denom);
         BigDecimal coin1Available = getBalance(coin1Denom);
 
-        if (coin0denom.equalsIgnoreCase(TOKEN_OSMOSIS)) {
+        if (coin0denom.equalsIgnoreCase(BaseChain.OSMOSIS_MAIN.INSTANCE.getMainDenom())) {
             coin0Available = coin0Available.subtract(feeAmount);
         }
-        if (coin1Denom.equalsIgnoreCase(TOKEN_OSMOSIS)) {
+        if (coin1Denom.equalsIgnoreCase(BaseChain.OSMOSIS_MAIN.INSTANCE.getMainDenom())) {
             coin1Available = coin1Available.subtract(feeAmount);
         }
 
@@ -218,7 +218,7 @@ public class LabsListActivity extends BaseActivity implements TaskListener {
             return;
         }
 
-        BigDecimal mainBalance = getBalance(TOKEN_OSMOSIS);
+        BigDecimal mainBalance = getBalance(BaseChain.OSMOSIS_MAIN.INSTANCE.getMainDenom());
         BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_OSMOSIS_EXIT_POOL, 0);
 
         if (mainBalance.compareTo(feeAmount) < 0) {

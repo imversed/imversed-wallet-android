@@ -71,7 +71,7 @@ public class StartLockStep3Fragment extends BaseFragment implements View.OnClick
         long UnbondingDuraion = getSActivity().mOsmosisLockupDuration;
 
         mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDpDecimal, mDpDecimal));
-        WDp.showCoinDp(getSActivity(), getBaseDao(), LpCoin, mLockCoinSymbol, mLockCoinAmount, BaseChain.OSMOSIS_MAIN.INSTANCE);
+        WDp.showCoinDp(getBaseDao(), LpCoin, mLockCoinSymbol, mLockCoinAmount, BaseChain.OSMOSIS_MAIN.INSTANCE);
         if (UnbondingDuraion == 86400) {
             mLockUnbondingDuraion.setText("1 Day");
         } else if (UnbondingDuraion == 604800) {
