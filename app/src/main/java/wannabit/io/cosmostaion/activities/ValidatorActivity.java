@@ -266,8 +266,15 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
             Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
             return;
         }
-        if (getBaseDao().getReward(getBaseChain().getMainDenom(), mValOpAddress).compareTo(feeAmount) <= 0) {
+
+        final BigDecimal reward = getBaseDao().getReward(getBaseChain().getMainDenom(), mValOpAddress);
+        if (reward.compareTo(feeAmount) <= 0) {
             Toast.makeText(getBaseContext(), R.string.error_small_reward, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (reward.compareTo(BigDecimal.ZERO) <= 0) {
+            Toast.makeText(getBaseContext(), R.string.error_not_enough_reward, Toast.LENGTH_SHORT).show();
             return;
         }
 

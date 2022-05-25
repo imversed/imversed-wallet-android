@@ -192,9 +192,8 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
                 return;
             }
 
-            BigDecimal singlefeeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_REWARD, 1);
             for (Distribution.DelegationDelegatorReward reward : getBaseDao().mGrpcRewards) {
-                if (getBaseDao().getReward(getBaseChain().getMainDenom(), reward.getValidatorAddress()).compareTo(singlefeeAmount) > 0) {
+                if (getBaseDao().getReward(getBaseChain().getMainDenom(), reward.getValidatorAddress()).compareTo(BigDecimal.ZERO) > 0) {
                     toClaimRewards.add(reward);
                 }
             }

@@ -14,7 +14,6 @@ import com.fulldive.wallet.presentation.main.MainActivity;
 import org.jetbrains.annotations.NotNull;
 
 import wannabit.io.cosmostaion.R;
-import wannabit.io.cosmostaion.activities.TxDetailActivity;
 import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.model.type.BnbHistory;
 import wannabit.io.cosmostaion.network.res.ResOkHistoryHit;
@@ -47,19 +46,9 @@ public class HistoryOldHolder extends BaseHolder {
         history_block.setText(history.blockHeight + "block");
         historySuccess.setVisibility(View.GONE);
         historyRoot.setOnClickListener(v -> {
-            if (history.txType.equals("HTL_TRANSFER") || history.txType.equals("CLAIM_HTL") || history.txType.equals("REFUND_HTL") || history.txType.equals("TRANSFER")) {
-                Intent txDetail = new Intent(mainActivity, TxDetailActivity.class);
-                txDetail.putExtra("txHash", history.txHash);
-                txDetail.putExtra("isGen", false);
-                txDetail.putExtra("isSuccess", true);
-                txDetail.putExtra("bnbTime", history.timeStamp);
-                mainActivity.startActivity(txDetail);
-
-            } else {
-                String url = WUtil.getTxExplorer(mainActivity.getBaseChain(), history.txHash);
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                mainActivity.startActivity(intent);
-            }
+            String url = WUtil.getTxExplorer(mainActivity.getBaseChain(), history.txHash);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            mainActivity.startActivity(intent);
         });
     }
 
