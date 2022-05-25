@@ -175,7 +175,7 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
                 return;
             }
             final String mainDenom = getBaseChain().getMainDenom();
-            final BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_IBC_TRANSFER, 0);
+            final BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_IBC_TRANSFER);
             BigDecimal mainDenomAmount = getBalance(mainDenom);
             BigDecimal availableAmount = mainDenomAmount.subtract(feeAmount);
             if (availableAmount.compareTo(BigDecimal.ZERO) <= 0) {
@@ -195,7 +195,7 @@ public class BridgeTokenGrpcActivity extends BaseActivity implements View.OnClic
             }
             Intent intent = new Intent(getBaseContext(), SendActivity.class);
             BigDecimal mainAvailable = getBalance(getBaseChain().getMainDenom());
-            BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_SEND, 0);
+            BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_SEND);
             if (mainAvailable.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return;

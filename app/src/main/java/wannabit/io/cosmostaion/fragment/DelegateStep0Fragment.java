@@ -33,7 +33,6 @@ import wannabit.io.cosmostaion.dialog.Dialog_Empty_Warning;
 import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WLog;
-import wannabit.io.cosmostaion.utils.WUtil;
 
 public class DelegateStep0Fragment extends BaseFragment implements View.OnClickListener {
 
@@ -96,7 +95,7 @@ public class DelegateStep0Fragment extends BaseFragment implements View.OnClickL
         WDp.DpMainDenom(baseChain, mDenomTitle);
         final WalletBalance balance = getSActivity().getFullBalance(baseChain.getMainDenom());
 
-        BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getSActivity().getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
+        BigDecimal feeAmount = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_SIMPLE_DELEGATE);
         BigDecimal delegatableAmount = balance.getBalanceAmount(); // TODO add(getVesting(denom))
         mMaxAvailable = delegatableAmount.subtract(feeAmount);
         mAvailableAmount.setText(WDp.getDpAmount2(mMaxAvailable, mDpDecimal, mDpDecimal));

@@ -35,7 +35,6 @@ import android.content.Context;
 import android.text.SpannableString;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -46,7 +45,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.models.WalletBalance;
-import com.fulldive.wallet.presentation.main.MainActivity;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -2013,23 +2011,6 @@ public class WUtil {
         return result;
     }
 
-    /**
-     * Main Guide
-     */
-    public static void getGuide(MainActivity mainActivity, ImageView guideImg, TextView guideTitle, TextView guideMsg, Button guideBtn1, Button guideBtn2) {
-        final BaseChain chain = mainActivity.getBaseChain();
-        guideBtn1.setText(R.string.str_home);
-        guideBtn2.setText(R.string.str_blog);
-        if (chain.equals(BaseChain.OKEX_MAIN.INSTANCE)) {
-            guideImg.setImageResource(R.drawable.infoicon_okx);
-            guideTitle.setText(R.string.str_front_guide_title_ok);
-            guideMsg.setText(R.string.str_front_guide_msg_ok);
-            guideBtn1.setText(R.string.str_faq_ok);
-            guideBtn2.setText(R.string.str_guide_ok);
-
-        }
-    }
-
     public static void getWalletData(BaseChain chain, ImageView coinImg, TextView coinDenom) {
         coinImg.setImageResource(chain.getCoinIcon());
         coinDenom.setText(chain.getSymbolTitle());
@@ -2088,13 +2069,6 @@ public class WUtil {
             }
         }
         return result;
-    }
-
-    /**
-     * Chain Gas Rate
-     */
-    public static BigDecimal getEstimateGasFeeAmount(BaseChain chain, int type, int index) {
-        return chain.getGasFeeEstimateCalculator().calc(chain, type, index);
     }
 
     /**

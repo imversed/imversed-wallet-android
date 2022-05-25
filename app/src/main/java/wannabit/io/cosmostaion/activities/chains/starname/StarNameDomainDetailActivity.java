@@ -117,7 +117,7 @@ public class StarNameDomainDetailActivity extends BaseActivity implements View.O
                 return;
             }
             BigDecimal available = getBalance(getBaseChain().getMainDenom());
-            BigDecimal txFee = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_DELETE_DOMAIN, 0);
+            BigDecimal txFee = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_DELETE_DOMAIN);
             if (available.compareTo(txFee) < 0) {
                 Toast.makeText(this, R.string.error_not_enough_starname_fee, Toast.LENGTH_SHORT).show();
                 return;
@@ -137,7 +137,7 @@ public class StarNameDomainDetailActivity extends BaseActivity implements View.O
 
             BigDecimal available = getBalance(getBaseChain().getMainDenom());
             BigDecimal starNameFee = getBaseDao().getStarNameRenewDomainFee(mDomain_gRPC.getName(), mDomain_gRPC.getType());
-            BigDecimal txFee = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_RENEW_DOMAIN, 0);
+            BigDecimal txFee = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_RENEW_DOMAIN);
             if (available.compareTo(starNameFee.add(txFee)) < 0) {
                 Toast.makeText(this, R.string.error_not_enough_starname_fee, Toast.LENGTH_SHORT).show();
                 return;
@@ -159,7 +159,7 @@ public class StarNameDomainDetailActivity extends BaseActivity implements View.O
 
             BigDecimal available = getBalance(getBaseChain().getMainDenom());
             BigDecimal starNameFee = getBaseDao().getReplaceFee();
-            BigDecimal txFee = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_REPLACE_STARNAME, 0);
+            BigDecimal txFee = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_REPLACE_STARNAME);
             if (available.compareTo(starNameFee.add(txFee)) < 0) {
                 Toast.makeText(this, R.string.error_not_enough_starname_fee, Toast.LENGTH_SHORT).show();
                 return;

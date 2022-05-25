@@ -12,7 +12,8 @@ open class GasFeeEstimateCalculator(
 
     private val gasRate = BigDecimal(gasRate)
 
-    open fun calc(chain: BaseChain, type: Int, index: Int): BigDecimal {
+    @JvmOverloads
+    open fun calc(chain: BaseChain, type: Int, index: Int = 0): BigDecimal {
         val gasAmount = chain.gasProvider.getEstimateGasAmount(type, index)
         return gasRate.multiply(gasAmount).setScale(scale, RoundingMode.DOWN)
     }

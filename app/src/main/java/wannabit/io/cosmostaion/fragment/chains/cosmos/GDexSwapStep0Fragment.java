@@ -21,6 +21,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
@@ -116,7 +118,9 @@ public class GDexSwapStep0Fragment extends BaseFragment implements View.OnClickL
         mOutputCoinDecimal = WUtil.getCosmosCoinDecimal(getBaseDao(), getSActivity().mOutputDenom);
         setDpDecimals(mInputCoinDecimal);
         mAvailableMaxAmount = getSActivity().getBalance(getSActivity().mInputDenom);
-        BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getSActivity().getBaseChain(), CONST_PW_TX_GDEX_SWAP, 0);
+
+        final BaseChain baseChain = getSActivity().getBaseChain();
+        final BigDecimal txFee = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_GDEX_SWAP);
         if (getSActivity().mInputDenom.equals(COSMOS_MAIN.INSTANCE.getMainDenom())) {
             mAvailableMaxAmount = mAvailableMaxAmount.subtract(txFee);
         }

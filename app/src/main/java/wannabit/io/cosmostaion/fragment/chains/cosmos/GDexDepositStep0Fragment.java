@@ -133,7 +133,8 @@ public class GDexDepositStep0Fragment extends BaseFragment implements View.OnCli
     private void onInitView() {
         mProgress.setVisibility(View.GONE);
 
-        BigDecimal txFeeAmount = WUtil.getEstimateGasFeeAmount(getSActivity().getBaseChain(), CONST_PW_TX_GDEX_DEPOSIT, 0);
+        final BaseChain baseChain = getSActivity().getBaseChain();
+        final BigDecimal txFeeAmount = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_GDEX_DEPOSIT);
         String coin0Denom = getSActivity().mGDexPool.getReserveCoinDenoms(0);
         String coin1Denom = getSActivity().mGDexPool.getReserveCoinDenoms(1);
 

@@ -115,7 +115,9 @@ public class SifSwapStep0Fragment extends BaseFragment implements View.OnClickLi
         setDpDecimals(mInputCoinDecimal);
 
         mAvailableMaxAmount = getSActivity().getBalance(getSActivity().mInputDenom);
-        BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getSActivity().getBaseChain(), CONST_PW_TX_SIF_SWAP, 0);
+
+        final BaseChain baseChain = getSActivity().getBaseChain();
+        final BigDecimal txFee = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_SIF_SWAP);
         if (getSActivity().mInputDenom.equals(BaseChain.SIF_MAIN.INSTANCE.getMainDenom())) {
             mAvailableMaxAmount = mAvailableMaxAmount.subtract(txFee);
         }

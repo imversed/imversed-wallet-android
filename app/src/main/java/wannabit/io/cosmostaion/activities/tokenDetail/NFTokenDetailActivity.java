@@ -147,7 +147,7 @@ public class NFTokenDetailActivity extends BaseActivity implements View.OnClickL
             } else {
                 Intent intent = new Intent(getBaseContext(), NFTSendActivity.class);
                 BigDecimal mainAvailable = getBalance(getBaseChain().getMainDenom());
-                BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SEND_NFT, 0);
+                BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SEND_NFT);
                 if (mainAvailable.compareTo(feeAmount) < 0) {
                     Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                     return;

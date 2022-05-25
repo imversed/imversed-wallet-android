@@ -143,7 +143,7 @@ public class DAppsList5Activity extends BaseActivity implements TaskListener {
             return;
         }
         BigDecimal available = getBalance(getBaseChain().getMainDenom());
-        BigDecimal txFee = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_KAVA_SWAP, 0);
+        BigDecimal txFee = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_KAVA_SWAP);
         if (available.compareTo(txFee) <= 0) {
             Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
             return;
@@ -182,7 +182,7 @@ public class DAppsList5Activity extends BaseActivity implements TaskListener {
             showDialog(add);
             return;
         }
-        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_KAVA_JOIN_POOL, 0);
+        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_KAVA_JOIN_POOL);
         String coin0Denom = myPool.getCoins(0).getDenom();
         String coin1Denom = myPool.getCoins(1).getDenom();
 
@@ -214,7 +214,7 @@ public class DAppsList5Activity extends BaseActivity implements TaskListener {
 
         final String kavaDenom = BaseChain.KAVA_MAIN.INSTANCE.getMainDenom();
         BigDecimal mainBalance = getBalance(kavaDenom);
-        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_KAVA_EXIT_POOL, 0);
+        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_KAVA_EXIT_POOL);
 
         if (mainBalance.compareTo(feeAmount) < 0) {
             Toast.makeText(getBaseContext(), R.string.error_not_enough_to_withdraw_pool, Toast.LENGTH_SHORT).show();

@@ -90,7 +90,7 @@ public class NFTListActivity extends BaseActivity implements TaskListener {
                 }
                 Intent intent = new Intent(NFTListActivity.this, NFTCreateActivity.class);
                 BigDecimal mainAvailable = getBalance(getBaseChain().getMainDenom());
-                BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_MINT_NFT, 0);
+                BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_MINT_NFT);
                 if (mainAvailable.compareTo(feeAmount) <= 0) {
                     Toast.makeText(NFTListActivity.this, R.string.error_not_enough_budget, Toast.LENGTH_SHORT).show();
                     return;
