@@ -95,15 +95,15 @@ public class StepFeeSetOldFragment extends BaseFragment implements View.OnClickL
         mButtonGroup.setSelectedBackground(WDp.getChainColor(getContext(), baseChain));
         mButtonGroup.setRipple(WDp.getChainColor(getContext(), baseChain));
 
+        int myValidatorCnt = 0;
         if (baseChain.equals(OKEX_MAIN.INSTANCE)) {
-            int myValidatorCnt = 0;
             if (getBaseDao().mOkStaking != null && getBaseDao().mOkStaking.validator_address != null) {
                 myValidatorCnt = getBaseDao().mOkStaking.validator_address.size();
             }
-            mEstimateGasAmount = WUtil.getEstimateGasAmount(getContext(), baseChain, getSActivity().mTxType, myValidatorCnt);
         } else {
-            mEstimateGasAmount = WUtil.getEstimateGasAmount(getContext(), baseChain, getSActivity().mTxType, (getSActivity().mValidators.size()));
+            myValidatorCnt = getSActivity().mValidators.size();
         }
+        mEstimateGasAmount = baseChain.getGasProvider().getEstimateGasAmount(getSActivity().mTxType, myValidatorCnt);
         onUpdateView();
 
         mButtonGroup.setOnPositionChangedListener(position -> {
@@ -124,7 +124,7 @@ public class StepFeeSetOldFragment extends BaseFragment implements View.OnClickL
 
     private void onCalculateFees() {
         final BaseChain baseChain = getSActivity().getBaseChain();
-        mSelectedGasRate = WUtil.getGasRate(baseChain, mSelectedGasPosition);
+        mSelectedGasRate = baseChain.getGasRateProvider().get(mSelectedGasPosition);
         if (baseChain.equals(BNB_MAIN.INSTANCE)) {
             mFee = new BigDecimal(FEE_BNB_SEND);
         } else if (baseChain.equals(OKEX_MAIN.INSTANCE)) {

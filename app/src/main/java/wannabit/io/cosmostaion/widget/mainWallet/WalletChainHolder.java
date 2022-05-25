@@ -143,7 +143,7 @@ public class WalletChainHolder extends BaseHolder {
             activity.startActivity(airdrop);
         } else if (account.hasPrivateKey) {
             BigDecimal available = activity.getBalance(baseChain.getMainDenom());
-            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(activity, baseChain, CONST_PW_TX_PROFILE, 0);
+            BigDecimal txFee = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_PROFILE, 0);
             if (available.compareTo(txFee) <= 0) {
                 Toast.makeText(activity, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return;

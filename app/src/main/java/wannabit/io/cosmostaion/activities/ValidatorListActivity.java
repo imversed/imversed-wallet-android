@@ -5,7 +5,6 @@ import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIMPLE_REWAR
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -117,14 +116,12 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
     }
 
     public void onStartValidatorDetail(Validator validator) {
-        Log.d("fftf", "onStartValidatorDetail: " + validator.toString());
         Intent intent = new Intent(ValidatorListActivity.this, ValidatorActivity.class);
         intent.putExtra("validator", validator);
         startActivity(intent);
     }
 
     public void onStartValidatorDetailV1(String opAddress) {
-        Log.d("fftf", "onStartValidatorDetailV1: " + opAddress);
         Intent intent = new Intent(ValidatorListActivity.this, ValidatorActivity.class);
         intent.putExtra("valOpAddress", opAddress);
         startActivity(intent);
@@ -140,7 +137,7 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
             String cosmostation = "";
             final WalletBalance balance = getFullBalance(getBaseChain().getMainDenom());
             BigDecimal delegatableAmount = balance.getBalanceAmount(); // TODO add(getVesting(denom))
-            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
+            BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
             if (delegatableAmount.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_to_delegate, Toast.LENGTH_SHORT).show();
                 return;
@@ -159,7 +156,7 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
             Validator toValidator = null;
             final WalletBalance balance = getFullBalance(getBaseChain().getMainDenom());
             BigDecimal delegatableAmount = balance.getDelegatableAmount();
-            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
+            BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
             if (delegatableAmount.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_to_delegate, Toast.LENGTH_SHORT).show();
                 return;
@@ -192,9 +189,8 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
                 return;
             }
 
-            BigDecimal singlefeeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_REWARD, 1);
             for (Distribution.DelegationDelegatorReward reward : getBaseDao().mGrpcRewards) {
-                if (getBaseDao().getReward(getBaseChain().getMainDenom(), reward.getValidatorAddress()).compareTo(singlefeeAmount) > 0) {
+                if (getBaseDao().getReward(getBaseChain().getMainDenom(), reward.getValidatorAddress()).compareTo(BigDecimal.ZERO) > 0) {
                     toClaimRewards.add(reward);
                 }
             }
@@ -211,7 +207,7 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
 
             final String mainDenom = getBaseChain().getMainDenom();
             final WalletBalance balance = getFullBalance(mainDenom);
-            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_REWARD, toClaimRewards.size());
+            BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_REWARD, toClaimRewards.size() - 1);
             if (balance.getBalanceAmount().compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return;
@@ -231,7 +227,7 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
                 return;
             }
 
-            BigDecimal singlefeeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_REWARD, 1);
+            BigDecimal singlefeeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_REWARD, 0);
             for (Validator validator : getBaseDao().mAllValidators) {
                 if (getBaseDao().rewardAmountByValidator(getBaseChain().getMainDenom(), validator.operator_address).compareTo(singlefeeAmount) > 0) {
                     toClaimValidators.add(validator);
@@ -250,7 +246,7 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
             }
 
             BigDecimal available = getAccount().getTokenBalance(getBaseChain().getMainDenom());
-            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_REWARD, toClaimValidators.size());
+            BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_REWARD, toClaimValidators.size() - 1);
 
             if (available.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();

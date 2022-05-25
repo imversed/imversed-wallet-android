@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -55,7 +56,6 @@ import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.task.FetchTask.MoonPayTask;
 import wannabit.io.cosmostaion.utils.FetchCallBack;
 import wannabit.io.cosmostaion.utils.WLog;
-import wannabit.io.cosmostaion.utils.WUtil;
 
 public class BaseActivity extends AppCompatActivity implements IEnrichableActivity {
     private Injector injector;
@@ -150,12 +150,16 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
     }
 
     public void showWaitDialog() {
-        Fragment fragment = getSupportFragmentManager().findFragmentByTag("wait");
-        if (fragment == null || !fragment.isAdded()) {
-            if (waitDialogFragment == null) {
-                waitDialogFragment = WaitDialogFragment.Companion.newInstance();
+        try {
+            Fragment fragment = getSupportFragmentManager().findFragmentByTag("wait");
+            if (fragment == null || !fragment.isAdded()) {
+                if (waitDialogFragment == null) {
+                    waitDialogFragment = WaitDialogFragment.Companion.newInstance();
+                }
+                showDialog(waitDialogFragment, "wait", false);
             }
-            showDialog(waitDialogFragment, "wait", false);
+        } catch (Exception ex) {
+            WLog.e(ex.toString());
         }
     }
 
@@ -204,7 +208,7 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
                 WLog.e(exception.toString());
             }
         }
-        BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_SEND, 0);
+        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_SEND, 0);
         if (mainAvailable.compareTo(feeAmount) <= 0) {
             Toast.makeText(getBaseContext(), R.string.error_not_enough_budget, Toast.LENGTH_SHORT).show();
             return;
@@ -235,7 +239,7 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
             }
         } else if (getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             BigDecimal mainAvailable = getBalance(getBaseChain().getMainDenom());
-            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_HTLS_REFUND, 0);
+            BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_HTLS_REFUND, 0);
             if (mainAvailable.subtract(feeAmount).compareTo(BigDecimal.ZERO) <= 0) {
                 hasBalance = false;
             }
@@ -293,6 +297,7 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
         compositeDisposable.add(disposable);
     }
 
+    @Nullable
     public Price getPrice(String denom) {
         Price price = null;
         try {

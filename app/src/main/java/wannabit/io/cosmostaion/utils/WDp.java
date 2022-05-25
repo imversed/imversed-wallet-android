@@ -687,7 +687,7 @@ public class WDp {
         return result + "   " + "(" + baseData.mChainParam.getUnbonding(baseChain) + c.getString(R.string.str_unbonding_days_after);
     }
 
-    public static String getUnbondingTimeleft(Context c, long finishTime) {
+    public static String getUnbondingTimeleft(long finishTime) {
         String result = "??";
         try {
             long now = Calendar.getInstance().getTimeInMillis();

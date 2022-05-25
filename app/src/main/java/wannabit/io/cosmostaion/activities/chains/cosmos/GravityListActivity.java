@@ -21,7 +21,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -42,7 +41,6 @@ import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
-import wannabit.io.cosmostaion.dao.Price;
 import wannabit.io.cosmostaion.dialog.Dialog_Pool_Gravity_Dex;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.fragment.chains.cosmos.GravityPoolListFragment;
@@ -151,7 +149,7 @@ public class GravityListActivity extends BaseActivity implements TaskListener {
 
         final String mainDenom = getBaseChain().getMainDenom();
         final WalletBalance balance = getFullBalance(mainDenom);
-        BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_GDEX_SWAP, 0);
+        BigDecimal txFee = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_GDEX_SWAP, 0);
         if (balance.getBalanceAmount().compareTo(txFee) < 0) {
             Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
             return;
@@ -189,7 +187,7 @@ public class GravityListActivity extends BaseActivity implements TaskListener {
         String coinDenom0 = tempPool.getReserveCoinDenoms(0);
         String coinDenom1 = tempPool.getReserveCoinDenoms(1);
 
-        BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(GravityListActivity.this, getBaseChain(), CONST_PW_TX_GDEX_DEPOSIT, 0);
+        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_GDEX_DEPOSIT, 0);
         BigDecimal coin0Available = getBalance(coinDenom0);
         BigDecimal coin1Available = getBalance(coinDenom1);
 
@@ -216,7 +214,7 @@ public class GravityListActivity extends BaseActivity implements TaskListener {
         }
 
         BigDecimal mainBalance = getBalance(COSMOS_MAIN.INSTANCE.getMainDenom());
-        BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_GDEX_WITHDRAW, 0);
+        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_GDEX_WITHDRAW, 0);
 
         if (mainBalance.compareTo(feeAmount) < 0) {
             Toast.makeText(getBaseContext(), R.string.error_not_enough_to_withdraw_pool, Toast.LENGTH_SHORT).show();

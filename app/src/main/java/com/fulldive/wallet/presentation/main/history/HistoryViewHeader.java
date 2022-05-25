@@ -3,7 +3,6 @@ package com.fulldive.wallet.presentation.main.history;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,12 +22,7 @@ public class HistoryViewHeader extends RecyclerView.ItemDecoration {
     private TextView mItemCnt;
 
     public HistoryViewHeader(Context context) {
-        topPadding = dpToPx(context, 26);
-    }
-
-    // dp -> pixel 단위로 변경
-    private int dpToPx(Context context, int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
+        topPadding = context.getResources().getDimensionPixelSize(R.dimen.text_size_26);
     }
 
     @Override

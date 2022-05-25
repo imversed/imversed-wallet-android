@@ -94,7 +94,7 @@ public class IBCSendStep2Fragment extends BaseFragment implements View.OnClickLi
 
     private void onUpdateInitInfo() {
         final String mainDenom = getSActivity().getBaseChain().getMainDenom();
-        final BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getContext(), getSActivity().getBaseChain(), CONST_PW_TX_IBC_TRANSFER, 0);
+        final BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getSActivity().getBaseChain(), CONST_PW_TX_IBC_TRANSFER, 0);
 
         mMaxAvailable = getSActivity().getBalance(getSActivity().mToIbcDenom);
         if (mainDenom.equalsIgnoreCase(getSActivity().mToIbcDenom)) {

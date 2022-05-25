@@ -96,7 +96,7 @@ public class DelegateStep0Fragment extends BaseFragment implements View.OnClickL
         WDp.DpMainDenom(baseChain, mDenomTitle);
         final WalletBalance balance = getSActivity().getFullBalance(baseChain.getMainDenom());
 
-        BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getContext(), getSActivity().getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
+        BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getSActivity().getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
         BigDecimal delegatableAmount = balance.getBalanceAmount(); // TODO add(getVesting(denom))
         mMaxAvailable = delegatableAmount.subtract(feeAmount);
         mAvailableAmount.setText(WDp.getDpAmount2(mMaxAvailable, mDpDecimal, mDpDecimal));

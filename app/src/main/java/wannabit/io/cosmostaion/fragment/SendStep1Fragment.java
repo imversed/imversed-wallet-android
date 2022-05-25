@@ -98,7 +98,7 @@ public class SendStep1Fragment extends BaseFragment implements View.OnClickListe
 
         final String mainDenom = getSActivity().getBaseChain().getMainDenom();
         final String toSendDenom = getSActivity().mDenom;
-        final BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getContext(), getSActivity().getBaseChain(), CONST_PW_TX_SIMPLE_SEND, 0);
+        final BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getSActivity().getBaseChain(), CONST_PW_TX_SIMPLE_SEND, 0);
         if (getSActivity().getBaseChain().isGRPC()) {
             if (getSActivity().mDenom.startsWith("ibc/")) {
                 mDpDecimal = WUtil.getIbcDecimal(getBaseDao(), toSendDenom);

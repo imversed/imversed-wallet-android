@@ -222,7 +222,7 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
                 return;
             }
             final String mainDenom = getBaseChain().getMainDenom();
-            final BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_IBC_TRANSFER, 0);
+            final BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_IBC_TRANSFER, 0);
 
             mTotalAmount = getBalance(mNativeGrpcDenom);
             if (mainDenom.equalsIgnoreCase(mNativeGrpcDenom)) {
@@ -244,7 +244,7 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
             }
             Intent intent = new Intent(getBaseContext(), SendActivity.class);
             BigDecimal mainAvailable = getBalance(getBaseChain().getMainDenom());
-            BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_SEND, 0);
+            BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_SEND, 0);
             if (mainAvailable.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return;

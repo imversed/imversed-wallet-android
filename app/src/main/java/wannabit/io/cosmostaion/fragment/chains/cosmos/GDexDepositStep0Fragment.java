@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -131,7 +133,7 @@ public class GDexDepositStep0Fragment extends BaseFragment implements View.OnCli
     private void onInitView() {
         mProgress.setVisibility(View.GONE);
 
-        BigDecimal txFeeAmount = WUtil.getEstimateGasFeeAmount(getSActivity(), getSActivity().getBaseChain(), CONST_PW_TX_GDEX_DEPOSIT, 0);
+        BigDecimal txFeeAmount = WUtil.getEstimateGasFeeAmount(getSActivity().getBaseChain(), CONST_PW_TX_GDEX_DEPOSIT, 0);
         String coin0Denom = getSActivity().mGDexPool.getReserveCoinDenoms(0);
         String coin1Denom = getSActivity().mGDexPool.getReserveCoinDenoms(1);
 
