@@ -21,6 +21,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
@@ -132,9 +134,10 @@ public class RegisterDomain0Fragment extends BaseFragment implements View.OnClic
                 Toast.makeText(getBaseActivity(), R.string.error_invalid_domain_format, Toast.LENGTH_SHORT).show();
                 return;
             }
+            final BaseChain baseChain = getSActivity().getBaseChain();
             BigDecimal available = getSActivity().getBalance(getSActivity().getBaseChain().getMainDenom());
             BigDecimal starNameFee = getBaseDao().getStarNameRegisterDomainFee(userInput, mTypeSwitch.isChecked() ? "open" : "closed");
-            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getSActivity().getBaseChain(), CONST_PW_TX_REGISTER_DOMAIN, 0);
+            final BigDecimal txFee = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_REGISTER_DOMAIN);
             if (available.compareTo(starNameFee.add(txFee)) < 0) {
                 Toast.makeText(getBaseActivity(), R.string.error_not_enough_starname_fee, Toast.LENGTH_SHORT).show();
                 return;

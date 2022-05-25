@@ -149,7 +149,7 @@ public class GravityListActivity extends BaseActivity implements TaskListener {
 
         final String mainDenom = getBaseChain().getMainDenom();
         final WalletBalance balance = getFullBalance(mainDenom);
-        BigDecimal txFee = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_GDEX_SWAP, 0);
+        BigDecimal txFee = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_GDEX_SWAP);
         if (balance.getBalanceAmount().compareTo(txFee) < 0) {
             Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
             return;
@@ -187,7 +187,7 @@ public class GravityListActivity extends BaseActivity implements TaskListener {
         String coinDenom0 = tempPool.getReserveCoinDenoms(0);
         String coinDenom1 = tempPool.getReserveCoinDenoms(1);
 
-        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_GDEX_DEPOSIT, 0);
+        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_GDEX_DEPOSIT);
         BigDecimal coin0Available = getBalance(coinDenom0);
         BigDecimal coin1Available = getBalance(coinDenom1);
 
@@ -214,7 +214,7 @@ public class GravityListActivity extends BaseActivity implements TaskListener {
         }
 
         BigDecimal mainBalance = getBalance(COSMOS_MAIN.INSTANCE.getMainDenom());
-        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_GDEX_WITHDRAW, 0);
+        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_GDEX_WITHDRAW);
 
         if (mainBalance.compareTo(feeAmount) < 0) {
             Toast.makeText(getBaseContext(), R.string.error_not_enough_to_withdraw_pool, Toast.LENGTH_SHORT).show();

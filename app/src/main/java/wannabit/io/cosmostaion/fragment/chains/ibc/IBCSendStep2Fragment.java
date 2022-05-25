@@ -1,5 +1,6 @@
 package wannabit.io.cosmostaion.fragment.chains.ibc;
 
+import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_GDEX_SWAP;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_IBC_TRANSFER;
 
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+
+import com.fulldive.wallet.models.BaseChain;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -93,8 +96,9 @@ public class IBCSendStep2Fragment extends BaseFragment implements View.OnClickLi
     }
 
     private void onUpdateInitInfo() {
-        final String mainDenom = getSActivity().getBaseChain().getMainDenom();
-        final BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getSActivity().getBaseChain(), CONST_PW_TX_IBC_TRANSFER, 0);
+        final BaseChain baseChain = getSActivity().getBaseChain();
+        final String mainDenom = baseChain.getMainDenom();
+        final BigDecimal feeAmount = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_IBC_TRANSFER);
 
         mMaxAvailable = getSActivity().getBalance(getSActivity().mToIbcDenom);
         if (mainDenom.equalsIgnoreCase(getSActivity().mToIbcDenom)) {

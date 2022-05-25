@@ -208,7 +208,7 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
                 WLog.e(exception.toString());
             }
         }
-        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_SEND, 0);
+        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_SEND);
         if (mainAvailable.compareTo(feeAmount) <= 0) {
             Toast.makeText(getBaseContext(), R.string.error_not_enough_budget, Toast.LENGTH_SHORT).show();
             return;
@@ -239,7 +239,7 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
             }
         } else if (getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             BigDecimal mainAvailable = getBalance(getBaseChain().getMainDenom());
-            BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_HTLS_REFUND, 0);
+            BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_HTLS_REFUND);
             if (mainAvailable.subtract(feeAmount).compareTo(BigDecimal.ZERO) <= 0) {
                 hasBalance = false;
             }

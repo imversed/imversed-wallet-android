@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
@@ -96,9 +98,10 @@ public class RegisterAccount0Fragment extends BaseFragment implements View.OnCli
                 Toast.makeText(getBaseActivity(), R.string.error_invalid_account_format, Toast.LENGTH_SHORT).show();
                 return;
             }
+            final BaseChain baseChain = getSActivity().getBaseChain();
             BigDecimal available = getSActivity().getBalance(getSActivity().getBaseChain().getMainDenom());
             BigDecimal starNameFee = getBaseDao().getStarNameRegisterAccountFee("open");
-            BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getSActivity().getBaseChain(), CONST_PW_TX_REGISTER_ACCOUNT, 0);
+            final BigDecimal txFee = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_REGISTER_ACCOUNT);
             if (available.compareTo(starNameFee.add(txFee)) < 0) {
                 Toast.makeText(getBaseActivity(), R.string.error_not_enough_starname_fee, Toast.LENGTH_SHORT).show();
                 return;

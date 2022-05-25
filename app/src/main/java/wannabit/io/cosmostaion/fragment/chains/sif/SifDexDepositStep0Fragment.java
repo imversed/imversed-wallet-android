@@ -1,5 +1,6 @@
 package wannabit.io.cosmostaion.fragment.chains.sif;
 
+import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_OSMOSIS_JOIN_POOL;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIF_JOIN_POOL;
 
 import android.os.Bundle;
@@ -121,7 +122,9 @@ public class SifDexDepositStep0Fragment extends BaseFragment implements View.OnC
 
     private void onInitView() {
         mProgress.setVisibility(View.GONE);
-        BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getSActivity().getBaseChain(), CONST_PW_TX_SIF_JOIN_POOL, 0);
+
+        final BaseChain baseChain = getSActivity().getBaseChain();
+        final BigDecimal feeAmount = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_SIF_JOIN_POOL);
         mRowanMaxAmount = getSActivity().getBalance(BaseChain.SIF_MAIN.INSTANCE.getMainDenom());
         mRowanMaxAmount = mRowanMaxAmount.subtract(feeAmount);
 

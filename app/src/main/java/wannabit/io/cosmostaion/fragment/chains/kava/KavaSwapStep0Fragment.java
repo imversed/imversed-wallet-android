@@ -1,5 +1,6 @@
 package wannabit.io.cosmostaion.fragment.chains.kava;
 
+import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_KAVA_JOIN_POOL;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_KAVA_SWAP;
 import static wannabit.io.cosmostaion.base.BaseConstant.TASK_GRPC_FETCH_KAVA_SWAP_POOLS_INFO;
 
@@ -114,6 +115,7 @@ public class KavaSwapStep0Fragment extends BaseFragment implements View.OnClickL
 
     private void onInitView() {
         mProgress.setVisibility(View.GONE);
+        final BaseChain baseChain = getSActivity().getBaseChain();
 
         if (mSwapPool.get(0).getCoins(0).getDenom().equalsIgnoreCase(getSActivity().mInputDenom)) {
             mInputCoinAmount = new BigDecimal(mSwapPool.get(0).getCoins(0).getAmount());
@@ -128,7 +130,8 @@ public class KavaSwapStep0Fragment extends BaseFragment implements View.OnClickL
         setDpDecimals(mInputCoinDecimal);
 
         mAvailableMaxAmount = getSActivity().getBalance(getSActivity().mInputDenom);
-        BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getSActivity().getBaseChain(), CONST_PW_TX_KAVA_SWAP, 0);
+
+        final BigDecimal txFee = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_KAVA_SWAP);
         if (getSActivity().mInputDenom.equals(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom())) {
             mAvailableMaxAmount = mAvailableMaxAmount.subtract(txFee);
         }

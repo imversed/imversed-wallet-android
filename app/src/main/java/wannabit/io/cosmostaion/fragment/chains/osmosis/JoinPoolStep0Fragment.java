@@ -129,7 +129,8 @@ public class JoinPoolStep0Fragment extends BaseFragment implements View.OnClickL
         mProgress.setVisibility(View.GONE);
         WLog.w("pool " + getSActivity().mOsmosisPool.getId());
 
-        BigDecimal txFeeAmount = WUtil.getEstimateGasFeeAmount(getSActivity().getBaseChain(), CONST_PW_TX_OSMOSIS_JOIN_POOL, 0);
+        final BaseChain baseChain = getSActivity().getBaseChain();
+        final BigDecimal txFeeAmount = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_OSMOSIS_JOIN_POOL);
         String coin0Denom = getSActivity().mOsmosisPool.getPoolAssets(0).getToken().getDenom();
         String coin1Denom = getSActivity().mOsmosisPool.getPoolAssets(1).getToken().getDenom();
 

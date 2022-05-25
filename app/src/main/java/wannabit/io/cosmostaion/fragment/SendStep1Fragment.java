@@ -23,6 +23,8 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.fulldive.wallet.models.BaseChain;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -96,9 +98,10 @@ public class SendStep1Fragment extends BaseFragment implements View.OnClickListe
             getSActivity().onBackPressed();
         }
 
-        final String mainDenom = getSActivity().getBaseChain().getMainDenom();
+        final BaseChain baseChain = getSActivity().getBaseChain();
+        final String mainDenom = baseChain.getMainDenom();
         final String toSendDenom = getSActivity().mDenom;
-        final BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getSActivity().getBaseChain(), CONST_PW_TX_SIMPLE_SEND, 0);
+        final BigDecimal feeAmount = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_SIMPLE_SEND);
         if (getSActivity().getBaseChain().isGRPC()) {
             if (getSActivity().mDenom.startsWith("ibc/")) {
                 mDpDecimal = WUtil.getIbcDecimal(getBaseDao(), toSendDenom);

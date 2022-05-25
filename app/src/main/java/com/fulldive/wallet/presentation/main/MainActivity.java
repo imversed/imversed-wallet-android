@@ -276,7 +276,7 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
         final String mainDenom = baseChain.getMainDenom();
         final BigDecimal available = getBalance(mainDenom);
         if (baseChain.equals(KAVA_MAIN.INSTANCE)) {
-            BigDecimal txFee = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_CLAIM_INCENTIVE, 0);
+            BigDecimal txFee = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_CLAIM_INCENTIVE);
             if (available.compareTo(txFee) <= 0) {
                 Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return;
@@ -291,7 +291,7 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
             startActivity(intent);
 
         } else if (baseChain.equals(SIF_MAIN.INSTANCE)) {
-            BigDecimal txFee = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_SIF_CLAIM_INCENTIVE, 0);
+            BigDecimal txFee = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_SIF_CLAIM_INCENTIVE);
             if (available.compareTo(txFee) <= 0) {
                 Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return;

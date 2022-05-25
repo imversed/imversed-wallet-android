@@ -124,7 +124,7 @@ public class VoteDetailsActivity extends BaseActivity implements View.OnClickLis
             }
             final String mainDenom = getBaseChain().getMainDenom();
             final WalletBalance balance = getFullBalance(mainDenom);
-            BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_VOTE, 0);
+            BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_VOTE);
 
             if (mApiProposal != null && !mApiProposal.proposal_status.isEmpty() && !mApiProposal.proposal_status.contains("VOTING")) {
                 Toast.makeText(getBaseContext(), getString(R.string.error_not_voting_period), Toast.LENGTH_SHORT).show();

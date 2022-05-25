@@ -137,7 +137,7 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
             String cosmostation = "";
             final WalletBalance balance = getFullBalance(getBaseChain().getMainDenom());
             BigDecimal delegatableAmount = balance.getBalanceAmount(); // TODO add(getVesting(denom))
-            BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
+            BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE);
             if (delegatableAmount.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_to_delegate, Toast.LENGTH_SHORT).show();
                 return;
@@ -156,7 +156,7 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
             Validator toValidator = null;
             final WalletBalance balance = getFullBalance(getBaseChain().getMainDenom());
             BigDecimal delegatableAmount = balance.getDelegatableAmount();
-            BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
+            BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE);
             if (delegatableAmount.compareTo(feeAmount) < 0) {
                 Toast.makeText(getBaseContext(), R.string.error_not_enough_to_delegate, Toast.LENGTH_SHORT).show();
                 return;
@@ -227,7 +227,7 @@ public class ValidatorListActivity extends BaseActivity implements FetchCallBack
                 return;
             }
 
-            BigDecimal singlefeeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_REWARD, 0);
+            BigDecimal singlefeeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_REWARD);
             for (Validator validator : getBaseDao().mAllValidators) {
                 if (getBaseDao().rewardAmountByValidator(getBaseChain().getMainDenom(), validator.operator_address).compareTo(singlefeeAmount) > 0) {
                     toClaimValidators.add(validator);
