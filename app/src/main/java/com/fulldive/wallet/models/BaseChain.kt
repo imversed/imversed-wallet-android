@@ -6,6 +6,9 @@ import androidx.annotation.StringRes
 import com.fulldive.wallet.components.path.*
 import com.fulldive.wallet.extensions.unsafeLazy
 import com.fulldive.wallet.interactors.secret.WalletUtils
+import com.fulldive.wallet.models.gas.GasFeeEstimateCalculator
+import com.fulldive.wallet.models.gas.GasRateProvider
+import com.fulldive.wallet.models.gas.providers.*
 import com.fulldive.wallet.models.local.ApiHost
 import wannabit.io.cosmostaion.R
 import wannabit.io.cosmostaion.base.BaseConstant
@@ -42,6 +45,9 @@ sealed class BaseChain constructor(
     val monikerImageTag: String = mintScanChainName,
     val blockTime: BigDecimal = BigDecimal.ZERO,
     val pathProvider: IPathProvider = PathProvider.DEFAULT,
+    val gasProvider: GasProvider = GasProvider(),
+    val gasRateProvider: GasRateProvider = GasRateProvider.ZERO,
+    val gasFeeEstimateCalculator: GasFeeEstimateCalculator = GasFeeEstimateCalculator.DEFAULT,
     val isSupported: Boolean = true,
     val isTestNet: Boolean = false,
     val isGRPC: Boolean = true,
@@ -71,6 +77,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("7.6597"),
         historyApiUrl = "https://api.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-cosmos-app-and.cosmostation.io"),
+        gasRateProvider = GasRateProvider.DEFAULT,
         sortValue = 20,
         guide = Guide.create(
             guideIcon = R.drawable.guide_img,
@@ -104,6 +111,8 @@ sealed class BaseChain constructor(
         coingeckoUrl = "https://www.coingecko.com/en/coins/imversed",
         explorerUrl = "https://tex-c.imversed.com/",
         pathProvider = PathProvider(60),
+        gasProvider = ImversedGasProvider,
+        gasRateProvider = GasRateProvider.DEFAULT,
         sortValue = 10,
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_imversed,
@@ -137,6 +146,8 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("6.7884"),
         historyApiUrl = "https://api-iris.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-iris-app.cosmostation.io"),
+        gasRateProvider = GasRateProvider("0.002", "0.02", "0.2"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator(gasRate = "0.2"),
         guide = Guide.create(
             guideIcon = R.drawable.irisnet_img,
             guideTitle = R.string.str_front_guide_title_iris,
@@ -171,6 +182,9 @@ sealed class BaseChain constructor(
         historyApiUrl = "https://api-iov.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-iov-app.cosmostation.io"),
         pathProvider = PathProvider(234),
+        gasProvider = IovGasProvider,
+        gasRateProvider = GasRateProvider("0.10", "1.00", "1.00"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator.ONE,
         guide = Guide.create(
             guideIcon = R.drawable.iov_img,
             guideTitle = R.string.str_front_guide_title_iov,
@@ -205,6 +219,8 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("0.4124"),
         pathProvider = PathProvider(714),
         isGRPC = false,
+        gasRateProvider = GasRateProvider.ZERO,
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator.BNB,
         guide = Guide.create(
             guideIcon = R.drawable.binance_img,
             guideTitle = R.string.str_front_guide_title_binance,
@@ -240,6 +256,9 @@ sealed class BaseChain constructor(
         historyApiUrl = "https://api-kava.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-kava-app.cosmostation.io"),
         pathProvider = MultiPathProvider(459, mapOf(0 to 118)),
+        gasProvider = KavaGasProvider,
+        gasRateProvider = GasRateProvider("0.00", "0.0025", "0.025"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator.KAVA,
         guide = Guide.create(
             guideIcon = R.drawable.kavamain_img,
             guideTitle = R.string.str_front_guide_title_kava,
@@ -274,6 +293,9 @@ sealed class BaseChain constructor(
         historyApiUrl = "https://api-band.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-band-app.cosmostation.io"),
         pathProvider = PathProvider(494),
+        gasProvider = BandGasProvider,
+        gasRateProvider = GasRateProvider("0.000", "0.0025", "0.025"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator.ZERO,
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_bandprotocol,
             guideTitle = R.string.str_front_guide_title_band,
@@ -306,6 +328,9 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("5.9740"),
         historyApiUrl = "https://api-certik.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-certik-app.cosmostation.io"),
+        gasProvider = CertikGasProvider,
+        gasRateProvider = GasRateProvider("0.05"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator(gasRate = "0.05"),
         guide = Guide.create(
             guideIcon = R.drawable.certik_img,
             guideTitle = R.string.str_front_guide_title_certik,
@@ -340,6 +365,9 @@ sealed class BaseChain constructor(
         historyApiUrl = "https://api-secret.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-secret.cosmostation.io"),
         pathProvider = MultiPathProvider(529, mapOf(0 to 118)),
+        gasProvider = SecretGasProvider,
+        gasRateProvider = GasRateProvider("0.25"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator(gasRate = "0.25"),
         guide = Guide.create(
             guideIcon = R.drawable.secret_img,
             guideTitle = R.string.str_front_guide_title_secret,
@@ -372,6 +400,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("6.4526"),
         historyApiUrl = "https://api-akash.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-akash-app.cosmostation.io"),
+        gasRateProvider = GasRateProvider.DEFAULT,
         guide = Guide.create(
             guideIcon = R.drawable.akash_img,
             guideTitle = R.string.str_front_guide_title_akash,
@@ -403,12 +432,15 @@ sealed class BaseChain constructor(
         coingeckoUrl = "https://www.coingecko.com/en/coins/okexchain",
         explorerUrl = "https://www.oklink.com/okexchain/",
         blockTime = BigDecimal("4.0286"),
+        gasRateProvider = GasRateProvider("0.0000000001"),
         pathProvider = HintedMultiPathProvider(
             60,
             mapOf(0 to 996, 1 to 996),
             "Ethereum Type",
             mapOf(0 to "Tendermint Type", 1 to "Ethermint Type")
         ),
+        gasProvider = OkexGasProvider,
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator(gasRate = "0.0000000001", scale = 18),
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_okx,
             guideTitle = R.string.str_front_guide_title_ok,
@@ -446,6 +478,8 @@ sealed class BaseChain constructor(
         historyApiUrl = "https://api-persistence.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-persistence-app.cosmostation.io"),
         pathProvider = PathProvider(750),
+        gasRateProvider = GasRateProvider.ZERO,
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator.ZERO,
         guide = Guide.create(
             guideIcon = R.drawable.persistence_img,
             guideTitle = R.string.str_front_guide_title_persis,
@@ -478,6 +512,9 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("6.3113"),
         historyApiUrl = "https://api-sentinel.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-sentinel-app.cosmostation.io"),
+        gasProvider = AlterGasProvider,
+        gasRateProvider = GasRateProvider("0.01", "0.1", "0.1"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator(gasRate = "0.1"),
         guide = Guide.create(
             guideIcon = R.drawable.sentinel_img,
             guideTitle = R.string.str_front_guide_title_sentinel,
@@ -512,6 +549,9 @@ sealed class BaseChain constructor(
         historyApiUrl = "https://api-fetchai.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-fetchai-app.cosmostation.io"),
         pathProvider = FetchaiPathProvider,
+        gasProvider = AlterGasProvider,
+        gasRateProvider = GasRateProvider.ZERO,
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator.ZERO,
         guide = Guide.create(
             guideIcon = R.drawable.fetchai_img,
             guideTitle = R.string.str_front_guide_title_fetch,
@@ -547,6 +587,7 @@ sealed class BaseChain constructor(
         historyApiUrl = "https://api-cryptocom.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-cryptocom-app.cosmostation.io"),
         pathProvider = PathProvider(394),
+        gasRateProvider = GasRateProvider("0.025", "0.05", "0.075"),
         guide = Guide.create(
             guideIcon = R.drawable.cryptochain_img,
             guideTitle = R.string.str_front_guide_title_crypto,
@@ -581,6 +622,9 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("5.7246"),
         historyApiUrl = "https://api-sifchain.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-sifchain-app.cosmostation.io"),
+        gasProvider = AlterGasProvider,
+        gasRateProvider = GasRateProvider("0.50"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator.SIF,
         guide = Guide.create(
             guideIcon = R.drawable.sifchain_img,
             guideTitle = R.string.str_front_guide_title_sif,
@@ -613,6 +657,8 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("5.7571"),
         historyApiUrl = "https://api-kichain.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-kichain-app.cosmostation.io"),
+        gasProvider = AlterGasProvider,
+        gasRateProvider = GasRateProvider("0.025"),
         guide = Guide.create(
             guideIcon = R.drawable.kifoundation_img,
             guideTitle = R.string.str_front_guide_title_ki,
@@ -645,6 +691,9 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("6.5324"),
         historyApiUrl = "https://api-osmosis.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-osmosis-app-and.cosmostation.io"),
+        gasProvider = OsmosisGasProvider,
+        gasRateProvider = GasRateProvider("0.000", "0.0025", "0.025"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator.ZERO,
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_osmosis,
             guideTitle = R.string.str_front_guide_title_osmosis,
@@ -679,6 +728,9 @@ sealed class BaseChain constructor(
         historyApiUrl = "https://api-medibloc.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-medibloc-app.cosmostation.io"),
         pathProvider = PathProvider(371),
+        gasProvider = AlterGasProvider,
+        gasRateProvider = GasRateProvider("5.00"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator(gasRate = "5.00"),
         guide = Guide.create(
             guideIcon = R.drawable.medibloc_img,
             guideTitle = R.string.str_front_guide_title_medi,
@@ -710,6 +762,8 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("24.8486"),
         historyApiUrl = "https://api-emoney.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-emoney-app.cosmostation.io"),
+        gasRateProvider = GasRateProvider("0.10", "0.30", "1.00"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator.ONE,
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_emoney,
             guideTitle = R.string.str_front_guide_title_emoney,
@@ -741,6 +795,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("5.8850"),
         historyApiUrl = "https://api-rizon.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-rizon-app.cosmostation.io"),
+        gasRateProvider = GasRateProvider.DEFAULT,
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_rizon,
             guideTitle = R.string.str_front_guide_title_rizon,
@@ -772,6 +827,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("6.3104"),
         historyApiUrl = "https://api-juno.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-juno-app.cosmostation.io"),
+        gasRateProvider = GasRateProvider("0.0025", "0.005", "0.025"),
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_juno,
             guideTitle = R.string.str_front_guide_title_juno,
@@ -803,6 +859,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("6.2491"),
         historyApiUrl = "https://api-regen.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-regen-app.cosmostation.io"),
+        gasRateProvider = GasRateProvider.DEFAULT,
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_regen,
             guideTitle = R.string.str_front_guide_title_regen,
@@ -834,6 +891,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("6.0256"),
         historyApiUrl = "https://api-bitcanna.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-bitcanna-app.cosmostation.io"),
+        gasRateProvider = GasRateProvider("0.025"),
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_bitcanna,
             guideTitle = R.string.str_front_guide_title_bitcanna,
@@ -893,6 +951,8 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("5.8129"),
         historyApiUrl = "https://api-stargaze.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-stargaze-app.cosmostation.io"),
+        gasRateProvider = GasRateProvider.ZERO,
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator.ZERO,
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_stargaze,
             guideTitle = R.string.str_front_guide_title_stargaze,
@@ -924,6 +984,8 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("6.4500"),
         historyApiUrl = "https://api-gravity-bridge.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-gravity-bridge-app.cosmostation.io"),
+        gasRateProvider = GasRateProvider.ZERO,
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator.ZERO,
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_gravitybridge,
             guideTitle = R.string.str_front_guide_title_grabridge,
@@ -956,6 +1018,7 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("6.1746"),
         historyApiUrl = "https://api-comdex.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-comdex-app.cosmostation.io"),
+        gasRateProvider = GasRateProvider("0.025"),
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_comdex,
             guideTitle = R.string.str_front_guide_title_comdex,
@@ -990,6 +1053,9 @@ sealed class BaseChain constructor(
         historyApiUrl = "https://api-inj.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-inj-app.cosmostation.io"),
         pathProvider = PathProvider(60),
+        gasProvider = InjGasProvider,
+        gasRateProvider = GasRateProvider("500000000.00"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator(gasRate = "500000000.00"),
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_injective,
             guideTitle = R.string.str_front_guide_title_inj,
@@ -1021,6 +1087,7 @@ sealed class BaseChain constructor(
         historyApiUrl = "https://api-bitsong.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-bitsong-app.cosmostation.io"),
         pathProvider = PathProvider(639),
+        gasRateProvider = GasRateProvider("0.025"),
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_bitsong,
             guideTitle = R.string.str_front_guide_title_bitsong,
@@ -1052,6 +1119,7 @@ sealed class BaseChain constructor(
         historyApiUrl = "https://api-desmos.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-desmos-app.cosmostation.io"),
         pathProvider = PathProvider(852),
+        gasRateProvider = GasRateProvider("0.001", "0.010", "0.025"),
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_desmos,
             guideTitle = R.string.str_front_guide_title_desmos,
@@ -1084,6 +1152,8 @@ sealed class BaseChain constructor(
         historyApiUrl = "https://api-lum.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-lum-app.cosmostation.io"),
         pathProvider = MultiPathProvider(880, mapOf(0 to 118)),
+        gasRateProvider = GasRateProvider("0.001"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator(gasRate = "0.001"),
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_lumnetwork,
             guideTitle = R.string.str_front_guide_title_lum,
@@ -1115,6 +1185,9 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("5.8172"),
         historyApiUrl = "https://api-chihuahua.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-chihuahua-app.cosmostation.io"),
+        gasProvider = ChihuahuaGasProvider,
+        gasRateProvider = GasRateProvider("0.00035", "0.0035", "0.035"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator(gasRate = "0.035"),
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_chihuahua,
             guideTitle = R.string.str_front_guide_title_chihuahua,
@@ -1146,6 +1219,8 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("5.5596"),
         historyApiUrl = "https://api-axelar.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-axelar-app.cosmostation.io"),
+        gasRateProvider = GasRateProvider("0.05"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator(gasRate = "0.05"),
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_axelar,
             guideTitle = R.string.str_front_guide_title_axelar,
@@ -1178,6 +1253,8 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("5.376"),
         historyApiUrl = "https://api-konstellation.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-konstellation-app.cosmostation.io"),
+        gasRateProvider = GasRateProvider("0.0001", "0.001", "0.01"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator(gasRate = "0.01"),
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_konstellation,
             guideTitle = R.string.str_front_guide_title_konstellation,
@@ -1208,6 +1285,8 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("5.658"),
         historyApiUrl = "https://api-umee.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-umee-app.cosmostation.io"),
+        gasRateProvider = GasRateProvider("0.000", "0.001", "0.005"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator.ZERO,
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_umee,
             guideTitle = R.string.str_front_guide_title_umee,
@@ -1243,6 +1322,8 @@ sealed class BaseChain constructor(
         historyApiUrl = "https://api-evmos.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-evmos-app.cosmostation.io"),
         pathProvider = PathProvider(60),
+        gasRateProvider = GasRateProvider.ZERO,
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator.ZERO,
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_evmos,
             guideTitle = R.string.str_front_guide_title_evmos,
@@ -1274,6 +1355,8 @@ sealed class BaseChain constructor(
         grpcApiHost = ApiHost.from("lcd-cudos-testnet.cosmostation.io"),
         coingeckoUrl = "https://www.coingecko.com/en/coins/cudos",
         explorerUrl = "https://www.mintscan.io/cudos/",
+        gasRateProvider = GasRateProvider.ZERO,
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator.ZERO,
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_cudos,
             guideTitle = R.string.str_front_guide_title_cudos,
@@ -1309,6 +1392,8 @@ sealed class BaseChain constructor(
         historyApiUrl = "https://api-provenance.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-provenance-app.cosmostation.io"),
         pathProvider = PathProvider(505),
+        gasRateProvider = GasRateProvider("2000.00"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator(gasRate = "2000.00"),
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_provenance,
             guideTitle = R.string.str_front_guide_title_provenance,
@@ -1339,6 +1424,8 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("5.9666"),
         historyApiUrl = "https://api-cerberus.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-cerberus-app.cosmostation.io"),
+        gasRateProvider = GasRateProvider.ZERO,
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator.ZERO,
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_cerberus,
             guideTitle = R.string.str_front_guide_title_cerberus,
@@ -1369,6 +1456,8 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("5.7970"),
         historyApiUrl = "https://api-omniflix.cosmostation.io/",
         grpcApiHost = ApiHost.from("lcd-omniflix-app.cosmostation.io"),
+        gasRateProvider = GasRateProvider("0.001"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator(gasRate = "0.001"),
         guide = Guide.create(
             guideIcon = R.drawable.infoicon_omniflix,
             guideTitle = R.string.str_front_guide_title_omniflix,
@@ -1401,6 +1490,7 @@ sealed class BaseChain constructor(
         grpcApiHost = ApiHost.from("lcd-office.cosmostation.io:10300"),
         isSupported = false,
         isTestNet = true,
+        gasRateProvider = GasRateProvider.DEFAULT,
         guide = Guide.create(
             guideIcon = R.drawable.guide_img,
             guideTitle = R.string.str_front_guide_title,
@@ -1430,6 +1520,8 @@ sealed class BaseChain constructor(
         chainTabColor = R.color.color_tab_myvalidator_imversed,
         grpcApiHost = ApiHost.from("qt.imversed.com"),
         pathProvider = PathProvider(60),
+        gasProvider = ImversedGasProvider,
+        gasRateProvider = GasRateProvider.DEFAULT,
         coingeckoUrl = "https://www.coingecko.com/en/coins/imversed",
         explorerUrl = "https://tex-t.imversed.com/",
         guide = Guide.create(
@@ -1462,6 +1554,8 @@ sealed class BaseChain constructor(
         blockTime = BigDecimal("6.7884"),
         historyApiUrl = "https://api-office.cosmostation.io/bifrost/",
         grpcApiHost = ApiHost.from("lcd-office.cosmostation.io:9095"),
+        gasRateProvider = GasRateProvider("0.002", "0.02", "0.2"),
+        gasFeeEstimateCalculator = GasFeeEstimateCalculator(gasRate = "0.2"),
         guide = Guide.create(
             guideIcon = R.drawable.irisnet_img,
             guideTitle = R.string.str_front_guide_title_iris,

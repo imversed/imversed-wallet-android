@@ -163,7 +163,7 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
 
         final WalletBalance balance = getFullBalance(getBaseChain().getMainDenom());
         BigDecimal delegatableAmount = balance.getBalanceAmount(); // TODO add(getVesting(denom))
-        BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
+        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_DELEGATE, 0);
         if (delegatableAmount.compareTo(feeAmount) < 0) {
             Toast.makeText(getBaseContext(), R.string.error_not_enough_to_delegate, Toast.LENGTH_SHORT).show();
             return;
@@ -202,7 +202,7 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
 
         final String mainDenom = getBaseChain().getMainDenom();
         final WalletBalance balance = getFullBalance(mainDenom);
-        BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_REDELEGATE, 0);
+        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_REDELEGATE, 0);
         if (balance.getBalanceAmount().compareTo(feeAmount) < 0) {
             Toast.makeText(getBaseContext(), R.string.error_not_enough_budget, Toast.LENGTH_SHORT).show();
             return;
@@ -242,7 +242,7 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
             return;
         }
 
-        BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_UNDELEGATE, 0);
+        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_UNDELEGATE, 0);
         if (balance.getBalanceAmount().compareTo(feeAmount) < 0) {
             Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
             return;
@@ -261,7 +261,7 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
         }
         final String mainDenom = getBaseChain().getMainDenom();
         final WalletBalance balance = getFullBalance(mainDenom);
-        BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_SIMPLE_REWARD, 1);
+        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIMPLE_REWARD, 1);
         if (balance.getBalanceAmount().compareTo(feeAmount) < 0) {
             Toast.makeText(getBaseContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
             return;
@@ -294,7 +294,7 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
 
         final String mainDenom = getBaseChain().getMainDenom();
         final WalletBalance balance = getFullBalance(mainDenom);
-        BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_REINVEST, 0);
+        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_REINVEST, 0);
         if (balance.getBalanceAmount().compareTo(feeAmount) < 0) {
             Toast.makeText(getBaseContext(), R.string.error_not_enough_budget, Toast.LENGTH_SHORT).show();
             return;

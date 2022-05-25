@@ -132,7 +132,7 @@ public class DepositPoolStep0Fragment extends BaseFragment implements View.OnCli
     private void onInitView() {
         mProgress.setVisibility(View.GONE);
 
-        BigDecimal txFeeAmount = WUtil.getEstimateGasFeeAmount(getSActivity(), getSActivity().getBaseChain(), CONST_PW_TX_KAVA_JOIN_POOL, 0);
+        BigDecimal txFeeAmount = WUtil.getEstimateGasFeeAmount(getSActivity().getBaseChain(), CONST_PW_TX_KAVA_JOIN_POOL, 0);
         mCoin0Denom = mSwapPool.get(0).getCoins(0).getDenom();
         mCoin1Denom = mSwapPool.get(0).getCoins(1).getDenom();
         mCoin0Decimal = WUtil.getKavaCoinDecimal(getBaseDao(), mCoin0Denom);

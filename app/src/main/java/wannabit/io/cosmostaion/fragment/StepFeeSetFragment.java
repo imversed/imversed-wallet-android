@@ -145,7 +145,6 @@ import wannabit.io.cosmostaion.task.gRpcTask.simulate.SimulVoteGrpcTask;
 import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WKey;
-import wannabit.io.cosmostaion.utils.WUtil;
 
 public class StepFeeSetFragment extends BaseFragment implements View.OnClickListener, TaskListener {
 
@@ -213,11 +212,14 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
         mBtnBefore = rootView.findViewById(R.id.btn_before);
         mBtnNext = rootView.findViewById(R.id.nextButton);
 
-        WDp.DpMainDenom(getSActivity().getBaseChain(), mFeeDenom);
-        mFeeTotalCard.setCardBackgroundColor(WDp.getChainBgColor(getContext(), getSActivity().getBaseChain()));
-        mButtonGroup.setSelectedBackground(WDp.getChainColor(getContext(), getSActivity().getBaseChain()));
-        mButtonGroup.setRipple(WDp.getChainColor(getContext(), getSActivity().getBaseChain()));
-        mEstimateGasAmount = WUtil.getEstimateGasAmount(getContext(), getSActivity().getBaseChain(), getSActivity().mTxType, (getSActivity().mValAddresses.size()));
+        final BaseChain baseChain = getSActivity().getBaseChain();
+
+
+        WDp.DpMainDenom(baseChain, mFeeDenom);
+        mFeeTotalCard.setCardBackgroundColor(WDp.getChainBgColor(getContext(), baseChain));
+        mButtonGroup.setSelectedBackground(WDp.getChainColor(getContext(), baseChain));
+        mButtonGroup.setRipple(WDp.getChainColor(getContext(), baseChain));
+        mEstimateGasAmount = baseChain.getGasProvider().getEstimateGasAmount(getSActivity().mTxType, getSActivity().mValAddresses.size());
 
         onUpdateView();
 
@@ -232,8 +234,9 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
     }
 
     private void onCalculateFees() {
-        mSelectedGasRate = WUtil.getGasRate(getSActivity().getBaseChain(), mSelectedGasPosition);
-        if (getSActivity().getBaseChain().equals(BaseChain.SIF_MAIN.INSTANCE)) {
+        final BaseChain baseChain = getSActivity().getBaseChain();
+        mSelectedGasRate = baseChain.getGasRateProvider().get(mSelectedGasPosition);
+        if (baseChain.equals(BaseChain.SIF_MAIN.INSTANCE)) {
             mFee = new BigDecimal("100000000000000000");
         } else {
             mFee = mSelectedGasRate.multiply(mEstimateGasAmount).setScale(0, RoundingMode.UP);

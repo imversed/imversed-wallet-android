@@ -132,11 +132,11 @@ public class BaseApplication extends Application implements IInjectorHolder {
     public long getAppLockInterval() {
         switch (settingsInteractor.getAppLockInterval()) {
             case 1:
-                return BaseConstant.CONSTANT_10S;
+                return 10000L;
             case 2:
-                return BaseConstant.CONSTANT_30S;
+                return 30000L;
             case 3:
-                return BaseConstant.CONSTANT_M;
+                return 60000L;
             default:
                 return 0L;
         }

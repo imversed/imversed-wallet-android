@@ -159,7 +159,7 @@ public class LabsListActivity extends BaseActivity implements TaskListener {
         }
 
         BigDecimal available = getBalance(getBaseChain().getMainDenom());
-        BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_OSMOSIS_SWAP, 0);
+        BigDecimal txFee = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_OSMOSIS_SWAP, 0);
         if (available.compareTo(txFee) < 0) {
             Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
             return;
@@ -189,7 +189,7 @@ public class LabsListActivity extends BaseActivity implements TaskListener {
         String coin0denom = tempPool.getPoolAssets(0).getToken().getDenom();
         String coin1Denom = tempPool.getPoolAssets(1).getToken().getDenom();
 
-        BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(LabsListActivity.this, getBaseChain(), CONST_PW_TX_OSMOSIS_JOIN_POOL, 0);
+        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_OSMOSIS_JOIN_POOL, 0);
         BigDecimal coin0Available = getBalance(coin0denom);
         BigDecimal coin1Available = getBalance(coin1Denom);
 
@@ -219,7 +219,7 @@ public class LabsListActivity extends BaseActivity implements TaskListener {
         }
 
         BigDecimal mainBalance = getBalance(BaseChain.OSMOSIS_MAIN.INSTANCE.getMainDenom());
-        BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(getBaseContext(), getBaseChain(), CONST_PW_TX_OSMOSIS_EXIT_POOL, 0);
+        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_OSMOSIS_EXIT_POOL, 0);
 
         if (mainBalance.compareTo(feeAmount) < 0) {
             Toast.makeText(getBaseContext(), R.string.error_not_enough_to_withdraw_pool, Toast.LENGTH_SHORT).show();

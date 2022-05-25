@@ -133,7 +133,7 @@ public class SifDexListActivity extends BaseActivity implements TaskListener {
         }
 
         BigDecimal available = getBalance(getBaseChain().getMainDenom());
-        BigDecimal txFee = WUtil.getEstimateGasFeeAmount(this, getBaseChain(), CONST_PW_TX_SIF_SWAP, 0);
+        BigDecimal txFee = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIF_SWAP, 0);
         if (available.compareTo(txFee) < 0) {
             Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
             return;
@@ -169,7 +169,7 @@ public class SifDexListActivity extends BaseActivity implements TaskListener {
             return;
         }
 
-        BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(SifDexListActivity.this, getBaseChain(), CONST_PW_TX_SIF_JOIN_POOL, 0);
+        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIF_JOIN_POOL, 0);
         String externalDenom = pool.getExternalAsset().getSymbol();
         BigDecimal rowanAvailable = getBalance(BaseChain.SIF_MAIN.INSTANCE.getMainDenom());
         rowanAvailable = rowanAvailable.subtract(feeAmount);
@@ -192,7 +192,7 @@ public class SifDexListActivity extends BaseActivity implements TaskListener {
             return;
         }
 
-        BigDecimal feeAmount = WUtil.getEstimateGasFeeAmount(SifDexListActivity.this, getBaseChain(), CONST_PW_TX_SIF_EXIT_POOL, 0);
+        BigDecimal feeAmount = getBaseChain().getGasFeeEstimateCalculator().calc(getBaseChain(), CONST_PW_TX_SIF_EXIT_POOL, 0);
         BigDecimal rowanAvailable = getBalance(BaseChain.SIF_MAIN.INSTANCE.getMainDenom());
         rowanAvailable = rowanAvailable.subtract(feeAmount);
 

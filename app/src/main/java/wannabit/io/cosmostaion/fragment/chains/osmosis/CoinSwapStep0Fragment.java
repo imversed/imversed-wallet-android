@@ -116,7 +116,7 @@ public class CoinSwapStep0Fragment extends BaseFragment implements View.OnClickL
         mOutputCoinDecimal = WUtil.getOsmosisCoinDecimal(getBaseDao(), getSActivity().mOutputDenom);
         setDpDecimals(mInputCoinDecimal);
         mAvailableMaxAmount = getSActivity().getBalance(getSActivity().mInputDenom);
-        BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getContext(), getSActivity().getBaseChain(), CONST_PW_TX_OSMOSIS_SWAP, 0);
+        BigDecimal txFee = WUtil.getEstimateGasFeeAmount(getSActivity().getBaseChain(), CONST_PW_TX_OSMOSIS_SWAP, 0);
         if (getSActivity().mInputDenom.equals(BaseChain.OSMOSIS_MAIN.INSTANCE.getMainDenom())) {
             mAvailableMaxAmount = mAvailableMaxAmount.subtract(txFee);
         }
