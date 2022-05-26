@@ -862,7 +862,7 @@ public class WUtil {
     public static String dpCosmosTokenName(Context c, BaseData baseData, TextView textView, String denom) {
         if (denom.equals(BaseChain.COSMOS_MAIN.INSTANCE.getMainDenom())) {
             textView.setTextColor(ContextCompat.getColor(c, R.color.colorAtom));
-            textView.setText("ATOM");
+            textView.setText(R.string.str_atom_c);
 
         } else if (denom.startsWith("pool")) {
             textView.setTextColor(ContextCompat.getColor(c, R.color.colorWhite));
@@ -904,25 +904,25 @@ public class WUtil {
             textView.setText(R.string.str_kava_c);
         } else if (denom.equalsIgnoreCase(TOKEN_HARD)) {
             textView.setTextColor(ContextCompat.getColor(c, R.color.colorHard));
-            textView.setText("HARD");
+            textView.setText(R.string.str_hard_c);
         } else if (denom.equalsIgnoreCase(TOKEN_USDX)) {
             textView.setTextColor(ContextCompat.getColor(c, R.color.colorUsdx));
-            textView.setText("USDX");
+            textView.setText(R.string.str_usdx_c);
         } else if (denom.equalsIgnoreCase(TOKEN_SWP)) {
             textView.setTextColor(ContextCompat.getColor(c, R.color.colorSwp));
-            textView.setText("SWP");
+            textView.setText(R.string.str_swp_c);
         } else if (denom.equalsIgnoreCase(TOKEN_HTLC_KAVA_BNB)) {
             textView.setTextColor(ContextCompat.getColor(c, R.color.colorWhite));
-            textView.setText("BNB");
+            textView.setText(R.string.str_bnb_c);
         } else if (denom.equalsIgnoreCase(TOKEN_HTLC_KAVA_XRPB) || denom.equalsIgnoreCase("xrbp")) {
             textView.setTextColor(ContextCompat.getColor(c, R.color.colorWhite));
-            textView.setText("XRPB");
+            textView.setText(R.string.str_xrpb_c);
         } else if (denom.equalsIgnoreCase(TOKEN_HTLC_KAVA_BUSD)) {
             textView.setTextColor(ContextCompat.getColor(c, R.color.colorWhite));
-            textView.setText("BUSD");
+            textView.setText(R.string.str_busd_c);
         } else if (denom.contains("btc")) {
             textView.setTextColor(ContextCompat.getColor(c, R.color.colorWhite));
-            textView.setText("BTCB");
+            textView.setText(R.string.str_btcb_c);
         } else if (denom.startsWith("ibc/")) {
             textView.setTextColor(ContextCompat.getColor(c, R.color.colorWhite));
             IbcToken ibcToken = baseData.getIbcToken(denom.replaceAll("ibc/", ""));

@@ -37,6 +37,12 @@
     <string name="str_iris_c" translatable="false">IRIS</string>
     <string name="str_photon_c" translatable="false">PHOTINO</string>
     <string name="str_kava_c" translatable="false">KAVA</string>
+    <string name="str_hard_c" translatable="false">HARD</string>
+    <string name="str_usdx_c" translatable="false">USDX</string>
+    <string name="str_busd_c" translatable="false">BUSD</string>
+    <string name="str_btcb_c" translatable="false">BTCB</string>
+    <string name="str_swp_c" translatable="false">SWP</string>
+    <string name="str_xrpb_c" translatable="false">XRPB</string>
     <string name="str_iov_c" translatable="false">IOV</string>
     <string name="str_band_c" translatable="false">BAND</string>
     <string name="str_ok_c" translatable="false">OKT</string>
