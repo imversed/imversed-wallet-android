@@ -357,10 +357,6 @@ public class BaseConstant {
     public final static String OK_GAS_AMOUNT_STAKE = "200000";
     public final static String OK_GAS_AMOUNT_STAKE_MUX = "20000";
 
-    public final static String COSMOS_GAS_RATE_TINY = "0.00025";
-    public final static String COSMOS_GAS_RATE_LOW = "0.0025";
-    public final static String COSMOS_GAS_RATE_AVERAGE = "0.025";
-
     public final static String BINANCE_MAIN_BNB_DEPUTY = "bnb1jh7uv2rm6339yue8k4mj9406k3509kr4wt5nxn";
     public final static String KAVA_MAIN_BNB_DEPUTY = "kava1r4v2zdhdalfj2ydazallqvrus9fkphmglhn6u6";
     public final static String BINANCE_MAIN_BTCB_DEPUTY = "bnb1xz3xqf4p2ygrw9lhp5g5df4ep4nd20vsywnmpr";
