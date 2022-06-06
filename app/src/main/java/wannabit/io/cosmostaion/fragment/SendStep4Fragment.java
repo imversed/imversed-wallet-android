@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat;
 import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.Currency;
+import com.fulldive.wallet.models.local.DenomMetadata;
 
 import java.math.BigDecimal;
 
@@ -98,11 +99,19 @@ public class SendStep4Fragment extends BaseFragment implements View.OnClickListe
         final String mainDenom = baseChain.getMainDenom();
         final String toSendDenom = getSActivity().mDenom;
         final PriceProvider priceProvider = getSActivity()::getPrice;
-
-        mDivideDecimal = baseChain.getDivideDecimal();
-        mDisplayDecimal = baseChain.getDisplayDecimal();
+        if (toSendDenom.equals(mainDenom)) {
+            mDivideDecimal = baseChain.getDivideDecimal();
+            mDisplayDecimal = baseChain.getDisplayDecimal();
+        }
 
         if (baseChain.isGRPC()) {
+            final DenomMetadata denomMetadata = getBaseDao().getDenomMetadata(baseChain.getChainName(), toSendDenom);
+
+            if (denomMetadata != null) {
+                int divider = denomMetadata.getDenomUnit(toSendDenom).getExpanent();
+                mDivideDecimal = divider;
+                mDisplayDecimal = divider;
+            }
             mFeeAmount.setText(WDp.getDpAmount2(feeAmount, mDivideDecimal, mDisplayDecimal));
 
             if (toSendDenom.equals(mainDenom)) {

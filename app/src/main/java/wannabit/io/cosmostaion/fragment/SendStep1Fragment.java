@@ -24,6 +24,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.local.DenomMetadata;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -102,23 +103,28 @@ public class SendStep1Fragment extends BaseFragment implements View.OnClickListe
         final String mainDenom = baseChain.getMainDenom();
         final String toSendDenom = getSActivity().mDenom;
         final BigDecimal feeAmount = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_SIMPLE_SEND);
-        if (getSActivity().getBaseChain().isGRPC()) {
+        if (baseChain.isGRPC()) {
+            final DenomMetadata denomMetadata = getBaseDao().getDenomMetadata(baseChain.getChainName(), toSendDenom);
             if (getSActivity().mDenom.startsWith("ibc/")) {
                 mDpDecimal = WUtil.getIbcDecimal(getBaseDao(), toSendDenom);
-            } else if (getSActivity().getBaseChain().equals(SIF_MAIN.INSTANCE)) {
+            } else if (denomMetadata != null) {
+                mDpDecimal = denomMetadata.getDenomUnit(toSendDenom).getExpanent();
+            } else if (baseChain.equals(SIF_MAIN.INSTANCE)) {
                 mDpDecimal = WUtil.getSifCoinDecimal(getBaseDao(), toSendDenom);
-            } else if (getSActivity().getBaseChain().equals(GRABRIDGE_MAIN.INSTANCE)) {
+            } else if (baseChain.equals(GRABRIDGE_MAIN.INSTANCE)) {
                 mDpDecimal = WUtil.getGBridgeCoinDecimal(getBaseDao(), toSendDenom);
-            } else if (getSActivity().getBaseChain().equals(KAVA_MAIN.INSTANCE)) {
+            } else if (baseChain.equals(KAVA_MAIN.INSTANCE)) {
                 mDpDecimal = WUtil.getKavaCoinDecimal(getBaseDao(), toSendDenom);
-            } else if (getSActivity().getBaseChain().equals(INJ_MAIN.INSTANCE)) {
+            } else if (baseChain.equals(INJ_MAIN.INSTANCE)) {
                 mDpDecimal = WUtil.getInjCoinDecimal(getBaseDao(), toSendDenom);
+            } else if (baseChain.equals(BaseChain.IMVERSED_MAIN.INSTANCE) || baseChain.equals(BaseChain.IMVERSED_TEST.INSTANCE)) {
+                mDpDecimal = WUtil.getImvCoinDecimal(toSendDenom);
             } else {
-                mDpDecimal = getSActivity().getBaseChain().getDisplayDecimal();
+                mDpDecimal = baseChain.getDisplayDecimal();
             }
 
-        } else if (getSActivity().getBaseChain().equals(BNB_MAIN.INSTANCE) || getSActivity().getBaseChain().equals(OKEX_MAIN.INSTANCE)) {
-            mDpDecimal = getSActivity().getBaseChain().getDisplayDecimal();
+        } else if (baseChain.equals(BNB_MAIN.INSTANCE) || baseChain.equals(OKEX_MAIN.INSTANCE)) {
+            mDpDecimal = baseChain.getDisplayDecimal();
         }
 
         setDisplayDecimals(mDpDecimal);
@@ -128,7 +134,7 @@ public class SendStep1Fragment extends BaseFragment implements View.OnClickListe
             mMaxAvailable = getSActivity().getBalance(toSendDenom);
         }
 
-        WDp.showCoinDp(getBaseDao(), toSendDenom, mMaxAvailable.toPlainString(), mDenomTitle, mAvailableAmount, getSActivity().getBaseChain());
+        WDp.showCoinDp(getBaseDao(), toSendDenom, mMaxAvailable.toPlainString(), mDenomTitle, mAvailableAmount, baseChain);
         onAddAmountWatcher();
     }
 

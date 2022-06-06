@@ -111,12 +111,7 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
         mRecyclerView.setAdapter(mAdapter);
 
         //prepare for token history
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                onUpdateView();
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> onUpdateView());
 
         onUpdateView();
         mBtnAddressPopup.setOnClickListener(this);

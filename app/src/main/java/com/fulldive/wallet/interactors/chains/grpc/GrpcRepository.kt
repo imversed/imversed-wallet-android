@@ -2,6 +2,7 @@ package com.fulldive.wallet.interactors.chains.grpc
 
 import com.fulldive.wallet.di.modules.DefaultRepositoryModule
 import com.fulldive.wallet.models.BaseChain
+import com.fulldive.wallet.models.local.DenomMetadata
 import com.joom.lightsaber.ProvidedBy
 import cosmos.base.v1beta1.CoinOuterClass
 import cosmos.staking.v1beta1.Staking
@@ -68,6 +69,19 @@ class GrpcRepository @Inject constructor(
             .flatMapCompletable { items ->
                 grpcLocalSource.setRewards(chain, items)
             }
+    }
+
+    fun updateDenomsMetadata(chain: BaseChain): Completable {
+        return grpcRemoteSource
+            .requestDenomsMetadata(chain)
+            .map { it.map(DenomMetadata::from) }
+            .flatMapCompletable { items ->
+                grpcLocalSource.setDenomsMetadata(chain, items)
+            }
+    }
+
+    fun getDenomsMetadata(chain: BaseChain): Single<List<DenomMetadata>> {
+        return grpcLocalSource.getDenomsMetadata(chain)
     }
 
     fun requestBalance(chain: BaseChain, address: String): Single<List<CoinOuterClass.Coin>> {

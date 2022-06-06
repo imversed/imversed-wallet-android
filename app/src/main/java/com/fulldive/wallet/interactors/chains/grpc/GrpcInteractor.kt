@@ -4,6 +4,7 @@ import com.fulldive.wallet.di.modules.DefaultInteractorsModule
 import com.fulldive.wallet.extensions.*
 import com.fulldive.wallet.interactors.chains.StationInteractor
 import com.fulldive.wallet.models.BaseChain
+import com.fulldive.wallet.models.local.DenomMetadata
 import com.fulldive.wallet.rx.AppSchedulers
 import com.joom.lightsaber.ProvidedBy
 import cosmos.base.v1beta1.CoinOuterClass
@@ -27,7 +28,8 @@ class GrpcInteractor @Inject constructor(
             .mergeArray(
                 updateBondedValidators(chain).subscribeOn(AppSchedulers.io()),
                 updateUnbondedValidators(chain).subscribeOn(AppSchedulers.io()),
-                updateUnbondingValidators(chain).subscribeOn(AppSchedulers.io())
+                updateUnbondingValidators(chain).subscribeOn(AppSchedulers.io()),
+                updateDenomsMetadata(chain).subscribeOn(AppSchedulers.io())
             )
             .andThen(
                 Completable.mergeArray(
@@ -127,6 +129,14 @@ class GrpcInteractor @Inject constructor(
 
     fun updateRewards(chain: BaseChain, account: Account): Completable {
         return grpcRepository.updateRewards(chain, account.address)
+    }
+
+    fun updateDenomsMetadata(chain: BaseChain): Completable {
+        return grpcRepository.updateDenomsMetadata(chain)
+    }
+
+    fun getDenomsMetadata(chain: BaseChain): Single<List<DenomMetadata>> {
+        return grpcRepository.getDenomsMetadata(chain)
     }
 
     fun updateNodeInfo(chain: BaseChain): Single<Types.NodeInfo> {

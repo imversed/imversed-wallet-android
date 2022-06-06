@@ -8,6 +8,7 @@ import com.google.gson.Gson
 import com.google.protobuf.ByteString
 import com.google.protobuf2.Any
 import com.joom.lightsaber.ProvidedBy
+import cosmos.bank.v1beta1.Bank
 import cosmos.base.query.v1beta1.Pagination.PageRequest
 import cosmos.base.tendermint.v1beta1.Query.GetNodeInfoRequest
 import cosmos.base.tendermint.v1beta1.ServiceGrpc
@@ -113,6 +114,25 @@ class GrpcRemoteSource @Inject constructor(
                         .setAddress(address).build()
                 )
                 .balancesList
+        }
+    }
+
+    fun requestDenomsMetadata(
+        chain: BaseChain,
+        limit: Int = 1000
+    ): Single<List<Bank.Metadata>> {
+        return safeSingle {
+            cosmos.bank.v1beta1.QueryGrpc.newBlockingStub(ChannelBuilder.getChain(chain))
+                .withDeadlineAfter(ChannelBuilder.TIME_OUT, TimeUnit.SECONDS)
+                .denomsMetadata(
+                    cosmos.bank.v1beta1.QueryOuterClass.QueryDenomsMetadataRequest
+                        .newBuilder()
+                        .setPagination(
+                            PageRequest.newBuilder().setLimit(limit.toLong()).build()
+                        )
+                        .build()
+                )
+                .metadatasList
         }
     }
 

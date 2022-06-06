@@ -3,8 +3,10 @@ package com.fulldive.wallet.interactors.chains.grpc
 import com.fulldive.wallet.di.modules.DefaultLocalStorageModule
 import com.fulldive.wallet.extensions.completeCallable
 import com.fulldive.wallet.extensions.safeCompletable
+import com.fulldive.wallet.extensions.safeSingle
 import com.fulldive.wallet.extensions.singleCallable
 import com.fulldive.wallet.models.BaseChain
+import com.fulldive.wallet.models.local.DenomMetadata
 import com.google.protobuf2.Any
 import com.joom.lightsaber.ProvidedBy
 import cosmos.distribution.v1beta1.Distribution
@@ -20,11 +22,15 @@ import wannabit.io.cosmostaion.dao.Cw20Assets
 import wannabit.io.cosmostaion.model.kava.IncentiveParam
 import wannabit.io.cosmostaion.model.kava.IncentiveReward
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 @ProvidedBy(DefaultLocalStorageModule::class)
 class GrpcLocalSource @Inject constructor(
     private val baseData: BaseData
 ) {
+
+    private var denomsMetadataMap: MutableMap<String, List<DenomMetadata>> = mutableMapOf()
 
     fun setNodeInfo(chain: BaseChain, nodeInfo: Types.NodeInfo): Completable {
         return safeCompletable {
@@ -106,6 +112,24 @@ class GrpcLocalSource @Inject constructor(
     ): Completable {
         return completeCallable {
             baseData.mGrpcRewards = items
+        }
+    }
+
+    fun getDenomsMetadata(
+        chain: BaseChain
+    ): Single<List<DenomMetadata>> {
+        return safeSingle {
+            denomsMetadataMap[chain.chainName]
+        }
+    }
+
+    fun setDenomsMetadata(
+        chain: BaseChain,
+        items: List<DenomMetadata>
+    ): Completable {
+        return completeCallable {
+            denomsMetadataMap[chain.chainName] = items
+            baseData.denomsMetadataMap[chain.chainName] = items
         }
     }
 

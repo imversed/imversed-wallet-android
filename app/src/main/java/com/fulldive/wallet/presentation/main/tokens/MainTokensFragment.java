@@ -10,6 +10,7 @@ import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
 import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
 import static com.fulldive.wallet.models.BaseChain.OSMOSIS_MAIN;
 import static com.fulldive.wallet.models.BaseChain.SIF_MAIN;
+import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_FD;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HARD;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HTLC_KAVA_BNB;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HTLC_KAVA_BTCB;
@@ -97,7 +98,7 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
     private final ArrayList<WalletBalance> osmosisPoolItems = new ArrayList<>();
     private final ArrayList<WalletBalance> etherItems = new ArrayList<>();
     private final ArrayList<WalletBalance> ibcUnknownItems = new ArrayList<>();
-    private final ArrayList<WalletBalance> GravityDexItems = new ArrayList<>();
+    private final ArrayList<WalletBalance> gravityDexItems = new ArrayList<>();
     private final ArrayList<WalletBalance> injectivePoolItems = new ArrayList<>();
     private final ArrayList<WalletBalance> kavaBep2Items = new ArrayList<>();
     private final ArrayList<WalletBalance> nativeItems = new ArrayList<>();
@@ -255,8 +256,8 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
 
                 } else if (baseChain.equals(COSMOS_MAIN.INSTANCE)) {
                     return position == 0 || position == nativeItems.size() || position == nativeItems.size() + ibcAuthedItems.size()
-                            || position == nativeItems.size() + ibcAuthedItems.size() + GravityDexItems.size()
-                            || position == nativeItems.size() + ibcAuthedItems.size() + GravityDexItems.size() + ibcUnknownItems.size();
+                            || position == nativeItems.size() + ibcAuthedItems.size() + gravityDexItems.size()
+                            || position == nativeItems.size() + ibcAuthedItems.size() + gravityDexItems.size() + ibcUnknownItems.size();
 
                 } else if (baseChain.equals(SIF_MAIN.INSTANCE) || baseChain.equals(GRABRIDGE_MAIN.INSTANCE)) {
                     return position == 0 || position == nativeItems.size() || position == nativeItems.size() + ibcAuthedItems.size()
@@ -339,7 +340,7 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
                     case SECTION_ETHER_GRPC:
                         return etherItems.size();
                     case SECTION_GRAVICTY_DEX_GRPC:
-                        return GravityDexItems.size();
+                        return gravityDexItems.size();
                     case SECTION_KAVA_BEP2_GRPC:
                         return kavaBep2Items.size();
                     case SECTION_ETC:
@@ -375,7 +376,7 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
         osmosisPoolItems.clear();
         etherItems.clear();
         ibcUnknownItems.clear();
-        GravityDexItems.clear();
+        gravityDexItems.clear();
         injectivePoolItems.clear();
         kavaBep2Items.clear();
         nativeItems.clear();
@@ -386,9 +387,7 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
         for (WalletBalance balance : balances) {
             if (balance.getDenom().equalsIgnoreCase(mainDenom)) {
                 nativeItems.add(balance);
-            } else if (baseChain.equals(BNB_MAIN.INSTANCE)) {
-                etcItems.add(balance);
-            } else if (baseChain.equals(OKEX_MAIN.INSTANCE)) {
+            } else if (baseChain.equals(OKEX_MAIN.INSTANCE) || baseChain.equals(BNB_MAIN.INSTANCE)) {
                 etcItems.add(balance);
             } else if (balance.isIbc()) {
                 final IbcToken ibcToken = getBaseDao().getIbcToken(balance.getIbcHash());
@@ -400,14 +399,15 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
             } else if (baseChain.equals(OSMOSIS_MAIN.INSTANCE) && balance.osmosisAmm()) {
                 osmosisPoolItems.add(balance);
             } else if (baseChain.equals(OSMOSIS_MAIN.INSTANCE) && balance.getDenom().equalsIgnoreCase(TOKEN_ION) ||
-                    baseChain.equals(EMONEY_MAIN.INSTANCE) && balance.getDenom().startsWith("e")) {
+                    baseChain.equals(EMONEY_MAIN.INSTANCE) && balance.getDenom().startsWith("e") ||
+                    (baseChain.equals(BaseChain.IMVERSED_MAIN.INSTANCE) || baseChain.equals(BaseChain.IMVERSED_TEST.INSTANCE)) && balance.getDenom().equalsIgnoreCase(TOKEN_FD)) {
                 nativeItems.add(balance);
             } else if (baseChain.equals(SIF_MAIN.INSTANCE) && balance.getDenom().startsWith("c") ||
                     baseChain.equals(GRABRIDGE_MAIN.INSTANCE) && balance.getDenom().startsWith("gravity") ||
                     baseChain.equals(INJ_MAIN.INSTANCE) && balance.getDenom().startsWith("peggy")) {
                 etherItems.add(balance);
             } else if (baseChain.equals(COSMOS_MAIN.INSTANCE) && balance.getDenom().startsWith("pool")) {
-                GravityDexItems.add(balance);
+                gravityDexItems.add(balance);
             } else if (baseChain.equals(INJ_MAIN.INSTANCE) && balance.getDenom().startsWith("share")) {
                 injectivePoolItems.add(balance);
             } else if (baseChain.equals(KAVA_MAIN.INSTANCE)) {
@@ -426,7 +426,7 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
 
         if (baseChain.isGRPC()) {
             WUtil.onSortingBalance(nativeItems, baseChain);
-            WUtil.onSortingGravityPool(GravityDexItems, getBaseDao());
+            WUtil.onSortingGravityPool(gravityDexItems, getBaseDao());
             WUtil.onSortingOsmosisPool(osmosisPoolItems);
             WUtil.onSortingInjectivePool(injectivePoolItems);
 
@@ -442,7 +442,7 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
             adapter.poolItems = osmosisPoolItems;
             adapter.etherItems = etherItems;
             adapter.ibcUnknownItems = ibcUnknownItems;
-            adapter.GravityDexItems = GravityDexItems;
+            adapter.GravityDexItems = gravityDexItems;
             adapter.injectivePoolItems = injectivePoolItems;
             adapter.kavaBep2Items = kavaBep2Items;
             adapter.nativeItems = nativeItems;

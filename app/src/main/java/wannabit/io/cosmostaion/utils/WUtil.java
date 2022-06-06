@@ -815,6 +815,17 @@ public class WUtil {
         return 18;
     }
 
+    public static int getImvCoinDecimal(String denom) {
+        if (denom != null) {
+            if (denom.equalsIgnoreCase(BaseChain.IMVERSED_MAIN.INSTANCE.getMainDenom())) {
+                return BaseChain.IMVERSED_MAIN.INSTANCE.getDivideDecimal();
+            } else if (denom.equalsIgnoreCase("fdtoken")) {
+                return 0;
+            }
+        }
+        return 18;
+    }
+
     public static int getIbcDecimal(BaseData baseData, String denom) {
         IbcToken ibcToken = baseData.getIbcToken(denom.replaceAll("ibc/", ""));
         if (ibcToken != null && ibcToken.auth) {

@@ -6,6 +6,7 @@ import static wannabit.io.cosmostaion.base.BaseConstant.COSMOS_COIN_IMG_URL;
 import static wannabit.io.cosmostaion.base.BaseConstant.EMONEY_COIN_IMG_URL;
 import static wannabit.io.cosmostaion.base.BaseConstant.KAVA_COIN_IMG_URL;
 import static wannabit.io.cosmostaion.base.BaseConstant.OKEX_COIN_IMG_URL;
+import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_FD;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HARD;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_ION;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_SWP;
@@ -27,6 +28,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.models.WalletBalance;
+import com.fulldive.wallet.models.local.DenomMetadata;
+import com.fulldive.wallet.models.local.DenomUnit;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
@@ -85,7 +88,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_IBC_UNKNOWN_GRPC) {
                 onBindIbcUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - poolItems.size());
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_UNKNOWN) {
-                onBindUnKnownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - poolItems.size() - ibcUnknownItems.size());
+                onBindUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - poolItems.size() - ibcUnknownItems.size());
             }
 
         } else if (baseChain.equals(BaseChain.SIF_MAIN.INSTANCE) || baseChain.equals(BaseChain.GRABRIDGE_MAIN.INSTANCE)) {
@@ -98,7 +101,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_IBC_UNKNOWN_GRPC) {
                 onBindIbcUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - etherItems.size());
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_UNKNOWN) {
-                onBindUnKnownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - etherItems.size() - ibcUnknownItems.size());
+                onBindUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - etherItems.size() - ibcUnknownItems.size());
             }
 
         } else if (baseChain.equals(BaseChain.COSMOS_MAIN.INSTANCE)) {
@@ -111,7 +114,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_IBC_UNKNOWN_GRPC) {
                 onBindIbcUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - GravityDexItems.size());
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_UNKNOWN) {
-                onBindUnKnownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - GravityDexItems.size() - ibcUnknownItems.size());
+                onBindUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - GravityDexItems.size() - ibcUnknownItems.size());
             }
 
         } else if (baseChain.equals(BaseChain.INJ_MAIN.INSTANCE)) {
@@ -126,7 +129,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_IBC_UNKNOWN_GRPC) {
                 onBindIbcUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - etherItems.size() - injectivePoolItems.size());
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_UNKNOWN) {
-                onBindUnKnownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - etherItems.size() - injectivePoolItems.size() - ibcUnknownItems.size());
+                onBindUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - etherItems.size() - injectivePoolItems.size() - ibcUnknownItems.size());
             }
 
         } else if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
@@ -141,7 +144,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_IBC_UNKNOWN_GRPC) {
                 onBindIbcUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - kavaBep2Items.size() - etcItems.size());
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_UNKNOWN) {
-                onBindUnKnownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - kavaBep2Items.size() - etcItems.size() - ibcUnknownItems.size());
+                onBindUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - kavaBep2Items.size() - etcItems.size() - ibcUnknownItems.size());
             }
 
         } else if (baseChain.equals(BaseChain.JUNO_MAIN.INSTANCE)) {
@@ -154,7 +157,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_IBC_UNKNOWN_GRPC) {
                 onBindIbcUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - CW20Items.size());
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_UNKNOWN) {
-                onBindUnKnownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - CW20Items.size() - ibcUnknownItems.size());
+                onBindUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - CW20Items.size() - ibcUnknownItems.size());
             }
 
         } else if (baseChain.isGRPC()) {
@@ -165,7 +168,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_IBC_UNKNOWN_GRPC) {
                 onBindIbcUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size());
             } else if (getItemViewType(position) == MainTokensFragment.SECTION_UNKNOWN) {
-                onBindUnKnownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - ibcUnknownItems.size());
+                onBindUnknownToken(viewHolder, position - nativeItems.size() - ibcAuthedItems.size() - ibcUnknownItems.size());
             }
 
         } else if (baseChain.equals(BaseChain.OKEX_MAIN.INSTANCE)) {
@@ -334,8 +337,12 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
 
         Picasso.get().cancelRequest(holder.itemImg);
         final Context context = holder.itemView.getContext();
-
+        int divideDecimal = 6;
+        int displayDecimal = 6;
         if (chain != null) {
+            divideDecimal = chain.getDivideDecimal();
+            displayDecimal = chain.getDisplayDecimal();
+
             holder.itemSymbol.setText(chain.getSymbolTitle());
             holder.itemSymbol.setTextColor(ContextCompat.getColor(context, chain.getChainColor()));
             holder.itemFullName.setText(chain.getFullNameCoin());
@@ -351,6 +358,14 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
             holder.itemInnerSymbol.setText("");
             holder.itemFullName.setText("Ion Coin");
             holder.itemImg.setImageResource(R.drawable.token_ion);
+        } else if (balance.getDenom().equals(TOKEN_FD)) {
+            divideDecimal = 0;
+            displayDecimal = 0;
+            holder.itemSymbol.setText(R.string.str_fd_c);
+            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorImversed));
+            holder.itemInnerSymbol.setText("");
+            holder.itemFullName.setText("FD Token");
+            holder.itemImg.setImageResource(R.drawable.token_ic);
         } else if (balance.getDenom().equals(TOKEN_HARD)) {
             Picasso.get().load(KAVA_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
             holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorHard));
@@ -378,29 +393,16 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
         }
 
         BigDecimal amount = balance.getBalanceAmount().add(baseData.getAllMainAsset(balance.getDenom()));  //TODO: add vesting
-        int divideDecimal = 6;
-        int displayDecimal = 6;
-        int divider = 6;
 
         if (balance.getDenom().equals(TOKEN_ION) || balance.getDenom().startsWith("e")) {
             amount = onBalanceProvider.getFullBalance(balance.getDenom()).getBalanceAmount();
-        } else if (balance.getDenom().equals(BaseChain.FETCHAI_MAIN.INSTANCE.getMainDenom()) || balance.getDenom().equals(BaseChain.INJ_MAIN.INSTANCE.getMainDenom()) || balance.getDenom().equals(BaseChain.SIF_MAIN.INSTANCE.getMainDenom()) ||
-                balance.getDenom().equals(BaseChain.EVMOS_MAIN.INSTANCE.getMainDenom()) || balance.getDenom().equals(BaseChain.CUDOS_MAIN.INSTANCE.getMainDenom())) {
-            divideDecimal = 18;
-            divider = 18;
-        } else if (balance.getDenom().equals(BaseChain.PROVENANCE_MAIN.INSTANCE.getMainDenom())) {
-            divideDecimal = 9;
-            divider = 9;
-        } else if (balance.getDenom().equals(BaseChain.CRYPTO_MAIN.INSTANCE.getMainDenom())) {
-            divideDecimal = 8;
-            divider = 8;
         } else if (balance.getDenom().equals(TOKEN_HARD) || balance.getDenom().equals(TOKEN_USDX) || balance.getDenom().equals(TOKEN_SWP)) {
             amount = balance.getBalanceAmount(); // .add(baseData.getVesting(balance.getSymbol()));
             divideDecimal = WUtil.getKavaCoinDecimal(baseData, balance.getDenom());
         }
 
         holder.itemBalance.setText(WDp.getDpAmount2(amount, divideDecimal, displayDecimal));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), amount, divider, priceProvider));
+        holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), amount, divideDecimal, priceProvider));
 
         holder.itemRoot.setOnClickListener(v -> {
             if (nativeItems.get(position).getDenom().equalsIgnoreCase(baseChain.getMainDenom())) {
@@ -445,8 +447,8 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
     private void onBindIbcUnknownToken(AssetHolder holder, int position) {
         final WalletBalance balance = ibcUnknownItems.get(position);
         final IbcToken ibcToken = baseData.getIbcToken(balance.getDenom());
-        holder.itemInnerSymbol.setText("");
-        holder.itemSymbol.setText(R.string.str_unknown);
+        holder.itemSymbol.setText(balance.getDenom());
+        holder.itemInnerSymbol.setText("(" + holder.itemInnerSymbol.getContext().getString(R.string.str_unknown) + ")");
         if (ibcToken == null) {
             holder.itemFullName.setText("");
             holder.itemImg.setImageResource(R.drawable.token_default_ibc);
@@ -601,17 +603,21 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
     }
 
     //with Unknown Token gRPC
-    private void onBindUnKnownToken(AssetHolder holder, int position) {
+    private void onBindUnknownToken(AssetHolder holder, int position) {
         final WalletBalance balance = unknownItems.get(position);
         final Context context = holder.itemView.getContext();
 
-        holder.itemSymbol.setText(R.string.str_unknown);
+        holder.itemSymbol.setText(balance.getDenom());
+        holder.itemInnerSymbol.setText("(" + context.getString(R.string.str_unknown) + ")");
         holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-        holder.itemInnerSymbol.setText("");
         holder.itemFullName.setText("");
         holder.itemImg.setImageResource(R.drawable.token_ic);
         holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
         holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), BigDecimal.ZERO, 6, priceProvider));
+
+        holder.itemRoot.setOnClickListener(v -> {
+            itemsClickListeners.onNativeTokenClicked(balance.getDenom());
+        });
     }
 
 
@@ -704,13 +710,25 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
         final WalletBalance balance = unknownItems.get(position);
         final Context context = holder.itemView.getContext();
 
-        holder.itemSymbol.setText(R.string.str_unknown);
+        final String balanceDenom = balance.getDenom();
+        final DenomMetadata denomMetadata = baseData.getDenomMetadata(baseChain.getChainName(), balanceDenom);
+        int divider = 6;
+        if (denomMetadata != null) {
+            holder.itemInnerSymbol.setText(denomMetadata.getSymbol());
+            holder.itemFullName.setText(denomMetadata.getName());
+            Picasso.get().load(denomMetadata.getUri()).fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
+            DenomUnit denomUnit = denomMetadata.getDenomUnit(balanceDenom);
+            divider = denomUnit.getExpanent();
+        } else {
+            holder.itemInnerSymbol.setText("(" + context.getString(R.string.str_unknown) + ")");
+            holder.itemFullName.setText("");
+            holder.itemImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.token_ic));
+        }
+
+        holder.itemSymbol.setText(balanceDenom);
         holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-        holder.itemInnerSymbol.setText("");
-        holder.itemFullName.setText("");
-        holder.itemImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.token_ic));
-        holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), 6, 6));
-        holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), BigDecimal.ZERO, 6, priceProvider));
+        holder.itemBalance.setText(WDp.getDpAmount2(balance.getBalanceAmount(), divider, divider));
+        holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), BigDecimal.ZERO, divider, priceProvider));
     }
 
     interface OnItemsClickListeners {

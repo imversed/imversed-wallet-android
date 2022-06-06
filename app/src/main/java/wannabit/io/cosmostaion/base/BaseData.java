@@ -12,6 +12,8 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.local.DenomMetadata;
+import com.fulldive.wallet.models.local.DenomUnit;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.protobuf.InvalidProtocolBufferException;
@@ -26,6 +28,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import javax.annotation.Nullable;
 
 import cosmos.base.v1beta1.CoinOuterClass;
 import cosmos.distribution.v1beta1.Distribution;
@@ -109,6 +113,26 @@ public class BaseData {
             }
         }
         return null;
+    }
+
+    @Nullable
+    public DenomMetadata getDenomMetadata(String chainName, String denom) {
+        DenomMetadata result = null;
+        List<DenomMetadata> denomsMetadata = denomsMetadataMap.get(chainName);
+        if (denomsMetadata != null) {
+            for (DenomMetadata item : denomsMetadata) {
+                for (DenomUnit unit : item.getDenomUnits()) {
+                    if (unit.getDenom().equalsIgnoreCase(denom)) {
+                        result = item;
+                        break;
+                    }
+                }
+                if (result != null) {
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
     public Assets getAsset(String denom) {
@@ -225,7 +249,7 @@ public class BaseData {
     public List<Staking.Validator> mGRpcTopValidators = new ArrayList<>();
     public List<Staking.Validator> mGRpcOtherValidators = new ArrayList<>();
     public List<Staking.Validator> mGRpcMyValidators = new ArrayList<>();
-
+    public HashMap<String, List<DenomMetadata>> denomsMetadataMap = new HashMap<>();
 
     public List<Validator> getMyValidators() {
         if (mMyValidators.isEmpty()) {

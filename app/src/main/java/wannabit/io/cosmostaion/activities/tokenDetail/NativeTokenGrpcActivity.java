@@ -5,6 +5,7 @@ import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_IBC_TRANSFER
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIMPLE_SEND;
 import static wannabit.io.cosmostaion.base.BaseConstant.EMONEY_COIN_IMG_URL;
 import static wannabit.io.cosmostaion.base.BaseConstant.KAVA_COIN_IMG_URL;
+import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_FD;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HARD;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_ION;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_SWP;
@@ -118,12 +119,7 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
         mRecyclerView.setAdapter(mAdapter);
 
         //prepare for token history
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                onUpdateView();
-            }
-        });
+        mSwipeRefreshLayout.setOnRefreshListener(() -> onUpdateView());
 
         onUpdateView();
         mBtnAddressPopup.setOnClickListener(this);
@@ -158,6 +154,9 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
                 mTotalAmount = getBalance(mNativeGrpcDenom);
             }
 
+        } else if ((getBaseChain().equals(BaseChain.IMVERSED_MAIN.INSTANCE) || getBaseChain().equals(BaseChain.IMVERSED_TEST.INSTANCE)) && mNativeGrpcDenom.equalsIgnoreCase(TOKEN_FD)) {
+            mDivideDecimal = 0;
+            mTotalAmount = getBalance(mNativeGrpcDenom);
         } else if (getBaseChain().equals(BaseChain.EMONEY_MAIN.INSTANCE)) {
             mToolbarSymbol.setText(mNativeGrpcDenom.toUpperCase());
             Picasso.get().load(EMONEY_COIN_IMG_URL + mNativeGrpcDenom + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(mToolbarSymbolImg);
@@ -188,10 +187,10 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
         final BigDecimal lastUpDown = WDp.valueChange(price);
         if (lastUpDown.compareTo(BigDecimal.ZERO) > 0) {
             mItemUpDownImg.setVisibility(View.VISIBLE);
-            mItemUpDownImg.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_up));
+            mItemUpDownImg.setImageResource(R.drawable.ic_price_up);
         } else if (lastUpDown.compareTo(BigDecimal.ZERO) < 0) {
             mItemUpDownImg.setVisibility(View.VISIBLE);
-            mItemUpDownImg.setImageDrawable(getResources().getDrawable(R.drawable.ic_price_down));
+            mItemUpDownImg.setImageResource(R.drawable.ic_price_down);
         } else {
             mItemUpDownImg.setVisibility(View.INVISIBLE);
         }

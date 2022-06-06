@@ -36,6 +36,7 @@ import com.fulldive.wallet.interactors.secret.WalletUtils;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.models.WalletBalance;
+import com.fulldive.wallet.models.local.DenomMetadata;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -119,6 +120,13 @@ public class WDp {
         if (coin.denom.equals(chain.getMainDenom())) {
             denomColorRes = chain.getChainColor();
             denom = context.getString(chain.getSymbolTitle());
+        } else if (chain.isGRPC()) {
+            final DenomMetadata denomMetadata = baseData.getDenomMetadata(chain.getChainName(), denom);
+            if (denomMetadata != null) {
+                int divider = denomMetadata.getDenomUnit(denom).getExpanent();
+                divideDecimal = divider;
+                displayDecimal = divider;
+            }
         }
 
         if (chain.isGRPC() && coin.isIbc()) {
@@ -133,6 +141,10 @@ public class WDp {
             }
             denomColorRes = R.color.colorWhite;
 
+        } else if (chain.equals(BaseChain.IMVERSED_MAIN.INSTANCE) || chain.equals(BaseChain.IMVERSED_TEST.INSTANCE)) {
+            int divider  = WUtil.getImvCoinDecimal(coin.denom);
+            divideDecimal = divider;
+            displayDecimal = divider;
         } else if (chain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             int decimal = WUtil.getKavaCoinDecimal(coin);
             divideDecimal = decimal;

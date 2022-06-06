@@ -319,6 +319,7 @@ public class BaseConstant {
     public final static String TOKEN_USDX = "usdx";
     public final static String TOKEN_SWP = "swp";
     public final static String TOKEN_ION = "uion";
+    public final static String TOKEN_FD = "FDToken";
 
 
     public final static String TOKEN_EMONEY_EUR = "eeur";
