@@ -135,7 +135,7 @@ public class StakingTokenDetailActivity extends BaseActivity implements View.OnC
         final BaseData baseData = getBaseDao();
         final Currency currency = settingsInteractor.getCurrency();
         Picasso.get().cancelRequest(mToolbarSymbolImg);
-        mToolbarSymbolImg.setImageResource(getBaseChain().getCoinIcon());
+        mToolbarSymbolImg.setImageResource(getBaseChain().getMainToken().getCoinIconRes());
         WDp.DpMainDenom(getBaseChain(), mToolbarSymbol);
 
         final PriceProvider priceProvider = this::getPrice;

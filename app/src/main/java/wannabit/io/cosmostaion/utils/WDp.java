@@ -37,6 +37,7 @@ import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.models.WalletBalance;
 import com.fulldive.wallet.models.local.DenomMetadata;
+import com.fulldive.wallet.models.Token;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -112,14 +113,16 @@ public class WDp {
 
     public static void showCoinDp(BaseData baseData, Coin coin, TextView denomTextView, TextView amountTextView, BaseChain chain) {
         final Context context = denomTextView.getContext();
-        int divideDecimal = chain.getDivideDecimal();
-        int displayDecimal = chain.getDisplayDecimal();
+
+        final Token mainToken = chain.getMainToken();
+        int divideDecimal = mainToken.getDivideDecimal();
+        int displayDecimal = mainToken.getDisplayDecimal();
         int denomColorRes = R.color.colorWhite;
         String denom = coin.denom.toUpperCase();
 
-        if (coin.denom.equals(chain.getMainDenom())) {
-            denomColorRes = chain.getChainColor();
-            denom = context.getString(chain.getSymbolTitle());
+        if (coin.denom.equals(mainToken.getDenom())) {
+            denomColorRes = mainToken.getCoinColorRes();
+            denom = mainToken.getSymbol();
         } else if (chain.isGRPC()) {
             final DenomMetadata denomMetadata = baseData.getDenomMetadata(chain.getChainName(), denom);
             if (denomMetadata != null) {
@@ -142,7 +145,7 @@ public class WDp {
             denomColorRes = R.color.colorWhite;
 
         } else if (chain.equals(BaseChain.IMVERSED_MAIN.INSTANCE) || chain.equals(BaseChain.IMVERSED_TEST.INSTANCE)) {
-            int divider  = WUtil.getImvCoinDecimal(coin.denom);
+            int divider = WUtil.getImvCoinDecimal(coin.denom);
             divideDecimal = divider;
             displayDecimal = divider;
         } else if (chain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
@@ -283,7 +286,8 @@ public class WDp {
         BigDecimal calCommission = BigDecimal.ONE.subtract(commission);
         BigDecimal aprCommission = apr.multiply(calCommission);
         BigDecimal dayReward = delegated.multiply(aprCommission).divide(new BigDecimal("365"), 0, RoundingMode.DOWN);
-        return getDpAmount2(dayReward, chain.getDivideDecimal(), chain.getDisplayDecimal());
+        final Token mainToken = chain.getMainToken();
+        return getDpAmount2(dayReward, mainToken.getDivideDecimal(), mainToken.getDisplayDecimal());
     }
 
     public static SpannableString getMonthlyReward(Context c, BaseData baseData, BigDecimal commission, BigDecimal delegated, BaseChain chain) {
@@ -299,7 +303,8 @@ public class WDp {
         BigDecimal calCommission = BigDecimal.ONE.subtract(commission);
         BigDecimal aprCommission = apr.multiply(calCommission);
         BigDecimal dayReward = delegated.multiply(aprCommission).divide(new BigDecimal("12"), 0, RoundingMode.DOWN);
-        return getDpAmount2(dayReward, chain.getDivideDecimal(), chain.getDisplayDecimal());
+        final Token mainToken = chain.getMainToken();
+        return getDpAmount2(dayReward, mainToken.getDivideDecimal(), mainToken.getDisplayDecimal());
     }
 
     public static String getKavaBaseDenom(String denom) {
@@ -938,8 +943,9 @@ public class WDp {
     public static void DpMainDenom(String chainName, TextView textView) {
         BaseChain chain = BaseChain.getChain(chainName);
         if (chain != null) {
-            textView.setTextColor(ContextCompat.getColor(textView.getContext(), chain.getChainColor()));
-            textView.setText(textView.getContext().getString(chain.getSymbolTitle()));
+            final Token mainToken = chain.getMainToken();
+            textView.setTextColor(ContextCompat.getColor(textView.getContext(), mainToken.getCoinColorRes()));
+            textView.setText(mainToken.getSymbol());
         }
     }
 
@@ -981,7 +987,7 @@ public class WDp {
     public static int mainDisplayDecimal(String denom) {
         BaseChain chain = BaseChain.Companion.getChainByDenom(denom);
         if (chain != null) {
-            return chain.getDisplayDecimal();
+            return chain.getMainToken().getDisplayDecimal();
         } else {
             return 6;
         }

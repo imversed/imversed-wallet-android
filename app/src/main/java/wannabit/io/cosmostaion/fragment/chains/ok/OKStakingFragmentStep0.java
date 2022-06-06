@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.Token;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -148,10 +149,11 @@ public class OKStakingFragmentStep0 extends BaseFragment implements View.OnClick
     public void onResume() {
         super.onResume();
         final BaseChain chain = getSActivity().getBaseChain();
+        final Token mainToken = chain.getMainToken();
 
         WDp.DpMainDenom(getSActivity().getAccount().baseChain, mAvailableDenom);
         if (chain.equals(OKEX_MAIN.INSTANCE) || chain.equals(OK_TEST.INSTANCE)) {
-            mDpDecimal = chain.getDisplayDecimal();
+            mDpDecimal = mainToken.getDisplayDecimal();
             setDpDecimals(mDpDecimal);
             int myValidatorCnt = 0;
             if (getBaseDao().mOkStaking != null && getBaseDao().mOkStaking.validator_address != null) {
@@ -159,7 +161,7 @@ public class OKStakingFragmentStep0 extends BaseFragment implements View.OnClick
             }
             BigDecimal estimateGasAmount = (new BigDecimal(OK_GAS_AMOUNT_STAKE_MUX).multiply(new BigDecimal("" + myValidatorCnt))).add(new BigDecimal(BaseConstant.OK_GAS_AMOUNT_STAKE));
             BigDecimal feeAmount = estimateGasAmount.multiply(new BigDecimal(OK_GAS_RATE_AVERAGE));
-            mMaxAvailable = getSActivity().getAccount().getTokenBalance(chain.getMainDenom()).subtract(feeAmount);
+            mMaxAvailable = getSActivity().getAccount().getTokenBalance(mainToken.getDenom()).subtract(feeAmount);
             mAvailableAmount.setText(WDp.getDpAmount2(mMaxAvailable, 0, mDpDecimal));
         }
     }

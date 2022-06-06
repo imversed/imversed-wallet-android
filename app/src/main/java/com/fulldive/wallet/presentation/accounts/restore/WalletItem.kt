@@ -9,8 +9,7 @@ data class WalletItem(
     val address: String,
     val path: Int,
     val mnemonicPath: String,
-    @StringRes
-    val symbolTitle: Int,
+    val symbol: String,
     @ColorRes
     val color: Int,
     @ColorRes

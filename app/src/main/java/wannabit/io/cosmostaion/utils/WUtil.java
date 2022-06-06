@@ -45,6 +45,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.models.WalletBalance;
+import com.fulldive.wallet.models.Token;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -1071,8 +1072,9 @@ public class WUtil {
     public static String dpOsmosisTokenName(Context c, BaseData baseData, TextView textView, String denom) {
         if (denom != null) {
             if (denom.equals(BaseChain.OSMOSIS_MAIN.INSTANCE.getMainDenom())) {
-                textView.setTextColor(ContextCompat.getColor(c, BaseChain.OSMOSIS_MAIN.INSTANCE.getChainColor()));
-                textView.setText(BaseChain.OSMOSIS_MAIN.INSTANCE.getSymbolTitle());
+                final Token mainToken = BaseChain.OSMOSIS_MAIN.INSTANCE.getMainToken();
+                textView.setTextColor(ContextCompat.getColor(c, mainToken.getCoinColorRes()));
+                textView.setText(mainToken.getSymbol());
 
             } else if (denom.equals(TOKEN_ION)) {
                 textView.setTextColor(ContextCompat.getColor(c, R.color.colorIon));
@@ -1173,9 +1175,10 @@ public class WUtil {
      * Token Img
      */
     public static void DpCosmosTokenImg(BaseData baseData, ImageView imageView, String denom) {
-        if (denom.equalsIgnoreCase(BaseChain.COSMOS_MAIN.INSTANCE.getMainDenom())) {
+        final Token cosmosToken = BaseChain.COSMOS_MAIN.INSTANCE.getMainToken();
+        if (denom.equalsIgnoreCase(cosmosToken.getDenom())) {
             Picasso.get().cancelRequest(imageView);
-            imageView.setImageResource(BaseChain.COSMOS_MAIN.INSTANCE.getCoinIcon());
+            imageView.setImageResource(cosmosToken.getCoinIconRes());
         } else if (denom.startsWith("pool")) {
             Liquidity.Pool poolInfo = baseData.getGravityPoolByDenom(denom);
             if (poolInfo != null) {
@@ -1192,9 +1195,10 @@ public class WUtil {
 
     public static void DpOsmosisTokenImg(BaseData baseData, ImageView imageView, String denom) {
         if (denom != null) {
-            if (denom.equalsIgnoreCase(BaseChain.OSMOSIS_MAIN.INSTANCE.getMainDenom())) {
+            final Token osmosisToken = BaseChain.OSMOSIS_MAIN.INSTANCE.getMainToken();
+            if (denom.equalsIgnoreCase(osmosisToken.getDenom())) {
                 Picasso.get().cancelRequest(imageView);
-                imageView.setImageResource(BaseChain.OSMOSIS_MAIN.INSTANCE.getCoinIcon());
+                imageView.setImageResource(osmosisToken.getCoinIconRes());
             } else if (denom.equalsIgnoreCase(TOKEN_ION)) {
                 imageView.setImageResource(R.drawable.token_ion);
             } else if (denom.startsWith("gamm/pool/")) {
@@ -1211,9 +1215,10 @@ public class WUtil {
 
     public static void DpSifTokenImg(BaseData baseData, ImageView imageView, String denom) {
         if (denom != null) {
-            if (denom.equalsIgnoreCase(BaseChain.SIF_MAIN.INSTANCE.getMainDenom())) {
+            final Token sifToken = BaseChain.SIF_MAIN.INSTANCE.getMainToken();
+            if (denom.equalsIgnoreCase(sifToken.getDenom())) {
                 Picasso.get().cancelRequest(imageView);
-                imageView.setImageResource(BaseChain.SIF_MAIN.INSTANCE.getCoinIcon());
+                imageView.setImageResource(sifToken.getCoinIconRes());
             } else if (denom.startsWith("c")) {
                 Assets assets = baseData.getAsset(denom);
                 if (assets != null) {
@@ -1231,9 +1236,10 @@ public class WUtil {
 
     public static void DpKavaTokenImg(BaseData baseData, ImageView imageView, String denom) {
         if (denom != null) {
-            if (denom.equalsIgnoreCase(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom())) {
+            final Token kavaToken = BaseChain.KAVA_MAIN.INSTANCE.getMainToken();
+            if (denom.equalsIgnoreCase(kavaToken.getDenom())) {
                 Picasso.get().cancelRequest(imageView);
-                imageView.setImageResource(BaseChain.KAVA_MAIN.INSTANCE.getCoinIcon());
+                imageView.setImageResource(kavaToken.getCoinIconRes());
             } else if (denom.startsWith("ibc/")) {
                 IbcToken ibcToken = baseData.getIbcToken(denom.replaceAll("ibc/", ""));
                 if (ibcToken != null) {
@@ -2023,9 +2029,10 @@ public class WUtil {
     }
 
     public static void getWalletData(BaseChain chain, ImageView coinImg, TextView coinDenom) {
-        coinImg.setImageResource(chain.getCoinIcon());
-        coinDenom.setText(chain.getSymbolTitle());
-        coinDenom.setTextColor(ContextCompat.getColor(coinDenom.getContext(), chain.getChainColor()));
+        final Token mainToken = chain.getMainToken();
+        coinImg.setImageResource(mainToken.getCoinIconRes());
+        coinDenom.setText(mainToken.getSymbol());
+        coinDenom.setTextColor(ContextCompat.getColor(coinDenom.getContext(), mainToken.getCoinColorRes()));
     }
 
     public static void getDexTitle(BaseChain chain, RelativeLayout mBtnDex, TextView dexTitle) {

@@ -18,6 +18,7 @@ import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.models.local.DenomMetadata;
+import com.fulldive.wallet.models.Token;
 
 import java.math.BigDecimal;
 
@@ -94,14 +95,15 @@ public class SendStep4Fragment extends BaseFragment implements View.OnClickListe
     public void onRefreshTab() {
         final Currency currency = settingsInteractor.getCurrency();
         final BaseChain baseChain = getSActivity().getBaseChain();
+        final Token mainToken = baseChain.getMainToken();
         BigDecimal toSendAmount = new BigDecimal(getSActivity().mAmounts.get(0).amount);
         BigDecimal feeAmount = new BigDecimal(getSActivity().mTxFee.amount.get(0).amount);
-        final String mainDenom = baseChain.getMainDenom();
+        final String mainDenom = mainToken.getDenom();
         final String toSendDenom = getSActivity().mDenom;
         final PriceProvider priceProvider = getSActivity()::getPrice;
         if (toSendDenom.equals(mainDenom)) {
-            mDivideDecimal = baseChain.getDivideDecimal();
-            mDisplayDecimal = baseChain.getDisplayDecimal();
+            mDivideDecimal = mainToken.getDivideDecimal();
+            mDisplayDecimal = mainToken.getDisplayDecimal();
         }
 
         if (baseChain.isGRPC()) {

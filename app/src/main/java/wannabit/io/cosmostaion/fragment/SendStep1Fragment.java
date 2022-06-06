@@ -25,6 +25,7 @@ import androidx.annotation.Nullable;
 
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.local.DenomMetadata;
+import com.fulldive.wallet.models.Token;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -100,7 +101,8 @@ public class SendStep1Fragment extends BaseFragment implements View.OnClickListe
         }
 
         final BaseChain baseChain = getSActivity().getBaseChain();
-        final String mainDenom = baseChain.getMainDenom();
+        final Token mainToken = baseChain.getMainToken();
+        final String mainDenom = mainToken.getDenom();
         final String toSendDenom = getSActivity().mDenom;
         final BigDecimal feeAmount = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_SIMPLE_SEND);
         if (baseChain.isGRPC()) {
@@ -120,11 +122,11 @@ public class SendStep1Fragment extends BaseFragment implements View.OnClickListe
             } else if (baseChain.equals(BaseChain.IMVERSED_MAIN.INSTANCE) || baseChain.equals(BaseChain.IMVERSED_TEST.INSTANCE)) {
                 mDpDecimal = WUtil.getImvCoinDecimal(toSendDenom);
             } else {
-                mDpDecimal = baseChain.getDisplayDecimal();
+                mDpDecimal = mainToken.getDisplayDecimal();
             }
 
         } else if (baseChain.equals(BNB_MAIN.INSTANCE) || baseChain.equals(OKEX_MAIN.INSTANCE)) {
-            mDpDecimal = baseChain.getDisplayDecimal();
+            mDpDecimal = mainToken.getDisplayDecimal();
         }
 
         setDisplayDecimals(mDpDecimal);

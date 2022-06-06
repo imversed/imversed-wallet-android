@@ -406,7 +406,7 @@ public class TxDetailActivity extends BaseActivity implements View.OnClickListen
             WDp.DpMainDenom(getBaseChain().getChainName(), holder.itemFeeUsedDenom);
             WDp.DpMainDenom(getBaseChain().getChainName(), holder.itemFeeLimitDenom);
             if (getBaseChain().equals(BNB_MAIN.INSTANCE)) {
-                holder.itemStatusImg.setImageDrawable(getResources().getDrawable(R.drawable.success_ic));
+                holder.itemStatusImg.setImageResource(R.drawable.success_ic);
                 holder.itemStatusTxt.setText(R.string.str_success_c);
                 holder.itemHeight.setText(mResBnbTxInfo.height);
                 holder.itemMsgCnt.setText(String.valueOf(mResBnbTxInfo.tx.value.msg.size()));
@@ -420,10 +420,10 @@ public class TxDetailActivity extends BaseActivity implements View.OnClickListen
 
             } else if (getBaseChain().equals(OKEX_MAIN.INSTANCE)) {
                 if (mResTxInfo.isSuccess()) {
-                    holder.itemStatusImg.setImageDrawable(getResources().getDrawable(R.drawable.success_ic));
+                    holder.itemStatusImg.setImageResource(R.drawable.success_ic);
                     holder.itemStatusTxt.setText(R.string.str_success_c);
                 } else {
-                    holder.itemStatusImg.setImageDrawable(getResources().getDrawable(R.drawable.fail_ic));
+                    holder.itemStatusImg.setImageResource(R.drawable.fail_ic);
                     holder.itemStatusTxt.setText(R.string.str_failed_c);
                     holder.itemFailTxt.setText(mResTxInfo.failMessage());
                     holder.itemFailTxt.setVisibility(View.VISIBLE);
@@ -441,10 +441,10 @@ public class TxDetailActivity extends BaseActivity implements View.OnClickListen
             } else {
                 final int dpDecimal = getBaseChain().getDivideDecimal();
                 if (mResTxInfo.isSuccess()) {
-                    holder.itemStatusImg.setImageDrawable(getResources().getDrawable(R.drawable.success_ic));
+                    holder.itemStatusImg.setImageResource(R.drawable.success_ic);
                     holder.itemStatusTxt.setText(R.string.str_success_c);
                 } else {
-                    holder.itemStatusImg.setImageDrawable(getResources().getDrawable(R.drawable.fail_ic));
+                    holder.itemStatusImg.setImageResource(R.drawable.fail_ic);
                     holder.itemStatusTxt.setText(R.string.str_failed_c);
                     if (mResTxInfo.failMessage().replace("\u00A0", "").startsWith("atomicswapnotfound")) {
                         holder.itemFailTxt.setText("atomic swap not found");

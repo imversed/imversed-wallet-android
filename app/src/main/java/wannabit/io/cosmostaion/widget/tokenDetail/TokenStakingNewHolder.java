@@ -9,6 +9,7 @@ import androidx.cardview.widget.CardView;
 
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.WalletBalance;
+import com.fulldive.wallet.models.Token;
 
 import java.math.BigDecimal;
 
@@ -44,8 +45,9 @@ public class TokenStakingNewHolder extends BaseHolder {
 
     @Override
     public void onBindTokenHolder(BaseActivity baseActivity, BaseChain chain, BaseData baseData, String denom) {
-        final int stakingDivideDecimal = chain.getDivideDecimal();
-        final int stakingDisplayDecimal = chain.getDisplayDecimal();
+        final Token mainToken = chain.getMainToken();
+        final int stakingDivideDecimal = mainToken.getDivideDecimal();
+        final int stakingDisplayDecimal = mainToken.getDisplayDecimal();
         final WalletBalance balance = baseActivity.getFullBalance(denom);
         final BigDecimal totalToken = balance.getBalanceAmount().add(baseData.getAllMainAsset(denom));  //TODO: add vesting
         mTotalAmount.setText(WDp.getDpAmount2(totalToken, stakingDivideDecimal, stakingDisplayDecimal));

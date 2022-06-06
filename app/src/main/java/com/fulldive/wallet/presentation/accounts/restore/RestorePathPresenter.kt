@@ -83,6 +83,8 @@ class RestorePathPresenter @Inject constructor(
 
     private fun generateItems() {
         viewState.showWaitDialog()
+        val mainToken = chain.mainToken
+
         val walletsGenerator = safeSingle {
             (0 until MAX_PATH_COUNT)
                 .map { index ->
@@ -90,13 +92,13 @@ class RestorePathPresenter @Inject constructor(
                         MnemonicUtils.createAddress(chain, entropy, index, customPath),
                         index,
                         chain.pathProvider.getPathString(index, customPath),
-                        chain.symbolTitle,
+                        mainToken.symbol,
                         chain.chainColor,
                         chain.chainBackground,
                         WalletState.ReadyState,
                         BigDecimal.ZERO,
-                        chain.divideDecimal,
-                        chain.displayDecimal
+                        mainToken.divideDecimal,
+                        mainToken.displayDecimal
                     )
                 }
         }
@@ -144,7 +146,7 @@ class RestorePathPresenter @Inject constructor(
                                 .map { balances ->
                                     balances
                                         .find { balance ->
-                                            balance.denom == chain.mainDenom
+                                            balance.denom == chain.mainToken.denom
                                         }
                                         ?.let { balance ->
                                             val amount = safe(

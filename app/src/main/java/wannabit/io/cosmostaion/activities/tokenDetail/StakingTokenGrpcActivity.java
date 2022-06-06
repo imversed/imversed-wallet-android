@@ -137,7 +137,7 @@ public class StakingTokenGrpcActivity extends BaseActivity implements View.OnCli
         final Currency currency = settingsInteractor.getCurrency();
         final PriceProvider priceProvider = this::getPrice;
         Picasso.get().cancelRequest(mToolbarSymbolImg);
-        mToolbarSymbolImg.setImageResource(getBaseChain().getCoinIcon());
+        mToolbarSymbolImg.setImageResource(getBaseChain().getMainToken().getCoinIconRes());
         WDp.DpMainDenom(getBaseChain(), mToolbarSymbol);
 
         mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, mMainDenom, priceProvider));

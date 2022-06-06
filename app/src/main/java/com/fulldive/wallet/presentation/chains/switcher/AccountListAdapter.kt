@@ -66,7 +66,7 @@ class AccountListAdapter(
                 contentContainer.setBackgroundResource(
                     if (item.selected) R.drawable.box_round_selected_white else R.drawable.box_round_darkgray
                 )
-                val chainColor = ContextCompat.getColor(context, chain.chainColor)
+                val chainColor = ContextCompat.getColor(context, chain.mainToken.coinColorRes)
                 addressTextView.text = account.address
                 amountTextView.text = account.getLastTotal(chain, item.lastTotal)
                 keyImageView.setColorFilter(
@@ -75,7 +75,7 @@ class AccountListAdapter(
                 )
 
                 denomTextView.setTextColor(chainColor)
-                denomTextView.text = context.getString(chain.symbolTitle)
+                denomTextView.text = chain.mainToken.symbol
 
                 if (account.hasPrivateKey) {
                     keyImageView.setColorFilter(

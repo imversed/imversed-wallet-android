@@ -30,6 +30,7 @@ import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.models.WalletBalance;
 import com.fulldive.wallet.models.local.DenomMetadata;
 import com.fulldive.wallet.models.local.DenomUnit;
+import com.fulldive.wallet.models.Token;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
@@ -340,18 +341,19 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
         int divideDecimal = 6;
         int displayDecimal = 6;
         if (chain != null) {
-            divideDecimal = chain.getDivideDecimal();
-            displayDecimal = chain.getDisplayDecimal();
+            final Token mainToken = chain.getMainToken();
+            divideDecimal = mainToken.getDivideDecimal();
+            displayDecimal = mainToken.getDisplayDecimal();
 
-            holder.itemSymbol.setText(chain.getSymbolTitle());
-            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, chain.getChainColor()));
-            holder.itemFullName.setText(chain.getFullNameCoin());
-            if (balance.getDenom().equals(BaseChain.SECRET_MAIN.INSTANCE.getMainDenom())) {
+            holder.itemSymbol.setText(mainToken.getSymbol());
+            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, mainToken.getCoinColorRes()));
+            holder.itemFullName.setText(mainToken.getName());
+            if (balance.getDenom().equals(BaseChain.SECRET_MAIN.INSTANCE.getMainToken().getDenom())) {
                 holder.itemInnerSymbol.setText("(" + balance.getDenom() + ")");
             } else {
                 holder.itemInnerSymbol.setText("");
             }
-            holder.itemImg.setImageDrawable(ContextCompat.getDrawable(context, chain.getCoinIcon()));
+            holder.itemImg.setImageDrawable(ContextCompat.getDrawable(context, mainToken.getCoinIconRes()));
         } else if (balance.getDenom().equals(TOKEN_ION)) {
             holder.itemSymbol.setText(R.string.str_uion_c);
             holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorIon));
@@ -405,7 +407,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
         holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), amount, divideDecimal, priceProvider));
 
         holder.itemRoot.setOnClickListener(v -> {
-            if (nativeItems.get(position).getDenom().equalsIgnoreCase(baseChain.getMainDenom())) {
+            if (nativeItems.get(position).getDenom().equalsIgnoreCase(baseChain.getMainToken().getDenom())) {
                 itemsClickListeners.onStackingTokenClicked(balance.getDenom());
             } else {
                 itemsClickListeners.onNativeTokenClicked(balance.getDenom());
@@ -625,6 +627,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
     private void onBindNativeItem(AssetHolder holder, int position) {
         final WalletBalance balance = nativeItems.get(position);
         final Context context = holder.itemView.getContext();
+        final Token mainToken = baseChain.getMainToken();
 
         if (baseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
             final String denom = balance.getDenom();
@@ -634,11 +637,11 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
             if (bnbToken != null) {
                 holder.itemSymbol.setText(bnbToken.original_symbol.toUpperCase());
                 holder.itemInnerSymbol.setText("(" + bnbToken.symbol + ")");
-                holder.itemFullName.setText(BaseChain.BNB_MAIN.INSTANCE.getFullNameCoin());
-                holder.itemImg.setImageDrawable(ContextCompat.getDrawable(context, BaseChain.BNB_MAIN.INSTANCE.getCoinIcon()));
+                holder.itemFullName.setText(mainToken.getName());
+                holder.itemImg.setImageDrawable(ContextCompat.getDrawable(context, mainToken.getCoinIconRes()));
                 holder.itemSymbol.setTextColor(WDp.getChainColor(context, BaseChain.BNB_MAIN.INSTANCE));
-                holder.itemBalance.setText(WDp.getDpAmount2(amount, 0, 6));
-                holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, BaseChain.BNB_MAIN.INSTANCE.getMainDenom(), amount, 0, priceProvider));
+                holder.itemBalance.setText(WDp.getDpAmount2(amount, mainToken.getDivideDecimal(), 6 /*mainToken.getDisplayDecimal()*/));
+                holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, mainToken.getDenom(), amount, mainToken.getDivideDecimal(), priceProvider));
             }
             holder.itemRoot.setOnClickListener(v -> {
                 itemsClickListeners.onNativeStackingTokenClicked();
@@ -648,14 +651,14 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
             final OkToken okToken = baseData.okToken(balance.getDenom());
             holder.itemSymbol.setText(okToken.original_symbol.toUpperCase());
             holder.itemInnerSymbol.setText("(" + okToken.symbol + ")");
-            holder.itemFullName.setText(BaseChain.OKEX_MAIN.INSTANCE.getFullNameCoin());
-            if (balance.getDenom().equals(BaseChain.OKEX_MAIN.INSTANCE.getMainDenom())) {
+            holder.itemFullName.setText(mainToken.getName());
+            if (balance.getDenom().equals(mainToken.getDenom())) {
                 holder.itemSymbol.setTextColor(WDp.getChainColor(context, baseChain));
-                holder.itemImg.setImageDrawable(ContextCompat.getDrawable(context, BaseChain.OKEX_MAIN.INSTANCE.getCoinIcon()));
+                holder.itemImg.setImageDrawable(ContextCompat.getDrawable(context, mainToken.getCoinIconRes()));
 
                 BigDecimal totalAmount = balance.getDelegatableAmount().add(baseData.getAllExToken(balance.getDenom()));
-                holder.itemBalance.setText(WDp.getDpAmount2(totalAmount, 0, 6));
-                holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), totalAmount, 0, priceProvider));
+                holder.itemBalance.setText(WDp.getDpAmount2(totalAmount, mainToken.getDivideDecimal(), 6 /*mainToken.getDisplayDecimal()*/));
+                holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), totalAmount, mainToken.getDivideDecimal(), priceProvider));
             }
             holder.itemRoot.setOnClickListener(v -> {
                 itemsClickListeners.onNativeStackingTokenClicked();

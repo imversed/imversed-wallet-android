@@ -37,7 +37,7 @@ class RestorePathAdapter(
         holder.newState.setTextColor(context.getColorCompat(item.state.stateColor))
         holder.cardView.setOnClickListener { onItemClickListener(item) }
 
-        holder.coinDenom.setText(item.symbolTitle)
+        holder.coinDenom.setText(item.symbol)
         holder.coinDenom.setTextColor(context.getColorCompat(item.color))
         holder.coinAmount.text = WDp.getDpAmount2(
             item.amount,

@@ -19,6 +19,7 @@ import androidx.cardview.widget.CardView;
 import com.addisonelliott.segmentedbutton.SegmentedButtonGroup;
 import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.Token;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -32,7 +33,6 @@ import wannabit.io.cosmostaion.model.type.Coin;
 import wannabit.io.cosmostaion.model.type.Fee;
 import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
-import wannabit.io.cosmostaion.utils.WUtil;
 
 public class StepFeeSetOldFragment extends BaseFragment implements View.OnClickListener, IRefreshTabListener {
 
@@ -135,10 +135,11 @@ public class StepFeeSetOldFragment extends BaseFragment implements View.OnClickL
     private void onUpdateView() {
         onCalculateFees();
         final BaseChain baseChain = getSActivity().getBaseChain();
+        final Token mainToken = baseChain.getMainToken();
 
-        mFeeAmount.setText(WDp.getDpAmount2(mFee, baseChain.getDivideDecimal(), baseChain.getDisplayDecimal()));
+        mFeeAmount.setText(WDp.getDpAmount2(mFee, mainToken.getDivideDecimal(), mainToken.getDisplayDecimal()));
         final PriceProvider priceProvider = getBaseActivity()::getPrice;
-        mFeeValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), settingsInteractor.getCurrency(), baseChain.getMainDenom(), mFee, baseChain.getDivideDecimal(), priceProvider));
+        mFeeValue.setText(WDp.dpUserCurrencyValue(getBaseDao(), settingsInteractor.getCurrency(), mainToken.getDenom(), mFee, mainToken.getDivideDecimal(), priceProvider));
 
         mGasRate.setText(WDp.getDpGasRate(mSelectedGasRate.toPlainString()));
         mGasAmount.setText(mEstimateGasAmount.toPlainString());

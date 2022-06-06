@@ -43,6 +43,7 @@ import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.models.WalletBalance;
+import com.fulldive.wallet.models.Token;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.fulldive.wallet.presentation.main.MainActivity;
 
@@ -370,7 +371,8 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
     }
 
     private void onUpdateView() {
-        final String mainDenom = baseChain.getMainDenom();
+        final Token mainToken = baseChain.getMainToken();
+        final String mainDenom = mainToken.getDenom();
         CW20Items = getBaseDao().getCw20sGrpc(baseChain);
         ibcAuthedItems.clear();
         osmosisPoolItems.clear();

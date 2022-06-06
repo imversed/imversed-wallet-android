@@ -32,6 +32,7 @@ import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.Token;
 import com.fulldive.wallet.presentation.chains.switcher.WalletSwitchActivity;
 import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -273,7 +274,8 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
         }
         final BaseData baseData = getBaseDao();
         final BaseChain baseChain = getBaseChain();
-        final String mainDenom = baseChain.getMainDenom();
+        final Token mainToken = baseChain.getMainToken();
+        final String mainDenom = mainToken.getDenom();
         final BigDecimal available = getBalance(mainDenom);
         if (baseChain.equals(KAVA_MAIN.INSTANCE)) {
             BigDecimal txFee = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_CLAIM_INCENTIVE);
@@ -282,7 +284,7 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
                 return;
             }
             final IncentiveReward incentiveReward = baseData.mIncentiveRewards;
-            if (incentiveReward.getRewardSum(baseChain.getMainDenom()).equals(BigDecimal.ZERO) && incentiveReward.getRewardSum(TOKEN_HARD).equals(BigDecimal.ZERO) &&
+            if (incentiveReward.getRewardSum(mainDenom).equals(BigDecimal.ZERO) && incentiveReward.getRewardSum(TOKEN_HARD).equals(BigDecimal.ZERO) &&
                     incentiveReward.getRewardSum(TOKEN_SWP).equals(BigDecimal.ZERO)) {
                 Toast.makeText(this, R.string.error_no_incentive_to_claim, Toast.LENGTH_SHORT).show();
                 return;

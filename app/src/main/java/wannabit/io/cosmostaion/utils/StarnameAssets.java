@@ -92,7 +92,6 @@ public class StarnameAssets implements Parcelable {
 
     public static ArrayList<StarnameAssets> getStarnameAssets() {
         ArrayList<StarnameAssets> result = new ArrayList<>();
-        result.add(imv);
         result.add(ada);
         result.add(akt);
         result.add(algo);
@@ -147,41 +146,40 @@ public class StarnameAssets implements Parcelable {
     }
 
     public static StarnameAssets ada = new StarnameAssets("Cardano", "asset:ada", "ADA", "ada.png", null);
-    public static StarnameAssets imv = new StarnameAssets("Imversed", "asset:imv", "IMV", "imv.png", BaseChain.IMVERSED_MAIN.INSTANCE.getChainName());
-    public static StarnameAssets akt = new StarnameAssets("Akash", "asset:akt", "AKT", "akash.png", BaseChain.AKASH_MAIN.INSTANCE.getChainName());
+    public static StarnameAssets akt = new StarnameAssets("Akash", "asset:akt", "AKT", "akash.png", "akashnet-mainnet");
     public static StarnameAssets algo = new StarnameAssets("Algorand", "asset:algo", "ALGO", "algo.png", null);
-    public static StarnameAssets atom = new StarnameAssets("Cosmos", "asset:atom", "ATOM", "cosmos.png", BaseChain.COSMOS_MAIN.INSTANCE.getChainName());
+    public static StarnameAssets atom = new StarnameAssets("Cosmos", "asset:atom", "ATOM", "cosmos.png", "cosmoshub-mainnet");
     public static StarnameAssets avax = new StarnameAssets("Avalanche", "asset:avax", "AVAX", "avax.png", null);
-    public static StarnameAssets band = new StarnameAssets("Band Protocol", "asset:band", "BAND", "band.png", BaseChain.BAND_MAIN.INSTANCE.getChainName());
+    public static StarnameAssets band = new StarnameAssets("Band Protocol", "asset:band", "BAND", "band.png", "band-mainnet");
     public static StarnameAssets bat = new StarnameAssets("Basic Attention Token", "asset:bat", "BAT", "bat.png", null);
     public static StarnameAssets bch = new StarnameAssets("Bitcoin Cash", "asset:bch", "BCH", "bitcoincash.png", null);
-    public static StarnameAssets bnb = new StarnameAssets("BNB coin", "asset:bnb", "BNB", "binance.png", BaseChain.BNB_MAIN.INSTANCE.getChainName());
+    public static StarnameAssets bnb = new StarnameAssets("BNB coin", "asset:bnb", "BNB", "binance.png", "binance-mainnet");
     public static StarnameAssets btc = new StarnameAssets("Bitcoin", "asset:btc", "BTC", "bitcoin.png", null);
     public static StarnameAssets comp = new StarnameAssets("Compound", "asset:comp", "COMP", "comp.png", null);
-    public static StarnameAssets cro = new StarnameAssets("Crypto.org", "asset:cro", "CRO", "crypto-org.png", BaseChain.CRYPTO_MAIN.INSTANCE.getChainName());
-    public static StarnameAssets ctk = new StarnameAssets("CertiK", "asset:ctk", "CTK", "certik.png", BaseChain.CERTIK_MAIN.INSTANCE.getChainName());
+    public static StarnameAssets cro = new StarnameAssets("Crypto.org", "asset:cro", "CRO", "crypto-org.png", "crytoorg-mainnet");
+    public static StarnameAssets ctk = new StarnameAssets("CertiK", "asset:ctk", "CTK", "certik.png", "shentu-mainnet");
     public static StarnameAssets dai = new StarnameAssets("Dai Stablecoin", "asset:dai", "DAI", "dai.png", null);
     public static StarnameAssets dash = new StarnameAssets("Dash", "asset:dash", "DASH", "dash.png", null);
     public static StarnameAssets doge = new StarnameAssets("Dogecoin", "asset:doge", "DOGE", "doge.png", null);
     public static StarnameAssets dsm = new StarnameAssets("Desmos", "asset:dsm", "DSM", "dsm.png", null);
-    public static StarnameAssets dvpn = new StarnameAssets("Sentinel", "asset:dvpn", "DVPN", "sentinel.png", BaseChain.SENTINEL_MAIN.INSTANCE.getChainName());
+    public static StarnameAssets dvpn = new StarnameAssets("Sentinel", "asset:dvpn", "DVPN", "sentinel.png", "sentinel-mainnet");
     public static StarnameAssets eos = new StarnameAssets("EOS", "asset:eos", "EOS", "eos.png", null);
     public static StarnameAssets eth = new StarnameAssets("Ethereum", "asset:eth", "ETH", "ethereum.png", null);
-    public static StarnameAssets ion = new StarnameAssets("ION", "asset:ion", "ION", "osmosis.png", BaseChain.OSMOSIS_MAIN.INSTANCE.getChainName());
-    public static StarnameAssets iov = new StarnameAssets("Starname (IOV)", "asset:iov", "IOV", "starname.png", BaseChain.IOV_MAIN.INSTANCE.getChainName());
-    public static StarnameAssets iris = new StarnameAssets("IRISnet", "asset:iris", "IRIS", "iris.png", BaseChain.IRIS_MAIN.INSTANCE.getChainName());
-    public static StarnameAssets kava = new StarnameAssets("Kava", "asset:kava", "KAVA", "kava.png", BaseChain.KAVA_MAIN.INSTANCE.getChainName());
+    public static StarnameAssets ion = new StarnameAssets("ION", "asset:ion", "ION", "osmosis.png", "osmosis-mainnet");
+    public static StarnameAssets iov = new StarnameAssets("Starname (IOV)", "asset:iov", "IOV", "starname.png", "iov-mainnet");
+    public static StarnameAssets iris = new StarnameAssets("IRISnet", "asset:iris", "IRIS", "iris.png", "irishub-mainnet");
+    public static StarnameAssets kava = new StarnameAssets("Kava", "asset:kava", "KAVA", "kava.png", "kava-mainnet");
     public static StarnameAssets ksm = new StarnameAssets("Kusama", "asset:ksm", "KSM", "ksm.png", null);
     public static StarnameAssets link = new StarnameAssets("Chainlink", "asset:link", "LINK", "link.png", null);
     public static StarnameAssets ltc = new StarnameAssets("Litecoin", "asset:ltc", "LTC", "litecoin.png", null);
     public static StarnameAssets neo = new StarnameAssets("Neo", "asset:neo", "NEO", "neo.png", null);
-    public static StarnameAssets okb = new StarnameAssets("OKB", "asset:okb", "OKB", "okex.png", BaseChain.OKEX_MAIN.INSTANCE.getChainName());
-    public static StarnameAssets osmo = new StarnameAssets("Osmosis", "asset:osmo", "OSMO", "osmosis.png", BaseChain.OSMOSIS_MAIN.INSTANCE.getChainName());
-    public static StarnameAssets regen = new StarnameAssets("Regen Network", "asset:regen", "REGEN", "regen.png", BaseChain.REGEN_MAIN.INSTANCE.getChainName());
+    public static StarnameAssets okb = new StarnameAssets("OKB", "asset:okb", "OKB", "okex.png", "okexchain-mainnet");
+    public static StarnameAssets osmo = new StarnameAssets("Osmosis", "asset:osmo", "OSMO", "osmosis.png", "osmosis-mainnet");
+    public static StarnameAssets regen = new StarnameAssets("Regen Network", "asset:regen", "REGEN", "regen.png", "regen-mainnet");
     public static StarnameAssets ren = new StarnameAssets("Ren", "asset:ren", "REN", "ren.png", null);
     public static StarnameAssets req = new StarnameAssets("Request", "asset:req", "REQ", "req.png", null);
-    public static StarnameAssets rowan = new StarnameAssets("Sifchain", "asset:rowan", "ROWAN", "sifchain.png", BaseChain.SIF_MAIN.INSTANCE.getChainName());
-    public static StarnameAssets scrt = new StarnameAssets("Secret", "asset:scrt", "SCRT", "secret.png", BaseChain.SECRET_MAIN.INSTANCE.getChainName());
+    public static StarnameAssets rowan = new StarnameAssets("Sifchain", "asset:rowan", "ROWAN", "sifchain.png", "sif-mainnet");
+    public static StarnameAssets scrt = new StarnameAssets("Secret", "asset:scrt", "SCRT", "secret.png", "secret-mainnet");
     public static StarnameAssets shib = new StarnameAssets("Shiba Inu", "asset:shib", "SHIB", "shib.png", null);
     public static StarnameAssets sol = new StarnameAssets("Solana", "asset:sol", "SOL", "sol.png", null);
     public static StarnameAssets svt = new StarnameAssets("Savitar Token", "asset:svt", "SVT", "svt.png", null);
@@ -191,11 +189,11 @@ public class StarnameAssets implements Parcelable {
     public static StarnameAssets wbtc = new StarnameAssets("Wrapped Bitcoin", "asset:wbtc", "WBTC", "wbtc.png", null);
     public static StarnameAssets xlm = new StarnameAssets("Stellar", "asset:xlm", "XLM", "xlm.png", null);
     public static StarnameAssets xmr = new StarnameAssets("Monero", "asset:xmr", "XMR", "xmr.png", null);
-    public static StarnameAssets xprt = new StarnameAssets("Persistence", "asset:xprt", "XPRT", "persistence.png", BaseChain.PERSIS_MAIN.INSTANCE.getChainName());
+    public static StarnameAssets xprt = new StarnameAssets("Persistence", "asset:xprt", "XPRT", "persistence.png", "persistence-mainnet");
     public static StarnameAssets xtz = new StarnameAssets("Tezos", "asset:xtz", "XTZ", "tezos.png", null);
     public static StarnameAssets zec = new StarnameAssets("Zcash", "asset:zec", "ZEC", "zec.png", null);
 
     public static StarnameAssets ter = new StarnameAssets("Terra", "asset:luna", "LUNA", "terra.png", null);
-    public static StarnameAssets emy = new StarnameAssets("E-Money", "asset:ngm", "NGM", "emoney.png", BaseChain.EMONEY_MAIN.INSTANCE.getChainName());
+    public static StarnameAssets emy = new StarnameAssets("E-Money", "asset:ngm", "NGM", "emoney.png", "emoney-mainnet");
     public static StarnameAssets lsk = new StarnameAssets("LISK", "asset:lsk", "LSK", "lisk.png", null);
 }

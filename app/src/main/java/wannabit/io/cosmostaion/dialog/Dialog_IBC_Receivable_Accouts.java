@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.Token;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -77,7 +78,8 @@ public class Dialog_IBC_Receivable_Accouts extends DialogFragment {
         public void onBindViewHolder(@NonNull AccountListAdapter.AccountHolder holder, int position) {
             final Account account = mAccounts.get(position);
             final BaseChain baseChain = BaseChain.getChain(account.baseChain);
-            final int dpDecimal = baseChain.getDisplayDecimal();
+            final Token mainToken = baseChain.getMainToken();
+            final int dpDecimal = mainToken.getDisplayDecimal();
             final Context context = holder.itemView.getContext();
             holder.accountKeyState.setColorFilter(ContextCompat.getColor(context, R.color.colorGray0), android.graphics.PorterDuff.Mode.SRC_IN);
             holder.accountAddress.setText(account.address);

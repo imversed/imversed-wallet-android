@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.WalletBalance;
+import com.fulldive.wallet.models.Token;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -140,7 +141,8 @@ public class Account {
         SpannableString result = SpannableString.valueOf("--");
         try {
             if (!TextUtils.isEmpty(lastTotal)) {
-                result = WDp.getDpAmount2(new BigDecimal(lastTotal), chain.getDivideDecimal(), chain.getDisplayDecimal());
+                final Token mainToken = chain.getMainToken();
+                result = WDp.getDpAmount2(new BigDecimal(lastTotal), mainToken.getDivideDecimal(), mainToken.getDisplayDecimal());
             }
         } catch (Exception ignore) {
         }

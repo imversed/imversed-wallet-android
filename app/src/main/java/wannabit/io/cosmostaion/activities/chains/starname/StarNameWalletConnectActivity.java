@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.appcompat.widget.Toolbar;
 
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.Token;
 import com.google.gson.Gson;
 import com.squareup.moshi.Moshi;
 import com.squareup.picasso.Picasso;
@@ -247,12 +248,15 @@ public class StarNameWalletConnectActivity extends BaseActivity implements View.
         ExportStarName result = new ExportStarName();
         result.type = "starname";
         for (Account account : accounts) {
-            BaseChain chain = BaseChain.getChain(account.baseChain);
-            if (chain != null && !chain.getTicker().isEmpty()) {
-                ExportStarName.ExportResource resource = new ExportStarName.ExportResource();
-                resource.ticker = chain.getTicker();
-                resource.address = account.address;
-                result.addresses.add(resource);
+            final BaseChain chain = BaseChain.getChain(account.baseChain);
+            if (chain != null) {
+                final Token mainToken = chain.getMainToken();
+                if (!mainToken.getTicker().isEmpty()) {
+                    ExportStarName.ExportResource resource = new ExportStarName.ExportResource();
+                    resource.ticker = mainToken.getTicker();
+                    resource.address = account.address;
+                    result.addresses.add(resource);
+                }
             }
         }
         return result;
