@@ -44,8 +44,8 @@ import androidx.core.content.ContextCompat;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.Currency;
-import com.fulldive.wallet.models.WalletBalance;
 import com.fulldive.wallet.models.Token;
+import com.fulldive.wallet.models.WalletBalance;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;

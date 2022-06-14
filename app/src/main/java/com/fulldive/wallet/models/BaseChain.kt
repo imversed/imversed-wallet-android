@@ -224,7 +224,7 @@ sealed class BaseChain constructor(
         grpcApiHost = ApiHost.from("lcd-kava-app.cosmostation.io"),
         pathProvider = MultiPathProvider(459, mapOf(0 to 118)),
         gasProvider = KavaGasProvider,
-        gasRateProvider = GasRateProvider("0.00", "0.0025", "0.025"),
+        gasRateProvider = GasRateProvider("0.01", "0.0025", "0.025"),
         gasFeeEstimateCalculator = GasFeeEstimateCalculator.KAVA,
         guide = Guide.create(
             guideIcon = R.drawable.kavamain_img,
