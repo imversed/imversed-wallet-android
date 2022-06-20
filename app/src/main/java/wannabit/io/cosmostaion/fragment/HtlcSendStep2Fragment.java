@@ -115,11 +115,11 @@ public class HtlcSendStep2Fragment extends BaseFragment implements View.OnClickL
             mDecimal = 8;
             setDpDecimals(mDecimal);
             if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_BNB) || mToSwapDenom.equals(TOKEN_HTLC_BINANCE_TEST_BNB)) {
-                mDenomTitle.setText(getString(R.string.str_bnb_c));
+                mDenomTitle.setText(R.string.str_bnb_c);
                 mDenomTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorBnb));
                 mMaxAvailable = available.subtract(new BigDecimal(FEE_BNB_SEND));
             } else if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_BTCB) || mToSwapDenom.equals(TOKEN_HTLC_BINANCE_TEST_BTC)) {
-                mDenomTitle.setText(getString(R.string.str_btc_c));
+                mDenomTitle.setText(R.string.str_btc_c);
                 mDenomTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
                 mMaxAvailable = available;
             } else if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_XRPB)) {
@@ -149,10 +149,10 @@ public class HtlcSendStep2Fragment extends BaseFragment implements View.OnClickL
             mDecimal = WUtil.getKavaCoinDecimal(getBaseDao(), getSActivity().mToSwapDenom);
             setDpDecimals(mDecimal);
             if (mToSwapDenom.equals(TOKEN_HTLC_KAVA_BNB) || mToSwapDenom.equals(TOKEN_HTLC_KAVA_TEST_BNB)) {
-                mDenomTitle.setText(getString(R.string.str_bnb_c));
+                mDenomTitle.setText(R.string.str_bnb_c);
                 mDenomTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorBnb));
             } else if (mToSwapDenom.equals(TOKEN_HTLC_KAVA_BTCB) || mToSwapDenom.equals(TOKEN_HTLC_KAVA_TEST_BTC)) {
-                mDenomTitle.setText(getString(R.string.str_btc_c));
+                mDenomTitle.setText(R.string.str_btc_c);
                 mDenomTitle.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
             } else if (mToSwapDenom.equals(TOKEN_HTLC_KAVA_XRPB)) {
                 mDenomTitle.setText("XRP");
@@ -187,12 +187,12 @@ public class HtlcSendStep2Fragment extends BaseFragment implements View.OnClickL
             public void afterTextChanged(Editable et) {
                 String es = et.toString().trim();
                 if (TextUtils.isEmpty(es)) {
-                    mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mAmountInput.setBackgroundResource(R.drawable.edittext_box);
                 } else if (es.startsWith(".")) {
-                    mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mAmountInput.setBackgroundResource(R.drawable.edittext_box);
                     mAmountInput.setText("");
                 } else if (es.endsWith(".")) {
-                    mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                    mAmountInput.setBackgroundResource(R.drawable.edittext_box_error);
                     return;
                 } else if (es.length() > 1 && es.startsWith("0") && !es.startsWith("0.")) {
                     mAmountInput.setText("0");
@@ -206,7 +206,7 @@ public class HtlcSendStep2Fragment extends BaseFragment implements View.OnClickL
                     try {
                         final BigDecimal inputAmount = new BigDecimal(es);
                         if (BigDecimal.ZERO.compareTo(inputAmount) >= 0) {
-                            mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mAmountInput.setBackgroundResource(R.drawable.edittext_box_error);
                             return;
                         }
 
@@ -221,24 +221,24 @@ public class HtlcSendStep2Fragment extends BaseFragment implements View.OnClickL
 
                         if (getSActivity().getBaseChain().equals(BaseChain.BNB_MAIN.INSTANCE)) {
                             if (mMaxAvailable.compareTo(inputAmount) < 0) {
-                                mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                                mAmountInput.setBackgroundResource(R.drawable.edittext_box_error);
 
                             } else if (mMinAvailable.compareTo(inputAmount) >= 0) {
-                                mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                                mAmountInput.setBackgroundResource(R.drawable.edittext_box_error);
 
                             } else {
-                                mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                                mAmountInput.setBackgroundResource(R.drawable.edittext_box);
                             }
 
                         } else if (getSActivity().getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                             if (mMaxAvailable.compareTo(checkPosition) < 0) {
-                                mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                                mAmountInput.setBackgroundResource(R.drawable.edittext_box_error);
 
                             } else if (mMinAvailable.compareTo(checkPosition) >= 0) {
-                                mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                                mAmountInput.setBackgroundResource(R.drawable.edittext_box_error);
 
                             } else {
-                                mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                                mAmountInput.setBackgroundResource(R.drawable.edittext_box);
                             }
                         }
                         mAmountInput.setSelection(mAmountInput.getText().length());

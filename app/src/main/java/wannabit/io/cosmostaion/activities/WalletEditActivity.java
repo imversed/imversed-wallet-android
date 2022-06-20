@@ -134,7 +134,7 @@ public class WalletEditActivity extends BaseActivity implements View.OnClickList
                         }
                     }
                     if (dpAccountSum <= 0) {
-                        Toast.makeText(WalletEditActivity.this, getString(R.string.error_reserve_1_account), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(WalletEditActivity.this, R.string.error_reserve_1_account, Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }

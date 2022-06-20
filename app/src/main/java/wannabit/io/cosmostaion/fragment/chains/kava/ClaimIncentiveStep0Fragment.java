@@ -103,7 +103,7 @@ public class ClaimIncentiveStep0Fragment extends BaseFragment implements View.On
 
         } else if (v.equals(BtnOption1)) {
             onInitBtnBg();
-            BtnOption1.setBackground(getResources().getDrawable(R.drawable.box_round_selected));
+            BtnOption1.setBackgroundResource(R.drawable.box_round_selected);
             BigDecimal kavaIncentiveCal = mKavaIncetiveAmount.multiply(mIncentiveParam.getFactor(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom(), 0)).setScale(0, RoundingMode.DOWN);
             BigDecimal hardIncentiveCal = mHardIncetiveAmount.multiply(mIncentiveParam.getFactor(TOKEN_HARD, 0)).setScale(0, RoundingMode.DOWN);
             BigDecimal swpIncentiveCal = mSwpIncetiveAmount.multiply(mIncentiveParam.getFactor(TOKEN_SWP, 0)).setScale(0, RoundingMode.DOWN);
@@ -116,7 +116,7 @@ public class ClaimIncentiveStep0Fragment extends BaseFragment implements View.On
 
         } else if (v.equals(BtnOption2)) {
             onInitBtnBg();
-            BtnOption2.setBackground(getResources().getDrawable(R.drawable.box_round_selected));
+            BtnOption2.setBackgroundResource(R.drawable.box_round_selected);
             BigDecimal kavaIncentiveCal = mKavaIncetiveAmount.multiply(mIncentiveParam.getFactor(BaseChain.KAVA_MAIN.INSTANCE.getMainDenom(), 1)).setScale(0, RoundingMode.DOWN);
             BigDecimal hardIncentiveCal = mHardIncetiveAmount.multiply(mIncentiveParam.getFactor(TOKEN_HARD, 1)).setScale(0, RoundingMode.DOWN);
             BigDecimal swpIncentiveCal = mSwpIncetiveAmount.multiply(mIncentiveParam.getFactor(TOKEN_SWP, 1)).setScale(0, RoundingMode.DOWN);
@@ -131,8 +131,8 @@ public class ClaimIncentiveStep0Fragment extends BaseFragment implements View.On
     }
 
     private void onInitBtnBg() {
-        BtnOption1.setBackground(getResources().getDrawable(R.drawable.box_round_unselected));
-        BtnOption2.setBackground(getResources().getDrawable(R.drawable.box_round_unselected));
+        BtnOption1.setBackgroundResource(R.drawable.box_round_unselected);
+        BtnOption2.setBackgroundResource(R.drawable.box_round_unselected);
     }
 
     private ClaimIncentiveActivity getSActivity() {

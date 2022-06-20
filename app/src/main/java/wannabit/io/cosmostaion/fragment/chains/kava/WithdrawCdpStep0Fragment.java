@@ -145,12 +145,12 @@ public class WithdrawCdpStep0Fragment extends BaseFragment implements View.OnCli
             public void afterTextChanged(Editable et) {
                 String es = et.toString().trim();
                 if (TextUtils.isEmpty(es)) {
-                    mCollateralInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mCollateralInput.setBackgroundResource(R.drawable.edittext_box);
                 } else if (es.startsWith(".")) {
-                    mCollateralInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mCollateralInput.setBackgroundResource(R.drawable.edittext_box);
                     mCollateralInput.setText("");
                 } else if (es.endsWith(".")) {
-                    mCollateralInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                    mCollateralInput.setBackgroundResource(R.drawable.edittext_box_error);
                     return;
                 } else if (es.length() > 1 && es.startsWith("0") && !es.startsWith("0.")) {
                     mCollateralInput.setText("0");
@@ -164,7 +164,7 @@ public class WithdrawCdpStep0Fragment extends BaseFragment implements View.OnCli
                     try {
                         final BigDecimal inputAmount = new BigDecimal(es);
                         if (BigDecimal.ZERO.compareTo(inputAmount) >= 0) {
-                            mCollateralInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mCollateralInput.setBackgroundResource(R.drawable.edittext_box_error);
                             return;
                         }
 
@@ -178,10 +178,10 @@ public class WithdrawCdpStep0Fragment extends BaseFragment implements View.OnCli
                         }
 
                         if (mCanWithdrawMaxMaxAmount.compareTo(checkPosition) < 0) {
-                            mCollateralInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mCollateralInput.setBackgroundResource(R.drawable.edittext_box_error);
 
                         } else {
-                            mCollateralInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                            mCollateralInput.setBackgroundResource(R.drawable.edittext_box);
                         }
                         mCollateralInput.setSelection(mCollateralInput.getText().length());
 
@@ -207,7 +207,7 @@ public class WithdrawCdpStep0Fragment extends BaseFragment implements View.OnCli
             if (mToWithdrawAmount.compareTo(BigDecimal.ZERO) <= 0 || mCanWithdrawMaxMaxAmount.compareTo(mToWithdrawAmount) < 0) {
                 mBtnNext.setText(R.string.str_next);
                 mBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_btn_photon));
-                mBtnNext.setBackground(getResources().getDrawable(R.drawable.btn_trans_with_border));
+                mBtnNext.setBackgroundResource(R.drawable.btn_trans_with_border);
                 mBtnNext.setTypeface(null, Typeface.NORMAL);
                 mAfterRiskLayer.setVisibility(View.INVISIBLE);
                 mAfterDepositAmount.setVisibility(View.GONE);
@@ -228,7 +228,7 @@ public class WithdrawCdpStep0Fragment extends BaseFragment implements View.OnCli
         } catch (Exception e) {
             mBtnNext.setText(R.string.str_next);
             mBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_btn_photon));
-            mBtnNext.setBackground(getResources().getDrawable(R.drawable.btn_trans_with_border));
+            mBtnNext.setBackgroundResource(R.drawable.btn_trans_with_border);
             mBtnNext.setTypeface(null, Typeface.NORMAL);
             return false;
 

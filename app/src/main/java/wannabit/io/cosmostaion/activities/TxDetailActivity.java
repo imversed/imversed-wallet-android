@@ -132,7 +132,7 @@ public class TxDetailActivity extends BaseActivity implements View.OnClickListen
         if (TextUtils.isEmpty(mTxHash)) {
             mLoadingLayer.setVisibility(View.GONE);
             mErrorCardView.setVisibility(View.VISIBLE);
-            mErrorMsgTv.setText(getString(R.string.error_network));
+            mErrorMsgTv.setText(R.string.error_network);
             return;
         }
 
@@ -143,7 +143,7 @@ public class TxDetailActivity extends BaseActivity implements View.OnClickListen
             mLoadingLayer.setVisibility(View.GONE);
             mErrorCardView.setVisibility(View.VISIBLE);
             if (mErrorCode == ERROR_CODE_BROADCAST) {
-                mErrorMsgTv.setText(getString(R.string.error_network));
+                mErrorMsgTv.setText(R.string.error_network);
             } else {
                 mErrorMsgTv.setText("error code : " + mErrorCode + "\n" + mErrorMsg);
             }
@@ -664,16 +664,16 @@ public class TxDetailActivity extends BaseActivity implements View.OnClickListen
             if (getBaseChain().equals(BNB_MAIN.INSTANCE)) {
                 final Msg msg = mResBnbTxInfo.getMsg(position - 1);
                 if (getAccount().address.equals(msg.value.from)) {
-                    holder.itemMsgTitle.setText(getString(R.string.tx_send_htlc2));
+                    holder.itemMsgTitle.setText(R.string.tx_send_htlc2);
                     holder.itemSender.setText(msg.value.from);
                     holder.itemRecipient.setText(msg.value.recipient_other_chain);
 
                 } else if (getAccount().address.equals(msg.value.to)) {
-                    holder.itemMsgTitle.setText(getString(R.string.tx_receive_htlc2));
+                    holder.itemMsgTitle.setText(R.string.tx_receive_htlc2);
                     holder.itemSender.setText(msg.value.sender_other_chain);
                     holder.itemRecipient.setText(msg.value.to);
                 } else {
-                    holder.itemMsgTitle.setText(getString(R.string.tx_create_htlc2));
+                    holder.itemMsgTitle.setText(R.string.tx_create_htlc2);
                     holder.itemSender.setText(msg.value.from);
                     holder.itemRecipient.setText(msg.value.to);
                 }
@@ -738,10 +738,10 @@ public class TxDetailActivity extends BaseActivity implements View.OnClickListen
                 final Msg msg = mResTxInfo.getMsg(position - 1);
                 if (msg.type.equals(OK_MSG_TYPE_DEPOSIT)) {
                     holder.itemMsgTitle.setText(R.string.str_staking);
-                    holder.itemMsgImg.setImageDrawable(getResources().getDrawable(R.drawable.deposit_ic));
+                    holder.itemMsgImg.setImageResource(R.drawable.deposit_ic);
                 } else if (msg.type.equals(OK_MSG_TYPE_WITHDRAW)) {
                     holder.itemMsgTitle.setText(R.string.str_to_unbonding);
-                    holder.itemMsgImg.setImageDrawable(getResources().getDrawable(R.drawable.withdraw_ic));
+                    holder.itemMsgImg.setImageResource(R.drawable.withdraw_ic);
                 }
                 try {
                     holder.itemDeleagtor.setText(WalletUtils.INSTANCE.convertAddressOkexToEth(msg.value.delegator_address));

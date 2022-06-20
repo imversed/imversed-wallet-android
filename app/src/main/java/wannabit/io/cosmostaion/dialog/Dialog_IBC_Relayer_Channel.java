@@ -70,18 +70,15 @@ public class Dialog_IBC_Relayer_Channel extends DialogFragment {
             final IbcPath.Path path = mIbcSendablePaths.get(position);
             holder.channelTitle.setText(path.channel_id);
             if (path.auth == null) {
-                holder.channelStatus.setImageDrawable(getSActivity().getDrawable(R.drawable.unknown));
+                holder.channelStatus.setImageResource(R.drawable.unknown);
             } else if (path.auth) {
-                holder.channelStatus.setImageDrawable(getSActivity().getDrawable(R.drawable.wellknown));
+                holder.channelStatus.setImageResource(R.drawable.wellknown);
             }
-            holder.rootLayer.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent resultIntent = new Intent();
-                    resultIntent.putExtra("position", position);
-                    getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, resultIntent);
-                    dismiss();
-                }
+            holder.rootLayer.setOnClickListener(v -> {
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("position", position);
+                getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, resultIntent);
+                dismiss();
             });
         }
 

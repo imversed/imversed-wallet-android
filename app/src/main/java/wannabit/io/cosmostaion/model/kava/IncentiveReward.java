@@ -1,7 +1,5 @@
 package wannabit.io.cosmostaion.model.kava;
 
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HARD;
-
 import com.fulldive.wallet.models.BaseChain;
 import com.google.gson.annotations.SerializedName;
 
@@ -44,37 +42,6 @@ public class IncentiveReward {
                 if (index.collateral_type.equals(denom)) {
                     if (index.reward_indexes != null && index.reward_indexes.size() > 0) {
                         result = new BigDecimal(index.reward_indexes.get(0).reward_factor);
-                    }
-                }
-            }
-        }
-        return result;
-    }
-
-
-    public BigDecimal getHardPoolRewardCnt() {
-        BigDecimal result = BigDecimal.ZERO;
-        if (hard_claims != null) {
-            result = new BigDecimal(hard_claims.size());
-        }
-        return result;
-    }
-
-    public BigDecimal getMintingRewardCnt() {
-        BigDecimal result = BigDecimal.ZERO;
-        if (usdx_minting_claims != null) {
-            result = new BigDecimal(usdx_minting_claims.size());
-        }
-        return result;
-    }
-
-    public BigDecimal getHardPoolHardRewardAmount() {
-        BigDecimal result = BigDecimal.ZERO;
-        for (HardClaim reward : hard_claims) {
-            if (reward.base_claim.reward != null) {
-                for (Coin coin : reward.base_claim.reward) {
-                    if (coin.denom.equals(TOKEN_HARD)) {
-                        result = result.add(new BigDecimal(coin.amount));
                     }
                 }
             }

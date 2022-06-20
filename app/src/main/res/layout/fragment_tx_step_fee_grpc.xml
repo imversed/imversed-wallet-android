@@ -19,26 +19,26 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_12"
-                android:layout_marginEnd="@dimen/space_12"
                 android:layout_marginTop="@dimen/space_2"
-                app:cardPreventCornerOverlap="true"
+                android:layout_marginEnd="@dimen/space_12"
+                app:cardBackgroundColor="@color/colorTransBgCosmos"
                 app:cardCornerRadius="@dimen/space_6"
                 app:cardElevation="1.5dp"
-                app:cardBackgroundColor="@color/colorTransBgCosmos"
+                app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:gravity="center"
+                    android:orientation="vertical"
                     android:padding="@dimen/space_16">
 
                     <TextView
+                        style="@style/font_ss_12_gray1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total Fee"
-                        style="@style/font_ss_12_gray1" />
+                        android:text="Total Fee" />
 
                     <RelativeLayout
                         android:layout_width="wrap_content"
@@ -47,28 +47,28 @@
 
                         <TextView
                             android:id="@+id/fee_amount"
+                            style="@style/font_ss_17_white"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="-"
-                            style="@style/font_ss_17_white" />
+                            android:text="-" />
 
                         <TextView
                             android:id="@+id/fee_denom"
+                            style="@style/font_ss_14_atom"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/fee_amount"
                             android:layout_alignBaseline="@+id/fee_amount"
                             android:layout_marginStart="@dimen/space_2"
-                            android:text="@string/str_atom_c"
-                            style="@style/font_ss_14_atom" />
+                            android:layout_toEndOf="@+id/fee_amount"
+                            android:text="@string/str_atom_c" />
                     </RelativeLayout>
 
                     <TextView
                         android:id="@+id/fee_value"
+                        style="@style/font_ss_14_white"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/space_2"
-                        style="@style/font_ss_14_white"
                         android:text="-" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -79,10 +79,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_12"
                 android:layout_marginEnd="@dimen/space_12"
-                app:cardPreventCornerOverlap="true"
+                app:cardBackgroundColor="@color/colorTransBg"
                 app:cardCornerRadius="@dimen/space_6"
                 app:cardElevation="1.5dp"
-                app:cardBackgroundColor="@color/colorTransBg"
+                app:cardPreventCornerOverlap="true"
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout
@@ -94,27 +94,27 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center">
+                        android:gravity="center"
+                        android:orientation="horizontal">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
-                            android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/gas_amount"
+                                style="@style/font_ss_12_white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                style="@style/font_ss_12_white"
                                 android:text="-" />
 
                             <TextView
+                                style="@style/font_ss_11_gray1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                style="@style/font_ss_11_gray1"
                                 android:text="@string/str_gas_amount" />
                         </LinearLayout>
 
@@ -122,13 +122,13 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:orientation="vertical">
 
                             <TextView
+                                style="@style/font_ss_17_gray1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                style="@style/font_ss_17_gray1"
                                 android:text="X" />
                         </LinearLayout>
 
@@ -136,20 +136,20 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="3"
-                            android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/gas_rate"
+                                style="@style/font_ss_12_white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                style="@style/font_ss_12_white"
                                 android:text="-" />
 
                             <TextView
+                                style="@style/font_ss_11_gray1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                style="@style/font_ss_11_gray1"
                                 android:text="@string/str_gas_rate" />
                         </LinearLayout>
 
@@ -157,13 +157,13 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:orientation="vertical">
 
                             <TextView
+                                style="@style/font_ss_24_gray1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                style="@style/font_ss_24_gray1"
                                 android:text="=" />
                         </LinearLayout>
 
@@ -171,20 +171,20 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:orientation="vertical"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:orientation="vertical">
 
                             <TextView
                                 android:id="@+id/gas_fee"
+                                style="@style/font_ss_15_white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                style="@style/font_ss_15_white"
                                 android:text="-" />
 
                             <TextView
+                                style="@style/font_ss_11_gray1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                style="@style/font_ss_11_gray1"
                                 android:text="@string/str_fee_amount" />
                         </LinearLayout>
 
@@ -196,8 +196,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/space_16"
-                        android:elevation="2dp"
                         android:background="@color/colorTransBg"
+                        android:elevation="2dp"
                         app:borderColor="@color/colorGray1"
                         app:borderWidth="1dp"
                         app:divider="@color/colorGray1"
@@ -214,11 +214,11 @@
                             android:layout_height="@dimen/space_32"
                             android:layout_weight="1"
                             android:padding="10dp"
-                            app:textSize="@dimen/text_size_12"
+                            app:borderColor="@color/colorGray1"
                             app:selectedTextColor="@color/colorWhite"
                             app:text="@string/str_tiny"
-                            app:borderColor="@color/colorGray1"
-                            app:textColor="@color/colorWhite" />
+                            app:textColor="@color/colorWhite"
+                            app:textSize="@dimen/text_size_12" />
 
                         <com.addisonelliott.segmentedbutton.SegmentedButton
                             android:id="@+id/btn_low"
@@ -226,11 +226,11 @@
                             android:layout_height="@dimen/space_32"
                             android:layout_weight="1"
                             android:padding="10dp"
-                            app:textSize="@dimen/text_size_12"
+                            app:borderColor="@color/colorGray1"
                             app:selectedTextColor="@color/colorWhite"
                             app:text="@string/str_low"
-                            app:borderColor="@color/colorGray1"
-                            app:textColor="@color/colorWhite" />
+                            app:textColor="@color/colorWhite"
+                            app:textSize="@dimen/text_size_12" />
 
                         <com.addisonelliott.segmentedbutton.SegmentedButton
                             android:id="@+id/btn_average"
@@ -238,11 +238,11 @@
                             android:layout_height="@dimen/space_32"
                             android:layout_weight="1"
                             android:padding="10dp"
-                            app:textSize="@dimen/text_size_12"
+                            app:borderColor="@color/colorGray1"
                             app:selectedTextColor="@color/colorWhite"
                             app:text="@string/str_average"
-                            app:borderColor="@color/colorGray1"
-                            app:textColor="@color/colorWhite" />
+                            app:textColor="@color/colorWhite"
+                            app:textSize="@dimen/text_size_12" />
                     </com.addisonelliott.segmentedbutton.SegmentedButtonGroup>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -258,8 +258,8 @@
         android:layout_above="@+id/bottom_control_layer"
         android:layout_marginTop="@dimen/space_16"
         android:layout_marginBottom="@dimen/space_24"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/speed_img"
@@ -268,21 +268,21 @@
             android:src="@drawable/bycicle_img" />
 
         <TextView
+            style="@style/font_ssm_14_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginTop="@dimen/space_2"
-            style="@style/font_ssm_14_white"
-            android:text="Cosmostation Wallet is a free service." />
+            android:gravity="center"
+            android:text="@string/str_fee_fdwallet" />
 
         <TextView
             android:id="@+id/speed_txt"
+            style="@style/font_ss_12_gray1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/space_36"
             android:layout_marginEnd="@dimen/space_36"
             android:gravity="center"
-            style="@style/font_ss_12_gray1"
             android:text="@string/str_fee_speed_title_0" />
     </LinearLayout>
 
@@ -290,30 +290,30 @@
         android:id="@+id/bottom_control_layer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="@dimen/space_16"
         android:layout_marginEnd="@dimen/space_16"
-        android:layout_marginBottom="@dimen/space_24">
+        android:layout_marginBottom="@dimen/space_24"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/btn_gas_check"
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_45"
-            android:minHeight="@dimen/space_45"
             android:background="@drawable/btn_trans_with_border"
-            android:clickable="true">
+            android:clickable="true"
+            android:minHeight="@dimen/space_45">
 
             <TextView
+                style="@style/font_ss_14_photon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:drawableLeft="@drawable/icon_gas"
-                android:drawableTint="@color/colorPhoton"
                 android:drawablePadding="@dimen/space_4"
                 android:gravity="center"
-                style="@style/font_ss_14_photon"
-                android:text="@string/str_check_estimate_gas_amount" />
+                android:text="@string/str_check_estimate_gas_amount"
+                app:drawableStartCompat="@drawable/icon_gas"
+                app:drawableTint="@color/colorPhoton" />
         </RelativeLayout>
 
         <LinearLayout
@@ -324,28 +324,28 @@
 
             <Button
                 android:id="@+id/btn_before"
+                style="@style/font_ss_14_white"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/space_45"
-                android:layout_weight="1"
-                android:minHeight="@dimen/space_45"
                 android:layout_marginEnd="@dimen/space_4"
+                android:layout_weight="1"
                 android:background="@drawable/btn_trans_with_border"
-                style="@style/font_ss_14_white"
-                android:textAllCaps="false"
-                android:text="@string/str_back" />
+                android:minHeight="@dimen/space_45"
+                android:text="@string/str_back"
+                android:textAllCaps="false" />
 
             <Button
                 android:id="@+id/nextButton"
+                style="@style/font_ss_14_photon"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/space_45"
-                android:layout_weight="1"
-                android:minHeight="@dimen/space_45"
                 android:layout_marginStart="@dimen/space_4"
+                android:layout_weight="1"
                 android:background="@drawable/btn_trans_with_border"
-                style="@style/font_ss_14_photon"
-                android:textColor="@color/color_btn_photon"
+                android:minHeight="@dimen/space_45"
+                android:text="@string/str_next"
                 android:textAllCaps="false"
-                android:text="@string/str_next" />
+                android:textColor="@color/color_btn_photon" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

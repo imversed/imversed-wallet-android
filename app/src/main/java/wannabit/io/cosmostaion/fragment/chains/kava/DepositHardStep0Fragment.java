@@ -100,12 +100,12 @@ public class DepositHardStep0Fragment extends BaseFragment implements View.OnCli
             public void afterTextChanged(Editable et) {
                 String es = et.toString().trim();
                 if (TextUtils.isEmpty(es)) {
-                    mDepositInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mDepositInput.setBackgroundResource(R.drawable.edittext_box);
                 } else if (es.startsWith(".")) {
-                    mDepositInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mDepositInput.setBackgroundResource(R.drawable.edittext_box);
                     mDepositInput.setText("");
                 } else if (es.endsWith(".")) {
-                    mDepositInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                    mDepositInput.setBackgroundResource(R.drawable.edittext_box_error);
                     mDepositInput.setVisibility(View.VISIBLE);
                 } else if (es.length() > 1 && es.startsWith("0") && !es.startsWith("0.")) {
                     mDepositInput.setText("0");
@@ -119,7 +119,7 @@ public class DepositHardStep0Fragment extends BaseFragment implements View.OnCli
                     try {
                         final BigDecimal inputAmount = new BigDecimal(es);
                         if (BigDecimal.ZERO.compareTo(inputAmount) >= 0) {
-                            mDepositInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mDepositInput.setBackgroundResource(R.drawable.edittext_box_error);
                             return;
                         }
 
@@ -132,9 +132,9 @@ public class DepositHardStep0Fragment extends BaseFragment implements View.OnCli
                             return;
                         }
                         if (inputAmount.compareTo(mMaxAvailable.movePointLeft(mDpDecimal).setScale(mDpDecimal, RoundingMode.CEILING)) > 0) {
-                            mDepositInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mDepositInput.setBackgroundResource(R.drawable.edittext_box_error);
                         } else {
-                            mDepositInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                            mDepositInput.setBackgroundResource(R.drawable.edittext_box);
                         }
                         mDepositInput.setSelection(mDepositInput.getText().length());
                     } catch (Exception e) {

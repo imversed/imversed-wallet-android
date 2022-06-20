@@ -3,16 +3,14 @@ package wannabit.io.cosmostaion.activities.tokenDetail;
 import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_IBC_TRANSFER;
 import static wannabit.io.cosmostaion.base.BaseConstant.CONST_PW_TX_SIMPLE_SEND;
-import static wannabit.io.cosmostaion.base.BaseConstant.EMONEY_COIN_IMG_URL;
 import static wannabit.io.cosmostaion.base.BaseConstant.KAVA_COIN_IMG_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_FD;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HARD;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_ION;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_SWP;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_USDX;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +29,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.Currency;
+import com.fulldive.wallet.models.Token;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.squareup.picasso.Picasso;
 
@@ -143,42 +142,52 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
         final Currency currency = settingsInteractor.getCurrency();
         final PriceProvider priceProvider = this::getPrice;
         mBtnAddressPopup.setCardBackgroundColor(WDp.getChainBgColor(NativeTokenGrpcActivity.this, getBaseChain()));
-        mBtnIbcSend.setVisibility(View.VISIBLE);
-        if (getBaseChain().equals(BaseChain.OSMOSIS_MAIN.INSTANCE)) {
-            WUtil.DpOsmosisTokenImg(getBaseDao(), mToolbarSymbolImg, mNativeGrpcDenom);
-            mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorIon));
-            mToolbarSymbol.setText(getString(R.string.str_uion_c));
-            if (mNativeGrpcDenom.equalsIgnoreCase(TOKEN_ION)) {
-                mDivideDecimal = 6;
+        if (WUtil.isBep3Coin(mNativeGrpcDenom)) {
+            mBtnIbcSend.setVisibility(View.GONE);
+        } else {
+            mBtnIbcSend.setVisibility(View.VISIBLE);
+        }
 
-                mTotalAmount = getBalance(mNativeGrpcDenom);
+        final Token token = getBaseChain().getToken(mNativeGrpcDenom);
+
+        if (token != null) {
+            mToolbarSymbol.setText(token.getSymbol());
+            mToolbarSymbol.setTextColor(ContextCompat.getColor(this, token.getCoinColorRes()));
+            mDivideDecimal = token.getDivideDecimal();
+
+            final String coinIcon = token.getCoinIcon();
+
+            if (!TextUtils.isEmpty(coinIcon)) {
+                Picasso.get()
+                        .load(coinIcon)
+                        .fit()
+                        .placeholder(token.getCoinIconRes())
+                        .error(token.getCoinIconRes())
+                        .into(mToolbarSymbolImg);
+            } else {
+                Picasso.get().cancelRequest(mToolbarSymbolImg);
+                mToolbarSymbolImg.setImageResource(token.getCoinIconRes());
             }
-
-        } else if ((getBaseChain().equals(BaseChain.IMVERSED_MAIN.INSTANCE) || getBaseChain().equals(BaseChain.IMVERSED_TEST.INSTANCE)) && mNativeGrpcDenom.equalsIgnoreCase(TOKEN_FD)) {
-            mDivideDecimal = 0;
-            mTotalAmount = getBalance(mNativeGrpcDenom);
-        } else if (getBaseChain().equals(BaseChain.EMONEY_MAIN.INSTANCE)) {
-            mToolbarSymbol.setText(mNativeGrpcDenom.toUpperCase());
-            Picasso.get().load(EMONEY_COIN_IMG_URL + mNativeGrpcDenom + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(mToolbarSymbolImg);
-            mTotalAmount = getBalance(mNativeGrpcDenom);
-
-        } else if (getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             if (mNativeGrpcDenom.equalsIgnoreCase(TOKEN_HARD)) {
-                mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorHard));
                 mBtnAddressPopup.setCardBackgroundColor(ContextCompat.getColor(this, R.color.colorTransBghard));
             } else if (mNativeGrpcDenom.equalsIgnoreCase(TOKEN_USDX)) {
-                mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorUsdx));
                 mBtnAddressPopup.setCardBackgroundColor(ContextCompat.getColor(this, R.color.colorTransBgusdx));
             } else if (mNativeGrpcDenom.equalsIgnoreCase(TOKEN_SWP)) {
-                mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorSwp));
                 mBtnAddressPopup.setCardBackgroundColor(ContextCompat.getColor(this, R.color.colorTransBgswp));
+            } else {
+                mBtnAddressPopup.setCardBackgroundColor(ContextCompat.getColor(this, R.color.colorTransBgOsmosis));
             }
+
+            mTotalAmount = getBalance(mNativeGrpcDenom);
+        } else if (getBaseChain().equals(BaseChain.OSMOSIS_MAIN.INSTANCE)) {
+            WUtil.DpOsmosisTokenImg(getBaseDao(), mToolbarSymbolImg, mNativeGrpcDenom);
+            mToolbarSymbol.setTextColor(ContextCompat.getColor(this, R.color.colorIon));
+            mToolbarSymbol.setText(R.string.str_uion_c);
+
+        } else if (getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             mToolbarSymbol.setText(mNativeGrpcDenom.toUpperCase());
             Picasso.get().load(KAVA_COIN_IMG_URL + mNativeGrpcDenom + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(mToolbarSymbolImg);
             mTotalAmount = getBalance(mNativeGrpcDenom);
-            if (WUtil.isBep3Coin(mNativeGrpcDenom)) {
-                mBtnIbcSend.setVisibility(View.GONE);
-            }
         }
 
         mItemPerPrice.setText(WDp.dpPerUserCurrencyValue(getBaseDao(), currency, mNativeGrpcDenom, priceProvider));
@@ -203,7 +212,6 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
         }
         mSwipeRefreshLayout.setRefreshing(false);
     }
-
 
     @Override
     public void onClick(View v) {

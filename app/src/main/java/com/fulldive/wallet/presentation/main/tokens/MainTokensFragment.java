@@ -2,7 +2,6 @@ package com.fulldive.wallet.presentation.main.tokens;
 
 import static com.fulldive.wallet.models.BaseChain.BNB_MAIN;
 import static com.fulldive.wallet.models.BaseChain.COSMOS_MAIN;
-import static com.fulldive.wallet.models.BaseChain.EMONEY_MAIN;
 import static com.fulldive.wallet.models.BaseChain.GRABRIDGE_MAIN;
 import static com.fulldive.wallet.models.BaseChain.INJ_MAIN;
 import static com.fulldive.wallet.models.BaseChain.JUNO_MAIN;
@@ -10,15 +9,10 @@ import static com.fulldive.wallet.models.BaseChain.KAVA_MAIN;
 import static com.fulldive.wallet.models.BaseChain.OKEX_MAIN;
 import static com.fulldive.wallet.models.BaseChain.OSMOSIS_MAIN;
 import static com.fulldive.wallet.models.BaseChain.SIF_MAIN;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_FD;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HARD;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HTLC_KAVA_BNB;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HTLC_KAVA_BTCB;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HTLC_KAVA_BUSD;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HTLC_KAVA_XRPB;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_ION;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_SWP;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_USDX;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -38,12 +32,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.interactors.balances.BalancesInteractor;
 import com.fulldive.wallet.interactors.settings.SettingsInteractor;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.Currency;
 import com.fulldive.wallet.models.WalletBalance;
-import com.fulldive.wallet.models.Token;
 import com.fulldive.wallet.presentation.accounts.AccountShowDialogFragment;
 import com.fulldive.wallet.presentation.main.MainActivity;
 
@@ -111,6 +105,7 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
     private BaseChain baseChain;
     private SettingsInteractor settingsInteractor;
     private BalancesInteractor balancesInteractor;
+    private AccountsInteractor accountsInteractor;
 
     private PriceProvider priceProvider;
 
@@ -125,6 +120,7 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
         super.onCreate(savedInstanceState);
         settingsInteractor = getAppInjector().getInstance(SettingsInteractor.class);
         balancesInteractor = getAppInjector().getInstance(BalancesInteractor.class);
+        accountsInteractor = getAppInjector().getInstance(AccountsInteractor.class);
         priceProvider = getMainActivity()::getPrice;
 
         setHasOptionsMenu(true);
@@ -176,9 +172,10 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
         recyclerViewHeader.baseChain = baseChain;
         adapter.baseChain = baseChain;
         adapter.currency = getCurrency();
+        adapter.balancesInteractor = balancesInteractor;
+        adapter.accountsInteractor = accountsInteractor;
         adapter.priceProvider = priceProvider;
         adapter.baseData = getBaseDao();
-        adapter.onBalanceProvider = denom -> getMainActivity().getFullBalance(denom);
         adapter.itemsClickListeners = new TokensAdapter.OnItemsClickListeners() {
             @Override
             public void onStackingTokenClicked(String denom) {
@@ -371,8 +368,6 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
     }
 
     private void onUpdateView() {
-        final Token mainToken = baseChain.getMainToken();
-        final String mainDenom = mainToken.getDenom();
         CW20Items = getBaseDao().getCw20sGrpc(baseChain);
         ibcAuthedItems.clear();
         osmosisPoolItems.clear();
@@ -387,7 +382,8 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
         List<WalletBalance> balances = getBalances();
 
         for (WalletBalance balance : balances) {
-            if (balance.getDenom().equalsIgnoreCase(mainDenom)) {
+            final String denom = balance.getDenom();
+            if (baseChain.getToken(denom) != null) {
                 nativeItems.add(balance);
             } else if (baseChain.equals(OKEX_MAIN.INSTANCE) || baseChain.equals(BNB_MAIN.INSTANCE)) {
                 etcItems.add(balance);
@@ -400,10 +396,6 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
                 }
             } else if (baseChain.equals(OSMOSIS_MAIN.INSTANCE) && balance.osmosisAmm()) {
                 osmosisPoolItems.add(balance);
-            } else if (baseChain.equals(OSMOSIS_MAIN.INSTANCE) && balance.getDenom().equalsIgnoreCase(TOKEN_ION) ||
-                    baseChain.equals(EMONEY_MAIN.INSTANCE) && balance.getDenom().startsWith("e") ||
-                    (baseChain.equals(BaseChain.IMVERSED_MAIN.INSTANCE) || baseChain.equals(BaseChain.IMVERSED_TEST.INSTANCE)) && balance.getDenom().equalsIgnoreCase(TOKEN_FD)) {
-                nativeItems.add(balance);
             } else if (baseChain.equals(SIF_MAIN.INSTANCE) && balance.getDenom().startsWith("c") ||
                     baseChain.equals(GRABRIDGE_MAIN.INSTANCE) && balance.getDenom().startsWith("gravity") ||
                     baseChain.equals(INJ_MAIN.INSTANCE) && balance.getDenom().startsWith("peggy")) {
@@ -413,9 +405,7 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
             } else if (baseChain.equals(INJ_MAIN.INSTANCE) && balance.getDenom().startsWith("share")) {
                 injectivePoolItems.add(balance);
             } else if (baseChain.equals(KAVA_MAIN.INSTANCE)) {
-                if (balance.getDenom().equals(TOKEN_HARD) || balance.getDenom().equalsIgnoreCase(TOKEN_USDX) || balance.getDenom().equalsIgnoreCase(TOKEN_SWP)) {
-                    nativeItems.add(balance);
-                } else if (balance.getDenom().equalsIgnoreCase(TOKEN_HTLC_KAVA_BNB) || balance.getDenom().equalsIgnoreCase(TOKEN_HTLC_KAVA_BTCB) ||
+                if (balance.getDenom().equalsIgnoreCase(TOKEN_HTLC_KAVA_BNB) || balance.getDenom().equalsIgnoreCase(TOKEN_HTLC_KAVA_BTCB) ||
                         balance.getDenom().equalsIgnoreCase(TOKEN_HTLC_KAVA_XRPB) || balance.getDenom().equalsIgnoreCase(TOKEN_HTLC_KAVA_BUSD)) {
                     kavaBep2Items.add(balance);
                 } else if (balance.getDenom().equalsIgnoreCase("btch") || balance.getDenom().equalsIgnoreCase("hbtc")) {
@@ -463,7 +453,6 @@ public class MainTokensFragment extends BaseFragment implements IBusyFetchListen
     private List<WalletBalance> getBalances() {
         return balancesInteractor.getBalances(account.id).blockingGet();
     }
-
 
     private void showAddressDialog() {
         AccountShowDialogFragment show = AccountShowDialogFragment.Companion.newInstance(

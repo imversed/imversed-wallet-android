@@ -176,7 +176,7 @@ public class IBCSendStep1Fragment extends BaseFragment implements View.OnClickLi
 
         } else if (v.equals(mBtnWallet)) {
             if (mTochain == null || mToAccountList.size() <= 0) {
-                Toast.makeText(getSActivity(), getString(R.string.error_no_wallet_this_chain), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getSActivity(), R.string.error_no_wallet_this_chain, Toast.LENGTH_SHORT).show();
                 return;
             } else {
                 Bundle bundle = new Bundle();

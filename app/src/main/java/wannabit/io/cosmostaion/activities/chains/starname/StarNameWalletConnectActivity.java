@@ -66,12 +66,12 @@ public class StarNameWalletConnectActivity extends BaseActivity implements View.
             switch (msg.what) {
                 case MSG_WC_DISCONNECTED:
                     mSession.clearCallbacks();
-                    Toast.makeText(getBaseContext(), getString(R.string.str_wc_disconnected), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), R.string.str_wc_disconnected, Toast.LENGTH_SHORT).show();
                     if (!isFinishing()) onBackPressed();
                     break;
 
                 case MSG_WC_CLOSED:
-                    Toast.makeText(getBaseContext(), getString(R.string.str_wc_closed), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), R.string.str_wc_closed, Toast.LENGTH_SHORT).show();
                     if (!isFinishing()) onBackPressed();
                     break;
 

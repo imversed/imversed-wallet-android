@@ -34,19 +34,11 @@ public class Dialog_Not_Top_100 extends DialogFragment {
         Button btn_negative = view.findViewById(R.id.negativeButton);
         Button btn_positive = view.findViewById(R.id.positiveButton);
 
-        btn_negative.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
+        btn_negative.setOnClickListener(v -> dismiss());
 
-        btn_positive.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getTopActivity().onStartDelegate();
-                dismiss();
-            }
+        btn_positive.setOnClickListener(v -> {
+            getTopActivity().onStartDelegate();
+            dismiss();
         });
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

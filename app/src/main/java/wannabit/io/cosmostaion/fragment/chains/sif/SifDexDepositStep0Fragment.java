@@ -177,12 +177,12 @@ public class SifDexDepositStep0Fragment extends BaseFragment implements View.OnC
                 String es = et.toString().trim();
                 onUpdateInput1Et(es);
                 if (TextUtils.isEmpty(es)) {
-                    mJoinPoolInput0.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mJoinPoolInput0.setBackgroundResource(R.drawable.edittext_box);
                 } else if (es.startsWith(".")) {
-                    mJoinPoolInput0.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mJoinPoolInput0.setBackgroundResource(R.drawable.edittext_box);
                     mJoinPoolInput0.setText("");
                 } else if (es.endsWith(".")) {
-                    mJoinPoolInput0.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                    mJoinPoolInput0.setBackgroundResource(R.drawable.edittext_box_error);
                     mJoinPoolInput0.setVisibility(View.VISIBLE);
                 } else if (mJoinPoolInput0.length() > 1 && es.startsWith("0") && !es.startsWith("0.")) {
                     mJoinPoolInput0.setText("0");
@@ -196,7 +196,7 @@ public class SifDexDepositStep0Fragment extends BaseFragment implements View.OnC
                     try {
                         final BigDecimal inputAmount = new BigDecimal(es);
                         if (BigDecimal.ZERO.compareTo(inputAmount) >= 0) {
-                            mJoinPoolInput0.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mJoinPoolInput0.setBackgroundResource(R.drawable.edittext_box_error);
                             return;
                         }
 
@@ -210,9 +210,9 @@ public class SifDexDepositStep0Fragment extends BaseFragment implements View.OnC
                         }
 
                         if (inputAmount.compareTo(mRowanMaxAmount.movePointLeft(mRowanDecimal).setScale(mRowanDecimal, RoundingMode.CEILING)) > 0) {
-                            mJoinPoolInput0.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mJoinPoolInput0.setBackgroundResource(R.drawable.edittext_box_error);
                         } else {
-                            mJoinPoolInput0.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                            mJoinPoolInput0.setBackgroundResource(R.drawable.edittext_box);
                         }
                         mJoinPoolInput0.setSelection(mJoinPoolInput0.getText().length());
 
@@ -236,12 +236,12 @@ public class SifDexDepositStep0Fragment extends BaseFragment implements View.OnC
                 String es = et.toString().trim();
                 onUpdateInput0Et(es);
                 if (TextUtils.isEmpty(es)) {
-                    mJoinPoolInput1.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mJoinPoolInput1.setBackgroundResource(R.drawable.edittext_box);
                 } else if (es.startsWith(".")) {
-                    mJoinPoolInput1.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mJoinPoolInput1.setBackgroundResource(R.drawable.edittext_box);
                     mJoinPoolInput1.setText("");
                 } else if (es.endsWith(".")) {
-                    mJoinPoolInput1.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                    mJoinPoolInput1.setBackgroundResource(R.drawable.edittext_box_error);
                     mJoinPoolInput1.setVisibility(View.VISIBLE);
                 } else if (mJoinPoolInput1.length() > 1 && es.startsWith("0") && !es.startsWith("0.")) {
                     mJoinPoolInput1.setText("0");
@@ -255,7 +255,7 @@ public class SifDexDepositStep0Fragment extends BaseFragment implements View.OnC
                     try {
                         final BigDecimal inputAmount = new BigDecimal(es);
                         if (BigDecimal.ZERO.compareTo(inputAmount) >= 0) {
-                            mJoinPoolInput1.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mJoinPoolInput1.setBackgroundResource(R.drawable.edittext_box_error);
                             return;
                         }
 
@@ -269,9 +269,9 @@ public class SifDexDepositStep0Fragment extends BaseFragment implements View.OnC
                         }
 
                         if (inputAmount.compareTo(mExternalMaxAmount.movePointLeft(mExternalDecimal).setScale(mExternalDecimal, RoundingMode.CEILING)) > 0) {
-                            mJoinPoolInput1.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mJoinPoolInput1.setBackgroundResource(R.drawable.edittext_box_error);
                         } else {
-                            mJoinPoolInput1.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                            mJoinPoolInput1.setBackgroundResource(R.drawable.edittext_box);
                         }
                         mJoinPoolInput1.setSelection(mJoinPoolInput1.getText().length());
 

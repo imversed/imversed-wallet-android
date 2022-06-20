@@ -86,10 +86,10 @@ public class StepMemoFragment extends BaseFragment implements View.OnClickListen
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 String memo = mMemo.getText().toString().trim();
                 if (WUtil.getCharSize(memo) < WUtil.getMaxMemoSize(getSActivity().getBaseChain())) {
-                    mMemo.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mMemo.setBackgroundResource(R.drawable.edittext_box);
                     mMemoCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorGray1));
                 } else {
-                    mMemo.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                    mMemo.setBackgroundResource(R.drawable.edittext_box_error);
                     mMemoCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorRed));
                 }
                 mMemoCnt.setText("" + WUtil.getCharSize(memo) + "/" + WUtil.getMaxMemoSize(getSActivity().getBaseChain()) + " byte");
@@ -104,10 +104,10 @@ public class StepMemoFragment extends BaseFragment implements View.OnClickListen
             public void afterTextChanged(Editable s) {
                 String memo = mMemo.getText().toString().trim();
                 if (WUtil.getCharSize(memo) < WUtil.getMaxMemoSize(getSActivity().getBaseChain())) {
-                    mMemo.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mMemo.setBackgroundResource(R.drawable.edittext_box);
                     mMemoCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorGray1));
                 } else {
-                    mMemo.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                    mMemo.setBackgroundResource(R.drawable.edittext_box_error);
                     mMemoCnt.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorRed));
                 }
                 mMemoCnt.setText("" + WUtil.getCharSize(memo) + "/" + WUtil.getMaxMemoSize(getSActivity().getBaseChain()) + " byte");

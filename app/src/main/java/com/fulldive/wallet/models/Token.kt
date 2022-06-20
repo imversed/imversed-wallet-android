@@ -406,3 +406,46 @@ object Tokens {
         coinColorRes = R.color.colorIris,
     )
 }
+
+object SubTokens {
+    val FDTOKEN = Token(
+        denom = "FDToken",
+        name = "FD Token",
+        symbol = "FD",
+        coinColorRes = R.color.colorImversed,
+        displayDecimal = 0,
+        divideDecimal = 0
+    )
+
+    val ION = Token(
+        denom = "uion",
+        name = "Ion Coin",
+        symbol = "ION",
+        coinIconRes = R.drawable.token_ion,
+        coinColorRes = R.color.colorIon
+    )
+
+    val KAVA_HARD = Token(
+        denom = "hard",
+        name = "HardPool Gov. Coin",
+        symbol = "HARD",
+        coinIcon = "https://raw.githubusercontent.com/cosmostation/cosmostation_token_resource/master/coin_image/kava/hard.png",
+        coinColorRes = R.color.colorHard
+    )
+
+    val KAVA_USDX = Token(
+        denom = "usdx",
+        name = "USD Stable Asset",
+        symbol = "USDX",
+        coinIcon = "https://raw.githubusercontent.com/cosmostation/cosmostation_token_resource/master/coin_image/kava/usdx.png",
+        coinColorRes = R.color.colorUsdx
+    )
+
+    val KAVA_SWP = Token(
+        denom = "swp",
+        name = "Kava Swap Coin",
+        symbol = "SWP",
+        coinIcon = "https://raw.githubusercontent.com/cosmostation/cosmostation_token_resource/master/coin_image/kava/swp.png",
+        coinColorRes = R.color.colorSwp
+    )
+}

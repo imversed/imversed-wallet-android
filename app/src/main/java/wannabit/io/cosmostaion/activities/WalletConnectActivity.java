@@ -93,22 +93,22 @@ public class WalletConnectActivity extends BaseActivity implements View.OnClickL
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case MSG_WC_CONNECTED:
-                    Toast.makeText(getBaseContext(), getString(R.string.str_wc_connected), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), R.string.str_wc_connected, Toast.LENGTH_SHORT).show();
                     break;
 
                 case MSG_WC_DISCONNECTED:
                     mSession.clearCallbacks();
-                    Toast.makeText(getBaseContext(), getString(R.string.str_wc_disconnected), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), R.string.str_wc_disconnected, Toast.LENGTH_SHORT).show();
                     if (!isFinishing()) onBackPressed();
                     break;
 
                 case MSG_WC_APPROVED:
-                    Toast.makeText(getBaseContext(), getString(R.string.str_wc_approved), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), R.string.str_wc_approved, Toast.LENGTH_SHORT).show();
                     mWcAccount.setText(getAccount().address);
                     break;
 
                 case MSG_WC_CLOSED:
-                    Toast.makeText(getBaseContext(), getString(R.string.str_wc_closed), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), R.string.str_wc_closed, Toast.LENGTH_SHORT).show();
                     if (!isFinishing()) onBackPressed();
                     break;
 
@@ -151,7 +151,7 @@ public class WalletConnectActivity extends BaseActivity implements View.OnClickL
                     break;
 
                 case MSG_WC_SESSION_BNB_CONFIRM:
-                    Toast.makeText(getBaseContext(), getString(R.string.str_wc_sign_result_msg), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), R.string.str_wc_sign_result_msg, Toast.LENGTH_SHORT).show();
                     new Thread(new ConfirmRunnable()).start();
                     break;
             }

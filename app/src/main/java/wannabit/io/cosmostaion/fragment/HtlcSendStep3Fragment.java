@@ -112,10 +112,10 @@ public class HtlcSendStep3Fragment extends BaseFragment implements View.OnClickL
         mSendIcon.setColorFilter(WDp.getChainColor(getContext(), getSActivity().getBaseChain()), android.graphics.PorterDuff.Mode.SRC_IN);
         if (getSActivity().getBaseChain().equals(BaseChain.BNB_MAIN.INSTANCE)) {
             if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_BNB) || mToSwapDenom.equals(TOKEN_HTLC_BINANCE_TEST_BNB)) {
-                mSendDenomTv.setText(getString(R.string.str_bnb_c));
+                mSendDenomTv.setText(R.string.str_bnb_c);
                 mSendDenomTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorBnb));
             } else if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_BTCB) || mToSwapDenom.equals(TOKEN_HTLC_BINANCE_TEST_BTC)) {
-                mSendDenomTv.setText(getString(R.string.str_btc_c));
+                mSendDenomTv.setText(R.string.str_btc_c);
                 mSendDenomTv.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorWhite));
             } else if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_XRPB)) {
                 mSendDenomTv.setText("XRP");
@@ -171,11 +171,11 @@ public class HtlcSendStep3Fragment extends BaseFragment implements View.OnClickL
 
         } else if (getSActivity().mRecipientChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
             if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_BNB) || mToSwapDenom.equals(TOKEN_HTLC_BINANCE_TEST_BNB)) {
-                mReceiveAmountDenomTv.setText(getString(R.string.str_bnb_c));
-                mRelayFeeAmountDenomTv.setText(getString(R.string.str_bnb_c));
+                mReceiveAmountDenomTv.setText(R.string.str_bnb_c);
+                mRelayFeeAmountDenomTv.setText(R.string.str_bnb_c);
             } else if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_BTCB) || mToSwapDenom.equals(TOKEN_HTLC_BINANCE_TEST_BTC)) {
-                mReceiveAmountDenomTv.setText(getString(R.string.str_btc_c));
-                mRelayFeeAmountDenomTv.setText(getString(R.string.str_btc_c));
+                mReceiveAmountDenomTv.setText(R.string.str_btc_c);
+                mRelayFeeAmountDenomTv.setText(R.string.str_btc_c);
             } else if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_XRPB)) {
                 mReceiveAmountDenomTv.setText("XRP");
                 mRelayFeeAmountDenomTv.setText("XRP");

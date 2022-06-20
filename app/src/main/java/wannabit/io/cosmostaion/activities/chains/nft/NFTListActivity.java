@@ -65,7 +65,7 @@ public class NFTListActivity extends BaseActivity implements TaskListener {
         mEmptyNfts = findViewById(R.id.empty_nfts);
         mLoadingLayer = findViewById(R.id.loadingLayer);
         mBtnCreateNft = findViewById(R.id.btn_create_nft);
-        mTitle.setText(getString(R.string.str_nft_c));
+        mTitle.setText(R.string.str_nft_c);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);

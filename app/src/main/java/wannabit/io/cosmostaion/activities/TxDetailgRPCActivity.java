@@ -518,7 +518,7 @@ public class TxDetailgRPCActivity extends BaseActivity implements View.OnClickLi
         public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
             if (position == 0) {
                 final TxCommonHolder viewHolder = (TxCommonHolder) holder;
-                viewHolder.onBindCommon(TxDetailgRPCActivity.this, getBaseDao(), getBaseChain(), mResponse, mIsGen);
+                viewHolder.onBindCommon(TxDetailgRPCActivity.this, getBaseChain(), mResponse);
 
             } else {
                 final TxHolder viewHolder = (TxHolder) holder;

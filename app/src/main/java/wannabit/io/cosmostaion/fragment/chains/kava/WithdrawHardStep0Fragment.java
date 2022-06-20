@@ -100,12 +100,12 @@ public class WithdrawHardStep0Fragment extends BaseFragment implements View.OnCl
             public void afterTextChanged(Editable et) {
                 String es = et.toString().trim();
                 if (TextUtils.isEmpty(es)) {
-                    mWithdrawInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mWithdrawInput.setBackgroundResource(R.drawable.edittext_box);
                 } else if (es.startsWith(".")) {
-                    mWithdrawInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mWithdrawInput.setBackgroundResource(R.drawable.edittext_box);
                     mWithdrawInput.setText("");
                 } else if (es.endsWith(".")) {
-                    mWithdrawInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                    mWithdrawInput.setBackgroundResource(R.drawable.edittext_box_error);
                     mWithdrawInput.setVisibility(View.VISIBLE);
                 } else if (es.length() > 1 && es.startsWith("0") && !es.startsWith("0.")) {
                     mWithdrawInput.setText("0");
@@ -119,7 +119,7 @@ public class WithdrawHardStep0Fragment extends BaseFragment implements View.OnCl
                     try {
                         final BigDecimal inputAmount = new BigDecimal(es);
                         if (BigDecimal.ZERO.compareTo(inputAmount) >= 0) {
-                            mWithdrawInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mWithdrawInput.setBackgroundResource(R.drawable.edittext_box_error);
                             return;
                         }
 
@@ -132,9 +132,9 @@ public class WithdrawHardStep0Fragment extends BaseFragment implements View.OnCl
                             return;
                         }
                         if (inputAmount.compareTo(mMaxAvailable.movePointLeft(mDpDecimal).setScale(mDpDecimal, RoundingMode.CEILING)) > 0) {
-                            mWithdrawInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mWithdrawInput.setBackgroundResource(R.drawable.edittext_box_error);
                         } else {
-                            mWithdrawInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                            mWithdrawInput.setBackgroundResource(R.drawable.edittext_box);
                         }
                         mWithdrawInput.setSelection(mWithdrawInput.getText().length());
                     } catch (Exception e) {

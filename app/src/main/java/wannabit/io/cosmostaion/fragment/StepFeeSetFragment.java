@@ -263,14 +263,14 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
         mGasFee.setText(mFee.toPlainString());
 
         if (mSelectedGasPosition == 0) {
-            mSpeedImg.setImageDrawable(getResources().getDrawable(R.drawable.bycicle_img));
-            mSpeedTxt.setText(getString(R.string.str_fee_speed_title_0));
+            mSpeedImg.setImageResource(R.drawable.bycicle_img);
+            mSpeedTxt.setText(R.string.str_fee_speed_title_0);
         } else if (mSelectedGasPosition == 1) {
-            mSpeedImg.setImageDrawable(getResources().getDrawable(R.drawable.car_img));
-            mSpeedTxt.setText(getString(R.string.str_fee_speed_title_1));
+            mSpeedImg.setImageResource(R.drawable.car_img);
+            mSpeedTxt.setText(R.string.str_fee_speed_title_1);
         } else {
-            mSpeedImg.setImageDrawable(getResources().getDrawable(R.drawable.rocket_img));
-            mSpeedTxt.setText(getString(R.string.str_fee_speed_title_2));
+            mSpeedImg.setImageResource(R.drawable.rocket_img);
+            mSpeedTxt.setText(R.string.str_fee_speed_title_2);
         }
     }
 
@@ -311,13 +311,13 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
             if (getSActivity().mDenom.equals(mainDenom)) {
                 BigDecimal toSend = new BigDecimal(getSActivity().mAmounts.get(0).amount);
                 if ((toSend.add(mFee)).compareTo(mainDenomAvailable) > 0) {
-                    Toast.makeText(getContext(), getString(R.string.error_not_enough_fee), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                     return false;
                 }
 
             } else {
                 if (mFee.compareTo(mainDenomAvailable) > 0) {
-                    Toast.makeText(getContext(), getString(R.string.error_not_enough_fee), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                     return false;
                 }
             }
@@ -327,14 +327,14 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
             BigDecimal delegatable = balance.getBalanceAmount(); // TODO add(getVesting(denom))
             BigDecimal todelegate = new BigDecimal(getSActivity().mAmount.amount);
             if ((todelegate.add(mFee)).compareTo(delegatable) > 0) {
-                Toast.makeText(getContext(), getString(R.string.error_not_enough_fee), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
         } else if (getSActivity().mTxType == CONST_PW_TX_SIMPLE_REWARD) {
             BigDecimal available = getSActivity().getBalance(mainDenom);
             if (mFee.compareTo(available) > 0) {
-                Toast.makeText(getContext(), getString(R.string.error_not_enough_fee), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return false;
             }
             BigDecimal rewardSum = BigDecimal.ZERO;
@@ -343,20 +343,20 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
             }
 
             if (mFee.compareTo(rewardSum) > 0) {
-                Toast.makeText(getContext(), getString(R.string.error_waste_fee), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.error_waste_fee, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
         } else if (getSActivity().mTxType == CONST_PW_TX_REINVEST) {
             BigDecimal available = getSActivity().getBalance(mainDenom);
             if (mFee.compareTo(available) > 0) {
-                Toast.makeText(getContext(), getString(R.string.error_not_enough_fee), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
             BigDecimal reinvest = new BigDecimal(getSActivity().mAmount.amount);
             if (mFee.compareTo(reinvest) > 0) {
-                Toast.makeText(getContext(), getString(R.string.error_waste_fee), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.error_waste_fee, Toast.LENGTH_SHORT).show();
                 return false;
             }
 
@@ -670,9 +670,9 @@ public class StepFeeSetFragment extends BaseFragment implements View.OnClickList
             gasused = (long) ((double) gasused * 1.1d);
             mEstimateGasAmount = new BigDecimal(gasused);
             onUpdateView();
-            Toast.makeText(getContext(), getString(R.string.str_apply_estimate_gas_amount), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.str_apply_estimate_gas_amount, Toast.LENGTH_SHORT).show();
         } else {
-            Toast.makeText(getContext(), getString(R.string.str_network_error_title), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.str_network_error_title, Toast.LENGTH_SHORT).show();
         }
         getSActivity().hideWaitDialog();
     }

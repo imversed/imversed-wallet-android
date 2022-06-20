@@ -1,7 +1,6 @@
 package wannabit.io.cosmostaion.model.type;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -58,21 +57,21 @@ public class Proposal {
     }
 
 
-    public Drawable getStatusImg(Context c) {
+    public int getStatusImg() {
         if (proposal_status.equals(PROPOSAL_DEPOSIT)) {
-            return c.getResources().getDrawable(R.drawable.ic_deposit_img);
+            return R.drawable.ic_deposit_img;
 
         } else if (proposal_status.equals(PROPOSAL_VOTING)) {
-            return c.getResources().getDrawable(R.drawable.ic_voting_img);
+            return R.drawable.ic_voting_img;
 
         } else if (proposal_status.equals(PROPOSAL_REJECTED)) {
-            return c.getResources().getDrawable(R.drawable.ic_rejected_img);
+            return R.drawable.ic_rejected_img;
 
         } else if (proposal_status.equals(PROPOSAL_PASSED)) {
-            return c.getResources().getDrawable(R.drawable.ic_passed_img);
+            return R.drawable.ic_passed_img;
 
         }
-        return null;
+        return 0;
     }
 
     public String getTitle() {

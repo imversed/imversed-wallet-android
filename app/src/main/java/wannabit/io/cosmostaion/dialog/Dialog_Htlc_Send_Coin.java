@@ -86,8 +86,8 @@ public class Dialog_Htlc_Send_Coin extends DialogFragment {
             final String tosendCoin = mSwappableCoinList.get(position);
             if (mBaseChain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
                 if (tosendCoin.equals(TOKEN_HTLC_BINANCE_BNB)) {
-                    holder.coinImg.setImageDrawable(getResources().getDrawable(R.drawable.bnb_token_img));
-                    holder.coinName.setText(getString(R.string.str_bnb_c));
+                    holder.coinImg.setImageResource(R.drawable.bnb_token_img);
+                    holder.coinName.setText(R.string.str_bnb_c);
                 } else if (tosendCoin.equals(TOKEN_HTLC_BINANCE_BTCB)) {
                     holder.coinName.setText("BTC");
                     try {
@@ -113,8 +113,8 @@ public class Dialog_Htlc_Send_Coin extends DialogFragment {
 
             } else if (mBaseChain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
                 if (tosendCoin.equals(TOKEN_HTLC_KAVA_BNB)) {
-                    holder.coinImg.setImageDrawable(getResources().getDrawable(R.drawable.bnb_on_kava));
-                    holder.coinName.setText(getString(R.string.str_bnb_c));
+                    holder.coinImg.setImageResource(R.drawable.bnb_on_kava);
+                    holder.coinName.setText(R.string.str_bnb_c);
                 } else if (tosendCoin.equals(TOKEN_HTLC_KAVA_BTCB)) {
                     holder.coinName.setText("BTC");
                     try {

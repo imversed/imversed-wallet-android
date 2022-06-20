@@ -97,12 +97,12 @@ public class OKStakingFragmentStep0 extends BaseFragment implements View.OnClick
             public void afterTextChanged(Editable et) {
                 String es = et.toString().trim();
                 if (TextUtils.isEmpty(es)) {
-                    mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mAmountInput.setBackgroundResource(R.drawable.edittext_box);
                 } else if (es.startsWith(".")) {
-                    mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mAmountInput.setBackgroundResource(R.drawable.edittext_box);
                     mAmountInput.setText("");
                 } else if (es.endsWith(".")) {
-                    mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                    mAmountInput.setBackgroundResource(R.drawable.edittext_box_error);
                     mAmountInput.setVisibility(View.VISIBLE);
                 } else if (es.length() > 1 && es.startsWith("0") && !es.startsWith("0.")) {
                     mAmountInput.setText("0");
@@ -117,7 +117,7 @@ public class OKStakingFragmentStep0 extends BaseFragment implements View.OnClick
                     try {
                         final BigDecimal inputAmount = new BigDecimal(es);
                         if (BigDecimal.ZERO.compareTo(inputAmount) >= 0) {
-                            mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mAmountInput.setBackgroundResource(R.drawable.edittext_box_error);
                             return;
                         }
 
@@ -131,9 +131,9 @@ public class OKStakingFragmentStep0 extends BaseFragment implements View.OnClick
                         }
                         if (getSActivity().getBaseChain().equals(OKEX_MAIN.INSTANCE) || getSActivity().getBaseChain().equals(OK_TEST.INSTANCE)) {
                             if (inputAmount.compareTo(mMaxAvailable) > 0) {
-                                mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                                mAmountInput.setBackgroundResource(R.drawable.edittext_box_error);
                             } else {
-                                mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                                mAmountInput.setBackgroundResource(R.drawable.edittext_box);
                             }
                         }
 

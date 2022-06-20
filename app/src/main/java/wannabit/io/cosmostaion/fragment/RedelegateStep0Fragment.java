@@ -103,12 +103,12 @@ public class RedelegateStep0Fragment extends BaseFragment implements View.OnClic
             public void afterTextChanged(Editable et) {
                 String es = et.toString().trim();
                 if (es == null || es.length() == 0) {
-                    mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                    mAmountInput.setBackgroundResource(R.drawable.edittext_box_error);
                 } else if (es.startsWith(".")) {
-                    mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mAmountInput.setBackgroundResource(R.drawable.edittext_box);
                     mAmountInput.setText("");
                 } else if (es.endsWith(".")) {
-                    mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                    mAmountInput.setBackgroundResource(R.drawable.edittext_box_error);
                     mAmountInput.setVisibility(View.VISIBLE);
                 } else if (es.length() > 1 && es.startsWith("0") && !es.startsWith("0.")) {
                     mAmountInput.setText("0");
@@ -122,7 +122,7 @@ public class RedelegateStep0Fragment extends BaseFragment implements View.OnClic
                     try {
                         final BigDecimal inputAmount = new BigDecimal(es);
                         if (BigDecimal.ZERO.compareTo(inputAmount) >= 0) {
-                            mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mAmountInput.setBackgroundResource(R.drawable.edittext_box_error);
                             return;
                         }
 
@@ -136,9 +136,9 @@ public class RedelegateStep0Fragment extends BaseFragment implements View.OnClic
                         }
 
                         if (inputAmount.compareTo(mMaxAvailable.movePointLeft(mDpDecimal).setScale(mDpDecimal, RoundingMode.DOWN)) > 0) {
-                            mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mAmountInput.setBackgroundResource(R.drawable.edittext_box_error);
                         } else {
-                            mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                            mAmountInput.setBackgroundResource(R.drawable.edittext_box);
                         }
                         mAmountInput.setSelection(mAmountInput.getText().length());
                     } catch (Exception e) {

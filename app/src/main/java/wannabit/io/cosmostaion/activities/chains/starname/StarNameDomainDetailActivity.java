@@ -73,7 +73,7 @@ public class StarNameDomainDetailActivity extends BaseActivity implements View.O
         mMyDomain = getIntent().getStringExtra("domain");
         WLog.w("mMyDomain " + mMyDomain);
 
-        mToolTitle.setText(getString(R.string.str_domain_detail));
+        mToolTitle.setText(R.string.str_domain_detail);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

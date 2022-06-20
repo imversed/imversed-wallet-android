@@ -331,7 +331,6 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
             ArrayList<ResApiNewTxListCustom> hits = (ArrayList<ResApiNewTxListCustom>) result.resultData;
             if (hits != null && hits.size() > 0) {
                 mApiNewTxCustomHistory = hits;
-
             }
         } else if (result.taskType == TASK_GRPC_FETCH_DELEGATIONS) {
             ArrayList<Staking.DelegationResponse> delegations = (ArrayList<Staking.DelegationResponse>) result.resultData;
@@ -510,10 +509,10 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
 
             if (getBaseChain().equals(BAND_MAIN.INSTANCE)) {
                 if (getBaseDao().mChainParam != null && !getBaseDao().mChainParam.isOracleEnable(mGrpcValidator.getOperatorAddress())) {
-                    holder.itemBandOracleOff.setImageDrawable(getDrawable(R.drawable.band_oracleoff_l));
+                    holder.itemBandOracleOff.setImageResource(R.drawable.band_oracleoff_l);
                     holder.itemTvYieldRate.setTextColor(ContextCompat.getColor(ValidatorActivity.this, R.color.colorRed));
                 } else {
-                    holder.itemBandOracleOff.setImageDrawable(getDrawable(R.drawable.band_oracleon_l));
+                    holder.itemBandOracleOff.setImageResource(R.drawable.band_oracleon_l);
                 }
                 holder.itemBandOracleOff.setVisibility(View.VISIBLE);
             }
@@ -576,10 +575,10 @@ public class ValidatorActivity extends BaseActivity implements TaskListener {
 
             if (getBaseChain().equals(BAND_MAIN.INSTANCE)) {
                 if (getBaseDao().mChainParam != null && !getBaseDao().mChainParam.isOracleEnable(mGrpcValidator.getOperatorAddress())) {
-                    holder.itemBandOracleOff.setImageDrawable(getDrawable(R.drawable.band_oracleoff_l));
+                    holder.itemBandOracleOff.setImageResource(R.drawable.band_oracleoff_l);
                     holder.itemTvYieldRate.setTextColor(ContextCompat.getColor(ValidatorActivity.this, R.color.colorRed));
                 } else {
-                    holder.itemBandOracleOff.setImageDrawable(getDrawable(R.drawable.band_oracleon_l));
+                    holder.itemBandOracleOff.setImageResource(R.drawable.band_oracleon_l);
                 }
                 holder.itemBandOracleOff.setVisibility(View.VISIBLE);
             }

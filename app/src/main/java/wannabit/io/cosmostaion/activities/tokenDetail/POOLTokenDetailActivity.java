@@ -195,7 +195,7 @@ public class POOLTokenDetailActivity extends BaseActivity implements View.OnClic
             showDialog(show);
 
         } else if (v.equals(mBtnSend)) {
-            Toast.makeText(POOLTokenDetailActivity.this, getString(R.string.error_prepare), Toast.LENGTH_SHORT).show();
+            Toast.makeText(POOLTokenDetailActivity.this, R.string.error_prepare, Toast.LENGTH_SHORT).show();
             return;
 //            Intent intent = new Intent(getBaseContext(), SendActivity.class);
 //            BigDecimal mainAvailable = getBalance(mBaseChain.getMainDenom());
@@ -207,7 +207,7 @@ public class POOLTokenDetailActivity extends BaseActivity implements View.OnClic
 //            intent.putExtra("sendTokenDenom", mPoolDenom);
 //            startActivity(intent);
         } else if (v.equals(mBtnIbcSend)) {
-            Toast.makeText(POOLTokenDetailActivity.this, getString(R.string.error_prepare), Toast.LENGTH_SHORT).show();
+            Toast.makeText(POOLTokenDetailActivity.this, R.string.error_prepare, Toast.LENGTH_SHORT).show();
             return;
         }
     }

@@ -75,7 +75,7 @@ public class StarNameAccountDetailActivity extends BaseActivity implements View.
         mMyAccount = getIntent().getStringExtra("account");
         WLog.w("mMyDomain " + mMyDomain);
 
-        mToolTitle.setText(getString(R.string.str_account_detail));
+        mToolTitle.setText(R.string.str_account_detail);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

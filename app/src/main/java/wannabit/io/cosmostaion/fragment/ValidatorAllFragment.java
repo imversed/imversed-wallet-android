@@ -239,25 +239,25 @@ public class ValidatorAllFragment extends BaseFragment implements View.OnClickLi
         if (getMainActivity().getBaseChain().isGRPC()) {
             if (baseDao.getValSorting() == 2) {
                 baseDao.mGRpcTopValidators = WUtil.onSortingByCommissionV1(baseDao.mGRpcTopValidators);
-                mSortType.setText(getString(R.string.str_sorting_by_yield));
+                mSortType.setText(R.string.str_sorting_by_yield);
             } else if (baseDao.getValSorting() == 0) {
                 baseDao.mGRpcTopValidators = WUtil.onSortByValidatorNameV1(baseDao.mGRpcTopValidators);
-                mSortType.setText(getString(R.string.str_sorting_by_name));
+                mSortType.setText(R.string.str_sorting_by_name);
             } else {
                 baseDao.mGRpcTopValidators = WUtil.onSortByValidatorPowerV1(baseDao.mGRpcTopValidators);
-                mSortType.setText(getString(R.string.str_sorting_by_power));
+                mSortType.setText(R.string.str_sorting_by_power);
             }
 
         } else {
             if (baseDao.getValSorting() == 2) {
                 baseDao.mTopValidators = WUtil.onSortingByCommission(baseDao.mTopValidators);
-                mSortType.setText(getString(R.string.str_sorting_by_yield));
+                mSortType.setText(R.string.str_sorting_by_yield);
             } else if (baseDao.getValSorting() == 0) {
                 baseDao.mTopValidators = WUtil.onSortByValidatorName(baseDao.mTopValidators);
-                mSortType.setText(getString(R.string.str_sorting_by_name));
+                mSortType.setText(R.string.str_sorting_by_name);
             } else {
                 baseDao.mTopValidators = WUtil.onSortByValidatorPower(baseDao.mTopValidators);
-                mSortType.setText(getString(R.string.str_sorting_by_power));
+                mSortType.setText(R.string.str_sorting_by_power);
             }
         }
 

@@ -104,12 +104,12 @@ public class RepayHardStep0Fragment extends BaseFragment implements View.OnClick
             public void afterTextChanged(Editable et) {
                 String es = et.toString().trim();
                 if (TextUtils.isEmpty(es)) {
-                    mRepayInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mRepayInput.setBackgroundResource(R.drawable.edittext_box);
                 } else if (es.startsWith(".")) {
-                    mRepayInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mRepayInput.setBackgroundResource(R.drawable.edittext_box);
                     mRepayInput.setText("");
                 } else if (es.endsWith(".")) {
-                    mRepayInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                    mRepayInput.setBackgroundResource(R.drawable.edittext_box_error);
                     mRepayInput.setVisibility(View.VISIBLE);
                 } else if (es.length() > 1 && es.startsWith("0") && !es.startsWith("0.")) {
                     mRepayInput.setText("0");
@@ -123,7 +123,7 @@ public class RepayHardStep0Fragment extends BaseFragment implements View.OnClick
                     try {
                         final BigDecimal inputAmount = new BigDecimal(es);
                         if (BigDecimal.ZERO.compareTo(inputAmount) >= 0) {
-                            mRepayInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mRepayInput.setBackgroundResource(R.drawable.edittext_box_error);
                             return;
                         }
 
@@ -136,9 +136,9 @@ public class RepayHardStep0Fragment extends BaseFragment implements View.OnClick
                             return;
                         }
                         if (inputAmount.compareTo(mMaxAvailable.movePointLeft(mDpDecimal).setScale(mDpDecimal, RoundingMode.CEILING)) > 0) {
-                            mRepayInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mRepayInput.setBackgroundResource(R.drawable.edittext_box_error);
                         } else {
-                            mRepayInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                            mRepayInput.setBackgroundResource(R.drawable.edittext_box);
                         }
                         mRepayInput.setSelection(mRepayInput.getText().length());
                     } catch (Exception e) {

@@ -81,7 +81,7 @@ public class GravityListActivity extends BaseActivity implements TaskListener {
         mTitle = findViewById(R.id.toolbarTitleTextView);
         mLabTapLayer = findViewById(R.id.lab_tab);
         mLabPager = findViewById(R.id.lab_view_pager);
-        mTitle.setText(getString(R.string.str_gravity_dex));
+        mTitle.setText(R.string.str_gravity_dex);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);

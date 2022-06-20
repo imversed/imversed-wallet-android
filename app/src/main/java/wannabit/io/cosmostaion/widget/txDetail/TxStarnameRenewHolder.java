@@ -34,7 +34,7 @@ public class TxStarnameRenewHolder extends TxHolder {
         if (response.getTx().getBody().getMessages(position).getTypeUrl().contains("MsgRenewAccount")) {
             try {
                 Tx.MsgRenewAccount msg = Tx.MsgRenewAccount.parseFrom(response.getTx().getBody().getMessages(position).getValue());
-                itemMsgImg.setImageDrawable(itemView.getResources().getDrawable(R.drawable.ic_msgs_renewaccount));
+                itemMsgImg.setImageResource(R.drawable.ic_msgs_renewaccount);
                 itemMsgTitle.setText(itemView.getContext().getString(R.string.tx_starname_renew_account));
                 itemStarname.setText(msg.getName() + "*" + msg.getDomain());
                 itemSigner.setText(msg.getSigner());
@@ -45,7 +45,7 @@ public class TxStarnameRenewHolder extends TxHolder {
             try {
                 Tx.MsgRenewDomain msg = Tx.MsgRenewDomain.parseFrom(response.getTx().getBody().getMessages(position).getValue());
                 WLog.w("domain ");
-                itemMsgImg.setImageDrawable(itemView.getResources().getDrawable(R.drawable.ic_msgs_renewdomain));
+                itemMsgImg.setImageResource(R.drawable.ic_msgs_renewdomain);
                 itemMsgTitle.setText(itemView.getContext().getString(R.string.tx_starname_renew_domain));
                 itemStarname.setText("*" + msg.getDomain());
                 itemSigner.setText(msg.getSigner());

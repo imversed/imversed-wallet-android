@@ -165,12 +165,12 @@ public class CoinSwapStep0Fragment extends BaseFragment implements View.OnClickL
                 onUpdateOutputTextView();
                 String es = et.toString().trim();
                 if (TextUtils.isEmpty(es)) {
-                    mSwapInputAmount.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mSwapInputAmount.setBackgroundResource(R.drawable.edittext_box);
                 } else if (es.startsWith(".")) {
-                    mSwapInputAmount.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mSwapInputAmount.setBackgroundResource(R.drawable.edittext_box);
                     mSwapInputAmount.setText("");
                 } else if (es.endsWith(".")) {
-                    mSwapInputAmount.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                    mSwapInputAmount.setBackgroundResource(R.drawable.edittext_box_error);
                     mSwapInputAmount.setVisibility(View.VISIBLE);
                 } else if (mSwapInputAmount.length() > 1 && es.startsWith("0") && !es.startsWith("0.")) {
                     mSwapInputAmount.setText("0");
@@ -184,7 +184,7 @@ public class CoinSwapStep0Fragment extends BaseFragment implements View.OnClickL
                     try {
                         final BigDecimal inputAmount = new BigDecimal(es);
                         if (BigDecimal.ZERO.compareTo(inputAmount) >= 0) {
-                            mSwapInputAmount.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mSwapInputAmount.setBackgroundResource(R.drawable.edittext_box_error);
                             return;
                         }
 
@@ -198,9 +198,9 @@ public class CoinSwapStep0Fragment extends BaseFragment implements View.OnClickL
                         }
 
                         if (inputAmount.compareTo(mAvailableMaxAmount.movePointLeft(mInputCoinDecimal).setScale(mInputCoinDecimal, RoundingMode.CEILING)) > 0) {
-                            mSwapInputAmount.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mSwapInputAmount.setBackgroundResource(R.drawable.edittext_box_error);
                         } else {
-                            mSwapInputAmount.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                            mSwapInputAmount.setBackgroundResource(R.drawable.edittext_box);
                         }
                         mSwapInputAmount.setSelection(mSwapInputAmount.getText().length());
 

@@ -72,9 +72,9 @@ public class Dialog_StarName_Resource extends BottomSheetDialogFragment {
         public void onBindViewHolder(@NonNull ChainForResourceHolder holder, int position) {
             final StarnameAssets resource = mAllChains.get(position);
             if (alreadyHave(resource)) {
-                holder.rootLayer.setBackground(getResources().getDrawable(R.drawable.box_et_gary));
+                holder.rootLayer.setBackgroundResource(R.drawable.box_et_gary);
             } else {
-                holder.rootLayer.setBackground(getResources().getDrawable(R.drawable.box_et_white));
+                holder.rootLayer.setBackgroundResource(R.drawable.box_et_white);
             }
 
             Picasso.get().load(StarnameAssets.getStarNameChainImgUrl(resource.url)).fit().into(holder.chainImg);

@@ -101,7 +101,7 @@ public class ListSwapFragment extends BaseFragment implements View.OnClickListen
         mBtnSwapStart.setOnClickListener(this);
 
         mBtnToggle.setBackgroundTintList(getResources().getColorStateList(R.color.colorOsmosis));
-        mSwapTitle.setText(getString(R.string.str_swap_osmosis));
+        mSwapTitle.setText(R.string.str_swap_osmosis);
         return rootView;
     }
 

@@ -102,12 +102,12 @@ public class SifDexWithdrawStep0Fragment extends BaseFragment implements View.On
             public void afterTextChanged(Editable et) {
                 String es = et.toString().trim();
                 if (TextUtils.isEmpty(es)) {
-                    mLpCoinInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mLpCoinInput.setBackgroundResource(R.drawable.edittext_box);
                 } else if (es.startsWith(".")) {
-                    mLpCoinInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mLpCoinInput.setBackgroundResource(R.drawable.edittext_box);
                     mLpCoinInput.setText("");
                 } else if (es.endsWith(".")) {
-                    mLpCoinInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                    mLpCoinInput.setBackgroundResource(R.drawable.edittext_box_error);
                     mLpCoinInput.setVisibility(View.VISIBLE);
                 } else if (es.length() > 1 && es.startsWith("0") && !es.startsWith("0.")) {
                     mLpCoinInput.setText("0");
@@ -121,7 +121,7 @@ public class SifDexWithdrawStep0Fragment extends BaseFragment implements View.On
                     try {
                         final BigDecimal inputAmount = new BigDecimal(es);
                         if (BigDecimal.ZERO.compareTo(inputAmount) >= 0) {
-                            mLpCoinInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mLpCoinInput.setBackgroundResource(R.drawable.edittext_box_error);
                             return;
                         }
 
@@ -135,9 +135,9 @@ public class SifDexWithdrawStep0Fragment extends BaseFragment implements View.On
                         }
 
                         if (inputAmount.compareTo(mAvailableMaxAmount.movePointLeft(mCoinDecimal).setScale(mCoinDecimal, RoundingMode.CEILING)) > 0) {
-                            mLpCoinInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mLpCoinInput.setBackgroundResource(R.drawable.edittext_box_error);
                         } else {
-                            mLpCoinInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                            mLpCoinInput.setBackgroundResource(R.drawable.edittext_box);
                         }
                         mLpCoinInput.setSelection(mLpCoinInput.getText().length());
                     } catch (Exception e) {

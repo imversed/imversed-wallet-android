@@ -147,7 +147,7 @@ public class HtlcSendStep0Fragment extends BaseFragment implements View.OnClickL
         if (getSActivity().getBaseChain().equals(BaseChain.BNB_MAIN.INSTANCE) && (mKavaBep3Param2 != null && mKavaSuppies2 != null)) {
             mCapLayer.setVisibility(View.VISIBLE);
             if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_BNB)) {
-                mToSendCoinImg.setImageDrawable(getResources().getDrawable(R.drawable.bnb_token_img));
+                mToSendCoinImg.setImageResource(R.drawable.bnb_token_img);
                 onSetDpDenom(getString(R.string.str_bnb_c));
             } else if (mToSwapDenom.equals(TOKEN_HTLC_BINANCE_BTCB)) {
                 onSetDpDenom("BTC");
@@ -180,7 +180,7 @@ public class HtlcSendStep0Fragment extends BaseFragment implements View.OnClickL
         } else if (getSActivity().getBaseChain().equals(BaseChain.KAVA_MAIN.INSTANCE) && (mKavaBep3Param2 != null && mKavaSuppies2 != null)) {
             mCapLayer.setVisibility(View.GONE);
             if (mToSwapDenom.equals(TOKEN_HTLC_KAVA_BNB)) {
-                mToSendCoinImg.setImageDrawable(getResources().getDrawable(R.drawable.bnb_on_kava));
+                mToSendCoinImg.setImageResource(R.drawable.bnb_on_kava);
                 onSetDpDenom(getString(R.string.str_bnb_c));
             } else if (mToSwapDenom.equals(TOKEN_HTLC_KAVA_BTCB)) {
                 onSetDpDenom("BTC");

@@ -818,13 +818,12 @@ public class WUtil {
 
     public static int getImvCoinDecimal(String denom) {
         if (denom != null) {
-            if (denom.equalsIgnoreCase(BaseChain.IMVERSED_MAIN.INSTANCE.getMainDenom())) {
-                return BaseChain.IMVERSED_MAIN.INSTANCE.getDivideDecimal();
-            } else if (denom.equalsIgnoreCase("fdtoken")) {
-                return 0;
+            final Token token = BaseChain.IMVERSED_MAIN.INSTANCE.getToken(denom);
+            if (token != null) {
+                return token.getDivideDecimal();
             }
         }
-        return 18;
+        return BaseChain.IMVERSED_MAIN.INSTANCE.getDivideDecimal();
     }
 
     public static int getIbcDecimal(BaseData baseData, String denom) {
@@ -1175,10 +1174,20 @@ public class WUtil {
      * Token Img
      */
     public static void DpCosmosTokenImg(BaseData baseData, ImageView imageView, String denom) {
-        final Token cosmosToken = BaseChain.COSMOS_MAIN.INSTANCE.getMainToken();
-        if (denom.equalsIgnoreCase(cosmosToken.getDenom())) {
-            Picasso.get().cancelRequest(imageView);
-            imageView.setImageResource(cosmosToken.getCoinIconRes());
+        final Token token = BaseChain.COSMOS_MAIN.INSTANCE.getToken(denom);
+        if (token != null) {
+            final String coinIcon = token.getCoinIcon();
+            if (!TextUtils.isEmpty(coinIcon)) {
+                Picasso.get()
+                        .load(coinIcon)
+                        .fit()
+                        .placeholder(token.getCoinIconRes())
+                        .error(token.getCoinIconRes())
+                        .into(imageView);
+            } else {
+                Picasso.get().cancelRequest(imageView);
+                imageView.setImageResource(token.getCoinIconRes());
+            }
         } else if (denom.startsWith("pool")) {
             Liquidity.Pool poolInfo = baseData.getGravityPoolByDenom(denom);
             if (poolInfo != null) {
@@ -1195,12 +1204,20 @@ public class WUtil {
 
     public static void DpOsmosisTokenImg(BaseData baseData, ImageView imageView, String denom) {
         if (denom != null) {
-            final Token osmosisToken = BaseChain.OSMOSIS_MAIN.INSTANCE.getMainToken();
-            if (denom.equalsIgnoreCase(osmosisToken.getDenom())) {
-                Picasso.get().cancelRequest(imageView);
-                imageView.setImageResource(osmosisToken.getCoinIconRes());
-            } else if (denom.equalsIgnoreCase(TOKEN_ION)) {
-                imageView.setImageResource(R.drawable.token_ion);
+            final Token token = BaseChain.OSMOSIS_MAIN.INSTANCE.getToken(denom);
+            if (token != null) {
+                final String coinIcon = token.getCoinIcon();
+                if (!TextUtils.isEmpty(coinIcon)) {
+                    Picasso.get()
+                            .load(coinIcon)
+                            .fit()
+                            .placeholder(token.getCoinIconRes())
+                            .error(token.getCoinIconRes())
+                            .into(imageView);
+                } else {
+                    Picasso.get().cancelRequest(imageView);
+                    imageView.setImageResource(token.getCoinIconRes());
+                }
             } else if (denom.startsWith("gamm/pool/")) {
                 imageView.setImageResource(R.drawable.token_pool);
             } else if (denom.startsWith("ibc/")) {
@@ -1215,10 +1232,20 @@ public class WUtil {
 
     public static void DpSifTokenImg(BaseData baseData, ImageView imageView, String denom) {
         if (denom != null) {
-            final Token sifToken = BaseChain.SIF_MAIN.INSTANCE.getMainToken();
-            if (denom.equalsIgnoreCase(sifToken.getDenom())) {
-                Picasso.get().cancelRequest(imageView);
-                imageView.setImageResource(sifToken.getCoinIconRes());
+            final Token token = BaseChain.SIF_MAIN.INSTANCE.getToken(denom);
+            if (token != null) {
+                final String coinIcon = token.getCoinIcon();
+                if (!TextUtils.isEmpty(coinIcon)) {
+                    Picasso.get()
+                            .load(coinIcon)
+                            .fit()
+                            .placeholder(token.getCoinIconRes())
+                            .error(token.getCoinIconRes())
+                            .into(imageView);
+                } else {
+                    Picasso.get().cancelRequest(imageView);
+                    imageView.setImageResource(token.getCoinIconRes());
+                }
             } else if (denom.startsWith("c")) {
                 Assets assets = baseData.getAsset(denom);
                 if (assets != null) {
@@ -1236,10 +1263,20 @@ public class WUtil {
 
     public static void DpKavaTokenImg(BaseData baseData, ImageView imageView, String denom) {
         if (denom != null) {
-            final Token kavaToken = BaseChain.KAVA_MAIN.INSTANCE.getMainToken();
-            if (denom.equalsIgnoreCase(kavaToken.getDenom())) {
-                Picasso.get().cancelRequest(imageView);
-                imageView.setImageResource(kavaToken.getCoinIconRes());
+            final Token token = BaseChain.SIF_MAIN.INSTANCE.getToken(denom);
+            if (token != null) {
+                final String coinIcon = token.getCoinIcon();
+                if (!TextUtils.isEmpty(coinIcon)) {
+                    Picasso.get()
+                            .load(coinIcon)
+                            .fit()
+                            .placeholder(token.getCoinIconRes())
+                            .error(token.getCoinIconRes())
+                            .into(imageView);
+                } else {
+                    Picasso.get().cancelRequest(imageView);
+                    imageView.setImageResource(token.getCoinIconRes());
+                }
             } else if (denom.startsWith("ibc/")) {
                 IbcToken ibcToken = baseData.getIbcToken(denom.replaceAll("ibc/", ""));
                 if (ibcToken != null) {

@@ -52,8 +52,10 @@ class GrpcLocalSource @Inject constructor(
         return safeCompletable {
             when (status) {
                 Staking.BondStatus.BOND_STATUS_BONDED -> baseData.mGRpcTopValidators = items
-                Staking.BondStatus.BOND_STATUS_UNBONDED -> baseData.mGRpcOtherValidators = items
+                Staking.BondStatus.BOND_STATUS_UNBONDED ->  baseData.mGRpcOtherValidators = items
                 Staking.BondStatus.BOND_STATUS_UNBONDING -> baseData.mGRpcOtherValidators = items
+                Staking.BondStatus.BOND_STATUS_UNSPECIFIED -> Unit
+                Staking.BondStatus.UNRECOGNIZED -> Unit
             }
         }
     }

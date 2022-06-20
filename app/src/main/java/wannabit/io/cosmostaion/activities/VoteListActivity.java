@@ -126,16 +126,16 @@ public class VoteListActivity extends BaseActivity implements TaskListener {
             final ResProposal proposal = mApiProposalList.get(position);
             voteHolder.proposal_id.setText("# " + proposal.id);
             if (proposal.proposal_status.contains("DEPOSIT")) {
-                voteHolder.proposal_status_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_deposit_img));
+                voteHolder.proposal_status_img.setImageResource(R.drawable.ic_deposit_img);
                 voteHolder.proposal_status.setText("DepositPeriod");
             } else if (proposal.proposal_status.contains("VOTING")) {
-                voteHolder.proposal_status_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_voting_img));
+                voteHolder.proposal_status_img.setImageResource(R.drawable.ic_voting_img);
                 voteHolder.proposal_status.setText("VotingPeriod");
             } else if (proposal.proposal_status.contains("REJECTED")) {
-                voteHolder.proposal_status_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_rejected_img));
+                voteHolder.proposal_status_img.setImageResource(R.drawable.ic_rejected_img);
                 voteHolder.proposal_status.setText("Rejected");
             } else if (proposal.proposal_status.contains("PASSED")) {
-                voteHolder.proposal_status_img.setImageDrawable(getResources().getDrawable(R.drawable.ic_passed_img));
+                voteHolder.proposal_status_img.setImageResource(R.drawable.ic_passed_img);
                 voteHolder.proposal_status.setText("Passed");
             } else {
                 voteHolder.proposal_status_img.setVisibility(View.GONE);

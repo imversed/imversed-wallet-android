@@ -94,11 +94,14 @@ public class BaseData {
     public List<Assets> mAssets = new ArrayList<>();
     public List<Cw20Assets> mCw20Assets = new ArrayList<>();
 
-    public IbcToken getIbcToken(String denom) {
-        String ibcHash = denom.replace("ibc/", "");
-        for (IbcToken ibcToken : mIbcTokens) {
-            if (ibcToken.hash.equals(ibcHash)) {
-                return ibcToken;
+    @Nullable
+    public IbcToken getIbcToken(@Nullable String denom) {
+        if (denom != null) {
+            String ibcHash = denom.replace("ibc/", "");
+            for (IbcToken ibcToken : mIbcTokens) {
+                if (ibcToken.hash.equals(ibcHash)) {
+                    return ibcToken;
+                }
             }
         }
         return null;
@@ -124,6 +127,25 @@ public class BaseData {
                 for (DenomUnit unit : item.getDenomUnits()) {
                     if (unit.getDenom().equalsIgnoreCase(denom)) {
                         result = item;
+                        break;
+                    }
+                }
+                if (result != null) {
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+    @Nullable
+    public DenomUnit getDenomUnit(String chainName, String denom) {
+        DenomUnit result = null;
+        List<DenomMetadata> denomsMetadata = denomsMetadataMap.get(chainName);
+        if (denomsMetadata != null) {
+            for (DenomMetadata item : denomsMetadata) {
+                for (DenomUnit unit : item.getDenomUnits()) {
+                    if (unit.getDenom().equalsIgnoreCase(denom)) {
+                        result = unit;
                         break;
                     }
                 }

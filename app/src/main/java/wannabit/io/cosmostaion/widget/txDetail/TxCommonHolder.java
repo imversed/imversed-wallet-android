@@ -46,18 +46,18 @@ public class TxCommonHolder extends TxHolder {
         itemFeeLimitDenom = itemView.findViewById(R.id.tx_fee_limit_symbol);
     }
 
-    public void onBindCommon(TxDetailgRPCActivity c, BaseData baseData, BaseChain baseChain, ServiceOuterClass.GetTxResponse response, boolean isGen) {
+    public void onBindCommon(TxDetailgRPCActivity c, BaseChain baseChain, ServiceOuterClass.GetTxResponse response) {
         WDp.DpMainDenom(baseChain.getChainName(), itemFeeDenom);
         WDp.DpMainDenom(baseChain.getChainName(), itemFeeUsedDenom);
         WDp.DpMainDenom(baseChain.getChainName(), itemFeeLimitDenom);
         final int dpDecimal = baseChain.getDivideDecimal();
         if (response.getTxResponse().getCode() != 0) {
-            itemStatusImg.setImageDrawable(c.getDrawable(R.drawable.fail_ic));
+            itemStatusImg.setImageResource(R.drawable.fail_ic);
             itemStatusTxt.setText(R.string.str_failed_c);
             itemFailTxt.setVisibility(View.VISIBLE);
             itemFailTxt.setText(response.getTxResponse().getRawLog());
         } else {
-            itemStatusImg.setImageDrawable(c.getDrawable(R.drawable.success_ic));
+            itemStatusImg.setImageResource(R.drawable.success_ic);
             itemStatusTxt.setText(R.string.str_success_c);
         }
         itemHeight.setText("" + response.getTxResponse().getHeight());

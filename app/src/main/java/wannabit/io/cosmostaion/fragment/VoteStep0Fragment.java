@@ -71,29 +71,29 @@ public class VoteStep0Fragment extends BaseFragment implements View.OnClickListe
     }
 
     private void onUpdateView() {
-        mBtnYes.setBackground(getResources().getDrawable(R.drawable.box_round_unselected));
-        mBtnNo.setBackground(getResources().getDrawable(R.drawable.box_round_unselected));
-        mBtnVeto.setBackground(getResources().getDrawable(R.drawable.box_round_unselected));
-        mBtnAbstain.setBackground(getResources().getDrawable(R.drawable.box_round_unselected));
+        mBtnYes.setBackgroundResource(R.drawable.box_round_unselected);
+        mBtnNo.setBackgroundResource(R.drawable.box_round_unselected);
+        mBtnVeto.setBackgroundResource(R.drawable.box_round_unselected);
+        mBtnAbstain.setBackgroundResource(R.drawable.box_round_unselected);
         mImgYes.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorGray1), android.graphics.PorterDuff.Mode.SRC_IN);
         mImgNo.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorGray1), android.graphics.PorterDuff.Mode.SRC_IN);
         mImgVeto.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorGray1), android.graphics.PorterDuff.Mode.SRC_IN);
         mImgAbstain.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorGray1), android.graphics.PorterDuff.Mode.SRC_IN);
 
         if (mMyVote.equals(Vote.OPTION_YES)) {
-            mBtnYes.setBackground(getResources().getDrawable(R.drawable.box_round_selected));
+            mBtnYes.setBackgroundResource(R.drawable.box_round_selected);
             mImgYes.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorWhite), android.graphics.PorterDuff.Mode.SRC_IN);
 
         } else if (mMyVote.equals(Vote.OPTION_NO)) {
-            mBtnNo.setBackground(getResources().getDrawable(R.drawable.box_round_selected));
+            mBtnNo.setBackgroundResource(R.drawable.box_round_selected);
             mImgNo.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorWhite), android.graphics.PorterDuff.Mode.SRC_IN);
 
         } else if (mMyVote.equals(Vote.OPTION_VETO)) {
-            mBtnVeto.setBackground(getResources().getDrawable(R.drawable.box_round_selected));
+            mBtnVeto.setBackgroundResource(R.drawable.box_round_selected);
             mImgVeto.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorWhite), android.graphics.PorterDuff.Mode.SRC_IN);
 
         } else if (mMyVote.equals(Vote.OPTION_ABSTAIN)) {
-            mBtnAbstain.setBackground(getResources().getDrawable(R.drawable.box_round_selected));
+            mBtnAbstain.setBackgroundResource(R.drawable.box_round_selected);
             mImgAbstain.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorWhite), android.graphics.PorterDuff.Mode.SRC_IN);
 
         }

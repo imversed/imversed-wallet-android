@@ -320,31 +320,31 @@ public class ValidatorMyFragment extends BaseFragment implements View.OnClickLis
         final BaseData baseDao = getBaseDao();
         if (getMainActivity().getBaseChain().isGRPC()) {
             if (baseDao.getMyValSorting() == 2) {
-                mSortType.setText(getString(R.string.str_sorting_by_reward));
+                mSortType.setText(R.string.str_sorting_by_reward);
                 baseDao.mGRpcMyValidators = WUtil.onSortByRewardV1(baseDao.mGRpcMyValidators, getMainActivity().getBaseChain().getMainDenom(), baseDao);
 
             } else if (baseDao.getMyValSorting() == 0) {
                 baseDao.mGRpcMyValidators = WUtil.onSortByValidatorNameV1(baseDao.mGRpcMyValidators);
-                mSortType.setText(getString(R.string.str_sorting_by_name));
+                mSortType.setText(R.string.str_sorting_by_name);
 
             } else {
                 baseDao.mGRpcMyValidators = WUtil.onSortByDelegateV1(baseDao.mGRpcMyValidators, baseDao);
-                mSortType.setText(getString(R.string.str_sorting_by_my_delegated));
+                mSortType.setText(R.string.str_sorting_by_my_delegated);
 
             }
 
         } else {
             if (baseDao.getMyValSorting() == 2) {
                 baseDao.mMyValidators = WUtil.onSortByReward(baseDao.getMyValidators(), getMainActivity().getBaseChain().getMainDenom(), baseDao);
-                mSortType.setText(getString(R.string.str_sorting_by_reward));
+                mSortType.setText(R.string.str_sorting_by_reward);
 
             } else if (baseDao.getMyValSorting() == 0) {
                 baseDao.mMyValidators = WUtil.onSortByValidatorName(baseDao.getMyValidators());
-                mSortType.setText(getString(R.string.str_sorting_by_name));
+                mSortType.setText(R.string.str_sorting_by_name);
 
             } else {
                 baseDao.mMyValidators = WUtil.onSortByDelegate(baseDao.getMyValidators(), baseDao);
-                mSortType.setText(getString(R.string.str_sorting_by_my_delegated));
+                mSortType.setText(R.string.str_sorting_by_my_delegated);
             }
         }
     }

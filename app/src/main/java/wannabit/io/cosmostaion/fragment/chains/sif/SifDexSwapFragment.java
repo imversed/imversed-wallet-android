@@ -101,7 +101,7 @@ public class SifDexSwapFragment extends BaseFragment implements View.OnClickList
         mBtnSwapStart.setOnClickListener(this);
 
         mBtnToggle.setBackgroundTintList(getResources().getColorStateList(R.color.colorSif));
-        mSwapTitle.setText(getString(R.string.str_sif_swap_rate));
+        mSwapTitle.setText(R.string.str_sif_swap_rate);
         return rootView;
     }
 

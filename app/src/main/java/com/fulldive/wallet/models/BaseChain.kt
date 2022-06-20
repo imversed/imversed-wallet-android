@@ -24,6 +24,8 @@ sealed class BaseChain constructor(
     @StringRes val chainTitle: Int,
     @StringRes val chainAlterTitle: Int,
     val mainToken: Token,
+    val subTokens: List<Token> = emptyList(),
+    val tokensProvider: TokensProvider = TokensProvider(),
     @ColorRes val chainColor: Int,
     @DrawableRes val mnemonicBackground: Int,
     @ColorRes val chainBackground: Int,
@@ -88,6 +90,7 @@ sealed class BaseChain constructor(
         chainTitle = R.string.str_imversed_canary_net,
         chainAlterTitle = R.string.str_imversed_canary,
         mainToken = Tokens.IMV,
+        subTokens = listOf(SubTokens.FDTOKEN),
         chainColor = R.color.colorImversed,
         mnemonicBackground = R.drawable.box_round_imversed,
         chainBackground = R.color.colorTransBgImversed,
@@ -213,6 +216,7 @@ sealed class BaseChain constructor(
         chainTitle = R.string.str_kava_net,
         chainAlterTitle = R.string.str_kava,
         mainToken = Tokens.KAVA,
+        subTokens = listOf(SubTokens.KAVA_HARD, SubTokens.KAVA_USDX, SubTokens.KAVA_SWP),
         chainColor = R.color.colorKava,
         mnemonicBackground = R.drawable.box_round_kava,
         chainBackground = R.color.colorTransBgKava,
@@ -593,6 +597,7 @@ sealed class BaseChain constructor(
         chainTitle = R.string.str_osmosis_net,
         chainAlterTitle = R.string.str_osmosis_main,
         mainToken = Tokens.OSMO,
+        subTokens = listOf(SubTokens.ION),
         chainColor = R.color.colorOsmosis,
         mnemonicBackground = R.drawable.box_round_osmosis,
         chainBackground = R.color.colorTransBgOsmosis,
@@ -656,6 +661,7 @@ sealed class BaseChain constructor(
         chainTitle = R.string.str_emoney_net,
         chainAlterTitle = R.string.str_emoney_main,
         mainToken = Tokens.NGM,
+        tokensProvider = EMoneyTokenProvider,
         chainColor = R.color.colorEmoney,
         mnemonicBackground = R.drawable.box_round_emoney,
         chainBackground = R.color.colorTransBgEmoney,
@@ -1333,6 +1339,7 @@ sealed class BaseChain constructor(
         chainTitle = R.string.str_imversed_test_net,
         chainAlterTitle = R.string.str_imversed_test,
         mainToken = Tokens.IMV,
+        subTokens = listOf(SubTokens.FDTOKEN),
         chainColor = R.color.colorImversed,
         mnemonicBackground = R.drawable.box_round_imversed,
         chainBackground = R.color.colorTransBgImversed,
@@ -1437,6 +1444,10 @@ sealed class BaseChain constructor(
         isTestNet = true
     )
 
+    fun getToken(denom: String?): Token? {
+        return tokensProvider.getToken(denom, mainToken, subTokens)
+    }
+
     val mainDenom: String get() = mainToken.denom   // XXX
     val divideDecimal: Int get() = mainToken.divideDecimal  // XXX
 
@@ -1469,7 +1480,7 @@ sealed class BaseChain constructor(
 
         fun getChainByDenom(denom: String): BaseChain? {
             return chains.find { chain ->
-                chain.mainDenom == denom
+                chain.getToken(denom) != null
             }
         }
 

@@ -3,13 +3,11 @@ package wannabit.io.cosmostaion.widget.tokenDetail;
 import static com.fulldive.wallet.models.BaseChain.COSMOS_MAIN;
 import static com.fulldive.wallet.models.BaseChain.CRYPTO_MAIN;
 import static com.fulldive.wallet.models.BaseChain.IRIS_MAIN;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_FD;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HARD;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_SWP;
 import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_USDX;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,6 +17,7 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import com.fulldive.wallet.models.BaseChain;
+import com.fulldive.wallet.models.Token;
 import com.fulldive.wallet.models.WalletBalance;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
@@ -107,10 +106,9 @@ public class TokenDetailSupportHolder extends BaseHolder {
                 mTvVesting.setText(WDp.getDpAmount2(vestingAmount, dpDecimal, dpDecimal));
             }
         } else {
-            if ((baseChain.equals(BaseChain.IMVERSED_MAIN.INSTANCE) || baseChain.equals(BaseChain.IMVERSED_TEST.INSTANCE)) && denom.equalsIgnoreCase(TOKEN_FD)) {
-                dpDecimal = 0;
-            }else {
-                dpDecimal = 6;
+            final Token token = baseChain.getToken(denom);
+            if (token != null) {
+                dpDecimal = token.getDivideDecimal();
             }
             mAvailableAmount = baseActivity.getBalance(denom);
             mTvTotal.setText(WDp.getDpAmount2(mAvailableAmount, dpDecimal, dpDecimal));

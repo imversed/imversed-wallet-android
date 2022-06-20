@@ -158,12 +158,12 @@ public class DrawDebtCdpStep0Fragment extends BaseFragment implements View.OnCli
             public void afterTextChanged(Editable et) {
                 String es = et.toString().trim();
                 if (TextUtils.isEmpty(es)) {
-                    mPrincipalInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mPrincipalInput.setBackgroundResource(R.drawable.edittext_box);
                 } else if (es.startsWith(".")) {
-                    mPrincipalInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mPrincipalInput.setBackgroundResource(R.drawable.edittext_box);
                     mPrincipalInput.setText("");
                 } else if (es.endsWith(".")) {
-                    mPrincipalInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                    mPrincipalInput.setBackgroundResource(R.drawable.edittext_box_error);
                 } else if (mPrincipalInput.length() > 1 && es.startsWith("0") && !es.startsWith("0.")) {
                     mPrincipalInput.setText("0");
                     mPrincipalInput.setSelection(1);
@@ -176,7 +176,7 @@ public class DrawDebtCdpStep0Fragment extends BaseFragment implements View.OnCli
                     try {
                         final BigDecimal inputAmount = new BigDecimal(es);
                         if (BigDecimal.ZERO.compareTo(inputAmount) >= 0) {
-                            mPrincipalInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mPrincipalInput.setBackgroundResource(R.drawable.edittext_box_error);
                             return;
                         }
 
@@ -189,13 +189,13 @@ public class DrawDebtCdpStep0Fragment extends BaseFragment implements View.OnCli
                             return;
                         }
                         if (mMinLoanableAmount.compareTo(checkPosition) > 0) {
-                            mPrincipalInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mPrincipalInput.setBackgroundResource(R.drawable.edittext_box_error);
 
                         } else if (mMaxLoanableAmount.compareTo(checkPosition) < 0) {
-                            mPrincipalInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mPrincipalInput.setBackgroundResource(R.drawable.edittext_box_error);
 
                         } else {
-                            mPrincipalInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                            mPrincipalInput.setBackgroundResource(R.drawable.edittext_box);
                         }
                         mPrincipalInput.setSelection(mPrincipalInput.getText().length());
 
@@ -222,7 +222,7 @@ public class DrawDebtCdpStep0Fragment extends BaseFragment implements View.OnCli
             if (mToLoanAmount.compareTo(mMinLoanableAmount) < 0 || mToLoanAmount.compareTo(mMaxLoanableAmount) > 0) {
                 mBtnNext.setText(R.string.str_next);
                 mBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_btn_photon));
-                mBtnNext.setBackground(ContextCompat.getDrawable(requireContext(), R.drawable.btn_trans_with_border));
+                mBtnNext.setBackgroundResource(R.drawable.btn_trans_with_border);
                 mBtnNext.setTypeface(null, Typeface.NORMAL);
                 mAfterRiskLayer.setVisibility(View.INVISIBLE);
                 mAfterPrincipalAmount.setVisibility(View.GONE);
@@ -243,7 +243,7 @@ public class DrawDebtCdpStep0Fragment extends BaseFragment implements View.OnCli
         } catch (Exception e) {
             mBtnNext.setText(R.string.str_next);
             mBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_btn_photon));
-            mBtnNext.setBackground(getResources().getDrawable(R.drawable.btn_trans_with_border));
+            mBtnNext.setBackgroundResource(R.drawable.btn_trans_with_border);
             mBtnNext.setTypeface(null, Typeface.NORMAL);
             return false;
 

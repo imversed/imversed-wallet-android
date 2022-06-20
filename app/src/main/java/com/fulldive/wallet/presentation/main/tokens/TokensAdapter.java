@@ -3,14 +3,8 @@ package com.fulldive.wallet.presentation.main.tokens;
 import static wannabit.io.cosmostaion.base.BaseConstant.ASSET_IMG_URL;
 import static wannabit.io.cosmostaion.base.BaseConstant.BINANCE_TOKEN_IMG_URL;
 import static wannabit.io.cosmostaion.base.BaseConstant.COSMOS_COIN_IMG_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.EMONEY_COIN_IMG_URL;
 import static wannabit.io.cosmostaion.base.BaseConstant.KAVA_COIN_IMG_URL;
 import static wannabit.io.cosmostaion.base.BaseConstant.OKEX_COIN_IMG_URL;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_FD;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_HARD;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_ION;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_SWP;
-import static wannabit.io.cosmostaion.base.BaseConstant.TOKEN_USDX;
 
 import android.content.Context;
 import android.text.TextUtils;
@@ -25,12 +19,14 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
+import com.fulldive.wallet.interactors.balances.BalancesInteractor;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.Currency;
+import com.fulldive.wallet.models.Token;
 import com.fulldive.wallet.models.WalletBalance;
 import com.fulldive.wallet.models.local.DenomMetadata;
 import com.fulldive.wallet.models.local.DenomUnit;
-import com.fulldive.wallet.models.Token;
 import com.squareup.picasso.Picasso;
 
 import java.math.BigDecimal;
@@ -47,6 +43,7 @@ import wannabit.io.cosmostaion.dao.IbcToken;
 import wannabit.io.cosmostaion.dao.OkToken;
 import wannabit.io.cosmostaion.utils.PriceProvider;
 import wannabit.io.cosmostaion.utils.WDp;
+import wannabit.io.cosmostaion.utils.WLog;
 import wannabit.io.cosmostaion.utils.WUtil;
 
 class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
@@ -65,10 +62,11 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
     public BaseChain baseChain;
     public Currency currency = Currency.Companion.getDefault();
 
+    public BalancesInteractor balancesInteractor;
+    public AccountsInteractor accountsInteractor;
     public PriceProvider priceProvider;
     public BaseData baseData;
     public OnItemsClickListeners itemsClickListeners;
-    public OnBalanceProvider onBalanceProvider;
 
     @NonNull
     @Override
@@ -334,83 +332,58 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
     //with Native gRPC
     private void onNativeGrpcItem(AssetHolder holder, final int position) {
         final WalletBalance balance = nativeItems.get(position);
-        final BaseChain chain = BaseChain.Companion.getChainByDenom(balance.getDenom());
 
         Picasso.get().cancelRequest(holder.itemImg);
         final Context context = holder.itemView.getContext();
         int divideDecimal = 6;
         int displayDecimal = 6;
-        if (chain != null) {
-            final Token mainToken = chain.getMainToken();
-            divideDecimal = mainToken.getDivideDecimal();
-            displayDecimal = mainToken.getDisplayDecimal();
 
-            holder.itemSymbol.setText(mainToken.getSymbol());
-            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, mainToken.getCoinColorRes()));
-            holder.itemFullName.setText(mainToken.getName());
-            if (balance.getDenom().equals(BaseChain.SECRET_MAIN.INSTANCE.getMainToken().getDenom())) {
-                holder.itemInnerSymbol.setText("(" + balance.getDenom() + ")");
-            } else {
-                holder.itemInnerSymbol.setText("");
-            }
-            holder.itemImg.setImageDrawable(ContextCompat.getDrawable(context, mainToken.getCoinIconRes()));
-        } else if (balance.getDenom().equals(TOKEN_ION)) {
-            holder.itemSymbol.setText(R.string.str_uion_c);
-            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorIon));
-            holder.itemInnerSymbol.setText("");
-            holder.itemFullName.setText("Ion Coin");
-            holder.itemImg.setImageResource(R.drawable.token_ion);
-        } else if (balance.getDenom().equals(TOKEN_FD)) {
-            divideDecimal = 0;
-            displayDecimal = 0;
-            holder.itemSymbol.setText(R.string.str_fd_c);
-            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorImversed));
-            holder.itemInnerSymbol.setText("");
-            holder.itemFullName.setText("FD Token");
-            holder.itemImg.setImageResource(R.drawable.token_ic);
-        } else if (balance.getDenom().equals(TOKEN_HARD)) {
-            Picasso.get().load(KAVA_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
-            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorHard));
-            holder.itemSymbol.setText(balance.getDenom().toUpperCase());
-            holder.itemInnerSymbol.setText("");
-            holder.itemFullName.setText("HardPool Gov. Coin");
-        } else if (balance.getDenom().equals(TOKEN_USDX)) {
-            Picasso.get().load(KAVA_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
-            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorUsdx));
-            holder.itemSymbol.setText(balance.getDenom().toUpperCase());
-            holder.itemInnerSymbol.setText("");
-            holder.itemFullName.setText("USD Stable Asset");
-        } else if (balance.getDenom().equals(TOKEN_SWP)) {
-            Picasso.get().load(KAVA_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
-            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorSwp));
-            holder.itemSymbol.setText(balance.getDenom().toUpperCase());
-            holder.itemInnerSymbol.setText("");
-            holder.itemFullName.setText("Kava Swap Coin");
-        } else if (balance.getDenom().startsWith("e")) {
-            holder.itemSymbol.setText(balance.getDenom().toUpperCase());
-            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, R.color.colorWhite));
-            holder.itemInnerSymbol.setText("");
-            holder.itemFullName.setText(balance.getDenom().substring(1).toUpperCase() + " on E-Money Network");
-            Picasso.get().load(EMONEY_COIN_IMG_URL + balance.getDenom() + ".png").fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
+        final String denom = balance.getDenom();
+
+        final BaseChain chain = BaseChain.Companion.getChainByDenom(denom);
+        Token token = null;
+        if (chain != null) {
+            token = chain.getToken(denom);
         }
 
-        BigDecimal amount = balance.getBalanceAmount().add(baseData.getAllMainAsset(balance.getDenom()));  //TODO: add vesting
+        if (token != null) {
+            divideDecimal = token.getDivideDecimal();
+            displayDecimal = token.getDisplayDecimal();
 
-        if (balance.getDenom().equals(TOKEN_ION) || balance.getDenom().startsWith("e")) {
-            amount = onBalanceProvider.getFullBalance(balance.getDenom()).getBalanceAmount();
-        } else if (balance.getDenom().equals(TOKEN_HARD) || balance.getDenom().equals(TOKEN_USDX) || balance.getDenom().equals(TOKEN_SWP)) {
+            holder.itemSymbol.setText(token.getSymbol());
+            holder.itemSymbol.setTextColor(ContextCompat.getColor(context, token.getCoinColorRes()));
+            holder.itemFullName.setText(token.getName());
+            final String coinIcon = token.getCoinIcon();
+
+            if (!TextUtils.isEmpty(coinIcon)) {
+                Picasso.get()
+                        .load(coinIcon)
+                        .fit()
+                        .placeholder(token.getCoinIconRes())
+                        .error(token.getCoinIconRes())
+                        .into(holder.itemImg);
+            } else {
+                holder.itemImg.setImageResource(token.getCoinIconRes());
+            }
+        }
+        holder.itemInnerSymbol.setText("");
+
+        BigDecimal amount;
+
+        if (token != null && chain.getMainToken() != token) {
             amount = balance.getBalanceAmount(); // .add(baseData.getVesting(balance.getSymbol()));
-            divideDecimal = WUtil.getKavaCoinDecimal(baseData, balance.getDenom());
+        } else {
+            amount = balance.getBalanceAmount().add(baseData.getAllMainAsset(balance.getDenom()));  //TODO: add vesting
         }
 
         holder.itemBalance.setText(WDp.getDpAmount2(amount, divideDecimal, displayDecimal));
         holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, balance.getDenom(), amount, divideDecimal, priceProvider));
 
         holder.itemRoot.setOnClickListener(v -> {
-            if (nativeItems.get(position).getDenom().equalsIgnoreCase(baseChain.getMainToken().getDenom())) {
-                itemsClickListeners.onStackingTokenClicked(balance.getDenom());
+            if (denom.equalsIgnoreCase(baseChain.getMainToken().getDenom())) {
+                itemsClickListeners.onStackingTokenClicked(denom);
             } else {
-                itemsClickListeners.onNativeTokenClicked(balance.getDenom());
+                itemsClickListeners.onNativeTokenClicked(denom);
             }
         });
     }
@@ -535,7 +508,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
             holder.itemFullName.setText(assets.display_symbol);
             Picasso.get().load(ASSET_IMG_URL + assets.logo).fit().placeholder(R.drawable.token_ic).error(R.drawable.token_ic).into(holder.itemImg);
 
-            BigDecimal totalAmount = onBalanceProvider.getFullBalance(assets.denom).getBalanceAmount();
+            BigDecimal totalAmount = getFullBalance(assets.denom).getBalanceAmount();
             holder.itemBalance.setText(WDp.getDpAmount2(totalAmount, assets.decimal, 6));
             holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, assets.origin_symbol, totalAmount, assets.decimal, priceProvider));
 
@@ -556,7 +529,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
         holder.itemInnerSymbol.setText("");
         holder.itemFullName.setText(balance.getDenom().toUpperCase() + " on Kava Chain");
 
-        BigDecimal totalAmount = onBalanceProvider.getFullBalance(balance.getDenom()).getBalanceAmount();
+        BigDecimal totalAmount = getFullBalance(balance.getDenom()).getBalanceAmount();
         String baseDenom = WDp.getKavaBaseDenom(balance.getDenom());
         int bep2decimal = WUtil.getKavaCoinDecimal(baseData, balance.getDenom());
         holder.itemBalance.setText(WDp.getDpAmount2(totalAmount, bep2decimal, 6));
@@ -638,7 +611,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
                 holder.itemSymbol.setText(bnbToken.original_symbol.toUpperCase());
                 holder.itemInnerSymbol.setText("(" + bnbToken.symbol + ")");
                 holder.itemFullName.setText(mainToken.getName());
-                holder.itemImg.setImageDrawable(ContextCompat.getDrawable(context, mainToken.getCoinIconRes()));
+                holder.itemImg.setImageResource(mainToken.getCoinIconRes());
                 holder.itemSymbol.setTextColor(WDp.getChainColor(context, BaseChain.BNB_MAIN.INSTANCE));
                 holder.itemBalance.setText(WDp.getDpAmount2(amount, mainToken.getDivideDecimal(), 6 /*mainToken.getDisplayDecimal()*/));
                 holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, mainToken.getDenom(), amount, mainToken.getDivideDecimal(), priceProvider));
@@ -654,7 +627,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
             holder.itemFullName.setText(mainToken.getName());
             if (balance.getDenom().equals(mainToken.getDenom())) {
                 holder.itemSymbol.setTextColor(WDp.getChainColor(context, baseChain));
-                holder.itemImg.setImageDrawable(ContextCompat.getDrawable(context, mainToken.getCoinIconRes()));
+                holder.itemImg.setImageResource(mainToken.getCoinIconRes());
 
                 BigDecimal totalAmount = balance.getDelegatableAmount().add(baseData.getAllExToken(balance.getDenom()));
                 holder.itemBalance.setText(WDp.getDpAmount2(totalAmount, mainToken.getDivideDecimal(), 6 /*mainToken.getDisplayDecimal()*/));
@@ -683,7 +656,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
             }
 
             BigDecimal totalAmount = balance.getDelegatableAmount().add(baseData.getAllExToken(denom));
-            BigDecimal convertAmount = WDp.convertTokenToOkt(onBalanceProvider.getFullBalance(denom), baseData, denom, priceProvider);
+            BigDecimal convertAmount = WDp.convertTokenToOkt(getFullBalance(denom), baseData, denom, priceProvider);
             holder.itemBalance.setText(WDp.getDpAmount2(totalAmount, 0, 6));
             holder.itemValue.setText(WDp.dpUserCurrencyValue(baseData, currency, BaseChain.OKEX_MAIN.INSTANCE.getMainDenom(), convertAmount, 0, priceProvider));
             holder.itemRoot.setOnClickListener(v -> {
@@ -725,7 +698,7 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
         } else {
             holder.itemInnerSymbol.setText("(" + context.getString(R.string.str_unknown) + ")");
             holder.itemFullName.setText("");
-            holder.itemImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.token_ic));
+            holder.itemImg.setImageResource(R.drawable.token_ic);
         }
 
         holder.itemSymbol.setText(balanceDenom);
@@ -752,8 +725,18 @@ class TokensAdapter extends RecyclerView.Adapter<TokensAdapter.AssetHolder> {
         void onEtcTokenClicked(String denom);
     }
 
-    interface OnBalanceProvider {
-        WalletBalance getFullBalance(String denom);
+    public WalletBalance getFullBalance(String denom) {
+        WalletBalance result;
+        try {
+            result = accountsInteractor.getCurrentAccount().map(item -> item.id)
+                    .flatMap(accountId -> balancesInteractor.getBalance(accountId, denom))
+                    .blockingGet();
+        } catch (Exception exception) {
+            WLog.e(exception.toString());
+            exception.printStackTrace();
+            result = WalletBalance.Companion.create(0L, 0L, denom, "", "", "", System.currentTimeMillis());
+        }
+        return result;
     }
 
     public static class AssetHolder extends RecyclerView.ViewHolder {

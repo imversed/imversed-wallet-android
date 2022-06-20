@@ -222,23 +222,23 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
         mAccountGenTime.setText(WDp.getDpTime(getBaseContext(), account.importTime));
 
         if (account.hasPrivateKey && account.fromMnemonic) {
-            mAccountState.setText(getString(R.string.str_with_mnemonic));
+            mAccountState.setText(R.string.str_with_mnemonic);
             mAccountPath.setText(baseChain.getPathProvider().getPathString(account.path, account.customPath));
             mPathLayer.setVisibility(View.VISIBLE);
             mImportMsg.setVisibility(View.GONE);
             mBtnCheck.setVisibility(View.VISIBLE);
             mBtnCheckKey.setVisibility(View.VISIBLE);
-            mBtnCheck.setText(getString(R.string.str_check_mnemonic));
-            mBtnCheckKey.setText(getString(R.string.str_check_private_key));
+            mBtnCheck.setText(R.string.str_check_mnemonic);
+            mBtnCheckKey.setText(R.string.str_check_private_key);
 
         } else if (account.hasPrivateKey) {
-            mAccountState.setText(getString(R.string.str_with_privatekey));
+            mAccountState.setText(R.string.str_with_privatekey);
             mPathLayer.setVisibility(View.GONE);
             mImportMsg.setVisibility(View.GONE);
             mBtnCheck.setVisibility(View.GONE);
             mView.setVisibility(View.GONE);
             mBtnCheckKey.setVisibility(View.VISIBLE);
-            mBtnCheckKey.setText(getString(R.string.str_check_private_key));
+            mBtnCheckKey.setText(R.string.str_check_private_key);
             if (baseChain.equals(OKEX_MAIN.INSTANCE)) {
                 mPathLayer.setVisibility(View.VISIBLE);
                 mAccountPathTitle.setText(R.string.str_address_type);
@@ -251,14 +251,14 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
             }
 
         } else {
-            mAccountState.setText(getString(R.string.str_only_address));
+            mAccountState.setText(R.string.str_only_address);
             mPathLayer.setVisibility(View.GONE);
             mImportMsg.setVisibility(View.VISIBLE);
             mImportMsg.setTextColor(WDp.getChainColor(getBaseContext(), baseChain));
             mBtnCheck.setVisibility(View.VISIBLE);
             mBtnCheckKey.setVisibility(View.VISIBLE);
-            mBtnCheck.setText(getString(R.string.str_import_mnemonic));
-            mBtnCheckKey.setText(getString(R.string.str_import_key));
+            mBtnCheck.setText(R.string.str_import_mnemonic);
+            mBtnCheckKey.setText(R.string.str_import_key);
         }
 
     }
@@ -314,7 +314,7 @@ public class AccountDetailActivity extends BaseActivity implements View.OnClickL
                 accountSum = accountSum + accountsInteractor.getChainAccounts(baseChain).size();
             }
             if (accountSum <= 1) {
-                Toast.makeText(AccountDetailActivity.this, getString(R.string.error_reserve_1_account), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AccountDetailActivity.this, R.string.error_reserve_1_account, Toast.LENGTH_SHORT).show();
                 return;
             }
 

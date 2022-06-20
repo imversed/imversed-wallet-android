@@ -58,14 +58,14 @@ public class RedelegateActivity extends BaseBroadCastActivity implements TaskLis
         mIvStep = findViewById(R.id.send_step);
         mTvStep = findViewById(R.id.send_step_msg);
         mViewPager = findViewById(R.id.view_pager);
-        mTitle.setText(getString(R.string.str_redelegate_c));
+        mTitle.setText(R.string.str_redelegate_c);
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mIvStep.setImageDrawable(getDrawable(R.drawable.step_1_img));
-        mTvStep.setText(getString(R.string.str_redelegate_step_0));
+        mIvStep.setImageResource(R.drawable.step_1_img);
+        mTvStep.setText(R.string.str_redelegate_step_0);
         mTxType = CONST_PW_TX_SIMPLE_REDELEGATE;
 
         mValAddress = getIntent().getStringExtra("valOpAddress");
@@ -82,22 +82,22 @@ public class RedelegateActivity extends BaseBroadCastActivity implements TaskLis
             @Override
             public void onPageSelected(int i) {
                 if (i == 0) {
-                    mIvStep.setImageDrawable(getDrawable(R.drawable.step_1_img));
-                    mTvStep.setText(getString(R.string.str_redelegate_step_0));
+                    mIvStep.setImageResource(R.drawable.step_1_img);
+                    mTvStep.setText(R.string.str_redelegate_step_0);
                 } else if (i == 1) {
-                    mIvStep.setImageDrawable(getDrawable(R.drawable.step_2_img));
-                    mTvStep.setText(getString(R.string.str_redelegate_step_1));
+                    mIvStep.setImageResource(R.drawable.step_2_img);
+                    mTvStep.setText(R.string.str_redelegate_step_1);
                     ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
                 } else if (i == 2) {
-                    mIvStep.setImageDrawable(getDrawable(R.drawable.step_3_img));
-                    mTvStep.setText(getString(R.string.str_redelegate_step_2));
+                    mIvStep.setImageResource(R.drawable.step_3_img);
+                    mTvStep.setText(R.string.str_redelegate_step_2);
                 } else if (i == 3) {
-                    mIvStep.setImageDrawable(getDrawable(R.drawable.step_4_img));
-                    mTvStep.setText(getString(R.string.str_redelegate_step_3));
+                    mIvStep.setImageResource(R.drawable.step_4_img);
+                    mTvStep.setText(R.string.str_redelegate_step_3);
                     ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
                 } else if (i == 4) {
-                    mIvStep.setImageDrawable(getDrawable(R.drawable.step_5_img));
-                    mTvStep.setText(getString(R.string.str_redelegate_step_4));
+                    mIvStep.setImageResource(R.drawable.step_5_img);
+                    mTvStep.setText(R.string.str_redelegate_step_4);
                     ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
                 }
             }

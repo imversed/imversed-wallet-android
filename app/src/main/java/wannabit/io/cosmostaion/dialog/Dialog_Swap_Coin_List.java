@@ -85,6 +85,8 @@ public class Dialog_Swap_Coin_List extends DialogFragment {
 
         @Override
         public void onBindViewHolder(@NonNull SwapChainListAdapter.SwapChainHolder holder, int position) {
+            Picasso.get().cancelRequest(holder.chainImg);
+
             final String inputCoin = mSwapCoinList.get(position);
             IbcToken ibcToken = getSActivity().getBaseDao().getIbcToken(inputCoin);
             if (inputCoin.startsWith("ibc/")) {
@@ -111,19 +113,15 @@ public class Dialog_Swap_Coin_List extends DialogFragment {
                 }
             } else if (inputCoin.equals(COSMOS_MAIN.INSTANCE.getMainDenom())) {
                 holder.chainName.setText(R.string.str_atom_c);
-                Picasso.get().cancelRequest(holder.chainImg);
                 holder.chainImg.setImageResource(R.drawable.atom_ic);
             } else if (inputCoin.equals(BaseChain.OSMOSIS_MAIN.INSTANCE.getMainDenom())) {
                 holder.chainName.setText(R.string.str_osmosis_c);
-                Picasso.get().cancelRequest(holder.chainImg);
                 holder.chainImg.setImageResource(R.drawable.token_osmosis);
             } else if (inputCoin.equals(BaseChain.SIF_MAIN.INSTANCE.getMainDenom())) {
                 holder.chainName.setText(R.string.str_sif_c);
-                Picasso.get().cancelRequest(holder.chainImg);
                 holder.chainImg.setImageResource(R.drawable.tokensifchain);
             } else if (inputCoin.equals(TOKEN_ION)) {
                 holder.chainName.setText(R.string.str_uion_c);
-                Picasso.get().cancelRequest(holder.chainImg);
                 holder.chainImg.setImageResource(R.drawable.token_ion);
             } else if (inputCoin.startsWith("c")) {
                 final Assets assets = getSActivity().getBaseDao().getAsset(inputCoin);
@@ -133,7 +131,6 @@ public class Dialog_Swap_Coin_List extends DialogFragment {
                 }
             } else {
                 holder.chainName.setText(R.string.str_unknown);
-                Picasso.get().cancelRequest(holder.chainImg);
                 holder.chainImg.setImageResource(R.drawable.token_ic);
             }
 

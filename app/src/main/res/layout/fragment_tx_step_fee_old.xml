@@ -274,7 +274,7 @@
             android:gravity="center"
             android:layout_marginTop="@dimen/space_2"
             style="@style/font_ssm_14_white"
-            android:text="Cosmostation Wallet is a free service." />
+            android:text="@string/str_fee_fdwallet" />
 
         <TextView
             android:id="@+id/speed_txt"

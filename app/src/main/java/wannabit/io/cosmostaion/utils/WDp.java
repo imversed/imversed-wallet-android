@@ -35,9 +35,9 @@ import com.fulldive.wallet.extensions.ContextExtensionsKt;
 import com.fulldive.wallet.interactors.secret.WalletUtils;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.models.Currency;
-import com.fulldive.wallet.models.WalletBalance;
-import com.fulldive.wallet.models.local.DenomMetadata;
 import com.fulldive.wallet.models.Token;
+import com.fulldive.wallet.models.WalletBalance;
+import com.fulldive.wallet.models.local.DenomUnit;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -124,9 +124,9 @@ public class WDp {
             denomColorRes = mainToken.getCoinColorRes();
             denom = mainToken.getSymbol();
         } else if (chain.isGRPC()) {
-            final DenomMetadata denomMetadata = baseData.getDenomMetadata(chain.getChainName(), denom);
-            if (denomMetadata != null) {
-                int divider = denomMetadata.getDenomUnit(denom).getExpanent();
+            final DenomUnit denomUnit = baseData.getDenomUnit(chain.getChainName(), denom);
+            if (denomUnit != null) {
+                int divider = denomUnit.getExpanent();
                 divideDecimal = divider;
                 displayDecimal = divider;
             }
@@ -554,8 +554,8 @@ public class WDp {
                     BigDecimal assetValue = userCurrencyValue(baseData, currency, balance.getDenom().substring(1), amount, decimal, priceProvider);
                     totalValue = totalValue.add(assetValue);
                 } else if (baseChain.equals(BaseChain.EMONEY_MAIN.INSTANCE) || balance.getDenom().startsWith("e")) {
-                    BigDecimal available = balance.getBalanceAmount();
-                    totalValue = totalValue.add(userCurrencyValue(baseData, currency, balance.getDenom(), available, 6, priceProvider));
+                    BigDecimal amount = balance.getBalanceAmount();
+                    totalValue = totalValue.add(userCurrencyValue(baseData, currency, balance.getDenom(), amount, 6, priceProvider));
                 } else if (baseChain.equals(BaseChain.KAVA_MAIN.INSTANCE) && !balance.isIbc()) {
                     BigDecimal amount = balance.getBalanceAmount();
 //                    amount = amount.add(baseData.getVesting(balance.getSymbol())); // TODO Vesting
@@ -978,7 +978,7 @@ public class WDp {
     public static int mainDivideDecimal(String denom) {
         BaseChain chain = BaseChain.Companion.getChainByDenom(denom);
         if (chain != null) {
-            return chain.getDivideDecimal();
+            return chain.getMainToken().getDivideDecimal();
         } else {
             return 6;
         }
@@ -1145,9 +1145,9 @@ public class WDp {
             imgView.setImageResource(chain.getChainIcon());
         }
         if (chain.equals(BaseChain.BNB_MAIN.INSTANCE)) {
-            txtView.setText(c.getString(R.string.str_binance));
+            txtView.setText(R.string.str_binance);
         } else if (chain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
-            txtView.setText(c.getString(R.string.str_kava));
+            txtView.setText(R.string.str_kava);
         }
     }
 

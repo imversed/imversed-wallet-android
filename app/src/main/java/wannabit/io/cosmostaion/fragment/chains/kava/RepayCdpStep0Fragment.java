@@ -203,12 +203,12 @@ public class RepayCdpStep0Fragment extends BaseFragment implements View.OnClickL
             public void afterTextChanged(Editable et) {
                 String es = et.toString().trim();
                 if (TextUtils.isEmpty(es)) {
-                    mPrincipalInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mPrincipalInput.setBackgroundResource(R.drawable.edittext_box);
                 } else if (es.startsWith(".")) {
-                    mPrincipalInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mPrincipalInput.setBackgroundResource(R.drawable.edittext_box);
                     mPrincipalInput.setText("");
                 } else if (es.endsWith(".")) {
-                    mPrincipalInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                    mPrincipalInput.setBackgroundResource(R.drawable.edittext_box_error);
                 } else if (mPrincipalInput.length() > 1 && es.startsWith("0") && !es.startsWith("0.")) {
                     mPrincipalInput.setText("0");
                     mPrincipalInput.setSelection(1);
@@ -221,7 +221,7 @@ public class RepayCdpStep0Fragment extends BaseFragment implements View.OnClickL
                     try {
                         final BigDecimal inputAmount = new BigDecimal(es);
                         if (BigDecimal.ZERO.compareTo(inputAmount) >= 0) {
-                            mPrincipalInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mPrincipalInput.setBackgroundResource(R.drawable.edittext_box_error);
                             return;
                         }
 
@@ -235,7 +235,7 @@ public class RepayCdpStep0Fragment extends BaseFragment implements View.OnClickL
                         }
                         if ((checkPosition.compareTo(pMinAmount) < 0 || checkPosition.compareTo(pMaxAmount) > 0) &&
                                 !checkPosition.equals(pAllAmount)) {
-                            mPrincipalInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                            mPrincipalInput.setBackgroundResource(R.drawable.edittext_box);
                         }
                         mPrincipalInput.setSelection(mPrincipalInput.getText().length());
 
@@ -347,7 +347,7 @@ public class RepayCdpStep0Fragment extends BaseFragment implements View.OnClickL
         } catch (Exception e) {
             mBtnNext.setText(R.string.str_next);
             mBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_btn_photon));
-            mBtnNext.setBackground(getResources().getDrawable(R.drawable.btn_trans_with_border));
+            mBtnNext.setBackgroundResource(R.drawable.btn_trans_with_border);
             mBtnNext.setTypeface(null, Typeface.NORMAL);
             return false;
         }
@@ -357,7 +357,7 @@ public class RepayCdpStep0Fragment extends BaseFragment implements View.OnClickL
         if (!onValidateAmount()) {
             mBtnNext.setText(R.string.str_next);
             mBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_btn_photon));
-            mBtnNext.setBackground(getResources().getDrawable(R.drawable.btn_trans_with_border));
+            mBtnNext.setBackgroundResource(R.drawable.btn_trans_with_border);
             mBtnNext.setTypeface(null, Typeface.NORMAL);
             mAfterRiskLayer.setVisibility(View.INVISIBLE);
 

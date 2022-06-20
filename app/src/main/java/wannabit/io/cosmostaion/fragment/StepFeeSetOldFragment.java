@@ -145,8 +145,8 @@ public class StepFeeSetOldFragment extends BaseFragment implements View.OnClickL
         mGasAmount.setText(mEstimateGasAmount.toPlainString());
         mGasFee.setText(mFee.toPlainString());
 
-        mSpeedImg.setImageDrawable(getResources().getDrawable(R.drawable.rocket_img));
-        mSpeedTxt.setText(getString(R.string.str_fee_speed_title_2));
+        mSpeedImg.setImageResource(R.drawable.rocket_img);
+        mSpeedTxt.setText(R.string.str_fee_speed_title_2);
     }
 
     @Override

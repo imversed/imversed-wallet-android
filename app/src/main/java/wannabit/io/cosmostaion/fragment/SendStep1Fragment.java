@@ -24,8 +24,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.fulldive.wallet.models.BaseChain;
-import com.fulldive.wallet.models.local.DenomMetadata;
 import com.fulldive.wallet.models.Token;
+import com.fulldive.wallet.models.local.DenomUnit;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -106,11 +106,11 @@ public class SendStep1Fragment extends BaseFragment implements View.OnClickListe
         final String toSendDenom = getSActivity().mDenom;
         final BigDecimal feeAmount = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_SIMPLE_SEND);
         if (baseChain.isGRPC()) {
-            final DenomMetadata denomMetadata = getBaseDao().getDenomMetadata(baseChain.getChainName(), toSendDenom);
+            final DenomUnit denomUnit = getBaseDao().getDenomUnit(baseChain.getChainName(), toSendDenom);
             if (getSActivity().mDenom.startsWith("ibc/")) {
                 mDpDecimal = WUtil.getIbcDecimal(getBaseDao(), toSendDenom);
-            } else if (denomMetadata != null) {
-                mDpDecimal = denomMetadata.getDenomUnit(toSendDenom).getExpanent();
+            } else if (denomUnit != null) {
+                mDpDecimal = denomUnit.getExpanent();
             } else if (baseChain.equals(SIF_MAIN.INSTANCE)) {
                 mDpDecimal = WUtil.getSifCoinDecimal(getBaseDao(), toSendDenom);
             } else if (baseChain.equals(GRABRIDGE_MAIN.INSTANCE)) {
@@ -119,10 +119,13 @@ public class SendStep1Fragment extends BaseFragment implements View.OnClickListe
                 mDpDecimal = WUtil.getKavaCoinDecimal(getBaseDao(), toSendDenom);
             } else if (baseChain.equals(INJ_MAIN.INSTANCE)) {
                 mDpDecimal = WUtil.getInjCoinDecimal(getBaseDao(), toSendDenom);
-            } else if (baseChain.equals(BaseChain.IMVERSED_MAIN.INSTANCE) || baseChain.equals(BaseChain.IMVERSED_TEST.INSTANCE)) {
-                mDpDecimal = WUtil.getImvCoinDecimal(toSendDenom);
             } else {
-                mDpDecimal = mainToken.getDisplayDecimal();
+                final Token token = BaseChain.IMVERSED_MAIN.INSTANCE.getToken(toSendDenom);
+                if (token != null) {
+                    mDpDecimal = token.getDisplayDecimal();
+                } else {
+                    mDpDecimal = mainToken.getDisplayDecimal();
+                }
             }
 
         } else if (baseChain.equals(BNB_MAIN.INSTANCE) || baseChain.equals(OKEX_MAIN.INSTANCE)) {
@@ -155,12 +158,12 @@ public class SendStep1Fragment extends BaseFragment implements View.OnClickListe
             public void afterTextChanged(Editable et) {
                 String es = et.toString().trim();
                 if (TextUtils.isEmpty(es)) {
-                    mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mAmountInput.setBackgroundResource(R.drawable.edittext_box);
                 } else if (es.startsWith(".")) {
-                    mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                    mAmountInput.setBackgroundResource(R.drawable.edittext_box);
                     mAmountInput.setText("");
                 } else if (es.endsWith(".")) {
-                    mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                    mAmountInput.setBackgroundResource(R.drawable.edittext_box_error);
                     mAmountInput.setVisibility(View.VISIBLE);
                 } else if (es.length() > 1 && es.startsWith("0") && !es.startsWith("0.")) {
                     mAmountInput.setText("0");
@@ -174,7 +177,7 @@ public class SendStep1Fragment extends BaseFragment implements View.OnClickListe
                     try {
                         final BigDecimal inputAmount = new BigDecimal(es);
                         if (BigDecimal.ZERO.compareTo(inputAmount) >= 0) {
-                            mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                            mAmountInput.setBackgroundResource(R.drawable.edittext_box_error);
                             return;
                         }
 
@@ -189,16 +192,16 @@ public class SendStep1Fragment extends BaseFragment implements View.OnClickListe
 
                         if (getSActivity().getBaseChain().equals(BNB_MAIN.INSTANCE) || getSActivity().getBaseChain().equals(OKEX_MAIN.INSTANCE)) {
                             if (inputAmount.compareTo(mMaxAvailable) > 0) {
-                                mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                                mAmountInput.setBackgroundResource(R.drawable.edittext_box_error);
                             } else {
-                                mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                                mAmountInput.setBackgroundResource(R.drawable.edittext_box);
                             }
 
                         } else {
                             if (inputAmount.compareTo(mMaxAvailable.movePointLeft(mDpDecimal).setScale(mDpDecimal, RoundingMode.CEILING)) > 0) {
-                                mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box_error));
+                                mAmountInput.setBackgroundResource(R.drawable.edittext_box_error);
                             } else {
-                                mAmountInput.setBackground(getResources().getDrawable(R.drawable.edittext_box));
+                                mAmountInput.setBackgroundResource(R.drawable.edittext_box);
                             }
                         }
                         mAmountInput.setSelection(mAmountInput.getText().length());
