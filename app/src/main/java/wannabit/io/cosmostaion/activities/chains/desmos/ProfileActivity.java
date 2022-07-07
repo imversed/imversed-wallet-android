@@ -75,18 +75,24 @@ public class ProfileActivity extends BaseBroadCastActivity {
                 if (i == 0) {
                     mIvStep.setImageResource(R.drawable.step_4_img_1);
                     mTvStep.setText(R.string.str_create_profile_step_0);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 } else if (i == 1) {
                     mIvStep.setImageResource(R.drawable.step_4_img_2);
                     mTvStep.setText(R.string.str_create_profile_step_1);
                 } else if (i == 2) {
                     mIvStep.setImageResource(R.drawable.step_4_img_3);
                     mTvStep.setText(R.string.str_create_profile_step_2);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 } else if (i == 3) {
                     mIvStep.setImageResource(R.drawable.step_4_img_4);
                     mTvStep.setText(R.string.str_create_profile_step_3);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 }
             }
 

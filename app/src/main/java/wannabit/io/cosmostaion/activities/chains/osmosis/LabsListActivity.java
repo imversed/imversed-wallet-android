@@ -54,7 +54,6 @@ import wannabit.io.cosmostaion.task.gRpcTask.OsmosisLockupStatusGrpcTask;
 import wannabit.io.cosmostaion.task.gRpcTask.OsmosisPoolListGrpcTask;
 import wannabit.io.cosmostaion.utils.WDp;
 import wannabit.io.cosmostaion.utils.WLog;
-import wannabit.io.cosmostaion.utils.WUtil;
 
 public class LabsListActivity extends BaseActivity implements TaskListener {
 
@@ -295,7 +294,9 @@ public class LabsListActivity extends BaseActivity implements TaskListener {
                 @Override
                 public void run() {
                     hideWaitDialog();
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 }
             }, 300);
         }

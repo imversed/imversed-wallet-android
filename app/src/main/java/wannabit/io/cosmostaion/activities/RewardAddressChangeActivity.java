@@ -84,11 +84,15 @@ public class RewardAddressChangeActivity extends BaseBroadCastActivity {
                 } else if (i == 2) {
                     mIvStep.setImageResource(R.drawable.step_4_img_3);
                     mTvStep.setText(R.string.str_change_reward_address_step_2);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 } else if (i == 3) {
                     mIvStep.setImageResource(R.drawable.step_4_img_4);
                     mTvStep.setText(R.string.str_change_reward_address_step_3);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 }
             }
 

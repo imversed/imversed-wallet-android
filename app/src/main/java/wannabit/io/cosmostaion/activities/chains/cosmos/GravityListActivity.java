@@ -291,7 +291,9 @@ public class GravityListActivity extends BaseActivity implements TaskListener {
             }
             new Handler(Looper.getMainLooper()).postDelayed(() -> {
                 hideWaitDialog();
-                ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                }
             }, 300);
         }
     }

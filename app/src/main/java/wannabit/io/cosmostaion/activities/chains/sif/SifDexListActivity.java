@@ -46,7 +46,6 @@ import wannabit.io.cosmostaion.task.TaskResult;
 import wannabit.io.cosmostaion.task.gRpcTask.SifDexPoolAssetListGrpcTask;
 import wannabit.io.cosmostaion.task.gRpcTask.SifDexPoolListGrpcTask;
 import wannabit.io.cosmostaion.utils.WDp;
-import wannabit.io.cosmostaion.utils.WUtil;
 
 public class SifDexListActivity extends BaseActivity implements TaskListener {
 
@@ -281,7 +280,9 @@ public class SifDexListActivity extends BaseActivity implements TaskListener {
                 @Override
                 public void run() {
                     hideWaitDialog();
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 }
             }, 300);
         }

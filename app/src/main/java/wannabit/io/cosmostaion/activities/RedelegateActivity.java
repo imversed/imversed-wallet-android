@@ -87,18 +87,24 @@ public class RedelegateActivity extends BaseBroadCastActivity implements TaskLis
                 } else if (i == 1) {
                     mIvStep.setImageResource(R.drawable.step_2_img);
                     mTvStep.setText(R.string.str_redelegate_step_1);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 } else if (i == 2) {
                     mIvStep.setImageResource(R.drawable.step_3_img);
                     mTvStep.setText(R.string.str_redelegate_step_2);
                 } else if (i == 3) {
                     mIvStep.setImageResource(R.drawable.step_4_img);
                     mTvStep.setText(R.string.str_redelegate_step_3);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 } else if (i == 4) {
                     mIvStep.setImageResource(R.drawable.step_5_img);
                     mTvStep.setText(R.string.str_redelegate_step_4);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 }
             }
 
@@ -195,7 +201,9 @@ public class RedelegateActivity extends BaseBroadCastActivity implements TaskLis
         }
 
         if (mTaskCount == 0) {
-            ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+            if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+            }
         }
     }
 

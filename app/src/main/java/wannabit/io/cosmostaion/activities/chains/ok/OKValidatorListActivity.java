@@ -107,7 +107,9 @@ public class OKValidatorListActivity extends BaseActivity implements FetchCallBa
     public void fetchFinished() {
         if (!isFinishing()) {
             hideWaitDialog();
-            ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+            if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+            }
         }
 
     }

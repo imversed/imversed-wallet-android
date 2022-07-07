@@ -107,11 +107,15 @@ public class RepayCdpActivity extends BaseBroadCastActivity implements TaskListe
                 } else if (i == 2) {
                     mIvStep.setImageResource(R.drawable.step_4_img_3);
                     mTvStep.setText(R.string.str_repay_cdp_step_3);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 } else if (i == 3) {
                     mIvStep.setImageResource(R.drawable.step_4_img_4);
                     mTvStep.setText(R.string.str_repay_cdp_step_4);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 }
             }
 
@@ -247,7 +251,9 @@ public class RepayCdpActivity extends BaseBroadCastActivity implements TaskListe
                 onBackPressed();
                 return;
             }
-            ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+            if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+            }
         }
     }
 

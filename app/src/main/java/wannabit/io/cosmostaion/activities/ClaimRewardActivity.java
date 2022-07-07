@@ -90,12 +90,16 @@ public class ClaimRewardActivity extends BaseBroadCastActivity implements TaskLi
                 } else if (i == 2) {
                     mIvStep.setImageResource(R.drawable.step_4_img_3);
                     mTvStep.setText(R.string.str_reward_step_3);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
 
                 } else if (i == 3) {
                     mIvStep.setImageResource(R.drawable.step_4_img_4);
                     mTvStep.setText(R.string.str_reward_step_4);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 }
             }
 
@@ -185,7 +189,9 @@ public class ClaimRewardActivity extends BaseBroadCastActivity implements TaskLi
         }
 
         if (mTaskCount == 0) {
-            ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+            if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+            }
         }
     }
 

@@ -298,7 +298,9 @@ public class DAppsList5Activity extends BaseActivity implements TaskListener {
                 @Override
                 public void run() {
                     hideWaitDialog();
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 }
             }, 300);
         }

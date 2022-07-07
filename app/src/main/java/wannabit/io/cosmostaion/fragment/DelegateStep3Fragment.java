@@ -17,6 +17,7 @@ import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.DelegateActivity;
 import wannabit.io.cosmostaion.base.BaseFragment;
 import wannabit.io.cosmostaion.base.IRefreshTabListener;
+import wannabit.io.cosmostaion.dao.ChainParam;
 import wannabit.io.cosmostaion.dialog.Dialog_Delegate_Warning;
 import wannabit.io.cosmostaion.utils.WDp;
 
@@ -80,7 +81,10 @@ public class DelegateStep3Fragment extends BaseFragment implements View.OnClickL
 
         } else if (v.equals(mConfirmBtn)) {
             Bundle bundle = new Bundle();
-            bundle.putInt("day", getBaseDao().mChainParam.getUnbonding(getSActivity().getBaseChain()));
+            ChainParam.Params chainParam = getBaseDao().mChainParam;
+            if (chainParam != null) {
+                bundle.putInt("day", getBaseDao().mChainParam.getUnbonding(getSActivity().getBaseChain()));
+            }
             Dialog_Delegate_Warning dialog = Dialog_Delegate_Warning.newInstance(bundle);
             dialog.setTargetFragment(DelegateStep3Fragment.this, SELECT_DELEGATE_CHECK);
             showDialog(dialog);

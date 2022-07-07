@@ -84,15 +84,21 @@ public class RegisterStarNameAccountActivity extends BaseBroadCastActivity {
                 } else if (i == 2) {
                     mIvStep.setImageResource(R.drawable.step_3_img);
                     mTvStep.setText(R.string.str_register_account_step_2);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 } else if (i == 3) {
                     mIvStep.setImageResource(R.drawable.step_4_img);
                     mTvStep.setText(R.string.str_register_account_step_3);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 } else if (i == 4) {
                     mIvStep.setImageResource(R.drawable.step_5_img);
                     mTvStep.setText(R.string.str_register_account_step_4);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 }
             }
 

@@ -111,15 +111,21 @@ public class HtlcSendActivity extends BaseActivity {
                 } else if (i == 1) {
                     mIvStep.setImageResource(R.drawable.step_4_img_2);
                     mTvStep.setText(R.string.str_htlc_send_step_2);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 } else if (i == 2) {
                     mIvStep.setImageResource(R.drawable.step_4_img_3);
                     mTvStep.setText(R.string.str_htlc_send_step_3);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 } else if (i == 3) {
                     mIvStep.setImageResource(R.drawable.step_4_img_4);
                     mTvStep.setText(R.string.str_htlc_send_step_4);
-                    ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    if (mPageAdapter.mCurrentFragment instanceof IRefreshTabListener) {
+                        ((IRefreshTabListener) mPageAdapter.mCurrentFragment).onRefreshTab();
+                    }
                 }
             }
 
