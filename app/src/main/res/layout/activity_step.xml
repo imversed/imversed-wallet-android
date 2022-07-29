@@ -5,12 +5,6 @@
     android:layout_height="match_parent"
     android:id="@+id/root_view">
 
-    <com.fulldive.wallet.components.CustomImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitStart"
-        app:srcCompat="@drawable/bg_cosmos" />
-
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
