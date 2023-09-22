@@ -4,8 +4,8 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.joom.lightsaber.android'
 
 android {
-    compileSdkVersion 32
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 33
+    buildToolsVersion "33.0.2"
 
     signingConfigs {
         release {
@@ -24,7 +24,7 @@ android {
     defaultConfig {
         applicationId "com.fulldive.extension.fdwallet"
         minSdkVersion 23
-        targetSdkVersion 32
+        targetSdkVersion 33
         versionCode 10550
         versionName "1.5.50"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
