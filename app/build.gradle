@@ -25,7 +25,7 @@ android {
         applicationId "com.fulldive.extension.fdwallet"
         minSdkVersion 23
         targetSdkVersion 33
-        versionCode 10550
+        versionCode 10700
         versionName "1.7.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
