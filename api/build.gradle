@@ -9,6 +9,15 @@ kotlin {
     jvmToolchain(17)
 }
 
+tasks.withType(JavaCompile).configureEach {
+    // This module is ~3M lines of generated protobuf/gRPC Java. Compiled inside the Gradle
+    // daemon, javac's AST competes for the same heap as D8 (:app:mergeExtDex runs in
+    // parallel with it), and release builds die with OutOfMemoryError. Give javac its own
+    // JVM so the two no longer share a heap. It needs a little under 1 GB on its own.
+    options.fork = true
+    options.forkOptions.jvmArgs = ['-Xmx2g']
+}
+
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
