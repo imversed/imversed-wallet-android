@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.DialogFragment
 import androidx.viewbinding.ViewBinding
 import com.fulldive.wallet.di.IEnrichableActivity
+import com.fulldive.wallet.extensions.applySystemBarInsetsToContent
 import com.fulldive.wallet.extensions.clearUi
 import com.fulldive.wallet.extensions.or
 import com.fulldive.wallet.extensions.toast
@@ -40,7 +41,16 @@ abstract class BaseMvpActivity<VB : ViewBinding> : MvpAppCompatActivity(), IEnri
                 throw ex
             }
         )
+        if (appliesSystemBarInsets) {
+            applySystemBarInsetsToContent()
+        }
     }
+
+    /**
+     * Screens that draw their own background edge to edge, or lay the system bars out
+     * themselves, override this and handle the insets on the views that need them.
+     */
+    protected open val appliesSystemBarInsets: Boolean = true
 
     @CallSuper
     override fun onDestroy() {

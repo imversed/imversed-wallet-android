@@ -38,6 +38,7 @@ import java.math.BigDecimal;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.SendActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
+import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.dao.Price;
 import wannabit.io.cosmostaion.dialog.Dialog_IBC_Send_Warning;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
@@ -107,7 +108,7 @@ public class NativeTokenGrpcActivity extends BaseActivity implements View.OnClic
             if (getBaseDao().onParseRemainVestingsByDenom(mNativeGrpcDenom).size() > 0) {
                 mHasVesting = true;
             }
-            if (WUtil.isBep3Coin(mNativeGrpcDenom)) {
+            if (BaseConstant.SUPPORT_BEP3_SWAP && WUtil.isBep3Coin(mNativeGrpcDenom)) {
                 mBtnBep3Send.setVisibility(View.VISIBLE);
             }
         }

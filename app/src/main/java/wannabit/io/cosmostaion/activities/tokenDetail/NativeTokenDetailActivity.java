@@ -36,6 +36,7 @@ import java.math.BigDecimal;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.SendActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
+import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.dao.BnbToken;
 import wannabit.io.cosmostaion.dao.OkToken;
 import wannabit.io.cosmostaion.dao.Price;
@@ -100,7 +101,7 @@ public class NativeTokenDetailActivity extends BaseActivity implements View.OnCl
         mDenom = getIntent().getStringExtra("denom");
 
         if (getBaseChain().equals(BNB_MAIN.INSTANCE)) {
-            if (WUtil.isBep3Coin(mDenom)) {
+            if (BaseConstant.SUPPORT_BEP3_SWAP && WUtil.isBep3Coin(mDenom)) {
                 mBtnBep3Send.setVisibility(View.VISIBLE);
             }
         }

@@ -33,6 +33,13 @@ import wannabit.io.cosmostaion.task.gRpcTask.ProfileInfoGrpcTask;
 import wannabit.io.cosmostaion.utils.WDp;
 
 public class ProfileDetailActivity extends BaseActivity implements View.OnClickListener, TaskListener {
+    // This screen lays the status bar out itself through fitsSystemWindows on its
+    // CollapsingToolbarLayout, so the blanket content padding would apply the inset twice.
+    @Override
+    protected boolean appliesSystemBarInsets() {
+        return false;
+    }
+
 
     private Toolbar mToolbar;
     private ImageView mProfileCoverImg, mProfileImg;

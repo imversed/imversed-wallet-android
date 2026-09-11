@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 
 import com.fulldive.wallet.di.IEnrichableActivity;
 import com.fulldive.wallet.extensions.ViewExtensionsKt;
+import com.fulldive.wallet.extensions.WindowInsetsExtensionsKt;
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor;
 import com.fulldive.wallet.interactors.balances.BalancesInteractor;
 import com.fulldive.wallet.interactors.chains.StationInteractor;
@@ -103,6 +104,22 @@ public class BaseActivity extends AppCompatActivity implements IEnrichableActivi
         stationInteractor = getAppInjector().getInstance(StationInteractor.class);
         balancesInteractor = getAppInjector().getInstance(BalancesInteractor.class);
         rootView = findViewById(android.R.id.content);
+    }
+
+    @Override
+    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        if (appliesSystemBarInsets()) {
+            WindowInsetsExtensionsKt.applySystemBarInsetsToContent(this);
+        }
+    }
+
+    /**
+     * Screens that draw their own background edge to edge, or lay the system bars out
+     * themselves, override this and handle the insets on the views that need them.
+     */
+    protected boolean appliesSystemBarInsets() {
+        return true;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.fulldive.wallet.presentation.accounts
 
 import android.Manifest
+import android.os.Build
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -13,7 +14,7 @@ import com.fulldive.wallet.extensions.withDefaults
 import com.fulldive.wallet.interactors.QRCodeInteractor
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
 import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.TedPermission
+import com.gun0912.tedpermission.normal.TedPermission
 import com.joom.lightsaber.ProvidedBy
 import io.reactivex.Completable
 import io.reactivex.Single
@@ -85,7 +86,7 @@ class ShareAccountPresenter @Inject constructor(
                 values
             )
             if (uri != null) {
-                context.contentResolver.openOutputStream(uri).use { outstream ->
+                context.contentResolver.openOutputStream(uri)?.use { outstream ->
                     bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outstream)
                 }
             }
@@ -95,13 +96,18 @@ class ShareAccountPresenter @Inject constructor(
 
     private fun checkPermissions(context: Context): Completable {
         return Completable.create { emitter ->
-            TedPermission(context)
+            // Scoped storage: writing through MediaStore needs no permission on Q and above.
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                emitter.onComplete()
+                return@create
+            }
+            TedPermission.create()
                 .setPermissionListener(object : PermissionListener {
                     override fun onPermissionGranted() {
                         emitter.onComplete()
                     }
 
-                    override fun onPermissionDenied(deniedPermissions: ArrayList<String>) {
+                    override fun onPermissionDenied(deniedPermissions: List<String>) {
                         emitter.tryOnError(Exception(context.getString(R.string.error_permission)))
                     }
                 })

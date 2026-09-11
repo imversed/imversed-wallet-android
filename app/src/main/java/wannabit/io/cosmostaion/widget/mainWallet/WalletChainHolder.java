@@ -26,13 +26,9 @@ import desmos.profiles.v1beta1.ModelsProfile;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.ValidatorListActivity;
 import wannabit.io.cosmostaion.activities.VoteListActivity;
-import wannabit.io.cosmostaion.activities.chains.cosmos.GravityListActivity;
 import wannabit.io.cosmostaion.activities.chains.desmos.ProfileActivity;
 import wannabit.io.cosmostaion.activities.chains.desmos.ProfileDetailActivity;
-import wannabit.io.cosmostaion.activities.chains.kava.DAppsList5Activity;
 import wannabit.io.cosmostaion.activities.chains.nft.NFTListActivity;
-import wannabit.io.cosmostaion.activities.chains.osmosis.LabsListActivity;
-import wannabit.io.cosmostaion.activities.chains.sif.SifDexListActivity;
 import wannabit.io.cosmostaion.activities.chains.starname.StarNameListActivity;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.dao.Account;
@@ -123,7 +119,10 @@ public class WalletChainHolder extends BaseHolder {
             if (mainActivity.getBaseChain().equals(BaseChain.DESMOS_MAIN.INSTANCE)) {
                 onClickProfile(mainActivity.getBaseDao(), mainActivity.getBaseChain(), mainActivity.getAccount(), mainActivity);
             } else {
-                mainActivity.startActivity(getDexIntent(mainActivity, mainActivity.getBaseChain()));
+                Intent dexIntent = getDexIntent(mainActivity, mainActivity.getBaseChain());
+                if (dexIntent != null) {
+                    mainActivity.startActivity(dexIntent);
+                }
             }
         });
 
@@ -156,18 +155,11 @@ public class WalletChainHolder extends BaseHolder {
     }
 
     public static Intent getDexIntent(MainActivity mainActivity, BaseChain chain) {
-        if (chain.equals(BaseChain.COSMOS_MAIN.INSTANCE)) {
-            return new Intent(mainActivity, GravityListActivity.class);
-        } else if (chain.equals(BaseChain.IRIS_MAIN.INSTANCE) || chain.equals(BaseChain.CRYPTO_MAIN.INSTANCE)) {
+        // Kept in sync with WUtil.getDexTitle, which only shows the button for these chains.
+        if (chain.equals(BaseChain.IRIS_MAIN.INSTANCE) || chain.equals(BaseChain.CRYPTO_MAIN.INSTANCE)) {
             return new Intent(mainActivity, NFTListActivity.class);
         } else if (chain.equals(BaseChain.IOV_MAIN.INSTANCE)) {
             return new Intent(mainActivity, StarNameListActivity.class);
-        } else if (chain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
-            return new Intent(mainActivity, DAppsList5Activity.class);
-        } else if (chain.equals(BaseChain.SIF_MAIN.INSTANCE)) {
-            return new Intent(mainActivity, SifDexListActivity.class);
-        } else if (chain.equals(BaseChain.OSMOSIS_MAIN.INSTANCE)) {
-            return new Intent(mainActivity, LabsListActivity.class);
         } else {
             return null;
         }

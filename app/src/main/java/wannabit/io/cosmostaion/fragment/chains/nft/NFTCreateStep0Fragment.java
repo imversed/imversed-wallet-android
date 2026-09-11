@@ -4,6 +4,7 @@ import static wannabit.io.cosmostaion.base.BaseConstant.NFT_INFURA;
 import static wannabit.io.cosmostaion.base.BaseConstant.STATION_NFT_DENOM;
 
 import android.Manifest;
+import android.os.Build;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -24,12 +25,12 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
+import com.gun0912.tedpermission.normal.TedPermission;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import io.ipfs.api.IPFS;
@@ -126,17 +127,24 @@ public class NFTCreateStep0Fragment extends BaseFragment implements View.OnClick
     }
 
     private void tedPermission() {
-        new TedPermission(getSActivity()).setPermissionListener(new PermissionListener() {
+        // goToAlbum() uses ACTION_PICK, which grants access to the chosen image on its own.
+        // From Android 13 the storage permissions below are never granted, which used to make
+        // this whole path dead.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            goToAlbum();
+            return;
+        }
+        TedPermission.create().setPermissionListener(new PermissionListener() {
             @Override
             public void onPermissionGranted() {
                 goToAlbum();
             }
 
             @Override
-            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+            public void onPermissionDenied(List<String> deniedPermissions) {
                 Toast.makeText(getSActivity(), getSActivity().getString(R.string.str_permission_photo_title), Toast.LENGTH_SHORT).show();
             }
-        }).setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE).setRationaleMessage(getSActivity().getString(R.string.str_permission_photo_title)).check();
+        }).setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE).setRationaleMessage(getSActivity().getString(R.string.str_permission_photo_title)).check();
     }
 
     private void goToAlbum() {

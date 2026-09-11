@@ -17,6 +17,12 @@ import com.joom.lightsaber.Lightsaber;
 import com.squareup.picasso.Picasso;
 
 import java.util.UUID;
+import io.grpc.StatusRuntimeException;
+import io.reactivex.exceptions.UndeliverableException;
+import io.reactivex.plugins.RxJavaPlugins;
+import java.io.IOException;
+import java.net.SocketException;
+import wannabit.io.cosmostaion.utils.WLog;
 
 public class BaseApplication extends Application implements IInjectorHolder {
 
@@ -31,6 +37,28 @@ public class BaseApplication extends Application implements IInjectorHolder {
     @Override
     public void onCreate() {
         super.onCreate();
+        // A network error that arrives after its subscriber is gone (the user left the screen
+        // while a request was in flight) has nowhere to be delivered, and RxJava escalates it
+        // to the global handler, which kills the process. Swallow those, keep the rest fatal.
+        RxJavaPlugins.setErrorHandler(throwable -> {
+            Throwable error = throwable;
+            if (error instanceof UndeliverableException && error.getCause() != null) {
+                error = error.getCause();
+            }
+            if (error instanceof IOException
+                    || error instanceof SocketException
+                    || error instanceof StatusRuntimeException
+                    || error instanceof InterruptedException) {
+                WLog.w("Undeliverable exception: " + error);
+                return;
+            }
+            Thread thread = Thread.currentThread();
+            Thread.UncaughtExceptionHandler handler = thread.getUncaughtExceptionHandler();
+            if (handler != null) {
+                handler.uncaughtException(thread, error);
+            }
+        });
+
         appInjector = new Lightsaber.Builder().build().createInjector(new ApplicationComponent(getApplicationContext()));
 
         secretInteractor = appInjector.getInstance(SecretInteractor.class);

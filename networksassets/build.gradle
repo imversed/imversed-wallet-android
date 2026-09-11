@@ -3,6 +3,18 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    namespace 'wannabit.io.cosmostaion.networksassets'
+    compileSdk 36
+    buildToolsVersion "36.0.0"
+
+    defaultConfig {
+        // Without this the merger treats the module as targetSdk < 4 and implies legacy
+        // permissions (READ_PHONE_STATE, storage) into the app manifest.
+        minSdk 24
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
 }

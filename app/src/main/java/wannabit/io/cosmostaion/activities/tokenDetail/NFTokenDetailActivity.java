@@ -37,6 +37,13 @@ import wannabit.io.cosmostaion.utils.WUtil;
 import wannabit.io.cosmostaion.widget.tokenDetail.TokenDetailSupportHolder;
 
 public class NFTokenDetailActivity extends BaseActivity implements View.OnClickListener {
+    // This screen lays the status bar out itself through fitsSystemWindows on its
+    // CollapsingToolbarLayout, so the blanket content padding would apply the inset twice.
+    @Override
+    protected boolean appliesSystemBarInsets() {
+        return false;
+    }
+
 
     private Toolbar mToolbar;
     private ImageView mNftImg;

@@ -15,6 +15,7 @@ import static wannabit.io.cosmostaion.base.BaseConstant.COSMOS_MSG_TYPE_WITHDRAW
 import static wannabit.io.cosmostaion.base.BaseConstant.ERROR_CODE_BROADCAST;
 import static wannabit.io.cosmostaion.base.BaseConstant.ERROR_CODE_UNKNOWN;
 import static wannabit.io.cosmostaion.base.BaseConstant.FEE_BNB_SEND;
+import static wannabit.io.cosmostaion.base.BaseConstant.SUPPORT_BEP3_SWAP;
 import static wannabit.io.cosmostaion.base.BaseConstant.OK_MSG_TYPE_DEPOSIT;
 import static wannabit.io.cosmostaion.base.BaseConstant.OK_MSG_TYPE_DIRECT_VOTE;
 import static wannabit.io.cosmostaion.base.BaseConstant.OK_MSG_TYPE_MULTI_TRANSFER;
@@ -683,7 +684,8 @@ public class TxDetailActivity extends BaseActivity implements View.OnClickListen
                 holder.itemExpectIncome.setText(msg.value.expected_income);
                 holder.itemStatus.setText(WDp.getBnbHtlcStatus(getBaseContext(), mResBnbSwapInfo, mResBnbNodeInfo));
 
-                if (mResBnbSwapInfo != null &&
+                if (SUPPORT_BEP3_SWAP &&
+                        mResBnbSwapInfo != null &&
                         mResBnbNodeInfo != null &&
                         mResBnbSwapInfo.status == BNB_STATUS_OPEN &&
                         mResBnbSwapInfo.expireHeight < mResBnbNodeInfo.getCHeight()) {

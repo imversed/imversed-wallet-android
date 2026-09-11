@@ -5,7 +5,7 @@ import android.util.Log;
 import wannabit.io.cosmostaion.BuildConfig;
 
 public class WLog {
-    public final static String LOG_TAG = "FDWallet";
+    public final static String LOG_TAG = "ImversedWallet";
 
     public static void e(String msg) {
         if (BuildConfig.DEBUG) {

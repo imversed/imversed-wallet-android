@@ -10,3 +10,8 @@ app/src/debug/google-services.json
 /*/build/
 /captures
 .externalNativeBuild
+assets/
+.kotlin/sessions/*.salive
+
+# Generated design-canvas page for the Play Store assets (rebuilt from play-assets/*.dc.html)
+play-assets/imversed-wallet-play-assets.html

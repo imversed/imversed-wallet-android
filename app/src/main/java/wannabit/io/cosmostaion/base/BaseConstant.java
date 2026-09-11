@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 
 public class BaseConstant {
     public final static boolean SUPPORT_MOONPAY = false;
-    public final static boolean SUPPORT_BEP3_SWAP = true;
+    // BEP3/HTLC atomic swaps are cross-chain exchange, which this app no longer offers.
+    public final static boolean SUPPORT_BEP3_SWAP = false;
 
     public final static String PRE_VALIDATOR_SORTING = "PRE_VALIDATOR_SORTING";
     public final static String PRE_MY_VALIDATOR_SORTING = "PRE_MY_VALIDATOR_SORTING";

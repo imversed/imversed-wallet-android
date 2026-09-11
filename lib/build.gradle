@@ -1,33 +1,40 @@
 apply plugin: "kotlin"
 
 repositories {
-    jcenter()
+    mavenCentral()
     maven { url 'https://jitpack.io' }
 }
 
+kotlin {
+    jvmToolchain(17)
+}
+
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.20"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
     implementation "com.github.komputing:KHex:0.6"
 
+    // Pinned to bitcoinj 0.15.2's BouncyCastle. Anything newer removes
+    // ECPoint.isCompressed(), which bitcoinj's ECKey.compressPoint() calls, and key
+    // derivation dies with NoSuchMethodError. See the note in api/build.gradle.
     implementation 'org.bouncycastle:bcprov-jdk15on:1.60'
 
-    implementation 'com.squareup.moshi:moshi:1.8.0'
+    implementation 'com.squareup.moshi:moshi:1.15.1'
     // TODO: it would be better to use the generated adapter by moshi
     // but for that we should move the implementations in different modules
     //kapt "com.squareup.moshi:moshi-kotlin-codegen:$versions.moshi"
 
-    implementation "com.squareup.okhttp3:okhttp:4.9.1"
+    implementation "com.squareup.okhttp3:okhttp:4.12.0"
 
-    implementation group: 'org.slf4j', name: 'slf4j-log4j12', version: "1.7.25"
+    implementation group: 'org.slf4j', name: 'slf4j-log4j12', version: "1.7.36"
 
-    testImplementation 'org.assertj:assertj-core:3.11.1'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.7.0'
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    testImplementation 'org.assertj:assertj-core:3.26.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.10.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.10.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.10.3'
 
 
-    testImplementation "com.squareup.okhttp3:mockwebserver:4.2.0"
+    testImplementation "com.squareup.okhttp3:mockwebserver:4.12.0"
 }
 
 test {

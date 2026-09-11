@@ -48,6 +48,7 @@ class GrpcLocalSource @Inject constructor(
                 Staking.BondStatus.BOND_STATUS_BONDED -> baseData.mGRpcTopValidators = items
                 Staking.BondStatus.BOND_STATUS_UNBONDED -> baseData.mGRpcOtherValidators = items
                 Staking.BondStatus.BOND_STATUS_UNBONDING -> baseData.mGRpcOtherValidators = items
+                else -> Unit
             }
         }
     }

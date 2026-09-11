@@ -44,8 +44,6 @@ import java.math.BigDecimal;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.WalletConnectActivity;
 import wannabit.io.cosmostaion.activities.chains.kava.ClaimIncentiveActivity;
-import wannabit.io.cosmostaion.activities.chains.sif.SifIncentiveActivity;
-import wannabit.io.cosmostaion.appextensions.PopupManager;
 import wannabit.io.cosmostaion.base.BaseActivity;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.base.IBusyFetchListener;
@@ -135,10 +133,6 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
 
         int page = getIntent().getIntExtra("page", 0);
         viewPager.setCurrentItem(page, false);
-
-        if (savedInstanceState == null && page == 0) {
-            PopupManager.INSTANCE.onAppStarted(this);
-        }
     }
 
     @Override
@@ -290,19 +284,8 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
             Intent intent = new Intent(MainActivity.this, ClaimIncentiveActivity.class);
             startActivity(intent);
 
-        } else if (baseChain.equals(SIF_MAIN.INSTANCE)) {
-            BigDecimal txFee = baseChain.getGasFeeEstimateCalculator().calc(baseChain, CONST_PW_TX_SIF_CLAIM_INCENTIVE);
-            if (available.compareTo(txFee) <= 0) {
-                Toast.makeText(this, R.string.error_not_enough_fee, Toast.LENGTH_SHORT).show();
-                return;
-            }
-            if (baseData.mSifLmIncentive == null || baseData.mSifLmIncentive.totalClaimableCommissionsAndClaimableRewards == 0) {
-                Toast.makeText(this, R.string.error_no_incentive_to_claim, Toast.LENGTH_SHORT).show();
-                return;
-            }
-            Intent intent = new Intent(MainActivity.this, SifIncentiveActivity.class);
-            startActivity(intent);
         }
+        // The Sifchain liquidity-mining incentive claim went with the DEX features.
     }
 
     @Override

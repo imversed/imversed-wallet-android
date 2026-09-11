@@ -4,29 +4,29 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'com.joom.lightsaber.android'
 
 android {
-    compileSdkVersion 33
-    buildToolsVersion "33.0.2"
+    namespace "wannabit.io.cosmostaion"
+    compileSdk 36
+    buildToolsVersion "36.0.0"
+
+    def releaseKeystore = rootProject.file('keys/keys.jks')
 
     signingConfigs {
         release {
-            storeFile file('../keys/keys.jks')
-            storePassword System.getenv("FULLDIVE_KEYSTORE_PASSWORD")
-            keyAlias System.getenv("FULLDIVE_ALIAS")
-            keyPassword System.getenv("FULLDIVE_ALIAS_PASSWORD")
-            applicationVariants.all { variant ->
-                variant.outputs.each { output ->
-                    output.outputFileName = "FDWallet-v${android.defaultConfig.versionName}-${variant.buildType.name}.apk"
-                }
+            if (releaseKeystore.exists()) {
+                storeFile releaseKeystore
+                storePassword System.getenv("IMVERSED_KEYSTORE_PASSWORD") ?: System.getenv("FULLDIVE_KEYSTORE_PASSWORD")
+                keyAlias System.getenv("IMVERSED_ALIAS") ?: System.getenv("FULLDIVE_ALIAS")
+                keyPassword System.getenv("IMVERSED_ALIAS_PASSWORD") ?: System.getenv("FULLDIVE_ALIAS_PASSWORD")
             }
         }
     }
 
     defaultConfig {
         applicationId "com.fulldive.extension.fdwallet"
-        minSdkVersion 23
-        targetSdkVersion 33
-        versionCode 10550
-        versionName "1.7.0"
+        minSdk 24
+        targetSdk 36
+        versionCode 10801
+        versionName "1.8.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -42,16 +42,26 @@ android {
             splits.density.enable = false
         }
         release {
-            signingConfig signingConfigs.release
+            // Without the keystore the release variant still builds, just unsigned.
+            signingConfig releaseKeystore.exists() ? signingConfigs.release : null
             minifyEnabled false
             zipAlignEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
+    applicationVariants.configureEach { variant ->
+        variant.outputs.configureEach { output ->
+            output.outputFileName = "ImversedWallet-v${variant.versionName}-${variant.buildType.name}.apk"
+        }
+    }
+
     packagingOptions {
         jniLibs {
             excludes += ['lib/x86_64/freebsd/libscrypt.so', 'lib/x86_64/linux/libscrypt.so']
+            // Required so Android 15+ devices with 16 KB memory pages can load the
+            // bundled native libraries (Google Play requirement since Nov 1, 2025).
+            useLegacyPackaging = false
         }
         resources {
             excludes += ['lib/x86_64/darwin/libscrypt.dylib']
@@ -59,12 +69,17 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
     }
 
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
     lint {
         abortOnError false
@@ -78,77 +93,80 @@ dependencies {
     implementation project(path: ':api')
     implementation project(path: ':networksassets')
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.6.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.appcompat:appcompat:1.7.1'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
     //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.7.1'
-    implementation 'com.squareup.retrofit2:converter-gson:2.7.1'
-    implementation 'com.squareup.retrofit2:converter-jackson:2.1.0'
-    implementation 'com.squareup.retrofit2:converter-scalars:2.5.0'
-    implementation "com.squareup.retrofit2:adapter-rxjava2:2.7.1"
-    implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-jackson:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.11.0'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.11.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.12.0"
     //jackson
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.12.3'
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.3'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
-    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.12.3'
-    //sqliteChiper
-    implementation "net.zetetic:android-database-sqlcipher:4.5.0"
-    implementation "androidx.sqlite:sqlite-ktx:2.2.0"
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.17.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.17.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.2'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-joda:2.17.2'
+    //sqliteChiper - 16 KB page size compatible build
+    implementation "net.zetetic:sqlcipher-android:4.9.0"
+    implementation "androidx.sqlite:sqlite-ktx:2.4.0"
     //picasso for images
     implementation 'com.squareup.picasso:picasso:2.71828'
     //glide for images
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
     //ipfs for infura
     implementation group: 'com.github.ipfs', name: 'java-ipfs-http-client', version: 'v1.3.3'
     //shimmer
     implementation 'com.romainpiel.shimmer:library:1.4.0@aar'
     //permission check
-    implementation 'gun0912.ted:tedpermission:1.0.3'
+    implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'
     //circle Image
-    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
     //firebase
 //    implementation 'com.google.firebase:firebase-messaging:17.3.4'
 //    implementation 'com.google.firebase:firebase-core:16.0.1'
     //for qr code
     implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
-    implementation 'org.apache.commons:commons-lang3:3.6'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.21'
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.6.21"
-    implementation "androidx.core:core-ktx:1.7.0"
+    implementation 'org.apache.commons:commons-lang3:3.14.0'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
+    implementation "androidx.core:core-ktx:1.16.0"
 
     implementation("com.afollestad.material-dialogs:core:0.9.6.0") { transitive = true }
 
-    implementation("androidx.room:room-runtime:2.4.2")
-    annotationProcessor("androidx.room:room-compiler:2.4.2")
+    implementation("androidx.room:room-runtime:2.8.5")
+    annotationProcessor("androidx.room:room-compiler:2.8.5")
 
     // To use Kotlin annotation processing tool (kapt)
-    kapt("androidx.room:room-compiler:2.4.2")
-    implementation("androidx.room:room-ktx:2.4.2")
+    kapt("androidx.room:room-compiler:2.8.5")
+    implementation("androidx.room:room-ktx:2.8.5")
     // optional - RxJava2 support for Room
-    implementation("androidx.room:room-rxjava2:2.4.2")
+    implementation("androidx.room:room-rxjava2:2.8.5")
 
 
-    implementation 'com.squareup.moshi:moshi:1.8.0'
+    implementation 'com.squareup.moshi:moshi:1.15.1'
     implementation files('libs/httpclient-4.5.3.jar')
     implementation files('libs/apache-httpcomponents-httpcore.jar')
     //foreground notification
     implementation 'com.github.shasin89:NotificationBanner:1.1.5'
 
-    implementation 'com.google.guava:guava:22.0-android'
-    releaseImplementation "com.snore.guard:fdwallet:1.4.0"
+    implementation 'com.google.guava:guava:33.3.1-android'
+    releaseImplementation "com.snore.guard:fdwallet:1.5.0"
 
     implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
     implementation "io.reactivex.rxjava2:rxandroid:2.1.1"
 
     //web3 for ethermint
+    // Held at 4.6.0-android: newer releases drag in BouncyCastle 1.7x, which is
+    // incompatible with bitcoinj 0.15.2 (see api/build.gradle). 4.12.3-android is also
+    // published with an empty POM and resolves none of its transitive dependencies.
     implementation 'org.web3j:core:4.6.0-android'
 
     implementation 'com.github.addisonelliott:SegmentedButton:3.1.9'
 
-    implementation 'com.joom.lightsaber:lightsaber-core-kotlin:1.0.0-alpha13'
+    implementation "com.joom.lightsaber:lightsaber-core-kotlin:$lightsaberVersion"
 
     implementation "com.github.moxy-community:moxy:2.2.2"
     implementation "com.github.moxy-community:moxy-android:2.2.2"
@@ -156,8 +174,8 @@ dependencies {
     implementation "com.github.moxy-community:moxy-ktx:2.2.2"
     kapt "com.github.moxy-community:moxy-compiler:2.2.2"
 
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
 }
 //apply plugin: 'com.google.gms.google-services'

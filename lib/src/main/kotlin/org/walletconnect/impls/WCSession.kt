@@ -166,6 +166,8 @@ class WCSession(
                     )
                 )
             }
+
+            else -> Unit
         }
         propagateToCallbacks {
             onStatus(when(status) {
@@ -211,6 +213,8 @@ class WCSession(
                 val callback = requests[data.id] ?: return
                 callback(data)
             }
+
+            else -> Unit
         }
 
         if (accountToCheck?.let { accountCheck(data.id(), it) } != false) {
@@ -219,7 +223,7 @@ class WCSession(
     }
 
     private fun accountCheck(id: Long, address: String): Boolean {
-        approvedAccounts?.find { it.toLowerCase() == address.toLowerCase() } ?: run {
+        approvedAccounts?.find { it.lowercase() == address.lowercase() } ?: run {
             handlePayloadError(Session.MethodCallException.InvalidAccount(id, address))
             return false
         }

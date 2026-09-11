@@ -31,6 +31,7 @@ import java.math.BigDecimal;
 import wannabit.io.cosmostaion.R;
 import wannabit.io.cosmostaion.activities.SendActivity;
 import wannabit.io.cosmostaion.base.BaseActivity;
+import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.dao.Price;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
@@ -97,7 +98,7 @@ public class StakingTokenDetailActivity extends BaseActivity implements View.OnC
         mMainDenom = getBaseChain().getMainDenom();
         mDivideDecimal = getBaseChain().getDivideDecimal();
 
-        if (getBaseChain().equals(BNB_MAIN.INSTANCE)) {
+        if (BaseConstant.SUPPORT_BEP3_SWAP && getBaseChain().equals(BNB_MAIN.INSTANCE)) {
             mBtnBep3Send.setVisibility(View.VISIBLE);
         }
 

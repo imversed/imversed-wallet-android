@@ -16,14 +16,15 @@ import com.fulldive.wallet.models.WalletBalance;
 import com.fulldive.wallet.presentation.main.MainActivity;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
+import com.gun0912.tedpermission.normal.TedPermission;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.List;
 
 import wannabit.io.cosmostaion.R;
+import wannabit.io.cosmostaion.base.BaseConstant;
 import wannabit.io.cosmostaion.base.BaseData;
 import wannabit.io.cosmostaion.dialog.Dialog_WatchMode;
 import wannabit.io.cosmostaion.utils.PriceProvider;
@@ -72,7 +73,7 @@ public class WalletBinanceHolder extends BaseHolder {
                 mainActivity.showDialog(dialog);
                 return;
             }
-            new TedPermission(mainActivity).setPermissionListener(new PermissionListener() {
+            TedPermission.create().setPermissionListener(new PermissionListener() {
                 @Override
                 public void onPermissionGranted() {
                     IntentIntegrator integrator = new IntentIntegrator(mainActivity);
@@ -81,15 +82,21 @@ public class WalletBinanceHolder extends BaseHolder {
                 }
 
                 @Override
-                public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                public void onPermissionDenied(List<String> deniedPermissions) {
                     Toast.makeText(mainActivity, R.string.error_permission, Toast.LENGTH_SHORT).show();
                 }
             })
-                    .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    // This opens the QR scanner, so CAMERA is the permission it needs.
+                    .setPermissions(Manifest.permission.CAMERA)
                     .setRationaleMessage(mainActivity.getString(R.string.str_permission_qr))
                     .check();
         });
-        mBtnBep3Send.setOnClickListener(v -> mainActivity.startHTLCSendActivity(TOKEN_HTLC_BINANCE_BNB));
+        if (BaseConstant.SUPPORT_BEP3_SWAP) {
+            mBtnBep3Send.setVisibility(View.VISIBLE);
+            mBtnBep3Send.setOnClickListener(v -> mainActivity.startHTLCSendActivity(TOKEN_HTLC_BINANCE_BNB));
+        } else {
+            mBtnBep3Send.setVisibility(View.GONE);
+        }
     }
 }
 

@@ -3,11 +3,11 @@ package com.fulldive.wallet.presentation.main.intro
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.core.app.ActivityOptionsCompat
+import com.fulldive.wallet.extensions.applyBottomSystemBarInset
 import com.fulldive.wallet.presentation.base.BaseMvpActivity
 import com.fulldive.wallet.presentation.main.MainActivity
 import com.joom.lightsaber.getInstance
@@ -36,9 +36,13 @@ class IntroActivity : BaseMvpActivity<ActivityIntroBinding>(), IntroMoxyView, IT
 
     override fun getViewBinding() = ActivityIntroBinding.inflate(layoutInflater)
 
+    // The splash artwork is meant to fill the screen, so only the buttons panel is inset.
+    override val appliesSystemBarInsets = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding {
+            bottomLayer2.applyBottomSystemBarInset()
             startButton.setOnClickListener {
                 presenter.onStartButtonClicked()
             }
@@ -53,20 +57,12 @@ class IntroActivity : BaseMvpActivity<ActivityIntroBinding>(), IntroMoxyView, IT
             AnimationUtils
                 .loadAnimation(introBg.context, R.anim.fade_out5)
                 .let(introBg::startAnimation)
+            // The "Powered by Fulldive" badge that used to fade out here is gone with the
+            // rebranding, so the buttons panel just fades straight in.
+            bottomLayer2.visibility = View.VISIBLE
             AnimationUtils
-                .loadAnimation(bottomLayer1.context, R.anim.fade_out2)
-                .apply {
-                    setAnimationListener(object : Animation.AnimationListener {
-                        override fun onAnimationStart(animation: Animation) {}
-                        override fun onAnimationRepeat(animation: Animation) {}
-                        override fun onAnimationEnd(animation: Animation) {
-                            bottomLayer2.visibility = View.VISIBLE
-                            AnimationUtils.loadAnimation(bottomLayer2.context, R.anim.fade_in2)
-                                .let(bottomLayer2::startAnimation)
-                        }
-                    })
-                }
-                .let(bottomLayer1::startAnimation)
+                .loadAnimation(bottomLayer2.context, R.anim.fade_in2)
+                .let(bottomLayer2::startAnimation)
         }
     }
 

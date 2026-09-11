@@ -6,8 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.fulldive.wallet.models.WalletAccount
 import com.fulldive.wallet.models.WalletBalance
-import net.sqlcipher.database.SQLiteDatabase
-import net.sqlcipher.database.SupportFactory
+import net.zetetic.database.sqlcipher.SupportOpenHelperFactory
 
 @Database(entities = [WalletAccount::class, WalletBalance::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {
@@ -24,10 +23,13 @@ abstract class AppDatabase : RoomDatabase() {
             if (INSTANCE == null) {
                 synchronized(AppDatabase::class.java) {
                     if (INSTANCE == null) {
-                        val passphrase: ByteArray = SQLiteDatabase.getBytes(
-                            ("${context.packageName}_$DATABASE_NAME").toCharArray()
-                        )
-                        val factory = SupportFactory(passphrase)
+                        // sqlcipher-android does not auto-load its native library.
+                        System.loadLibrary("sqlcipher")
+                        // Same bytes the removed SQLiteDatabase.getBytes(char[]) produced,
+                        // so databases created by earlier versions still open.
+                        val passphrase: ByteArray =
+                            "${context.packageName}_$DATABASE_NAME".toByteArray(Charsets.UTF_8)
+                        val factory = SupportOpenHelperFactory(passphrase)
                         val builder = Room
                             .databaseBuilder(
                                 context.applicationContext,

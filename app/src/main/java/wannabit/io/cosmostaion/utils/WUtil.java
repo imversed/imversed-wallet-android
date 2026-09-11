@@ -2018,11 +2018,9 @@ public class WUtil {
     }
 
     public static void getDexTitle(BaseChain chain, RelativeLayout mBtnDex, TextView dexTitle) {
-        if (chain.equals(BaseChain.COSMOS_MAIN.INSTANCE)) {
-            mBtnDex.setVisibility(View.VISIBLE);
-            dexTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_gravitydex, 0, 0, 0);
-            dexTitle.setText(R.string.str_gravity_dex);
-        } else if (chain.equals(BaseChain.IRIS_MAIN.INSTANCE) || chain.equals(BaseChain.CRYPTO_MAIN.INSTANCE)) {
+        // Gravity DEX, Kava dApps, Sif DEX and Osmosis DeFi Lab are intentionally absent:
+        // the app no longer offers token exchange, liquidity pools or lending.
+        if (chain.equals(BaseChain.IRIS_MAIN.INSTANCE) || chain.equals(BaseChain.CRYPTO_MAIN.INSTANCE)) {
             mBtnDex.setVisibility(View.VISIBLE);
             dexTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_nft, 0, 0, 0);
             dexTitle.setText(R.string.str_nft_c);
@@ -2030,18 +2028,6 @@ public class WUtil {
             mBtnDex.setVisibility(View.VISIBLE);
             dexTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.name_ic, 0, 0, 0);
             dexTitle.setText(R.string.str_starname_service);
-        } else if (chain.equals(BaseChain.KAVA_MAIN.INSTANCE)) {
-            mBtnDex.setVisibility(View.VISIBLE);
-            dexTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.cdp_s_ic, 0, 0, 0);
-            dexTitle.setText(R.string.str_kava_dapp);
-        } else if (chain.equals(BaseChain.SIF_MAIN.INSTANCE)) {
-            mBtnDex.setVisibility(View.VISIBLE);
-            dexTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_sifdex, 0, 0, 0);
-            dexTitle.setText(R.string.str_sif_dex_title);
-        } else if (chain.equals(BaseChain.OSMOSIS_MAIN.INSTANCE)) {
-            mBtnDex.setVisibility(View.VISIBLE);
-            dexTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_osmosislab, 0, 0, 0);
-            dexTitle.setText(R.string.str_osmosis_defi_lab);
         } else if (chain.equals(BaseChain.DESMOS_MAIN.INSTANCE)) {
             mBtnDex.setVisibility(View.VISIBLE);
             dexTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_profile, 0, 0, 0);

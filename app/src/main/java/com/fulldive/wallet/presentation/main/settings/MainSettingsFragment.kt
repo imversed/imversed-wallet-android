@@ -12,7 +12,7 @@ import com.fulldive.wallet.presentation.chains.choicenet.ChoiceChainDialogFragme
 import com.fulldive.wallet.presentation.main.currency.CurrencyDialogFragment
 import com.google.zxing.integration.android.IntentIntegrator
 import com.gun0912.tedpermission.PermissionListener
-import com.gun0912.tedpermission.TedPermission
+import com.gun0912.tedpermission.normal.TedPermission
 import com.joom.lightsaber.getInstance
 import moxy.ktx.moxyPresenter
 import wannabit.io.cosmostaion.BuildConfig
@@ -59,18 +59,18 @@ class MainSettingsFragment : BaseMvpFragment<FragmentMainSettingBinding>(), Main
                 startActivity(
                     Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse("https://discord.gg/BW2unf5s8X")
+                        Uri.parse("https://discord.gg/32cw2ZfHC8")
                     )
                 )
             }
             guideButton.setOnClickListener {
-                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.fulldive.com/faq")))
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://www.imversed.com/")))
             }
             termsButton.setOnClickListener {
                 startActivity(
                     Intent(
                         Intent.ACTION_VIEW,
-                        Uri.parse("https://www.fulldive.com/terms-of-use")
+                        Uri.parse("https://www.imversed.com/terms-of-use")
                     )
                 )
             }
@@ -111,18 +111,21 @@ class MainSettingsFragment : BaseMvpFragment<FragmentMainSettingBinding>(), Main
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == SELECT_STARNAME_WALLET_CONNECT && resultCode == Activity.RESULT_OK) {
-            TedPermission(requireContext()).setPermissionListener(object : PermissionListener {
+            TedPermission.create().setPermissionListener(object : PermissionListener {
                 override fun onPermissionGranted() {
                     val integrator = IntentIntegrator.forSupportFragment(this@MainSettingsFragment)
                     integrator.setOrientationLocked(true)
                     integrator.initiateScan()
                 }
 
-                override fun onPermissionDenied(deniedPermissions: ArrayList<String>) {
+                override fun onPermissionDenied(deniedPermissions: List<String>) {
                     showMessage(R.string.error_permission)
                 }
             })
-                .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                // This gate opens the QR scanner, so CAMERA is the permission it needs.
+                // WRITE_EXTERNAL_STORAGE is never granted from Android 13 on and used to
+                // make this branch dead.
+                .setPermissions(Manifest.permission.CAMERA)
                 .setRationaleMessage(getString(R.string.str_permission_qr))
                 .check()
         } else {
