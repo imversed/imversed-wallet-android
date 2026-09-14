@@ -81,14 +81,18 @@ class BillingInteractor @Inject constructor(
             refresh()
             return false
         }
+        val productParams = BillingFlowParams.ProductDetailsParams.newBuilder()
+            .setProductDetails(details)
+            .apply {
+                // Products built on the purchase-options model are launched by offer token;
+                // legacy ones carry no token and must be launched without it.
+                offerDetails(details)?.offerToken
+                    ?.takeIf(String::isNotEmpty)
+                    ?.let(::setOfferToken)
+            }
+            .build()
         val params = BillingFlowParams.newBuilder()
-            .setProductDetailsParamsList(
-                listOf(
-                    BillingFlowParams.ProductDetailsParams.newBuilder()
-                        .setProductDetails(details)
-                        .build()
-                )
-            )
+            .setProductDetailsParamsList(listOf(productParams))
             .build()
         val result = billingClient.launchBillingFlow(activity, params)
         return result.responseCode == BillingClient.BillingResponseCode.OK
@@ -129,7 +133,7 @@ class BillingInteractor @Inject constructor(
                 val details = result.productDetailsList.firstOrNull { it.productId == PRODUCT_ID }
                 productDetails = details
                 priceSubject.onNext(
-                    details?.oneTimePurchaseOfferDetails?.formattedPrice.orEmpty()
+                    details?.let(::offerDetails)?.formattedPrice.orEmpty()
                 )
             } else {
                 WLog.w("Billing product details failed: ${billingResult.debugMessage}")
@@ -172,6 +176,15 @@ class BillingInteractor @Inject constructor(
                 WLog.w("Billing acknowledge failed: ${billingResult.debugMessage}")
             }
         }
+    }
+
+    /**
+     * The purchase-options model exposes offers through the list, older products only through the
+     * single legacy field - which stays null unless a purchase option is marked backwards compatible.
+     */
+    private fun offerDetails(details: ProductDetails): ProductDetails.OneTimePurchaseOfferDetails? {
+        return details.oneTimePurchaseOfferDetailsList?.firstOrNull()
+            ?: details.oneTimePurchaseOfferDetails
     }
 
     private fun isProPurchase(purchase: Purchase): Boolean {
