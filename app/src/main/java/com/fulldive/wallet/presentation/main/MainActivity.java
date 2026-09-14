@@ -31,9 +31,12 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.fulldive.wallet.interactors.billing.BillingInteractor;
 import com.fulldive.wallet.models.BaseChain;
 import com.fulldive.wallet.presentation.chains.switcher.WalletSwitchActivity;
+import com.fulldive.wallet.presentation.pro.ProDialogFragment;
 import com.fulldive.wallet.presentation.security.password.CheckPasswordActivity;
+import com.fulldive.wallet.rx.AppSchedulers;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -66,6 +69,10 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
 
     public MainViewPageAdapter adapter;
     public FloatingActionButton floatingActionButton;
+
+    private BillingInteractor billingInteractor;
+    private View proMenuView;
+    private boolean isPro = false;
 
     private String wcUrl = "";
     private String lastAccountChainName = null;
@@ -133,11 +140,34 @@ public class MainActivity extends BaseActivity implements FetchCallBack {
 
         int page = getIntent().getIntExtra("page", 0);
         viewPager.setCurrentItem(page, false);
+
+        billingInteractor = getAppInjector().getInstance(BillingInteractor.class);
+        compositeDisposable.add(
+                billingInteractor.observeIsPro()
+                        .subscribeOn(AppSchedulers.INSTANCE.io())
+                        .observeOn(AppSchedulers.INSTANCE.ui())
+                        .subscribe(this::onProStateChanged)
+        );
+        billingInteractor.refresh();
+    }
+
+    private void onProStateChanged(boolean isPro) {
+        this.isPro = isPro;
+        if (proMenuView != null) {
+            // PRO is already bought, nothing to sell in the toolbar.
+            proMenuView.setVisibility(isPro ? View.GONE : View.VISIBLE);
+        }
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        MenuItem proItem = menu.findItem(R.id.menu_pro);
+        proMenuView = proItem != null ? proItem.getActionView() : null;
+        if (proMenuView != null) {
+            proMenuView.setOnClickListener(v -> showDialog(ProDialogFragment.Companion.newInstance()));
+            proMenuView.setVisibility(isPro ? View.GONE : View.VISIBLE);
+        }
         return true;
     }
 

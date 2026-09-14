@@ -8,6 +8,7 @@ import com.fulldive.wallet.extensions.withDefaults
 import com.fulldive.wallet.interactors.ClipboardInteractor
 import com.fulldive.wallet.interactors.ScreensInteractor
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
+import com.fulldive.wallet.interactors.accounts.AccountsLimitException
 import com.fulldive.wallet.interactors.accounts.DuplicateAccountException
 import com.fulldive.wallet.interactors.secret.SecretInteractor
 import com.fulldive.wallet.models.BaseChain
@@ -89,6 +90,7 @@ class CreateAccountPresenter @Inject constructor(
                         override fun onError(error: Throwable) {
                             when (error) {
                                 is DuplicateAccountException -> viewState.showMessage(R.string.error_duplicate_account)
+                                is AccountsLimitException -> viewState.showMessage(R.string.error_wallets_limit)
                                 else -> super.onError(error)
                             }
                         }

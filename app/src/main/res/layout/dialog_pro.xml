@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBlack"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="@dimen/space_16"
+        android:layout_marginEnd="@dimen/space_16"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/font_ss_17_white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/str_pro" />
+
+        <TextView
+            android:id="@+id/descriptionTextView"
+            style="@style/font_ss_12_gray1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_12"
+            android:gravity="center_horizontal"
+            tools:text="The free version is limited to 10 wallets." />
+
+        <Button
+            android:id="@+id/buyButton"
+            style="@style/font_ss_14_white"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_45"
+            android:layout_marginTop="@dimen/space_16"
+            android:background="@drawable/btn_trans_with_photon_border"
+            android:minHeight="@dimen/space_45"
+            android:text="@string/str_pro_buy" />
+
+        <Button
+            android:id="@+id/restoreButton"
+            style="@style/font_ss_14_white"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_45"
+            android:layout_marginTop="@dimen/space_12"
+            android:background="@drawable/btn_trans_with_border"
+            android:minHeight="@dimen/space_45"
+            android:text="@string/str_pro_restore" />
+
+        <Button
+            android:id="@+id/closeButton"
+            style="@style/font_ss_14_white"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_45"
+            android:layout_marginTop="@dimen/space_12"
+            android:background="@drawable/btn_trans_with_border"
+            android:minHeight="@dimen/space_45"
+            android:text="@string/str_close" />
+
+    </LinearLayout>
+</RelativeLayout>

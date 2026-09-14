@@ -10,6 +10,7 @@ import com.fulldive.wallet.models.Currency
 import com.fulldive.wallet.presentation.base.BaseMvpFragment
 import com.fulldive.wallet.presentation.chains.choicenet.ChoiceChainDialogFragment
 import com.fulldive.wallet.presentation.main.currency.CurrencyDialogFragment
+import com.fulldive.wallet.presentation.pro.ProDialogFragment
 import com.google.zxing.integration.android.IntentIntegrator
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
@@ -40,7 +41,10 @@ class MainSettingsFragment : BaseMvpFragment<FragmentMainSettingBinding>(), Main
 
         binding {
             addWalletButton.setOnClickListener {
-                showDialog(ChoiceChainDialogFragment.newInstance())
+                presenter.onAddWalletClicked()
+            }
+            proButton.setOnClickListener {
+                presenter.onProClicked()
             }
             walletButton.setOnClickListener {
                 startActivity(
@@ -95,6 +99,26 @@ class MainSettingsFragment : BaseMvpFragment<FragmentMainSettingBinding>(), Main
         binding {
             currencyTextView.text = currency.title
         }
+    }
+
+    override fun setProEnabled(isPro: Boolean) {
+        binding {
+            proTextView.setText(
+                if (isPro) {
+                    R.string.str_pro_active
+                } else {
+                    R.string.str_pro_inactive
+                }
+            )
+        }
+    }
+
+    override fun showAddWalletDialog() {
+        showDialog(ChoiceChainDialogFragment.newInstance())
+    }
+
+    override fun showProDialog() {
+        showDialog(ProDialogFragment.newInstance())
     }
 
     override fun setAppLockEnabled(enabled: Boolean) {

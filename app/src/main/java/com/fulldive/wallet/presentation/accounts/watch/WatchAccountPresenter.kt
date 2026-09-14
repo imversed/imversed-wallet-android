@@ -6,6 +6,7 @@ import com.fulldive.wallet.extensions.withDefaults
 import com.fulldive.wallet.interactors.ClipboardInteractor
 import com.fulldive.wallet.interactors.ScreensInteractor
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
+import com.fulldive.wallet.interactors.accounts.AccountsLimitException
 import com.fulldive.wallet.interactors.accounts.DuplicateAccountException
 import com.fulldive.wallet.models.BaseChain
 import com.fulldive.wallet.presentation.base.BaseMoxyPresenter
@@ -104,6 +105,7 @@ class WatchAccountPresenter @Inject constructor(
                         viewState.showMessage(
                             when (error) {
                                 is DuplicateAccountException -> R.string.error_already_imported_address
+                                is AccountsLimitException -> R.string.error_wallets_limit
                                 else -> R.string.error_import_errer
                             }
                         )

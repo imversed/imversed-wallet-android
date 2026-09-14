@@ -4,6 +4,7 @@ import com.fulldive.wallet.di.modules.DefaultInteractorsModule
 import com.fulldive.wallet.extensions.combine
 import com.fulldive.wallet.extensions.safeSingle
 import com.fulldive.wallet.extensions.singleCallable
+import com.fulldive.wallet.interactors.billing.BillingInteractor
 import com.fulldive.wallet.interactors.chains.ChainsInteractor
 import com.fulldive.wallet.interactors.secret.SecretInteractor
 import com.fulldive.wallet.models.BaseChain
@@ -21,7 +22,8 @@ import javax.inject.Inject
 class AccountsInteractor @Inject constructor(
     private val accountsRepository: AccountsRepository,
     private val secretInteractor: SecretInteractor,
-    private val chainsInteractor: ChainsInteractor
+    private val chainsInteractor: ChainsInteractor,
+    private val billingInteractor: BillingInteractor
 ) {
 
     fun getWalletAccount(accountId: Long): Single<WalletAccount> {
@@ -99,40 +101,64 @@ class AccountsInteractor @Inject constructor(
             }
     }
 
-    fun createAccount(chain: BaseChain, address: String): Completable {
-        return singleCallable {
-            WalletAccount.create(
-                address = address.lowercase(),
-                chain = chain.chainName
-            )
+    /** Free users are capped at [FREE_ACCOUNTS_LIMIT] wallets, Imversed PRO lifts the cap. */
+    fun canAddAccount(): Single<Boolean> {
+        return if (billingInteractor.isPro()) {
+            Single.just(true)
+        } else {
+            getAccounts().map { accounts -> accounts.size < FREE_ACCOUNTS_LIMIT }
         }
-            .flatMap(accountsRepository::addAccount)
-            .flatMapCompletable(accountsRepository::selectAccount)
-            .andThen(chainsInteractor.showChain(chain.chainName))
+    }
+
+    private fun checkAccountsLimit(): Completable {
+        return canAddAccount()
+            .flatMapCompletable { allowed ->
+                if (allowed) {
+                    Completable.complete()
+                } else {
+                    Completable.error(AccountsLimitException())
+                }
+            }
+    }
+
+    fun createAccount(chain: BaseChain, address: String): Completable {
+        return checkAccountsLimit().andThen(
+            singleCallable {
+                WalletAccount.create(
+                    address = address.lowercase(),
+                    chain = chain.chainName
+                )
+            }
+                .flatMap(accountsRepository::addAccount)
+                .flatMapCompletable(accountsRepository::selectAccount)
+                .andThen(chainsInteractor.showChain(chain.chainName))
+        )
     }
 
     fun createAccount(chain: BaseChain, accountSecrets: AccountSecrets): Completable {
-        return singleCallable { UUID.randomUUID().toString() }
-            .flatMap { uuid ->
-                secretInteractor.entropyFromMnemonic(uuid, accountSecrets.entropy)
-                    .map { encryptData ->
-                        WalletAccount.create(
-                            uuid = uuid,
-                            address = accountSecrets.address,
-                            chain = chain.chainName,
-                            hasPrivateKey = true,
-                            resource = encryptData.encDataString,
-                            spec = encryptData.ivDataString,
-                            fromMnemonic = true,
-                            msize = accountSecrets.mnemonic.size,
-                            path = accountSecrets.path,
-                            customPath = accountSecrets.customPath
-                        )
-                    }
-            }
-            .flatMap(accountsRepository::addAccount)
-            .flatMapCompletable(accountsRepository::selectAccount)
-            .andThen(chainsInteractor.showChain(chain.chainName))
+        return checkAccountsLimit().andThen(
+            singleCallable { UUID.randomUUID().toString() }
+                .flatMap { uuid ->
+                    secretInteractor.entropyFromMnemonic(uuid, accountSecrets.entropy)
+                        .map { encryptData ->
+                            WalletAccount.create(
+                                uuid = uuid,
+                                address = accountSecrets.address,
+                                chain = chain.chainName,
+                                hasPrivateKey = true,
+                                resource = encryptData.encDataString,
+                                spec = encryptData.ivDataString,
+                                fromMnemonic = true,
+                                msize = accountSecrets.mnemonic.size,
+                                path = accountSecrets.path,
+                                customPath = accountSecrets.customPath
+                            )
+                        }
+                }
+                .flatMap(accountsRepository::addAccount)
+                .flatMapCompletable(accountsRepository::selectAccount)
+                .andThen(chainsInteractor.showChain(chain.chainName))
+        )
     }
 
     fun createAccount(
@@ -143,27 +169,29 @@ class AccountsInteractor @Inject constructor(
         customPath: Int,
         mnemonicSize: Int
     ): Completable {
-        return singleCallable { UUID.randomUUID().toString() }
-            .flatMap { uuid ->
-                secretInteractor.entropyFromMnemonic(uuid, entropy)
-                    .map { encryptData ->
-                        WalletAccount.create(
-                            uuid = uuid,
-                            address = address,
-                            chain = chain,
-                            hasPrivateKey = true,
-                            resource = encryptData.encDataString,
-                            spec = encryptData.ivDataString,
-                            fromMnemonic = true,
-                            msize = mnemonicSize,
-                            path = path,
-                            customPath = customPath
-                        )
-                    }
-            }
-            .flatMap(accountsRepository::addAccount)
-            .flatMapCompletable(accountsRepository::selectAccount)
-            .andThen(chainsInteractor.showChain(chain))
+        return checkAccountsLimit().andThen(
+            singleCallable { UUID.randomUUID().toString() }
+                .flatMap { uuid ->
+                    secretInteractor.entropyFromMnemonic(uuid, entropy)
+                        .map { encryptData ->
+                            WalletAccount.create(
+                                uuid = uuid,
+                                address = address,
+                                chain = chain,
+                                hasPrivateKey = true,
+                                resource = encryptData.encDataString,
+                                spec = encryptData.ivDataString,
+                                fromMnemonic = true,
+                                msize = mnemonicSize,
+                                path = path,
+                                customPath = customPath
+                            )
+                        }
+                }
+                .flatMap(accountsRepository::addAccount)
+                .flatMapCompletable(accountsRepository::selectAccount)
+                .andThen(chainsInteractor.showChain(chain))
+        )
     }
 
     fun createAccount(
@@ -172,25 +200,27 @@ class AccountsInteractor @Inject constructor(
         privateKey: String,
         customPath: Int
     ): Completable {
-        return singleCallable { UUID.randomUUID().toString() }
-            .flatMap { uuid ->
-                secretInteractor.entropyFromPrivateKey(uuid, privateKey)
-                    .map { encryptData ->
-                        WalletAccount.create(
-                            uuid = uuid,
-                            address = address,
-                            chain = chain.chainName,
-                            hasPrivateKey = true,
-                            resource = encryptData.encDataString,
-                            spec = encryptData.ivDataString,
-                            fromMnemonic = false,
-                            customPath = customPath
-                        )
-                    }
-            }
-            .flatMap(accountsRepository::addAccount)
-            .flatMapCompletable(accountsRepository::selectAccount)
-            .andThen(chainsInteractor.showChain(chain.chainName))
+        return checkAccountsLimit().andThen(
+            singleCallable { UUID.randomUUID().toString() }
+                .flatMap { uuid ->
+                    secretInteractor.entropyFromPrivateKey(uuid, privateKey)
+                        .map { encryptData ->
+                            WalletAccount.create(
+                                uuid = uuid,
+                                address = address,
+                                chain = chain.chainName,
+                                hasPrivateKey = true,
+                                resource = encryptData.encDataString,
+                                spec = encryptData.ivDataString,
+                                fromMnemonic = false,
+                                customPath = customPath
+                            )
+                        }
+                }
+                .flatMap(accountsRepository::addAccount)
+                .flatMapCompletable(accountsRepository::selectAccount)
+                .andThen(chainsInteractor.showChain(chain.chainName))
+        )
     }
 
     fun updateAccount(
@@ -351,5 +381,9 @@ class AccountsInteractor @Inject constructor(
             accountsRepository.deleteAccount(account.id).onErrorComplete()
                 .subscribeOn(AppSchedulers.io())
         )
+    }
+
+    companion object {
+        const val FREE_ACCOUNTS_LIMIT = 10
     }
 }

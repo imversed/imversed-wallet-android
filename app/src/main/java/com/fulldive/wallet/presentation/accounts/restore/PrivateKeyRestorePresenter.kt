@@ -5,6 +5,7 @@ import com.fulldive.wallet.extensions.toSingle
 import com.fulldive.wallet.extensions.withDefaults
 import com.fulldive.wallet.interactors.ClipboardInteractor
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
+import com.fulldive.wallet.interactors.accounts.AccountsLimitException
 import com.fulldive.wallet.interactors.accounts.DuplicateAccountException
 import com.fulldive.wallet.interactors.secret.MnemonicUtils
 import com.fulldive.wallet.interactors.secret.SecretInteractor
@@ -98,7 +99,16 @@ class PrivateKeyRestorePresenter @Inject constructor(
         }
             .withDefaults()
             .compositeSubscribe(
-                onSuccess = viewState::showMainActivity
+                onSuccess = viewState::showMainActivity,
+                onError = object : OnErrorConsumer() {
+                    override fun onError(error: Throwable) {
+                        if (error is AccountsLimitException) {
+                            viewState.showMessage(R.string.error_wallets_limit)
+                        } else {
+                            super.onError(error)
+                        }
+                    }
+                }
             )
     }
 

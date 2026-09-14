@@ -6,6 +6,7 @@ import com.fulldive.wallet.extensions.safe
 import com.fulldive.wallet.extensions.safeSingle
 import com.fulldive.wallet.extensions.withDefaults
 import com.fulldive.wallet.interactors.accounts.AccountsInteractor
+import com.fulldive.wallet.interactors.accounts.AccountsLimitException
 import com.fulldive.wallet.interactors.balances.BalancesInteractor
 import com.fulldive.wallet.interactors.secret.MnemonicUtils
 import com.fulldive.wallet.models.BaseChain
@@ -56,7 +57,16 @@ class RestorePathPresenter @Inject constructor(
                 viewState.hideWaitDialog()
             }
             .compositeSubscribe(
-                onSuccess = viewState::showMainActivity
+                onSuccess = viewState::showMainActivity,
+                onError = object : OnErrorConsumer() {
+                    override fun onError(error: Throwable) {
+                        if (error is AccountsLimitException) {
+                            viewState.showMessage(R.string.error_wallets_limit)
+                        } else {
+                            super.onError(error)
+                        }
+                    }
+                }
             )
     }
 

@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menu_pro"
+        android:title="@string/str_pro"
+        app:actionLayout="@layout/view_menu_pro"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/menu_explorer"
         android:icon="@drawable/icon_explorer"
         app:showAsAction="always"

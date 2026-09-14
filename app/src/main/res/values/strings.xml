@@ -1984,4 +1984,17 @@
     <string name="str_expand_group">(%d) ▼</string>
     <string name="str_collapse_group">(%d) ▲</string>
 
+    <!-- Imversed PRO -->
+    <string name="str_pro">Imversed PRO</string>
+    <string name="str_pro_short">PRO</string>
+    <string name="str_pro_description">The free version is limited to %1$d wallets. Imversed PRO removes the limit — create as many wallets as you need.</string>
+    <string name="str_pro_buy">Buy PRO</string>
+    <string name="str_pro_buy_price">Buy PRO — %1$s</string>
+    <string name="str_pro_active">Active</string>
+    <string name="str_pro_inactive">Free</string>
+    <string name="str_pro_active_message">Imversed PRO is active. The wallets limit is removed.</string>
+    <string name="str_pro_restore">Restore purchase</string>
+    <string name="error_pro_unavailable">Google Play is unavailable, please try again later</string>
+    <string name="error_wallets_limit">Wallets limit reached. Buy Imversed PRO to add more.</string>
+
 </resources>

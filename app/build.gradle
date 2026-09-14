@@ -25,8 +25,8 @@ android {
         applicationId "com.fulldive.extension.fdwallet"
         minSdk 24
         targetSdk 36
-        versionCode 10801
-        versionName "1.8.1"
+        versionCode 10802
+        versionName "1.8.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -165,6 +165,9 @@ dependencies {
     implementation 'org.web3j:core:4.6.0-android'
 
     implementation 'com.github.addisonelliott:SegmentedButton:3.1.9'
+
+    //google play billing (Imversed PRO)
+    implementation 'com.android.billingclient:billing:8.0.0'
 
     implementation "com.joom.lightsaber:lightsaber-core-kotlin:$lightsaberVersion"
 
